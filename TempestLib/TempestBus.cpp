@@ -54,15 +54,7 @@ void TempestBus::LoadROM(const std::string &_path, uint16_t address)
       if (bytesRead2 != 0)
          throw TempestException(std::string("File too long: '") + _path + "'");
 
-      if (vectorGenerator.IsVectorROMAddress(address))
-      {
-         vectorGenerator.LoadROM(address, buffer, bytesRead);
-      }
-      else
-      {
-         for (int i=0; i<bytesRead; ++i)
-            rom[address - ROM_BASE + i] = buffer[i];
-      }
+	  LoadROM(buffer, bytesRead, address);
       
       fclose(f);
    }
@@ -73,6 +65,18 @@ void TempestBus::LoadROM(const std::string &_path, uint16_t address)
    }
 }
 
+void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
+{
+	if (vectorGenerator.IsVectorROMAddress(address))
+	{
+		vectorGenerator.LoadROM(address, _rom, length);
+	}
+	else
+	{
+		for (int i = 0; i<length; ++i)
+			rom[address - ROM_BASE + i] = _rom[i];
+	}
+}
 
 uint8_t TempestBus::ReadByte(uint16_t address)
 {

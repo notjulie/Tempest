@@ -25,7 +25,8 @@ public:
    TempestBus(Abstract3KHzClock *_clock3KHz);
    
    void LoadROM(const std::string &_path, uint16_t address);
-   
+   void LoadROM(const uint8_t *rom, int length, uint16_t address);
+
 public:
    virtual uint8_t ReadByte(uint16_t address);   
    virtual void    WriteByte(uint16_t address, uint8_t value);

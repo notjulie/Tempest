@@ -109,6 +109,25 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.111" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.112" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.113" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.114" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.115" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.116" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.117" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.118" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.119" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.120" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.121" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.122" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.126" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.127" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.128" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.129" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.130" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.131" />
+    <EmbeddedResource Include="tempest_ver1_roms\136002.132" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -118,6 +137,9 @@
       <Project>{1da6bb69-4290-49a5-a903-cbae8752bd54}</Project>
       <Name>Tempest.NET</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tempest_ver1_roms\tempest1_readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

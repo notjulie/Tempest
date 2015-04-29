@@ -18,6 +18,7 @@ namespace TempestDotNET {
 		~Tempest();
 
 		String ^GetProcessorStatus(void);
+		void LoadROM(array<Byte>^ rom, int address);
 		void Start(void);
 
 	private:

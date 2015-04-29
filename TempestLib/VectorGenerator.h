@@ -19,7 +19,7 @@ public:
    void    Go(void);
    bool    IsVectorRAMAddress(uint16_t address) const;
    bool    IsVectorROMAddress(uint16_t address) const;
-   void    LoadROM(uint16_t address, uint8_t *buffer, int count);
+   void    LoadROM(uint16_t address, const uint8_t *buffer, int count);
    uint8_t ReadVectorRAM(uint16_t address);
    uint8_t ReadVectorROM(uint16_t address);
    void    Reset(void);

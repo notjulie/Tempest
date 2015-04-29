@@ -41,6 +41,14 @@ namespace TempestDotNET {
 		return processorStatus;
 	}
 
+	void Tempest::LoadROM(array<Byte>^ rom, int address)
+	{
+		std::vector<uint8_t> romCopy;
+		for (int i = 0; i < rom->Length; ++i)
+			romCopy.push_back(rom[i]);
+		tempestBus->LoadROM(&romCopy[0], romCopy.size(), address);
+	}
+
 	void Tempest::Start(void)
 	{
 		thread = gcnew Thread(gcnew ThreadStart(this, &Tempest::ThreadEntry));

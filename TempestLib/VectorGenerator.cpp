@@ -135,7 +135,7 @@ bool VectorGenerator::IsVectorROMAddress(uint16_t address) const
    return address>=VECTOR_ROM_BASE && address<VECTOR_ROM_BASE+VECTOR_ROM_SIZE;
 }
 
-void VectorGenerator::LoadROM(uint16_t address, uint8_t *buffer, int count)
+void VectorGenerator::LoadROM(uint16_t address,const uint8_t *buffer, int count)
 {
    for (int i=0; i<count; ++i)
       vectorROM[address - VECTOR_ROM_BASE + i] = buffer[i];
