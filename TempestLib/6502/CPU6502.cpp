@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "AbstractBus.h"
-#include "TempestException.h"
+#include "CPU6502Exception.h"
 
 #include "CPU6502.h"
 
@@ -152,7 +152,7 @@ int CPU6502::DoSingleStep(void)
       {
          char  buffer[100];
          sprintf(buffer, "Unimplemented op code: %X", opCode);
-         throw TempestException(buffer);
+         throw CPU6502Exception(buffer);
       }
    }
 }
@@ -236,7 +236,7 @@ void CPU6502::SetNZ(uint8_t value)
 void CPU6502::ADC(uint16_t address)
 {
    if (P.D)
-      throw TempestException("ADC: decimal mode not supported");
+      throw CPU6502Exception("ADC: decimal mode not supported");
    
    uint8_t value = bus->ReadByte(address);
    int unsignedResult = A + value + (P.C?1:0);

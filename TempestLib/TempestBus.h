@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#include "AbstractBus.h"
+#include "6502/AbstractBus.h"
 #include "EEPROM.h"
 #include "MathBox.h"
 #include "Pokey.h"

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <vector>
 
-#include "TempestException.h"
+#include "CPU6502Exception.h"
 
 #include "InstructionLog.h"
 
@@ -25,7 +25,7 @@ void InstructionLog::LogInstruction(const InstructionLogEntry &_entry)
    
    // for the moment
    if (instructionsExecuted > 10000000)
-      throw TempestException("Instruction limit hit");
+      throw CPU6502Exception("Instruction limit hit");
    
    // add the entry
    int index = (logStart + logCount) % logEntries.size();

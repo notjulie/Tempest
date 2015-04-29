@@ -22,21 +22,18 @@
     <Filter Include="Win32\Header Files">
       <UniqueIdentifier>{c37ad670-b0fc-4acf-a832-18c37e017033}</UniqueIdentifier>
     </Filter>
+    <Filter Include="6502">
+      <UniqueIdentifier>{1f7a08b9-a3d5-4519-af4c-92a9cf2b9e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="6502\Source Files">
+      <UniqueIdentifier>{59d86b73-f651-4375-be13-309308855204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="6502\Header Files">
+      <UniqueIdentifier>{76c7f1f0-7a90-4bd4-9b23-832e5e81e36e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CPU6502.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InstructionLog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InstructionLogEntry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MathBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mnemonic6502.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TempestBus.cpp">
@@ -51,6 +48,21 @@
     <ClCompile Include="Win32\Win32PerformanceCounter3KHzClock.cpp">
       <Filter>Win32\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="6502\CPU6502.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="6502\InstructionLog.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="6502\InstructionLogEntry.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="6502\Mnemonic6502.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="6502\CPU6502Exception.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -59,31 +71,13 @@
     <ClInclude Include="Abstract3KHzClock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractBus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CPU6502.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EEPROM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstructionLog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstructionLogEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MathBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mnemonic6502.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pokey.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProcessorStatusWord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TempestBus.h">
@@ -94,6 +88,24 @@
     </ClInclude>
     <ClInclude Include="VectorGenerator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\AbstractBus.h">
+      <Filter>6502\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\CPU6502.h">
+      <Filter>6502\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\InstructionLog.h">
+      <Filter>6502\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\InstructionLogEntry.h">
+      <Filter>6502\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\Mnemonic6502.h">
+      <Filter>6502\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\CPU6502Exception.h">
+      <Filter>6502\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

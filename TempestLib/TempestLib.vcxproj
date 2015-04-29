@@ -11,27 +11,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CPU6502.cpp" />
-    <ClCompile Include="InstructionLog.cpp" />
-    <ClCompile Include="InstructionLogEntry.cpp" />
+    <ClCompile Include="6502\CPU6502.cpp" />
+    <ClCompile Include="6502\CPU6502Exception.cpp" />
+    <ClCompile Include="6502\InstructionLog.cpp" />
+    <ClCompile Include="6502\InstructionLogEntry.cpp" />
+    <ClCompile Include="6502\Mnemonic6502.cpp" />
     <ClCompile Include="MathBox.cpp" />
-    <ClCompile Include="Mnemonic6502.cpp" />
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestException.cpp" />
     <ClCompile Include="VectorGenerator.cpp" />
     <ClCompile Include="Win32\Win32PerformanceCounter3KHzClock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="6502\AbstractBus.h" />
+    <ClInclude Include="6502\CPU6502.h" />
+    <ClInclude Include="6502\CPU6502Exception.h" />
+    <ClInclude Include="6502\InstructionLog.h" />
+    <ClInclude Include="6502\InstructionLogEntry.h" />
+    <ClInclude Include="6502\Mnemonic6502.h" />
     <ClInclude Include="Abstract3KHzClock.h" />
-    <ClInclude Include="AbstractBus.h" />
-    <ClInclude Include="CPU6502.h" />
     <ClInclude Include="EEPROM.h" />
-    <ClInclude Include="InstructionLog.h" />
-    <ClInclude Include="InstructionLogEntry.h" />
     <ClInclude Include="MathBox.h" />
-    <ClInclude Include="Mnemonic6502.h" />
     <ClInclude Include="Pokey.h" />
-    <ClInclude Include="ProcessorStatusWord.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
     <ClInclude Include="VectorGenerator.h" />

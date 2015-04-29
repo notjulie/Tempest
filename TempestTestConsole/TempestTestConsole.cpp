@@ -12,7 +12,7 @@
 #include <string>
 #include <stdio.h>
 
-#include "TempestLib/CPU6502.h"
+#include "TempestLib/6502/CPU6502.h"
 #include "TempestLib/TempestBus.h"
 #include "TempestLib/TempestException.h"
 #include "TempestLib/Win32/Win32PerformanceCounter3KHzClock.h"
