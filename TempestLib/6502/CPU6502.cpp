@@ -108,7 +108,7 @@ int CPU6502::DoSingleStep(void)
       case 0x91: STA(GetIndirectYAddress()); return 6;
       case 0x95: STA((uint16_t)bus->ReadByte(PC++) + X); return 4;
       case 0x96: STX((uint16_t)bus->ReadByte(PC++) + Y); return 4;
-      case 0x98: A = Y; SetNZ(X); return 2; //TYA
+      case 0x98: A = Y; SetNZ(A); return 2; //TYA
       case 0x99: STA(GetAbsoluteAddress() + Y); return 5;
       case 0x9A: S = X; SetNZ(S); return 2; //TXS
       case 0x9D: STA(GetAbsoluteAddress() + X); return 5;
