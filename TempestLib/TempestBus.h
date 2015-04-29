@@ -14,7 +14,7 @@
 #include "EEPROM.h"
 #include "MathBox.h"
 #include "Pokey.h"
-#include "VectorGenerator.h"
+#include "Vector/VectorGenerator.h"
 
 
 class Abstract3KHzClock;

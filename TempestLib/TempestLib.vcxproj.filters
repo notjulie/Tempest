@@ -31,6 +31,15 @@
     <Filter Include="6502\Header Files">
       <UniqueIdentifier>{76c7f1f0-7a90-4bd4-9b23-832e5e81e36e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vector">
+      <UniqueIdentifier>{58f5690e-5bb7-4ae3-bb00-732db1f54976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vector\Source Files">
+      <UniqueIdentifier>{d66aa2ae-db25-4a3b-92da-55fa7b7af6f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vector\Header Files">
+      <UniqueIdentifier>{2f069af9-af52-4c10-bc0a-ebbb4c195179}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MathBox.cpp">
@@ -40,9 +49,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TempestException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VectorGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Win32\Win32PerformanceCounter3KHzClock.cpp">
@@ -62,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="6502\CPU6502Exception.cpp">
       <Filter>6502\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector\VectorGenerator.cpp">
+      <Filter>Vector\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +95,6 @@
     <ClInclude Include="TempestException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VectorGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="6502\AbstractBus.h">
       <Filter>6502\Header Files</Filter>
     </ClInclude>
@@ -106,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="6502\CPU6502Exception.h">
       <Filter>6502\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector\VectorGenerator.h">
+      <Filter>Vector\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-#include "TempestException.h"
+#include "../TempestException.h"
 
 #include "VectorGenerator.h"
 
