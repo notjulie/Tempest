@@ -3,6 +3,7 @@
 #include "stdafx.h"
 
 #include "TempestLib/6502/CPU6502.h"
+#include "TempestLib/6502/CPU6502Exception.h"
 #include "TempestLib/TempestBus.h"
 #include "TempestLib/Win32/Win32PerformanceCounter3KHzClock.h"
 
@@ -14,7 +15,9 @@ using namespace System;
 namespace TempestDotNET {
 	Tempest::Tempest(void)
 	{
+		// clear
 		terminated = false;
+		processorStatus = gcnew String("OK");
 
 		clock = new Win32PerformanceCounter3KHzClock();
 		tempestBus = new TempestBus(clock);
@@ -33,6 +36,11 @@ namespace TempestDotNET {
 		delete clock, clock = NULL;
 	}
 
+	String ^Tempest::GetProcessorStatus(void)
+	{
+		return processorStatus;
+	}
+
 	void Tempest::Start(void)
 	{
 		thread = gcnew Thread(gcnew ThreadStart(this, &Tempest::ThreadEntry));
@@ -43,9 +51,16 @@ namespace TempestDotNET {
 
 	void Tempest::ThreadEntry(void)
 	{
-		cpu6502->Reset();
-		while (!terminated)
-			cpu6502->SingleStep();
+		try
+		{
+			cpu6502->Reset();
+			while (!terminated)
+				cpu6502->SingleStep();
+		}
+		catch (CPU6502Exception &_x6502)
+		{
+			processorStatus = gcnew String(_x6502.what());
+		}
 	}
 }
 

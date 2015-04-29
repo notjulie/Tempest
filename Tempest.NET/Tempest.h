@@ -2,6 +2,7 @@
 #ifndef TEMPEST_H
 #define TEMPEST_H
 
+using namespace System;
 using namespace System::Threading;
 
 class CPU6502;
@@ -16,6 +17,7 @@ namespace TempestDotNET {
 		Tempest();
 		~Tempest();
 
+		String ^GetProcessorStatus(void);
 		void Start(void);
 
 	private:
@@ -29,6 +31,7 @@ namespace TempestDotNET {
 		Win32PerformanceCounter3KHzClock *clock;
 
 		Thread	^thread;
+		String  ^processorStatus;
 	};
 
 }

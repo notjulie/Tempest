@@ -24,6 +24,7 @@ namespace TempestWpf
     public partial class MainWindow : Window
     {
         private Tempest tempest;
+        private DispatcherTimer timer;
 
         public MainWindow()
         {
@@ -38,6 +39,16 @@ namespace TempestWpf
         {
             tempest = new Tempest();
             tempest.Start();
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(200);
+            timer.IsEnabled = true;
+            timer.Tick += timer_Tick;
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            processorStatus.Text = tempest.GetProcessorStatus();
         }
     }
 }
