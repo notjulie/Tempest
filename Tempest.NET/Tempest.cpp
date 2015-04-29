@@ -1,6 +1,7 @@
 
 
 #include "stdafx.h"
+#include <msclr\lock.h>
 
 #include "TempestLib/6502/CPU6502.h"
 #include "TempestLib/6502/CPU6502Exception.h"
@@ -18,6 +19,8 @@ namespace TempestDotNET {
 		// clear
 		terminated = false;
 		processorStatus = gcnew String("OK");
+		synchronizer = gcnew Object();
+		vectorData = new VectorData();
 
 		clock = new Win32PerformanceCounter3KHzClock();
 		tempestBus = new TempestBus(clock);
@@ -34,6 +37,7 @@ namespace TempestDotNET {
 		delete cpu6502, cpu6502 = NULL;
 		delete tempestBus, tempestBus = NULL;
 		delete clock, clock = NULL;
+		delete vectorData, vectorData = NULL;
 	}
 
 	String ^Tempest::GetProcessorStatus(void)
@@ -66,9 +70,23 @@ namespace TempestDotNET {
 	{
 		try
 		{
+			// reset the CPU
 			cpu6502->Reset();
+
+			// run
 			while (!terminated)
-				cpu6502->SingleStep();
+			{
+				// run the processor for a little bit
+				for (int i = 0; i < 100; ++i)
+					cpu6502->SingleStep();
+
+				// pop the new vector data if we have any
+				if (tempestBus->HaveNewVectorData())
+				{
+					msclr::lock l(synchronizer);
+					tempestBus->PopVectorData(*vectorData);
+				}
+			}
 		}
 		catch (CPU6502Exception &_x6502)
 		{

@@ -72,6 +72,9 @@
     <ClCompile Include="Vector\VectorGenerator.cpp">
       <Filter>Vector\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vector\VectorData.cpp">
+      <Filter>Vector\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -114,6 +117,9 @@
       <Filter>6502\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector\VectorGenerator.h">
+      <Filter>Vector\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector\VectorData.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

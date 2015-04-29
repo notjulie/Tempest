@@ -65,6 +65,17 @@ void TempestBus::LoadROM(const std::string &_path, uint16_t address)
    }
 }
 
+bool TempestBus::HaveNewVectorData(void)
+{
+	return vectorGenerator.HaveNewData();
+}
+
+void TempestBus::PopVectorData(VectorData &_vectorData)
+{
+	vectorGenerator.Pop(_vectorData);
+}
+
+
 void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
 {
 	if (vectorGenerator.IsVectorROMAddress(address))

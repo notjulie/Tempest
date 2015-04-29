@@ -31,9 +31,12 @@ namespace TempestDotNET {
 		CPU6502		*cpu6502;
 		TempestBus	*tempestBus;
 		Win32PerformanceCounter3KHzClock *clock;
+		VectorData	*vectorData;
 
+		Object  ^synchronizer;
 		Thread	^thread;
 		String  ^processorStatus;
+
 	};
 
 }

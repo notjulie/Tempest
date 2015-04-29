@@ -19,6 +19,7 @@
     <ClCompile Include="MathBox.cpp" />
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestException.cpp" />
+    <ClCompile Include="Vector\VectorData.cpp" />
     <ClCompile Include="Vector\VectorGenerator.cpp" />
     <ClCompile Include="Win32\Win32PerformanceCounter3KHzClock.cpp" />
   </ItemGroup>
@@ -35,6 +36,7 @@
     <ClInclude Include="Pokey.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
+    <ClInclude Include="Vector\VectorData.h" />
     <ClInclude Include="Vector\VectorGenerator.h" />
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h" />
   </ItemGroup>

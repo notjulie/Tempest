@@ -6,18 +6,16 @@
 #include "VectorGenerator.h"
 
 static const uint16_t VECTOR_RAM_BASE = 0x2000;
-static const uint16_t VECTOR_RAM_SIZE = 0x1000;
 static const uint16_t VECTOR_ROM_BASE = 0x3000;
-static const uint16_t VECTOR_ROM_SIZE = 0x1000;
 
 VectorGenerator::VectorGenerator(void)
 {
-   vectorRAM.resize(VECTOR_RAM_SIZE);
-   vectorROM.resize(VECTOR_ROM_SIZE);
 }
 
 void VectorGenerator::Go(void)
 {
+	haveNewData = true;
+
    // for now just process all vector commands to see if we can
    PC = 0;
    stack.resize(0);
@@ -30,6 +28,13 @@ void VectorGenerator::Go(void)
    
    throw TempestException("Graphics output complete");
 }
+
+void VectorGenerator::Pop(VectorData &_vectorData)
+{
+	_vectorData = vectorData;
+	haveNewData = false;
+}
+
 
 bool VectorGenerator::SingleStep(void)
 {
@@ -112,43 +117,42 @@ bool VectorGenerator::SingleStep(void)
    }
 }
 
+bool VectorGenerator::HaveNewData(void)
+{
+	return haveNewData;
+}
 
 uint8_t VectorGenerator::GetAt(uint16_t pcOffset)
 {
-   uint16_t address = PC + pcOffset;
-   if (address >= VECTOR_RAM_SIZE)
-      return vectorROM[address - VECTOR_RAM_SIZE];
-   else
-      return vectorRAM[address];
+   return vectorData.GetAt(PC + pcOffset);
 }
 
 
 
 bool VectorGenerator::IsVectorRAMAddress(uint16_t address) const
 {
-   return address>=VECTOR_RAM_BASE && address<VECTOR_RAM_BASE+VECTOR_RAM_SIZE;
+   return address>=VECTOR_RAM_BASE && address<VECTOR_RAM_BASE+VectorData::GetVectorRAMSize();
 }
 
 
 bool VectorGenerator::IsVectorROMAddress(uint16_t address) const
 {
-   return address>=VECTOR_ROM_BASE && address<VECTOR_ROM_BASE+VECTOR_ROM_SIZE;
+	return address >= VECTOR_ROM_BASE && address<VECTOR_ROM_BASE + VectorData::GetVectorROMSize();
 }
 
 void VectorGenerator::LoadROM(uint16_t address,const uint8_t *buffer, int count)
 {
-   for (int i=0; i<count; ++i)
-      vectorROM[address - VECTOR_ROM_BASE + i] = buffer[i];
+	vectorData.LoadROM(address - VECTOR_ROM_BASE, buffer, count);
 }
 
 uint8_t VectorGenerator::ReadVectorRAM(uint16_t address)
 {
-   return vectorRAM[address - VECTOR_RAM_BASE];
+   return vectorData.ReadVectorRAM(address - VECTOR_RAM_BASE);
 }
 
 uint8_t VectorGenerator::ReadVectorROM(uint16_t address)
 {
-   return vectorROM[address - VECTOR_ROM_BASE];
+   return vectorData.ReadVectorROM(address - VECTOR_ROM_BASE);
 }
 
 void VectorGenerator::Reset(void)
@@ -159,5 +163,5 @@ void VectorGenerator::Reset(void)
 
 void VectorGenerator::WriteVectorRAM(uint16_t address, uint8_t value)
 {
-   vectorRAM[address - VECTOR_RAM_BASE] = value;
+   vectorData.WriteVectorRAM(address - VECTOR_RAM_BASE, value);
 }
