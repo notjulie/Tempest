@@ -26,9 +26,10 @@ public:
 
    void     Reset(void);
    void     Run(void);
-   
+   void		SingleStep(void);
+
 private:
-   int  SingleStep(void);
+   int  DoSingleStep(void);
 
 private:
    void     Compare(uint8_t a, uint8_t b);

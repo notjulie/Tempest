@@ -24,7 +24,6 @@ namespace TempestWpf
     public partial class MainWindow : Window
     {
         private Tempest tempest;
-        private DispatcherTimer timer = new DispatcherTimer();
 
         public MainWindow()
         {
@@ -35,20 +34,10 @@ namespace TempestWpf
             this.Loaded += MainWindow_Loaded;
         }
 
-        void timer_Tick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             tempest = new Tempest();
             tempest.Start();
-
-            // initialize our timer
-            timer.Interval = TimeSpan.FromMilliseconds(50);
-            timer.Tick += timer_Tick;
-            timer.IsEnabled = true;
         }
     }
 }

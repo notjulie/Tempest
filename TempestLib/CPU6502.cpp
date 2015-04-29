@@ -39,19 +39,22 @@ uint16_t CPU6502::GetU16At(uint16_t address) const
 void CPU6502::Run(void)
 {
    for (;;)
-   {
-      // clear the current instruction log entry
-      currentInstruction = InstructionLogEntry();
-      
-      // execute an instruction
-      currentInstruction.ClockCycles += SingleStep();
-      
-      // log
-      log.LogInstruction(currentInstruction);
-   }
+	   SingleStep();
 }
 
-int CPU6502::SingleStep(void)
+void CPU6502::SingleStep(void)
+{
+	// clear the current instruction log entry
+	currentInstruction = InstructionLogEntry();
+
+	// execute an instruction
+	currentInstruction.ClockCycles += DoSingleStep();
+
+	// log
+	log.LogInstruction(currentInstruction);
+}
+
+int CPU6502::DoSingleStep(void)
 {
    // load the instruction
    currentInstruction.PC = PC;

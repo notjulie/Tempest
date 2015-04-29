@@ -14,6 +14,8 @@ using namespace System;
 namespace TempestDotNET {
 	Tempest::Tempest(void)
 	{
+		terminated = false;
+
 		clock = new Win32PerformanceCounter3KHzClock();
 		tempestBus = new TempestBus(clock);
 		cpu6502 = new CPU6502(tempestBus);
@@ -21,6 +23,11 @@ namespace TempestDotNET {
 
 	Tempest::~Tempest(void)
 	{
+		// stop the thread
+		terminated = true;
+		thread->Join();
+
+		// delete
 		delete cpu6502, cpu6502 = NULL;
 		delete tempestBus, tempestBus = NULL;
 		delete clock, clock = NULL;
@@ -28,7 +35,17 @@ namespace TempestDotNET {
 
 	void Tempest::Start(void)
 	{
-		throw gcnew NotImplementedException("Tempest::Start");
+		thread = gcnew Thread(gcnew ThreadStart(this, &Tempest::ThreadEntry));
+		thread->Name = "TempestThread";
+		thread->Start();
+	}
+
+
+	void Tempest::ThreadEntry(void)
+	{
+		cpu6502->Reset();
+		while (!terminated)
+			cpu6502->SingleStep();
 	}
 }
 
