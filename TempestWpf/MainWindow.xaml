@@ -8,6 +8,10 @@
                 <TextBlock Text="Processor Status: "/>
                 <TextBlock Name="processorStatus"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Math Box Status: "/>
+                <TextBlock Name="mathBoxStatus"/>
+            </StackPanel>
         </StackPanel>
         <Grid Background="Black">
 

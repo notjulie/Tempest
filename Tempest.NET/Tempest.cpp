@@ -41,6 +41,11 @@ namespace TempestDotNET {
 		return processorStatus;
 	}
 
+	String ^Tempest::GetMathBoxStatus(void)
+	{
+		return gcnew String(tempestBus->GetMathBoxStatus().c_str());
+	}
+
 	void Tempest::LoadROM(array<Byte>^ rom, int address)
 	{
 		std::vector<uint8_t> romCopy;

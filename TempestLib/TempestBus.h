@@ -24,6 +24,7 @@ class TempestBus : public AbstractBus
 public:
    TempestBus(Abstract3KHzClock *_clock3KHz);
    
+   std::string GetMathBoxStatus(void) const { return mathBox.GetErrorString(); }
    void LoadROM(const std::string &_path, uint16_t address);
    void LoadROM(const uint8_t *rom, int length, uint16_t address);
 
