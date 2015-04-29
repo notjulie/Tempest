@@ -27,13 +27,7 @@ public:
 	void		WriteVectorRAM(uint16_t address, uint8_t value);
 
 private:
-	uint8_t GetAt(uint16_t pcOffset);
-	bool SingleStep(void);
-
-private:
 	VectorData	vectorData;
-	uint16_t PC;
-	std::vector<uint16_t> stack;
 	bool haveNewData;
 };
 
