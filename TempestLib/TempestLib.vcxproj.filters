@@ -19,6 +19,9 @@
     <Filter Include="Win32\Source Files">
       <UniqueIdentifier>{a7056f75-ba72-42be-a767-969a319af6db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Win32\Header Files">
+      <UniqueIdentifier>{c37ad670-b0fc-4acf-a832-18c37e017033}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPU6502.cpp">
@@ -48,5 +51,49 @@
     <ClCompile Include="Win32\Win32PerformanceCounter3KHzClock.cpp">
       <Filter>Win32\Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
+      <Filter>Win32\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Abstract3KHzClock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractBus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPU6502.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EEPROM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstructionLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstructionLogEntry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MathBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mnemonic6502.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessorStatusWord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TempestBus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TempestException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
