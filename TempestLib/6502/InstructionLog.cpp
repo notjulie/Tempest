@@ -23,10 +23,6 @@ void InstructionLog::LogInstruction(const InstructionLogEntry &_entry)
    totalClockCycles += _entry.ClockCycles;
    ++instructionsExecuted;
    
-   // for the moment
-   if (instructionsExecuted > 10000000)
-      throw CPU6502Exception("Instruction limit hit");
-   
    // add the entry
    int index = (logStart + logCount) % logEntries.size();
    logEntries[index] = _entry;
