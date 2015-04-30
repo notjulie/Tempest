@@ -5,6 +5,8 @@
 using namespace System;
 using namespace System::Threading;
 
+#include "VectorEnumerator.h"
+
 class CPU6502;
 class TempestBus;
 class Win32PerformanceCounter3KHzClock;
@@ -19,6 +21,7 @@ namespace TempestDotNET {
 
 		String ^GetMathBoxStatus(void);
 		String ^GetProcessorStatus(void);
+		VectorEnumerator ^GetVectorEnumerator(void);
 		void LoadROM(array<Byte>^ rom, int address);
 		void Start(void);
 

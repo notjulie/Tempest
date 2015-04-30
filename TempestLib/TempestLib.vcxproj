@@ -19,6 +19,7 @@
     <ClCompile Include="MathBox.cpp" />
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestException.cpp" />
+    <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorData.cpp" />
     <ClCompile Include="Vector\VectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorGenerator.cpp" />
@@ -37,6 +38,8 @@
     <ClInclude Include="Pokey.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
+    <ClInclude Include="Vector\SimpleVector.h" />
+    <ClInclude Include="Vector\SimpleVectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorData.h" />
     <ClInclude Include="Vector\VectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorGenerator.h" />

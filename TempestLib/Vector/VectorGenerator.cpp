@@ -10,6 +10,7 @@ static const uint16_t VECTOR_ROM_BASE = 0x3000;
 
 VectorGenerator::VectorGenerator(void)
 {
+	haveNewData = false;
 }
 
 void VectorGenerator::Go(void)

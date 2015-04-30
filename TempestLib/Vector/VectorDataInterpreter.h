@@ -15,6 +15,7 @@ public:
 
 	void Interpret(void);
 
+protected:
 	virtual void Center(void) {}
 	virtual void LDraw(int x, int y, int intensity) {}
 	virtual void Scale(int thing1, int thing2) {}

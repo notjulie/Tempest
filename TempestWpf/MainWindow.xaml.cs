@@ -26,6 +26,7 @@ namespace TempestWpf
    {
       private Tempest tempest;
       private DispatcherTimer timer;
+      private DispatcherTimer vectorTimer;
 
       public MainWindow()
       {
@@ -70,12 +71,33 @@ namespace TempestWpf
          timer.Interval = TimeSpan.FromMilliseconds(200);
          timer.IsEnabled = true;
          timer.Tick += timer_Tick;
+
+         vectorTimer = new DispatcherTimer();
+         vectorTimer.Interval = TimeSpan.FromMilliseconds(200);
+         vectorTimer.IsEnabled = true;
+         vectorTimer.Tick += vectorTimer_Tick;
       }
 
       void timer_Tick(object sender, EventArgs e)
       {
          processorStatus.Text = tempest.GetProcessorStatus();
          mathBoxStatus.Text = tempest.GetMathBoxStatus();
+      }
+
+      void vectorTimer_Tick(object sender, EventArgs e)
+      {
+         // get a vector enumerator
+         VectorEnumerator enumerator = tempest.GetVectorEnumerator();
+         if (enumerator != null)
+         {
+            for (; ; )
+            {
+               float startX, startY, endX, endY;
+               int color;
+               if (!enumerator.GetNextVector(out startX, out startY, out endX, out endY, out color))
+                  break;
+            }
+         }
       }
 
       private byte[] GetROM(string name)

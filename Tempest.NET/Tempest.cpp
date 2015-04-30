@@ -20,7 +20,7 @@ namespace TempestDotNET {
 		terminated = false;
 		processorStatus = gcnew String("OK");
 		synchronizer = gcnew Object();
-		vectorData = new VectorData();
+		vectorData = NULL;
 
 		clock = new Win32PerformanceCounter3KHzClock();
 		tempestBus = new TempestBus(clock);
@@ -48,6 +48,15 @@ namespace TempestDotNET {
 	String ^Tempest::GetMathBoxStatus(void)
 	{
 		return gcnew String(tempestBus->GetMathBoxStatus().c_str());
+	}
+
+	VectorEnumerator ^Tempest::GetVectorEnumerator(void)
+	{
+		msclr::lock l(synchronizer);
+		if (vectorData != NULL)
+			return gcnew VectorEnumerator(*vectorData);
+		else
+			return nullptr;
 	}
 
 	void Tempest::LoadROM(array<Byte>^ rom, int address)
@@ -84,6 +93,8 @@ namespace TempestDotNET {
 				if (tempestBus->HaveNewVectorData())
 				{
 					msclr::lock l(synchronizer);
+					if (vectorData == NULL)
+						vectorData = new VectorData();
 					tempestBus->PopVectorData(*vectorData);
 				}
 			}
