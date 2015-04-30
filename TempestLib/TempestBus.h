@@ -27,7 +27,8 @@ public:
    
 	void LoadROM(const std::string &_path, uint16_t address);
 	void LoadROM(const uint8_t *rom, int length, uint16_t address);
-	
+	void LoadMathBoxROM(const uint8_t *rom, int length, char slot);
+
 	std::string GetMathBoxStatus(void) const { return mathBox.GetErrorString(); }
    bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);

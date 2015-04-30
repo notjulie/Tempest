@@ -89,6 +89,11 @@ void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
 	}
 }
 
+void TempestBus::LoadMathBoxROM(const uint8_t *rom, int length, char slot)
+{
+	mathBox.LoadROM(rom, length, slot);
+}
+
 uint8_t TempestBus::ReadByte(uint16_t address)
 {
    // see if it's a ROM address

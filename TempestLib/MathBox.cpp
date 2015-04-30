@@ -2,7 +2,54 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "TempestException.h"
+
 #include "MathBox.h"
+
+
+void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
+{
+	switch (slot)
+	{
+	case 'A':
+		romA.resize(length);
+		memcpy(&romA[0], rom, length);
+		break;
+
+	case 'E':
+		romE.resize(length);
+		memcpy(&romE[0], rom, length);
+		break;
+
+	case 'F':
+		romF.resize(length);
+		memcpy(&romF[0], rom, length);
+		break;
+
+	case 'H':
+		romH.resize(length);
+		memcpy(&romH[0], rom, length);
+		break;
+
+	case 'J':
+		romJ.resize(length);
+		memcpy(&romJ[0], rom, length);
+		break;
+
+	case 'K':
+		romK.resize(length);
+		memcpy(&romK[0], rom, length);
+		break;
+
+	case 'L':
+		romL.resize(length);
+		memcpy(&romL[0], rom, length);
+		break;
+
+	default:
+		throw TempestException("MathBox::LoadROM: invalid slot letter");
+	}
+}
 
 
 uint8_t MathBox::GetStatus(void)
