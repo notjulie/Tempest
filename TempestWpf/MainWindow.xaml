@@ -1,7 +1,7 @@
 ﻿<Window x:Class="TempestWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tempest" Height="350" Width="525">
+        Title="Tempest" Height="720" Width="550">
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom">
             <StackPanel Orientation="Horizontal">
@@ -13,8 +13,7 @@
                 <TextBlock Name="mathBoxStatus"/>
             </StackPanel>
         </StackPanel>
-        <Grid Background="Black">
-
-        </Grid>
+        <Canvas Name="canvas" Background="Black">
+        </Canvas>
     </DockPanel>
 </Window>

@@ -27,6 +27,7 @@ namespace TempestWpf
       private Tempest tempest;
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
+      private List<Line> lines = new List<Line>();
 
       public MainWindow()
       {
@@ -90,13 +91,38 @@ namespace TempestWpf
          VectorEnumerator enumerator = tempest.GetVectorEnumerator();
          if (enumerator != null)
          {
+            int index = 0;
             for (; ; )
             {
                float startX, startY, endX, endY;
                int color;
                if (!enumerator.GetNextVector(out startX, out startY, out endX, out endY, out color))
                   break;
+
+               Line line;
+               if (index >= lines.Count)
+               {
+                  line = new Line();
+                  lines.Add(line);
+                  canvas.Children.Add(line);
+               }
+               else
+               {
+                  line = lines[index];
+               }
+
+               line.Stroke = new SolidColorBrush(Colors.White);
+               line.X1 = canvas.ActualWidth / 2 + startX;
+               line.X2 = canvas.ActualWidth / 2 + endX;
+               line.Y1 = canvas.ActualHeight / 2 - startY;
+               line.Y2 = canvas.ActualHeight / 2 - endY;
+               line.Visibility = System.Windows.Visibility.Visible;
+
+               ++index;
             }
+
+            while (index < lines.Count)
+               lines[index++].Visibility = System.Windows.Visibility.Hidden;
          }
       }
 
