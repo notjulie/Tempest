@@ -15,6 +15,11 @@
 
 class MathBox
 {
+private:
+	enum Bit {
+		PCEN
+	};
+
 public:
 	void LoadROM(const uint8_t *rom, int length, char slot);
 
@@ -25,6 +30,7 @@ public:
    void Write(uint8_t address, uint8_t value);
 
 private:
+	bool GetBit(Bit bit);
 	void SetError(const std::string &_status);
 
 private:
@@ -36,11 +42,12 @@ private:
 	int dataIn;
 	int addressIn;
 	bool BEGIN;
-	bool STOP;
 
-	// state values
-	bool	D5;
-	int pc;
+	// state values that change on rising clock
+	int   PC;
+
+	// state values that change on falling clock
+	bool STOP;
 
 	// ALUs
 	Am2901	aluK;

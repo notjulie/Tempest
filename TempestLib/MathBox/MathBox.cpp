@@ -151,13 +151,60 @@ void MathBox::Write(uint8_t address, uint8_t value)
 
 void MathBox::HandleRisingClock(void)
 {
-	throw MathBoxException("MathBox::HandleRisingClock not implemented");
+	// calculate the new PC 
+	int newPC;
+	if (GetBit(PCEN))
+	{
+		// we load the PC from whichever source is selected
+		if (BEGIN)
+		{
+			throw MathBoxException("Load PC from ROM A");
+		}
+		else
+		{
+			throw MathBoxException("Load PC from latch B1");
+		}
+	}
+	else
+	{
+		if (PC < 0)
+			throw MathBoxException("Can't increment PC... not set");
+		newPC = PC + 1;
+		if (newPC > 255)
+			throw MathBoxException("PC wraparound");
+	}
+
+	// latch all the state values that we are supposed to latch on the
+	// rising clock
+	PC = newPC;
+
+	throw MathBoxException("MathBox::HandleRisingClock needs to update the ALUs");
 }
 
 void MathBox::HandleFallingClock(void)
 {
-	throw MathBoxException("MathBox::HandleFallingClock not implemented");
+	bool newSTOP;
+	throw MathBoxException("MathBox::HandleFallingClock: not calculating STOP");
+
+	// latch all the state values that we are supposed to latch on the
+	// falling clock
+	STOP = newSTOP;
+
+	throw MathBoxException("MathBox::HandleFallingClock needs to update the ALUs");
 }
+
+bool MathBox::GetBit(Bit bit)
+{
+	char buf[200];
+
+	switch (bit)
+	{
+	default:
+		sprintf(buf, "MathBox::GetBit: unsupported bit: %d", bit);
+		throw MathBoxException(buf);
+	}
+}
+
 
 /*void MathBox::Update(void)
 {
