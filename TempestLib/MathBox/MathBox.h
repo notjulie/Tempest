@@ -28,20 +28,27 @@ private:
 	void SetError(const std::string &_status);
 
 private:
-	void	Update(void);
+	void HandleRisingClock(void);
+	void HandleFallingClock(void);
 
 private:
-	int pc;
+	// inputs
 	int dataIn;
+	int addressIn;
+	bool BEGIN;
+	bool STOP;
 
+	// state values
 	bool	D5;
+	int pc;
 
+	// ALUs
 	Am2901	aluK;
 	Am2901	aluF;
 	Am2901	aluJ;
 	Am2901	aluE;
 
-	std::string	error;
+	// ROMs
 	std::vector<uint8_t> romA;
 	std::vector<uint8_t> romE;
 	std::vector<uint8_t> romF;
@@ -49,6 +56,9 @@ private:
 	std::vector<uint8_t> romJ;
 	std::vector<uint8_t> romK;
 	std::vector<uint8_t> romL;
+
+	// misc
+	std::string	error;
 };
 
 #endif	/* MATHBOX_H */

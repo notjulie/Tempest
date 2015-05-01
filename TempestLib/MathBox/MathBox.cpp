@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../TempestException.h"
+#include "MathBoxException.h"
 
 #include "MathBox.h"
 
@@ -47,7 +47,7 @@ void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
 		break;
 
 	default:
-		throw TempestException("MathBox::LoadROM: invalid slot letter");
+		throw MathBoxException("MathBox::LoadROM: invalid slot letter");
 	}
 }
 
@@ -72,7 +72,40 @@ uint8_t MathBox::Read2(void)
 
 void MathBox::Write(uint8_t address, uint8_t value)
 {
-	// validate the address
+	try
+	{
+		// set our inputs... the address strobe will assert BEGIN and cause the
+		// first rising edge of the clock
+		addressIn = address;
+		dataIn = value;
+		BEGIN = true;
+		HandleRisingClock();
+
+		// shortly after the clock will fall
+		HandleFallingClock();
+
+		// our inputs will clear
+		addressIn = -1;
+		dataIn = -1;
+		BEGIN = false;
+
+		// then we can just handle clock pulses until the clock is disabled
+		while (!STOP)
+		{
+			HandleRisingClock();
+			HandleFallingClock();
+		}
+	}
+	catch (MathBoxException &x)
+	{
+		SetError(x.what());
+	}
+	catch (...)
+	{
+		SetError("Unknown exception in MathBox::Write");
+	}
+
+/*	// validate the address
 	if (address >= romA.size())
 	{
 		char buffer[200];
@@ -81,6 +114,23 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		return;
 	}
 
+
+
+	// On a write to the MathBox, the 109 JK at A2 causes the BEGIN signal
+	// to go active during the high cycle of the 3MHz clock... BEGIN remains
+	// active until the write cycle completes.
+
+	// The result of BEGIN going active will be that the D flip-flop at D5 will
+	// be cleared, enabling the Math Box clock, whose first edge will be a rising edge
+	// when the 3MHz clock goes low.
+
+	// When A12 goes low, the Math Box clock will be disabled on its next falling edge.
+
+
+	// So when BEGIN is activated:
+	//   - the ROM at A1 puts the start address on the bus going to the counters
+	//   - the PCEN is activated, putting the counters into "load" mode
+	//   - the 
 	// the value from the ROM becomes the new program counter
 	pc = romA[address];
 
@@ -95,10 +145,21 @@ void MathBox::Write(uint8_t address, uint8_t value)
 	catch (TempestException &_x)
 	{
 		SetError(_x.what());
-	}
+	}*/
 }
 
-void MathBox::Update(void)
+
+void MathBox::HandleRisingClock(void)
+{
+	throw MathBoxException("MathBox::HandleRisingClock not implemented");
+}
+
+void MathBox::HandleFallingClock(void)
+{
+	throw MathBoxException("MathBox::HandleFallingClock not implemented");
+}
+
+/*void MathBox::Update(void)
 {
 	SetError("D5 not being calculated");
 
@@ -141,7 +202,7 @@ void MathBox::Update(void)
 	aluE.Update();
 
 	SetError("Iteration not implemented");
-}
+}*/
 
 void MathBox::SetError(const std::string &_status)
 {
