@@ -28,6 +28,7 @@ namespace TempestWpf
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
       private List<Line> lines = new List<Line>();
+      private DateTime startTime;
 
       public MainWindow()
       {
@@ -75,6 +76,7 @@ namespace TempestWpf
          tempest.LoadMathBoxROM(GetROM("136002.132"), (sbyte)'L');
 
          // set it to running
+         startTime = DateTime.Now;
          tempest.Start();
 
          timer = new DispatcherTimer();
@@ -92,6 +94,11 @@ namespace TempestWpf
       {
          processorStatus.Text = tempest.GetProcessorStatus();
          mathBoxStatus.Text = tempest.GetMathBoxStatus();
+
+         double processorSpeed = tempest.GetTotalClockCycles();
+         processorSpeed /= (DateTime.Now - startTime).TotalSeconds;
+         processorSpeed /= 1000000;
+         processorSpeedText.Text = processorSpeed.ToString("F1") + " MHz";
       }
 
       void vectorTimer_Tick(object sender, EventArgs e)

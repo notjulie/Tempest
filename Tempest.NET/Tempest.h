@@ -25,6 +25,7 @@ namespace TempestDotNET {
 		void LoadROM(array<Byte>^ rom, int address);
 		void LoadMathBoxROM(array<Byte>^ rom, char slot);
 		void Start(void);
+		int GetTotalClockCycles(void);
 
 	private:
 		void ThreadEntry(void);

@@ -17,6 +17,11 @@ CPU6502::CPU6502(AbstractBus *_bus)
    bus = _bus;
 }
 
+int CPU6502::GetTotalClockCycles(void)
+{
+	return log.GetTotalClockCycles();
+}
+
 void CPU6502::Reset(void)
 {
    // start cold boot
@@ -58,7 +63,7 @@ int CPU6502::DoSingleStep(void)
 {
    // load the instruction
    currentInstruction.PC = PC;
-   uint8_t opCode = bus->ReadByte(PC++);
+	uint8_t opCode = bus->ReadByte(PC++);
    currentInstruction.OpCode = opCode;
    
    // process the instruction

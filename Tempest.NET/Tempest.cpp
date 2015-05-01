@@ -50,6 +50,11 @@ namespace TempestDotNET {
 		return gcnew String(tempestBus->GetMathBoxStatus().c_str());
 	}
 
+	int Tempest::GetTotalClockCycles(void)
+	{
+		return cpu6502->GetTotalClockCycles();
+	}
+
 	VectorEnumerator ^Tempest::GetVectorEnumerator(void)
 	{
 		msclr::lock l(synchronizer);

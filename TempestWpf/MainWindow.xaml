@@ -12,6 +12,10 @@
                 <TextBlock Text="Math Box Status: "/>
                 <TextBlock Name="mathBoxStatus"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Processor speed: "/>
+                <TextBlock Name="processorSpeedText"/>
+            </StackPanel>
         </StackPanel>
         <Canvas Name="canvas" Background="Black">
         </Canvas>

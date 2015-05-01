@@ -16,7 +16,8 @@ class InstructionLog
 public:
    InstructionLog();
    
-   void LogInstruction(const InstructionLogEntry &_entry);
+	int  GetTotalClockCycles(void) { return totalClockCycles; }
+	void LogInstruction(const InstructionLogEntry &_entry);
    void Print(void);
    
 private:    

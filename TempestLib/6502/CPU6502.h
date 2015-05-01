@@ -23,6 +23,7 @@ public:
    CPU6502(AbstractBus *_bus);
 
    InstructionLog &GetInstructionLog(void) { return log; }
+	int GetTotalClockCycles(void);
 
    void     Reset(void);
    void     Run(void);
