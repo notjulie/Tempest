@@ -81,6 +81,9 @@
     <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp">
       <Filter>Vector\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Am2901.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="Vector\SimpleVectorDataInterpreter.h">
       <Filter>Vector\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Am2901.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+#include "Am2901.h"
+
 class MathBox
 {
 public:
@@ -26,6 +28,19 @@ private:
 	void SetError(const std::string &_status);
 
 private:
+	void	Update(void);
+
+private:
+	int pc;
+	int dataIn;
+
+	bool	D5;
+
+	Am2901	aluK;
+	Am2901	aluF;
+	Am2901	aluJ;
+	Am2901	aluE;
+
 	std::string	error;
 	std::vector<uint8_t> romA;
 	std::vector<uint8_t> romE;
