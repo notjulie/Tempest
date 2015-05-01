@@ -17,8 +17,12 @@ class MathBox
 {
 private:
 	enum Bit {
+		A10STAR,
+		C,
 		J,
 		PCEN,
+		Q0,
+		R0,
 		S,
 		S0,
 		S1
@@ -35,6 +39,7 @@ public:
 
 private:
 	bool GetBit(Bit bit);
+	void SetALUInputs(void);
 	void SetError(const std::string &_status);
 
 private:

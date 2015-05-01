@@ -104,48 +104,6 @@ void MathBox::Write(uint8_t address, uint8_t value)
 	{
 		SetError("Unknown exception in MathBox::Write");
 	}
-
-/*	// validate the address
-	if (address >= romA.size())
-	{
-		char buffer[200];
-		sprintf(buffer, "MathBox::Write unsupported address: 0x%X", address);
-		SetError(buffer);
-		return;
-	}
-
-
-
-	// On a write to the MathBox, the 109 JK at A2 causes the BEGIN signal
-	// to go active during the high cycle of the 3MHz clock... BEGIN remains
-	// active until the write cycle completes.
-
-	// The result of BEGIN going active will be that the D flip-flop at D5 will
-	// be cleared, enabling the Math Box clock, whose first edge will be a rising edge
-	// when the 3MHz clock goes low.
-
-	// When A12 goes low, the Math Box clock will be disabled on its next falling edge.
-
-
-	// So when BEGIN is activated:
-	//   - the ROM at A1 puts the start address on the bus going to the counters
-	//   - the PCEN is activated, putting the counters into "load" mode
-	//   - the 
-	// the value from the ROM becomes the new program counter
-	pc = romA[address];
-
-	// the value being written is the data value
-	dataIn = value;
-
-	// we have all the outside inputs accounted for... update
-	try
-	{
-		Update();
-	}
-	catch (TempestException &_x)
-	{
-		SetError(_x.what());
-	}*/
 }
 
 
@@ -158,7 +116,9 @@ void MathBox::HandleRisingClock(void)
 		// we load the PC from whichever source is selected
 		if (BEGIN)
 		{
-			throw MathBoxException("Load PC from ROM A");
+			if (addressIn < 0)
+				throw MathBoxException("Load PC from ROM A: addressIn not set");
+			newPC = romA[addressIn];
 		}
 		else
 		{
@@ -174,11 +134,16 @@ void MathBox::HandleRisingClock(void)
 			throw MathBoxException("PC wraparound");
 	}
 
+	// let the ALUs handle the rising clock edge...
+	SetALUInputs();
+	aluK.SetClock(true);
+	aluF.SetClock(true);
+	aluJ.SetClock(true);
+	aluE.SetClock(true);
+
 	// latch all the state values that we are supposed to latch on the
 	// rising clock
 	PC = newPC;
-
-	throw MathBoxException("MathBox::HandleRisingClock needs to update the ALUs");
 }
 
 void MathBox::HandleFallingClock(void)
@@ -217,51 +182,59 @@ bool MathBox::GetBit(Bit bit)
 	}
 }
 
-
-/*void MathBox::Update(void)
+void MathBox::SetALUInputs(void)
 {
-	SetError("D5 not being calculated");
+	// if the PC is not set our ROM values are also considered unknown...
+	// just a diagnostic measure
+	if (PC < 0)
+	{
+		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = -1;
+		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = -1;
+		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = -1;
+		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = -1;
+		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = -1;
+	}
+	else
+	{
+		// the A & B inputs to the ALUs are all the same
+		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC];
+		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC];
+		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = romH[PC] & 7;
+		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = romF[PC] & 7;
 
-	// the A & B inputs to the ALUs are all the same
-	aluK.A = aluF.A = aluJ.A = aluE.A = romL[pc];
-	aluK.B = aluF.B = aluJ.B = aluE.B = romK[pc];
+		int i01 = romJ[PC] & 1;
+		if (GetBit(A10STAR))
+			i01 += 2;
+		aluK.I012 = aluF.I012 = i01 + (romJ[PC] & 4);
+		aluJ.I012 = aluE.I012 = i01 + ((romJ[PC] & 8) >> 1);
+	}
 
-	// calculate A10star
-	bool M = (romE[pc] & 2) != 0;
-	bool E4 = M & !D5;
-	bool A10 = (romJ[pc] & 2) != 0;
-	bool A10star = A10 ^ E4;
+	if (dataIn < 0)
+	{
+		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = -1;
+	}
+	else
+	{
+		aluK.DataIn = aluJ.DataIn = dataIn & 0xF;
+		aluF.DataIn = aluE.DataIn = dataIn >> 4;
+	}
 
-	// I8-I0 come from these pins on the ALU
-	// 6    7 5 27 28    26 14 13 12
-	// I8-I3 are easy
-	uint16_t I = ((romF[pc] & 7) << 6) + ((romH[pc] & 7) << 3);
-	if (A10star)
-		I |= 2;
-	if (romJ[pc] & 1)
-		I |= 1;
-	aluK.I = aluF.I = I + (romJ[pc] & 4);
-	aluJ.I = aluE.I = I + ((romJ[pc] & 8) >> 1);
+	aluK.RAM0 = GetBit(R0);
+	aluK.Q0 = GetBit(Q0);
+	aluK.CarryIn = GetBit(C);
 
-	bool A12 = (romH[pc] & 8) != 0;
-	bool LDAB = (romF[pc] & 8) != 0;
+	aluF.RAM0 = aluK.GetRAM3();
+	aluF.Q0 = aluK.GetQ3();
+	aluF.CarryIn = aluK.GetCarryOut();
 
-	// update the ALUs
-	SetError("Inputs to ALUs not set");
-	aluK.CarryIn = (romE[pc] & 1) != 0;
-	aluK.Update();
+	aluJ.RAM0 = aluF.GetRAM3();
+	aluJ.Q0 = aluF.GetQ3();
+	aluJ.CarryIn = aluF.GetCarryOut();
 
-	aluF.CarryIn = aluK.CarryOut;
-	aluF.Update();
-
-	aluJ.CarryIn = aluF.CarryOut;
-	aluJ.Update();
-
-	aluE.CarryIn = aluJ.CarryOut;
-	aluE.Update();
-
-	SetError("Iteration not implemented");
-}*/
+	aluE.RAM0 = aluJ.GetRAM3();
+	aluE.Q0 = aluJ.GetQ3();
+	aluE.CarryIn = aluJ.GetCarryOut();
+}
 
 void MathBox::SetError(const std::string &_status)
 {
