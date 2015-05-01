@@ -17,7 +17,11 @@ class MathBox
 {
 private:
 	enum Bit {
-		PCEN
+		J,
+		PCEN,
+		S,
+		S0,
+		S1
 	};
 
 public:

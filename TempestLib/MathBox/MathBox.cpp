@@ -199,6 +199,18 @@ bool MathBox::GetBit(Bit bit)
 
 	switch (bit)
 	{
+	case PCEN:
+	{
+		// if BEGIN is set we don't care about the rest, which may be
+		// in unspecified states
+		if (BEGIN)
+			return true;
+		bool E5XORout = GetBit(S0) ^ GetBit(S1);
+		bool D4NAND1out = !(E5XORout & GetBit(S));
+		bool D4NAND2out = !(D4NAND1out & GetBit(J));
+		return BEGIN | !D4NAND2out;
+	}
+
 	default:
 		sprintf(buf, "MathBox::GetBit: unsupported bit: %d", bit);
 		throw MathBoxException(buf);
