@@ -24,8 +24,8 @@
     <ClCompile Include="6502\InstructionLog.cpp" />
     <ClCompile Include="6502\InstructionLogEntry.cpp" />
     <ClCompile Include="6502\Mnemonic6502.cpp" />
-    <ClCompile Include="Am2901.cpp" />
-    <ClCompile Include="MathBox.cpp" />
+    <ClCompile Include="MathBox\Am2901.cpp" />
+    <ClCompile Include="MathBox\MathBox.cpp" />
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestException.cpp" />
     <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp" />
@@ -42,9 +42,9 @@
     <ClInclude Include="6502\InstructionLogEntry.h" />
     <ClInclude Include="6502\Mnemonic6502.h" />
     <ClInclude Include="Abstract3KHzClock.h" />
-    <ClInclude Include="Am2901.h" />
     <ClInclude Include="EEPROM.h" />
-    <ClInclude Include="MathBox.h" />
+    <ClInclude Include="MathBox\Am2901.h" />
+    <ClInclude Include="MathBox\MathBox.h" />
     <ClInclude Include="Pokey.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />

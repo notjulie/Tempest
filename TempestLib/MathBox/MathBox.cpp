@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "TempestException.h"
+#include "../TempestException.h"
 
 #include "MathBox.h"
 

@@ -40,11 +40,17 @@
     <Filter Include="Vector\Header Files">
       <UniqueIdentifier>{2f069af9-af52-4c10-bc0a-ebbb4c195179}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MathBox">
+      <UniqueIdentifier>{71a4f04a-fef8-414a-9c14-d1ff9639c829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathBox\Source Files">
+      <UniqueIdentifier>{aca0f39c-265a-4784-8a7c-c4394343bae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathBox\Header Files">
+      <UniqueIdentifier>{3b2944c4-c163-416f-86e2-f731c83abfc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MathBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TempestBus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,8 +87,11 @@
     <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp">
       <Filter>Vector\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Am2901.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MathBox\Am2901.cpp">
+      <Filter>MathBox\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MathBox\MathBox.cpp">
+      <Filter>MathBox\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EEPROM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MathBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pokey.h">
@@ -140,8 +146,11 @@
     <ClInclude Include="Vector\SimpleVectorDataInterpreter.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Am2901.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="MathBox\Am2901.h">
+      <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MathBox\MathBox.h">
+      <Filter>MathBox\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

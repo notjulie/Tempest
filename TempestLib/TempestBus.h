@@ -11,10 +11,11 @@
 #include <vector>
 
 #include "6502/AbstractBus.h"
-#include "EEPROM.h"
-#include "MathBox.h"
-#include "Pokey.h"
+#include "MathBox/MathBox.h"
 #include "Vector/VectorGenerator.h"
+
+#include "EEPROM.h"
+#include "Pokey.h"
 
 
 class Abstract3KHzClock;
