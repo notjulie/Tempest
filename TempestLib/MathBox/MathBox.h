@@ -16,19 +16,30 @@
 class MathBox
 {
 private:
+	enum Tristate {
+		ON,
+		OFF,
+		UNKNOWN
+	};
+
 	enum Bit {
+		A10,
 		A10STAR,
+		A12,
+		A18,
 		C,
 		J,
+		M,
 		PCEN,
 		Q0,
-		R0,
 		S,
 		S0,
 		S1
 	};
 
 public:
+	MathBox(void);
+
 	void LoadROM(const uint8_t *rom, int length, char slot);
 
 	std::string GetErrorString(void) const { return error.size() == 0 ? "OK" : error; }
@@ -39,6 +50,8 @@ public:
 
 private:
 	bool GetBit(Bit bit);
+	Tristate GetTristate(Bit bit);
+	void SetALUCarryFlags(void);
 	void SetALUInputs(void);
 	void SetError(const std::string &_status);
 
@@ -54,6 +67,7 @@ private:
 
 	// state values that change on rising clock
 	int   PC;
+	Tristate  Q0Latch;
 
 	// state values that change on falling clock
 	bool STOP;

@@ -7,6 +7,11 @@
 #include "MathBox.h"
 
 
+MathBox::MathBox(void)
+{
+	Q0Latch = UNKNOWN;
+}
+
 void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
 {
 	switch (slot)
@@ -134,6 +139,9 @@ void MathBox::HandleRisingClock(void)
 			throw MathBoxException("PC wraparound");
 	}
 
+	// calculate the new value of Q0Latch
+	Tristate newQ0Latch = GetTristate(Q0);
+
 	// let the ALUs handle the rising clock edge...
 	SetALUInputs();
 	aluK.SetClock(true);
@@ -144,19 +152,65 @@ void MathBox::HandleRisingClock(void)
 	// latch all the state values that we are supposed to latch on the
 	// rising clock
 	PC = newPC;
+	Q0Latch = newQ0Latch;
 }
 
 void MathBox::HandleFallingClock(void)
 {
+	// calculate the new value of STOP
 	bool newSTOP;
-	throw MathBoxException("MathBox::HandleFallingClock: not calculating STOP");
+	if (BEGIN)
+		newSTOP = false;
+	else
+		newSTOP = GetBit(A12);
+
+	// let the ALUs handle the falling clock edge...
+	SetALUInputs();
+	aluK.SetClock(false);
+	aluF.SetClock(false);
+	aluJ.SetClock(false);
+	aluE.SetClock(false);
 
 	// latch all the state values that we are supposed to latch on the
 	// falling clock
 	STOP = newSTOP;
-
-	throw MathBoxException("MathBox::HandleFallingClock needs to update the ALUs");
 }
+
+MathBox::Tristate MathBox::GetTristate(Bit bit)
+{
+	char buf[200];
+
+	switch (bit)
+	{
+	case A10:
+		if (PC < 0)
+			return UNKNOWN;
+		return ((romJ[PC] & 2) != 0) ? ON : OFF;
+
+	case A18:
+		if (PC < 0)
+			return UNKNOWN;
+		return ((romF[PC] & 2) != 0) ? ON : OFF;
+
+	case M:
+		if (PC < 0)
+			return UNKNOWN;
+		return ((romE[PC] & 2) != 0) ? ON : OFF;
+
+	case Q0:
+		switch (GetTristate(A18))
+		{
+		case ON: return OFF;
+		case OFF: return ON;
+		default: return UNKNOWN;
+		}
+
+	default:
+		sprintf(buf, "MathBox::GetTristate: unsupported bit: %d", bit);
+		throw MathBoxException(buf);
+	}
+}
+
 
 bool MathBox::GetBit(Bit bit)
 {
@@ -164,6 +218,18 @@ bool MathBox::GetBit(Bit bit)
 
 	switch (bit)
 	{
+	case A10STAR:
+	{
+		bool E4ANDout = false;
+		if (GetBit(M))
+		{
+			if (Q0Latch == UNKNOWN)
+				throw MathBoxException("A10STAR: Q0Latch is unknown");
+			E4ANDout = Q0Latch == ON;
+		}
+		return E4ANDout ^ GetBit(A10);
+	}
+
 	case PCEN:
 	{
 		// if BEGIN is set we don't care about the rest, which may be
@@ -177,8 +243,16 @@ bool MathBox::GetBit(Bit bit)
 	}
 
 	default:
-		sprintf(buf, "MathBox::GetBit: unsupported bit: %d", bit);
-		throw MathBoxException(buf);
+		switch (GetTristate(bit))
+		{
+		case ON: return true;
+		case OFF: return false;
+		default:
+			{
+				sprintf(buf, "MathBox::GetBit: bit value unknown: %d", bit);
+				throw MathBoxException(buf);
+			}
+		}
 	}
 }
 
@@ -224,8 +298,16 @@ void MathBox::SetALUInputs(void)
 		aluF.DataIn = aluE.DataIn = dataIn >> 4;
 	}
 
-	// set everybody's carry flags
-	aluK.RAM0 = GetBit(R0);
+	// set everybody's carry flags... do it iteratively a couple times just to make sure...
+	// there is some feedback here
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+}
+
+void MathBox::SetALUCarryFlags(void)
+{
+	aluK.RAM0 = aluE.GetQ3();
 	aluK.Q0 = GetBit(Q0);
 	aluK.CarryIn = GetBit(C);
 
