@@ -25,6 +25,7 @@ public:
 
 public:
 	Tristate GetCarryOut(void);
+	Tristate GetOVR(void);
 	Tristate GetQ3(void);
 	Tristate GetRAM3(void);
 	void SetClock(bool state);

@@ -217,11 +217,13 @@ Tristate MathBox::GetTristate(Bit bit)
 	case Q0:
 		return !GetTristate(A18);
 
+	case S0:
+		return aluE.GetOVR();
+
 	case A12:
 	case J:
 	case PCEN:
 	case S:
-	case S0:
 	case S1:
 	default:
 		sprintf_s(buf, "MathBox::GetTristate: unsupported bit: %d", bit);

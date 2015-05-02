@@ -35,11 +35,17 @@ Tristate Am2901::GetCarryOut(void)
 	default:
 		{
 			char buf[200];
-			sprintf_s(buf, "Am2901:GetCarryOut not implemented for function: %d", I345);
+			sprintf_s(buf, "Am2901:GetCarryOut not implemented for function: %d", I345.Value());
 			throw MathBoxException(buf);
 		}
 	}
 }
+
+Tristate Am2901::GetOVR(void)
+{
+	throw MathBoxException("Am2901::GetOVR not implemented");
+}
+
 
 Tristate Am2901::GetQ3(void)
 {
@@ -59,7 +65,7 @@ Tristate Am2901::GetQ3(void)
 	default:
 		{
 			char buf[200];
-			sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678);
+			sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678.Value());
 			throw MathBoxException(buf);
 		}
 	}
@@ -93,7 +99,7 @@ NullableByte Am2901::GetR(void)
 	default:
 		{
 			char buf[200];
-			sprintf_s(buf, "Am2901:GetR not implemented for source: %d", I012);
+			sprintf_s(buf, "Am2901:GetR not implemented for source: %d", I012.Value());
 			throw MathBoxException(buf);
 		}
 	}
@@ -116,7 +122,7 @@ NullableByte Am2901::GetS(void)
 	default:
 		{
 			char buf[200];
-			sprintf_s(buf, "Am2901:GetS not implemented for source: %d", I012);
+			sprintf_s(buf, "Am2901:GetS not implemented for source: %d", I012.Value());
 			throw MathBoxException(buf);
 		}
 	}
@@ -147,7 +153,7 @@ Tristate Am2901::GetRAM3(void)
 	default:
 		{
 			char buf[200];
-			sprintf_s(buf, "Am2901:GetRAM3 not implemented for destination: %d", I678);
+			sprintf_s(buf, "Am2901:GetRAM3 not implemented for destination: %d", I678.Value());
 			throw MathBoxException(buf);
 		}
 	}
@@ -166,13 +172,30 @@ void Am2901::SetClock(bool newClockState)
 	// handle rising edges
 	if (!clock.Value() && newClockState)
 	{
+		// write F to the BAddress if the destination code so dictates
+		/*if (I678.IsUnknown())
+			throw MathBoxException("Am2901::SetClock: destination code unknown");
+		switch (I678.Value())
+		{
+		case 3:
+
+		default:
+			{
+				char buf[200];
+				sprintf_s(buf, "Am2901:SetClock not implemented for destination: %d", I678.Value());
+				throw MathBoxException(buf);
+			}
+		}
+		*/
 		throw MathBoxException("Am2901::SetClock doesn't handle rising edges");
 	}
 
 	// handle falling edges
 	if (clock.Value() && !newClockState)
 	{
-		throw MathBoxException("Am2901::SetClock doesn't handle falling edges");
+		// latch A and B
+		ALatch = GetRAMValue(AAddress);
+		BLatch = GetRAMValue(BAddress);
 	}
 
 	clock = newClockState;
