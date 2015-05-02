@@ -30,6 +30,11 @@ public:
 	void SetClock(bool state);
 
 private:
+	uint8_t GetB(void);
+	uint8_t GetR(void);
+	uint8_t GetS(void);
+
+private:
 	bool clockState;
 	bool clockIsSet;
 };
