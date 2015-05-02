@@ -37,11 +37,13 @@ private:
 	NullableByte GetR(void);
 	NullableByte GetS(void);
 	NullableByte GetRAMValue(const NullableByte &_address);
+	void WriteToRAM(const NullableByte &_address, const NullableByte &_value);
 
 private:
 	Tristate clock;
 	NullableByte ALatch;
 	NullableByte BLatch;
+	NullableByte QLatch;
 	NullableByte RAM[16];
 };
 

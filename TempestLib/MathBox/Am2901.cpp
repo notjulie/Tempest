@@ -139,7 +139,7 @@ NullableByte Am2901::GetR(void)
 		return 0;
 
 	case 7:
-		return DataIn.Value();
+		return DataIn;
 
 	default:
 		{
@@ -217,22 +217,44 @@ void Am2901::SetClock(bool newClockState)
 	// handle rising edges
 	if (!clock.Value() && newClockState)
 	{
-		// write F to the BAddress if the destination code so dictates
-		/*if (I678.IsUnknown())
+		// latch values to the memory pointed to by the BAddress and to the Q register
+		// according to the destination code
+		if (I678.IsUnknown())
 			throw MathBoxException("Am2901::SetClock: destination code unknown");
+
+		// to RAM...
 		switch (I678.Value())
 		{
+		case 2:
 		case 3:
+			WriteToRAM(BAddress, GetF());
+			break;
 
 		default:
 			{
 				char buf[200];
-				sprintf_s(buf, "Am2901:SetClock not implemented for destination: %d", I678.Value());
+				sprintf_s(buf, "Am2901:SetClock RAM latch not implemented for destination: %d", I678.Value());
 				throw MathBoxException(buf);
 			}
 		}
-		*/
-		throw MathBoxException("Am2901::SetClock doesn't handle rising edges");
+
+		// to Q...
+		switch (I678.Value())
+		{
+		case 1:
+		case 2:
+		case 3:
+		case 5:
+		case 7:
+			break;
+
+		default:
+			{
+				char buf[200];
+				sprintf_s(buf, "Am2901:SetClock Q latch not implemented for destination: %d", I678.Value());
+				throw MathBoxException(buf);
+			}
+		}
 	}
 
 	// handle falling edges
@@ -244,4 +266,12 @@ void Am2901::SetClock(bool newClockState)
 	}
 
 	clock = newClockState;
+}
+
+
+void Am2901::WriteToRAM(const NullableByte &_address, const NullableByte &_value)
+{
+	if (_address.IsUnknown())
+		throw MathBoxException("Am2901::WriteToRAM: address not specified");
+	RAM[_address.Value()] = _value;
 }

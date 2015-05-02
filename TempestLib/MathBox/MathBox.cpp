@@ -208,6 +208,11 @@ Tristate MathBox::GetTristate(Bit bit)
 	case A10STAR:
 		return GetTristate(A10) ^ (GetTristate(M) && Q0Latch);
 
+	case A12:
+		if (PC.IsUnknown())
+			return Tristate::Unknown;
+		return ((romH[PC.Value()] & 8) != 0);
+
 	case A18:
 		if (PC.IsUnknown())
 			return Tristate::Unknown;
@@ -255,7 +260,6 @@ Tristate MathBox::GetTristate(Bit bit)
 	case S1:
 		return aluE.GetF3();
 
-	case A12:
 	default:
 		sprintf_s(buf, "MathBox::GetTristate: unsupported bit: %d", bit);
 		throw MathBoxException(buf);
