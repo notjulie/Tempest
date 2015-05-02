@@ -8,7 +8,6 @@
 
 MathBox::MathBox(void)
 {
-	Q0Latch = TS_UNKNOWN;
 }
 
 void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
@@ -194,36 +193,30 @@ Tristate MathBox::GetTristate(Bit bit)
 	{
 	case A10:
 		if (PC < 0)
-			return TS_UNKNOWN;
-		return ((romJ[(unsigned)PC] & 2) != 0) ? TS_ON : TS_OFF;
+			return Tristate::Unknown;
+		return ((romJ[(unsigned)PC] & 2) != 0);
+
+	case A10STAR:
+		return GetTristate(A10) ^ (GetTristate(M) && Q0Latch);
 
 	case A18:
 		if (PC < 0)
-			return TS_UNKNOWN;
-		return ((romF[(unsigned)PC] & 2) != 0) ? TS_ON : TS_OFF;
+			return Tristate::Unknown;
+		return ((romF[(unsigned)PC] & 2) != 0);
 
 	case C:
 		if (PC < 0)
-			return TS_UNKNOWN;
-		return ((romE[(unsigned)PC] & 1) != 0) ? TS_ON : TS_OFF;
+			return Tristate::Unknown;
+		return ((romE[(unsigned)PC] & 1) != 0);
 
 	case M:
 		if (PC < 0)
-			return TS_UNKNOWN;
-		return ((romE[(unsigned)PC] & 2) != 0) ? TS_ON : TS_OFF;
+			return Tristate::Unknown;
+		return ((romE[(unsigned)PC] & 2) != 0);
 
 	case Q0:
-		switch (GetTristate(A18))
-		{
-		case TS_ON: return TS_OFF;
-		case TS_OFF: return TS_ON;
+		return !GetTristate(A18);
 
-		case TS_UNKNOWN:
-		default:
-			return TS_UNKNOWN;
-		}
-
-	case A10STAR:
 	case A12:
 	case J:
 	case PCEN:
@@ -243,18 +236,6 @@ bool MathBox::GetBit(Bit bit)
 
 	switch (bit)
 	{
-	case A10STAR:
-	{
-		bool E4ANDout = false;
-		if (GetBit(M))
-		{
-			if (Q0Latch == TS_UNKNOWN)
-				throw MathBoxException("A10STAR: Q0Latch is unknown");
-			E4ANDout = Q0Latch == TS_ON;
-		}
-		return E4ANDout ^ GetBit(A10);
-	}
-
 	case PCEN:
 	{
 		// if BEGIN is set we don't care about the rest, which may be
@@ -268,6 +249,7 @@ bool MathBox::GetBit(Bit bit)
 	}
 
 	case A10:
+	case A10STAR:
 	case A12:
 	case A18:
 	case C:
@@ -278,17 +260,12 @@ bool MathBox::GetBit(Bit bit)
 	case S0:
 	case S1:
 	default:
-		switch (GetTristate(bit))
 		{
-		case TS_ON: return true;
-		case TS_OFF: return false;
-
-		case TS_UNKNOWN:
-		default:
-			{
-				sprintf_s(buf, "MathBox::GetBit: bit value unknown: %d", bit);
-				throw MathBoxException(buf);
-			}
+			Tristate value = GetTristate(bit);
+			if (!value.IsUnknown())
+				return value;
+			sprintf_s(buf, "MathBox::GetBit: bit value unknown: %d", bit);
+			throw MathBoxException(buf);
 		}
 	}
 }

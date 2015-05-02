@@ -53,7 +53,7 @@ Tristate Am2901::GetQ3(void)
 	case 3:
 	case 5:
 	case -1:
-		return TS_UNKNOWN;
+		return Tristate::Unknown;
 
 	default:
 		{
@@ -62,6 +62,11 @@ Tristate Am2901::GetQ3(void)
 			throw MathBoxException(buf);
 		}
 	}
+}
+
+uint8_t Am2901::GetB(void)
+{
+	throw MathBoxException("Am2901::GetB not implemented");
 }
 
 uint8_t Am2901::GetR(void)
@@ -117,7 +122,7 @@ Tristate Am2901::GetRAM3(void)
 	case 2:
 	case 3:
 	case -1:
-		return TS_UNKNOWN;
+		return Tristate::Unknown;
 
 	default:
 		{

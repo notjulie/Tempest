@@ -105,6 +105,9 @@
     <ClCompile Include="Pokey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MathBox\Tristate.cpp">
+      <Filter>MathBox\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
