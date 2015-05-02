@@ -43,7 +43,24 @@ Tristate Am2901::GetCarryOut(void)
 
 Tristate Am2901::GetOVR(void)
 {
-	throw MathBoxException("Am2901::GetOVR not implemented");
+	if (I345.IsUnknown())
+		return Tristate::Unknown;
+
+	switch (I345.Value())
+	{
+	case 3:
+		{
+			NullableByte p = GetR() | GetS();
+			return (p != 0xF) || CarryIn;
+		}
+
+	default:
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetOVR not implemented for function: %d", I345.Value());
+			throw MathBoxException(buf);
+		}
+	}
 }
 
 

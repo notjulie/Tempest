@@ -77,7 +77,7 @@ public:
 	Tristate(bool value);
 	Tristate(const Nullable<bool> value);
 
-	Tristate operator!(void);
+	Tristate operator!(void) const;
 	Tristate operator&&(const Tristate &t2) const;
 	Tristate operator||(const Tristate &t2) const;
 };

@@ -93,7 +93,7 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		BEGIN = false;
 
 		// then we can just handle clock pulses until the clock is disabled
-		while (!STOP)
+		while (!STOP.Value())
 		{
 			HandleRisingClock();
 			HandleFallingClock();
@@ -114,10 +114,10 @@ void MathBox::HandleRisingClock(void)
 {
 	// calculate the new PC 
 	int newPC;
-	if (GetBit(PCEN))
+	if (GetTristate(PCEN).Value())
 	{
 		// we load the PC from whichever source is selected
-		if (BEGIN)
+		if (BEGIN.Value())
 		{
 			if (addressIn < 0)
 				throw MathBoxException("Load PC from ROM A: addressIn not set");
@@ -156,11 +156,11 @@ void MathBox::HandleRisingClock(void)
 void MathBox::HandleFallingClock(void)
 {
 	// calculate the new value of STOP
-	bool newSTOP;
-	if (BEGIN)
+	Tristate newSTOP;
+	if (BEGIN.Value())
 		newSTOP = false;
 	else
-		newSTOP = GetBit(A12);
+		newSTOP = GetTristate(A12);
 
 	// let the ALUs handle the falling clock edge...
 	SetALUInputs();
@@ -214,6 +214,14 @@ Tristate MathBox::GetTristate(Bit bit)
 			return Tristate::Unknown;
 		return ((romE[(unsigned)PC] & 2) != 0);
 
+	case PCEN:
+	{
+		Tristate E5XORout = GetTristate(S0) ^ GetTristate(S1);
+		Tristate D4NAND1out = !(E5XORout && GetTristate(S));
+		Tristate D4NAND2out = !(D4NAND1out && GetTristate(J));
+		return BEGIN || !D4NAND2out;
+	}
+
 	case Q0:
 		return !GetTristate(A18);
 
@@ -222,7 +230,6 @@ Tristate MathBox::GetTristate(Bit bit)
 
 	case A12:
 	case J:
-	case PCEN:
 	case S:
 	case S1:
 	default:
@@ -231,46 +238,6 @@ Tristate MathBox::GetTristate(Bit bit)
 	}
 }
 
-
-bool MathBox::GetBit(Bit bit)
-{
-	char buf[200];
-
-	switch (bit)
-	{
-	case PCEN:
-	{
-		// if BEGIN is set we don't care about the rest, which may be
-		// in unspecified states
-		if (BEGIN)
-			return true;
-		bool E5XORout = GetBit(S0) ^ GetBit(S1);
-		bool D4NAND1out = !(E5XORout & GetBit(S));
-		bool D4NAND2out = !(D4NAND1out & GetBit(J));
-		return BEGIN | !D4NAND2out;
-	}
-
-	case A10:
-	case A10STAR:
-	case A12:
-	case A18:
-	case C:
-	case J:
-	case M:
-	case Q0:
-	case S:
-	case S0:
-	case S1:
-	default:
-		{
-			Tristate value = GetTristate(bit);
-			if (!value.IsUnknown())
-				return value.Value();
-			sprintf_s(buf, "MathBox::GetBit: bit value unknown: %d", bit);
-			throw MathBoxException(buf);
-		}
-	}
-}
 
 void MathBox::SetALUInputs(void)
 {
@@ -298,7 +265,7 @@ void MathBox::SetALUInputs(void)
 
 	// I012 are a little more complicated
 	int i01 = romJ[(unsigned)PC] & 1;
-	if (GetBit(A10STAR))
+	if (GetTristate(A10STAR).Value())
 		i01 += 2;
 	aluK.I012 = aluF.I012 = (uint8_t)(i01 + (romJ[(unsigned)PC] & 4));
 	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[(unsigned)PC] & 8) >> 1));
@@ -319,7 +286,7 @@ void MathBox::SetALUCarryFlags(void)
 {
 	aluK.RAM0 = aluE.GetQ3();
 	aluK.Q0 = GetTristate(Q0);
-	aluK.CarryIn = GetBit(C);
+	aluK.CarryIn = GetTristate(C);
 
 	aluF.RAM0 = aluK.GetRAM3();
 	aluF.Q0 = aluK.GetQ3();

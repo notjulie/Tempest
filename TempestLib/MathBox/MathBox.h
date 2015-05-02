@@ -44,7 +44,6 @@ public:
    void Write(uint8_t address, uint8_t value);
 
 private:
-	bool GetBit(Bit bit);
 	Tristate GetTristate(Bit bit);
 	void SetALUCarryFlags(void);
 	void SetALUInputs(void);
@@ -58,14 +57,14 @@ private:
 	// inputs
 	int dataIn;
 	int addressIn;
-	bool BEGIN;
+	Tristate BEGIN;
 
 	// state values that change on rising clock
 	int   PC;
 	Tristate  Q0Latch;
 
 	// state values that change on falling clock
-	bool STOP;
+	Tristate STOP;
 
 	// ALUs
 	Am2901	aluK;

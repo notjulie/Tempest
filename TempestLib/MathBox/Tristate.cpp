@@ -18,7 +18,7 @@ Tristate::Tristate(const Nullable<bool> value)
 {
 }
 
-Tristate Tristate::operator!(void)
+Tristate Tristate::operator!(void) const
 {
 	if (IsUnknown())
 		return Unknown;
