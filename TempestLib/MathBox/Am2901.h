@@ -25,6 +25,7 @@ public:
 
 public:
 	Tristate GetCarryOut(void);
+	Tristate GetF3(void);
 	Tristate GetOVR(void);
 	Tristate GetQ3(void);
 	Tristate GetRAM3(void);
@@ -32,6 +33,7 @@ public:
 
 private:
 	NullableByte GetB(void);
+	NullableByte GetF(void);
 	NullableByte GetR(void);
 	NullableByte GetS(void);
 	NullableByte GetRAMValue(const NullableByte &_address);

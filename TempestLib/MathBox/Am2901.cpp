@@ -41,6 +41,15 @@ Tristate Am2901::GetCarryOut(void)
 	}
 }
 
+Tristate Am2901::GetF3(void)
+{
+	NullableByte f = GetF();
+	if (f.IsUnknown())
+		return Tristate::Unknown;
+	else
+		return (f.Value() & 0x8) != 0;
+}
+
 Tristate Am2901::GetOVR(void)
 {
 	if (I345.IsUnknown())
@@ -98,6 +107,25 @@ NullableByte Am2901::GetB(void)
 		return GetRAMValue(BAddress);
 	else
 		return BLatch;
+}
+
+NullableByte Am2901::GetF(void)
+{
+	if (I345.IsUnknown())
+		return NullableByte::Unknown;
+
+	switch (I345.Value())
+	{
+	case 3:
+		return GetR() | GetS();
+
+	default:
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetF not implemented for function: %d", I345.Value());
+			throw MathBoxException(buf);
+		}
+	}
 }
 
 NullableByte Am2901::GetR(void)

@@ -209,6 +209,11 @@ Tristate MathBox::GetTristate(Bit bit)
 			return Tristate::Unknown;
 		return ((romE[(unsigned)PC] & 1) != 0);
 
+	case J:
+		if (PC < 0)
+			return Tristate::Unknown;
+		return ((romE[(unsigned)PC] & 4) != 0);
+
 	case M:
 		if (PC < 0)
 			return Tristate::Unknown;
@@ -225,13 +230,18 @@ Tristate MathBox::GetTristate(Bit bit)
 	case Q0:
 		return !GetTristate(A18);
 
+	case S:
+		if (PC < 0)
+			return Tristate::Unknown;
+		return ((romE[(unsigned)PC] & 8) != 0);
+
 	case S0:
 		return aluE.GetOVR();
 
-	case A12:
-	case J:
-	case S:
 	case S1:
+		return aluE.GetF3();
+
+	case A12:
 	default:
 		sprintf_s(buf, "MathBox::GetTristate: unsupported bit: %d", bit);
 		throw MathBoxException(buf);
