@@ -1,5 +1,5 @@
 
-#include <stdio.h>
+#include "stdafx.h"
 
 #include "Abstract3KHzClock.h"
 #include "TempestException.h"
@@ -34,35 +34,8 @@ TempestBus::TempestBus(Abstract3KHzClock *_clock3KHz)
    colorRAM.resize(COLOR_RAM_SIZE);
 }
 
-void TempestBus::LoadROM(const std::string &_path, uint16_t address)
+TempestBus::~TempestBus(void)
 {
-   // the file is supposed to be 2K long... that's what we expect
-   // for now
-   FILE *f = fopen(_path.c_str(), "rb");
-   if (f == NULL)
-      throw TempestException(std::string("Can't open ROM file: '") + _path + "'");
-   
-   try
-   {
-      uint8_t  buffer[2048];
-      int bytesRead = fread(buffer, 1, 2048, f);
-      if (bytesRead != 2048)
-         throw TempestException(std::string("File too short: '") + _path + "'");
-      
-      uint8_t  buffer2[1];
-      int bytesRead2 = fread(buffer2, 1, 1, f);
-      if (bytesRead2 != 0)
-         throw TempestException(std::string("File too long: '") + _path + "'");
-
-	  LoadROM(buffer, bytesRead, address);
-      
-      fclose(f);
-   }
-   catch (...)
-   {
-      fclose(f);
-      throw;
-   }
 }
 
 bool TempestBus::HaveNewVectorData(void)
@@ -85,7 +58,7 @@ void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
 	else
 	{
 		for (int i = 0; i<length; ++i)
-			rom[address - ROM_BASE + i] = _rom[i];
+			rom[(unsigned)(address - ROM_BASE + i)] = _rom[i];
 	}
 }
 
@@ -98,11 +71,11 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 {
    // see if it's a ROM address
    if (address >= ROM_BASE && address < ROM_BASE + rom.size())
-      return rom[address - ROM_BASE];
+		return rom[(unsigned)(address - ROM_BASE)];
    
    // main RAM
    if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
-      return mainRAM[address - MAIN_RAM_BASE];
+		return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
 
    // vector RAM
    if (vectorGenerator.IsVectorRAMAddress(address))
@@ -114,22 +87,22 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
-      return pokey1.ReadByte(address - POKEY1_BASE);
+      return pokey1.ReadByte((uint16_t)(address - POKEY1_BASE));
    
    // POKEY 2
    if (address >= POKEY2_BASE && address <= POKEY2_END)
-      return pokey2.ReadByte(address - POKEY2_BASE);
+      return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
    
    // see if it's in the address range above ROM that acts like a
    // copy of high ROM
    if (address >= ROM_ECHO_START && address<= ROM_ECHO_END)
-      return rom[(ROM_ECHO_SOURCE - ROM_BASE) + (address - ROM_ECHO_START)];
+      return rom[(unsigned)((ROM_ECHO_SOURCE - ROM_BASE) + (address - ROM_ECHO_START))];
    
    // miscellaneous other cases
    switch (address)
    {
       case 0x0C00:
-         return this->clock3KHz->IsHigh() ? 0x80 : 0x00;
+         return (uint8_t)(this->clock3KHz->IsHigh() ? 0x80 : 0x00);
 
       case 0x0D00:
          // DIP switch N13
@@ -157,7 +130,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
          
       default:
          char buffer[200];
-         sprintf(buffer, "Invalid read address: %X", address);
+         sprintf_s(buffer, "Invalid read address: %X", address);
          throw TempestException(buffer);
    }
 }   
@@ -168,7 +141,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // main RAM
    if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
    {
-      mainRAM[address - MAIN_RAM_BASE] = value;
+      mainRAM[(unsigned)(address - MAIN_RAM_BASE)] = value;
       return;
    }
    
@@ -182,34 +155,34 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // color RAM
    if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
    {
-      colorRAM[address - COLOR_RAM_BASE] = value;
+		colorRAM[(unsigned)(address - COLOR_RAM_BASE)] = value;
       return;
    }
    
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
    {
-      pokey1.WriteByte(address - POKEY1_BASE, value);
+      pokey1.WriteByte((uint16_t)(address - POKEY1_BASE), value);
       return;
    }
    
    // POKEY 2
    if (address >= POKEY2_BASE && address <= POKEY2_END)
    {
-      pokey2.WriteByte(address - POKEY2_BASE, value);
+		pokey2.WriteByte((uint16_t)(address - POKEY2_BASE), value);
       return;
    }
    
    // EEPROM
    if (address >= EEPROM_WRITE_BASE && address <= EEPROM_WRITE_END)
    {
-      eeprom.WriteByte(address - EEPROM_WRITE_BASE, value);
+		eeprom.WriteByte((uint16_t)(address - EEPROM_WRITE_BASE), value);
       return;
    }
    
    if (address >= MATHBOX_WRITE_BASE && address <= MATHBOX_WRITE_END)
    {
-      mathBox.Write(address - MATHBOX_WRITE_BASE, value);
+      mathBox.Write((uint8_t)(address - MATHBOX_WRITE_BASE), value);
       return;
    }
    
@@ -244,7 +217,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          
       default:
          char  buffer[200];
-         sprintf(buffer, "Invalid write address: 0x%X", address);
+         sprintf_s(buffer, "Invalid write address: 0x%X", address);
          throw TempestException(buffer);
    }
 }

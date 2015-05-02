@@ -1,5 +1,5 @@
 
-#include <stdio.h>
+#include "stdafx.h"
 
 #include "../TempestException.h"
 
@@ -44,17 +44,17 @@ bool VectorGenerator::IsVectorROMAddress(uint16_t address) const
 
 void VectorGenerator::LoadROM(uint16_t address,const uint8_t *buffer, int count)
 {
-	vectorData.LoadROM(address - VECTOR_ROM_BASE, buffer, count);
+	vectorData.LoadROM((uint16_t)(address - VECTOR_ROM_BASE), buffer, count);
 }
 
 uint8_t VectorGenerator::ReadVectorRAM(uint16_t address)
 {
-   return vectorData.ReadVectorRAM(address - VECTOR_RAM_BASE);
+	return vectorData.ReadVectorRAM((uint16_t)(address - VECTOR_RAM_BASE));
 }
 
 uint8_t VectorGenerator::ReadVectorROM(uint16_t address)
 {
-   return vectorData.ReadVectorROM(address - VECTOR_ROM_BASE);
+	return vectorData.ReadVectorROM((uint16_t)(address - VECTOR_ROM_BASE));
 }
 
 void VectorGenerator::Reset(void)
@@ -65,5 +65,5 @@ void VectorGenerator::Reset(void)
 
 void VectorGenerator::WriteVectorRAM(uint16_t address, uint8_t value)
 {
-   vectorData.WriteVectorRAM(address - VECTOR_RAM_BASE, value);
+	vectorData.WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
 }

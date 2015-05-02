@@ -69,7 +69,7 @@ namespace TempestDotNET {
 		std::vector<uint8_t> romCopy;
 		for (int i = 0; i < rom->Length; ++i)
 			romCopy.push_back(rom[i]);
-		tempestBus->LoadROM(&romCopy[0], romCopy.size(), address);
+		tempestBus->LoadROM(&romCopy[0], (int)romCopy.size(), address);
 	}
 
 	void Tempest::LoadMathBoxROM(array<Byte>^ rom, char slot)
@@ -77,7 +77,7 @@ namespace TempestDotNET {
 		std::vector<uint8_t> romCopy;
 		for (int i = 0; i < rom->Length; ++i)
 			romCopy.push_back(rom[i]);
-		tempestBus->LoadMathBoxROM(&romCopy[0], romCopy.size(), slot);
+		tempestBus->LoadMathBoxROM(&romCopy[0], (int)romCopy.size(), slot);
 	}
 
 	void Tempest::Start(void)

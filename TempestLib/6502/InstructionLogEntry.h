@@ -8,8 +8,10 @@
 #ifndef INSTRUCTIONLOGENTRY_H
 #define	INSTRUCTIONLOGENTRY_H
 
-#include <stdint.h>
 #include "Mnemonic6502.h"
+
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
 
 class InstructionLogEntry
 {
@@ -23,6 +25,8 @@ public:
    Mnemonic6502 Mnemonic;
    uint8_t OpCode;
 };
+
+#pragma warning(pop)
 
 #endif	/* INSTRUCTIONLOGENTRY_H */
 

@@ -1,5 +1,7 @@
 
-#include "../TempestException.h"
+#include "stdafx.h"
+
+#include "TempestException.h"
 
 #include "VectorDataInterpreter.h"
 
@@ -83,8 +85,8 @@ bool VectorDataInterpreter::SingleStep(void)
 	case 10: // 1010
 	case 11: // 1011
 		//JSR
-		stack.push_back(PC + 2);
-		PC = 2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF);
+		stack.push_back((uint16_t)(PC + 2));
+		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
 		return true;
 
 	case 12: // 1100
@@ -106,7 +108,27 @@ bool VectorDataInterpreter::SingleStep(void)
 
 uint8_t VectorDataInterpreter::GetAt(uint16_t pcOffset)
 {
-	return vectorData.GetAt(PC + pcOffset);
+	return vectorData.GetAt((uint16_t)(PC + pcOffset));
 }
 
+
+void VectorDataInterpreter::Center(void)
+{
+}
+
+void VectorDataInterpreter::LDraw(int, int, int)
+{
+}
+
+void VectorDataInterpreter::Scale(int, int)
+{
+}
+
+void VectorDataInterpreter::SDraw(int, int, int)
+{
+}
+
+void VectorDataInterpreter::Stat(int, int)
+{
+}
 

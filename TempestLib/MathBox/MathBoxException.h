@@ -2,8 +2,6 @@
 #ifndef MATHBOXEXCEPTION_H
 #define MATHBOXEXCEPTION_H
 
-#include <string>
-
 class MathBoxException
 {
 public:

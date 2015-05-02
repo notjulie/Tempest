@@ -1,5 +1,6 @@
 
-#include <Windows.h>
+#include "stdafx.h"
+#include "Win32.h"
 
 #include "..\TempestException.h"
 
@@ -10,7 +11,7 @@ Win32PerformanceCounter3KHzClock::Win32PerformanceCounter3KHzClock(void)
    LARGE_INTEGER liFrequency;
    if (!QueryPerformanceFrequency(&liFrequency))
       throw TempestException("QueryPerformanceFrequency failed");
-   performanceCountsPerHalfCycle = liFrequency.QuadPart / 6000;
+   performanceCountsPerHalfCycle = (uint64_t)liFrequency.QuadPart / 6000;
 }
 
 

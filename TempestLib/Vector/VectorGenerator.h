@@ -10,6 +10,9 @@
 
 #include "VectorData.h"
 
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
+
 class VectorGenerator
 {
 public:
@@ -30,6 +33,8 @@ private:
 	VectorData	vectorData;
 	bool haveNewData;
 };
+
+#pragma warning(pop)
 
 #endif	/* VECTORGENERATOR_H */
 

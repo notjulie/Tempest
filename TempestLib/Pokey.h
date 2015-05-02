@@ -11,8 +11,8 @@
 class Pokey
 {
 public:
-   uint8_t ReadByte(uint16_t address) { return 0; }
-   void    WriteByte(uint16_t address, uint8_t value) {}
+	uint8_t ReadByte(uint16_t address);
+	void    WriteByte(uint16_t address, uint8_t value);
 };
 
 #endif	/* POKEY_H */

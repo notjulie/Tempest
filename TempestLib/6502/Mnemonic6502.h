@@ -8,7 +8,6 @@
 #ifndef MENMONIC_H
 #define	MENMONIC_H
 
-#include <string>
 
 enum Mnemonic6502 {
    OP_BIT,

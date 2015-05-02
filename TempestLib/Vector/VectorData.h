@@ -2,8 +2,6 @@
 #ifndef VECTORDATA_H
 #define VECTORDATA_H
 
-#include <stdint.h>
-#include <vector>
 
 class VectorData
 {

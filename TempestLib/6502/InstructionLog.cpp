@@ -1,6 +1,5 @@
 
-#include <stdio.h>
-#include <vector>
+#include "stdafx.h"
 
 #include "CPU6502Exception.h"
 
@@ -24,9 +23,9 @@ void InstructionLog::LogInstruction(const InstructionLogEntry &_entry)
    ++instructionsExecuted;
    
    // add the entry
-   int index = (logStart + logCount) % logEntries.size();
+   unsigned index = (logStart + logCount) % logEntries.size();
    logEntries[index] = _entry;
-   if (logCount == logEntries.size())
+   if (logCount == (int)logEntries.size())
       ++logStart;
    else
       ++logCount;
@@ -40,7 +39,7 @@ void InstructionLog::Print(void)
    
    for (int i=0; i<logCount; ++i)
    {
-      int index = (logStart + i) % logEntries.size();
+      unsigned index = (logStart + i) % logEntries.size();
       logEntries[index].Print();
    }
 }

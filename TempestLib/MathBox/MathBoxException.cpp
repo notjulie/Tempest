@@ -1,4 +1,5 @@
 
+#include "stdafx.h"
 #include "MathBoxException.h"
 
 MathBoxException::MathBoxException(const std::string &_message)

@@ -8,7 +8,6 @@
 #ifndef ABSTRACTBUS_H
 #define	ABSTRACTBUS_H
 
-#include <stdint.h>
 
 class AbstractBus
 {

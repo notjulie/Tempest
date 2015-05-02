@@ -96,6 +96,15 @@
     <ClCompile Include="MathBox\MathBoxException.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EEPROM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -160,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="MathBox\Tristate.h">
       <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\Win32.h">
+      <Filter>Win32\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

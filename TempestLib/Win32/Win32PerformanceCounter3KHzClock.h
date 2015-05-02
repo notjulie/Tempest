@@ -8,7 +8,6 @@
 #ifndef WIN32PERFORMANCECOUNTER3KHZCLOCK_H
 #define	WIN32PERFORMANCECOUNTER3KHZCLOCK_H
 
-#include <stdint.h>
 #include "..\Abstract3KHzClock.h"
 
 class Win32PerformanceCounter3KHzClock : public Abstract3KHzClock

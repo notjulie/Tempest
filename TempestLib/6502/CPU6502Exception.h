@@ -2,8 +2,6 @@
 #ifndef CPU6502EXCEPTION_H
 #define CPU6502EXCEPTION_H
 
-#include <string>
-
 class CPU6502Exception
 {
 public:

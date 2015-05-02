@@ -1,4 +1,5 @@
 
+#include "stdafx.h"
 #include "TempestException.h"
 
 TempestException::TempestException(const std::string &_message)

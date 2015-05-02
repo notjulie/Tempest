@@ -1,6 +1,5 @@
 
-#include <stdio.h>
-
+#include "stdafx.h"
 #include "AbstractBus.h"
 #include "CPU6502Exception.h"
 
@@ -38,7 +37,7 @@ uint16_t CPU6502::GetResetVector(void) const
 uint16_t CPU6502::GetU16At(uint16_t address) const
 {
    // low byte first
-   return bus->ReadByte(address) + 256 * bus->ReadByte(address + 1);
+	return (uint16_t)(bus->ReadByte(address) + 256 * bus->ReadByte((uint16_t)(address + 1)));
 }
 
 void CPU6502::Run(void)
@@ -93,7 +92,7 @@ int CPU6502::DoSingleStep(void)
       case 0x4D: EOR(GetAbsoluteAddress()); return 4;
       case 0x50: BVC(); return 2;
       case 0x51: EOR(GetIndirectYAddress()); return 6;
-      case 0x59: EOR(GetAbsoluteAddress() + Y); return 5;
+      case 0x59: EOR((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
       case 0x60: RTS(); return 6;
       case 0x65: ADC(bus->ReadByte(PC++)); return 3;
       case 0x69: ADC(PC++); return 2;
@@ -111,12 +110,12 @@ int CPU6502::DoSingleStep(void)
       case 0x8E: STX(GetAbsoluteAddress()); return 4;
       case 0x90: BCC(); return 2;
       case 0x91: STA(GetIndirectYAddress()); return 6;
-      case 0x95: STA((uint16_t)bus->ReadByte(PC++) + X); return 4;
-      case 0x96: STX((uint16_t)bus->ReadByte(PC++) + Y); return 4;
+      case 0x95: STA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
+      case 0x96: STX((uint16_t)(bus->ReadByte(PC++) + Y)); return 4;
       case 0x98: A = Y; SetNZ(A); return 2; //TYA
-      case 0x99: STA(GetAbsoluteAddress() + Y); return 5;
+		case 0x99: STA((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
       case 0x9A: S = X; SetNZ(S); return 2; //TXS
-      case 0x9D: STA(GetAbsoluteAddress() + X); return 5;
+		case 0x9D: STA((uint16_t)(GetAbsoluteAddress() + X)); return 5;
       case 0xA0: LDY(PC++); return 2;
       case 0xA2: LDX(PC++); return 2;
       case 0xA4: LDY(bus->ReadByte(PC++)); return 3;
@@ -130,13 +129,13 @@ int CPU6502::DoSingleStep(void)
       case 0xAE: LDX(GetAbsoluteAddress()); return 4;
       case 0xB0: BCS(); return 2;
       case 0xB1: LDA(GetIndirectYAddress()); return 6;
-      case 0xB5: LDA(bus->ReadByte(PC++) + X); return 4;
+		case 0xB5: LDA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
       case 0xB8: P.V = false; return 2; //CLV
-      case 0xB9: LDA(GetAbsoluteAddress() + Y); return 4;
+		case 0xB9: LDA((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
       case 0xBA: X = S; SetNZ(X); return 2; //TSX
-      case 0xBC: LDY(GetAbsoluteAddress() + X); return 4;
-      case 0xBD: LDA(GetAbsoluteAddress() + X); return 4;
-      case 0xBE: LDX(GetAbsoluteAddress() + Y); return 4;
+		case 0xBC: LDY((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0xBD: LDA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0xBE: LDX((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
       case 0xC6: DEC(bus->ReadByte(PC++)); return 5;
       case 0xC8: INY(); return 2;
       case 0xC9: CMP(PC++); return 2;
@@ -156,7 +155,7 @@ int CPU6502::DoSingleStep(void)
       default:
       {
          char  buffer[100];
-         sprintf(buffer, "Unimplemented op code: %X", opCode);
+         sprintf_s(buffer, "Unimplemented op code: %X", opCode);
          throw CPU6502Exception(buffer);
       }
    }
@@ -165,14 +164,14 @@ int CPU6502::DoSingleStep(void)
 
 void CPU6502::Compare(uint8_t a, uint8_t b)
 {
-   SetNZ(a - b);
+   SetNZ((uint8_t)(a - b));
    P.C = a >= b;
 }
 
 uint8_t CPU6502::DoASL(uint8_t value)
 {
    P.C = (value & 0x80) != 0;
-   uint8_t result = value << 1;
+	uint8_t result = (uint8_t)(value << 1);
    SetNZ(result);
    return result;
 }
@@ -180,7 +179,7 @@ uint8_t CPU6502::DoASL(uint8_t value)
 uint8_t CPU6502::DoLSR(uint8_t value)
 {
    P.C = (value & 0x01) != 0;
-   uint8_t result = value >> 1;
+	uint8_t result = (uint8_t)(value >> 1);
    SetNZ(result);
    return result;
 }
@@ -209,23 +208,23 @@ uint8_t CPU6502::DoROR(uint8_t value)
 
 uint16_t CPU6502::GetAbsoluteAddress(void)
 {
-   return bus->ReadByte(PC++) + 256 * bus->ReadByte(PC++);
+	return (uint16_t)(bus->ReadByte(PC++) + 256 * bus->ReadByte(PC++));
 }
 
 uint16_t CPU6502::GetIndirectYAddress(void)
 {
    uint16_t zp = bus->ReadByte(PC++);
-   return bus->ReadByte(zp) + 256 * bus->ReadByte(zp + 1) + Y;
+	return (uint16_t)(bus->ReadByte(zp) + 256 * bus->ReadByte((uint16_t)(zp + 1)) + Y);
 }
 
 uint8_t CPU6502::Pull(void)
 {
-   return bus->ReadByte(0x100 + ++S);
+	return bus->ReadByte((uint16_t)(0x100 + ++S));
 }
 
 void CPU6502::Push(uint8_t value)
 {
-   bus->WriteByte(0x100 + S--, value);
+	bus->WriteByte((uint16_t)(0x100 + S--), value);
 }
 
 
@@ -273,21 +272,21 @@ void CPU6502::BCC(void)
 {
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (!P.C)
-      PC += branchDistance;
+      PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::BCS(void)
 {
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (P.C)
-      PC += branchDistance;
+		PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::BEQ(void)
 {
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (P.Z)
-      PC += branchDistance;
+		PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::BIT(uint16_t address)
@@ -304,7 +303,7 @@ void CPU6502::BMI(void)
    currentInstruction.Mnemonic = OP_BMI;
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (P.N)
-      PC += branchDistance;
+		PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::BNE(void)
@@ -312,7 +311,7 @@ void CPU6502::BNE(void)
    currentInstruction.Mnemonic = OP_BNE;
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (!P.Z)
-      PC += branchDistance;
+		PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::BPL(void)
@@ -320,7 +319,7 @@ void CPU6502::BPL(void)
    this->currentInstruction.Mnemonic = OP_BPL;
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (!P.N)
-      PC += branchDistance;
+		PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::BVC(void)
@@ -328,7 +327,7 @@ void CPU6502::BVC(void)
    this->currentInstruction.Mnemonic = OP_BVC;
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (!P.V)
-      PC += branchDistance;
+		PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::CMP(uint16_t address)
@@ -343,7 +342,7 @@ void CPU6502::CPX(uint16_t address)
 
 void CPU6502::DEC(uint16_t address)
 {
-   uint8_t result = bus->ReadByte(address) - 1;
+   uint8_t result = (uint8_t)(bus->ReadByte(address) - 1);
    bus->WriteByte(address, result);
    SetNZ(result);
 }
@@ -364,7 +363,7 @@ void CPU6502::EOR(uint16_t address)
 void CPU6502::INC(uint16_t address)
 {
    currentInstruction.Mnemonic = OP_INC;
-   uint8_t result = bus->ReadByte(address) + 1;
+   uint8_t result = (uint8_t)(bus->ReadByte(address) + 1);
    bus->WriteByte(address, result);
    SetNZ(result);
 }
@@ -378,7 +377,7 @@ void CPU6502::INY(void)
 
 void CPU6502::JSR(uint16_t address)
 {
-   uint16_t returnAddress = PC - 1;
+   uint16_t returnAddress = (uint16_t)(PC - 1);
    Push((uint8_t)(returnAddress>>8));
    Push((uint8_t)returnAddress);
    PC = address;
@@ -435,7 +434,7 @@ void CPU6502::ROR(uint16_t address)
 
 void CPU6502::RTS(void)
 {
-   PC = Pull() + 256*Pull() + 1;
+   PC = (uint16_t)(Pull() + 256*Pull() + 1);
 }
 
 void CPU6502::STA(uint16_t address)

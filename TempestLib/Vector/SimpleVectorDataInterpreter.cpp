@@ -1,4 +1,5 @@
 
+#include "stdafx.h"
 #include "SimpleVectorDataInterpreter.h"
 
 
@@ -11,10 +12,10 @@ SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(const VectorData &_data
 
 bool SimpleVectorDataInterpreter::GetNextVector(SimpleVector &_vector)
 {
-	if (nextIndex >= vectors.size())
+	if (nextIndex >= (int)vectors.size())
 		return false;
 
-	_vector = vectors[nextIndex++];
+	_vector = vectors[(unsigned)(nextIndex++)];
 	return true;
 }
 

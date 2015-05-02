@@ -8,14 +8,15 @@
 #ifndef CPU6502_H
 #define	CPU6502_H
 
-#include <stdint.h>
-
 #include "InstructionLog.h"
 #include "InstructionLogEntry.h"
 #include "ProcessorStatusWord.h"
 
 class AbstractBus;
 
+
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
 
 class CPU6502
 {
@@ -94,6 +95,7 @@ private:
    uint16_t PC;
 };
 
+#pragma warning(pop)
 
 #endif	/* CPU6502_H */
 

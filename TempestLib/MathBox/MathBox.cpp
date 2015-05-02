@@ -1,6 +1,5 @@
 
-#include <stdint.h>
-#include <stdio.h>
+#include "stdafx.h"
 
 #include "MathBoxException.h"
 
@@ -17,38 +16,38 @@ void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
 	switch (slot)
 	{
 	case 'A':
-		romA.resize(length);
-		memcpy(&romA[0], rom, length);
+		romA.resize((unsigned)length);
+		memcpy(&romA[0], rom, (unsigned)length);
 		break;
 
 	case 'E':
-		romE.resize(length);
-		memcpy(&romE[0], rom, length);
+		romE.resize((unsigned)length);
+		memcpy(&romE[0], rom, (unsigned)length);
 		break;
 
 	case 'F':
-		romF.resize(length);
-		memcpy(&romF[0], rom, length);
+		romF.resize((unsigned)length);
+		memcpy(&romF[0], rom, (unsigned)length);
 		break;
 
 	case 'H':
-		romH.resize(length);
-		memcpy(&romH[0], rom, length);
+		romH.resize((unsigned)length);
+		memcpy(&romH[0], rom, (unsigned)length);
 		break;
 
 	case 'J':
-		romJ.resize(length);
-		memcpy(&romJ[0], rom, length);
+		romJ.resize((unsigned)length);
+		memcpy(&romJ[0], rom, (unsigned)length);
 		break;
 
 	case 'K':
-		romK.resize(length);
-		memcpy(&romK[0], rom, length);
+		romK.resize((unsigned)length);
+		memcpy(&romK[0], rom, (unsigned)length);
 		break;
 
 	case 'L':
-		romL.resize(length);
-		memcpy(&romL[0], rom, length);
+		romL.resize((unsigned)length);
+		memcpy(&romL[0], rom, (unsigned)length);
 		break;
 
 	default:
@@ -123,7 +122,7 @@ void MathBox::HandleRisingClock(void)
 		{
 			if (addressIn < 0)
 				throw MathBoxException("Load PC from ROM A: addressIn not set");
-			newPC = romA[addressIn];
+			newPC = romA[(unsigned)addressIn];
 		}
 		else
 		{
@@ -196,28 +195,43 @@ Tristate MathBox::GetTristate(Bit bit)
 	case A10:
 		if (PC < 0)
 			return TS_UNKNOWN;
-		return ((romJ[PC] & 2) != 0) ? TS_ON : TS_OFF;
+		return ((romJ[(unsigned)PC] & 2) != 0) ? TS_ON : TS_OFF;
 
 	case A18:
 		if (PC < 0)
 			return TS_UNKNOWN;
-		return ((romF[PC] & 2) != 0) ? TS_ON : TS_OFF;
+		return ((romF[(unsigned)PC] & 2) != 0) ? TS_ON : TS_OFF;
+
+	case C:
+		if (PC < 0)
+			return TS_UNKNOWN;
+		return ((romE[(unsigned)PC] & 1) != 0) ? TS_ON : TS_OFF;
 
 	case M:
 		if (PC < 0)
 			return TS_UNKNOWN;
-		return ((romE[PC] & 2) != 0) ? TS_ON : TS_OFF;
+		return ((romE[(unsigned)PC] & 2) != 0) ? TS_ON : TS_OFF;
 
 	case Q0:
 		switch (GetTristate(A18))
 		{
 		case TS_ON: return TS_OFF;
 		case TS_OFF: return TS_ON;
-		default: return TS_UNKNOWN;
+
+		case TS_UNKNOWN:
+		default:
+			return TS_UNKNOWN;
 		}
 
+	case A10STAR:
+	case A12:
+	case J:
+	case PCEN:
+	case S:
+	case S0:
+	case S1:
 	default:
-		sprintf(buf, "MathBox::GetTristate: unsupported bit: %d", bit);
+		sprintf_s(buf, "MathBox::GetTristate: unsupported bit: %d", bit);
 		throw MathBoxException(buf);
 	}
 }
@@ -253,14 +267,26 @@ bool MathBox::GetBit(Bit bit)
 		return BEGIN | !D4NAND2out;
 	}
 
+	case A10:
+	case A12:
+	case A18:
+	case C:
+	case J:
+	case M:
+	case Q0:
+	case S:
+	case S0:
+	case S1:
 	default:
 		switch (GetTristate(bit))
 		{
 		case TS_ON: return true;
 		case TS_OFF: return false;
+
+		case TS_UNKNOWN:
 		default:
 			{
-				sprintf(buf, "MathBox::GetBit: bit value unknown: %d", bit);
+				sprintf_s(buf, "MathBox::GetBit: bit value unknown: %d", bit);
 				throw MathBoxException(buf);
 			}
 		}
@@ -284,19 +310,19 @@ void MathBox::SetALUInputs(void)
 	}
 
 	// the A & B inputs to the ALUs are all the same
-	aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC];
-	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC];
+	aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[(unsigned)PC];
+	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[(unsigned)PC];
 
 	// so are these
-	aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = romH[PC] & 7;
-	aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = romF[PC] & 7;
+	aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = romH[(unsigned)PC] & 7;
+	aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = romF[(unsigned)PC] & 7;
 
 	// I012 are a little more complicated
-	int i01 = romJ[PC] & 1;
+	int i01 = romJ[(unsigned)PC] & 1;
 	if (GetBit(A10STAR))
 		i01 += 2;
-	aluK.I012 = aluF.I012 = i01 + (romJ[PC] & 4);
-	aluJ.I012 = aluE.I012 = i01 + ((romJ[PC] & 8) >> 1);
+	aluK.I012 = aluF.I012 = i01 + (romJ[(unsigned)PC] & 4);
+	aluJ.I012 = aluE.I012 = i01 + ((romJ[(unsigned)PC] & 8) >> 1);
 
 	// set the data inputs accordingly
 	if (dataIn < 0)
@@ -313,7 +339,7 @@ void MathBox::SetALUInputs(void)
 void MathBox::SetALUCarryFlags(void)
 {
 	aluK.RAM0 = aluE.GetQ3();
-	aluK.Q0 = GetBit(Q0);
+	aluK.Q0 = GetTristate(Q0);
 	aluK.CarryIn = GetBit(C);
 
 	aluF.RAM0 = aluK.GetRAM3();

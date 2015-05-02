@@ -1,4 +1,5 @@
 
+#include "stdafx.h"
 #include "Mnemonic6502.h"
 
 std::string GetMnemonicString(Mnemonic6502 _mnemonic)

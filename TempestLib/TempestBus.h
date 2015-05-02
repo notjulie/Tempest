@@ -8,8 +8,6 @@
 #ifndef TEMPESTBUS_H
 #define	TEMPESTBUS_H
 
-#include <vector>
-
 #include "6502/AbstractBus.h"
 #include "MathBox/MathBox.h"
 #include "Vector/VectorGenerator.h"
@@ -21,12 +19,15 @@
 class Abstract3KHzClock;
 class VectorData;
 
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
+
 class TempestBus : public AbstractBus
 {
 public:
-   TempestBus(Abstract3KHzClock *_clock3KHz);
-   
-	void LoadROM(const std::string &_path, uint16_t address);
+	TempestBus(Abstract3KHzClock *_clock3KHz);
+	virtual ~TempestBus(void);
+
 	void LoadROM(const uint8_t *rom, int length, uint16_t address);
 	void LoadMathBoxROM(const uint8_t *rom, int length, char slot);
 
@@ -50,6 +51,8 @@ private:
    MathBox mathBox;
    VectorGenerator vectorGenerator;
 };
+
+#pragma warning(pop)
 
 #endif	/* TEMPESTBUS_H */
 

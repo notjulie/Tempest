@@ -1,4 +1,6 @@
 
+#include "stdafx.h"
+
 #include "MathBoxException.h"
 
 #include "Am2901.h"
@@ -17,14 +19,45 @@ bool Am2901::GetCarryOut(void)
 	throw MathBoxException("Am2901::GetCarryOut not implemented");
 }
 
-bool Am2901::GetQ3(void)
+Tristate Am2901::GetQ3(void)
 {
-	throw MathBoxException("Am2901::GetQ3 not implemented");
+	switch (I678)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 5:
+	case -1:
+		return TS_UNKNOWN;
+
+	default:
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678);
+			throw MathBoxException(buf);
+		}
+	}
 }
 
-bool Am2901::GetRAM3(void)
+Tristate Am2901::GetRAM3(void)
 {
-	throw MathBoxException("Am2901::GetRAM3 not implemented");
+	switch (I678)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case -1:
+		return TS_UNKNOWN;
+
+	default:
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetRAM3 not implemented for destination: %d", I678);
+			throw MathBoxException(buf);
+		}
+	}
 }
 
 

@@ -8,7 +8,6 @@
 #ifndef INSTRUCTIONLOG_H
 #define	INSTRUCTIONLOG_H
 
-#include <vector>
 #include "InstructionLogEntry.h"
 
 class InstructionLog

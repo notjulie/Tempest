@@ -1,5 +1,6 @@
 
-#include <stdio.h>
+#include "stdafx.h"
+
 #include "InstructionLogEntry.h"
 
 InstructionLogEntry::InstructionLogEntry(void)
