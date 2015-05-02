@@ -174,6 +174,15 @@ void MathBox::HandleFallingClock(void)
 	// latch all the state values that we are supposed to latch on the
 	// falling clock
 	STOP = newSTOP;
+
+	// When the ALU clock is low is when its gates are active... now is the time to
+	// set everybody's carry flags... do it iteratively a couple times just to make sure...
+	// there is some feedback here
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+	SetALUCarryFlags();
 }
 
 MathBox::Tristate MathBox::GetTristate(Bit bit)
@@ -297,12 +306,6 @@ void MathBox::SetALUInputs(void)
 		aluK.DataIn = aluJ.DataIn = dataIn & 0xF;
 		aluF.DataIn = aluE.DataIn = dataIn >> 4;
 	}
-
-	// set everybody's carry flags... do it iteratively a couple times just to make sure...
-	// there is some feedback here
-	SetALUCarryFlags();
-	SetALUCarryFlags();
-	SetALUCarryFlags();
 }
 
 void MathBox::SetALUCarryFlags(void)
