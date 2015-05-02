@@ -2,25 +2,17 @@
 #ifndef TRISTATE_H
 #define TRISTATE_H
 
-class Tristate
+#include "Nullable.h"
+
+class Tristate : public Nullable<bool>
 {
 public:
 	Tristate(void);
 	Tristate(bool value);
-
-	bool IsUnknown(void) const;
+	Tristate(const Nullable<bool> value);
 
 	Tristate operator!(void);
 	Tristate operator&&(const Tristate &t2) const;
-	Tristate operator^(const Tristate &t2) const;
-	operator bool(void) const;
-
-public:
-	static Tristate Unknown;
-
-private:
-	bool value;
-	bool isKnown;
 };
 
 #endif

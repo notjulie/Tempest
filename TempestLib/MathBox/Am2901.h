@@ -30,9 +30,9 @@ public:
 	void SetClock(bool state);
 
 private:
-	uint8_t GetB(void);
+	NullableByte GetB(void);
 	uint8_t GetR(void);
-	uint8_t GetS(void);
+	NullableByte GetS(void);
 
 private:
 	bool clockState;

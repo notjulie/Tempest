@@ -3,63 +3,34 @@
 #include "MathBoxException.h"
 #include "Tristate.h"
 
-Tristate Tristate::Unknown;
 
 Tristate::Tristate(void)
 {
-	isKnown = false;
 }
 
 Tristate::Tristate(bool value)
+	: Nullable<bool>(value)
 {
-	isKnown = true;
-	this->value = value;
 }
 
-bool Tristate::IsUnknown(void) const
+Tristate::Tristate(const Nullable<bool> value)
+	: Nullable<bool>(value)
 {
-	return !isKnown;
 }
 
 Tristate Tristate::operator!(void)
 {
-	if (isKnown)
-		return !value;
-	else
+	if (IsUnknown())
 		return Unknown;
+	else
+		return !(bool)*this;
 }
 
 Tristate Tristate::operator && (const Tristate &t2) const
 {
-	// if either is false the result is false
-	if (isKnown && !value)
-		return false;
-	if (t2.isKnown && !t2.value)
-		return false;
-
-	// else if either is not known the result is not known
-	if (!isKnown || !t2.isKnown)
-		return Unknown;
-
-	// else its just an and
-	return value && t2.value;
+	// this is the same as the single & operator for bools
+	return operator&(t2);
 }
 
-Tristate Tristate::operator ^ (const Tristate &t2) const
-{
-	// if either is not known the result is not known
-	if (!isKnown || !t2.isKnown)
-		return Unknown;
-
-	// else its just an xor
-	return value ^ t2.value;
-}
-
-Tristate::operator bool(void) const
-{
-	if (!isKnown)
-		throw MathBoxException("Can't convert unknown Tristate value to bool");
-	return value;
-}
 
 

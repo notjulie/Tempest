@@ -64,7 +64,7 @@ Tristate Am2901::GetQ3(void)
 	}
 }
 
-uint8_t Am2901::GetB(void)
+NullableByte Am2901::GetB(void)
 {
 	throw MathBoxException("Am2901::GetB not implemented");
 }
@@ -92,7 +92,7 @@ uint8_t Am2901::GetR(void)
 }
 
 
-uint8_t Am2901::GetS(void)
+NullableByte Am2901::GetS(void)
 {
 	switch (I012)
 	{
