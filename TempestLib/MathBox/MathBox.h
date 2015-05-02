@@ -24,6 +24,7 @@ private:
 		A18,
 		C,
 		J,
+		LDAB,
 		M,
 		PCEN,
 		Q0,
@@ -60,11 +61,12 @@ private:
 	Tristate BEGIN;
 
 	// state values that change on rising clock
-	int   PC;
+	NullableByte   PC;
 	Tristate  Q0Latch;
 
 	// state values that change on falling clock
 	Tristate STOP;
+	NullableByte JumpLatch;
 
 	// ALUs
 	Am2901	aluK;
