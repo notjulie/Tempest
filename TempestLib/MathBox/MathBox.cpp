@@ -9,7 +9,7 @@
 
 MathBox::MathBox(void)
 {
-	Q0Latch = UNKNOWN;
+	Q0Latch = TS_UNKNOWN;
 }
 
 void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
@@ -166,6 +166,17 @@ void MathBox::HandleFallingClock(void)
 
 	// let the ALUs handle the falling clock edge...
 	SetALUInputs();
+
+	// When the ALU clock is high is when its gates are active... now is the time to
+	// set everybody's carry flags... do it iteratively a couple times just to make sure...
+	// there is some feedback here
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+	SetALUCarryFlags();
+
+	// dropping the clock latches the result
 	aluK.SetClock(false);
 	aluF.SetClock(false);
 	aluJ.SetClock(false);
@@ -174,18 +185,9 @@ void MathBox::HandleFallingClock(void)
 	// latch all the state values that we are supposed to latch on the
 	// falling clock
 	STOP = newSTOP;
-
-	// When the ALU clock is low is when its gates are active... now is the time to
-	// set everybody's carry flags... do it iteratively a couple times just to make sure...
-	// there is some feedback here
-	SetALUCarryFlags();
-	SetALUCarryFlags();
-	SetALUCarryFlags();
-	SetALUCarryFlags();
-	SetALUCarryFlags();
 }
 
-MathBox::Tristate MathBox::GetTristate(Bit bit)
+Tristate MathBox::GetTristate(Bit bit)
 {
 	char buf[200];
 
@@ -193,25 +195,25 @@ MathBox::Tristate MathBox::GetTristate(Bit bit)
 	{
 	case A10:
 		if (PC < 0)
-			return UNKNOWN;
-		return ((romJ[PC] & 2) != 0) ? ON : OFF;
+			return TS_UNKNOWN;
+		return ((romJ[PC] & 2) != 0) ? TS_ON : TS_OFF;
 
 	case A18:
 		if (PC < 0)
-			return UNKNOWN;
-		return ((romF[PC] & 2) != 0) ? ON : OFF;
+			return TS_UNKNOWN;
+		return ((romF[PC] & 2) != 0) ? TS_ON : TS_OFF;
 
 	case M:
 		if (PC < 0)
-			return UNKNOWN;
-		return ((romE[PC] & 2) != 0) ? ON : OFF;
+			return TS_UNKNOWN;
+		return ((romE[PC] & 2) != 0) ? TS_ON : TS_OFF;
 
 	case Q0:
 		switch (GetTristate(A18))
 		{
-		case ON: return OFF;
-		case OFF: return ON;
-		default: return UNKNOWN;
+		case TS_ON: return TS_OFF;
+		case TS_OFF: return TS_ON;
+		default: return TS_UNKNOWN;
 		}
 
 	default:
@@ -232,9 +234,9 @@ bool MathBox::GetBit(Bit bit)
 		bool E4ANDout = false;
 		if (GetBit(M))
 		{
-			if (Q0Latch == UNKNOWN)
+			if (Q0Latch == TS_UNKNOWN)
 				throw MathBoxException("A10STAR: Q0Latch is unknown");
-			E4ANDout = Q0Latch == ON;
+			E4ANDout = Q0Latch == TS_ON;
 		}
 		return E4ANDout ^ GetBit(A10);
 	}
@@ -254,8 +256,8 @@ bool MathBox::GetBit(Bit bit)
 	default:
 		switch (GetTristate(bit))
 		{
-		case ON: return true;
-		case OFF: return false;
+		case TS_ON: return true;
+		case TS_OFF: return false;
 		default:
 			{
 				sprintf(buf, "MathBox::GetBit: bit value unknown: %d", bit);

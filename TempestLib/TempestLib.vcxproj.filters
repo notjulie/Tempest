@@ -158,5 +158,8 @@
     <ClInclude Include="MathBox\MathBoxException.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MathBox\Tristate.h">
+      <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

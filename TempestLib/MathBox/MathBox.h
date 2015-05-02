@@ -12,16 +12,11 @@
 #include <vector>
 
 #include "Am2901.h"
+#include "Tristate.h"
 
 class MathBox
 {
 private:
-	enum Tristate {
-		ON,
-		OFF,
-		UNKNOWN
-	};
-
 	enum Bit {
 		A10,
 		A10STAR,
