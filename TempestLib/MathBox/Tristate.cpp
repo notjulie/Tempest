@@ -23,7 +23,7 @@ Tristate Tristate::operator!(void)
 	if (IsUnknown())
 		return Unknown;
 	else
-		return !(bool)*this;
+		return !Value();
 }
 
 Tristate Tristate::operator && (const Tristate &t2) const
@@ -32,5 +32,13 @@ Tristate Tristate::operator && (const Tristate &t2) const
 	return operator&(t2);
 }
 
+
+Tristate Tristate::operator || (const Tristate &t2) const
+{
+	// for now this is the same as the single & operator for bools;
+	// at the moment this doesn't take into account the fact that
+	// 1 | x = 1
+	return operator|(t2);
+}
 
 

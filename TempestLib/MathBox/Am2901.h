@@ -13,30 +13,33 @@ public:
 	Am2901(void);
 
 public:
-	int AAddress;
-	int BAddress;
-	int DataIn;
-	int I012;
-	int I345;
-	int I678;
+	NullableByte AAddress;
+	NullableByte BAddress;
+	NullableByte DataIn;
+	NullableByte I012;
+	NullableByte I345;
+	NullableByte I678;
 	Tristate RAM0;
 	Tristate Q0;
-	bool CarryIn;
+	Tristate CarryIn;
 
 public:
-	bool GetCarryOut(void);
+	Tristate GetCarryOut(void);
 	Tristate GetQ3(void);
 	Tristate GetRAM3(void);
 	void SetClock(bool state);
 
 private:
 	NullableByte GetB(void);
-	uint8_t GetR(void);
+	NullableByte GetR(void);
 	NullableByte GetS(void);
+	NullableByte GetRAMValue(const NullableByte &_address);
 
 private:
-	bool clockState;
-	bool clockIsSet;
+	Tristate clock;
+	NullableByte ALatch;
+	NullableByte BLatch;
+	NullableByte RAM[16];
 };
 
 #pragma warning(pop)

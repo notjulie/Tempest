@@ -263,7 +263,7 @@ bool MathBox::GetBit(Bit bit)
 		{
 			Tristate value = GetTristate(bit);
 			if (!value.IsUnknown())
-				return value;
+				return value.Value();
 			sprintf_s(buf, "MathBox::GetBit: bit value unknown: %d", bit);
 			throw MathBoxException(buf);
 		}
@@ -278,11 +278,11 @@ void MathBox::SetALUInputs(void)
 	// that doesn't make sense in this state it can throw an exception.
 	if (PC < 0)
 	{
-		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = -1;
-		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = -1;
-		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = -1;
-		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = -1;
-		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = -1;
+		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = NullableByte::Unknown;
+		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = NullableByte::Unknown;
+		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = NullableByte::Unknown;
+		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = NullableByte::Unknown;
+		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = NullableByte::Unknown;
 		return;
 	}
 
@@ -291,25 +291,25 @@ void MathBox::SetALUInputs(void)
 	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[(unsigned)PC];
 
 	// so are these
-	aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = romH[(unsigned)PC] & 7;
-	aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = romF[(unsigned)PC] & 7;
+	aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = (uint8_t)(romH[(unsigned)PC] & 7);
+	aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = (uint8_t)(romF[(unsigned)PC] & 7);
 
 	// I012 are a little more complicated
 	int i01 = romJ[(unsigned)PC] & 1;
 	if (GetBit(A10STAR))
 		i01 += 2;
-	aluK.I012 = aluF.I012 = i01 + (romJ[(unsigned)PC] & 4);
-	aluJ.I012 = aluE.I012 = i01 + ((romJ[(unsigned)PC] & 8) >> 1);
+	aluK.I012 = aluF.I012 = (uint8_t)(i01 + (romJ[(unsigned)PC] & 4));
+	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[(unsigned)PC] & 8) >> 1));
 
 	// set the data inputs accordingly
 	if (dataIn < 0)
 	{
-		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = -1;
+		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = NullableByte::Unknown;
 	}
 	else
 	{
-		aluK.DataIn = aluJ.DataIn = dataIn & 0xF;
-		aluF.DataIn = aluE.DataIn = dataIn >> 4;
+		aluK.DataIn = aluJ.DataIn = (uint8_t)(dataIn & 0xF);
+		aluF.DataIn = aluE.DataIn = (uint8_t)(dataIn >> 4);
 	}
 }
 

@@ -2,6 +2,8 @@
 #ifndef NULLABLE_H
 #define NULLABLE_H
 
+class Tristate;
+
 template<class T> class Nullable
 {
 public:
@@ -10,6 +12,8 @@ public:
 
 	bool IsUnknown(void) const { return !isKnown; }
 
+	Tristate operator!=(const Nullable &_other);
+
 	Nullable operator|(const Nullable &t2) const
 	{
 		// if either is not known the result is not known
@@ -17,7 +21,7 @@ public:
 			return Unknown;
 
 		// else its just an or
-		return value | t2.value;
+		return (T)(value | t2.value);
 	}
 
 	Nullable operator^(const Nullable &t2) const
@@ -46,7 +50,7 @@ public:
 		return value && t2.value;
 	}
 
-	operator T(void) const
+	T Value(void) const
 	{
 		if (!isKnown)
 			throw MathBoxException("Attempt to access value of unknown nullable");
@@ -65,5 +69,28 @@ private:
 template <class T> Nullable<T> Nullable<T>::Unknown;
 
 typedef class Nullable<uint8_t> NullableByte;
+
+class Tristate : public Nullable<bool>
+{
+public:
+	Tristate(void);
+	Tristate(bool value);
+	Tristate(const Nullable<bool> value);
+
+	Tristate operator!(void);
+	Tristate operator&&(const Tristate &t2) const;
+	Tristate operator||(const Tristate &t2) const;
+};
+
+
+template <class T> Tristate Nullable<T>::operator!=(const Nullable<T> &_other)
+{
+	// if either is unknown we don't know if they are unequal
+	if (!isKnown || _other.IsUnknown())
+		return Tristate::Unknown;
+	else
+		return value != _other.Value();
+}
+
 
 #endif
