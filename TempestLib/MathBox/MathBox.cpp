@@ -184,8 +184,10 @@ bool MathBox::GetBit(Bit bit)
 
 void MathBox::SetALUInputs(void)
 {
-	// if the PC is not set our ROM values are also considered unknown...
-	// just a diagnostic measure
+	// If the PC is not set that should mean that this is our first rising edge;
+	// assuming that be so we just set all the ALU inputs to their unknown state.
+	// This is just a diagnostic measure so that if the ALU gets asked to do something
+	// that doesn't make sense in this state it can throw an exception.
 	if (PC < 0)
 	{
 		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = -1;
@@ -193,22 +195,25 @@ void MathBox::SetALUInputs(void)
 		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = -1;
 		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = -1;
 		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = -1;
-	}
-	else
-	{
-		// the A & B inputs to the ALUs are all the same
-		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC];
-		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC];
-		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = romH[PC] & 7;
-		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = romF[PC] & 7;
-
-		int i01 = romJ[PC] & 1;
-		if (GetBit(A10STAR))
-			i01 += 2;
-		aluK.I012 = aluF.I012 = i01 + (romJ[PC] & 4);
-		aluJ.I012 = aluE.I012 = i01 + ((romJ[PC] & 8) >> 1);
+		return;
 	}
 
+	// the A & B inputs to the ALUs are all the same
+	aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC];
+	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC];
+
+	// so are these
+	aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = romH[PC] & 7;
+	aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = romF[PC] & 7;
+
+	// I012 are a little more complicated
+	int i01 = romJ[PC] & 1;
+	if (GetBit(A10STAR))
+		i01 += 2;
+	aluK.I012 = aluF.I012 = i01 + (romJ[PC] & 4);
+	aluJ.I012 = aluE.I012 = i01 + ((romJ[PC] & 8) >> 1);
+
+	// set the data inputs accordingly
 	if (dataIn < 0)
 	{
 		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = -1;
@@ -219,6 +224,7 @@ void MathBox::SetALUInputs(void)
 		aluF.DataIn = aluE.DataIn = dataIn >> 4;
 	}
 
+	// set everybody's carry flags
 	aluK.RAM0 = GetBit(R0);
 	aluK.Q0 = GetBit(Q0);
 	aluK.CarryIn = GetBit(C);
