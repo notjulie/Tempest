@@ -3,7 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:TempestWpf"
         Title="MathBoxLog" Height="300" Width="300">
-    <Grid>
-        <local:MathBoxLogEntryControl x:Name="logEntry"/>
-    </Grid>
+    <DockPanel>
+        <Grid DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="leftButton">&lt;</Button>
+                <Button Name="rightButton">&gt;</Button>
+            </StackPanel>
+        </Grid>
+        <UniformGrid Columns="2">
+            <local:MathBoxLogEntryControl x:Name="logEntry1"/>
+            <local:MathBoxLogEntryControl x:Name="logEntry2"/>
+        </UniformGrid>
+    </DockPanel>
 </Window>

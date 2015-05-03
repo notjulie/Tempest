@@ -21,7 +21,10 @@ namespace TempestWpf
       /// <returns>the value</returns>
       public string GetAttribute(string name)
       {
-         return attributes[name];
+         if (attributes.ContainsKey(name))
+            return attributes[name];
+         else
+            return string.Empty;
       }
 
       /// <summary>

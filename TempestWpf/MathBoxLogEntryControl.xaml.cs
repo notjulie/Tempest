@@ -21,6 +21,7 @@ namespace TempestWpf
    public partial class MathBoxLogEntryControl : UserControl
    {
       private MathBoxLogEntry entry;
+      private int recordNumber;
 
       /// <summary>
       /// Initializes a new instance of class MathBoxLogEntryControl
@@ -46,8 +47,36 @@ namespace TempestWpf
          }
       }
 
+      /// <summary>
+      /// Gets or sets the record number
+      /// </summary>
+      public int RecordNumber
+      {
+         get
+         {
+            return this.recordNumber;
+         }
+         set
+         {
+            this.recordNumber = value;
+            UpdateControls();
+         }
+      }
+
       private void UpdateControls()
       {
+         // special case if our entry is null
+         MathBoxLogEntry entry = this.entry;
+         if (entry == null)
+         {
+            recordNumberLabel.Content = string.Empty;
+            entry = new MathBoxLogEntry();
+         }
+         else
+         {
+            recordNumberLabel.Content = this.recordNumber;
+         }
+
          pc.Content = entry.GetAttribute("PC");
       }
    }

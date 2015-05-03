@@ -20,6 +20,7 @@ namespace TempestWpf
    public partial class MathBoxLogWindow : Window
    {
       private MathBoxLog mathBoxLog = new MathBoxLog();
+      private int leftIndex;
 
       #region Constructor
 
@@ -28,7 +29,12 @@ namespace TempestWpf
       /// </summary>
       public MathBoxLogWindow()
       {
+         // normal initialization
          InitializeComponent();
+
+         // event handlers
+         leftButton.Click += leftButton_Click;
+         rightButton.Click += rightButton_Click;
       }
 
       #endregion
@@ -47,8 +53,52 @@ namespace TempestWpf
             // accept the value
             mathBoxLog = value;
 
-            // display the first entry
-            this.logEntry.Entry = mathBoxLog.Entries[0];
+            // set our scroll index to display the last two entries if we have that many
+            leftIndex = mathBoxLog.Entries.Length - 2;
+
+            // display the entries
+            UpdateEntries();
+         }
+      }
+
+      #region Event Handlers
+
+      void leftButton_Click(object sender, RoutedEventArgs e)
+      {
+         if (leftIndex > 0)
+         {
+            --leftIndex;
+            UpdateEntries();
+         }
+      }
+
+      void rightButton_Click(object sender, RoutedEventArgs e)
+      {
+         if (leftIndex < mathBoxLog.Entries.Length - 1)
+         {
+            ++leftIndex;
+            UpdateEntries();
+         }
+      }
+
+      #endregion
+
+      private void UpdateEntries()
+      {
+         SetPanelEntry(logEntry1, leftIndex);
+         SetPanelEntry(logEntry2, leftIndex + 1);
+      }
+
+      private void SetPanelEntry(MathBoxLogEntryControl logControl, int index)
+      {
+         if (index < 0 || index >= mathBoxLog.Entries.Length)
+         {
+            logControl.Entry = null;
+         }
+         else
+         {
+            logControl.Entry = mathBoxLog.Entries[index];
+            logControl.RecordNumber = index + 1;
          }
       }
    }
