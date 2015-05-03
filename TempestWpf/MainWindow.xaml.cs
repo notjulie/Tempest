@@ -31,7 +31,7 @@ namespace TempestWpf
       private DispatcherTimer vectorTimer;
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
-      private MathBoxLog mathBoxLog;
+      private MathBoxLogWindow mathBoxLog;
 
       #endregion
 
@@ -66,10 +66,10 @@ namespace TempestWpf
       {
          // create the window if we haven't yet
          if (mathBoxLog == null)
-            mathBoxLog = new MathBoxLog();
+            mathBoxLog = new MathBoxLogWindow();
 
          // set its data
-         mathBoxLog.LogData = tempest.GetMathBoxLogData();
+         mathBoxLog.MathBoxLog = MathBoxLog.FromXML(tempest.GetMathBoxLogData());
 
          // show it
          mathBoxLog.Show();

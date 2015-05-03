@@ -17,16 +17,16 @@ namespace TempestWpf
    /// <summary>
    /// Interaction logic for MathBoxLog.xaml
    /// </summary>
-   public partial class MathBoxLog : Window
+   public partial class MathBoxLogWindow : Window
    {
-      private string logData = string.Empty;
+      private MathBoxLog mathBoxLog = new MathBoxLog();
 
       #region Constructor
 
       /// <summary>
       /// Initializes a new instance of class MathBoxLog
       /// </summary>
-      public MathBoxLog()
+      public MathBoxLogWindow()
       {
          InitializeComponent();
       }
@@ -36,15 +36,15 @@ namespace TempestWpf
       /// <summary>
       /// Gets or sets the log data
       /// </summary>
-      public string LogData
+      public MathBoxLog MathBoxLog
       {
          get
          {
-            return logData;
+            return mathBoxLog;
          }
          set
          {
-            throw new Exception("MathBoxLog.LogData set not implemented");
+            mathBoxLog = value;
          }
       }
    }
