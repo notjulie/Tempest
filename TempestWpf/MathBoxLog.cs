@@ -15,6 +15,17 @@ namespace TempestWpf
       private List<MathBoxLogEntry> entries = new List<MathBoxLogEntry>();
 
       /// <summary>
+      /// Gets the entries
+      /// </summary>
+      public MathBoxLogEntry[] Entries
+      {
+         get 
+         {
+            return entries.ToArray();
+         }
+      }
+
+      /// <summary>
       /// Creates an instance of MathBoxLog from the given xml string
       /// </summary>
       /// <param name="xml">the XML</param>

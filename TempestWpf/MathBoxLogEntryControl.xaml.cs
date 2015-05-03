@@ -10,46 +10,45 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TempestWpf
 {
    /// <summary>
-   /// Interaction logic for MathBoxLog.xaml
+   /// Interaction logic for MathBoxLogEntryControl.xaml
    /// </summary>
-   public partial class MathBoxLogWindow : Window
+   public partial class MathBoxLogEntryControl : UserControl
    {
-      private MathBoxLog mathBoxLog = new MathBoxLog();
-
-      #region Constructor
+      private MathBoxLogEntry entry;
 
       /// <summary>
-      /// Initializes a new instance of class MathBoxLog
+      /// Initializes a new instance of class MathBoxLogEntryControl
       /// </summary>
-      public MathBoxLogWindow()
+      public MathBoxLogEntryControl()
       {
          InitializeComponent();
       }
 
-      #endregion
-
       /// <summary>
-      /// Gets or sets the log data
+      /// Gets or sets the entry we're displaying
       /// </summary>
-      public MathBoxLog MathBoxLog
+      public MathBoxLogEntry Entry
       {
          get
          {
-            return mathBoxLog;
+            return entry;
          }
          set
          {
-            // accept the value
-            mathBoxLog = value;
-
-            // display the first entry
-            this.logEntry.Entry = mathBoxLog.Entries[0];
+            entry = value;
+            UpdateControls();
          }
+      }
+
+      private void UpdateControls()
+      {
+         pc.Content = entry.GetAttribute("PC");
       }
    }
 }
