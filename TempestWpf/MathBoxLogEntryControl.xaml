@@ -3,44 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TempestWpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Border BorderBrush="Black" BorderThickness="1">
-        <StackPanel>
-            <Border BorderBrush="Black" BorderThickness="1">
+        <DockPanel>
+            <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
                     <Label>Record #:</Label>
                     <Label Name="recordNumberLabel"></Label>
                 </StackPanel>
             </Border>
-            <StackPanel Orientation="Horizontal">
-                <Label>PC:</Label>
-                <Label Name="pc"></Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label>BEGIN:</Label>
-                <Label Name="begin"></Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label>J:</Label>
-                <Label Name="j"></Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label>PCEN:</Label>
-                <Label Name="pcen"></Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label>S:</Label>
-                <Label Name="s"></Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label>S0:</Label>
-                <Label Name="s0"></Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label>S1:</Label>
-                <Label Name="s1"></Label>
-            </StackPanel>
-        </StackPanel>
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Label>PC:</Label>
+                        <Label Name="pc"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>BEGIN:</Label>
+                        <Label Name="begin"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>J:</Label>
+                        <Label Name="j"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>PCEN:</Label>
+                        <Label Name="pcen"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>S:</Label>
+                        <Label Name="s"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>S0:</Label>
+                        <Label Name="s0"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>S1:</Label>
+                        <Label Name="s1"></Label>
+                    </StackPanel>
+                </StackPanel>
+                <UniformGrid Rows="4">
+                    <local:ALULogEntryControl x:Name="aluE"/>
+                    <local:ALULogEntryControl x:Name="aluJ"/>
+                    <local:ALULogEntryControl x:Name="aluF"/>
+                    <local:ALULogEntryControl x:Name="aluK"/>
+                </UniformGrid>
+            </DockPanel>
+        </DockPanel>
     </Border>
 </UserControl>
