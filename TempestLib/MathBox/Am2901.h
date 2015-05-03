@@ -32,10 +32,15 @@ public:
 	void SetClock(bool state);
 
 private:
+	NullableByte GetA(void);
 	NullableByte GetB(void);
+	Tristate GetC3(const NullableByte &R, const NullableByte &S);
+	Tristate GetC4(const NullableByte &R, const NullableByte &S);
 	NullableByte GetF(void);
 	NullableByte GetR(void);
 	NullableByte GetS(void);
+	Tristate GetXORCarry(const NullableByte &R, const NullableByte &S);
+	Tristate GetXOROverflow(const NullableByte &R, const NullableByte &S);
 	NullableByte GetRAMValue(const NullableByte &_address);
 	void WriteToRAM(const NullableByte &_address, const NullableByte &_value);
 

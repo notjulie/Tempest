@@ -13,6 +13,15 @@ public:
 	bool IsUnknown(void) const { return !isKnown; }
 
 	Tristate operator!=(const Nullable &_other);
+	Tristate operator[](int i) const;
+
+	Nullable operator~(void) const
+	{
+		if (!isKnown)
+			return Unknown;
+		else
+			return (T)~value;
+	}
 
 	Nullable operator|(const Nullable &t2) const
 	{
@@ -24,6 +33,26 @@ public:
 		return (T)(value | t2.value);
 	}
 
+	Nullable operator+(const Nullable &t2) const
+	{
+		// if either is not known the result is not known
+		if (!isKnown || !t2.isKnown)
+			return Unknown;
+
+		// else its just addition
+		return (T)(value + t2.value);
+	}
+
+	Nullable operator-(const Nullable &t2) const
+	{
+		// if either is not known the result is not known
+		if (!isKnown || !t2.isKnown)
+			return Unknown;
+
+		// else its just a subtraction
+		return (T)(value - t2.value);
+	}
+
 	Nullable operator^(const Nullable &t2) const
 	{
 		// if either is not known the result is not known
@@ -31,7 +60,7 @@ public:
 			return Unknown;
 
 		// else its just an xor
-		return value ^ t2.value;
+		return (T)(value ^ t2.value);
 	}
 
 	Nullable operator&(const Nullable &t2) const
@@ -47,7 +76,7 @@ public:
 			return Unknown;
 
 		// else its just an and
-		return value && t2.value;
+		return (T)(value & t2.value);
 	}
 
 	T Value(void) const
@@ -92,5 +121,12 @@ template <class T> Tristate Nullable<T>::operator!=(const Nullable<T> &_other)
 		return value != _other.Value();
 }
 
+template <class T> Tristate Nullable<T>::operator[](int i) const
+{
+	if (!isKnown)
+		return Tristate::Unknown;
+	else
+		return (value & (1 << i)) != 0;
+}
 
 #endif

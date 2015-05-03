@@ -19,18 +19,96 @@ Am2901::Am2901(void)
 }
 
 
+Tristate Am2901::GetC3(const NullableByte &R, const NullableByte &S)
+{
+	NullableByte P = R | S;
+	NullableByte G = R & S;
+	return
+		G[2] |
+		(P[2] & G[1]) |
+		(P[2] & P[1] & G[0]) |
+		(P[2] & P[1] & P[0] & CarryIn);
+}
+
+Tristate Am2901::GetC4(const NullableByte &R, const NullableByte &S)
+{
+	NullableByte P = R | S;
+	NullableByte G = R & S;
+	return
+		G[3] |
+		(P[3] & G[2]) |
+		(P[3] & P[2] & G[1]) |
+		(P[3] & P[2] & P[1] & G[0]) |
+		(P[3] & P[2] & P[1] & P[0] & CarryIn);
+}
+
+Tristate Am2901::GetXORCarry(const NullableByte &R, const NullableByte &S)
+{
+	NullableByte P = R | S;
+	NullableByte G = R & S;
+
+	Tristate notResult =
+		G[3] |
+		(P[3] & G[2]) |
+		(P[3] & P[2] & G[1]) |
+		(P[3] & P[2] & P[1] & P[0] & (G[0] & !CarryIn));
+	return !notResult;
+
+}
+
+Tristate Am2901::GetXOROverflow(const NullableByte &R, const NullableByte &S)
+{
+	NullableByte P = R | S;
+	NullableByte G = R & S;
+
+	Tristate a =
+		P[2] |
+		(G[2] & P[1]) |
+		(G[2] & G[1] & P[0]) |
+		(G[2] & G[1] & G[0] & CarryIn);
+	Tristate b =
+		P[3] |
+		(G[3] & P[2]) |
+		(G[3] & G[2] & P[1]) |
+		(G[3] & G[2] & G[1] & P[0]) |
+		(G[3] & G[2] & G[1] & G[0] & CarryIn);
+	return a ^ b;
+}
+
 Tristate Am2901::GetCarryOut(void)
 {
 	if (I345.IsUnknown())
 		return Tristate::Unknown;
 
+	// Get R and S
+	NullableByte R = GetR();
+	NullableByte S = GetS();
+
 	switch (I345.Value())
 	{
+	case 0:
+		return GetC4(R, S);
+
+	case 1:
+		return GetC4(~R, S);
+
+	case 2:
+		return GetC4(R, ~S);
+
 	case 3:
-		{
-			NullableByte p = GetR() | GetS();
-			return (p != 0xF) || CarryIn;
-		}
+		return ((R | S) != 0xF) || CarryIn;
+
+	case 4:
+		return ((R & S) != 0x0) || CarryIn;
+
+	case 5:
+		return (((~R) & S) != 0x0) || CarryIn;
+
+	case 6:
+		return GetXORCarry(~R, S);
+
+	case 7:
+		return GetXORCarry(R, S);
 
 	default:
 		{
@@ -55,13 +133,35 @@ Tristate Am2901::GetOVR(void)
 	if (I345.IsUnknown())
 		return Tristate::Unknown;
 
+	// Get R and S
+	NullableByte R = GetR();
+	NullableByte S = GetS();
+
 	switch (I345.Value())
 	{
+	case 0:
+		return GetC3(R, S) ^ GetC4(R, S);
+
+	case 1:
+		return GetC3(~R, S) ^ GetC4(~R, S);
+
+	case 2:
+		return GetC3(R, ~S) ^ GetC4(R, ~S);
+
 	case 3:
-		{
-			NullableByte p = GetR() | GetS();
-			return (p != 0xF) || CarryIn;
-		}
+		return ((R | S) != 0xF) || CarryIn;
+
+	case 4:
+		return ((R & S) != 0x0) || CarryIn;
+
+	case 5:
+		return (((~R) & S) != 0x0) || CarryIn;
+
+	case 6:
+		return GetXOROverflow(~R, S);
+
+	case 7:
+		return GetXOROverflow(R, S);
 
 	default:
 		{
@@ -97,6 +197,18 @@ Tristate Am2901::GetQ3(void)
 	}
 }
 
+NullableByte Am2901::GetA(void)
+{
+	// if the clock is high we return the current value; else we
+	// return the latched value
+	if (clock.IsUnknown())
+		return NullableByte::Unknown;
+	else if (clock.Value())
+		return GetRAMValue(AAddress);
+	else
+		return ALatch;
+}
+
 NullableByte Am2901::GetB(void)
 {
 	// if the clock is high we return the current value; else we
@@ -116,8 +228,44 @@ NullableByte Am2901::GetF(void)
 
 	switch (I345.Value())
 	{
+	case 0:
+		if (CarryIn.IsUnknown())
+			return NullableByte::Unknown;
+		else if (CarryIn.Value())
+			return (GetR() + GetS() + 1) & 0xF;
+		else
+			return (GetR() + GetS()) & 0xF;
+
+	case 1:
+		if (CarryIn.IsUnknown())
+			return NullableByte::Unknown;
+		else if (CarryIn.Value())
+			return (GetS() - GetR()) & 0xF;
+		else
+			return (GetS() - GetR() - 1) & 0xF;
+
+	case 2:
+		if (CarryIn.IsUnknown())
+			return NullableByte::Unknown;
+		else if (CarryIn.Value())
+			return (GetR() - GetS()) & 0xF;
+		else
+			return (GetR() - GetS() - 1) & 0xF;
+
 	case 3:
 		return GetR() | GetS();
+
+	case 4:
+		return GetR() & GetS();
+
+	case 5:
+		return (~GetR()) & GetS();
+
+	case 6:
+		return GetR() ^ GetS();
+
+	case 7:
+		return ~(GetR() ^ GetS());
 
 	default:
 		{
@@ -135,9 +283,17 @@ NullableByte Am2901::GetR(void)
 
 	switch (I012.Value())
 	{
+	case 0:
+	case 1:
+		return GetA();
+
+	case 2:
 	case 3:
+	case 4:
 		return 0;
 
+	case 5:
+	case 6:
 	case 7:
 		return DataIn;
 
@@ -158,8 +314,18 @@ NullableByte Am2901::GetS(void)
 
 	switch (I012.Value())
 	{
+	case 0:
+	case 2:
+	case 6:
+		return QLatch;
+
+	case 1:
 	case 3:
 		return GetB();
+
+	case 4:
+	case 5:
+		return GetA();
 
 	case 7:
 		return 0;
@@ -225,6 +391,10 @@ void Am2901::SetClock(bool newClockState)
 		// to RAM...
 		switch (I678.Value())
 		{
+		case 0:
+		case 1:
+			break;
+
 		case 2:
 		case 3:
 			WriteToRAM(BAddress, GetF());
@@ -241,6 +411,10 @@ void Am2901::SetClock(bool newClockState)
 		// to Q...
 		switch (I678.Value())
 		{
+		case 0:
+			QLatch = GetF();
+			break;
+
 		case 1:
 		case 2:
 		case 3:
