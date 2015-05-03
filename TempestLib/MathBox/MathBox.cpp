@@ -305,7 +305,7 @@ void MathBox::SetALUInputs(void)
 	// set the data inputs accordingly
 	if (dataIn < 0)
 	{
-		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = NullableByte::Unknown;
+		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = NullableNybble::Unknown;
 	}
 	else
 	{

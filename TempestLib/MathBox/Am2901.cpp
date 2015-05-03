@@ -19,10 +19,10 @@ Am2901::Am2901(void)
 }
 
 
-Tristate Am2901::GetC3(const NullableByte &R, const NullableByte &S)
+Tristate Am2901::GetC3(const NullableNybble &R, const NullableNybble &S)
 {
-	NullableByte P = R | S;
-	NullableByte G = R & S;
+	NullableNybble P = R | S;
+	NullableNybble G = R & S;
 	return
 		G[2] |
 		(P[2] & G[1]) |
@@ -30,10 +30,10 @@ Tristate Am2901::GetC3(const NullableByte &R, const NullableByte &S)
 		(P[2] & P[1] & P[0] & CarryIn);
 }
 
-Tristate Am2901::GetC4(const NullableByte &R, const NullableByte &S)
+Tristate Am2901::GetC4(const NullableNybble &R, const NullableNybble &S)
 {
-	NullableByte P = R | S;
-	NullableByte G = R & S;
+	NullableNybble P = R | S;
+	NullableNybble G = R & S;
 	return
 		G[3] |
 		(P[3] & G[2]) |
@@ -42,10 +42,10 @@ Tristate Am2901::GetC4(const NullableByte &R, const NullableByte &S)
 		(P[3] & P[2] & P[1] & P[0] & CarryIn);
 }
 
-Tristate Am2901::GetXORCarry(const NullableByte &R, const NullableByte &S)
+Tristate Am2901::GetXORCarry(const NullableNybble &R, const NullableNybble &S)
 {
-	NullableByte P = R | S;
-	NullableByte G = R & S;
+	NullableNybble P = R | S;
+	NullableNybble G = R & S;
 
 	Tristate notResult =
 		G[3] |
@@ -56,10 +56,10 @@ Tristate Am2901::GetXORCarry(const NullableByte &R, const NullableByte &S)
 
 }
 
-Tristate Am2901::GetXOROverflow(const NullableByte &R, const NullableByte &S)
+Tristate Am2901::GetXOROverflow(const NullableNybble &R, const NullableNybble &S)
 {
-	NullableByte P = R | S;
-	NullableByte G = R & S;
+	NullableNybble P = R | S;
+	NullableNybble G = R & S;
 
 	Tristate a =
 		P[2] |
@@ -81,8 +81,8 @@ Tristate Am2901::GetCarryOut(void)
 		return Tristate::Unknown;
 
 	// Get R and S
-	NullableByte R = GetR();
-	NullableByte S = GetS();
+	NullableNybble R = GetR();
+	NullableNybble S = GetS();
 
 	switch (I345.Value())
 	{
@@ -96,13 +96,13 @@ Tristate Am2901::GetCarryOut(void)
 		return GetC4(R, ~S);
 
 	case 3:
-		return ((R | S) != 0xF) || CarryIn;
+		return ((R | S) != Nybble(0xF)) || CarryIn;
 
 	case 4:
-		return ((R & S) != 0x0) || CarryIn;
+		return ((R & S) != Nybble(0x0)) || CarryIn;
 
 	case 5:
-		return (((~R) & S) != 0x0) || CarryIn;
+		return (((~R) & S) != Nybble(0x0)) || CarryIn;
 
 	case 6:
 		return GetXORCarry(~R, S);
@@ -121,11 +121,7 @@ Tristate Am2901::GetCarryOut(void)
 
 Tristate Am2901::GetF3(void)
 {
-	NullableByte f = GetF();
-	if (f.IsUnknown())
-		return Tristate::Unknown;
-	else
-		return (f.Value() & 0x8) != 0;
+	return GetF()[3];
 }
 
 Tristate Am2901::GetOVR(void)
@@ -134,8 +130,8 @@ Tristate Am2901::GetOVR(void)
 		return Tristate::Unknown;
 
 	// Get R and S
-	NullableByte R = GetR();
-	NullableByte S = GetS();
+	NullableNybble R = GetR();
+	NullableNybble S = GetS();
 
 	switch (I345.Value())
 	{
@@ -149,13 +145,13 @@ Tristate Am2901::GetOVR(void)
 		return GetC3(R, ~S) ^ GetC4(R, ~S);
 
 	case 3:
-		return ((R | S) != 0xF) || CarryIn;
+		return ((R | S) != Nybble(0xF)) || CarryIn;
 
 	case 4:
-		return ((R & S) != 0x0) || CarryIn;
+		return ((R & S) != Nybble(0x0)) || CarryIn;
 
 	case 5:
-		return (((~R) & S) != 0x0) || CarryIn;
+		return (((~R) & S) != Nybble(0x0)) || CarryIn;
 
 	case 6:
 		return GetXOROverflow(~R, S);
@@ -197,60 +193,60 @@ Tristate Am2901::GetQ3(void)
 	}
 }
 
-NullableByte Am2901::GetA(void)
+NullableNybble Am2901::GetA(void)
 {
 	// if the clock is high we return the current value; else we
 	// return the latched value
 	if (clock.IsUnknown())
-		return NullableByte::Unknown;
+		return NullableNybble::Unknown;
 	else if (clock.Value())
 		return GetRAMValue(AAddress);
 	else
 		return ALatch;
 }
 
-NullableByte Am2901::GetB(void)
+NullableNybble Am2901::GetB(void)
 {
 	// if the clock is high we return the current value; else we
 	// return the latched value
 	if (clock.IsUnknown())
-		return NullableByte::Unknown;
+		return NullableNybble::Unknown;
 	else if (clock.Value())
 		return GetRAMValue(BAddress);
 	else
 		return BLatch;
 }
 
-NullableByte Am2901::GetF(void)
+NullableNybble Am2901::GetF(void)
 {
 	if (I345.IsUnknown())
-		return NullableByte::Unknown;
+		return NullableNybble::Unknown;
 
 	switch (I345.Value())
 	{
 	case 0:
 		if (CarryIn.IsUnknown())
-			return NullableByte::Unknown;
+			return NullableNybble::Unknown;
 		else if (CarryIn.Value())
-			return (GetR() + GetS() + 1) & 0xF;
+			return GetR() + GetS() + Nybble(1);
 		else
-			return (GetR() + GetS()) & 0xF;
+			return GetR() + GetS();
 
 	case 1:
 		if (CarryIn.IsUnknown())
-			return NullableByte::Unknown;
+			return NullableNybble::Unknown;
 		else if (CarryIn.Value())
-			return (GetS() - GetR()) & 0xF;
+			return GetS() - GetR();
 		else
-			return (GetS() - GetR() - 1) & 0xF;
+			return GetS() - GetR() - Nybble(1);
 
 	case 2:
 		if (CarryIn.IsUnknown())
-			return NullableByte::Unknown;
+			return NullableNybble::Unknown;
 		else if (CarryIn.Value())
-			return (GetR() - GetS()) & 0xF;
+			return GetR() - GetS();
 		else
-			return (GetR() - GetS() - 1) & 0xF;
+			return GetR() - GetS() - Nybble(1);
 
 	case 3:
 		return GetR() | GetS();
@@ -276,10 +272,10 @@ NullableByte Am2901::GetF(void)
 	}
 }
 
-NullableByte Am2901::GetR(void)
+NullableNybble Am2901::GetR(void)
 {
 	if (I012.IsUnknown())
-		return NullableByte::Unknown;
+		return NullableNybble::Unknown;
 
 	switch (I012.Value())
 	{
@@ -307,10 +303,10 @@ NullableByte Am2901::GetR(void)
 }
 
 
-NullableByte Am2901::GetS(void)
+NullableNybble Am2901::GetS(void)
 {
 	if (I012.IsUnknown())
-		return NullableByte::Unknown;
+		return NullableNybble::Unknown;
 
 	switch (I012.Value())
 	{
@@ -339,10 +335,10 @@ NullableByte Am2901::GetS(void)
 	}
 }
 
-NullableByte Am2901::GetRAMValue(const NullableByte &_address)
+NullableNybble Am2901::GetRAMValue(const NullableByte &_address)
 {
 	if (_address.IsUnknown())
-		return NullableByte::Unknown;
+		return NullableNybble::Unknown;
 	else
 		return RAM[_address.Value()];
 }
@@ -443,7 +439,7 @@ void Am2901::SetClock(bool newClockState)
 }
 
 
-void Am2901::WriteToRAM(const NullableByte &_address, const NullableByte &_value)
+void Am2901::WriteToRAM(const NullableByte &_address, const NullableNybble &_value)
 {
 	if (_address.IsUnknown())
 		throw MathBoxException("Am2901::WriteToRAM: address not specified");

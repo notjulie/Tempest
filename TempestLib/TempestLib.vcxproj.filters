@@ -176,5 +176,8 @@
     <ClInclude Include="MathBox\Nullable.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MathBox\Nybble.h">
+      <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

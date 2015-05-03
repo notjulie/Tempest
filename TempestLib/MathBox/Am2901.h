@@ -15,7 +15,7 @@ public:
 public:
 	NullableByte AAddress;
 	NullableByte BAddress;
-	NullableByte DataIn;
+	NullableNybble DataIn;
 	NullableByte I012;
 	NullableByte I345;
 	NullableByte I678;
@@ -32,24 +32,24 @@ public:
 	void SetClock(bool state);
 
 private:
-	NullableByte GetA(void);
-	NullableByte GetB(void);
-	Tristate GetC3(const NullableByte &R, const NullableByte &S);
-	Tristate GetC4(const NullableByte &R, const NullableByte &S);
-	NullableByte GetF(void);
-	NullableByte GetR(void);
-	NullableByte GetS(void);
-	Tristate GetXORCarry(const NullableByte &R, const NullableByte &S);
-	Tristate GetXOROverflow(const NullableByte &R, const NullableByte &S);
-	NullableByte GetRAMValue(const NullableByte &_address);
-	void WriteToRAM(const NullableByte &_address, const NullableByte &_value);
+	NullableNybble GetA(void);
+	NullableNybble GetB(void);
+	Tristate GetC3(const NullableNybble &R, const NullableNybble &S);
+	Tristate GetC4(const NullableNybble &R, const NullableNybble &S);
+	NullableNybble GetF(void);
+	NullableNybble GetR(void);
+	NullableNybble GetS(void);
+	Tristate GetXORCarry(const NullableNybble &R, const NullableNybble &S);
+	Tristate GetXOROverflow(const NullableNybble &R, const NullableNybble &S);
+	NullableNybble GetRAMValue(const NullableByte &_address);
+	void WriteToRAM(const NullableByte &_address, const NullableNybble &_value);
 
 private:
 	Tristate clock;
-	NullableByte ALatch;
-	NullableByte BLatch;
-	NullableByte QLatch;
-	NullableByte RAM[16];
+	NullableNybble ALatch;
+	NullableNybble BLatch;
+	NullableNybble QLatch;
+	NullableNybble RAM[16];
 };
 
 #pragma warning(pop)

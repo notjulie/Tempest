@@ -14,6 +14,7 @@
 #define NULLABLE_H
 
 #include "MathBoxException.h"
+#include "Nybble.h"
 
 // =======================================================================
 // =======================================================================
@@ -27,6 +28,12 @@ public:
 	Nullable(T _value) { isKnown = true; value = _value; }
 
 	bool IsUnknown(void) const { return !isKnown; }
+
+	Nullable &operator=(const T &_value)
+	{
+		*this = Nullable(_value);
+		return *this;
+	}
 
 	Nullable<bool> operator!(void) const
 	{
@@ -224,6 +231,7 @@ template <> Nullable<bool> Nullable<bool>::operator||(const Nullable<bool> &b) c
 // =======================================================================
 typedef class Nullable<bool>		Tristate;
 typedef class Nullable<uint8_t>	NullableByte;
+typedef class Nullable<Nybble>	NullableNybble;
 
 
 #endif
