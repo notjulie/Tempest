@@ -24,11 +24,16 @@ namespace TempestWpf
    /// </summary>
    public partial class MainWindow : Window
    {
+      #region Private Fields
+
       private Tempest tempest;
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
+      private MathBoxLog mathBoxLog;
+
+      #endregion
 
       public MainWindow()
       {
@@ -38,6 +43,23 @@ namespace TempestWpf
          // event handlers
          this.Loaded += MainWindow_Loaded;
          this.Closed += MainWindow_Closed;
+         this.Closing += MainWindow_Closing;
+         buttonMathBoxLog.Click += buttonMathBoxLog_Click;
+      }
+
+      void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+      {
+         timer.IsEnabled = false;
+         vectorTimer.IsEnabled = false;
+         e.Cancel = false;
+      }
+
+      void buttonMathBoxLog_Click(object sender, RoutedEventArgs e)
+      {
+         if (mathBoxLog == null)
+            mathBoxLog = new MathBoxLog();
+         mathBoxLog.Show();
+         mathBoxLog.Activate();
       }
 
       void MainWindow_Closed(object sender, EventArgs e)
