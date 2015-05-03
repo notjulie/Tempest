@@ -35,6 +35,9 @@ namespace TempestWpf
 
       #endregion
 
+      /// <summary>
+      /// Initializes a new instance of class MainWindow
+      /// </summary>
       public MainWindow()
       {
          // normal initialization
@@ -54,10 +57,21 @@ namespace TempestWpf
          e.Cancel = false;
       }
 
-      void buttonMathBoxLog_Click(object sender, RoutedEventArgs e)
+      /// <summary>
+      /// Displays the math box log window
+      /// </summary>
+      /// <param name="sender">sender of the event</param>
+      /// <param name="e">details of the event</param>
+      private void buttonMathBoxLog_Click(object sender, RoutedEventArgs e)
       {
+         // create the window if we haven't yet
          if (mathBoxLog == null)
             mathBoxLog = new MathBoxLog();
+
+         // set its data
+         mathBoxLog.LogData = tempest.GetMathBoxLogData();
+
+         // show it
          mathBoxLog.Show();
          mathBoxLog.Activate();
       }

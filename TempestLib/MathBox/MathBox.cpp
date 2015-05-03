@@ -339,3 +339,5 @@ void MathBox::SetError(const std::string &_status)
 	if (error.size() == 0)
 		error = _status;
 }
+
+

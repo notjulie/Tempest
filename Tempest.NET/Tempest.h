@@ -19,6 +19,7 @@ namespace TempestDotNET {
 		Tempest();
 		~Tempest();
 
+		String ^GetMathBoxLogData(void);
 		String ^GetMathBoxStatus(void);
 		String ^GetProcessorStatus(void);
 		VectorEnumerator ^GetVectorEnumerator(void);

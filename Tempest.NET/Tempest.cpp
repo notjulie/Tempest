@@ -50,6 +50,11 @@ namespace TempestDotNET {
 		return gcnew String(tempestBus->GetMathBoxStatus().c_str());
 	}
 
+	String ^Tempest::GetMathBoxLogData(void)
+	{
+		return gcnew String(tempestBus->GetMathBoxLogXML().c_str());
+	}
+
 	int Tempest::GetTotalClockCycles(void)
 	{
 		return cpu6502->GetTotalClockCycles();

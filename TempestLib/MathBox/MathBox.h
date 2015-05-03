@@ -9,6 +9,7 @@
 #define	MATHBOX_H
 
 #include "Am2901.h"
+#include "MathBoxLog.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -38,6 +39,8 @@ public:
 	void LoadROM(const uint8_t *rom, int length, char slot);
 
 	std::string GetErrorString(void) const { return error.size() == 0 ? "OK" : error; }
+	std::string GetLogXML(void) const { return log.GetXML(); }
+
    uint8_t GetStatus(void);
    uint8_t Read1(void);
    uint8_t Read2(void);
@@ -84,6 +87,7 @@ private:
 
 	// misc
 	std::string	error;
+	MathBoxLog log;
 };
 
 #pragma warning(pop)

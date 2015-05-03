@@ -19,9 +19,33 @@ namespace TempestWpf
    /// </summary>
    public partial class MathBoxLog : Window
    {
+      private string logData = string.Empty;
+
+      #region Constructor
+
+      /// <summary>
+      /// Initializes a new instance of class MathBoxLog
+      /// </summary>
       public MathBoxLog()
       {
          InitializeComponent();
+      }
+
+      #endregion
+
+      /// <summary>
+      /// Gets or sets the log data
+      /// </summary>
+      public string LogData
+      {
+         get
+         {
+            return logData;
+         }
+         set
+         {
+            throw new Exception("MathBoxLog.LogData set not implemented");
+         }
       }
    }
 }

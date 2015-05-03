@@ -32,6 +32,8 @@ public:
 	void LoadMathBoxROM(const uint8_t *rom, int length, char slot);
 
 	std::string GetMathBoxStatus(void) const { return mathBox.GetErrorString(); }
+	std::string GetMathBoxLogXML(void) const { return mathBox.GetLogXML(); }
+	
    bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);
 
