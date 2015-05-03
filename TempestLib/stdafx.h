@@ -11,6 +11,7 @@
 
 // temporarily disable some warnings that get reported while loading system headers
 #pragma warning(push)
+#pragma warning(disable : 4265)	// no virtual destructor
 #pragma warning(disable : 4350)	// non-const reference thing
 #pragma warning(disable : 4820)	// padding in structures
 
@@ -18,7 +19,10 @@
 #include <stdint.h>
 #include <stdio.h>
 
-// STL
+// C++
+#ifndef _M_CEE
+	#include <mutex>
+#endif
 #include <string>
 #include <vector>
 

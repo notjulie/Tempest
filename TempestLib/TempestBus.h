@@ -40,7 +40,12 @@ public:
 public:
    virtual uint8_t ReadByte(uint16_t address);   
    virtual void    WriteByte(uint16_t address, uint8_t value);
-   
+
+private:
+	// forbidden items
+	TempestBus(const TempestBus &bus);
+	TempestBus &operator=(const TempestBus &bus);
+
 private:
    Abstract3KHzClock *clock3KHz;
    

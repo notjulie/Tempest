@@ -108,6 +108,9 @@
     <ClCompile Include="MathBox\MathBoxLog.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MathBox\MathBoxLogEntry.cpp">
+      <Filter>MathBox\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -183,6 +186,9 @@
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MathBox\MathBoxLog.h">
+      <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MathBox\MathBoxLogEntry.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

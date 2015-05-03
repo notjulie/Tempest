@@ -9,7 +9,10 @@
 #define	MATHBOX_H
 
 #include "Am2901.h"
-#include "MathBoxLog.h"
+
+
+class MathBoxLog;
+
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -35,11 +38,12 @@ private:
 
 public:
 	MathBox(void);
+	virtual ~MathBox(void);
 
 	void LoadROM(const uint8_t *rom, int length, char slot);
 
 	std::string GetErrorString(void) const { return error.size() == 0 ? "OK" : error; }
-	std::string GetLogXML(void) const { return log.GetXML(); }
+	std::string GetLogXML(void) const;
 
    uint8_t GetStatus(void);
    uint8_t Read1(void);
@@ -48,6 +52,7 @@ public:
 
 private:
 	Tristate GetTristate(Bit bit);
+	void Log(void);
 	void SetALUCarryFlags(void);
 	void SetALUInputs(void);
 	void SetError(const std::string &_status);
@@ -55,6 +60,11 @@ private:
 private:
 	void HandleRisingClock(void);
 	void HandleFallingClock(void);
+
+private:
+	// forbidden items
+	MathBox(const MathBox &mathBox);
+	MathBox &operator=(const MathBox &mathBox);
 
 private:
 	// inputs
@@ -87,7 +97,7 @@ private:
 
 	// misc
 	std::string	error;
-	MathBoxLog log;
+	MathBoxLog *log;
 };
 
 #pragma warning(pop)

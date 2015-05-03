@@ -2,12 +2,19 @@
 #include "stdafx.h"
 
 #include "MathBoxException.h"
+#include "MathBoxLog.h"
 
 #include "MathBox.h"
 
 
 MathBox::MathBox(void)
 {
+	log = new MathBoxLog();
+}
+
+MathBox::~MathBox(void)
+{
+	delete log, log = NULL;
 }
 
 void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
@@ -86,6 +93,7 @@ void MathBox::Write(uint8_t address, uint8_t value)
 
 		// shortly after the clock will fall
 		HandleFallingClock();
+		Log();
 
 		// our inputs will clear
 		addressIn = -1;
@@ -97,6 +105,7 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		{
 			HandleRisingClock();
 			HandleFallingClock();
+			Log();
 		}
 	}
 	catch (MathBoxException &x)
@@ -341,3 +350,21 @@ void MathBox::SetError(const std::string &_status)
 }
 
 
+void MathBox::Log(void)
+{
+	// we stop logging if we reported an error
+	if (error.size() != 0)
+		return;
+
+	// create a log entry
+	MathBoxLogEntry entry;
+	entry.PC = PC;
+
+	// add it to the log
+	log->AddEntry(entry);
+}
+
+std::string MathBox::GetLogXML(void) const
+{
+	return log->GetXML(); 
+}
