@@ -7,6 +7,13 @@
 class MathBoxLogEntry
 {
 public:
+	Tristate			BEGIN;
+	Tristate			J;
+	Tristate			PCEN;
+	Tristate			S;
+	Tristate			S0;
+	Tristate			S1;
+
 	NullableByte	PC;
 
 public:
@@ -14,6 +21,7 @@ public:
 
 private:
 	static std::string MakeElement(const std::string &name, const NullableByte &value);
+	static std::string MakeElement(const std::string &name, const Tristate &value);
 };
 
 #endif

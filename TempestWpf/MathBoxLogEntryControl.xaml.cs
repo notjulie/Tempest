@@ -78,6 +78,13 @@ namespace TempestWpf
          }
 
          pc.Content = entry.GetAttribute("PC");
+
+         begin.Content = entry.GetAttribute("BEGIN");
+         j.Content = entry.GetAttribute("J");
+         pcen.Content = entry.GetAttribute("PCEN");
+         s.Content = entry.GetAttribute("S");
+         s0.Content = entry.GetAttribute("S0");
+         s1.Content = entry.GetAttribute("S1");
       }
    }
 }

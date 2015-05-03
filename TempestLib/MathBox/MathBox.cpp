@@ -358,6 +358,16 @@ void MathBox::Log(void)
 
 	// create a log entry
 	MathBoxLogEntry entry;
+
+	// add bits
+	entry.BEGIN = BEGIN;
+	entry.PCEN = GetTristate(PCEN);
+	entry.J = GetTristate(J);
+	entry.S = GetTristate(S);
+	entry.S0 = GetTristate(S0);
+	entry.S1 = GetTristate(S1);
+
+	// bytes
 	entry.PC = PC;
 
 	// add it to the log

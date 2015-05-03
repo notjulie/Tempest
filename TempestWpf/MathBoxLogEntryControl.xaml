@@ -17,6 +17,30 @@
                 <Label>PC:</Label>
                 <Label Name="pc"></Label>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>BEGIN:</Label>
+                <Label Name="begin"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>J:</Label>
+                <Label Name="j"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>PCEN:</Label>
+                <Label Name="pcen"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>S:</Label>
+                <Label Name="s"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>S0:</Label>
+                <Label Name="s0"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>S1:</Label>
+                <Label Name="s1"></Label>
+            </StackPanel>
         </StackPanel>
     </Border>
 </UserControl>
