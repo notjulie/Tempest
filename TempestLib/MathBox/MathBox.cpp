@@ -114,7 +114,11 @@ void MathBox::HandleRisingClock(void)
 {
 	// calculate the new PC 
 	NullableByte newPC;
-	if (GetTristate(PCEN).Value())
+	Tristate pcen = GetTristate(PCEN);
+	if (pcen.IsUnknown())
+		throw MathBoxException("MathBox::HandleRisingClock: PCEN is unknown");
+
+	if (pcen.Value())
 	{
 		// we load the PC from whichever source is selected
 		if (BEGIN.Value())

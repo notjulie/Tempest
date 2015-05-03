@@ -2,7 +2,7 @@
 #ifndef AM2901_H
 #define AM2901_H
 
-#include "Tristate.h"
+#include "Nullable.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures

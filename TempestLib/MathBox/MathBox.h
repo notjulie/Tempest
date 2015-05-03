@@ -9,7 +9,6 @@
 #define	MATHBOX_H
 
 #include "Am2901.h"
-#include "Tristate.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures

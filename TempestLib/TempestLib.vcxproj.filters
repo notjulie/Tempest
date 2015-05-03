@@ -105,9 +105,6 @@
     <ClCompile Include="Pokey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MathBox\Tristate.cpp">
-      <Filter>MathBox\Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -168,9 +165,6 @@
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MathBox\MathBoxException.h">
-      <Filter>MathBox\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MathBox\Tristate.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Win32\Win32.h">
