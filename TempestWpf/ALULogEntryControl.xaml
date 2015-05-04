@@ -8,16 +8,19 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UniformGrid Columns="3">
         <StackPanel>
+            <Border BorderBrush="Black" BorderThickness="2" Height="20" Width="20" HorizontalAlignment="Left">
+                <TextBlock Name="whichALU" FontWeight="Bold" Text="X" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
             <local:LabeledField x:Name="cn" LabelText="Cn:" />
             <local:LabeledField x:Name="f3" LabelText="F3:" />
             <local:LabeledField x:Name="i012" LabelText="I012:" />
             <local:LabeledField x:Name="i345" LabelText="I345:" />
             <local:LabeledField x:Name="i678" LabelText="I678:" />
             <local:LabeledField x:Name="ovr" LabelText="OVR:" />
-            <local:LabeledField x:Name="r" LabelText="R:" />
-            <local:LabeledField x:Name="s" LabelText="S:" />
         </StackPanel>
         <StackPanel>
+            <local:LabeledField x:Name="r" LabelText="R:" />
+            <local:LabeledField x:Name="s" LabelText="S:" />
             <local:LabeledField x:Name="qLatch" LabelText="QLatch:" />
             <local:LabeledField x:Name="a" LabelText="A:" />
             <local:LabeledField x:Name="b" LabelText="B:" />

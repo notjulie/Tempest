@@ -98,6 +98,8 @@ private:
 	// misc
 	std::string	error;
 	MathBoxLog *log;
+
+	friend class MathBoxTestInterface;
 };
 
 #pragma warning(pop)

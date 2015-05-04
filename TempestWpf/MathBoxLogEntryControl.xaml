@@ -28,16 +28,16 @@
                 </StackPanel>
                 <UniformGrid Rows="4">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <local:ALULogEntryControl x:Name="aluE"/>
+                        <local:ALULogEntryControl x:Name="aluE" ALUName="E"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <local:ALULogEntryControl x:Name="aluJ"/>
+                        <local:ALULogEntryControl x:Name="aluJ" ALUName="J"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1">
-                            <local:ALULogEntryControl x:Name="aluF"/>
+                        <local:ALULogEntryControl x:Name="aluF" ALUName="F"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <local:ALULogEntryControl x:Name="aluK"/>
+                        <local:ALULogEntryControl x:Name="aluK"  ALUName="K"/>
                     </Border>
                 </UniformGrid>
             </DockPanel>

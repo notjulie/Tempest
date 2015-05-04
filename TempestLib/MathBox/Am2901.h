@@ -55,7 +55,7 @@ private:
 	NullableNybble QLatch;
 	NullableNybble RAM[16];
 
-friend class Am2901Test;
+	friend class Am2901TestInterface;
 };
 
 #pragma warning(pop)

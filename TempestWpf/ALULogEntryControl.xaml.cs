@@ -46,6 +46,21 @@ namespace TempestWpf
          }
       }
 
+      /// <summary>
+      /// Gets or sets the ALU name
+      /// </summary>
+      public string ALUName
+      {
+         get
+         {
+            return whichALU.Text;
+         }
+         set
+         {
+            whichALU.Text = value;
+         }
+      }
+
       private void UpdateControls()
       {
          // special case if our entry is null
