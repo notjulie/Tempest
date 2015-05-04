@@ -6,14 +6,41 @@
              xmlns:local="clr-namespace:TempestWpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <local:LabeledField x:Name="cn" LabelText="Cn:" />
-        <local:LabeledField x:Name="f3" LabelText="F3:" />
-        <local:LabeledField x:Name="i012" LabelText="I012:" />
-        <local:LabeledField x:Name="i345" LabelText="I345:" />
-        <local:LabeledField x:Name="i678" LabelText="I678:" />
-        <local:LabeledField x:Name="ovr" LabelText="OVR:" />
-        <local:LabeledField x:Name="r" LabelText="R:" />
-        <local:LabeledField x:Name="s" LabelText="S:" />
-    </StackPanel>
+    <UniformGrid Columns="3">
+        <StackPanel>
+            <local:LabeledField x:Name="cn" LabelText="Cn:" />
+            <local:LabeledField x:Name="f3" LabelText="F3:" />
+            <local:LabeledField x:Name="i012" LabelText="I012:" />
+            <local:LabeledField x:Name="i345" LabelText="I345:" />
+            <local:LabeledField x:Name="i678" LabelText="I678:" />
+            <local:LabeledField x:Name="ovr" LabelText="OVR:" />
+            <local:LabeledField x:Name="r" LabelText="R:" />
+            <local:LabeledField x:Name="s" LabelText="S:" />
+        </StackPanel>
+        <StackPanel>
+            <local:LabeledField x:Name="qLatch" LabelText="QLatch:" />
+            <local:LabeledField x:Name="a" LabelText="A:" />
+            <local:LabeledField x:Name="b" LabelText="B:" />
+        </StackPanel>
+        <StackPanel>
+            <UniformGrid Rows="4" Columns="4">
+                <TextBlock Name="ram0"/>
+                <TextBlock Name="ram1"/>
+                <TextBlock Name="ram2"/>
+                <TextBlock Name="ram3"/>
+                <TextBlock Name="ram4"/>
+                <TextBlock Name="ram5"/>
+                <TextBlock Name="ram6"/>
+                <TextBlock Name="ram7"/>
+                <TextBlock Name="ram8"/>
+                <TextBlock Name="ram9"/>
+                <TextBlock Name="ramA"/>
+                <TextBlock Name="ramB"/>
+                <TextBlock Name="ramC"/>
+                <TextBlock Name="ramD"/>
+                <TextBlock Name="ramE"/>
+                <TextBlock Name="ramF"/>
+            </UniformGrid>
+        </StackPanel>
+    </UniformGrid>
 </UserControl>

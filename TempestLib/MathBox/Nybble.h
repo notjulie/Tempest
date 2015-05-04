@@ -18,6 +18,8 @@ public:
 	bool operator!(void) const { return value == 0; }
 	Nybble operator~(void) const { return (uint8_t)~value; }
 
+	uint8_t Value(void) const { return value; }
+
 private:
 	uint8_t value;
 };

@@ -15,8 +15,8 @@ public:
 	Am2901(void);
 
 public:
-	NullableByte AAddress;
-	NullableByte BAddress;
+	NullableNybble AAddress;
+	NullableNybble BAddress;
 	NullableNybble DataIn;
 	NullableByte I012;
 	NullableByte I345;
@@ -45,8 +45,8 @@ private:
 	NullableNybble GetS(void) const;
 	Tristate GetXORCarry(const NullableNybble &R, const NullableNybble &S);
 	Tristate GetXOROverflow(const NullableNybble &R, const NullableNybble &S) const;
-	NullableNybble GetRAMValue(const NullableByte &_address) const;
-	void WriteToRAM(const NullableByte &_address, const NullableNybble &_value);
+	NullableNybble GetRAMValue(const NullableNybble &_address) const;
+	void WriteToRAM(const NullableNybble &_address, const NullableNybble &_value);
 
 private:
 	Tristate clock;

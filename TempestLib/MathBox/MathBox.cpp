@@ -288,8 +288,8 @@ void MathBox::SetALUInputs(void)
 	// that doesn't make sense in this state it can throw an exception.
 	if (PC.IsUnknown())
 	{
-		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = NullableByte::Unknown;
-		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = NullableByte::Unknown;
+		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = NullableNybble::Unknown;
+		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = NullableNybble::Unknown;
 		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = NullableByte::Unknown;
 		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = NullableByte::Unknown;
 		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = NullableByte::Unknown;

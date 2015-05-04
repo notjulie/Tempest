@@ -336,12 +336,12 @@ NullableNybble Am2901::GetS(void) const
 	}
 }
 
-NullableNybble Am2901::GetRAMValue(const NullableByte &_address) const
+NullableNybble Am2901::GetRAMValue(const NullableNybble &_address) const
 {
 	if (_address.IsUnknown())
 		return NullableNybble::Unknown;
 	else
-		return RAM[_address.Value()];
+		return RAM[_address.Value().Value()];
 }
 
 Tristate Am2901::GetRAM3(void)
@@ -440,11 +440,12 @@ void Am2901::SetClock(bool newClockState)
 }
 
 
-void Am2901::WriteToRAM(const NullableByte &_address, const NullableNybble &_value)
+void Am2901::WriteToRAM(const NullableNybble &_address, const NullableNybble &_value)
 {
 	if (_address.IsUnknown())
 		throw MathBoxException("Am2901::WriteToRAM: address not specified");
-	RAM[_address.Value()] = _value;
+	uint8_t address = _address.Value().Value();
+	RAM[address] = _value;
 }
 
 
@@ -452,14 +453,20 @@ ALULogEntry Am2901::GetLogData(void) const
 {
 	ALULogEntry result;
 
+	result.A = AAddress;
+	result.B = BAddress;
 	result.Cn = CarryIn;
 	result.F3 = GetF3();
 	result.I012 = I012;
 	result.I345 = I345;
 	result.I678 = I678;
 	result.OVR = GetOVR();
+	result.QLatch = QLatch;
 	result.R = GetR();
 	result.S = GetS();
+
+	for (int i = 0; i < 16; ++i)
+		result.RAM[i] = RAM[i];
 
 	return result;
 }

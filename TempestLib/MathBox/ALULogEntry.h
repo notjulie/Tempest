@@ -11,8 +11,13 @@ public:
 	NullableByte	I345;
 	NullableByte	I678;
 
+	NullableNybble	A;
+	NullableNybble	B;
+	NullableNybble	QLatch;
 	NullableNybble	R;
 	NullableNybble	S;
+
+	NullableNybble	RAM[16];
 
 	Tristate	Cn;
 	Tristate	OVR;

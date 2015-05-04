@@ -53,6 +53,8 @@ namespace TempestWpf
          if (entry == null)
             entry = new ALULogEntry();
 
+         a.Field = entry.GetAttribute("A");
+         b.Field = entry.GetAttribute("B");
          cn.Field = entry.GetAttribute("Cn");
          f3.Field = entry.GetAttribute("F3");
          i012.Field = entry.GetAttribute("I012");
@@ -60,6 +62,7 @@ namespace TempestWpf
          ovr.Field = entry.GetAttribute("OVR");
          r.Field = entry.GetAttribute("R");
          s.Field = entry.GetAttribute("S");
+         qLatch.Field = entry.GetAttribute("QLatch");
 
          // set i345
          string i345Value = entry.GetAttribute("I345");
@@ -75,6 +78,24 @@ namespace TempestWpf
             case "07": i345.Field = "EXNOR (7)"; break;
             default: i345.Field = i345Value; break;
          }
+
+         // RAM
+         ram0.Text = entry.GetAttribute("RAM0");
+         ram1.Text = entry.GetAttribute("RAM1");
+         ram2.Text = entry.GetAttribute("RAM2");
+         ram3.Text = entry.GetAttribute("RAM3");
+         ram4.Text = entry.GetAttribute("RAM4");
+         ram5.Text = entry.GetAttribute("RAM5");
+         ram6.Text = entry.GetAttribute("RAM6");
+         ram7.Text = entry.GetAttribute("RAM7");
+         ram8.Text = entry.GetAttribute("RAM8");
+         ram9.Text = entry.GetAttribute("RAM9");
+         ramA.Text = entry.GetAttribute("RAMA");
+         ramB.Text = entry.GetAttribute("RAMB");
+         ramC.Text = entry.GetAttribute("RAMC");
+         ramD.Text = entry.GetAttribute("RAMD");
+         ramE.Text = entry.GetAttribute("RAME");
+         ramF.Text = entry.GetAttribute("RAMF");
       }
    }
 }
