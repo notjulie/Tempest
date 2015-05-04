@@ -10,6 +10,9 @@
 
 #include "..\Abstract3KHzClock.h"
 
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
+
 class Win32PerformanceCounter3KHzClock : public Abstract3KHzClock
 {
 public:
@@ -21,6 +24,7 @@ private:
    uint64_t performanceCountsPerHalfCycle;
 };
 
+#pragma warning(pop)
 
 #endif	/* WIN32PERFORMANCECOUNTER3KHZCLOCK_H */
 
