@@ -113,6 +113,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ALULogEntry.cs" />
     <Compile Include="ALULogEntryControl.xaml.cs">
       <DependentUpon>ALULogEntryControl.xaml</DependentUpon>
     </Compile>

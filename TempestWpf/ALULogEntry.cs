@@ -8,12 +8,23 @@ using System.Xml;
 namespace TempestWpf
 {
    /// <summary>
-   /// Represents an entry in the MathBox log
+   /// Represents a log entry for one of the ALUs
    /// </summary>
-   public class MathBoxLogEntry
+   public class ALULogEntry
    {
       private Dictionary<string, string> attributes = new Dictionary<string, string>();
-      private List<ALULogEntry> alu = new List<ALULogEntry>();
+      private string name = string.Empty;
+
+      /// <summary>
+      /// Gets the name
+      /// </summary>
+      public string Name
+      {
+         get
+         {
+            return name;
+         }
+      }
 
       /// <summary>
       /// Gets the value of a named attribute
@@ -29,27 +40,16 @@ namespace TempestWpf
       }
 
       /// <summary>
-      /// Gets the named ALU's log entry
-      /// </summary>
-      /// <param name="name">the name</param>
-      /// <returns>the entry</returns>
-      public ALULogEntry GetALU(string name)
-      {
-         foreach (ALULogEntry logEntry in alu)
-            if (logEntry.Name == name)
-               return logEntry;
-
-         return new ALULogEntry();
-      }
-
-      /// <summary>
       /// Constructs an instance from the given XML element
       /// </summary>
       /// <param name="element">the XML element</param>
-      /// <returns>the resulting instance</returns>
-      public static MathBoxLogEntry FromElement(XmlElement element)
+      /// <returns>the created instance</returns>
+      public static ALULogEntry FromXML(XmlElement element)
       {
-         MathBoxLogEntry result = new MathBoxLogEntry();
+         ALULogEntry result = new ALULogEntry();
+
+         // get the name
+         result.name = element.GetAttribute("Name");
 
          // parse all the child elements
          // parse all the entries
@@ -61,10 +61,6 @@ namespace TempestWpf
 
             switch (child.Name)
             {
-               case "ALU":
-                  result.alu.Add(ALULogEntry.FromXML(child));
-                  break;
-
                default:
                   result.attributes[child.Name] = child.GetAttribute("value");
                   break;

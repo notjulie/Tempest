@@ -25,11 +25,13 @@
     <ClCompile Include="6502\InstructionLogEntry.cpp" />
     <ClCompile Include="6502\Mnemonic6502.cpp" />
     <ClCompile Include="EEPROM.cpp" />
+    <ClCompile Include="MathBox\ALULogEntry.cpp" />
     <ClCompile Include="MathBox\Am2901.cpp" />
     <ClCompile Include="MathBox\MathBox.cpp" />
     <ClCompile Include="MathBox\MathBoxException.cpp" />
     <ClCompile Include="MathBox\MathBoxLog.cpp" />
     <ClCompile Include="MathBox\MathBoxLogEntry.cpp" />
+    <ClCompile Include="MathBox\MathBoxXML.cpp" />
     <ClCompile Include="Pokey.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -54,11 +56,13 @@
     <ClInclude Include="6502\Mnemonic6502.h" />
     <ClInclude Include="Abstract3KHzClock.h" />
     <ClInclude Include="EEPROM.h" />
+    <ClInclude Include="MathBox\ALULogEntry.h" />
     <ClInclude Include="MathBox\Am2901.h" />
     <ClInclude Include="MathBox\MathBox.h" />
     <ClInclude Include="MathBox\MathBoxException.h" />
     <ClInclude Include="MathBox\MathBoxLog.h" />
     <ClInclude Include="MathBox\MathBoxLogEntry.h" />
+    <ClInclude Include="MathBox\MathBoxXML.h" />
     <ClInclude Include="MathBox\Nullable.h" />
     <ClInclude Include="MathBox\Nybble.h" />
     <ClInclude Include="Pokey.h" />

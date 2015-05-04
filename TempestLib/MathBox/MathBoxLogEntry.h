@@ -2,6 +2,7 @@
 #ifndef MATHBOXLOGENTRY_H
 #define MATHBOXLOGENTRY_H
 
+#include "ALULogEntry.h"
 #include "Nullable.h"
 
 class MathBoxLogEntry
@@ -16,12 +17,13 @@ public:
 
 	NullableByte	PC;
 
+	ALULogEntry		ALUE;
+	ALULogEntry		ALUF;
+	ALULogEntry		ALUJ;
+	ALULogEntry		ALUK;
+
 public:
 	std::string GetXML(void) const;
-
-private:
-	static std::string MakeElement(const std::string &name, const NullableByte &value);
-	static std::string MakeElement(const std::string &name, const Tristate &value);
 };
 
 #endif

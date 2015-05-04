@@ -370,6 +370,12 @@ void MathBox::Log(void)
 	// bytes
 	entry.PC = PC;
 
+	// ALU info
+	entry.ALUE = aluE.GetLogData();
+	entry.ALUF = aluF.GetLogData();
+	entry.ALUJ = aluJ.GetLogData();
+	entry.ALUK = aluK.GetLogData();
+
 	// add it to the log
 	log->AddEntry(entry);
 }

@@ -4,6 +4,8 @@
 
 #include "Nullable.h"
 
+class ALULogEntry;
+
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
@@ -25,23 +27,25 @@ public:
 
 public:
 	Tristate GetCarryOut(void);
-	Tristate GetF3(void);
-	Tristate GetOVR(void);
+	Tristate GetF3(void) const;
+	Tristate GetOVR(void) const;
 	Tristate GetQ3(void);
 	Tristate GetRAM3(void);
 	void SetClock(bool state);
 
+	ALULogEntry GetLogData(void) const;
+
 private:
-	NullableNybble GetA(void);
-	NullableNybble GetB(void);
-	Tristate GetC3(const NullableNybble &R, const NullableNybble &S);
-	Tristate GetC4(const NullableNybble &R, const NullableNybble &S);
-	NullableNybble GetF(void);
-	NullableNybble GetR(void);
-	NullableNybble GetS(void);
+	NullableNybble GetA(void) const;
+	NullableNybble GetB(void) const;
+	Tristate GetC3(const NullableNybble &R, const NullableNybble &S) const;
+	Tristate GetC4(const NullableNybble &R, const NullableNybble &S) const;
+	NullableNybble GetF(void) const;
+	NullableNybble GetR(void) const;
+	NullableNybble GetS(void) const;
 	Tristate GetXORCarry(const NullableNybble &R, const NullableNybble &S);
-	Tristate GetXOROverflow(const NullableNybble &R, const NullableNybble &S);
-	NullableNybble GetRAMValue(const NullableByte &_address);
+	Tristate GetXOROverflow(const NullableNybble &R, const NullableNybble &S) const;
+	NullableNybble GetRAMValue(const NullableByte &_address) const;
 	void WriteToRAM(const NullableByte &_address, const NullableNybble &_value);
 
 private:

@@ -85,6 +85,11 @@ namespace TempestWpf
          s.Content = entry.GetAttribute("S");
          s0.Content = entry.GetAttribute("S0");
          s1.Content = entry.GetAttribute("S1");
+
+         aluE.LogEntry = entry.GetALU("E");
+         aluF.LogEntry = entry.GetALU("F");
+         aluJ.LogEntry = entry.GetALU("J");
+         aluK.LogEntry = entry.GetALU("K");
       }
    }
 }

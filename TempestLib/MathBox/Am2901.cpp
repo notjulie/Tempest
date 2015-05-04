@@ -10,6 +10,7 @@
 
 #include "stdafx.h"
 
+#include "ALULogEntry.h"
 #include "MathBoxException.h"
 
 #include "Am2901.h"
@@ -19,7 +20,7 @@ Am2901::Am2901(void)
 }
 
 
-Tristate Am2901::GetC3(const NullableNybble &R, const NullableNybble &S)
+Tristate Am2901::GetC3(const NullableNybble &R, const NullableNybble &S) const
 {
 	NullableNybble P = R | S;
 	NullableNybble G = R & S;
@@ -30,7 +31,7 @@ Tristate Am2901::GetC3(const NullableNybble &R, const NullableNybble &S)
 		(P[2] & P[1] & P[0] & CarryIn);
 }
 
-Tristate Am2901::GetC4(const NullableNybble &R, const NullableNybble &S)
+Tristate Am2901::GetC4(const NullableNybble &R, const NullableNybble &S) const
 {
 	NullableNybble P = R | S;
 	NullableNybble G = R & S;
@@ -56,7 +57,7 @@ Tristate Am2901::GetXORCarry(const NullableNybble &R, const NullableNybble &S)
 
 }
 
-Tristate Am2901::GetXOROverflow(const NullableNybble &R, const NullableNybble &S)
+Tristate Am2901::GetXOROverflow(const NullableNybble &R, const NullableNybble &S) const
 {
 	NullableNybble P = R | S;
 	NullableNybble G = R & S;
@@ -119,12 +120,12 @@ Tristate Am2901::GetCarryOut(void)
 	}
 }
 
-Tristate Am2901::GetF3(void)
+Tristate Am2901::GetF3(void) const
 {
 	return GetF()[3];
 }
 
-Tristate Am2901::GetOVR(void)
+Tristate Am2901::GetOVR(void) const
 {
 	if (I345.IsUnknown())
 		return Tristate::Unknown;
@@ -193,7 +194,7 @@ Tristate Am2901::GetQ3(void)
 	}
 }
 
-NullableNybble Am2901::GetA(void)
+NullableNybble Am2901::GetA(void) const
 {
 	// if the clock is high we return the current value; else we
 	// return the latched value
@@ -205,7 +206,7 @@ NullableNybble Am2901::GetA(void)
 		return ALatch;
 }
 
-NullableNybble Am2901::GetB(void)
+NullableNybble Am2901::GetB(void) const
 {
 	// if the clock is high we return the current value; else we
 	// return the latched value
@@ -217,7 +218,7 @@ NullableNybble Am2901::GetB(void)
 		return BLatch;
 }
 
-NullableNybble Am2901::GetF(void)
+NullableNybble Am2901::GetF(void) const
 {
 	if (I345.IsUnknown())
 		return NullableNybble::Unknown;
@@ -272,7 +273,7 @@ NullableNybble Am2901::GetF(void)
 	}
 }
 
-NullableNybble Am2901::GetR(void)
+NullableNybble Am2901::GetR(void) const
 {
 	if (I012.IsUnknown())
 		return NullableNybble::Unknown;
@@ -303,7 +304,7 @@ NullableNybble Am2901::GetR(void)
 }
 
 
-NullableNybble Am2901::GetS(void)
+NullableNybble Am2901::GetS(void) const
 {
 	if (I012.IsUnknown())
 		return NullableNybble::Unknown;
@@ -335,7 +336,7 @@ NullableNybble Am2901::GetS(void)
 	}
 }
 
-NullableNybble Am2901::GetRAMValue(const NullableByte &_address)
+NullableNybble Am2901::GetRAMValue(const NullableByte &_address) const
 {
 	if (_address.IsUnknown())
 		return NullableNybble::Unknown;
@@ -445,3 +446,15 @@ void Am2901::WriteToRAM(const NullableByte &_address, const NullableNybble &_val
 		throw MathBoxException("Am2901::WriteToRAM: address not specified");
 	RAM[_address.Value()] = _value;
 }
+
+
+ALULogEntry Am2901::GetLogData(void) const
+{
+	ALULogEntry result;
+
+	result.F3 = GetF3();
+	result.OVR = GetOVR();
+
+	return result;
+}
+

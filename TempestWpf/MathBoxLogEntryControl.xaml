@@ -46,10 +46,18 @@
                     </StackPanel>
                 </StackPanel>
                 <UniformGrid Rows="4">
-                    <local:ALULogEntryControl x:Name="aluE"/>
-                    <local:ALULogEntryControl x:Name="aluJ"/>
-                    <local:ALULogEntryControl x:Name="aluF"/>
-                    <local:ALULogEntryControl x:Name="aluK"/>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <local:ALULogEntryControl x:Name="aluE"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <local:ALULogEntryControl x:Name="aluJ"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                            <local:ALULogEntryControl x:Name="aluF"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <local:ALULogEntryControl x:Name="aluK"/>
+                    </Border>
                 </UniformGrid>
             </DockPanel>
         </DockPanel>
