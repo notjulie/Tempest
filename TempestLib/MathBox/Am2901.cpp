@@ -452,8 +452,14 @@ ALULogEntry Am2901::GetLogData(void) const
 {
 	ALULogEntry result;
 
+	result.Cn = CarryIn;
 	result.F3 = GetF3();
+	result.I012 = I012;
+	result.I345 = I345;
+	result.I678 = I678;
 	result.OVR = GetOVR();
+	result.R = GetR();
+	result.S = GetS();
 
 	return result;
 }

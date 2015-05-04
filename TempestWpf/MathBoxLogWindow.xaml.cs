@@ -33,8 +33,15 @@ namespace TempestWpf
          InitializeComponent();
 
          // event handlers
+         Closing += MathBoxLogWindow_Closing;
          leftButton.Click += leftButton_Click;
          rightButton.Click += rightButton_Click;
+      }
+
+      void MathBoxLogWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+      {
+         e.Cancel = true;
+         this.Visibility = System.Windows.Visibility.Hidden;
       }
 
       #endregion

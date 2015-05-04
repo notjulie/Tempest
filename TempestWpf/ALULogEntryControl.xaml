@@ -3,16 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TempestWpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label>F3:</Label>
-            <Label Name="f3"></Label>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label>OVR:</Label>
-            <Label Name="ovr"></Label>
-        </StackPanel>
+        <local:LabeledField x:Name="cn" LabelText="Cn:" />
+        <local:LabeledField x:Name="f3" LabelText="F3:" />
+        <local:LabeledField x:Name="i012" LabelText="I012:" />
+        <local:LabeledField x:Name="i345" LabelText="I345:" />
+        <local:LabeledField x:Name="i678" LabelText="I678:" />
+        <local:LabeledField x:Name="ovr" LabelText="OVR:" />
+        <local:LabeledField x:Name="r" LabelText="R:" />
+        <local:LabeledField x:Name="s" LabelText="S:" />
     </StackPanel>
 </UserControl>

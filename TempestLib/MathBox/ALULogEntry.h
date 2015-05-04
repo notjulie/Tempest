@@ -7,6 +7,14 @@
 class ALULogEntry
 {
 public:
+	NullableByte	I012;
+	NullableByte	I345;
+	NullableByte	I678;
+
+	NullableNybble	R;
+	NullableNybble	S;
+
+	Tristate	Cn;
 	Tristate	OVR;
 	Tristate	F3;
 

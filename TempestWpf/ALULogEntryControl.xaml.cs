@@ -53,8 +53,28 @@ namespace TempestWpf
          if (entry == null)
             entry = new ALULogEntry();
 
-         f3.Content = entry.GetAttribute("F3");
-         ovr.Content = entry.GetAttribute("OVR");
+         cn.Field = entry.GetAttribute("Cn");
+         f3.Field = entry.GetAttribute("F3");
+         i012.Field = entry.GetAttribute("I012");
+         i678.Field = entry.GetAttribute("I678");
+         ovr.Field = entry.GetAttribute("OVR");
+         r.Field = entry.GetAttribute("R");
+         s.Field = entry.GetAttribute("S");
+
+         // set i345
+         string i345Value = entry.GetAttribute("I345");
+         switch (i345Value)
+         {
+            case "00": i345.Field = "ADD (0)"; break;
+            case "01": i345.Field = "SUBR (1)"; break;
+            case "02": i345.Field = "SUBS (2)"; break;
+            case "03": i345.Field = "OR (3)"; break;
+            case "04": i345.Field = "AND (4)"; break;
+            case "05": i345.Field = "NOTRS (5)"; break;
+            case "06": i345.Field = "EXOR (6)"; break;
+            case "07": i345.Field = "EXNOR (7)"; break;
+            default: i345.Field = i345Value; break;
+         }
       }
    }
 }
