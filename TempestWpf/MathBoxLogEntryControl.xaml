@@ -16,34 +16,15 @@
             </Border>
             <DockPanel>
                 <StackPanel DockPanel.Dock="Left">
-                    <StackPanel Orientation="Horizontal">
-                        <Label>PC:</Label>
-                        <Label Name="pc"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label>BEGIN:</Label>
-                        <Label Name="begin"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label>J:</Label>
-                        <Label Name="j"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label>PCEN:</Label>
-                        <Label Name="pcen"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label>S:</Label>
-                        <Label Name="s"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label>S0:</Label>
-                        <Label Name="s0"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label>S1:</Label>
-                        <Label Name="s1"></Label>
-                    </StackPanel>
+                    <local:LabeledField x:Name="addressIn" LabelText="AddressIn:" />
+                    <local:LabeledField x:Name="dataIn" LabelText="DataIn:" />
+                    <local:LabeledField x:Name="pc" LabelText="PC:" />
+                    <local:LabeledField x:Name="begin" LabelText="BEGIN:" />
+                    <local:LabeledField x:Name="j" LabelText="J:" />
+                    <local:LabeledField x:Name="pcen" LabelText="PCEN:" />
+                    <local:LabeledField x:Name="s" LabelText="S:" />
+                    <local:LabeledField x:Name="s0" LabelText="S0:" />
+                    <local:LabeledField x:Name="s1" LabelText="S1:" />
                 </StackPanel>
                 <UniformGrid Rows="4">
                     <Border BorderBrush="Black" BorderThickness="1">

@@ -68,8 +68,8 @@ private:
 
 private:
 	// inputs
-	int dataIn;
-	int addressIn;
+	NullableByte dataIn;
+	NullableByte addressIn;
 	Tristate BEGIN;
 
 	// state values that change on rising clock

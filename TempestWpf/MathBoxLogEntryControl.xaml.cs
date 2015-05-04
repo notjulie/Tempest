@@ -77,14 +77,16 @@ namespace TempestWpf
             recordNumberLabel.Content = this.recordNumber;
          }
 
-         pc.Content = entry.GetAttribute("PC");
+         pc.Field = entry.GetAttribute("PC");
 
-         begin.Content = entry.GetAttribute("BEGIN");
-         j.Content = entry.GetAttribute("J");
-         pcen.Content = entry.GetAttribute("PCEN");
-         s.Content = entry.GetAttribute("S");
-         s0.Content = entry.GetAttribute("S0");
-         s1.Content = entry.GetAttribute("S1");
+         addressIn.Field = entry.GetAttribute("AddressIn");
+         dataIn.Field = entry.GetAttribute("DataIn");
+         begin.Field = entry.GetAttribute("BEGIN");
+         j.Field = entry.GetAttribute("J");
+         pcen.Field = entry.GetAttribute("PCEN");
+         s.Field = entry.GetAttribute("S");
+         s0.Field = entry.GetAttribute("S0");
+         s1.Field = entry.GetAttribute("S1");
 
          aluE.LogEntry = entry.GetALU("E");
          aluF.LogEntry = entry.GetALU("F");

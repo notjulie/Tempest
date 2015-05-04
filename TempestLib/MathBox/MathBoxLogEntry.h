@@ -16,6 +16,8 @@ public:
 	Tristate			S1;
 
 	NullableByte	PC;
+	NullableByte	AddressIn;
+	NullableByte	DataIn;
 
 	ALULogEntry		ALUE;
 	ALULogEntry		ALUF;

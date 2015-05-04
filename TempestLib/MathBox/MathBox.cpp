@@ -96,8 +96,8 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		Log();
 
 		// our inputs will clear
-		addressIn = -1;
-		dataIn = -1;
+		addressIn = NullableByte::Unknown;
+		dataIn = NullableByte::Unknown;
 		BEGIN = false;
 
 		// then we can just handle clock pulses until the clock is disabled
@@ -132,9 +132,9 @@ void MathBox::HandleRisingClock(void)
 		// we load the PC from whichever source is selected
 		if (BEGIN.Value())
 		{
-			if (addressIn < 0)
+			if (addressIn.IsUnknown())
 				throw MathBoxException("Load PC from ROM A: addressIn not set");
-			newPC = romA[(unsigned)addressIn];
+			newPC = romA[(unsigned)addressIn.Value()];
 		}
 		else
 		{
@@ -312,14 +312,14 @@ void MathBox::SetALUInputs(void)
 	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[PC.Value()] & 8) >> 1));
 
 	// set the data inputs accordingly
-	if (dataIn < 0)
+	if (dataIn.IsUnknown())
 	{
 		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = NullableNybble::Unknown;
 	}
 	else
 	{
-		aluK.DataIn = aluJ.DataIn = (uint8_t)(dataIn & 0xF);
-		aluF.DataIn = aluE.DataIn = (uint8_t)(dataIn >> 4);
+		aluK.DataIn = aluJ.DataIn = (uint8_t)(dataIn.Value() & 0xF);
+		aluF.DataIn = aluE.DataIn = (uint8_t)(dataIn.Value() >> 4);
 	}
 }
 
@@ -369,6 +369,8 @@ void MathBox::Log(void)
 
 	// bytes
 	entry.PC = PC;
+	entry.AddressIn = addressIn;
+	entry.DataIn = dataIn;
 
 	// ALU info
 	entry.ALUE = aluE.GetLogData();

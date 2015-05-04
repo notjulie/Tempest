@@ -17,6 +17,8 @@ std::string MathBoxLogEntry::GetXML(void) const
 	result += MathBoxXML::MakeElement("S1", S1);
 
 	// add bytes
+	result += MathBoxXML::MakeElement("AddressIn", AddressIn);
+	result += MathBoxXML::MakeElement("DataIn", DataIn);
 	result += MathBoxXML::MakeElement("PC", PC);
 
 	// add the ALUs
