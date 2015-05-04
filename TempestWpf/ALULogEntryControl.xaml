@@ -21,6 +21,7 @@
             <local:LabeledField x:Name="qLatch" LabelText="QLatch:" />
             <local:LabeledField x:Name="a" LabelText="A:" />
             <local:LabeledField x:Name="b" LabelText="B:" />
+            <local:LabeledField x:Name="dataIn" LabelText="DataIn:" />
         </StackPanel>
         <StackPanel>
             <UniformGrid Rows="4" Columns="4">

@@ -55,6 +55,7 @@ namespace TempestWpf
 
          a.Field = entry.GetAttribute("A");
          b.Field = entry.GetAttribute("B");
+         dataIn.Field = entry.GetAttribute("DataIn");
          cn.Field = entry.GetAttribute("Cn");
          f3.Field = entry.GetAttribute("F3");
          i012.Field = entry.GetAttribute("I012");

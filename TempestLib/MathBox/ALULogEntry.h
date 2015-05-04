@@ -13,6 +13,7 @@ public:
 
 	NullableNybble	A;
 	NullableNybble	B;
+	NullableNybble	DataIn;
 	NullableNybble	QLatch;
 	NullableNybble	R;
 	NullableNybble	S;
