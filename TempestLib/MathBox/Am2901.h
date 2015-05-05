@@ -22,8 +22,6 @@ public:
 	NullableByte I012;
 	NullableByte I345;
 	NullableByte I678;
-	Tristate RAM0;
-	Tristate Q0;
 	Tristate CarryIn;
 
 public:
@@ -31,9 +29,16 @@ public:
 	Tristate GetCarryOut(void);
 	Tristate GetF3(void) const;
 	Tristate GetOVR(void) const;
-	Tristate GetQ3(void);
-	Tristate GetRAM3(void);
+	Tristate GetQ0Out(void);
+	Tristate GetQ3Out(void);
+	Tristate GetRAM0Out(void);
+	Tristate GetRAM3Out(void);
+
 	void SetClock(bool state);
+	void SetQ0In(const Tristate &q0) { Q0In = q0; }
+	void SetQ3In(const Tristate &q3) { Q3In = q3; }
+	void SetRAM0In(const Tristate &ram0) { RAM0In = ram0; }
+	void SetRAM3In(const Tristate &ram3) { RAM3In = ram3; }
 
 	ALULogEntry GetLogData(void) const;
 
@@ -60,6 +65,11 @@ private:
 
 private:
 	Tristate clock;
+	Tristate Q0In;
+	Tristate Q3In;
+	Tristate RAM0In;
+	Tristate RAM3In;
+
 	NullableNybble ALatch;
 	NullableNybble BLatch;
 	NullableNybble QLatch;

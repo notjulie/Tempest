@@ -202,12 +202,7 @@ void MathBox::HandleFallingClock(void)
 	SetALUInputs();
 
 	// When the ALU clock is high is when its gates are active... now is the time to
-	// set everybody's carry flags... do it iteratively a couple times just to make sure...
-	// there is some feedback here
-	SetALUCarryFlags();
-	SetALUCarryFlags();
-	SetALUCarryFlags();
-	SetALUCarryFlags();
+	// set everybody's carry flags...
 	SetALUCarryFlags();
 
 	// dropping the clock latches the result
@@ -275,7 +270,27 @@ Tristate MathBox::GetTristate(Bit bit)
 	}
 
 	case Q0:
-		return !GetTristate(A18);
+		{
+			Tristate aluKQ0 = aluK.GetQ0Out();
+			Tristate a18 = GetTristate(A18);
+
+			if (!aluKQ0.IsUnknown())
+			{
+				// ASSUMPTION WARNING
+				// we have multiple sources driving Q0... I will assume that they are
+				// wired OR and see how that goes
+				return aluKQ0 || !a18;
+			}
+
+			return !a18;
+		}
+
+	case R15:
+	{
+		Tristate E5XORout = GetTristate(S0) ^ GetTristate(S1);
+		Tristate D4NAND1out = !(E5XORout && GetTristate(S));
+		return !(D4NAND1out && !GetTristate(A18));
+	}
 
 	case S:
 		if (PC.IsUnknown())
@@ -338,23 +353,43 @@ void MathBox::SetALUInputs(void)
 	}
 }
 
+
 void MathBox::SetALUCarryFlags(void)
 {
-	aluK.RAM0 = aluE.GetQ3();
-	aluK.Q0 = GetTristate(Q0);
-	aluK.CarryIn = GetTristate(C);
+	// Pass the outputs of ALUs to the inputs of other ALUs... potentially this
+	// could require multiple iterations, for example carry flags on one ALU
+	// could cause a change in its carry out.  So we iterate a few times, well
+	// more than we need just in case.
+	for (int i = 0; i < 10; ++i)
+	{
+		// RAM0, RAM3, Q0 and Q3 are all tristate... which is output and which is input depends
+		// on the current ALU operation; thus you'll see a lot of cases where they are both being
+		// sent both directions.  The called function will sort things out depending on who is
+		// reporting an unknown value.
+		aluK.SetQ0In(GetTristate(Q0));
+		aluK.SetQ3In(aluF.GetQ0Out());
+		aluK.SetRAM0In(aluE.GetQ3Out());
+		aluK.SetRAM3In(aluF.GetRAM0Out());
+		aluK.CarryIn = GetTristate(C);
 
-	aluF.RAM0 = aluK.GetRAM3();
-	aluF.Q0 = aluK.GetQ3();
-	aluF.CarryIn = aluK.GetCarryOut();
+		aluF.SetQ0In(aluK.GetQ3Out());
+		aluF.SetQ3In(aluJ.GetQ0Out());
+		aluF.SetRAM0In(aluK.GetRAM3Out());
+		aluF.SetRAM3In(aluJ.GetRAM0Out());
+		aluF.CarryIn = aluK.GetCarryOut();
 
-	aluJ.RAM0 = aluF.GetRAM3();
-	aluJ.Q0 = aluF.GetQ3();
-	aluJ.CarryIn = aluF.GetCarryOut();
+		aluJ.SetQ0In(aluF.GetQ3Out());
+		aluJ.SetQ3In(aluE.GetQ0Out());
+		aluJ.SetRAM0In(aluF.GetRAM3Out());
+		aluJ.SetRAM3In(aluE.GetRAM0Out());
+		aluJ.CarryIn = aluF.GetCarryOut();
 
-	aluE.RAM0 = aluJ.GetRAM3();
-	aluE.Q0 = aluJ.GetQ3();
-	aluE.CarryIn = aluJ.GetCarryOut();
+		aluE.SetQ0In(aluJ.GetQ3Out());
+		aluE.SetQ3In(aluK.GetRAM0Out());
+		aluE.SetRAM0In(aluJ.GetRAM3Out());
+		aluE.SetRAM3In(GetTristate(R15));
+		aluE.CarryIn = aluJ.GetCarryOut();
+	}
 }
 
 void MathBox::SetError(const std::string &_status)

@@ -177,8 +177,33 @@ Tristate Am2901::GetOVR(void) const
 	}
 }
 
+Tristate Am2901::GetQ0Out(void)
+{
+	if (I678.IsUnknown())
+		return Tristate::Unknown;
 
-Tristate Am2901::GetQ3(void)
+	switch (I678.Value())
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+		return Tristate::Unknown;
+
+	case 4:
+	case 5:
+		return QLatch[0];
+
+	default:
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetQ0Out not implemented for destination: %d", I678.Value());
+			throw MathBoxException(buf);
+		}
+	}
+}
+
+Tristate Am2901::GetQ3Out(void)
 {
 	if (I678.IsUnknown())
 		return Tristate::Unknown;
@@ -198,11 +223,11 @@ Tristate Am2901::GetQ3(void)
 		return Tristate::Unknown;
 
 	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678.Value());
-			throw MathBoxException(buf);
-		}
+	{
+		char buf[200];
+		sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678.Value());
+		throw MathBoxException(buf);
+	}
 	}
 }
 
@@ -356,7 +381,34 @@ NullableNybble Am2901::GetRAMValue(const NullableNybble &_address) const
 		return RAM[_address.Value().Value()];
 }
 
-Tristate Am2901::GetRAM3(void)
+Tristate Am2901::GetRAM0Out(void)
+{
+	if (I678.IsUnknown())
+		return Tristate::Unknown;
+
+	switch (I678.Value())
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+		return Tristate::Unknown;
+
+	case 4:
+	case 5:
+		return GetF()[0];
+
+	default:
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetRAM0Out not implemented for destination: %d", I678.Value());
+			throw MathBoxException(buf);
+		}
+	}
+}
+
+
+Tristate Am2901::GetRAM3Out(void)
 {
 	if (I678.IsUnknown())
 		return Tristate::Unknown;
@@ -375,11 +427,11 @@ Tristate Am2901::GetRAM3(void)
 		return Tristate::Unknown;
 
 	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetRAM3 not implemented for destination: %d", I678.Value());
-			throw MathBoxException(buf);
-		}
+	{
+		char buf[200];
+		sprintf_s(buf, "Am2901:GetRAM3 not implemented for destination: %d", I678.Value());
+		throw MathBoxException(buf);
+	}
 	}
 }
 

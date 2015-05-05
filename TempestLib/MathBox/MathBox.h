@@ -31,6 +31,7 @@ private:
 		M,
 		PCEN,
 		Q0,
+		R15,
 		S,
 		S0,
 		S1
