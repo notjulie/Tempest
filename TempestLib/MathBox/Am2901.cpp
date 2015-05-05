@@ -382,48 +382,48 @@ void Am2901::SetClock(bool newClockState)
 	{
 		// latch values to the memory pointed to by the BAddress and to the Q register
 		// according to the destination code
-		if (I678.IsUnknown())
-			throw MathBoxException("Am2901::SetClock: destination code unknown");
-
-		// to RAM...
-		switch (I678.Value())
+		if (!I678.IsUnknown())
 		{
-		case 0:
-		case 1:
-			break;
+			// to RAM...
+			switch (I678.Value())
+			{
+			case 0:
+			case 1:
+				break;
 
-		case 2:
-		case 3:
-			WriteToRAM(BAddress, GetF());
-			break;
+			case 2:
+			case 3:
+				WriteToRAM(BAddress, GetF());
+				break;
 
-		default:
+			default:
 			{
 				char buf[200];
 				sprintf_s(buf, "Am2901:SetClock RAM latch not implemented for destination: %d", I678.Value());
 				throw MathBoxException(buf);
 			}
-		}
+			}
 
-		// to Q...
-		switch (I678.Value())
-		{
-		case 0:
-			QLatch = GetF();
-			break;
-
-		case 1:
-		case 2:
-		case 3:
-		case 5:
-		case 7:
-			break;
-
-		default:
+			// to Q...
+			switch (I678.Value())
 			{
-				char buf[200];
-				sprintf_s(buf, "Am2901:SetClock Q latch not implemented for destination: %d", I678.Value());
-				throw MathBoxException(buf);
+			case 0:
+				QLatch = GetF();
+				break;
+
+			case 1:
+			case 2:
+			case 3:
+			case 5:
+			case 7:
+				break;
+
+			default:
+				{
+					char buf[200];
+					sprintf_s(buf, "Am2901:SetClock Q latch not implemented for destination: %d", I678.Value());
+					throw MathBoxException(buf);
+				}
 			}
 		}
 	}
