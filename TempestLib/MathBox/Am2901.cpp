@@ -188,6 +188,8 @@ Tristate Am2901::GetQ0Out(void)
 	case 1:
 	case 2:
 	case 3:
+	case 6:
+	case 7:
 		return Tristate::Unknown;
 
 	case 4:
@@ -214,20 +216,20 @@ Tristate Am2901::GetQ3Out(void)
 	case 1:
 	case 2:
 	case 3:
+	case 4:
 	case 5:
 		return Tristate::Unknown;
 
-	case 4:
-		// the doc says "IN3", but no mention as to what that means... I'll figure that out
-		// if I need to
-		return Tristate::Unknown;
+	case 6:
+	case 7:
+		return QLatch[3];
 
 	default:
-	{
-		char buf[200];
-		sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678.Value());
-		throw MathBoxException(buf);
-	}
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678.Value());
+			throw MathBoxException(buf);
+		}
 	}
 }
 
@@ -392,6 +394,8 @@ Tristate Am2901::GetRAM0Out(void)
 	case 1:
 	case 2:
 	case 3:
+	case 6:
+	case 7:
 		return Tristate::Unknown;
 
 	case 4:
@@ -419,12 +423,13 @@ Tristate Am2901::GetRAM3Out(void)
 	case 1:
 	case 2:
 	case 3:
+	case 4:
+	case 5:
 		return Tristate::Unknown;
 
-	case 4:
-		// the doc says "IN3", but no mention as to what that means... I'll figure that out
-		// if I need to
-		return Tristate::Unknown;
+	case 6:
+	case 7:
+		return GetF()[3];
 
 	default:
 	{
@@ -469,8 +474,23 @@ void Am2901::SetClock(bool newClockState)
 
 			case 4:
 			case 5:
-				WriteToRAM(BAddress, GetF() >> 1);
+			{
+				NullableNybble shifted = GetF() >> 1;
+				if (RAM3In.Value())
+					shifted |= Nybble(8);
+				WriteToRAM(BAddress, shifted);
 				break;
+			}
+
+			case 6:
+			case 7:
+			{
+				NullableNybble shifted = GetF() << 1;
+				if (RAM0In.Value())
+					shifted |= Nybble(1);
+				WriteToRAM(BAddress, shifted);
+				break;
+			}
 
 			default:
 			{
@@ -496,6 +516,14 @@ void Am2901::SetClock(bool newClockState)
 
 			case 4:
 				QLatch = QLatch >> 1;
+				if (Q3In.Value())
+					QLatch |= Nybble(8);
+				break;
+
+			case 6:
+				QLatch = QLatch << 1;
+				if (Q0In.Value())
+					QLatch |= Nybble(1);
 				break;
 
 			default:

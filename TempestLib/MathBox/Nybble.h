@@ -16,6 +16,7 @@ public:
 	Nybble operator+(const Nybble &_n) const { return (uint8_t)((value + _n.value) & 0xF); }
 	Nybble operator-(const Nybble &_n) const { return (uint8_t)((value - _n.value) & 0xF); }
 	Nybble operator>>(int n) const { return (uint8_t)(value >> n); }
+	Nybble operator<<(int n) const { return (uint8_t)((value << n) & 0xF); }
 	bool operator!(void) const { return value == 0; }
 	Nybble operator~(void) const { return (uint8_t)~value; }
 
