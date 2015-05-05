@@ -12,11 +12,13 @@
 
 #include "ALULogEntry.h"
 #include "MathBoxException.h"
+#include "MathBoxTracer.h"
 
 #include "Am2901.h"
 
 Am2901::Am2901(void)
 {
+	tracer = NULL;
 }
 
 
@@ -374,12 +376,15 @@ void Am2901::SetClock(bool newClockState)
 	if (clock.IsUnknown())
 	{
 		clock = newClockState;
+		Trace(newClockState ? "Setting clock high" : "Setting clock low");
 		return;
 	}
 
 	// handle rising edges
 	if (!clock.Value() && newClockState)
 	{
+		Trace("Before rising edge");
+
 		// latch values to the memory pointed to by the BAddress and to the Q register
 		// according to the destination code
 		if (!I678.IsUnknown())
@@ -426,14 +431,18 @@ void Am2901::SetClock(bool newClockState)
 				}
 			}
 		}
+
+		Trace("After rising edge");
 	}
 
 	// handle falling edges
 	if (clock.Value() && !newClockState)
 	{
 		// latch A and B
+		Trace("Before falling edge");
 		ALatch = GetRAMValue(AAddress);
 		BLatch = GetRAMValue(BAddress);
+		Trace("After falling edge");
 	}
 
 	clock = newClockState;
@@ -472,3 +481,84 @@ ALULogEntry Am2901::GetLogData(void) const
 	return result;
 }
 
+void Am2901::Trace(const std::string &context)
+{
+	if (tracer == NULL)
+		return;
+
+	tracer->Trace("======= ");
+	tracer->Trace(context);
+	tracer->Trace(" =======\n");
+
+	TraceValue("A", AAddress);
+	TraceValue("B", BAddress);
+	TraceValue("Cn", CarryIn);
+	TraceValue("DataIn", DataIn);
+	TraceValue("F3", GetF3());
+	TraceValue("I012", I012);
+	TraceValue("I345", I345);
+	TraceValue("I678", I678);
+	TraceValue("OVR", GetOVR());
+	TraceValue("QLatch", QLatch);
+	TraceValue("R", GetR());
+	TraceValue("S", GetS());
+
+	TraceValue("RAM 0", GetRAMValue(Nybble(0)));
+	TraceValue("RAM 1", GetRAMValue(Nybble(1)));
+	TraceValue("RAM 2", GetRAMValue(Nybble(2)));
+	TraceValue("RAM 3", GetRAMValue(Nybble(3)));
+	TraceValue("RAM 4", GetRAMValue(Nybble(4)));
+	TraceValue("RAM 5", GetRAMValue(Nybble(5)));
+	TraceValue("RAM 6", GetRAMValue(Nybble(6)));
+	TraceValue("RAM 7", GetRAMValue(Nybble(7)));
+	TraceValue("RAM 8", GetRAMValue(Nybble(8)));
+	TraceValue("RAM 9", GetRAMValue(Nybble(9)));
+	TraceValue("RAM A", GetRAMValue(Nybble(10)));
+	TraceValue("RAM B", GetRAMValue(Nybble(11)));
+	TraceValue("RAM C", GetRAMValue(Nybble(12)));
+	TraceValue("RAM D", GetRAMValue(Nybble(13)));
+	TraceValue("RAM E", GetRAMValue(Nybble(14)));
+	TraceValue("RAM F", GetRAMValue(Nybble(15)));
+
+	tracer->Trace("\n\n");
+}
+
+
+void Am2901::TraceValue(const std::string &name, const NullableByte &value)
+{
+	char	buf[200];
+	sprintf_s(buf, "   %10s: ", name.c_str());
+	tracer->Trace(buf);
+
+	if (value.IsUnknown())
+		sprintf_s(buf, "X\n");
+	else
+		sprintf_s(buf, "%02X\n", value.Value());
+	tracer->Trace(buf);
+}
+
+void Am2901::TraceValue(const std::string &name, const NullableNybble &value)
+{
+	char	buf[200];
+	sprintf_s(buf, "   %10s: ", name.c_str());
+	tracer->Trace(buf);
+
+	if (value.IsUnknown())
+		sprintf_s(buf, "X\n");
+	else
+		sprintf_s(buf, "%X\n", value.Value().Value());
+	tracer->Trace(buf);
+}
+
+void Am2901::TraceValue(const std::string &name, const Tristate &value)
+{
+	char	buf[200];
+	sprintf_s(buf, "   %10s: ", name.c_str());
+	tracer->Trace(buf);
+
+	if (value.IsUnknown())
+		sprintf_s(buf, "X\n");
+	else
+		sprintf_s(buf, "%X\n", value.Value() ? 1 : 0);
+	tracer->Trace(buf);
+}

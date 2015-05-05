@@ -5,6 +5,7 @@
 #include "Nullable.h"
 
 class ALULogEntry;
+class MathBoxTracer;
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -35,6 +36,8 @@ public:
 
 	ALULogEntry GetLogData(void) const;
 
+	void EnableTrace(MathBoxTracer *_tracer) { tracer = _tracer; }
+
 private:
 	NullableNybble GetA(void) const;
 	NullableNybble GetB(void) const;
@@ -49,11 +52,19 @@ private:
 	void WriteToRAM(const NullableNybble &_address, const NullableNybble &_value);
 
 private:
+	void Trace(const std::string &context);
+	void TraceValue(const std::string &name, const NullableByte &value);
+	void TraceValue(const std::string &name, const NullableNybble &value);
+	void TraceValue(const std::string &name, const Tristate &value);
+
+private:
 	Tristate clock;
 	NullableNybble ALatch;
 	NullableNybble BLatch;
 	NullableNybble QLatch;
 	NullableNybble RAM[16];
+
+	MathBoxTracer *tracer;
 
 	friend class Am2901TestInterface;
 };

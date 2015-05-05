@@ -62,6 +62,7 @@
     <ClInclude Include="MathBox\MathBoxException.h" />
     <ClInclude Include="MathBox\MathBoxLog.h" />
     <ClInclude Include="MathBox\MathBoxLogEntry.h" />
+    <ClInclude Include="MathBox\MathBoxTracer.h" />
     <ClInclude Include="MathBox\MathBoxXML.h" />
     <ClInclude Include="MathBox\Nullable.h" />
     <ClInclude Include="MathBox\Nybble.h" />

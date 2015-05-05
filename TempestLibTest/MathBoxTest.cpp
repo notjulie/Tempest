@@ -3,6 +3,7 @@
 #include "CppUnitTest.h"
 
 #include "MathBox/MathBox.h"
+#include "MathBox/MathBoxTracer.h"
 
 #include "Am2901TestInterface.h"
 #include "MathBoxTestInterface.h"
@@ -10,14 +11,27 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-TEST_CLASS(MathBoxTest)
+TEST_CLASS(MathBoxTest) 
 {
+private:
+	class Tracer : public MathBoxTracer
+	{
+	public:
+		virtual void Trace(const std::string &s) {
+			::OutputDebugString(s.c_str());
+		}
+	};
+
+private:
+	Tracer	tracer;
+
 public:
 
 	TEST_METHOD(TestWrite00To15)
 	{
 		// create a math box and write 00 to address 0x15
 		MathBox mathBox;
+		mathBox.TraceALU('K', &tracer);
 		LoadROMs(&mathBox);
 		mathBox.Write(0x15, 0x00);
 

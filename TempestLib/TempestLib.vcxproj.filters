@@ -203,5 +203,8 @@
     <ClInclude Include="MathBox\MathBoxXML.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MathBox\MathBoxTracer.h">
+      <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

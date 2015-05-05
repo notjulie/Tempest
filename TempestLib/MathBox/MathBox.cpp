@@ -95,10 +95,21 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		HandleFallingClock();
 		Log();
 
-		// our inputs will clear
+		// BEGIN clears, but since our clock runs at twice the speed of the main
+		// CPU clock, the data and address lines will still be active for the beginning
+		// of the next cycle
+		BEGIN = false;
+		if (STOP.Value())
+			return;
+
+		// do the second cycle
+		HandleRisingClock();
+		HandleFallingClock();
+		Log();
+
+		// now our inputs will clear
 		addressIn = NullableByte::Unknown;
 		dataIn = NullableByte::Unknown;
-		BEGIN = false;
 
 		// then we can just handle clock pulses until the clock is disabled
 		while (!STOP.Value())
@@ -385,4 +396,16 @@ void MathBox::Log(void)
 std::string MathBox::GetLogXML(void) const
 {
 	return log->GetXML(); 
+}
+
+
+void MathBox::TraceALU(char alu, MathBoxTracer *tracer)
+{
+	switch (alu)
+	{
+	case 'E':  aluE.EnableTrace(tracer); break;
+	case 'F':  aluF.EnableTrace(tracer); break;
+	case 'J':  aluJ.EnableTrace(tracer); break;
+	case 'K':  aluK.EnableTrace(tracer); break;
+	}
 }
