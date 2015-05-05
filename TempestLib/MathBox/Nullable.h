@@ -114,6 +114,16 @@ public:
 		return (T)(value + t2.value);
 	}
 
+	Nullable operator>>(int n) const
+	{
+		// if the source is not known the result is not known
+		if (!isKnown)
+			return Unknown;
+
+		// else its just a simple shift
+		return (T)(value >> n);
+	}
+
 	Nullable operator-(const Nullable &t2) const
 	{
 		// if either is not known the result is not known

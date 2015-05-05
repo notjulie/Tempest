@@ -73,12 +73,26 @@ namespace TempestWpf
          dataIn.Field = entry.GetAttribute("DataIn");
          cn.Field = entry.GetAttribute("Cn");
          f3.Field = entry.GetAttribute("F3");
-         i012.Field = entry.GetAttribute("I012");
          i678.Field = entry.GetAttribute("I678");
          ovr.Field = entry.GetAttribute("OVR");
          r.Field = entry.GetAttribute("R");
          s.Field = entry.GetAttribute("S");
          qLatch.Field = entry.GetAttribute("QLatch");
+
+         // set i012
+         string i012Value = entry.GetAttribute("I012");
+         switch (i012Value)
+         {
+            case "00": i012.Field = "AQ (0)"; break;
+            case "01": i012.Field = "AB (1)"; break;
+            case "02": i012.Field = "ZQ (2)"; break;
+            case "03": i012.Field = "ZB (3)"; break;
+            case "04": i012.Field = "ZA (4)"; break;
+            case "05": i012.Field = "DA (5)"; break;
+            case "06": i012.Field = "DQ (6)"; break;
+            case "07": i012.Field = "DZ (7)"; break;
+            default: i012.Field = i012Value; break;
+         }
 
          // set i345
          string i345Value = entry.GetAttribute("I345");

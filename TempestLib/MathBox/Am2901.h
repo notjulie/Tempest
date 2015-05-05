@@ -27,6 +27,7 @@ public:
 	Tristate CarryIn;
 
 public:
+	void ClearRAM(const NullableNybble &value);
 	Tristate GetCarryOut(void);
 	Tristate GetF3(void) const;
 	Tristate GetOVR(void) const;

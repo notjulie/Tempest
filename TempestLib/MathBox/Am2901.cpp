@@ -22,6 +22,12 @@ Am2901::Am2901(void)
 }
 
 
+void Am2901::ClearRAM(const NullableNybble &value)
+{
+	for (int i = 0; i < 16; ++i)
+		RAM[i] = value;
+}
+
 Tristate Am2901::GetC3(const NullableNybble &R, const NullableNybble &S) const
 {
 	NullableNybble P = R | S;
@@ -184,7 +190,11 @@ Tristate Am2901::GetQ3(void)
 	case 2:
 	case 3:
 	case 5:
-	case -1:
+		return Tristate::Unknown;
+
+	case 4:
+		// the doc says "IN3", but no mention as to what that means... I'll figure that out
+		// if I need to
 		return Tristate::Unknown;
 
 	default:
@@ -357,7 +367,11 @@ Tristate Am2901::GetRAM3(void)
 	case 1:
 	case 2:
 	case 3:
-	case -1:
+		return Tristate::Unknown;
+
+	case 4:
+		// the doc says "IN3", but no mention as to what that means... I'll figure that out
+		// if I need to
 		return Tristate::Unknown;
 
 	default:
@@ -401,6 +415,11 @@ void Am2901::SetClock(bool newClockState)
 				WriteToRAM(BAddress, GetF());
 				break;
 
+			case 4:
+			case 5:
+				WriteToRAM(BAddress, GetF() >> 1);
+				break;
+
 			default:
 			{
 				char buf[200];
@@ -421,6 +440,10 @@ void Am2901::SetClock(bool newClockState)
 			case 3:
 			case 5:
 			case 7:
+				break;
+
+			case 4:
+				QLatch = QLatch >> 1;
 				break;
 
 			default:
