@@ -10,10 +10,10 @@
 MathBox::MathBox(void)
 {
 	log = new MathBoxLog();
-	aluE.ClearRAM(Nybble(0xF));
-	aluF.ClearRAM(Nybble(0xF));
-	aluJ.ClearRAM(Nybble(0xF));
-	aluK.ClearRAM(Nybble(0xF));
+	//aluE.ClearRAM(Nybble(0x0));
+	//aluF.ClearRAM(Nybble(0x0));
+	//aluJ.ClearRAM(Nybble(0x0));
+	//aluK.ClearRAM(Nybble(0x0));
 }
 
 MathBox::~MathBox(void)
