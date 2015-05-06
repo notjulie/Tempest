@@ -13,6 +13,7 @@
 #endif
 #endif
 
+#define IDR_ROM_A 102
 #define IDR_ROM_E 103
 #define IDR_ROM_F 104
 #define IDR_ROM_H 105
