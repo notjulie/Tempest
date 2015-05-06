@@ -25,6 +25,7 @@
                     <local:LabeledField x:Name="s" LabelText="S:" />
                     <local:LabeledField x:Name="s0" LabelText="S0 (E:OVR):" />
                     <local:LabeledField x:Name="s1" LabelText="S1 (E:F3):" />
+                    <local:LabeledField x:Name="jumpLatch" LabelText="JUMP:" />
                 </StackPanel>
                 <UniformGrid Rows="4">
                     <Border BorderBrush="Black" BorderThickness="1">

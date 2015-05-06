@@ -20,6 +20,7 @@ std::string MathBoxLogEntry::GetXML(void) const
 	result += MathBoxXML::MakeElement("AddressIn", AddressIn);
 	result += MathBoxXML::MakeElement("DataIn", DataIn);
 	result += MathBoxXML::MakeElement("PC", PC);
+	result += MathBoxXML::MakeElement("JumpLatch", JumpLatch);
 
 	// add the ALUs
 	result += ALUE.ToXML("E");

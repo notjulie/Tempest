@@ -63,7 +63,15 @@ void MathBoxDisassembler::DisassembleInstruction(int address)
 
 	// if this is a jump instruction, note it as such
 	if ((romE[address] & 4) != 0)
+	{
 		DisplayJumpInstructionInformation(address);
+	}
+	else if ((romF[address] & 8) != 0)
+	{
+		// if this is not a jump instruction but we are loading the address latch
+		// we should note that
+		printf("Address latch <== %02X\n", ((romL[address] << 4) + romK[address]));
+	}
 
 	// lastly we note if this is a stop point or an unconditional jump
 	if ((romH[address] & 8) != 0)
@@ -103,7 +111,21 @@ void MathBoxDisassembler::DisplayEntryPoints(const std::vector<uint8_t> addresse
 
 void MathBoxDisassembler::DisplayJumpInstructionInformation(int address)
 {
-	printf("Jump\n");
+	bool ldab = (romF[address] & 8) != 0;
+	bool s = (romE[address] & 8) != 0;
+
+	if (s)
+		printf("Conditional ");
+	printf("Jump: ");
+
+	if (ldab)
+	{
+		printf("%02X\n", (uint8_t)((romL[address] << 4) + romK[address]));
+	}
+	else
+	{
+		printf("Previously loaded address\n");
+	}
 }
 
 void MathBoxDisassembler::LoadROM(int id, std::vector<uint8_t> &rom)

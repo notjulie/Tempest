@@ -34,8 +34,10 @@ namespace TempestWpf
 
          // event handlers
          Closing += MathBoxLogWindow_Closing;
+         pageLeftButton.Click += pageLeftButton_Click;
          leftButton.Click += leftButton_Click;
          rightButton.Click += rightButton_Click;
+         pageRightButton.Click += pageRightButton_Click;
       }
 
       void MathBoxLogWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -84,6 +86,24 @@ namespace TempestWpf
          if (leftIndex < mathBoxLog.Entries.Length - 1)
          {
             ++leftIndex;
+            UpdateEntries();
+         }
+      }
+
+      void pageRightButton_Click(object sender, RoutedEventArgs e)
+      {
+         if (leftIndex < mathBoxLog.Entries.Length - 11)
+         {
+            leftIndex += 10;
+            UpdateEntries();
+         }
+      }
+
+      void pageLeftButton_Click(object sender, RoutedEventArgs e)
+      {
+         if (leftIndex > 10)
+         {
+            leftIndex -= 10;
             UpdateEntries();
          }
       }

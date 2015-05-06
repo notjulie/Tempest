@@ -18,6 +18,7 @@ public:
 	NullableByte	PC;
 	NullableByte	AddressIn;
 	NullableByte	DataIn;
+	NullableByte	JumpLatch;
 
 	ALULogEntry		ALUE;
 	ALULogEntry		ALUF;

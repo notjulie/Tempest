@@ -1,3 +1,14 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Emulation of the MathBox; this emulates all the logic external
+//    to the 4 Am2901 chips... those are emulated in class Am2901.
+// ====================================================================
+
 
 #include "stdafx.h"
 
@@ -10,10 +21,6 @@
 MathBox::MathBox(void)
 {
 	log = new MathBoxLog();
-	//aluE.ClearRAM(Nybble(0x0));
-	//aluF.ClearRAM(Nybble(0x0));
-	//aluJ.ClearRAM(Nybble(0x0));
-	//aluK.ClearRAM(Nybble(0x0));
 }
 
 MathBox::~MathBox(void)
@@ -195,7 +202,7 @@ void MathBox::HandleFallingClock(void)
 	Tristate ldab = GetTristate(LDAB);
 	if (ldab.IsUnknown() || PC.IsUnknown())
 		newJumpLatch = NullableByte::Unknown;
-	else
+	else if (ldab.Value())
 		newJumpLatch = (uint8_t)((romL[PC.Value()]<<4) + romK[PC.Value()]);
 
 	// let the ALUs handle the falling clock edge...
@@ -421,6 +428,7 @@ void MathBox::Log(void)
 	entry.PC = PC;
 	entry.AddressIn = addressIn;
 	entry.DataIn = dataIn;
+	entry.JumpLatch = JumpLatch;
 
 	// ALU info
 	entry.ALUE = aluE.GetLogData();

@@ -25,11 +25,6 @@ void MathBoxLog::AddEntry(const MathBoxLogEntry &entry)
 {
 	std::lock_guard<std::mutex> lock(theMutex);
 
-	// for now bail if we hit 100
-	if (entries.size() >= 100)
-		throw MathBoxException("MathBoxLog maxed");
-
-
 	entries.push_back(entry);
 	if (entries.size() > 100)
 		entries.erase(entries.begin());

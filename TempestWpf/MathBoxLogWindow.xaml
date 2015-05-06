@@ -6,8 +6,10 @@
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="pageLeftButton">&lt;&lt;</Button>
                 <Button Name="leftButton">&lt;</Button>
                 <Button Name="rightButton">&gt;</Button>
+                <Button Name="pageRightButton">&gt;&gt;</Button>
             </StackPanel>
         </Grid>
         <UniformGrid Columns="2">

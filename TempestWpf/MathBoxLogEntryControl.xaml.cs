@@ -87,6 +87,7 @@ namespace TempestWpf
          s.Field = entry.GetAttribute("S");
          s0.Field = entry.GetAttribute("S0");
          s1.Field = entry.GetAttribute("S1");
+         jumpLatch.Field = entry.GetAttribute("JumpLatch");
 
          aluE.LogEntry = entry.GetALU("E");
          aluF.LogEntry = entry.GetALU("F");
