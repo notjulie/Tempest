@@ -58,7 +58,7 @@ namespace TempestDotNET {
 		return gcnew String(tempestBus->GetMathBoxLogXML().c_str());
 	}
 
-	int Tempest::GetTotalClockCycles(void)
+	uint64_t Tempest::GetTotalClockCycles(void)
 	{
 		return cpu6502->GetTotalClockCycles();
 	}

@@ -27,7 +27,8 @@ namespace TempestDotNET {
 		void LoadROM(array<Byte>^ rom, int address);
 		void LoadMathBoxROM(array<Byte>^ rom, char slot);
 		void Start(void);
-		int GetTotalClockCycles(void);
+		uint64_t GetTotalClockCycles(void);
+		uint64_t GetIRQCount(void) { return cpu6502->GetIRQCount(); }
 
 	private:
 		void ThreadEntry(void);

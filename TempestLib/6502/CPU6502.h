@@ -24,7 +24,8 @@ public:
    CPU6502(AbstractBus *_bus);
 
    InstructionLog &GetInstructionLog(void) { return log; }
-	int GetTotalClockCycles(void);
+	uint64_t GetTotalClockCycles(void);
+	uint64_t GetIRQCount(void) { return irqsHandled; }
 
    void     Reset(void);
    void     Run(void);
@@ -94,7 +95,8 @@ private:
    AbstractBus *bus;
    InstructionLog log;
    InstructionLogEntry currentInstruction;
-   
+	uint64_t irqsHandled;
+
    uint8_t  A;
    uint8_t  S;
    uint8_t  X;

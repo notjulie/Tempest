@@ -10,22 +10,27 @@
 
 #include "InstructionLogEntry.h"
 
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
+
 class InstructionLog
 {
 public:
    InstructionLog();
    
-	int  GetTotalClockCycles(void) { return totalClockCycles; }
+	uint64_t  GetTotalClockCycles(void) { return totalClockCycles; }
 	void LogInstruction(const InstructionLogEntry &_entry);
    void Print(void);
    
 private:    
    int instructionsExecuted;
-   int totalClockCycles;
+   uint64_t totalClockCycles;
    int logStart;
    int logCount;
    std::vector<InstructionLogEntry> logEntries;
 };
+
+#pragma warning(pop)
 
 #endif	/* INSTRUCTIONLOG_H */
 

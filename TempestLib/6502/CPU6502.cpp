@@ -14,9 +14,12 @@ CPU6502::CPU6502(AbstractBus *_bus)
 {
    // save parameters
    bus = _bus;
+
+	// clear
+	irqsHandled = 0;
 }
 
-int CPU6502::GetTotalClockCycles(void)
+uint64_t CPU6502::GetTotalClockCycles(void)
 {
 	return log.GetTotalClockCycles();
 }
@@ -51,6 +54,8 @@ void CPU6502::SingleStep(void)
 	// see if we have an IRQ to handle
 	if (!P.I && bus->IsIRQ())
 	{
+		++irqsHandled;
+
 		// push the current PC
 		Push((uint8_t)(PC >> 8));
 		Push((uint8_t)PC);
