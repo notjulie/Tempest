@@ -23,6 +23,10 @@ class VectorData;
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
+enum ButtonID {
+	ONE_PLAYER_BUTTON
+};
+
 class TempestBus : public AbstractBus
 {
 public:
@@ -37,6 +41,8 @@ public:
 	
    bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);
+
+	void SetButtonState(ButtonID button, bool pressed);
 
 public:
 	virtual bool IsIRQ(void);
@@ -55,6 +61,7 @@ private:
    std::vector<uint8_t>  rom;
    std::vector<uint8_t>  mainRAM;
    std::vector<uint8_t>  colorRAM;
+	std::map<ButtonID, bool> buttons;
    Pokey pokey1;
    Pokey pokey2;
    EEPROM eeprom;

@@ -24,6 +24,7 @@
 #ifndef _M_CEE
 	#include <mutex>
 #endif
+#include <map>
 #include <string>
 #include <vector>
 

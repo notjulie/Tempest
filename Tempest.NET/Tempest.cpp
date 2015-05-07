@@ -88,6 +88,12 @@ namespace TempestDotNET {
 		tempestBus->LoadMathBoxROM(&romCopy[0], (int)romCopy.size(), slot);
 	}
 
+	void Tempest::SetOnePlayerButton(bool pressed)
+	{
+		tempestBus->SetButtonState(ONE_PLAYER_BUTTON, pressed);
+	}
+
+
 	void Tempest::Start(void)
 	{
 		thread = gcnew Thread(gcnew ThreadStart(this, &Tempest::ThreadEntry));

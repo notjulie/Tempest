@@ -32,6 +32,7 @@ TempestBus::TempestBus(Abstract3KHzClock *_clock3KHz, AbstractIRQClock *_irqCloc
    
 	// clear
 	selfTest = false;
+	buttons[ONE_PLAYER_BUTTON] = false;
 
    // create the ROM space
    rom.resize(20 * 1024);
@@ -102,8 +103,26 @@ uint8_t TempestBus::ReadByte(uint16_t address)
       return pokey1.ReadByte((uint16_t)(address - POKEY1_BASE));
    
    // POKEY 2
-   if (address >= POKEY2_BASE && address <= POKEY2_END)
-      return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
+	if (address >= POKEY2_BASE && address <= POKEY2_END)
+	{
+		if (address == 0x60D8)
+		{
+			//; BIT 0: D / E2 switch #2
+			//; BIT 1: D / E2 switch #3
+			//; BIT 2: D / E2 switch #4
+			//; BIT 3: Fire Button
+			//; BIT 4: Zapper Button
+			//; BIT 5: Start Player 1 Button
+			//; BIT 6: Start Player 2 Button
+			//; BIT 7: Unused.
+			uint8_t result = 0;
+			if (buttons[ONE_PLAYER_BUTTON])
+				result |= 0x20;
+			return result;
+		}
+
+		return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
+	}
    
    // see if it's in the address range above ROM that acts like a
    // copy of high ROM
@@ -246,4 +265,10 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          sprintf_s(buffer, "Invalid write address: 0x%X", address);
          throw TempestException(buffer);
    }
+}
+
+
+void TempestBus::SetButtonState(ButtonID button, bool pressed)
+{
+	buttons[button] = pressed;
 }

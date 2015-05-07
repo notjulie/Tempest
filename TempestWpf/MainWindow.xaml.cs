@@ -48,6 +48,14 @@ namespace TempestWpf
          this.Closed += MainWindow_Closed;
          this.Closing += MainWindow_Closing;
          buttonMathBoxLog.Click += buttonMathBoxLog_Click;
+         buttonOnePlayerStart.Click += buttonOnePlayerStart_Click;
+      }
+
+      void buttonOnePlayerStart_Click(object sender, RoutedEventArgs e)
+      {
+         tempest.SetOnePlayerButton(true);
+         System.Threading.Thread.Sleep(100);
+         tempest.SetOnePlayerButton(false);
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

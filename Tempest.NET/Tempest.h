@@ -30,6 +30,8 @@ namespace TempestDotNET {
 		uint64_t GetTotalClockCycles(void);
 		uint64_t GetIRQCount(void) { return cpu6502->GetIRQCount(); }
 
+		void SetOnePlayerButton(bool pressed);
+
 	private:
 		void ThreadEntry(void);
 
