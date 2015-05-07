@@ -8,6 +8,7 @@
 
 // and these are some that I just don't like
 #pragma warning(disable : 4571)  // informational... SEH exceptions not caught by catch (...)
+#pragma warning(disable : 4711)  // informational... function being inlined
 
 // temporarily disable some warnings that get reported while loading system headers
 #pragma warning(push)
