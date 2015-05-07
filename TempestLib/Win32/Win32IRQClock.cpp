@@ -1,15 +1,23 @@
 
 #include "stdafx.h"
 #include "Win32.h"
+
+#include "TempestException.h"
+
 #include "Win32IRQClock.h"
 
 Win32IRQClock::Win32IRQClock(void)
 {
 	// clear
-	irqsGenerated = 0;
-	irqsHandled = 0;
-	msAccumulator = 0;
+	irq = false;
+	accumulator = 0;
 	terminated = false;
+
+	// get the performance counter frequency
+	LARGE_INTEGER liFrequency;
+	if (!QueryPerformanceFrequency(&liFrequency))
+		throw TempestException("QueryPerformanceFrequency failed");
+	performanceCountsPerIRQ = (uint64_t)liFrequency.QuadPart / IRQS_PER_SECOND;
 
 	// start our thread
 	thread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadStart, this, 0, &threadID);
@@ -26,38 +34,41 @@ bool Win32IRQClock::GetIRQ(void)
 {
 	// we get called really often, hopefully millions of times per second... keep this
 	// ridiculously simple
-	return irqsGenerated > irqsHandled;
+	return irq;
 }
 
 
 void Win32IRQClock::ClearIRQ(void)
 {
-	if (irqsGenerated > irqsHandled)
-		++irqsHandled;
+	irq = false;
 }
 
 void Win32IRQClock::ThreadRun(void)
 {
-	double msPerIRQ = 1000.0 / IRQS_PER_SECOND;
-
-	lastTick = GetTickCount();
+	LARGE_INTEGER liCounter;
+	if (!QueryPerformanceCounter(&liCounter))
+		throw TempestException("QueryPerformanceCounter failed");
+	lastPerformanceCount = (uint64_t)liCounter.QuadPart;
 
 	while (!terminated)
 	{
-		// pause as small a tick as we can
-		Sleep(1);
+		// Sleep(0) is rather unfriendly, but it's better than not calling Sleep
+		// at all, and seriously we need the precision.
+		Sleep(0);
 
 		// add the elapsed time to our time accumulator
-		DWORD newTime = GetTickCount();
-		DWORD elapsed = newTime - lastTick;
-		lastTick = newTime;
-		msAccumulator += elapsed;
+		if (!QueryPerformanceCounter(&liCounter))
+			throw TempestException("QueryPerformanceCounter failed");
+		uint64_t newTime = (uint64_t)liCounter.QuadPart;
+		uint64_t elapsed = newTime - lastPerformanceCount;
+		lastPerformanceCount = newTime;
+		accumulator += elapsed;
 
 		// increment the number of IRQs we need to generate
-		while (msAccumulator > msPerIRQ)
+		while (accumulator > performanceCountsPerIRQ)
 		{
-			msAccumulator -= msPerIRQ;
-			++irqsGenerated;
+			accumulator -= performanceCountsPerIRQ;
+			irq = true;
 		}
 	}
 }

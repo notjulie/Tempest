@@ -101,7 +101,7 @@ bool VectorDataInterpreter::SingleStep(void)
 	case 14: // 1110
 	case 15: // 1111
 		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
-		return true;
+		return PC != 0;
 
 	default:
 		throw TempestException("VectorDataInterpreter bad op code");

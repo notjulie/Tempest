@@ -26,10 +26,11 @@ private:
 private:
 	HANDLE	thread;
 	DWORD		threadID;
-	uint64_t	irqsGenerated;
-	uint64_t	irqsHandled;
-	double	msAccumulator;
-	DWORD		lastTick;
+	uint64_t performanceCountsPerIRQ;
+	uint64_t	accumulator;
+	uint64_t lastPerformanceCount;
+	bool		irq;
+
 	bool		terminated;
 };
 
