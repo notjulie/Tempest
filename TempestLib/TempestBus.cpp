@@ -123,10 +123,10 @@ uint8_t TempestBus::ReadByte(uint16_t address)
          return eeprom.ReadByte();
          
       case 0x6060:
-         return mathBox.Read1();
+         return mathBox.ReadLow();
          
       case 0x6070:
-         return mathBox.Read2();
+         return mathBox.ReadHigh();
          
       default:
          char buffer[200];

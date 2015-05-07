@@ -312,6 +312,34 @@ NullableNybble Am2901::GetF(void) const
 	}
 }
 
+NullableNybble Am2901::GetY(void)
+{
+	if (I678.IsUnknown())
+		return NullableNybble::Unknown;
+
+	switch (I678.Value())
+	{
+	case 0:
+	case 1:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+		return GetF();
+
+	case 2:
+		return GetA();
+
+	default:
+		{
+			char buf[200];
+			sprintf_s(buf, "Am2901:GetY not implemented for destination: %d", I678.Value());
+			throw MathBoxException(buf);
+		}
+	}
+}
+
 NullableNybble Am2901::GetR(void) const
 {
 	if (I012.IsUnknown())

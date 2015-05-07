@@ -34,6 +34,8 @@ public:
 	Tristate GetRAM0Out(void);
 	Tristate GetRAM3Out(void);
 
+	NullableNybble GetY(void);
+
 	void SetClock(bool state);
 	void SetQ0In(const Tristate &q0) { Q0In = q0; }
 	void SetQ3In(const Tristate &q3) { Q3In = q3; }

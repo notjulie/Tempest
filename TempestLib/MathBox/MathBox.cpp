@@ -75,20 +75,30 @@ void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
 
 uint8_t MathBox::GetStatus(void)
 {
-	SetError("MathBox::GetStatus not implemented");
+	// it appears that we are supposed to return 0x80 to indicate that
+	// the mathbox is busy; this is never true because the emulated mathbox
+	// does all its work synchronously
 	return 0;
 }
 
-uint8_t MathBox::Read1(void)
+uint8_t MathBox::ReadLow(void)
 {
-	SetError("MathBox::Read1 not implemented");
-	return 0;
+	NullableNybble yK = aluK.GetY();
+	NullableNybble yF = aluF.GetY();
+	if (yK.IsUnknown() || yF.IsUnknown())
+		throw MathBoxException("MathBox::ReadLow: value unknown");
+
+	return (uint8_t)((yF.Value().Value() << 4) +yK.Value().Value());
 }
 
-uint8_t MathBox::Read2(void)
+uint8_t MathBox::ReadHigh(void)
 {
-	SetError("MathBox::Read2 not implemented");
-	return 0;
+	NullableNybble yJ = aluJ.GetY();
+	NullableNybble yE = aluE.GetY();
+	if (yJ.IsUnknown() || yE.IsUnknown())
+		throw MathBoxException("MathBox::ReadHigh: value unknown");
+
+	return (uint8_t)((yE.Value().Value() << 4) + yJ.Value().Value());
 }
 
 void MathBox::Write(uint8_t address, uint8_t value)

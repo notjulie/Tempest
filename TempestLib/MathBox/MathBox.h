@@ -47,8 +47,8 @@ public:
 	std::string GetLogXML(void) const;
 
    uint8_t GetStatus(void);
-   uint8_t Read1(void);
-   uint8_t Read2(void);
+   uint8_t ReadLow(void);
+   uint8_t ReadHigh(void);
    void Write(uint8_t address, uint8_t value);
 
 	void TraceALU(char alu, MathBoxTracer *tracer);
