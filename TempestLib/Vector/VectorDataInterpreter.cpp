@@ -92,13 +92,16 @@ bool VectorDataInterpreter::SingleStep(void)
 	case 12: // 1100
 	case 13: // 1101
 		//RTS
+		if (stack.size() == 0)
+			return false;
 		PC = stack[stack.size() - 1];
 		stack.pop_back();
 		return true;
 
 	case 14: // 1110
 	case 15: // 1111
-		throw TempestException("JUMP op not implemented");
+		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
+		return true;
 
 	default:
 		throw TempestException("VectorDataInterpreter bad op code");

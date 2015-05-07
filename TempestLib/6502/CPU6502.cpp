@@ -131,8 +131,10 @@ int CPU6502::DoSingleStep(void)
       case 0x6D: ADC(GetAbsoluteAddress()); return 4;
 		case 0x6E: ROR(GetAbsoluteAddress()); return 6;
 		case 0x70: BVS(); return 2;
+		case 0x71: ADC(GetIndirectYAddress()); return 5;
 		case 0x75: ADC((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0x78: P.I = true; return 2; //SEI
+		case 0x79: ADC((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0x7D: ADC((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0x84: STY(bus->ReadByte(PC++)); return 3;
       case 0x85: STA(bus->ReadByte(PC++)); return 3;
@@ -172,6 +174,7 @@ int CPU6502::DoSingleStep(void)
 		case 0xBD: LDA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0xBE: LDX((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0xC0: CPY(PC++); return 2;
+		case 0xC4: CPY(bus->ReadByte(PC++)); return 3;
 		case 0xC5: CMP(bus->ReadByte(PC++)); return 3;
 		case 0xC6: DEC(bus->ReadByte(PC++)); return 5;
 		case 0xC8: INY(); return 2;
@@ -197,6 +200,7 @@ int CPU6502::DoSingleStep(void)
 		case 0xEE: INC(GetAbsoluteAddress()); return 6;
 		case 0xF0: BEQ(); return 2;
 		case 0xF1: SBC(GetIndirectYAddress()); return 5;
+		case 0xF5: SBC((uint16_t)(bus->ReadByte(PC++) + X)); return 3;
 		case 0xF6: INC((uint16_t)(bus->ReadByte(PC++) + X)); return 6;
 		case 0xF8: P.D = true; return 2; //SED
 		case 0xF9: SBC((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
@@ -206,7 +210,7 @@ int CPU6502::DoSingleStep(void)
       default:
       {
          char  buffer[100];
-         sprintf_s(buffer, "Unimplemented op code: %02X", opCode);
+			sprintf_s(buffer, "Unimplemented op code at %04X: %02X", currentInstruction.PC, opCode);
          throw CPU6502Exception(buffer);
       }
    }
@@ -290,17 +294,40 @@ void CPU6502::SetNZ(uint8_t value)
 
 void CPU6502::ADC(uint16_t address)
 {
-   if (P.D)
-      throw CPU6502Exception("ADC: decimal mode not supported");
-   
-   uint8_t value = bus->ReadByte(address);
-   int unsignedResult = A + value + (P.C?1:0);
-   int signedResult = (int8_t)A + (int8_t)value + (P.C?1:0);
-   
-   A = (uint8_t)unsignedResult;
-   P.V = signedResult>127 || signedResult<-128;
-   P.C = unsignedResult > 255;
-   SetNZ(A);
+	uint8_t value = bus->ReadByte(address);
+
+	if (P.D)
+	{
+		uint8_t v = FromBCD(value);
+		uint8_t a = FromBCD(A);
+		int result = a + v + (P.C ? 1 : 0);
+		if (result > 99)
+		{
+			result -= 100;
+			P.C = true;
+		}
+		else
+		{
+			P.C = false;
+		}
+
+		A = ToBCD((uint8_t)result);
+
+		// From what I've read, the overflow result of decimal math is undefined,
+		// or useless, or varies between models of the 6502.  I'm just not going to
+		// touch it for now.
+	}
+	else
+	{
+		int unsignedResult = A + value + (P.C ? 1 : 0);
+		int signedResult = (int8_t)A + (int8_t)value + (P.C ? 1 : 0);
+
+		A = (uint8_t)unsignedResult;
+		P.V = signedResult > 127 || signedResult < -128;
+		P.C = unsignedResult > 255;
+	}
+
+	SetNZ(A);
 }
 
 void CPU6502::AND(uint16_t address)

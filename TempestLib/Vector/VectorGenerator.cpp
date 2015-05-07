@@ -18,6 +18,14 @@ void VectorGenerator::Go(void)
 	haveNewData = true;
 }
 
+
+bool VectorGenerator::IsHalt(void)
+{
+	// for now just return true every 10th time we're asked... that's a frame
+	// update rate of about 18Hz.
+	return (++haltCycle % 10) == 0;
+}
+
 void VectorGenerator::Pop(VectorData &_vectorData)
 {
 	_vectorData = vectorData;

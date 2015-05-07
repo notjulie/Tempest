@@ -20,6 +20,7 @@ public:
 
 	void		Go(void);
 	bool	   HaveNewData(void);
+	bool		IsHalt(void);
 	bool		IsVectorRAMAddress(uint16_t address) const;
 	bool		IsVectorROMAddress(uint16_t address) const;
 	void		LoadROM(uint16_t address, const uint8_t *buffer, int count);
@@ -32,6 +33,7 @@ public:
 private:
 	VectorData	vectorData;
 	bool haveNewData;
+	uint16_t haltCycle;
 };
 
 #pragma warning(pop)

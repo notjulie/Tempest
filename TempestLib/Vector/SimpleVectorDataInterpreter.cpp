@@ -6,6 +6,7 @@
 SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(const VectorData &_data)
 	: VectorDataInterpreter(_data)
 {
+	x = y = 0;
 	nextIndex = 0;
 }
 

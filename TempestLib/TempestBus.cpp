@@ -122,6 +122,8 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 			uint8_t result = 0;
 			if (this->clock3KHz->IsHigh())
 				result |= 0x80;
+			if (vectorGenerator.IsHalt())
+				result |= 0x40;
 			if (!selfTest)
 				result |= 0x10;
 			return result;
