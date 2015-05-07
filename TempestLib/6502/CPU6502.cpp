@@ -73,7 +73,8 @@ int CPU6502::DoSingleStep(void)
       case 0x08: Push(P.ToByte()); return 3; //PHP
       case 0x09: ORA(PC++); return 2;
       case 0x0A: ASL(); return 2;
-      case 0x10: BPL(); return 2;
+		case 0x0D: ORA(GetAbsoluteAddress()); return 4;
+		case 0x10: BPL(); return 2;
       case 0x18: P.C = false; return 2; //CLC
       case 0x20: JSR(GetAbsoluteAddress()); return 6;
       case 0x26: ROL(bus->ReadByte(PC++)); return 5;
@@ -92,6 +93,7 @@ int CPU6502::DoSingleStep(void)
       case 0x4D: EOR(GetAbsoluteAddress()); return 4;
       case 0x50: BVC(); return 2;
       case 0x51: EOR(GetIndirectYAddress()); return 6;
+		case 0x58: P.I = false; return 2; // CLI
       case 0x59: EOR((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
       case 0x60: RTS(); return 6;
       case 0x65: ADC(bus->ReadByte(PC++)); return 3;
@@ -140,8 +142,10 @@ int CPU6502::DoSingleStep(void)
       case 0xC8: INY(); return 2;
       case 0xC9: CMP(PC++); return 2;
       case 0xCA: SetNZ(--X); return 2; //DEX
-      case 0xCD: CMP(GetAbsoluteAddress()); return 4;
-      case 0xD0: BNE(); return 2;
+		case 0xCC: CPY(GetAbsoluteAddress()); return 4;
+		case 0xCD: CMP(GetAbsoluteAddress()); return 4;
+		case 0xCE: DEC(GetAbsoluteAddress()); return 6;
+		case 0xD0: BNE(); return 2;
       case 0xD1: CMP(GetIndirectYAddress()); return 6;
       case 0xD8: P.D = false; return 2; //CLD
       case 0xE0: CPX(PC++); return 2;
@@ -155,7 +159,7 @@ int CPU6502::DoSingleStep(void)
       default:
       {
          char  buffer[100];
-         sprintf_s(buffer, "Unimplemented op code: %X", opCode);
+         sprintf_s(buffer, "Unimplemented op code: %02X", opCode);
          throw CPU6502Exception(buffer);
       }
    }
@@ -337,7 +341,12 @@ void CPU6502::CMP(uint16_t address)
 
 void CPU6502::CPX(uint16_t address)
 {
-   Compare(X, bus->ReadByte(address));
+	Compare(X, bus->ReadByte(address));
+}
+
+void CPU6502::CPY(uint16_t address)
+{
+	Compare(Y, bus->ReadByte(address));
 }
 
 void CPU6502::DEC(uint16_t address)

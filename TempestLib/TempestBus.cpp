@@ -28,6 +28,9 @@ TempestBus::TempestBus(Abstract3KHzClock *_clock3KHz)
    // save parameters
    clock3KHz = _clock3KHz;
    
+	// clear
+	selfTest = false;
+
    // create the ROM space
    rom.resize(20 * 1024);
    mainRAM.resize(MAIN_RAM_SIZE);
@@ -101,8 +104,15 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    // miscellaneous other cases
    switch (address)
    {
-      case 0x0C00:
-         return (uint8_t)(this->clock3KHz->IsHigh() ? 0x80 : 0x00);
+		case 0x0C00:
+		{
+			uint8_t result = 0;
+			if (this->clock3KHz->IsHigh())
+				result |= 0x80;
+			if (!selfTest)
+				result |= 0x10;
+			return result;
+		}
 
       case 0x0D00:
          // DIP switch N13

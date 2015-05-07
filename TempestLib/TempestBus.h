@@ -57,6 +57,7 @@ private:
    EEPROM eeprom;
    MathBox mathBox;
    VectorGenerator vectorGenerator;
+	bool selfTest;
 };
 
 #pragma warning(pop)

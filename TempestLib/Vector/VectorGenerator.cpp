@@ -59,7 +59,6 @@ uint8_t VectorGenerator::ReadVectorROM(uint16_t address)
 
 void VectorGenerator::Reset(void)
 {
-   printf("Vector generator reset\n");
 }
 
 

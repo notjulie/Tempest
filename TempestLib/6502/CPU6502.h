@@ -61,8 +61,9 @@ private:
    void  BPL(void);
    void  BVC(void);
    void  CMP(uint16_t address);
-   void  CPX(uint16_t address);
-   void  DEC(uint16_t address);
+	void  CPX(uint16_t address);
+	void  CPY(uint16_t address);
+	void  DEC(uint16_t address);
    void  DEY(void);
    void  EOR(uint16_t address);
    void  INC(uint16_t address);
