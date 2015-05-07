@@ -17,6 +17,7 @@
 
 
 class Abstract3KHzClock;
+class AbstractIRQClock;
 class VectorData;
 
 #pragma warning(push)
@@ -25,7 +26,7 @@ class VectorData;
 class TempestBus : public AbstractBus
 {
 public:
-	TempestBus(Abstract3KHzClock *_clock3KHz);
+	TempestBus(Abstract3KHzClock *_clock3KHz, AbstractIRQClock *_irqClock);
 	virtual ~TempestBus(void);
 
 	void LoadROM(const uint8_t *rom, int length, uint16_t address);
@@ -38,7 +39,8 @@ public:
 	void PopVectorData(VectorData &_vectorData);
 
 public:
-   virtual uint8_t ReadByte(uint16_t address);   
+	virtual bool IsIRQ(void);
+	virtual uint8_t ReadByte(uint16_t address);
    virtual void    WriteByte(uint16_t address, uint8_t value);
 
 private:
@@ -48,7 +50,8 @@ private:
 
 private:
    Abstract3KHzClock *clock3KHz;
-   
+	AbstractIRQClock  *irqClock;
+
    std::vector<uint8_t>  rom;
    std::vector<uint8_t>  mainRAM;
    std::vector<uint8_t>  colorRAM;

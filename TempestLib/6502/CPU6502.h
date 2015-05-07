@@ -78,9 +78,11 @@ private:
    void  ROL(uint16_t address);
    void  ROR(void);
    void  ROR(uint16_t address);
-   void  RTS(void);
-   void  STA(uint16_t address);
-   void  STX(uint16_t address);
+	void  RTI(void);
+	void  RTS(void);
+	void  SBC(uint16_t address);
+	void  STA(uint16_t address);
+	void  STX(uint16_t address);
    void  STY(uint16_t address);
    
 private:

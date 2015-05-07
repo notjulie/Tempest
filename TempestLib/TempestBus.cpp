@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 #include "Abstract3KHzClock.h"
+#include "AbstractIRQClock.h"
 #include "TempestException.h"
 
 #include "TempestBus.h"
@@ -23,10 +24,11 @@ static const uint16_t EEPROM_WRITE_END = 0x603F;
 static const uint16_t MATHBOX_WRITE_BASE = 0x6080;
 static const uint16_t MATHBOX_WRITE_END = 0x609F;
 
-TempestBus::TempestBus(Abstract3KHzClock *_clock3KHz)
+TempestBus::TempestBus(Abstract3KHzClock *_clock3KHz, AbstractIRQClock *_irqClock)
 {
    // save parameters
    clock3KHz = _clock3KHz;
+	irqClock = _irqClock;
    
 	// clear
 	selfTest = false;
@@ -70,6 +72,13 @@ void TempestBus::LoadMathBoxROM(const uint8_t *rom, int length, char slot)
 	mathBox.LoadROM(rom, length, slot);
 }
 
+
+bool TempestBus::IsIRQ(void)
+{
+	return irqClock->GetIRQ();
+}
+
+
 uint8_t TempestBus::ReadByte(uint16_t address)
 {
    // see if it's a ROM address
@@ -101,7 +110,11 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    if (address >= ROM_ECHO_START && address<= ROM_ECHO_END)
       return rom[(unsigned)((ROM_ECHO_SOURCE - ROM_BASE) + (address - ROM_ECHO_START))];
    
-   // miscellaneous other cases
+	// color RAM
+	if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
+		return colorRAM[(unsigned)(address - COLOR_RAM_BASE)];
+
+	// miscellaneous other cases
    switch (address)
    {
 		case 0x0C00:
@@ -209,7 +222,8 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          break;
          
       case 0x5000:
-         // watchdog timer clear... do nothing
+         // watchdog timer clear... this is also what clears the IRQ
+			irqClock->ClearIRQ();
          break;
          
       case 0x5800:

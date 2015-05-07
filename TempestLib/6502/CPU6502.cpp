@@ -48,6 +48,23 @@ void CPU6502::Run(void)
 
 void CPU6502::SingleStep(void)
 {
+	// see if we have an IRQ to handle
+	if (!P.I && bus->IsIRQ())
+	{
+		// push the current PC
+		Push((uint8_t)(PC >> 8));
+		Push((uint8_t)PC);
+
+		// push the processor status register
+		Push(P.ToByte());
+
+		// disable interrupts
+		P.I = true;
+
+		// jump to the ISR
+		PC = GetU16At(IRQ_VECTOR_ADDRESS);
+	}
+
 	// clear the current instruction log entry
 	currentInstruction = InstructionLogEntry();
 
@@ -77,14 +94,17 @@ int CPU6502::DoSingleStep(void)
 		case 0x10: BPL(); return 2;
       case 0x18: P.C = false; return 2; //CLC
       case 0x20: JSR(GetAbsoluteAddress()); return 6;
-      case 0x26: ROL(bus->ReadByte(PC++)); return 5;
-      case 0x28: P.FromByte(Pull()); return 4; //PLP
+		case 0x24: BIT(bus->ReadByte(PC++)); return 3;
+		case 0x25: AND(bus->ReadByte(PC++)); return 2;
+		case 0x26: ROL(bus->ReadByte(PC++)); return 5;
+		case 0x28: P.FromByte(Pull()); return 4; //PLP
       case 0x29: AND(PC++); return 2;
       case 0x2A: ROL(); return 2;
       case 0x2C: BIT(GetAbsoluteAddress()); return 4;
       case 0x2D: AND(GetAbsoluteAddress()); return 4;
       case 0x30: BMI(); return 2;
       case 0x38: P.C = true; return 2; //SEC
+		case 0x40: RTI(); return 6;
       case 0x45: EOR(bus->ReadByte(PC++)); return 3;
       case 0x48: Push(A); return 3; //PHA
       case 0x49: EOR(PC++); return 2;
@@ -97,12 +117,14 @@ int CPU6502::DoSingleStep(void)
       case 0x59: EOR((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
       case 0x60: RTS(); return 6;
       case 0x65: ADC(bus->ReadByte(PC++)); return 3;
-      case 0x69: ADC(PC++); return 2;
-      case 0x6A: ROR(); return 2;
+		case 0x68: A = Pull(); SetNZ(A); return 4; //PLA
+		case 0x69: ADC(PC++); return 2;
+		case 0x6A: ROR(); return 2;
       case 0x6D: ADC(GetAbsoluteAddress()); return 4;
       case 0x6E: ROR(GetAbsoluteAddress()); return 6;
       case 0x78: P.I = true; return 2; //SEI
-      case 0x84: STY(bus->ReadByte(PC++)); return 3;
+		case 0x7D: ADC((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0x84: STY(bus->ReadByte(PC++)); return 3;
       case 0x85: STA(bus->ReadByte(PC++)); return 3;
       case 0x86: STX(bus->ReadByte(PC++)); return 3;
       case 0x88: DEY(); return 2;
@@ -138,7 +160,8 @@ int CPU6502::DoSingleStep(void)
 		case 0xBC: LDY((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0xBD: LDA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0xBE: LDX((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
-      case 0xC6: DEC(bus->ReadByte(PC++)); return 5;
+		case 0xC0: CPY(PC++); return 2;
+		case 0xC6: DEC(bus->ReadByte(PC++)); return 5;
       case 0xC8: INY(); return 2;
       case 0xC9: CMP(PC++); return 2;
       case 0xCA: SetNZ(--X); return 2; //DEX
@@ -148,14 +171,21 @@ int CPU6502::DoSingleStep(void)
 		case 0xD0: BNE(); return 2;
       case 0xD1: CMP(GetIndirectYAddress()); return 6;
       case 0xD8: P.D = false; return 2; //CLD
-      case 0xE0: CPX(PC++); return 2;
-      case 0xE6: INC(bus->ReadByte(PC++)); return 5;
-      case 0xE8: SetNZ(++X); return 2; //INX
-      case 0xEA: return 2; //NOP
+		case 0xDD: CMP((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0xE0: CPX(PC++); return 2;
+		case 0xE4: CPX(bus->ReadByte(PC++)); return 3;
+		case 0xE5: SBC(bus->ReadByte(PC++)); return 3;
+		case 0xE6: INC(bus->ReadByte(PC++)); return 5;
+		case 0xE8: SetNZ(++X); return 2; //INX
+		case 0xE9: SBC(PC++); return 2;
+		case 0xEA: return 2; //NOP
       case 0xEC: CPX(GetAbsoluteAddress()); return 4;
-      case 0xEE: INC(GetAbsoluteAddress()); return 6;
-      case 0xF0: BEQ(); return 2;
-      
+		case 0xED: SBC(GetAbsoluteAddress()); return 4;
+		case 0xEE: INC(GetAbsoluteAddress()); return 6;
+		case 0xF0: BEQ(); return 2;
+		case 0xF8: P.D = true; return 2; //SED
+		case 0xF9: SBC((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
+
       default:
       {
          char  buffer[100];
@@ -441,9 +471,30 @@ void CPU6502::ROR(uint16_t address)
    bus->WriteByte(address, DoROR(bus->ReadByte(address)));
 }
 
+void CPU6502::RTI(void)
+{
+	P.FromByte(Pull());
+	PC = (uint16_t)(Pull() + 256 * Pull());
+}
+
 void CPU6502::RTS(void)
 {
-   PC = (uint16_t)(Pull() + 256*Pull() + 1);
+	PC = (uint16_t)(Pull() + 256 * Pull() + 1);
+}
+
+void CPU6502::SBC(uint16_t address)
+{
+	if (P.D)
+		throw CPU6502Exception("SBC: decimal mode not supported");
+
+	uint8_t value = bus->ReadByte(address);
+	int unsignedResult = A - value - (P.C ? 0 : 1);
+	int signedResult = (int8_t)A - (int8_t)value - (P.C ? 0 : 1);
+
+	A = (uint8_t)unsignedResult;
+	P.V = signedResult>127 || signedResult<-128;
+	P.C = unsignedResult < 0;
+	SetNZ(A);
 }
 
 void CPU6502::STA(uint16_t address)

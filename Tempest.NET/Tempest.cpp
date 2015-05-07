@@ -7,6 +7,7 @@
 #include "TempestLib/6502/CPU6502Exception.h"
 #include "TempestLib/TempestBus.h"
 #include "TempestLib/Win32/Win32PerformanceCounter3KHzClock.h"
+#include "TempestLib/Win32/Win32IRQClock.h"
 
 #include "Tempest.h"
 
@@ -23,7 +24,8 @@ namespace TempestDotNET {
 		vectorData = NULL;
 
 		clock = new Win32PerformanceCounter3KHzClock();
-		tempestBus = new TempestBus(clock);
+		irqClock = new Win32IRQClock();
+		tempestBus = new TempestBus(clock, irqClock);
 		cpu6502 = new CPU6502(tempestBus);
 	}
 
@@ -36,6 +38,7 @@ namespace TempestDotNET {
 		// delete
 		delete cpu6502, cpu6502 = NULL;
 		delete tempestBus, tempestBus = NULL;
+		delete irqClock, irqClock = NULL;
 		delete clock, clock = NULL;
 		delete vectorData, vectorData = NULL;
 	}

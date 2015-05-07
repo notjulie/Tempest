@@ -10,6 +10,7 @@ using namespace System::Threading;
 class CPU6502;
 class TempestBus;
 class Win32PerformanceCounter3KHzClock;
+class Win32IRQClock;
 
 namespace TempestDotNET {
 
@@ -37,6 +38,7 @@ namespace TempestDotNET {
 		CPU6502		*cpu6502;
 		TempestBus	*tempestBus;
 		Win32PerformanceCounter3KHzClock *clock;
+		Win32IRQClock *irqClock;
 		VectorData	*vectorData;
 
 		Object  ^synchronizer;
