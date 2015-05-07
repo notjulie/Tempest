@@ -59,8 +59,9 @@ private:
    void  BMI(void);
    void  BNE(void);
    void  BPL(void);
-   void  BVC(void);
-   void  CMP(uint16_t address);
+	void  BVC(void);
+	void  BVS(void);
+	void  CMP(uint16_t address);
 	void  CPX(uint16_t address);
 	void  CPY(uint16_t address);
 	void  DEC(uint16_t address);
@@ -85,6 +86,10 @@ private:
 	void  STX(uint16_t address);
    void  STY(uint16_t address);
    
+private:
+	static uint8_t FromBCD(uint8_t value);
+	static uint8_t ToBCD(uint8_t value);
+
 private:
    AbstractBus *bus;
    InstructionLog log;

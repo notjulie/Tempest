@@ -93,7 +93,8 @@ int CPU6502::DoSingleStep(void)
 		case 0x0D: ORA(GetAbsoluteAddress()); return 4;
 		case 0x10: BPL(); return 2;
       case 0x18: P.C = false; return 2; //CLC
-      case 0x20: JSR(GetAbsoluteAddress()); return 6;
+		case 0x1D: ORA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0x20: JSR(GetAbsoluteAddress()); return 6;
 		case 0x24: BIT(bus->ReadByte(PC++)); return 3;
 		case 0x25: AND(bus->ReadByte(PC++)); return 2;
 		case 0x26: ROL(bus->ReadByte(PC++)); return 5;
@@ -104,6 +105,7 @@ int CPU6502::DoSingleStep(void)
       case 0x2D: AND(GetAbsoluteAddress()); return 4;
       case 0x30: BMI(); return 2;
       case 0x38: P.C = true; return 2; //SEC
+		case 0x39: AND((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0x40: RTI(); return 6;
       case 0x45: EOR(bus->ReadByte(PC++)); return 3;
       case 0x48: Push(A); return 3; //PHA
@@ -113,6 +115,7 @@ int CPU6502::DoSingleStep(void)
       case 0x4D: EOR(GetAbsoluteAddress()); return 4;
       case 0x50: BVC(); return 2;
       case 0x51: EOR(GetIndirectYAddress()); return 6;
+		case 0x55: EOR((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0x58: P.I = false; return 2; // CLI
       case 0x59: EOR((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
       case 0x60: RTS(); return 6;
@@ -121,8 +124,10 @@ int CPU6502::DoSingleStep(void)
 		case 0x69: ADC(PC++); return 2;
 		case 0x6A: ROR(); return 2;
       case 0x6D: ADC(GetAbsoluteAddress()); return 4;
-      case 0x6E: ROR(GetAbsoluteAddress()); return 6;
-      case 0x78: P.I = true; return 2; //SEI
+		case 0x6E: ROR(GetAbsoluteAddress()); return 6;
+		case 0x70: BVS(); return 2;
+		case 0x75: ADC((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0x78: P.I = true; return 2; //SEI
 		case 0x7D: ADC((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0x84: STY(bus->ReadByte(PC++)); return 3;
       case 0x85: STA(bus->ReadByte(PC++)); return 3;
@@ -153,16 +158,18 @@ int CPU6502::DoSingleStep(void)
       case 0xAE: LDX(GetAbsoluteAddress()); return 4;
       case 0xB0: BCS(); return 2;
       case 0xB1: LDA(GetIndirectYAddress()); return 6;
+		case 0xB4: LDY((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0xB5: LDA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
-      case 0xB8: P.V = false; return 2; //CLV
+		case 0xB8: P.V = false; return 2; //CLV
 		case 0xB9: LDA((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
       case 0xBA: X = S; SetNZ(X); return 2; //TSX
 		case 0xBC: LDY((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0xBD: LDA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0xBE: LDX((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0xC0: CPY(PC++); return 2;
+		case 0xC5: CMP(bus->ReadByte(PC++)); return 3;
 		case 0xC6: DEC(bus->ReadByte(PC++)); return 5;
-      case 0xC8: INY(); return 2;
+		case 0xC8: INY(); return 2;
       case 0xC9: CMP(PC++); return 2;
       case 0xCA: SetNZ(--X); return 2; //DEX
 		case 0xCC: CPY(GetAbsoluteAddress()); return 4;
@@ -170,7 +177,8 @@ int CPU6502::DoSingleStep(void)
 		case 0xCE: DEC(GetAbsoluteAddress()); return 6;
 		case 0xD0: BNE(); return 2;
       case 0xD1: CMP(GetIndirectYAddress()); return 6;
-      case 0xD8: P.D = false; return 2; //CLD
+		case 0xD6: DEC((uint16_t)(bus->ReadByte(PC++) + X)); return 6;
+		case 0xD8: P.D = false; return 2; //CLD
 		case 0xDD: CMP((uint16_t)(GetAbsoluteAddress() + X)); return 4;
 		case 0xE0: CPX(PC++); return 2;
 		case 0xE4: CPX(bus->ReadByte(PC++)); return 3;
@@ -183,8 +191,12 @@ int CPU6502::DoSingleStep(void)
 		case 0xED: SBC(GetAbsoluteAddress()); return 4;
 		case 0xEE: INC(GetAbsoluteAddress()); return 6;
 		case 0xF0: BEQ(); return 2;
+		case 0xF1: SBC(GetIndirectYAddress()); return 5;
+		case 0xF6: INC((uint16_t)(bus->ReadByte(PC++) + X)); return 6;
 		case 0xF8: P.D = true; return 2; //SED
 		case 0xF9: SBC((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
+		case 0xFD: SBC((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0xFE: INC((uint16_t)(GetAbsoluteAddress() + X)); return 7;
 
       default:
       {
@@ -358,9 +370,27 @@ void CPU6502::BPL(void)
 
 void CPU6502::BVC(void)
 {
-   this->currentInstruction.Mnemonic = OP_BVC;
-   int branchDistance = (int8_t)bus->ReadByte(PC++);
-   if (!P.V)
+	// I don't trust my implementation of decimal overflow, so warn
+	// about it
+	if (P.D)
+		throw CPU6502Exception("BVC not supported in decimal mode");
+
+	this->currentInstruction.Mnemonic = OP_BVC;
+	int branchDistance = (int8_t)bus->ReadByte(PC++);
+	if (!P.V)
+		PC = (uint16_t)(PC + branchDistance);
+}
+
+void CPU6502::BVS(void)
+{
+	// I don't trust my implementation of decimal overflow, so warn
+	// about it
+	if (P.D)
+		throw CPU6502Exception("BVS not supported in decimal mode");
+
+	this->currentInstruction.Mnemonic = OP_BVS;
+	int branchDistance = (int8_t)bus->ReadByte(PC++);
+	if (P.V)
 		PC = (uint16_t)(PC + branchDistance);
 }
 
@@ -484,16 +514,39 @@ void CPU6502::RTS(void)
 
 void CPU6502::SBC(uint16_t address)
 {
-	if (P.D)
-		throw CPU6502Exception("SBC: decimal mode not supported");
-
 	uint8_t value = bus->ReadByte(address);
-	int unsignedResult = A - value - (P.C ? 0 : 1);
-	int signedResult = (int8_t)A - (int8_t)value - (P.C ? 0 : 1);
 
-	A = (uint8_t)unsignedResult;
-	P.V = signedResult>127 || signedResult<-128;
-	P.C = unsignedResult < 0;
+	if (P.D)
+	{
+		uint8_t v = FromBCD(value);
+		uint8_t a = FromBCD(A);
+		int result = a - v - (P.C ? 0 : 1);
+		if (result < 0)
+		{
+			result += 100;
+			P.C = false;
+		}
+		else
+		{
+			P.C = true;
+		}
+
+		A = ToBCD((uint8_t)result);
+
+		// From what I've read, the overflow result of decimal math is undefined,
+		// or useless, or varies between models of the 6502.  I'm just not going to
+		// touch it for now.
+	}
+	else
+	{
+		int unsignedResult = A - value - (P.C ? 0 : 1);
+		int signedResult = (int8_t)A - (int8_t)value - (P.C ? 0 : 1);
+
+		A = (uint8_t)unsignedResult;
+		P.V = signedResult > 127 || signedResult < -128;
+		P.C = unsignedResult < 0;
+	}
+
 	SetNZ(A);
 }
 
@@ -511,5 +564,23 @@ void CPU6502::STX(uint16_t address)
 void CPU6502::STY(uint16_t address)
 {
    bus->WriteByte(address, Y);
+}
+
+uint8_t CPU6502::FromBCD(uint8_t value)
+{
+	// verify... for now I don't know what the correct action is
+	// for this
+	uint8_t lowDigit = (uint8_t)(value & 0xF);
+	uint8_t highDigit = (uint8_t)(value >> 4);
+	if (lowDigit > 9 || highDigit > 9)
+		throw CPU6502Exception("Invalid BCD value");
+	return (uint8_t)(highDigit * 10 + lowDigit);
+}
+
+uint8_t CPU6502::ToBCD(uint8_t value)
+{
+	if (value > 99)
+		throw CPU6502Exception("Invalid value for BCD");
+	return (uint8_t)((value % 10) + 16 * (value / 10));
 }
 

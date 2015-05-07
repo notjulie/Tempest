@@ -10,8 +10,9 @@ std::string GetMnemonicString(Mnemonic6502 _mnemonic)
       case OP_BMI: return "BMI";
       case OP_BNE: return "BNE";
       case OP_BPL: return "BPL";
-      case OP_BVC: return "BVC";
-      case OP_DEY: return "DEY";
+		case OP_BVC: return "BVC";
+		case OP_BVS: return "BVS";
+		case OP_DEY: return "DEY";
       case OP_EOR: return "EOR";
       case OP_INC: return "INC";
       case OP_INY: return "INY";
