@@ -10,10 +10,10 @@
 
 #include "6502/AbstractBus.h"
 #include "MathBox/MathBox.h"
+#include "Pokey/Pokey.h"
 #include "Vector/VectorGenerator.h"
 
 #include "EEPROM.h"
-#include "Pokey.h"
 
 
 class Abstract3KHzClock;

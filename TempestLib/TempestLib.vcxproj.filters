@@ -49,6 +49,15 @@
     <Filter Include="MathBox\Header Files">
       <UniqueIdentifier>{3b2944c4-c163-416f-86e2-f731c83abfc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pokey">
+      <UniqueIdentifier>{e3a85f5a-3df5-4ed0-beca-2bfb258e2455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokey\Source Files">
+      <UniqueIdentifier>{ed24aa61-3364-490c-8e6e-fb41e7f6f03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokey\Header Files">
+      <UniqueIdentifier>{c9876340-964f-45f6-8ac8-f9ae867a2e7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TempestBus.cpp">
@@ -102,9 +111,6 @@
     <ClCompile Include="EEPROM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Pokey.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MathBox\MathBoxLog.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
@@ -120,6 +126,9 @@
     <ClCompile Include="Win32\Win32IRQClock.cpp">
       <Filter>Win32\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pokey\Pokey.cpp">
+      <Filter>Pokey\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -129,9 +138,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EEPROM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pokey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TempestBus.h">
@@ -214,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="Win32\Win32IRQClock.h">
       <Filter>Win32\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokey\Pokey.h">
+      <Filter>Pokey\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
