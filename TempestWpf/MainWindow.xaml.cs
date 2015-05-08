@@ -32,6 +32,7 @@ namespace TempestWpf
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
       private MathBoxLogWindow mathBoxLog;
+      private SolidColorBrush[] vectorBrush = new SolidColorBrush[16];
 
       #endregion
 
@@ -42,6 +43,24 @@ namespace TempestWpf
       {
          // normal initialization
          InitializeComponent();
+
+         // set up our vector brushes
+         vectorBrush[0] = new SolidColorBrush(Colors.White);
+         vectorBrush[1] = new SolidColorBrush(Colors.Yellow);
+         vectorBrush[2] = new SolidColorBrush(Colors.Red);
+         vectorBrush[3] = new SolidColorBrush(Colors.Green);
+         vectorBrush[4] = new SolidColorBrush(Colors.Lime);
+         vectorBrush[5] = new SolidColorBrush(Colors.Orange);
+         vectorBrush[6] = new SolidColorBrush(Colors.Blue);
+         vectorBrush[7] = new SolidColorBrush(Colors.Pink);
+         vectorBrush[8] = new SolidColorBrush(Colors.Gray);
+         vectorBrush[9] = new SolidColorBrush(Colors.Maroon);
+         vectorBrush[10] = new SolidColorBrush(Colors.Gold);
+         vectorBrush[11] = new SolidColorBrush(Colors.Silver);
+         vectorBrush[12] = new SolidColorBrush(Colors.Fuchsia);
+         vectorBrush[13] = new SolidColorBrush(Colors.LightBlue);
+         vectorBrush[14] = new SolidColorBrush(Colors.LightGreen);
+         vectorBrush[15] = new SolidColorBrush(Colors.LightGray);
 
          // event handlers
          this.Loaded += MainWindow_Loaded;
@@ -175,7 +194,7 @@ namespace TempestWpf
                   line = lines[index];
                }
 
-               line.Stroke = new SolidColorBrush(Colors.White);
+               line.Stroke = vectorBrush[color];
                line.X1 = canvas.ActualWidth / 2 + startX;
                line.X2 = canvas.ActualWidth / 2 + endX;
                line.Y1 = canvas.ActualHeight / 2 - startY;

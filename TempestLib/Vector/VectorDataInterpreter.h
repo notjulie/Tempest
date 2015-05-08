@@ -19,9 +19,9 @@ public:
 protected:
 	virtual void Center(void);
 	virtual void LDraw(int x, int y, int intensity);
-	virtual void Scale(int thing1, int thing2);
+	virtual void Scale(int binaryScale, int linearScale);
 	virtual void SDraw(int x, int y, int intensity);
-	virtual void Stat(int thing1, int thing2);
+	virtual void Stat(int color, int intensity);
 
 private:
 	uint8_t GetAt(uint16_t pcOffset);

@@ -36,6 +36,7 @@ bool VectorDataInterpreter::SingleStep(void)
 	case  0: // 0000
 	case  1: // 0001
 	{
+		// LDRAW
 		int x = (GetAt(2) + 256 * GetAt(3)) & 0x1FFF;
 		if (x & 0x1000)
 			x = -0x1000 + (x & ~0x1000);
@@ -49,21 +50,23 @@ bool VectorDataInterpreter::SingleStep(void)
 
 	case  2: // 0010
 	case  3: // 0011
+		// HALT
 		return false;
 
 	case  4: // 0100         
 	case  5: // 0101
-	{
-		int x = GetAt(0) & 0x0F;
-		if ((GetAt(0) & 0x10) != 0)
-			x = -16 + x;
-		int y = GetAt(1) & 0x0F;
-		if ((GetAt(1) & 0x10) != 0)
-			y = -16 + y;
-		SDraw(x,	y,	GetAt(0) >> 5);
-		PC += 2;
-		return true;
-	}
+		// SDRAW
+		{
+			int x = GetAt(0) & 0x0F;
+			if ((GetAt(0) & 0x10) != 0)
+				x = -16 + x;
+			int y = GetAt(1) & 0x0F;
+			if ((GetAt(1) & 0x10) != 0)
+				y = -16 + y;
+			SDraw(x,	y,	GetAt(0) >> 5);
+			PC += 2;
+			return true;
+		}
 
 	case  6: // 0110
 		//STAT
@@ -72,26 +75,28 @@ bool VectorDataInterpreter::SingleStep(void)
 		return true;
 
 	case  7: // 0111
+		// SCALE
 		Scale(GetAt(1) & 7, GetAt(0));
 		PC += 2;
 		return true;
 
 	case  8: // 1000
 	case  9: // 1001
+		// CENTER
 		Center();
 		PC += 2;
 		return true;
 
 	case 10: // 1010
 	case 11: // 1011
-		//JSR
+		// JSR
 		stack.push_back((uint16_t)(PC + 2));
 		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
 		return true;
 
 	case 12: // 1100
 	case 13: // 1101
-		//RTS
+		// RTS
 		if (stack.size() == 0)
 			return false;
 		PC = stack[stack.size() - 1];
@@ -100,6 +105,7 @@ bool VectorDataInterpreter::SingleStep(void)
 
 	case 14: // 1110
 	case 15: // 1111
+		// JUMP
 		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
 		return PC != 0;
 

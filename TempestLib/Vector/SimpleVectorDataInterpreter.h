@@ -18,12 +18,17 @@ public:
 protected:
 	virtual void Center(void);
 	virtual void LDraw(int x, int y, int intensity);
+	virtual void Scale(int binaryScale, int linearScale);
 	virtual void SDraw(int x, int y, int intensity);
+	virtual void Stat(int color, int intensity);
 
 private:
 	int nextIndex;
 	std::vector<SimpleVector> vectors;
+	int color;
 	float x, y;
+	int binaryScale;
+	int linearScale;
 };
 
 #pragma warning(pop)

@@ -8,6 +8,9 @@ SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(const VectorData &_data
 {
 	x = y = 0;
 	nextIndex = 0;
+	color = 0;
+	binaryScale = 1;
+	linearScale = 0;
 }
 
 
@@ -27,19 +30,22 @@ void SimpleVectorDataInterpreter::Center(void)
 
 void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 {
+	float actualDX = (float)_x / (1 << (binaryScale - 1));
+	float actualDY = (float)_y / (1 << (binaryScale - 1));
+
 	if (_intensity != 0)
 	{
 		SimpleVector vector;
 		vector.startX = x;
 		vector.startY = y;
-		vector.endX = x + _x;
-		vector.endY = y + _y;
-		vector.color = _intensity;
+		vector.endX = x + actualDX;
+		vector.endY = y + actualDY;
+		vector.color = color;
 		vectors.push_back(vector);
 	}
 
-	x += _x;
-	y += _y;
+	x += actualDX;
+	y += actualDY;
 }
 
 void SimpleVectorDataInterpreter::SDraw(int x, int y, int intensity)
@@ -47,3 +53,14 @@ void SimpleVectorDataInterpreter::SDraw(int x, int y, int intensity)
 	LDraw(x, y, intensity);
 }
 
+
+void SimpleVectorDataInterpreter::Stat(int color, int)
+{
+	this->color = color;
+}
+
+void SimpleVectorDataInterpreter::Scale(int binaryScale, int linearScale)
+{
+	this->binaryScale = binaryScale;
+	this->linearScale = linearScale;
+}
