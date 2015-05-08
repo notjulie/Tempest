@@ -224,5 +224,8 @@
     <ClInclude Include="Pokey\Pokey.h">
       <Filter>Pokey\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempestPokey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

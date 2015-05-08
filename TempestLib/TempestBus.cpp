@@ -32,7 +32,6 @@ TempestBus::TempestBus(Abstract3KHzClock *_clock3KHz, AbstractIRQClock *_irqCloc
    
 	// clear
 	selfTest = false;
-	buttons[ONE_PLAYER_BUTTON] = false;
 
    // create the ROM space
    rom.resize(20 * 1024);
@@ -104,25 +103,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    
    // POKEY 2
 	if (address >= POKEY2_BASE && address <= POKEY2_END)
-	{
-		if (address == 0x60D8)
-		{
-			//; BIT 0: D / E2 switch #2
-			//; BIT 1: D / E2 switch #3
-			//; BIT 2: D / E2 switch #4
-			//; BIT 3: Fire Button
-			//; BIT 4: Zapper Button
-			//; BIT 5: Start Player 1 Button
-			//; BIT 6: Start Player 2 Button
-			//; BIT 7: Unused.
-			uint8_t result = 0;
-			if (buttons[ONE_PLAYER_BUTTON])
-				result |= 0x20;
-			return result;
-		}
-
 		return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
-	}
    
    // see if it's in the address range above ROM that acts like a
    // copy of high ROM
@@ -185,11 +166,6 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // main RAM
    if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
    {
-		// special case... we don't allow the game to write to 0050, which is where it
-		// stores the wheel position... we control that on our own
-		if (address == 0x0050)
-			return;
-
       mainRAM[(unsigned)(address - MAIN_RAM_BASE)] = value;
       return;
    }
@@ -272,13 +248,3 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    }
 }
 
-
-void TempestBus::MoveWheel(int delta)
-{
-	mainRAM[0x0050] = (uint8_t)(mainRAM[0x0050] + delta);
-}
-
-void TempestBus::SetButtonState(ButtonID button, bool pressed)
-{
-	buttons[button] = pressed;
-}

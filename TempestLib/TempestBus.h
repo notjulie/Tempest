@@ -10,10 +10,10 @@
 
 #include "6502/AbstractBus.h"
 #include "MathBox/MathBox.h"
-#include "Pokey/Pokey.h"
 #include "Vector/VectorGenerator.h"
 
 #include "EEPROM.h"
+#include "TempestPokey.h"
 
 
 class Abstract3KHzClock;
@@ -23,9 +23,6 @@ class VectorData;
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
-enum ButtonID {
-	ONE_PLAYER_BUTTON
-};
 
 class TempestBus : public AbstractBus
 {
@@ -42,8 +39,8 @@ public:
    bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);
 
-	void MoveWheel(int delta);
-	void SetButtonState(ButtonID button, bool pressed);
+	void MoveWheel(int delta) { pokey1.MoveWheel(delta); }
+	void SetButtonState(ButtonID button, bool pressed) { pokey2.SetButtonState(button, pressed); }
 
 public:
 	virtual bool IsIRQ(void);
@@ -62,9 +59,8 @@ private:
    std::vector<uint8_t>  rom;
    std::vector<uint8_t>  mainRAM;
    std::vector<uint8_t>  colorRAM;
-	std::map<ButtonID, bool> buttons;
-   Pokey pokey1;
-   Pokey pokey2;
+   TempestPokey1 pokey1;
+   TempestPokey2 pokey2;
    EEPROM eeprom;
    MathBox mathBox;
    VectorGenerator vectorGenerator;

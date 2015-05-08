@@ -6,6 +6,7 @@
 #include "TempestLib/6502/CPU6502.h"
 #include "TempestLib/6502/CPU6502Exception.h"
 #include "TempestLib/TempestBus.h"
+#include "TempestLib/TempestException.h"
 #include "TempestLib/Win32/Win32PerformanceCounter3KHzClock.h"
 #include "TempestLib/Win32/Win32IRQClock.h"
 
@@ -129,6 +130,11 @@ namespace TempestDotNET {
 		catch (CPU6502Exception &_x6502)
 		{
 			processorStatus = gcnew String(_x6502.what());
+		}
+		catch (TempestException &_xTempest)
+		{
+			// for now this goes as the processor status, too
+			processorStatus = gcnew String(_xTempest.what());
 		}
 	}
 }
