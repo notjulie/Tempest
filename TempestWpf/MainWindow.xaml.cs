@@ -166,6 +166,8 @@ namespace TempestWpf
          double irqFrequencyValue = tempest.GetIRQCount();
          irqFrequencyValue /= (DateTime.Now - startTime).TotalSeconds;
          irqFrequency.Text = irqFrequencyValue.ToString("F1");
+
+         tempest.MoveWheel(1);
       }
 
       void vectorTimer_Tick(object sender, EventArgs e)

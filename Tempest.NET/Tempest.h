@@ -30,6 +30,7 @@ namespace TempestDotNET {
 		uint64_t GetTotalClockCycles(void);
 		uint64_t GetIRQCount(void) { return cpu6502->GetIRQCount(); }
 
+		void MoveWheel(int delta) { tempestBus->MoveWheel(delta); }
 		void SetOnePlayerButton(bool pressed);
 
 	private:

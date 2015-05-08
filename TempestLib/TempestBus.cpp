@@ -185,6 +185,11 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // main RAM
    if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
    {
+		// special case... we don't allow the game to write to 0050, which is where it
+		// stores the wheel position... we control that on our own
+		if (address == 0x0050)
+			return;
+
       mainRAM[(unsigned)(address - MAIN_RAM_BASE)] = value;
       return;
    }
@@ -267,6 +272,11 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    }
 }
 
+
+void TempestBus::MoveWheel(int delta)
+{
+	mainRAM[0x0050] = (uint8_t)(mainRAM[0x0050] + delta);
+}
 
 void TempestBus::SetButtonState(ButtonID button, bool pressed)
 {

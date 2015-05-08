@@ -42,6 +42,7 @@ public:
    bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);
 
+	void MoveWheel(int delta);
 	void SetButtonState(ButtonID button, bool pressed);
 
 public:
