@@ -36,6 +36,13 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 		);
 	if (openResult != MMSYSERR_NOERROR)
 		return;
+
+	// prepare the buffers
+	buffer1.Prepare(waveOut);
+	buffer2.Prepare(waveOut);
+
+	// test play
+	buffer1.Play(waveOut);
 }
 
 
@@ -49,6 +56,10 @@ Win32WaveStreamer::~Win32WaveStreamer(void)
 		CloseHandle(callbackThread);
 		callbackThread = NULL;
 	}
+
+	// unprepare buffers
+	buffer1.Unprepare(waveOut);
+	buffer2.Unprepare(waveOut);
 
 	// close the device
 	if (waveOut != NULL)

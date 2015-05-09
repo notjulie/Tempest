@@ -2,6 +2,7 @@
 #ifndef WIN32WAVESTREAMER_H
 #define WIN32WAVESTREAMER_H
 
+#include "Win32WaveBuffer.h"
 
 class Win32WaveStreamer
 {
@@ -19,6 +20,9 @@ private:
 	HANDLE callbackThread;
 	DWORD callbackThreadID;
 	HWAVEOUT waveOut;
+
+	Win32WaveBuffer buffer1;
+	Win32WaveBuffer buffer2;
 };
 
 

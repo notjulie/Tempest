@@ -132,6 +132,9 @@
     <ClCompile Include="Win32\Win32WaveStreamer.cpp">
       <Filter>Win32\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Win32\Win32WaveBuffer.cpp">
+      <Filter>Win32\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -231,6 +234,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Win32\Win32WaveStreamer.h">
+      <Filter>Win32\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\Win32WaveBuffer.h">
       <Filter>Win32\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
