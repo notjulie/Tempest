@@ -148,7 +148,13 @@ void Win32WaveStreamer::ProcessFinishedBuffer(Win32WaveBuffer *waveBuffer)
 
 void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 {
-	// for now I ignore the difference in frequencies and just fill the
-	// buffer directly from the source
-	source->ReadWaveData(buffer->GetBuffer(), buffer->GetSampleCount());
+	int16_t *samples = buffer->GetBuffer();
+	int count = buffer->GetSampleCount();
+
+	// fill the buffer from the source
+	source->ReadWaveData(samples, count);
+
+	// the Pokey output is very low amplitude... beef it up to the level we like
+	for (int i = 0; i < count; ++i)
+		samples[i] = (int16_t)(samples[i] * 256);
 }
