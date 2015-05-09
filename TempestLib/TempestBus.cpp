@@ -237,3 +237,15 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    }
 }
 
+
+void TempestBus::ReadWaveData(int16_t *buffer, int count)
+{
+	// all we do is zero out the buffer and let the Pokey's add
+	// to it
+	for (int i = 0; i < count; ++i)
+		buffer[i] = 0;
+
+	pokey1.AddWaveData(buffer, count);
+	pokey2.AddWaveData(buffer, count);
+}
+

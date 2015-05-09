@@ -42,8 +42,13 @@ public:
 	void Set3KHzClockState(bool state) { clock3KHzIsHigh = state; }
 
 public:
+	// AbstractBus overrides
 	virtual uint8_t ReadByte(uint16_t address);
    virtual void    WriteByte(uint16_t address, uint8_t value);
+
+public:
+	// AbstractTempestWaveStream overrides
+	virtual void ReadWaveData(int16_t *buffer, int count);
 
 private:
 	// forbidden items

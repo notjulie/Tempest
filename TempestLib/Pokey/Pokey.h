@@ -21,6 +21,8 @@ public:
 	uint8_t ReadByte(uint16_t address);
 	void    WriteByte(uint16_t address, uint8_t value);
 
+	void AddWaveData(int16_t *buffer, int count);
+
 	virtual uint8_t GetALLPOT(void) { return 0; }
 
 private:

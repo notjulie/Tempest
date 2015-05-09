@@ -51,3 +51,9 @@ void Pokey::WriteByte(uint16_t address, uint8_t)
 		}
 	}
 }
+
+
+void Pokey::AddWaveData(int16_t *, int)
+{
+
+}
