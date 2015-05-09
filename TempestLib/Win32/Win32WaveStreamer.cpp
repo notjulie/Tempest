@@ -15,6 +15,7 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 
 	// create our callback thread
 	callbackThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)CallbackThreadEntry, this, 0, &callbackThreadID);
+	SetThreadPriority(callbackThread, THREAD_PRIORITY_TIME_CRITICAL);
 
 	WAVEFORMATEX waveFormat;
 	memset(&waveFormat, 0, sizeof(waveFormat));
@@ -30,7 +31,7 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 		&waveOut,
 		WAVE_MAPPER,
 		&waveFormat,
-		(DWORD_PTR)callbackThread,
+		(DWORD_PTR)callbackThreadID,
 		NULL,
 		CALLBACK_THREAD
 		);
@@ -43,6 +44,7 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 
 	// test play
 	buffer1.Play(waveOut);
+	buffer2.Play(waveOut);
 }
 
 
@@ -77,5 +79,19 @@ void Win32WaveStreamer::CallbackThread(void)
 		MSG msg;
 		if (!GetMessage(&msg, NULL, 0, 0))
 			break;
+
+		switch (msg.message)
+		{
+		case MM_WOM_DONE:
+			{
+				WAVEHDR *waveHdr = (WAVEHDR *)msg.lParam;
+				Win32WaveBuffer *waveBuffer = (Win32WaveBuffer *)waveHdr->dwUser;
+				waveBuffer->Play(waveOut);
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 }
