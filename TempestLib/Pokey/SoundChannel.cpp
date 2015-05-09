@@ -69,7 +69,7 @@ void SoundChannel::UpdateWaveform(void)
 	case 0xA:
 		// pure tone
 		{
-			float f = 64000.0F / (1 + frequency);
+			float f = 64000.0F / (1 + frequency) / 2;
 			pulseWidth = 44100.0F / f / 2;
 			outputState = true;
 			outputCounter = 0;
