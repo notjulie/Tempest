@@ -12,6 +12,7 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 	// clear
 	waveOut = NULL;
 	callbackThread = NULL;
+	terminating = false;
 
 	// create our callback thread
 	callbackThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)CallbackThreadEntry, this, 0, &callbackThreadID);
@@ -50,6 +51,16 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 
 Win32WaveStreamer::~Win32WaveStreamer(void)
 {
+	// mark ourself as terminating
+	terminating = true;
+
+	// stop playing
+	waveOutReset(waveOut);
+
+	// wait for both buffers to report that they aren't playing
+	while (buffer1.IsPlaying() || buffer2.IsPlaying())
+		Sleep(1);
+
 	// stop the thread
 	if (callbackThread != NULL)
 	{
@@ -86,7 +97,11 @@ void Win32WaveStreamer::CallbackThread(void)
 			{
 				WAVEHDR *waveHdr = (WAVEHDR *)msg.lParam;
 				Win32WaveBuffer *waveBuffer = (Win32WaveBuffer *)waveHdr->dwUser;
-				waveBuffer->Play(waveOut);
+
+				if (terminating)
+					waveBuffer->MarkDonePlaying();
+				else
+					waveBuffer->Play(waveOut);
 			}
 			break;
 

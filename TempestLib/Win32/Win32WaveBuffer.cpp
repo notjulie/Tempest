@@ -10,6 +10,7 @@
 Win32WaveBuffer::Win32WaveBuffer(void)
 {
 	prepared = false;
+	isPlaying = false;
 
 	waveData.resize(2000);
 	waveHeader.dwUser = (DWORD_PTR)this;
@@ -45,4 +46,5 @@ void Win32WaveBuffer::Play(HWAVEOUT waveOut)
 	MMRESULT result = waveOutWrite(waveOut, &waveHeader, sizeof(waveHeader));
 	if (result != MMSYSERR_NOERROR)
 		throw TempestException("Win32WaveBuffer::Play waveOutWrite failed");
+	isPlaying = true;
 }

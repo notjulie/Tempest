@@ -4,6 +4,10 @@
 
 #include "Win32WaveBuffer.h"
 
+
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
+
 class Win32WaveStreamer
 {
 public:
@@ -20,10 +24,13 @@ private:
 	HANDLE callbackThread;
 	DWORD callbackThreadID;
 	HWAVEOUT waveOut;
+	bool terminating;
 
 	Win32WaveBuffer buffer1;
 	Win32WaveBuffer buffer2;
 };
 
+
+#pragma warning(pop)
 
 #endif

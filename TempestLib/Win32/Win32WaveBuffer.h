@@ -13,10 +13,14 @@ public:
 	void Prepare(HWAVEOUT waveOut);
 	void Unprepare(HWAVEOUT waveOut);
 	void Play(HWAVEOUT waveOut);
+	void MarkDonePlaying(void) { isPlaying = false; }
+
+	bool IsPlaying(void) const { return isPlaying; }
 
 private:
 	WAVEHDR waveHeader;
 	bool prepared;
+	bool isPlaying;
 	std::vector<int16_t> waveData;
 };
 
