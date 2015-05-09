@@ -8,6 +8,8 @@
 #ifndef POKEY_H
 #define	POKEY_H
 
+#include "SoundChannel.h"
+
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
@@ -27,6 +29,10 @@ public:
 
 private:
 	uint8_t ALLPOT;
+	SoundChannel	sound1;
+	SoundChannel	sound2;
+	SoundChannel	sound3;
+	SoundChannel	sound4;
 };
 
 

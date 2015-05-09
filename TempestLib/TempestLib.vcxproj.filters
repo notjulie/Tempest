@@ -126,6 +126,9 @@
     <ClCompile Include="Win32\Win32RealTimeClock.cpp">
       <Filter>Win32\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pokey\SoundChannel.cpp">
+      <Filter>Pokey\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EEPROM.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="AbstractTempestWaveStream.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokey\SoundChannel.h">
+      <Filter>Pokey\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

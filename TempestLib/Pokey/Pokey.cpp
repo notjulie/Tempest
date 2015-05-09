@@ -53,7 +53,10 @@ void Pokey::WriteByte(uint16_t address, uint8_t)
 }
 
 
-void Pokey::AddWaveData(int16_t *, int)
+void Pokey::AddWaveData(int16_t *buffer, int count)
 {
-
+	sound1.AddWaveData(buffer, count);
+	sound2.AddWaveData(buffer, count);
+	sound3.AddWaveData(buffer, count);
+	sound4.AddWaveData(buffer, count);
 }
