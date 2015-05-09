@@ -11,6 +11,7 @@ class CPU6502;
 class TempestBus;
 class Win32PerformanceCounter3KHzClock;
 class Win32IRQClock;
+class Win32WaveStreamer;
 
 namespace TempestDotNET {
 
@@ -43,6 +44,7 @@ namespace TempestDotNET {
 		TempestBus	*tempestBus;
 		Win32PerformanceCounter3KHzClock *clock;
 		Win32IRQClock *irqClock;
+		Win32WaveStreamer *waveStreamer;
 		VectorData	*vectorData;
 
 		Object  ^synchronizer;

@@ -129,6 +129,9 @@
     <ClCompile Include="Pokey\Pokey.cpp">
       <Filter>Pokey\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Win32\Win32WaveStreamer.cpp">
+      <Filter>Win32\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="TempestPokey.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\Win32WaveStreamer.h">
+      <Filter>Win32\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

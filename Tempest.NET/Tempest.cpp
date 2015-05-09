@@ -9,6 +9,7 @@
 #include "TempestLib/TempestException.h"
 #include "TempestLib/Win32/Win32PerformanceCounter3KHzClock.h"
 #include "TempestLib/Win32/Win32IRQClock.h"
+#include "TempestLib/Win32/Win32WaveStreamer.h"
 
 #include "Tempest.h"
 
@@ -28,6 +29,8 @@ namespace TempestDotNET {
 		irqClock = new Win32IRQClock();
 		tempestBus = new TempestBus(clock, irqClock);
 		cpu6502 = new CPU6502(tempestBus);
+
+		waveStreamer = new Win32WaveStreamer();
 	}
 
 	Tempest::~Tempest(void)
@@ -37,6 +40,7 @@ namespace TempestDotNET {
 		thread->Join();
 
 		// delete
+		delete waveStreamer, waveStreamer = NULL;
 		delete cpu6502, cpu6502 = NULL;
 		delete tempestBus, tempestBus = NULL;
 		delete irqClock, irqClock = NULL;
