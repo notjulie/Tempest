@@ -17,11 +17,7 @@ CPU6502::CPU6502(AbstractBus *_bus)
 
 	// clear
 	irqsHandled = 0;
-}
-
-uint64_t CPU6502::GetTotalClockCycles(void)
-{
-	return log.GetTotalClockCycles();
+	totalClockCycles = 0;
 }
 
 void CPU6502::Reset(void)
@@ -70,22 +66,15 @@ void CPU6502::SingleStep(void)
 		PC = GetU16At(IRQ_VECTOR_ADDRESS);
 	}
 
-	// clear the current instruction log entry
-	currentInstruction = InstructionLogEntry();
-
 	// execute an instruction
-	currentInstruction.ClockCycles += DoSingleStep();
-
-	// log
-	log.LogInstruction(currentInstruction);
+	totalClockCycles += DoSingleStep();
 }
 
 int CPU6502::DoSingleStep(void)
 {
    // load the instruction
-   currentInstruction.PC = PC;
+	uint16_t instructionAddress = PC;
 	uint8_t opCode = bus->ReadByte(PC++);
-   currentInstruction.OpCode = opCode;
    
    // process the instruction
    switch (opCode)
@@ -212,7 +201,7 @@ int CPU6502::DoSingleStep(void)
       default:
       {
          char  buffer[100];
-			sprintf_s(buffer, "Unimplemented op code at %04X: %02X", currentInstruction.PC, opCode);
+			sprintf_s(buffer, "Unimplemented op code at %04X: %02X", instructionAddress, opCode);
          throw CPU6502Exception(buffer);
       }
    }
@@ -371,7 +360,6 @@ void CPU6502::BEQ(void)
 
 void CPU6502::BIT(uint16_t address)
 {
-   currentInstruction.Mnemonic = OP_BIT;
    uint8_t memoryValue = bus->ReadByte(address);
    P.Z = (A & memoryValue) == 0;
    P.N = (memoryValue & 0x80) != 0;
@@ -380,7 +368,6 @@ void CPU6502::BIT(uint16_t address)
 
 void CPU6502::BMI(void)
 {
-   currentInstruction.Mnemonic = OP_BMI;
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (P.N)
 		PC = (uint16_t)(PC + branchDistance);
@@ -388,7 +375,6 @@ void CPU6502::BMI(void)
 
 void CPU6502::BNE(void)
 {
-   currentInstruction.Mnemonic = OP_BNE;
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (!P.Z)
 		PC = (uint16_t)(PC + branchDistance);
@@ -396,7 +382,6 @@ void CPU6502::BNE(void)
 
 void CPU6502::BPL(void)
 {
-   this->currentInstruction.Mnemonic = OP_BPL;
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (!P.N)
 		PC = (uint16_t)(PC + branchDistance);
@@ -409,7 +394,6 @@ void CPU6502::BVC(void)
 	if (P.D)
 		throw CPU6502Exception("BVC not supported in decimal mode");
 
-	this->currentInstruction.Mnemonic = OP_BVC;
 	int branchDistance = (int8_t)bus->ReadByte(PC++);
 	if (!P.V)
 		PC = (uint16_t)(PC + branchDistance);
@@ -422,7 +406,6 @@ void CPU6502::BVS(void)
 	if (P.D)
 		throw CPU6502Exception("BVS not supported in decimal mode");
 
-	this->currentInstruction.Mnemonic = OP_BVS;
 	int branchDistance = (int8_t)bus->ReadByte(PC++);
 	if (P.V)
 		PC = (uint16_t)(PC + branchDistance);
@@ -452,20 +435,17 @@ void CPU6502::DEC(uint16_t address)
 
 void CPU6502::DEY(void)
 {
-   this->currentInstruction.Mnemonic = OP_DEY;
    SetNZ(--Y);
 }
 
 void CPU6502::EOR(uint16_t address)
 {
-   currentInstruction.Mnemonic = OP_EOR;
    A ^= bus->ReadByte(address);
    SetNZ(A);
 }
 
 void CPU6502::INC(uint16_t address)
 {
-   currentInstruction.Mnemonic = OP_INC;
    uint8_t result = (uint8_t)(bus->ReadByte(address) + 1);
    bus->WriteByte(address, result);
    SetNZ(result);
@@ -473,7 +453,6 @@ void CPU6502::INC(uint16_t address)
 
 void CPU6502::INY(void)
 {
-   this->currentInstruction.Mnemonic = OP_INY;
    SetNZ(++Y);
 }
 
@@ -586,7 +565,6 @@ void CPU6502::SBC(uint16_t address)
 
 void CPU6502::STA(uint16_t address)
 {
-   currentInstruction.Mnemonic = OP_STA;
    bus->WriteByte(address, A);
 }
 

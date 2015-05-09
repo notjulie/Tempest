@@ -21,9 +21,6 @@
   <ItemGroup>
     <ClCompile Include="6502\CPU6502.cpp" />
     <ClCompile Include="6502\CPU6502Exception.cpp" />
-    <ClCompile Include="6502\InstructionLog.cpp" />
-    <ClCompile Include="6502\InstructionLogEntry.cpp" />
-    <ClCompile Include="6502\Mnemonic6502.cpp" />
     <ClCompile Include="EEPROM.cpp" />
     <ClCompile Include="MathBox\ALULogEntry.cpp" />
     <ClCompile Include="MathBox\Am2901.cpp" />
@@ -54,9 +51,6 @@
     <ClInclude Include="6502\AbstractBus.h" />
     <ClInclude Include="6502\CPU6502.h" />
     <ClInclude Include="6502\CPU6502Exception.h" />
-    <ClInclude Include="6502\InstructionLog.h" />
-    <ClInclude Include="6502\InstructionLogEntry.h" />
-    <ClInclude Include="6502\Mnemonic6502.h" />
     <ClInclude Include="Abstract3KHzClock.h" />
     <ClInclude Include="AbstractIRQClock.h" />
     <ClInclude Include="EEPROM.h" />

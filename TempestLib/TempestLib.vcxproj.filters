@@ -72,15 +72,6 @@
     <ClCompile Include="6502\CPU6502.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="6502\InstructionLog.cpp">
-      <Filter>6502\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="6502\InstructionLogEntry.cpp">
-      <Filter>6502\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="6502\Mnemonic6502.cpp">
-      <Filter>6502\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="6502\CPU6502Exception.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
@@ -156,15 +147,6 @@
       <Filter>6502\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="6502\CPU6502.h">
-      <Filter>6502\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="6502\InstructionLog.h">
-      <Filter>6502\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="6502\InstructionLogEntry.h">
-      <Filter>6502\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="6502\Mnemonic6502.h">
       <Filter>6502\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="6502\CPU6502Exception.h">

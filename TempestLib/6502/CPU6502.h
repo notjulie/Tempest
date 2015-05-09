@@ -8,8 +8,6 @@
 #ifndef CPU6502_H
 #define	CPU6502_H
 
-#include "InstructionLog.h"
-#include "InstructionLogEntry.h"
 #include "ProcessorStatusWord.h"
 
 class AbstractBus;
@@ -23,8 +21,7 @@ class CPU6502
 public:
    CPU6502(AbstractBus *_bus);
 
-   InstructionLog &GetInstructionLog(void) { return log; }
-	uint64_t GetTotalClockCycles(void);
+	uint64_t GetTotalClockCycles(void) { return totalClockCycles; }
 	uint64_t GetIRQCount(void) { return irqsHandled; }
 
    void     Reset(void);
@@ -93,9 +90,8 @@ private:
 
 private:
    AbstractBus *bus;
-   InstructionLog log;
-   InstructionLogEntry currentInstruction;
 	uint64_t irqsHandled;
+	uint64_t totalClockCycles;
 
    uint8_t  A;
    uint8_t  S;
