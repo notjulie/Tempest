@@ -15,8 +15,12 @@ public:
 	Win32WaveStreamer(AbstractTempestWaveStream *source);
 	~Win32WaveStreamer(void);
 
+	std::string GetErrorString(void) const;
+
 private:
 	void	CallbackThread(void);
+	void  FillBuffer(Win32WaveBuffer *buffer);
+	void  ProcessFinishedBuffer(Win32WaveBuffer *buffer);
 
 private:
 	static LONG __stdcall CallbackThreadEntry(LPVOID pThis) { ((Win32WaveStreamer *)pThis)->CallbackThread(); return 0; }
@@ -28,6 +32,8 @@ private:
 	DWORD callbackThreadID;
 	HWAVEOUT waveOut;
 	bool terminating;
+	bool errorReported;
+	std::string errorString;
 
 	Win32WaveBuffer buffer1;
 	Win32WaveBuffer buffer2;

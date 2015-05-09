@@ -16,6 +16,10 @@
                 </StackPanel>
             </DockPanel>
             <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Audio status: "/>
+                <TextBlock Name="audioStatus"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Processor speed: "/>
                 <TextBlock Name="processorSpeedText"/>
             </StackPanel>

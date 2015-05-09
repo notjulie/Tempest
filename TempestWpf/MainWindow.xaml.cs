@@ -157,6 +157,7 @@ namespace TempestWpf
       {
          processorStatus.Text = tempest.GetProcessorStatus();
          mathBoxStatus.Text = tempest.GetMathBoxStatus();
+         audioStatus.Text = tempest.GetAudioStatus();
 
          double processorSpeed = tempest.GetTotalClockCycles();
          processorSpeed /= (DateTime.Now - startTime).TotalSeconds;

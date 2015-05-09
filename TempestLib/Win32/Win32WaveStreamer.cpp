@@ -2,6 +2,9 @@
 #include "stdafx.h"
 #include "Win32.h"
 
+#include "AbstractTempestWaveStream.h"
+#include "TempestException.h"
+
 #include "Win32WaveStreamer.h"
 
 #pragma comment(lib, "user32")
@@ -16,6 +19,7 @@ Win32WaveStreamer::Win32WaveStreamer(AbstractTempestWaveStream *source)
 	waveOut = NULL;
 	callbackThread = NULL;
 	terminating = false;
+	errorReported = false;
 
 	// create our callback thread
 	callbackThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)CallbackThreadEntry, this, 0, &callbackThreadID);
@@ -97,19 +101,54 @@ void Win32WaveStreamer::CallbackThread(void)
 		switch (msg.message)
 		{
 		case MM_WOM_DONE:
-			{
-				WAVEHDR *waveHdr = (WAVEHDR *)msg.lParam;
-				Win32WaveBuffer *waveBuffer = (Win32WaveBuffer *)waveHdr->dwUser;
-
-				if (terminating)
-					waveBuffer->MarkDonePlaying();
-				else
-					waveBuffer->Play(waveOut);
-			}
+			ProcessFinishedBuffer((Win32WaveBuffer *)((WAVEHDR *)msg.lParam)->dwUser);
 			break;
 
 		default:
 			break;
 		}
 	}
+}
+
+
+std::string Win32WaveStreamer::GetErrorString(void) const
+{
+	if (errorReported)
+		return errorString;
+	else
+		return "OK";
+}
+
+
+void Win32WaveStreamer::ProcessFinishedBuffer(Win32WaveBuffer *waveBuffer)
+{
+	if (terminating)
+	{
+		waveBuffer->MarkDonePlaying();
+	}
+	else
+	{
+		try
+		{
+			FillBuffer(waveBuffer);
+			waveBuffer->Play(waveOut);
+		}
+		catch (TempestException &x)
+		{
+			if (!errorReported)
+			{
+				errorString = x.what();
+				errorReported = true;
+			}
+			waveBuffer->MarkDonePlaying();
+		}
+	}
+}
+
+
+void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
+{
+	// for now I ignore the difference in frequencies and just fill the
+	// buffer directly from the source
+	source->ReadWaveData(buffer->GetBuffer(), buffer->GetSampleCount());
 }

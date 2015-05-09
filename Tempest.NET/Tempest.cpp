@@ -43,6 +43,11 @@ namespace TempestDotNET {
 		return gcnew String(tempestRunner->GetMathBoxStatus().c_str());
 	}
 
+	String ^Tempest::GetAudioStatus(void)
+	{
+		return gcnew String(waveStreamer->GetErrorString().c_str());
+	}
+
 	String ^Tempest::GetMathBoxLogData(void)
 	{
 		return gcnew String(tempestRunner->GetMathBoxLogXML().c_str());

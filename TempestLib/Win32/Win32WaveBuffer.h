@@ -17,6 +17,8 @@ public:
 	void Play(HWAVEOUT waveOut);
 	void MarkDonePlaying(void) { isPlaying = false; }
 
+	int16_t *GetBuffer(void) { return &waveData[0]; }
+	int GetSampleCount(void) { return (int)waveData.size(); }
 	bool IsPlaying(void) const { return isPlaying; }
 
 private:

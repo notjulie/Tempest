@@ -21,6 +21,8 @@ namespace TempestDotNET {
 		String ^GetMathBoxLogData(void);
 		String ^GetMathBoxStatus(void);
 		String ^GetProcessorStatus(void);
+		String ^GetAudioStatus(void);
+
 		VectorEnumerator ^GetVectorEnumerator(void);
 		void LoadROM(array<Byte>^ rom, int address);
 		void LoadMathBoxROM(array<Byte>^ rom, char slot);
