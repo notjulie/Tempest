@@ -12,6 +12,7 @@
 #include "MathBox/MathBox.h"
 #include "Vector/VectorGenerator.h"
 
+#include "AbstractTempestWaveStream.h"
 #include "EEPROM.h"
 #include "TempestPokey.h"
 
@@ -21,7 +22,7 @@ class VectorData;
 #pragma warning(disable : 4820)	// padding in structures
 
 
-class TempestBus : public AbstractBus
+class TempestBus : public AbstractBus, public AbstractTempestWaveStream
 {
 public:
 	TempestBus(void);

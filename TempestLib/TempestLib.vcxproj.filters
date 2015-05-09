@@ -218,5 +218,8 @@
     <ClInclude Include="Win32\Win32RealTimeClock.h">
       <Filter>Win32\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AbstractTempestWaveStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

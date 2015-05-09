@@ -52,6 +52,7 @@
     <ClInclude Include="6502\CPU6502.h" />
     <ClInclude Include="6502\CPU6502Exception.h" />
     <ClInclude Include="AbstractRealTimeClock.h" />
+    <ClInclude Include="AbstractTempestWaveStream.h" />
     <ClInclude Include="EEPROM.h" />
     <ClInclude Include="MathBox\ALULogEntry.h" />
     <ClInclude Include="MathBox\Am2901.h" />

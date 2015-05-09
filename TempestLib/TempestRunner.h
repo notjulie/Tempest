@@ -10,6 +10,7 @@ namespace std {
 };
 class AbstractRealTimeClock;
 
+
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
@@ -30,6 +31,7 @@ public:
 	// simple dispatches to the TempestBus object
 	std::string GetMathBoxLogXML(void) const { return tempestBus.GetMathBoxLogXML(); }
 	std::string GetMathBoxStatus(void) const { return tempestBus.GetMathBoxStatus(); }
+	AbstractTempestWaveStream *GetSoundStream(void) { return &tempestBus; }
 	bool HaveNewVectorData(void) { return tempestBus.HaveNewVectorData(); }
 	void PopVectorData(VectorData &vectorData) { return tempestBus.PopVectorData(vectorData); }
 	void LoadROM(const uint8_t *rom, int length, uint16_t address) { tempestBus.LoadROM(rom, length, address); }

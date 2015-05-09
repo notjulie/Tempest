@@ -4,6 +4,7 @@
 
 #include "Win32WaveBuffer.h"
 
+class AbstractTempestWaveStream;
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -11,7 +12,7 @@
 class Win32WaveStreamer
 {
 public:
-	Win32WaveStreamer(void);
+	Win32WaveStreamer(AbstractTempestWaveStream *source);
 	~Win32WaveStreamer(void);
 
 private:
@@ -21,6 +22,8 @@ private:
 	static LONG __stdcall CallbackThreadEntry(LPVOID pThis) { ((Win32WaveStreamer *)pThis)->CallbackThread(); return 0; }
 
 private:
+	AbstractTempestWaveStream *source;
+
 	HANDLE callbackThread;
 	DWORD callbackThreadID;
 	HWAVEOUT waveOut;

@@ -26,7 +26,7 @@ namespace TempestDotNET {
 		realTimeClock = new Win32RealTimeClock();
 		tempestRunner = new TempestRunner(realTimeClock);
 		vectorData = new VectorData();
-		waveStreamer = new Win32WaveStreamer();
+		waveStreamer = new Win32WaveStreamer(tempestRunner->GetSoundStream());
 	}
 
 	Tempest::~Tempest(void)

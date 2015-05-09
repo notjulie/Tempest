@@ -7,8 +7,11 @@
 #pragma comment(lib, "user32")
 #pragma comment(lib, "WinMM")
 
-Win32WaveStreamer::Win32WaveStreamer(void)
+Win32WaveStreamer::Win32WaveStreamer(AbstractTempestWaveStream *source)
 {
+	// copy parameters
+	this->source = source;
+
 	// clear
 	waveOut = NULL;
 	callbackThread = NULL;
