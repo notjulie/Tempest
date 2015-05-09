@@ -21,15 +21,10 @@ class CPU6502
 public:
    CPU6502(AbstractBus *_bus);
 
-	uint64_t GetTotalClockCycles(void) { return totalClockCycles; }
-	uint64_t GetIRQCount(void) { return irqsHandled; }
-
-   void     Reset(void);
+	void		IRQ(void);
+	void     Reset(void);
    void     Run(void);
-   void		SingleStep(void);
-
-private:
-   int  DoSingleStep(void);
+   int		SingleStep(void);
 
 private:
    void     Compare(uint8_t a, uint8_t b);
@@ -90,8 +85,6 @@ private:
 
 private:
    AbstractBus *bus;
-	uint64_t irqsHandled;
-	uint64_t totalClockCycles;
 
    uint8_t  A;
    uint8_t  S;

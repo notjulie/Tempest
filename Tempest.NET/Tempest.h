@@ -2,15 +2,12 @@
 #ifndef TEMPEST_H
 #define TEMPEST_H
 
+#include "VectorEnumerator.h"
+
 using namespace System;
 using namespace System::Threading;
 
-#include "VectorEnumerator.h"
-
-class CPU6502;
-class TempestBus;
-class Win32PerformanceCounter3KHzClock;
-class Win32IRQClock;
+class Win32RealTimeClock;
 class Win32WaveStreamer;
 
 namespace TempestDotNET {
@@ -27,30 +24,21 @@ namespace TempestDotNET {
 		VectorEnumerator ^GetVectorEnumerator(void);
 		void LoadROM(array<Byte>^ rom, int address);
 		void LoadMathBoxROM(array<Byte>^ rom, char slot);
+		void SetOnePlayerButton(bool pressed);
 		void Start(void);
 		uint64_t GetTotalClockCycles(void);
-		uint64_t GetIRQCount(void) { return cpu6502->GetIRQCount(); }
 
-		void MoveWheel(int delta) { tempestBus->MoveWheel(delta); }
-		void SetOnePlayerButton(bool pressed);
-
-	private:
-		void ThreadEntry(void);
+		// simple dispatches to the TempestRunner
+		uint64_t GetIRQCount(void) { return tempestRunner->GetIRQCount(); }
+		void MoveWheel(int delta) { tempestRunner->MoveWheel(delta); }
 
 	private:
-		bool   terminated;
-
-		CPU6502		*cpu6502;
-		TempestBus	*tempestBus;
-		Win32PerformanceCounter3KHzClock *clock;
-		Win32IRQClock *irqClock;
+		Win32RealTimeClock *realTimeClock;
+		TempestRunner *tempestRunner;
 		Win32WaveStreamer *waveStreamer;
-		VectorData	*vectorData;
+		VectorData *vectorData;
 
 		Object  ^synchronizer;
-		Thread	^thread;
-		String  ^processorStatus;
-
 	};
 
 }

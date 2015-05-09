@@ -38,12 +38,12 @@
     </ClCompile>
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestException.cpp" />
+    <ClCompile Include="TempestRunner.cpp" />
     <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorData.cpp" />
     <ClCompile Include="Vector\VectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorGenerator.cpp" />
-    <ClCompile Include="Win32\Win32IRQClock.cpp" />
-    <ClCompile Include="Win32\Win32PerformanceCounter3KHzClock.cpp" />
+    <ClCompile Include="Win32\Win32RealTimeClock.cpp" />
     <ClCompile Include="Win32\Win32WaveBuffer.cpp" />
     <ClCompile Include="Win32\Win32WaveStreamer.cpp" />
   </ItemGroup>
@@ -51,8 +51,7 @@
     <ClInclude Include="6502\AbstractBus.h" />
     <ClInclude Include="6502\CPU6502.h" />
     <ClInclude Include="6502\CPU6502Exception.h" />
-    <ClInclude Include="Abstract3KHzClock.h" />
-    <ClInclude Include="AbstractIRQClock.h" />
+    <ClInclude Include="AbstractRealTimeClock.h" />
     <ClInclude Include="EEPROM.h" />
     <ClInclude Include="MathBox\ALULogEntry.h" />
     <ClInclude Include="MathBox\Am2901.h" />
@@ -69,14 +68,14 @@
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
     <ClInclude Include="TempestPokey.h" />
+    <ClInclude Include="TempestRunner.h" />
     <ClInclude Include="Vector\SimpleVector.h" />
     <ClInclude Include="Vector\SimpleVectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorData.h" />
     <ClInclude Include="Vector\VectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorGenerator.h" />
     <ClInclude Include="Win32\Win32.h" />
-    <ClInclude Include="Win32\Win32IRQClock.h" />
-    <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h" />
+    <ClInclude Include="Win32\Win32RealTimeClock.h" />
     <ClInclude Include="Win32\Win32WaveBuffer.h" />
     <ClInclude Include="Win32\Win32WaveStreamer.h" />
   </ItemGroup>

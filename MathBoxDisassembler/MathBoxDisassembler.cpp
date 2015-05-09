@@ -52,7 +52,7 @@ void MathBoxDisassembler::DisassembleInstruction(int address)
 	// first thing we want to do is note if this instruction is an entry point
 	// from the CPU
 	std::vector<uint8_t> srcAddresses;
-	for (int i = 0; i < romA.size(); ++i)
+	for (unsigned i = 0; i < romA.size(); ++i)
 		if (romA[i] == address)
 			srcAddresses.push_back(i);
 	if (srcAddresses.size() != 0)
@@ -95,15 +95,15 @@ void MathBoxDisassembler::DisplayEntryPoints(const std::vector<uint8_t> addresse
 {
 	printf("\n\n");
 
-	for (int i = 0; i < addresses.size(); ++i)
+	for (unsigned i = 0; i < addresses.size(); ++i)
 		printf("   ");
 	printf("              \\\\\n");
 
-	for (int i = 0; i < addresses.size(); ++i)
+	for (unsigned i = 0; i < addresses.size(); ++i)
 		printf("%02X ", addresses[i]);
 	printf("================\n");
 
-	for (int i = 0; i < addresses.size(); ++i)
+	for (unsigned i = 0; i < addresses.size(); ++i)
 		printf("   ");
 	printf("              //\n");
 }

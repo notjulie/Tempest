@@ -66,9 +66,6 @@
     <ClCompile Include="TempestException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Win32\Win32PerformanceCounter3KHzClock.cpp">
-      <Filter>Win32\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="6502\CPU6502.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
@@ -114,9 +111,6 @@
     <ClCompile Include="MathBox\ALULogEntry.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Win32\Win32IRQClock.cpp">
-      <Filter>Win32\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Pokey\Pokey.cpp">
       <Filter>Pokey\Source Files</Filter>
     </ClCompile>
@@ -126,14 +120,14 @@
     <ClCompile Include="Win32\Win32WaveBuffer.cpp">
       <Filter>Win32\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TempestRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32\Win32RealTimeClock.cpp">
+      <Filter>Win32\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Win32\Win32PerformanceCounter3KHzClock.h">
-      <Filter>Win32\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Abstract3KHzClock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EEPROM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -203,12 +197,6 @@
     <ClInclude Include="MathBox\MathBoxTracer.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractIRQClock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Win32\Win32IRQClock.h">
-      <Filter>Win32\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pokey\Pokey.h">
       <Filter>Pokey\Header Files</Filter>
     </ClInclude>
@@ -219,6 +207,15 @@
       <Filter>Win32\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Win32\Win32WaveBuffer.h">
+      <Filter>Win32\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TempestRunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractRealTimeClock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\Win32RealTimeClock.h">
       <Filter>Win32\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

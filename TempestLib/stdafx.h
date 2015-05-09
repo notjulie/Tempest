@@ -14,6 +14,8 @@
 #pragma warning(push)
 #pragma warning(disable : 4265)	// no virtual destructor
 #pragma warning(disable : 4350)	// non-const reference thing
+#pragma warning(disable : 4625)	// can't generate copy constructor
+#pragma warning(disable : 4626)	// can't generate assignment operator
 #pragma warning(disable : 4820)	// padding in structures
 
 // old school C
@@ -21,8 +23,9 @@
 #include <stdio.h>
 
 // C++
-#ifndef _M_CEE
+#ifndef _M_CEE	// these are not allowed when compiling for .NET CLR
 	#include <mutex>
+	#include <thread>
 #endif
 #include <map>
 #include <string>

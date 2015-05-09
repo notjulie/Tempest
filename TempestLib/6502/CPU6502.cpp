@@ -14,10 +14,26 @@ CPU6502::CPU6502(AbstractBus *_bus)
 {
    // save parameters
    bus = _bus;
+}
 
-	// clear
-	irqsHandled = 0;
-	totalClockCycles = 0;
+void CPU6502::IRQ(void)
+{
+	// ignore if interrupts are disabled
+	if (P.I)
+		return;
+
+	// push the current PC
+	Push((uint8_t)(PC >> 8));
+	Push((uint8_t)PC);
+
+	// push the processor status register
+	Push(P.ToByte());
+
+	// disable interrupts
+	P.I = true;
+
+	// jump to the ISR
+	PC = GetU16At(IRQ_VECTOR_ADDRESS);
 }
 
 void CPU6502::Reset(void)
@@ -45,32 +61,7 @@ void CPU6502::Run(void)
 	   SingleStep();
 }
 
-void CPU6502::SingleStep(void)
-{
-	// see if we have an IRQ to handle
-	if (!P.I && bus->IsIRQ())
-	{
-		++irqsHandled;
-
-		// push the current PC
-		Push((uint8_t)(PC >> 8));
-		Push((uint8_t)PC);
-
-		// push the processor status register
-		Push(P.ToByte());
-
-		// disable interrupts
-		P.I = true;
-
-		// jump to the ISR
-		PC = GetU16At(IRQ_VECTOR_ADDRESS);
-	}
-
-	// execute an instruction
-	totalClockCycles += DoSingleStep();
-}
-
-int CPU6502::DoSingleStep(void)
+int CPU6502::SingleStep(void)
 {
    // load the instruction
 	uint16_t instructionAddress = PC;

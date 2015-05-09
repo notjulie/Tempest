@@ -7,9 +7,10 @@
 #include "TempestLib/6502/CPU6502Exception.h"
 #include "TempestLib/TempestBus.h"
 #include "TempestLib/TempestException.h"
-#include "TempestLib/Win32/Win32PerformanceCounter3KHzClock.h"
-#include "TempestLib/Win32/Win32IRQClock.h"
+#include "TempestLib/TempestRunner.h"
+#include "TempestLib/Win32/Win32RealTimeClock.h"
 #include "TempestLib/Win32/Win32WaveStreamer.h"
+
 
 #include "Tempest.h"
 
@@ -20,61 +21,49 @@ namespace TempestDotNET {
 	Tempest::Tempest(void)
 	{
 		// clear
-		terminated = false;
-		processorStatus = gcnew String("OK");
 		synchronizer = gcnew Object();
-		vectorData = NULL;
 
-		clock = new Win32PerformanceCounter3KHzClock();
-		irqClock = new Win32IRQClock();
-		tempestBus = new TempestBus(clock, irqClock);
-		cpu6502 = new CPU6502(tempestBus);
-
+		realTimeClock = new Win32RealTimeClock();
+		tempestRunner = new TempestRunner(realTimeClock);
+		vectorData = new VectorData();
 		waveStreamer = new Win32WaveStreamer();
 	}
 
 	Tempest::~Tempest(void)
 	{
-		// stop the thread
-		terminated = true;
-		thread->Join();
-
 		// delete
 		delete waveStreamer, waveStreamer = NULL;
-		delete cpu6502, cpu6502 = NULL;
-		delete tempestBus, tempestBus = NULL;
-		delete irqClock, irqClock = NULL;
-		delete clock, clock = NULL;
 		delete vectorData, vectorData = NULL;
-	}
-
-	String ^Tempest::GetProcessorStatus(void)
-	{
-		return processorStatus;
+		delete tempestRunner, tempestRunner = NULL;
+		delete realTimeClock, realTimeClock = NULL;
 	}
 
 	String ^Tempest::GetMathBoxStatus(void)
 	{
-		return gcnew String(tempestBus->GetMathBoxStatus().c_str());
+		return gcnew String(tempestRunner->GetMathBoxStatus().c_str());
 	}
 
 	String ^Tempest::GetMathBoxLogData(void)
 	{
-		return gcnew String(tempestBus->GetMathBoxLogXML().c_str());
+		return gcnew String(tempestRunner->GetMathBoxLogXML().c_str());
 	}
 
 	uint64_t Tempest::GetTotalClockCycles(void)
 	{
-		return cpu6502->GetTotalClockCycles();
+		return tempestRunner->GetTotalClockCycles();
 	}
 
 	VectorEnumerator ^Tempest::GetVectorEnumerator(void)
 	{
-		msclr::lock l(synchronizer);
-		if (vectorData != NULL)
+		if (tempestRunner->HaveNewVectorData())
+		{
+			tempestRunner->PopVectorData(*vectorData);
 			return gcnew VectorEnumerator(*vectorData);
+		}
 		else
+		{
 			return nullptr;
+		}
 	}
 
 	void Tempest::LoadROM(array<Byte>^ rom, int address)
@@ -82,7 +71,7 @@ namespace TempestDotNET {
 		std::vector<uint8_t> romCopy;
 		for (int i = 0; i < rom->Length; ++i)
 			romCopy.push_back(rom[i]);
-		tempestBus->LoadROM(&romCopy[0], (int)romCopy.size(), address);
+		tempestRunner->LoadROM(&romCopy[0], (int)romCopy.size(), address);
 	}
 
 	void Tempest::LoadMathBoxROM(array<Byte>^ rom, char slot)
@@ -90,56 +79,26 @@ namespace TempestDotNET {
 		std::vector<uint8_t> romCopy;
 		for (int i = 0; i < rom->Length; ++i)
 			romCopy.push_back(rom[i]);
-		tempestBus->LoadMathBoxROM(&romCopy[0], (int)romCopy.size(), slot);
+		tempestRunner->LoadMathBoxROM(&romCopy[0], (int)romCopy.size(), slot);
 	}
 
 	void Tempest::SetOnePlayerButton(bool pressed)
 	{
-		tempestBus->SetButtonState(ONE_PLAYER_BUTTON, pressed);
+		tempestRunner->SetButtonState(ONE_PLAYER_BUTTON, pressed);
 	}
 
 
 	void Tempest::Start(void)
 	{
-		thread = gcnew Thread(gcnew ThreadStart(this, &Tempest::ThreadEntry));
-		thread->Name = "TempestThread";
-		thread->Start();
+		tempestRunner->Start();
 	}
 
-
-	void Tempest::ThreadEntry(void)
+	String ^Tempest::GetProcessorStatus(void)
 	{
-		try
-		{
-			// reset the CPU
-			cpu6502->Reset();
-
-			// run
-			while (!terminated)
-			{
-				// run the processor for a little bit
-				for (int i = 0; i < 100; ++i)
-					cpu6502->SingleStep();
-
-				// pop the new vector data if we have any
-				if (tempestBus->HaveNewVectorData())
-				{
-					msclr::lock l(synchronizer);
-					if (vectorData == NULL)
-						vectorData = new VectorData();
-					tempestBus->PopVectorData(*vectorData);
-				}
-			}
-		}
-		catch (CPU6502Exception &_x6502)
-		{
-			processorStatus = gcnew String(_x6502.what());
-		}
-		catch (TempestException &_xTempest)
-		{
-			// for now this goes as the processor status, too
-			processorStatus = gcnew String(_xTempest.what());
-		}
+		if (tempestRunner->IsTerminated())
+			return gcnew String(tempestRunner->GetProcessorStatus().c_str());
+		else
+			return gcnew String("OK");
 	}
 }
 

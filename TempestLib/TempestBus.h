@@ -15,9 +15,6 @@
 #include "EEPROM.h"
 #include "TempestPokey.h"
 
-
-class Abstract3KHzClock;
-class AbstractIRQClock;
 class VectorData;
 
 #pragma warning(push)
@@ -27,7 +24,7 @@ class VectorData;
 class TempestBus : public AbstractBus
 {
 public:
-	TempestBus(Abstract3KHzClock *_clock3KHz, AbstractIRQClock *_irqClock);
+	TempestBus(void);
 	virtual ~TempestBus(void);
 
 	void LoadROM(const uint8_t *rom, int length, uint16_t address);
@@ -41,9 +38,9 @@ public:
 
 	void MoveWheel(int delta) { pokey1.MoveWheel(delta); }
 	void SetButtonState(ButtonID button, bool pressed) { pokey2.SetButtonState(button, pressed); }
+	void Set3KHzClockState(bool state) { clock3KHzIsHigh = state; }
 
 public:
-	virtual bool IsIRQ(void);
 	virtual uint8_t ReadByte(uint16_t address);
    virtual void    WriteByte(uint16_t address, uint8_t value);
 
@@ -53,9 +50,6 @@ private:
 	TempestBus &operator=(const TempestBus &bus);
 
 private:
-   Abstract3KHzClock *clock3KHz;
-	AbstractIRQClock  *irqClock;
-
    std::vector<uint8_t>  rom;
    std::vector<uint8_t>  mainRAM;
    std::vector<uint8_t>  colorRAM;
@@ -64,7 +58,9 @@ private:
    EEPROM eeprom;
    MathBox mathBox;
    VectorGenerator vectorGenerator;
+
 	bool selfTest;
+	bool clock3KHzIsHigh;
 };
 
 #pragma warning(pop)

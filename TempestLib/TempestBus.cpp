@@ -1,8 +1,6 @@
 
 #include "stdafx.h"
 
-#include "Abstract3KHzClock.h"
-#include "AbstractIRQClock.h"
 #include "TempestException.h"
 
 #include "TempestBus.h"
@@ -24,14 +22,11 @@ static const uint16_t EEPROM_WRITE_END = 0x603F;
 static const uint16_t MATHBOX_WRITE_BASE = 0x6080;
 static const uint16_t MATHBOX_WRITE_END = 0x609F;
 
-TempestBus::TempestBus(Abstract3KHzClock *_clock3KHz, AbstractIRQClock *_irqClock)
+TempestBus::TempestBus(void)
 {
-   // save parameters
-   clock3KHz = _clock3KHz;
-	irqClock = _irqClock;
-   
 	// clear
 	selfTest = false;
+	clock3KHzIsHigh = false;
 
    // create the ROM space
    rom.resize(20 * 1024);
@@ -70,12 +65,6 @@ void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
 void TempestBus::LoadMathBoxROM(const uint8_t *rom, int length, char slot)
 {
 	mathBox.LoadROM(rom, length, slot);
-}
-
-
-bool TempestBus::IsIRQ(void)
-{
-	return irqClock->GetIRQ();
 }
 
 
@@ -120,7 +109,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 		case 0x0C00:
 		{
 			uint8_t result = 0;
-			if (this->clock3KHz->IsHigh())
+			if (clock3KHzIsHigh)
 				result |= 0x80;
 			if (vectorGenerator.IsHalt())
 				result |= 0x40;
@@ -224,8 +213,8 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          break;
          
       case 0x5000:
-         // watchdog timer clear... this is also what clears the IRQ
-			irqClock->ClearIRQ();
+         // watchdog timer clear... this is also what clears the IRQ,
+			// but we don't worry about either of those things
          break;
          
       case 0x5800:
