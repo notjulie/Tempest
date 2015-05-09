@@ -27,6 +27,7 @@ TempestBus::TempestBus(void)
 	// clear
 	selfTest = false;
 	clock3KHzIsHigh = false;
+	slam = false;
 
    // create the ROM space
    rom.resize(20 * 1024);
@@ -115,6 +116,8 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 				result |= 0x40;
 			if (!selfTest)
 				result |= 0x10;
+			if (!slam)
+				result |= 0x08;
 			return result;
 		}
 

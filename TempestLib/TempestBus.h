@@ -66,6 +66,7 @@ private:
    VectorGenerator vectorGenerator;
 
 	bool selfTest;
+	bool slam;
 	bool clock3KHzIsHigh;
 };
 

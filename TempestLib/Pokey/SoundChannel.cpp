@@ -14,7 +14,7 @@ SoundChannel::SoundChannel(void)
 
 void SoundChannel::AddWaveData(int16_t *buffer, int count)
 {
-	if (volume < 16)
+	if (volume == 0)
 		return;
 
 	switch (outputWave)
