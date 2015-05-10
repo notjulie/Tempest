@@ -23,16 +23,15 @@ namespace TempestDotNET {
 		// clear
 		synchronizer = gcnew Object();
 
+		// create objects
 		environment = new Win32TempestEnvironment();
 		tempestRunner = new TempestRunner(environment);
 		vectorData = new VectorData();
-		waveStreamer = new Win32WaveStreamer(tempestRunner->GetSoundStream());
 	}
 
 	Tempest::~Tempest(void)
 	{
 		// delete
-		delete waveStreamer, waveStreamer = NULL;
 		delete vectorData, vectorData = NULL;
 		delete tempestRunner, tempestRunner = NULL;
 		delete environment, environment = NULL;
@@ -45,7 +44,7 @@ namespace TempestDotNET {
 
 	String ^Tempest::GetAudioStatus(void)
 	{
-		return gcnew String(waveStreamer->GetErrorString().c_str());
+		return gcnew String(environment->GetAudioStatus().c_str());
 	}
 
 	String ^Tempest::GetMathBoxLogData(void)

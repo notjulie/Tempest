@@ -10,16 +10,14 @@
 #pragma comment(lib, "user32")
 #pragma comment(lib, "WinMM")
 
-Win32WaveStreamer::Win32WaveStreamer(AbstractTempestWaveStream *source)
+Win32WaveStreamer::Win32WaveStreamer(void)
 {
-	// copy parameters
-	this->source = source;
-
 	// clear
 	waveOut = NULL;
 	callbackThread = NULL;
 	terminating = false;
 	errorReported = false;
+	source = NULL;
 
 	// create our callback thread
 	callbackThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)CallbackThreadEntry, this, 0, &callbackThreadID);

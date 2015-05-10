@@ -12,10 +12,11 @@ class AbstractTempestWaveStream;
 class Win32WaveStreamer
 {
 public:
-	Win32WaveStreamer(AbstractTempestWaveStream *source);
+	Win32WaveStreamer(void);
 	~Win32WaveStreamer(void);
 
 	std::string GetErrorString(void) const;
+	void SetSource(AbstractTempestWaveStream *_source) { source = _source; }
 
 private:
 	void	CallbackThread(void);

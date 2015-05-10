@@ -37,7 +37,6 @@ namespace TempestDotNET {
 	private:
 		Win32TempestEnvironment *environment;
 		TempestRunner *tempestRunner;
-		Win32WaveStreamer *waveStreamer;
 		VectorData *vectorData;
 
 		Object  ^synchronizer;

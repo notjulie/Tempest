@@ -7,13 +7,13 @@
 
 #include "TempestRunner.h"
 
-TempestRunner::TempestRunner(AbstractTempestEnvironment *environment)
+TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	:
 		tempestBus(),
 		cpu6502(&tempestBus)
 {
 	// save parameters
-	this->environment = environment;
+	environment = _environment;
 
 	// clear
 	terminate = false;
@@ -21,6 +21,9 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *environment)
 	irqCount = 0;
 	totalClockCycles = 0;
 	theThread = NULL;
+
+	// give the environment a reference to the sound stream
+	environment->SetSoundStream(GetSoundStream());
 }
 
 TempestRunner::~TempestRunner(void)

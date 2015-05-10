@@ -7,6 +7,10 @@ Win32TempestEnvironment::Win32TempestEnvironment(void)
 	Reset();
 }
 
+Win32TempestEnvironment::~Win32TempestEnvironment(void)
+{
+}
+
 void Win32TempestEnvironment::Reset(void)
 {
 	// set our current time to zero
