@@ -58,12 +58,10 @@ void TempestRunner::RunnerThread(void)
 		// run
 		while (!terminate)
 		{
-			// Run the processor for a little bit without any overhead... figuring an average
-			// of about 4 cycles per instruction that's about 2.7 uS per instruction, in CPU
-			// time.  So the CPU thinks this loop runs for 270us, which is a reasonable burst
-			// of effort without checking the various clocks.
+			// Run the processor until the 3KHz clock changes
+			int cyclesToRun = (int)(clockCyclesPer3KHzHalfWave - (totalClockCycles % clockCyclesPer3KHzHalfWave));
 			int newClockCycles = 0;
-			for (int i = 0; i < 100; ++i)
+			while (newClockCycles < cyclesToRun)
 				newClockCycles += cpu6502.SingleStep();
 
 			// update our master counter
