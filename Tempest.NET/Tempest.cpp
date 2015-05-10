@@ -8,7 +8,7 @@
 #include "TempestLib/TempestBus.h"
 #include "TempestLib/TempestException.h"
 #include "TempestLib/TempestRunner.h"
-#include "TempestLib/Win32/Win32RealTimeClock.h"
+#include "TempestLib/Win32/Win32TempestEnvironment.h"
 #include "TempestLib/Win32/Win32WaveStreamer.h"
 
 
@@ -23,8 +23,8 @@ namespace TempestDotNET {
 		// clear
 		synchronizer = gcnew Object();
 
-		realTimeClock = new Win32RealTimeClock();
-		tempestRunner = new TempestRunner(realTimeClock);
+		environment = new Win32TempestEnvironment();
+		tempestRunner = new TempestRunner(environment);
 		vectorData = new VectorData();
 		waveStreamer = new Win32WaveStreamer(tempestRunner->GetSoundStream());
 	}
@@ -35,7 +35,7 @@ namespace TempestDotNET {
 		delete waveStreamer, waveStreamer = NULL;
 		delete vectorData, vectorData = NULL;
 		delete tempestRunner, tempestRunner = NULL;
-		delete realTimeClock, realTimeClock = NULL;
+		delete environment, environment = NULL;
 	}
 
 	String ^Tempest::GetMathBoxStatus(void)

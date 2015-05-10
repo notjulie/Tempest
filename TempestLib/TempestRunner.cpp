@@ -2,18 +2,18 @@
 #include "stdafx.h"
 
 #include "6502/CPU6502Exception.h"
-#include "AbstractRealTimeClock.h"
+#include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 
 #include "TempestRunner.h"
 
-TempestRunner::TempestRunner(AbstractRealTimeClock *realTimeClock)
+TempestRunner::TempestRunner(AbstractTempestEnvironment *environment)
 	:
 		tempestBus(),
 		cpu6502(&tempestBus)
 {
 	// save parameters
-	this->realTimeClock = realTimeClock;
+	this->environment = environment;
 
 	// clear
 	terminate = false;
@@ -52,7 +52,7 @@ void TempestRunner::RunnerThread(void)
 		int clockCyclesPer3KHzHalfWave = 1500000 / 6000;
 		int clockCyclesPerIRQ = 1500000 / 250;
 		int irqTimer = 0;
-		realTimeClock->Reset();
+		environment->Reset();
 		totalClockCycles = 0;
 
 		// run
@@ -82,7 +82,7 @@ void TempestRunner::RunnerThread(void)
 
 				// this happens every 4ms in processor time, so it's a good time to synch
 				// up with the real world clock
-				realTimeClock->Sync(totalClockCycles / 1500);
+				environment->SynchronizeClock(totalClockCycles / 1500);
 			}
 		}
 

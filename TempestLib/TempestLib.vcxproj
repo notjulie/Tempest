@@ -44,7 +44,7 @@
     <ClCompile Include="Vector\VectorData.cpp" />
     <ClCompile Include="Vector\VectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorGenerator.cpp" />
-    <ClCompile Include="Win32\Win32RealTimeClock.cpp" />
+    <ClCompile Include="Win32\Win32TempestEnvironment.cpp" />
     <ClCompile Include="Win32\Win32WaveBuffer.cpp" />
     <ClCompile Include="Win32\Win32WaveStreamer.cpp" />
   </ItemGroup>
@@ -52,7 +52,7 @@
     <ClInclude Include="6502\AbstractBus.h" />
     <ClInclude Include="6502\CPU6502.h" />
     <ClInclude Include="6502\CPU6502Exception.h" />
-    <ClInclude Include="AbstractRealTimeClock.h" />
+    <ClInclude Include="AbstractTempestEnvironment.h" />
     <ClInclude Include="AbstractTempestWaveStream.h" />
     <ClInclude Include="EEPROM.h" />
     <ClInclude Include="MathBox\ALULogEntry.h" />
@@ -78,7 +78,7 @@
     <ClInclude Include="Vector\VectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorGenerator.h" />
     <ClInclude Include="Win32\Win32.h" />
-    <ClInclude Include="Win32\Win32RealTimeClock.h" />
+    <ClInclude Include="Win32\Win32TempestEnvironment.h" />
     <ClInclude Include="Win32\Win32WaveBuffer.h" />
     <ClInclude Include="Win32\Win32WaveStreamer.h" />
   </ItemGroup>

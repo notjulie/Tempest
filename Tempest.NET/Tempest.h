@@ -35,7 +35,7 @@ namespace TempestDotNET {
 		void MoveWheel(int delta) { tempestRunner->MoveWheel(delta); }
 
 	private:
-		Win32RealTimeClock *realTimeClock;
+		Win32TempestEnvironment *environment;
 		TempestRunner *tempestRunner;
 		Win32WaveStreamer *waveStreamer;
 		VectorData *vectorData;

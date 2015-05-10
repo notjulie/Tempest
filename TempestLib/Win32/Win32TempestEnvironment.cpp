@@ -1,13 +1,13 @@
 
 #include "stdafx.h"
-#include "Win32RealTimeClock.h"
+#include "Win32TempestEnvironment.h"
 
-Win32RealTimeClock::Win32RealTimeClock(void)
+Win32TempestEnvironment::Win32TempestEnvironment(void)
 {
 	Reset();
 }
 
-void Win32RealTimeClock::Reset(void)
+void Win32TempestEnvironment::Reset(void)
 {
 	// set our current time to zero
 	lastTimeCheck = GetTickCount();
@@ -15,7 +15,7 @@ void Win32RealTimeClock::Reset(void)
 }
 
 
-void Win32RealTimeClock::Sync(uint64_t busMSCount)
+void Win32TempestEnvironment::SynchronizeClock(uint64_t busMSCount)
 {
 	// update our time
 	DWORD now = GetTickCount();

@@ -8,7 +8,7 @@
 namespace std {
 	class thread;
 };
-class AbstractRealTimeClock;
+class AbstractTempestEnvironment;
 
 
 #pragma warning(push)
@@ -17,7 +17,7 @@ class AbstractRealTimeClock;
 class TempestRunner
 {
 public:
-	TempestRunner(AbstractRealTimeClock *realTimeClock);
+	TempestRunner(AbstractTempestEnvironment *environment);
 	virtual ~TempestRunner(void);
 
 	void	Start(void);
@@ -51,7 +51,7 @@ private:
 	TempestRunner &operator=(const TempestRunner &tr);
 
 private:
-	AbstractRealTimeClock *realTimeClock;
+	AbstractTempestEnvironment *environment;
 
 	bool		terminate;
 	bool     isTerminated;
