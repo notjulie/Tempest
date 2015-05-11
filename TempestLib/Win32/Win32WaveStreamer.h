@@ -23,6 +23,7 @@ private:
 	void	CallbackThread(void);
 	void  FillBuffer(Win32WaveBuffer *buffer);
 	void  ProcessFinishedBuffer(Win32WaveBuffer *buffer);
+	void  ProcessUpdate(int msElapsed);
 
 private:
 	static LONG __stdcall CallbackThreadEntry(LPVOID pThis) { ((Win32WaveStreamer *)pThis)->CallbackThread(); return 0; }
