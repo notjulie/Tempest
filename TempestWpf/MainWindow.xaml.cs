@@ -32,6 +32,7 @@ namespace TempestWpf
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
       private MathBoxLogWindow mathBoxLog;
+      private Debug6502Window debug6502;
       private SolidColorBrush[] vectorBrush = new SolidColorBrush[16];
 
       #endregion
@@ -68,6 +69,18 @@ namespace TempestWpf
          this.Closing += MainWindow_Closing;
          buttonMathBoxLog.Click += buttonMathBoxLog_Click;
          buttonOnePlayerStart.Click += buttonOnePlayerStart_Click;
+         view6502DebugWindowItem.Click += view6502DebugWindowItem_Click;
+      }
+
+      void view6502DebugWindowItem_Click(object sender, RoutedEventArgs e)
+      {
+         // create the window if we haven't yet
+         if (debug6502 == null)
+            debug6502 = new Debug6502Window();
+
+         // show it
+         debug6502.Show();
+         debug6502.Activate();
       }
 
       void buttonOnePlayerStart_Click(object sender, RoutedEventArgs e)

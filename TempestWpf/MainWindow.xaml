@@ -3,6 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Tempest" Height="720" Width="550" WindowStartupLocation="CenterScreen">
     <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="View">
+                <MenuItem Name="view6502DebugWindowItem" Header="6502 Debug"/>
+            </MenuItem>
+        </Menu>
         <StackPanel DockPanel.Dock="Bottom">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Processor Status: "/>
