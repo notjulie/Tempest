@@ -7,12 +7,12 @@
 #include "Win32WaveBuffer.h"
 
 
-Win32WaveBuffer::Win32WaveBuffer(void)
+Win32WaveBuffer::Win32WaveBuffer(int sampleCount)
 {
 	prepared = false;
 	isPlaying = false;
 
-	waveData.resize(2000);
+	waveData.resize((unsigned)sampleCount);
 	waveHeader.dwUser = (DWORD_PTR)this;
 	waveHeader.lpData = (LPSTR)&waveData[0];
 	waveHeader.dwFlags = 0;

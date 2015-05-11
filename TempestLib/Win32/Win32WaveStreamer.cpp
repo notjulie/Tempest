@@ -7,10 +7,15 @@
 
 #include "Win32WaveStreamer.h"
 
+static const int BUFFER_SAMPLE_COUNT = 2000;
+
 #pragma comment(lib, "user32")
 #pragma comment(lib, "WinMM")
 
 Win32WaveStreamer::Win32WaveStreamer(void)
+	:
+		buffer1(BUFFER_SAMPLE_COUNT),
+		buffer2(BUFFER_SAMPLE_COUNT)
 {
 	// clear
 	waveOut = NULL;
@@ -146,13 +151,42 @@ void Win32WaveStreamer::ProcessFinishedBuffer(Win32WaveBuffer *waveBuffer)
 
 void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 {
+	// fill up our input buffer if it's not
+	if (inputBuffer.size() < BUFFER_SAMPLE_COUNT)
+	{
+		unsigned offset = inputBuffer.size();
+		inputBuffer.resize(BUFFER_SAMPLE_COUNT);
+		source->ReadWaveData(&inputBuffer[offset], (int)(BUFFER_SAMPLE_COUNT - offset));
+	}
+
 	int16_t *samples = buffer->GetBuffer();
 	int count = buffer->GetSampleCount();
 
 	// fill the buffer from the source
 	source->ReadWaveData(samples, count);
 
-	// the Pokey output is very low amplitude... beef it up to the level we like
+	// copy the data... the Pokey output is very low amplitude... beef it up to the level we like
 	for (int i = 0; i < count; ++i)
-		samples[i] = (int16_t)(samples[i] * 256);
+		samples[i] = (int16_t)(inputBuffer[(unsigned)i] * 256);
+
+	// empty the input buffer
+	inputBuffer.resize(0);
+}
+
+
+void Win32WaveStreamer::Update(int msElapsed)
+{
+	// figure out how many samples we should get for the amount of
+	// time elapsed
+	int samplesToRead = 44100 * msElapsed / 1000;
+	
+	// never get more than what would fill up our buffer
+	if (samplesToRead > (int)(BUFFER_SAMPLE_COUNT - inputBuffer.size()))
+		samplesToRead = (int)(BUFFER_SAMPLE_COUNT - inputBuffer.size());
+	if (samplesToRead == 0)
+		return;
+
+	int offset = (int)inputBuffer.size();
+	inputBuffer.resize((unsigned)(offset + samplesToRead));
+	source->ReadWaveData(&inputBuffer[(unsigned)offset], samplesToRead);
 }

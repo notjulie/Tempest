@@ -17,6 +17,7 @@ public:
 
 	std::string GetErrorString(void) const;
 	void SetSource(AbstractTempestWaveStream *_source) { source = _source; }
+	void Update(int msElapsed);
 
 private:
 	void	CallbackThread(void);
@@ -35,6 +36,7 @@ private:
 	bool terminating;
 	bool errorReported;
 	std::string errorString;
+	std::vector<int16_t> inputBuffer;
 
 	Win32WaveBuffer buffer1;
 	Win32WaveBuffer buffer2;

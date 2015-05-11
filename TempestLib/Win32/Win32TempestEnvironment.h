@@ -23,6 +23,7 @@ private:
 	Win32WaveStreamer audioOut;
 	DWORD lastTimeCheck;
 	uint64_t currentTime;
+	uint64_t lastAudioUpdateBusTime;
 };
 
 #endif

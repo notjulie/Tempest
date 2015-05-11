@@ -10,7 +10,7 @@
 
 class Win32WaveBuffer {
 public:
-	Win32WaveBuffer(void);
+	Win32WaveBuffer(int sampleCount);
 
 	void Prepare(HWAVEOUT waveOut);
 	void Unprepare(HWAVEOUT waveOut);

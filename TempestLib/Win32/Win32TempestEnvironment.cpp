@@ -16,6 +16,7 @@ void Win32TempestEnvironment::Reset(void)
 	// set our current time to zero
 	lastTimeCheck = GetTickCount();
 	currentTime = 0;
+	lastAudioUpdateBusTime = 0;
 }
 
 
@@ -26,6 +27,11 @@ void Win32TempestEnvironment::SynchronizeClock(uint64_t busMSCount)
 	DWORD elapsed = now - lastTimeCheck;
 	lastTimeCheck = now;
 	currentTime += elapsed;
+
+	// let the audio output object update... if it doesn't update frequently it
+	// can completely miss very short sounds, of which there are many
+	audioOut.Update((int)(busMSCount - lastAudioUpdateBusTime));
+	lastAudioUpdateBusTime = busMSCount;
 
 	// if Tempest's CPU/bus clock has gotten ahead of us by 8ms
 	// or more we need to pause so that real time can catch up to
