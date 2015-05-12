@@ -1,7 +1,13 @@
 ﻿<Window x:Class="TempestWpf.Debug6502Window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TempestWpf"
         Title="Debug6502Window" Height="300" Width="300">
     <ListView Name="listView">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <local:DebugLineControl Text="{Binding Text, Mode=TwoWay}"/>
+            </DataTemplate>
+        </ListView.ItemTemplate>
     </ListView>
 </Window>

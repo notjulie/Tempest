@@ -50,11 +50,26 @@ namespace TempestWpf
          }
 
          // fill the list box with it
+         List<ListItem> items = new List<ListItem>();
          for (int i=0; i<disassembly.Count; ++i)
          {
-            TextBlock textBlock = new TextBlock();
-            textBlock.Text = disassembly[i];
-            listView.Items.Add(textBlock);
+            ListItem item = new ListItem();
+            item.Text = disassembly[i];
+            items.Add(item);
+            /*DebugLineControl line = new DebugLineControl();
+            line.Text = disassembly[i];
+            listView.Items.Add(line);*/
+         }
+
+         listView.ItemsSource = items;
+      }
+
+      class ListItem
+      {
+         public string Text
+         {
+            get;
+            set;
          }
       }
    }
