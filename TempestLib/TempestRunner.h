@@ -27,6 +27,7 @@ public:
 	std::string GetProcessorStatus(void) { return processorStatus; }
 	uint64_t    GetTotalClockCycles(void) { return totalClockCycles; }
 	bool		   IsTerminated(void) { return isTerminated; }
+	void        SetBreakpoint(uint16_t address, bool set) { breakpoints[address] = set; }
 
 	// simple dispatches to the TempestBus object
 	std::string GetMathBoxLogXML(void) const { return tempestBus.GetMathBoxLogXML(); }
@@ -63,6 +64,7 @@ private:
 
 	std::string processorStatus;
 	std::thread *theThread;
+	bool	breakpoints[64 * 1024];
 };
 
 #pragma warning(pop)

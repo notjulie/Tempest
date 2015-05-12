@@ -76,7 +76,10 @@ namespace TempestWpf
       {
          // create the window if we haven't yet
          if (debug6502 == null)
+         {
             debug6502 = new Debug6502Window();
+            debug6502.Tempest = tempest;
+         }
 
          // show it
          debug6502.Show();

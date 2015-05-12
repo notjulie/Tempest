@@ -26,6 +26,9 @@ public:
    void     Run(void);
    int		SingleStep(void);
 
+	// simple accessors
+	uint16_t GetPC(void) const { return PC; }
+
 private:
    void     Compare(uint8_t a, uint8_t b);
    uint8_t  DoASL(uint8_t value);

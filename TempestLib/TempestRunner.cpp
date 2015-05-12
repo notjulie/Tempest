@@ -21,6 +21,8 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	irqCount = 0;
 	totalClockCycles = 0;
 	theThread = NULL;
+	for (int i = 0; i < 64 * 1024; ++i)
+		breakpoints[i] = false;
 
 	// give the environment a reference to the sound stream
 	environment->SetSoundStream(GetSoundStream());
@@ -65,7 +67,16 @@ void TempestRunner::RunnerThread(void)
 			int cyclesToRun = (int)(clockCyclesPer3KHzHalfWave - (totalClockCycles % clockCyclesPer3KHzHalfWave));
 			int newClockCycles = 0;
 			while (newClockCycles < cyclesToRun)
+			{
+				if (breakpoints[cpu6502.GetPC()])
+				{
+					while (!terminate)
+					{
+						environment->Sleep(50);
+					}
+				}
 				newClockCycles += cpu6502.SingleStep();
+			}
 
 			// update our master counter
 			totalClockCycles += newClockCycles;

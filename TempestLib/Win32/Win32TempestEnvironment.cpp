@@ -20,6 +20,11 @@ void Win32TempestEnvironment::Reset(void)
 }
 
 
+void Win32TempestEnvironment::Sleep(int ms)
+{
+	::Sleep((DWORD)ms);
+}
+
 void Win32TempestEnvironment::SynchronizeClock(uint64_t busMSCount)
 {
 	// update our time

@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using TempestDotNET;
+
 namespace TempestWpf
 {
    /// <summary>
@@ -56,13 +58,34 @@ namespace TempestWpf
             ListItem item = new ListItem();
             item.Text = disassembly[i];
             items.Add(item);
-            /*DebugLineControl line = new DebugLineControl();
-            line.Text = disassembly[i];
-            listView.Items.Add(line);*/
          }
 
          listView.ItemsSource = items;
       }
+
+      /// <summary>
+      /// Gets or sets the Tempest instance
+      /// </summary>
+      public Tempest Tempest
+      {
+         get;
+         set;
+      }
+
+      private void itemBreakpointChanged(object sender, RoutedEventArgs e)
+      {
+         DebugLineControl lineControl = sender as DebugLineControl;
+         if (lineControl == null)
+            return;
+
+         int address = lineControl.Address;
+         if (address < 0)
+            return;
+
+         Tempest.SetBreakpoint(address, lineControl.IsBreakpoint);
+      }
+
+      #region Private Class ListItem
 
       class ListItem
       {
@@ -72,5 +95,7 @@ namespace TempestWpf
             set;
          }
       }
+
+      #endregion
    }
 }

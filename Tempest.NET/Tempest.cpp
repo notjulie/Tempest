@@ -70,6 +70,11 @@ namespace TempestDotNET {
 		}
 	}
 
+	void Tempest::SetBreakpoint(int address, bool set)
+	{
+		tempestRunner->SetBreakpoint(address, set);
+	}
+
 	void Tempest::LoadROM(array<Byte>^ rom, int address)
 	{
 		std::vector<uint8_t> romCopy;

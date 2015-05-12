@@ -23,6 +23,8 @@ namespace TempestDotNET {
 		String ^GetProcessorStatus(void);
 		String ^GetAudioStatus(void);
 
+		void SetBreakpoint(int address, bool set);
+
 		VectorEnumerator ^GetVectorEnumerator(void);
 		void LoadROM(array<Byte>^ rom, int address);
 		void LoadMathBoxROM(array<Byte>^ rom, char slot);

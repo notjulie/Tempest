@@ -6,7 +6,7 @@
     <ListView Name="listView">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <local:DebugLineControl Text="{Binding Text, Mode=TwoWay}"/>
+                <local:DebugLineControl Text="{Binding Text, Mode=TwoWay}" BreakpointChanged="itemBreakpointChanged" />
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

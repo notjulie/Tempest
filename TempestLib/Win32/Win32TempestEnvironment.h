@@ -14,6 +14,7 @@ public:
 	virtual ~Win32TempestEnvironment(void);
 
 	virtual void Reset(void);
+	virtual void Sleep(int ms);
 	virtual void SynchronizeClock(uint64_t busMSCount);
 	virtual void SetSoundStream(AbstractTempestWaveStream *soundStream) { audioOut.SetSource(soundStream); }
 
