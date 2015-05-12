@@ -93,6 +93,8 @@ namespace TempestWpf
       private void Update()
       {
          DebugLine item = Item;
+         if (item == null)
+            item = new DebugLine(String.Empty);
          text.Text = item.Text;
          Background = item.IsSelected ? selectedBrush : unselectedBrush;
          breakPoint.Visibility = item.Address >= 0 ? Visibility.Visible : Visibility.Hidden;
