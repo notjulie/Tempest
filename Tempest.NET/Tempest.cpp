@@ -70,6 +70,11 @@ namespace TempestDotNET {
 		}
 	}
 
+	bool Tempest::IsStopped(void)
+	{
+		return tempestRunner->IsStopped();
+	}
+
 	void Tempest::SetBreakpoint(int address, bool set)
 	{
 		tempestRunner->SetBreakpoint(address, set);

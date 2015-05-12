@@ -20,14 +20,17 @@ namespace TempestWpf
    /// </summary>
    public partial class DebugLineControl : UserControl
    {
+      private static SolidColorBrush selectedBrush = new SolidColorBrush(Colors.Pink);
+      private static SolidColorBrush unselectedBrush = new SolidColorBrush(Colors.White);
+
       /// <summary>
-      /// The Text dependency property
+      /// The Item dependency property
       /// </summary>
-      public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-        "Text",
-        typeof(String),
+      public static readonly DependencyProperty ItemProperty = DependencyProperty.Register(
+        "Item",
+        typeof(DebugLine),
         typeof(DebugLineControl),
-        new PropertyMetadata(null, new PropertyChangedCallback(OnTextChanged))
+        new PropertyMetadata(new DebugLine(), new PropertyChangedCallback(OnItemChanged))
       );
 
       /// <summary>
@@ -38,38 +41,26 @@ namespace TempestWpf
          // normal initialization
          InitializeComponent();
 
+         // set initial state
+         Update();
+
          // event handlers
          breakPoint.Checked += breakpointCheckChanged;
          breakPoint.Unchecked += breakpointCheckChanged;
       }
 
       /// <summary>
-      /// Gets or sets the text
+      /// Gets or sets the data item
       /// </summary>
-      public string Text
+      public DebugLine Item
       {
          get
          {
-            return (String)GetValue(TextProperty);
+            return (DebugLine)GetValue(ItemProperty);
          }
          set
          {
-            SetValue(TextProperty, value);
-            text.Text = value;
-         }
-      }
-
-      /// <summary>
-      /// Gets the address associated with the line, -1 if this is not an actual code line
-      /// </summary>
-      public int Address
-      {
-         get
-         {
-            string s = Text;
-            if (s.Length < 4)
-               return -1;
-            return ParseHex(s.Substring(0, 4));
+            SetValue(ItemProperty, value!=null ? value : new DebugLine());
          }
       }
 
@@ -99,32 +90,22 @@ namespace TempestWpf
             BreakpointChanged(this, e);
       }
 
-      private int ParseHex(string s)
+      private void Update()
       {
-         int result = 0;
-         for (int i=0; i<s.Length; ++i)
-         {
-            int digit;
-            if (s[i] >= '0' && s[i] <= '9')
-               digit = s[i] - '0';
-            else if (s[i] >= 'a' && s[i] <= 'f')
-               digit = 10 + s[i] - 'a';
-            else if (s[i] >= 'A' && s[i] <= 'F')
-               digit = 10 + s[i] - 'A';
-            else
-               return -1;
-            result = 16 * result + digit;
-         }
+         DebugLine item = Item;
+         if (item == null)
+            item = new DebugLine();
 
-         return result;
+         text.Text = item.Text;
+         Background = item.IsSelected ? selectedBrush : unselectedBrush;
       }
 
-      private static void OnTextChanged(
-        DependencyObject d, 
+      private static void OnItemChanged(
+        DependencyObject d,
         DependencyPropertyChangedEventArgs e
       )
       {
-         ((DebugLineControl)d).text.Text = e.NewValue.ToString();
+         ((DebugLineControl)d).Update();
       }
    }
 }

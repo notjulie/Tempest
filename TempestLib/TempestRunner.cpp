@@ -16,8 +16,8 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	environment = _environment;
 
 	// clear
-	terminate = false;
-	isTerminated = false;
+	state = Unstarted;
+	terminateRequested = false;
 	irqCount = 0;
 	totalClockCycles = 0;
 	theThread = NULL;
@@ -32,7 +32,7 @@ TempestRunner::~TempestRunner(void)
 {
 	if (theThread != NULL)
 	{
-		terminate = true;
+		terminateRequested = true;
 		theThread->join();
 		delete theThread, theThread = NULL;
 	}
@@ -50,6 +50,9 @@ void TempestRunner::RunnerThread(void)
 {
 	try
 	{
+		// set our state
+		state = Running;
+
 		// reset the CPU and the realtime clock
 		cpu6502.Reset();
 
@@ -61,7 +64,7 @@ void TempestRunner::RunnerThread(void)
 		totalClockCycles = 0;
 
 		// run
-		while (!terminate)
+		while (!terminateRequested)
 		{
 			// Run the processor until the 3KHz clock changes
 			int cyclesToRun = (int)(clockCyclesPer3KHzHalfWave - (totalClockCycles % clockCyclesPer3KHzHalfWave));
@@ -70,7 +73,9 @@ void TempestRunner::RunnerThread(void)
 			{
 				if (breakpoints[cpu6502.GetPC()])
 				{
-					while (!terminate)
+					state = Stopped;
+
+					while (!terminateRequested)
 					{
 						environment->Sleep(50);
 					}
@@ -112,5 +117,5 @@ void TempestRunner::RunnerThread(void)
 		processorStatus = _xTempest.what();
 	}
 
-	isTerminated = true;
+	state = Terminated;
 }

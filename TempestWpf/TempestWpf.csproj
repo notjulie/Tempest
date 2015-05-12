@@ -136,6 +136,7 @@
     <Compile Include="Debug6502Window.xaml.cs">
       <DependentUpon>Debug6502Window.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DebugLine.cs" />
     <Compile Include="DebugLineControl.xaml.cs">
       <DependentUpon>DebugLineControl.xaml</DependentUpon>
     </Compile>

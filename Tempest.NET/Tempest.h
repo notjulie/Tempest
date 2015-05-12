@@ -22,6 +22,7 @@ namespace TempestDotNET {
 		String ^GetMathBoxStatus(void);
 		String ^GetProcessorStatus(void);
 		String ^GetAudioStatus(void);
+		bool   IsStopped(void);
 
 		void SetBreakpoint(int address, bool set);
 
@@ -34,7 +35,8 @@ namespace TempestDotNET {
 
 		// simple dispatches to the TempestRunner
 		uint64_t GetIRQCount(void) { return tempestRunner->GetIRQCount(); }
-		void MoveWheel(int delta) { tempestRunner->MoveWheel(delta); }
+		int      GetProgramCounter(void) { return tempestRunner->GetProgramCounter(); }
+		void     MoveWheel(int delta) { tempestRunner->MoveWheel(delta); }
 
 	private:
 		Win32TempestEnvironment *environment;
