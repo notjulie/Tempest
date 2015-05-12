@@ -7,6 +7,6 @@
              >
     <StackPanel Orientation="Horizontal">
         <CheckBox Name="breakPoint" VerticalAlignment="Center"/>
-        <TextBlock Name="text" Text="" VerticalAlignment="Center"/>
+        <TextBlock Name="text" Text="" VerticalAlignment="Center" FontFamily="Courier New"/>
     </StackPanel>
 </UserControl>

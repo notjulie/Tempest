@@ -78,8 +78,7 @@ namespace TempestWpf
          items = new ObservableCollection<DebugLine>();
          for (int i=0; i<disassembly.Count; ++i)
          {
-            DebugLine item = new DebugLine();
-            item.Text = disassembly[i];
+            DebugLine item = new DebugLine(disassembly[i]);
             items.Add(item);
          }
 

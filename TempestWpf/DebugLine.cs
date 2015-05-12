@@ -11,6 +11,22 @@ namespace TempestWpf
    /// </summary>
    public class DebugLine
    {
+      private string text;
+      private int address;
+
+      /// <summary>
+      /// Initializes a new instance of class DebugLine
+      /// </summary>
+      /// <param name="s">the line's text</param>
+      public DebugLine(string s)
+      {
+         text = s;
+
+         address = -1;
+         if (s.Length >= 4)
+            address = ParseHex(s.Substring(0, 4));
+      }
+
       /// <summary>
       /// Gets the address associated with the line, -1 if this is not an actual code line
       /// </summary>
@@ -18,10 +34,7 @@ namespace TempestWpf
       {
          get
          {
-            string s = Text;
-            if (s.Length < 4)
-               return -1;
-            return ParseHex(s.Substring(0, 4));
+            return address;
          }
       }
 
@@ -35,12 +48,14 @@ namespace TempestWpf
       }
 
       /// <summary>
-      /// Gets or sets the text
+      /// Gets the text
       /// </summary>
       public string Text
       {
-         get;
-         set;
+         get
+         {
+            return text;
+         }
       }
 
       private int ParseHex(string s)

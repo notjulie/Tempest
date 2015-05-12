@@ -30,7 +30,7 @@ namespace TempestWpf
         "Item",
         typeof(DebugLine),
         typeof(DebugLineControl),
-        new PropertyMetadata(new DebugLine(), new PropertyChangedCallback(OnItemChanged))
+        new PropertyMetadata(new DebugLine(String.Empty), new PropertyChangedCallback(OnItemChanged))
       );
 
       /// <summary>
@@ -60,7 +60,7 @@ namespace TempestWpf
          }
          set
          {
-            SetValue(ItemProperty, value!=null ? value : new DebugLine());
+            SetValue(ItemProperty, value);
          }
       }
 
@@ -93,11 +93,9 @@ namespace TempestWpf
       private void Update()
       {
          DebugLine item = Item;
-         if (item == null)
-            item = new DebugLine();
-
          text.Text = item.Text;
          Background = item.IsSelected ? selectedBrush : unselectedBrush;
+         breakPoint.Visibility = item.Address >= 0 ? Visibility.Visible : Visibility.Hidden;
       }
 
       private static void OnItemChanged(
