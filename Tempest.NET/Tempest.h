@@ -34,8 +34,11 @@ namespace TempestDotNET {
 		uint64_t GetTotalClockCycles(void);
 
 		// simple dispatches to the TempestRunner
+		uint8_t  GetAccumulator(void) { return tempestRunner->GetAccumulator(); }
 		uint64_t GetIRQCount(void) { return tempestRunner->GetIRQCount(); }
 		int      GetProgramCounter(void) { return tempestRunner->GetProgramCounter(); }
+		uint8_t  GetXRegister(void) { return tempestRunner->GetXRegister(); }
+		uint8_t  GetYRegister(void) { return tempestRunner->GetYRegister(); }
 		void     MoveWheel(int delta) { tempestRunner->MoveWheel(delta); }
 		void     Step(void) { tempestRunner->Step(); }
 		void     Resume(void) { tempestRunner->Resume(); }

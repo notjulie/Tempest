@@ -48,7 +48,10 @@ public:
 	void			Resume(void) { requestedAction = ResumeAction; }
 
 	// simple dispatches to the CPU6502 object
+	uint8_t  GetAccumulator(void) { return cpu6502.GetA(); }
 	uint16_t GetProgramCounter(void) { return cpu6502.GetPC(); }
+	uint8_t  GetXRegister(void) { return cpu6502.GetX(); }
+	uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
 
 	// simple dispatches to the TempestBus object
 	std::string GetMathBoxLogXML(void) const { return tempestBus.GetMathBoxLogXML(); }

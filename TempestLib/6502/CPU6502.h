@@ -27,7 +27,10 @@ public:
    int		SingleStep(void);
 
 	// simple accessors
+	uint8_t  GetA(void) const { return A; }
 	uint16_t GetPC(void) const { return PC; }
+	uint8_t  GetX(void) const { return X; }
+	uint8_t  GetY(void) const { return Y; }
 
 private:
    void     Compare(uint8_t a, uint8_t b);

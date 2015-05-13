@@ -133,6 +133,7 @@ namespace TempestWpf
             {
                stopped = true;
 
+               UpdateCPUDisplay();
                this.Show();
                this.Activate();
 
@@ -240,6 +241,26 @@ namespace TempestWpf
                break;
             }
          }
+      }
+
+      private void UpdateCPUDisplay()
+      {
+         aLabel.Field = HexByte(Tempest.GetAccumulator());
+         xLabel.Field = HexByte(Tempest.GetXRegister());
+         yLabel.Field = HexByte(Tempest.GetYRegister());
+      }
+
+      private static string HexByte(byte b)
+      {
+         return HexDigit((byte)(b/16)) + HexDigit((byte)(b&15));
+      }
+
+      private static string HexDigit(byte b)
+      {
+         if (b < 10)
+            return new String((char)('0' + b), 1);
+         else
+            return new String((char)('A' + b - 10), 1);
       }
 
       #endregion
