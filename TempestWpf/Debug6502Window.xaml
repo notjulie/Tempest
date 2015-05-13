@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:TempestWpf"
         Title="Debug6502Window" Height="300" Width="300">
-    <ListView Name="listView">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <local:DebugLineControl Item="{Binding}" BreakpointChanged="itemBreakpointChanged" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <DockPanel>
+        <TextBox DockPanel.Dock="Top" Name="findString" HorizontalAlignment="Right" Width="100"/>
+        <ListView Name="listView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:DebugLineControl Item="{Binding}" BreakpointChanged="itemBreakpointChanged" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
 </Window>

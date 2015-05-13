@@ -52,6 +52,7 @@ namespace TempestWpf
 
          // event handlers
          Closing += Debug6502Window_Closing;
+         findString.KeyDown += findString_KeyDown;
 
          // load the disassembly
          List<string> disassembly = new List<string>();
@@ -154,9 +155,31 @@ namespace TempestWpf
          Tempest.SetBreakpoint(address, lineControl.IsBreakpoint);
       }
 
+      void findString_KeyDown(object sender, KeyEventArgs e)
+      {
+         if (e.Key == Key.Enter)
+         {
+            DoFind();
+         }
+      }
+
       #endregion
 
       #region Private Methods
+
+      private void DoFind()
+      {
+         for (int i=0; i<listView.Items.Count; ++i)
+         {
+            DebugLine line = listView.Items[i] as DebugLine;
+            if (line.Text.ToLower().Contains(findString.Text.ToLower()))
+            {
+               listView.SelectedIndex = i;
+               listView.ScrollIntoView(line);
+               return;
+            }
+         }
+      }
 
       private void SelectLine(DebugLine line)
       {
