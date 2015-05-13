@@ -37,6 +37,8 @@ namespace TempestDotNET {
 		uint64_t GetIRQCount(void) { return tempestRunner->GetIRQCount(); }
 		int      GetProgramCounter(void) { return tempestRunner->GetProgramCounter(); }
 		void     MoveWheel(int delta) { tempestRunner->MoveWheel(delta); }
+		void     Step(void) { tempestRunner->Step(); }
+		void     Resume(void) { tempestRunner->Resume(); }
 
 	private:
 		Win32TempestEnvironment *environment;

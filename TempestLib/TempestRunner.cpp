@@ -17,6 +17,7 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 
 	// clear
 	state = Unstarted;
+	requestedAction = NoAction;
 	terminateRequested = false;
 	irqCount = 0;
 	totalClockCycles = 0;
@@ -71,15 +72,29 @@ void TempestRunner::RunnerThread(void)
 			int newClockCycles = 0;
 			while (newClockCycles < cyclesToRun)
 			{
-				if (breakpoints[cpu6502.GetPC()])
+				// pause if we hit a breakpoint
+				if (breakpoints[cpu6502.GetPC()] || state == StepState)
 				{
 					state = Stopped;
+					requestedAction = NoAction;
 
 					while (!terminateRequested)
 					{
+						if (requestedAction == StepAction)
+						{
+							state = StepState;
+							break;
+						}
+						else if (requestedAction == ResumeAction)
+						{
+							state = Running;
+							break;
+						}
 						environment->Sleep(50);
 					}
 				}
+
+				// execute the next instruction
 				newClockCycles += cpu6502.SingleStep();
 			}
 

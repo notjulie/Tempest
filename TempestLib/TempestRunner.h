@@ -20,8 +20,15 @@ private:
 	enum State {
 		Unstarted,
 		Running,
+		StepState,
 		Stopped,
 		Terminated
+	};
+
+	enum Action {
+		NoAction,
+		ResumeAction,
+		StepAction
 	};
 
 public:
@@ -34,9 +41,11 @@ public:
 	uint64_t    GetIRQCount(void) { return irqCount; }
 	std::string GetProcessorStatus(void) { return processorStatus; }
 	uint64_t    GetTotalClockCycles(void) { return totalClockCycles; }
-	bool        IsStopped(void) { return state == Stopped; }
+	bool        IsStopped(void) { return state == Stopped && requestedAction==NoAction; }
 	bool		   IsTerminated(void) { return state == Terminated; }
 	void        SetBreakpoint(uint16_t address, bool set) { breakpoints[address] = set; }
+	void			Step(void) { requestedAction = StepAction; }
+	void			Resume(void) { requestedAction = ResumeAction; }
 
 	// simple dispatches to the CPU6502 object
 	uint16_t GetProgramCounter(void) { return cpu6502.GetPC(); }
@@ -68,6 +77,7 @@ private:
 
 	bool     terminateRequested;
 	State    state;
+	Action   requestedAction;
 	uint64_t irqCount;
 	uint64_t totalClockCycles;
 

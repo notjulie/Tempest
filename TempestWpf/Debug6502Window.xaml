@@ -4,7 +4,13 @@
         xmlns:local="clr-namespace:TempestWpf"
         Title="Debug6502Window" Height="300" Width="300">
     <DockPanel>
-        <TextBox DockPanel.Dock="Top" Name="findString" HorizontalAlignment="Right" Width="100"/>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBox DockPanel.Dock="Right" Name="findString" HorizontalAlignment="Right" Width="100"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="stepButton">Step</Button>
+                <Button Name="runButton">Run</Button>
+            </StackPanel>
+        </DockPanel>
         <ListView Name="listView">
             <ListView.ItemTemplate>
                 <DataTemplate>

@@ -53,6 +53,8 @@ namespace TempestWpf
          // event handlers
          Closing += Debug6502Window_Closing;
          findString.KeyDown += findString_KeyDown;
+         stepButton.Click += stepButton_Click;
+         runButton.Click += runButton_Click;
 
          // load the disassembly
          List<string> disassembly = new List<string>();
@@ -123,16 +125,23 @@ namespace TempestWpf
          if (Tempest == null)
             return;
 
-         // if we changed from running to not running show ourself and
-         // highlight the current instruction
-         if (!stopped && tempest.IsStopped())
+         if (!stopped)
          {
-            stopped = true;
+            // if we changed from running to not running show ourself and
+            // highlight the current instruction
+            if (tempest.IsStopped())
+            {
+               stopped = true;
 
-            this.Show();
-            this.Activate();
+               this.Show();
+               this.Activate();
 
-            ShowCurrentInstruction();
+               ShowCurrentInstruction();
+            }
+            else
+            {
+               SelectLine(null);
+            }
          }
       }
 
@@ -161,6 +170,18 @@ namespace TempestWpf
          {
             DoFind();
          }
+      }
+
+      void stepButton_Click(object sender, RoutedEventArgs e)
+      {
+         Tempest.Step();
+         stopped = false;
+      }
+
+      void runButton_Click(object sender, RoutedEventArgs e)
+      {
+         Tempest.Resume();
+         stopped = false;
       }
 
       #endregion
