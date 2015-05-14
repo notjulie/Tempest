@@ -191,7 +191,7 @@ namespace TempestWpf
 
       private void DoFind()
       {
-         for (int i=0; i<listView.Items.Count; ++i)
+         for (int i=listView.SelectedIndex + 1; i<listView.Items.Count; ++i)
          {
             DebugLine line = listView.Items[i] as DebugLine;
             if (line.Text.ToLower().Contains(findString.Text.ToLower()))

@@ -548,7 +548,7 @@ void CPU6502::SBC(uint16_t address)
 
 		A = (uint8_t)unsignedResult;
 		P.V = signedResult > 127 || signedResult < -128;
-		P.C = unsignedResult < 0;
+		P.C = unsignedResult >= 0;
 	}
 
 	SetNZ(A);

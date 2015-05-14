@@ -211,16 +211,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tempest.NET\Tempest.NET.vcxproj">
-      <Project>{1da6bb69-4290-49a5-a903-cbae8752bd54}</Project>
-      <Name>Tempest.NET</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="tempest_ver1_roms\tempest1_readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="tempest_ver1_roms\Disassembled.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tempest.NET\Tempest.NET.vcxproj">
+      <Project>{1da6bb69-4290-49a5-a903-cbae8752bd54}</Project>
+      <Name>Tempest.NET</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
