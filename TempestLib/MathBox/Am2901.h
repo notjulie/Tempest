@@ -42,8 +42,6 @@ public:
 	void SetRAM0In(const Tristate &ram0) { RAM0In = ram0; }
 	void SetRAM3In(const Tristate &ram3) { RAM3In = ram3; }
 
-	ALULogEntry GetLogData(void) const;
-
 private:
 	Nybble GetA(void) const;
 	Nybble GetB(void) const;

@@ -10,7 +10,6 @@
 
 #include "stdafx.h"
 
-#include "ALULogEntry.h"
 #include "MathBoxException.h"
 #include "MathBoxTracer.h"
 
@@ -491,27 +490,4 @@ void Am2901::SetClock(bool newClockState)
 	clock = newClockState;
 }
 
-
-ALULogEntry Am2901::GetLogData(void) const
-{
-	ALULogEntry result;
-
-	result.A = AAddress;
-	result.B = BAddress;
-	result.Cn = CarryIn;
-	result.DataIn = DataIn;
-	result.F3 = GetF3();
-	result.I012 = I012;
-	result.I345 = I345;
-	result.I678 = I678;
-	result.OVR = GetOVR();
-	result.QLatch = QLatch;
-	result.R = GetR();
-	result.S = GetS();
-
-	for (int i = 0; i < 16; ++i)
-		result.RAM[i] = RAM[i];
-
-	return result;
-}
 

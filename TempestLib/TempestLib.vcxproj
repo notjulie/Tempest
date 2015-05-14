@@ -22,13 +22,10 @@
     <ClCompile Include="6502\CPU6502.cpp" />
     <ClCompile Include="6502\CPU6502Exception.cpp" />
     <ClCompile Include="EEPROM.cpp" />
-    <ClCompile Include="MathBox\ALULogEntry.cpp" />
     <ClCompile Include="MathBox\Am2901.cpp" />
     <ClCompile Include="MathBox\Am2901Tables.cpp" />
     <ClCompile Include="MathBox\MathBox.cpp" />
     <ClCompile Include="MathBox\MathBoxException.cpp" />
-    <ClCompile Include="MathBox\MathBoxLogEntry.cpp" />
-    <ClCompile Include="MathBox\MathBoxXML.cpp" />
     <ClCompile Include="Pokey\Pokey.cpp" />
     <ClCompile Include="Pokey\SoundChannel.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -55,13 +52,10 @@
     <ClInclude Include="AbstractTempestEnvironment.h" />
     <ClInclude Include="AbstractTempestWaveStream.h" />
     <ClInclude Include="EEPROM.h" />
-    <ClInclude Include="MathBox\ALULogEntry.h" />
     <ClInclude Include="MathBox\Am2901.h" />
     <ClInclude Include="MathBox\Am2901Tables.h" />
     <ClInclude Include="MathBox\MathBox.h" />
     <ClInclude Include="MathBox\MathBoxException.h" />
-    <ClInclude Include="MathBox\MathBoxLogEntry.h" />
-    <ClInclude Include="MathBox\MathBoxXML.h" />
     <ClInclude Include="MathBox\Nullable.h" />
     <ClInclude Include="MathBox\Nybble.h" />
     <ClInclude Include="Pokey\Pokey.h" />
