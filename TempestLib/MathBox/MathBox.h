@@ -21,15 +21,6 @@ class MathBox
 {
 private:
 	enum Bit {
-		A10,
-		A10STAR,
-		A12,
-		C,
-		LDAB,
-		M,
-		PCEN,
-		Q0,
-		R15,
 		BIT_COUNT
 	};
 
@@ -47,7 +38,7 @@ public:
    void Write(uint8_t address, uint8_t value);
 
 private:
-	bool GetBit(Bit bit);
+	bool GetQ0(void);
 	void SetALUCarryFlags(void);
 	void SetALUInputs(void);
 	void SetError(const std::string &_status);
@@ -98,8 +89,6 @@ private:
 	uint32_t totalMathBoxWrites;
 	uint32_t totalFallingClockTime;
 	uint32_t totalRisingClockTime;
-	uint32_t totalGetTristateTime;
-	uint32_t bitTimes[BIT_COUNT];
 
 	// misc
 	std::string	error;

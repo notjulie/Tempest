@@ -50,9 +50,6 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 	totalMathBoxWrites = 0;
 	totalRisingClockTime = 0;
 	totalFallingClockTime = 0;
-	totalGetTristateTime = 0;
-	for (int i = 0; i < BIT_COUNT; ++i)
-		bitTimes[i] = 0;
 }
 
 MathBox::~MathBox(void)
@@ -201,7 +198,13 @@ void MathBox::HandleRisingClock(void)
 
 	// calculate the new PC 
 	uint8_t newPC;
-	bool pcen = GetBit(PCEN);
+	bool pcen;
+	{
+		bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
+		bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
+		bool D4NAND2out = !(D4NAND1out && ((romE[PC] & 4) != 0));
+		pcen = BEGIN || !D4NAND2out;
+	}
 	if (pcen)
 	{
 		// we load the PC from whichever source is selected
@@ -224,7 +227,7 @@ void MathBox::HandleRisingClock(void)
 	}
 
 	// calculate the new value of Q0Latch
-	bool newQ0Latch = GetBit(Q0);
+	bool newQ0Latch = GetQ0();
 
 	// let the ALUs handle the rising clock edge...
 	SetALUInputs();
@@ -251,11 +254,11 @@ void MathBox::HandleFallingClock(void)
 	if (BEGIN)
 		newSTOP = false;
 	else
-		newSTOP = GetBit(A12);
+		newSTOP = ((romH[PC] & 8) != 0);
 
 	// new value of our jump address latch
 	uint8_t newJumpLatch = JumpLatch;
-	bool ldab = GetBit(LDAB);
+	bool ldab = ((romF[PC] & 8) != 0);
 	if (ldab)
 		newJumpLatch = (uint8_t)((romL[PC]<<4) + romK[PC]);
 
@@ -281,69 +284,20 @@ void MathBox::HandleFallingClock(void)
 	totalFallingClockTime = totalFallingClockTime + (usEnd - usStart);
 }
 
-bool MathBox::GetBit(Bit bit)
+bool MathBox::GetQ0(void)
 {
-	Timer timer(environment, &totalGetTristateTime);
-	Timer timer2(environment, &bitTimes[bit]);
+	Tristate aluKQ0 = aluK.GetQ0Out();
+	bool a18 = (romF[PC] & 2) != 0;
 
-	char buf[200];
-
-	switch (bit)
+	if (!aluKQ0.IsUnknown())
 	{
-	case A10:
-		return ((romJ[PC] & 2) != 0);
-
-	case A10STAR:
-		return GetBit(A10) ^ (GetBit(M) && Q0Latch);
-
-	case A12:
-		return ((romH[PC] & 8) != 0);
-
-	case C:
-		return ((romE[PC] & 1) != 0);
-
-	case LDAB:
-		return ((romF[PC] & 8) != 0);
-
-	case M:
-		return ((romE[PC] & 2) != 0);
-
-	case PCEN:
-	{
-		bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
-		bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
-		bool D4NAND2out = !(D4NAND1out && ((romE[PC] & 4) != 0));
-		return BEGIN || !D4NAND2out;
+		// ASSUMPTION WARNING
+		// we have multiple sources driving Q0... I will assume that they are
+		// wired OR and see how that goes
+		return aluKQ0.Value() || !a18;
 	}
 
-	case Q0:
-		{
-			Tristate aluKQ0 = aluK.GetQ0Out();
-			bool a18 = (romF[PC] & 2) != 0;
-
-			if (!aluKQ0.IsUnknown())
-			{
-				// ASSUMPTION WARNING
-				// we have multiple sources driving Q0... I will assume that they are
-				// wired OR and see how that goes
-				return aluKQ0.Value() || !a18;
-			}
-
-			return !a18;
-		}
-
-	case R15:
-	{
-		bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
-		bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
-		return !(D4NAND1out && !((romF[PC] & 2) != 0));
-	}
-
-	case BIT_COUNT:
-	default:
-		sprintf_s(buf, "MathBox::GetTristate: unsupported bit: %d", bit);
-		throw MathBoxException(buf);
-	}
+	return !a18;
 }
 
 
@@ -359,7 +313,7 @@ void MathBox::SetALUInputs(void)
 
 	// I012 are a little more complicated
 	int i01 = romJ[PC] & 1;
-	if (GetBit(A10STAR))
+	if (((romJ[PC] & 2) != 0) ^ (((romE[PC] & 2) != 0) && Q0Latch))
 		i01 += 2;
 	aluK.I012 = aluF.I012 = (uint8_t)(i01 + (romJ[PC] & 4));
 	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[PC] & 8) >> 1));
@@ -380,7 +334,7 @@ void MathBox::SetALUInputs(void)
 void MathBox::SetALUCarryFlags(void)
 {
 	// the actual carry flags are easy... they just cascade up
-	aluK.CarryIn = GetBit(C);
+	aluK.CarryIn = ((romE[PC] & 1) != 0);
 	aluF.CarryIn = aluK.GetCarryOut().Value();
 	aluJ.CarryIn = aluF.GetCarryOut().Value();
 	aluE.CarryIn = aluJ.GetCarryOut().Value();
@@ -395,7 +349,7 @@ void MathBox::SetALUCarryFlags(void)
 		// on the current ALU operation; thus you'll see a lot of cases where they are both being
 		// sent both directions.  The called function will sort things out depending on who is
 		// reporting an unknown value.
-		aluK.SetQ0In(GetBit(Q0));
+		aluK.SetQ0In(GetQ0());
 		aluK.SetQ3In(aluF.GetQ0Out());
 		aluK.SetRAM0In(aluE.GetQ3Out());
 		aluK.SetRAM3In(aluF.GetRAM0Out());
@@ -413,7 +367,13 @@ void MathBox::SetALUCarryFlags(void)
 		aluE.SetQ0In(aluJ.GetQ3Out());
 		aluE.SetQ3In(aluK.GetRAM0Out());
 		aluE.SetRAM0In(aluJ.GetRAM3Out());
-		aluE.SetRAM3In(GetBit(R15));
+		bool r15;
+		{
+			bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
+			bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
+			r15 = !(D4NAND1out && !((romF[PC] & 2) != 0));
+		}
+		aluE.SetRAM3In(r15);
 	}
 }
 
