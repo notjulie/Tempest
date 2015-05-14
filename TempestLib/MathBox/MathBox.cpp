@@ -60,37 +60,44 @@ void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
 	switch (slot)
 	{
 	case 'A':
-		romA.resize((unsigned)length);
+		if (length != sizeof(romA))
+			throw MathBoxException("Invalid size for ROM A");
 		memcpy(&romA[0], rom, (unsigned)length);
 		break;
 
 	case 'E':
-		romE.resize((unsigned)length);
+		if (length != sizeof(romE))
+			throw MathBoxException("Invalid size for ROM E");
 		memcpy(&romE[0], rom, (unsigned)length);
 		break;
 
 	case 'F':
-		romF.resize((unsigned)length);
+		if (length != sizeof(romF))
+			throw MathBoxException("Invalid size for ROM F");
 		memcpy(&romF[0], rom, (unsigned)length);
 		break;
 
 	case 'H':
-		romH.resize((unsigned)length);
+		if (length != sizeof(romH))
+			throw MathBoxException("Invalid size for ROM H");
 		memcpy(&romH[0], rom, (unsigned)length);
 		break;
 
 	case 'J':
-		romJ.resize((unsigned)length);
+		if (length != sizeof(romJ))
+			throw MathBoxException("Invalid size for ROM J");
 		memcpy(&romJ[0], rom, (unsigned)length);
 		break;
 
 	case 'K':
-		romK.resize((unsigned)length);
+		if (length != sizeof(romK))
+			throw MathBoxException("Invalid size for ROM K");
 		memcpy(&romK[0], rom, (unsigned)length);
 		break;
 
 	case 'L':
-		romL.resize((unsigned)length);
+		if (length != sizeof(romL))
+			throw MathBoxException("Invalid size for ROM L");
 		memcpy(&romL[0], rom, (unsigned)length);
 		break;
 

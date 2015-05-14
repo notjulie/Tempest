@@ -89,13 +89,13 @@ private:
 	Am2901	aluE;
 
 	// ROMs
-	std::vector<uint8_t> romA;
-	std::vector<uint8_t> romE;
-	std::vector<uint8_t> romF;
-	std::vector<uint8_t> romH;
-	std::vector<uint8_t> romJ;
-	std::vector<uint8_t> romK;
-	std::vector<uint8_t> romL;
+	uint8_t romA[32];
+	uint8_t romE[256];
+	uint8_t romF[256];
+	uint8_t romH[256];
+	uint8_t romJ[256];
+	uint8_t romK[256];
+	uint8_t romL[256];
 
 	// profiling
 	uint32_t totalMathBoxTime;
