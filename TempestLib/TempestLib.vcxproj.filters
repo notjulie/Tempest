@@ -126,6 +126,9 @@
     <ClCompile Include="Win32\Win32TempestEnvironment.cpp">
       <Filter>Win32\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MathBox\Am2901Tables.cpp">
+      <Filter>MathBox\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EEPROM.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="Win32\Win32TempestEnvironment.h">
       <Filter>Win32\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MathBox\Am2901Tables.h">
+      <Filter>MathBox\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

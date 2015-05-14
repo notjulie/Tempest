@@ -16,6 +16,8 @@
 
 #include "Am2901.h"
 
+Am2901Tables Am2901::Tables;
+
 Am2901::Am2901(void)
 {
 	clock = false;
@@ -25,29 +27,6 @@ Am2901::Am2901(void)
 	I678 = 0;
 }
 
-
-bool Am2901::GetC3(Nybble R, Nybble S) const
-{
-	Nybble P = R | S;
-	Nybble G = R & S;
-	return
-		G[2] ||
-		(P[2] && G[1]) ||
-		(P[2] && P[1] && G[0]) ||
-		(P[2] && P[1] && P[0] && CarryIn);
-}
-
-bool Am2901::GetC4(Nybble R, Nybble S) const
-{
-	Nybble P = R | S;
-	Nybble G = R & S;
-	return
-		G[3] ||
-		(P[3] && G[2]) ||
-		(P[3] && P[2] && G[1]) ||
-		(P[3] && P[2] && P[1] && G[0]) ||
-		(P[3] && P[2] && P[1] && P[0] && CarryIn);
-}
 
 bool Am2901::GetXORCarry(Nybble R, Nybble S) const
 {
@@ -91,13 +70,13 @@ Tristate Am2901::GetCarryOut(void)
 	switch (I345)
 	{
 	case 0:
-		return GetC4(R, S);
+		return Tables.GetC4(R.Value(), S.Value(), CarryIn);
 
 	case 1:
-		return GetC4(~R, S);
+		return Tables.GetC4((~R).Value(), S.Value(), CarryIn);
 
 	case 2:
-		return GetC4(R, ~S);
+		return Tables.GetC4(R.Value(), (~S).Value(), CarryIn);
 
 	case 3:
 		return ((R | S) != Nybble(0xF)) || CarryIn;
@@ -137,13 +116,13 @@ Tristate Am2901::GetOVR(void) const
 	switch (I345)
 	{
 	case 0:
-		return GetC3(R, S) ^ GetC4(R, S);
+		return Tables.GetC3(R.Value(), S.Value(), CarryIn) ^ Tables.GetC4(R.Value(), S.Value(), CarryIn);
 
 	case 1:
-		return GetC3(~R, S) ^ GetC4(~R, S);
+		return Tables.GetC3((~R).Value(), S.Value(), CarryIn) ^ Tables.GetC4((~R).Value(), S.Value(), CarryIn);
 
 	case 2:
-		return GetC3(R, ~S) ^ GetC4(R, ~S);
+		return Tables.GetC3(R.Value(), (~S).Value(), CarryIn) ^ Tables.GetC4(R.Value(), (~S).Value(), CarryIn);
 
 	case 3:
 		return ((R | S) != Nybble(0xF)) || CarryIn;

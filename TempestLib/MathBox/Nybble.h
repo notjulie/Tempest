@@ -18,7 +18,7 @@ public:
 	Nybble operator>>(int n) const { return (uint8_t)(value >> n); }
 	Nybble operator<<(int n) const { return (uint8_t)((value << n) & 0xF); }
 	bool operator!(void) const { return value == 0; }
-	Nybble operator~(void) const { return (uint8_t)~value; }
+	Nybble operator~(void) const { return (uint8_t)((~value) & 0xF); }
 	bool operator[](int i) const { return (value & (1 << i)) != 0;	}
 
 	uint8_t Value(void) const { return value; }

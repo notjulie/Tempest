@@ -24,6 +24,7 @@
     <ClCompile Include="EEPROM.cpp" />
     <ClCompile Include="MathBox\ALULogEntry.cpp" />
     <ClCompile Include="MathBox\Am2901.cpp" />
+    <ClCompile Include="MathBox\Am2901Tables.cpp" />
     <ClCompile Include="MathBox\MathBox.cpp" />
     <ClCompile Include="MathBox\MathBoxException.cpp" />
     <ClCompile Include="MathBox\MathBoxLogEntry.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="EEPROM.h" />
     <ClInclude Include="MathBox\ALULogEntry.h" />
     <ClInclude Include="MathBox\Am2901.h" />
+    <ClInclude Include="MathBox\Am2901Tables.h" />
     <ClInclude Include="MathBox\MathBox.h" />
     <ClInclude Include="MathBox\MathBoxException.h" />
     <ClInclude Include="MathBox\MathBoxLogEntry.h" />
