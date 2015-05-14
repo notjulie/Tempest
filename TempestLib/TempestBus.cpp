@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 
+#include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 
 #include "TempestBus.h"
@@ -22,7 +23,9 @@ static const uint16_t EEPROM_WRITE_END = 0x603F;
 static const uint16_t MATHBOX_WRITE_BASE = 0x6080;
 static const uint16_t MATHBOX_WRITE_END = 0x609F;
 
-TempestBus::TempestBus(void)
+TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
+	:
+		mathBox(_environment)
 {
 	// clear
 	selfTest = false;

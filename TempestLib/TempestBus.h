@@ -25,7 +25,7 @@ class VectorData;
 class TempestBus : public AbstractBus, public AbstractTempestWaveStream
 {
 public:
-	TempestBus(void);
+	TempestBus(AbstractTempestEnvironment *_environment);
 	virtual ~TempestBus(void);
 
 	void LoadROM(const uint8_t *rom, int length, uint16_t address);

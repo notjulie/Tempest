@@ -9,7 +9,7 @@
 
 TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	:
-		tempestBus(),
+		tempestBus(_environment),
 		cpu6502(&tempestBus)
 {
 	// save parameters

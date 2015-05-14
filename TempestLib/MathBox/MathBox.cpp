@@ -17,8 +17,9 @@
 #include "MathBox.h"
 
 
-MathBox::MathBox(void)
+MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 {
+	environment = _environment;
 }
 
 MathBox::~MathBox(void)

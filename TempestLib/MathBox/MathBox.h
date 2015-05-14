@@ -10,7 +10,7 @@
 
 #include "Am2901.h"
 
-
+class AbstractTempestEnvironment;
 class MathBoxLog;
 
 
@@ -38,7 +38,7 @@ private:
 	};
 
 public:
-	MathBox(void);
+	MathBox(AbstractTempestEnvironment *_environment);
 	virtual ~MathBox(void);
 
 	void LoadROM(const uint8_t *rom, int length, char slot);
@@ -66,6 +66,9 @@ private:
 	MathBox &operator=(const MathBox &mathBox);
 
 private:
+	// construction parameters
+	AbstractTempestEnvironment	*environment;
+
 	// inputs
 	NullableByte dataIn;
 	NullableByte addressIn;

@@ -30,7 +30,7 @@ public:
 	TEST_METHOD(TestWrite00To15)
 	{
 		// create a math box and write 00 to address 0x15
-		MathBox mathBox;
+		MathBox mathBox(NULL);
 		LoadROMs(&mathBox);
 		mathBox.Write(0x15, 0x00);
 
