@@ -26,67 +26,67 @@ Am2901::Am2901(void)
 }
 
 
-Tristate Am2901::GetC3(const NullableNybble &R, const NullableNybble &S) const
+bool Am2901::GetC3(Nybble R, Nybble S) const
 {
-	NullableNybble P = R | S;
-	NullableNybble G = R & S;
+	Nybble P = R | S;
+	Nybble G = R & S;
 	return
-		G[2] |
-		(P[2] & G[1]) |
-		(P[2] & P[1] & G[0]) |
-		(P[2] & P[1] & P[0] & CarryIn);
+		G[2] ||
+		(P[2] && G[1]) ||
+		(P[2] && P[1] && G[0]) ||
+		(P[2] && P[1] && P[0] && CarryIn);
 }
 
-Tristate Am2901::GetC4(const NullableNybble &R, const NullableNybble &S) const
+bool Am2901::GetC4(Nybble R, Nybble S) const
 {
-	NullableNybble P = R | S;
-	NullableNybble G = R & S;
+	Nybble P = R | S;
+	Nybble G = R & S;
 	return
-		G[3] |
-		(P[3] & G[2]) |
-		(P[3] & P[2] & G[1]) |
-		(P[3] & P[2] & P[1] & G[0]) |
-		(P[3] & P[2] & P[1] & P[0] & CarryIn);
+		G[3] ||
+		(P[3] && G[2]) ||
+		(P[3] && P[2] && G[1]) ||
+		(P[3] && P[2] && P[1] && G[0]) ||
+		(P[3] && P[2] && P[1] && P[0] && CarryIn);
 }
 
-Tristate Am2901::GetXORCarry(const NullableNybble &R, const NullableNybble &S)
+bool Am2901::GetXORCarry(Nybble R, Nybble S) const
 {
-	NullableNybble P = R | S;
-	NullableNybble G = R & S;
+	Nybble P = R | S;
+	Nybble G = R & S;
 
-	Tristate notResult =
-		G[3] |
-		(P[3] & G[2]) |
-		(P[3] & P[2] & G[1]) |
-		(P[3] & P[2] & P[1] & P[0] & (G[0] & !CarryIn));
+	bool notResult =
+		G[3] ||
+		(P[3] && G[2]) ||
+		(P[3] && P[2] && G[1]) ||
+		(P[3] && P[2] && P[1] && P[0] && (G[0] && !CarryIn));
 	return !notResult;
 
 }
 
-Tristate Am2901::GetXOROverflow(const NullableNybble &R, const NullableNybble &S) const
+bool Am2901::GetXOROverflow(Nybble R, Nybble S) const
 {
-	NullableNybble P = R | S;
-	NullableNybble G = R & S;
+	Nybble P = R | S;
+	Nybble G = R & S;
 
-	Tristate a =
-		P[2] |
-		(G[2] & P[1]) |
-		(G[2] & G[1] & P[0]) |
-		(G[2] & G[1] & G[0] & CarryIn);
-	Tristate b =
-		P[3] |
-		(G[3] & P[2]) |
-		(G[3] & G[2] & P[1]) |
-		(G[3] & G[2] & G[1] & P[0]) |
-		(G[3] & G[2] & G[1] & G[0] & CarryIn);
+	bool a =
+		P[2] ||
+		(G[2] && P[1]) ||
+		(G[2] && G[1] && P[0]) ||
+		(G[2] && G[1] && G[0] && CarryIn);
+	bool b =
+		P[3] ||
+		(G[3] && P[2]) ||
+		(G[3] && G[2] && P[1]) ||
+		(G[3] && G[2] && G[1] && P[0]) ||
+		(G[3] && G[2] && G[1] && G[0] && CarryIn);
 	return a ^ b;
 }
 
 Tristate Am2901::GetCarryOut(void)
 {
 	// Get R and S
-	NullableNybble R = GetR();
-	NullableNybble S = GetS();
+	Nybble R = GetR();
+	Nybble S = GetS();
 
 	switch (I345)
 	{
@@ -131,8 +131,8 @@ bool Am2901::GetF3(void) const
 Tristate Am2901::GetOVR(void) const
 {
 	// Get R and S
-	NullableNybble R = GetR();
-	NullableNybble S = GetS();
+	Nybble R = GetR();
+	Nybble S = GetS();
 
 	switch (I345)
 	{

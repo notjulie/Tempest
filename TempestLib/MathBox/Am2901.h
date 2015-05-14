@@ -46,13 +46,13 @@ public:
 private:
 	Nybble GetA(void) const;
 	Nybble GetB(void) const;
-	Tristate GetC3(const NullableNybble &R, const NullableNybble &S) const;
-	Tristate GetC4(const NullableNybble &R, const NullableNybble &S) const;
+	bool GetC3(Nybble R, Nybble S) const;
+	bool GetC4(Nybble R, Nybble S) const;
 	Nybble GetF(void) const;
 	Nybble GetR(void) const;
 	Nybble GetS(void) const;
-	Tristate GetXORCarry(const NullableNybble &R, const NullableNybble &S);
-	Tristate GetXOROverflow(const NullableNybble &R, const NullableNybble &S) const;
+	bool GetXORCarry(Nybble R, Nybble S) const;
+	bool GetXOROverflow(Nybble R, Nybble S) const;
 
 private:
 	bool clock;
