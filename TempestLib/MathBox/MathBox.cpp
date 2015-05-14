@@ -292,18 +292,21 @@ void MathBox::HandleFallingClock(void)
 
 bool MathBox::GetQ0(void)
 {
-	Tristate aluKQ0 = aluK.GetQ0Out();
-	bool a18 = (romF[PC] & 2) != 0;
-
-	if (!aluKQ0.IsUnknown())
+	// =========== ASSUMPTION ============
+	// If the ALUs are currently in a downshifting operation then we have Q0
+	// being driven by A18 and the Q0 output of aluK.  I have assumed that they are
+	// wired ORed in that case.
+	switch (aluK.I678)
 	{
-		// ASSUMPTION WARNING
-		// we have multiple sources driving Q0... I will assume that they are
-		// wired OR and see how that goes
-		return aluKQ0.Value() || !a18;
-	}
+	case 4:
+	case 5:
+		// downshifting operation
+		return aluK.GetQ0Out() || !((romF[PC] & 2) != 0);
 
-	return !a18;
+	default:
+		// not downshifting, so aluK's Q0 is floating
+		return !((romF[PC] & 2) != 0);
+	}
 }
 
 
@@ -378,7 +381,7 @@ void MathBox::SetALUCarryFlags(void)
 	case 6:
 	case 7:
 		// upshifting operation
-		aluK.SetQ0In(GetQ0());
+		aluK.SetQ0In((romF[PC] & 2) != 0);
 		aluF.SetQ0In(aluK.GetQ3Out());
 		aluJ.SetQ0In(aluF.GetQ3Out());
 		aluE.SetQ0In(aluJ.GetQ3Out());

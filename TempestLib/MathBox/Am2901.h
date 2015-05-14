@@ -29,10 +29,10 @@ public:
 	Tristate GetCarryOut(void);
 	bool GetF3(void) const;
 	bool GetOVR(void) const;
-	Tristate GetQ0Out(void);
-	Tristate GetQ3Out(void);
-	Tristate GetRAM0Out(void);
-	Tristate GetRAM3Out(void);
+	bool GetQ0Out(void);
+	bool GetQ3Out(void);
+	bool GetRAM0Out(void);
+	bool GetRAM3Out(void);
 
 	Nybble GetY(void);
 

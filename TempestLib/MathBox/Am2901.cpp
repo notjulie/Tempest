@@ -147,54 +147,14 @@ bool Am2901::GetOVR(void) const
 	}
 }
 
-Tristate Am2901::GetQ0Out(void)
+bool Am2901::GetQ0Out(void)
 {
-	switch (I678)
-	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 6:
-	case 7:
-		return Tristate::Unknown;
-
-	case 4:
-	case 5:
-		return (QLatch.Value() & 1) != 0;
-
-	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetQ0Out not implemented for destination: %d", I678);
-			throw MathBoxException(buf);
-		}
-	}
+	return (QLatch.Value() & 1) != 0;
 }
 
-Tristate Am2901::GetQ3Out(void)
+bool Am2901::GetQ3Out(void)
 {
-	switch (I678)
-	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-		return Tristate::Unknown;
-
-	case 6:
-	case 7:
-		return (QLatch.Value() & 8) != 0;
-
-	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetQ3 not implemented for destination: %d", I678);
-			throw MathBoxException(buf);
-		}
-	}
+	return (QLatch.Value() & 8) != 0;
 }
 
 Nybble Am2901::GetA(void) const
@@ -345,55 +305,15 @@ Nybble Am2901::GetS(void) const
 	}
 }
 
-Tristate Am2901::GetRAM0Out(void)
+bool Am2901::GetRAM0Out(void)
 {
-	switch (I678)
-	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 6:
-	case 7:
-		return Tristate::Unknown;
-
-	case 4:
-	case 5:
-		return (GetF().Value() & 1) != 0;
-
-	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetRAM0Out not implemented for destination: %d", I678);
-			throw MathBoxException(buf);
-		}
-	}
+	return (GetF().Value() & 1) != 0;
 }
 
 
-Tristate Am2901::GetRAM3Out(void)
+bool Am2901::GetRAM3Out(void)
 {
-	switch (I678)
-	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-		return Tristate::Unknown;
-
-	case 6:
-	case 7:
-		return (GetF().Value() & 8) != 0;
-
-	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetRAM3 not implemented for destination: %d", I678);
-			throw MathBoxException(buf);
-		}
-	}
+	return (GetF().Value() & 8) != 0;
 }
 
 
