@@ -16,25 +16,24 @@ public:
 	Am2901(void);
 
 public:
-	NullableNybble AAddress;
-	NullableNybble BAddress;
-	NullableNybble DataIn;
-	NullableByte I012;
-	NullableByte I345;
-	NullableByte I678;
-	Tristate CarryIn;
+	Nybble AAddress;
+	Nybble BAddress;
+	Nybble DataIn;
+	uint8_t I012;
+	uint8_t I345;
+	uint8_t I678;
+	bool CarryIn;
 
 public:
-	void ClearRAM(const NullableNybble &value);
 	Tristate GetCarryOut(void);
-	Tristate GetF3(void) const;
+	bool GetF3(void) const;
 	Tristate GetOVR(void) const;
 	Tristate GetQ0Out(void);
 	Tristate GetQ3Out(void);
 	Tristate GetRAM0Out(void);
 	Tristate GetRAM3Out(void);
 
-	NullableNybble GetY(void);
+	Nybble GetY(void);
 
 	void SetClock(bool state);
 	void SetQ0In(const Tristate &q0) { Q0In = q0; }
@@ -45,29 +44,27 @@ public:
 	ALULogEntry GetLogData(void) const;
 
 private:
-	NullableNybble GetA(void) const;
-	NullableNybble GetB(void) const;
+	Nybble GetA(void) const;
+	Nybble GetB(void) const;
 	Tristate GetC3(const NullableNybble &R, const NullableNybble &S) const;
 	Tristate GetC4(const NullableNybble &R, const NullableNybble &S) const;
-	NullableNybble GetF(void) const;
-	NullableNybble GetR(void) const;
-	NullableNybble GetS(void) const;
+	Nybble GetF(void) const;
+	Nybble GetR(void) const;
+	Nybble GetS(void) const;
 	Tristate GetXORCarry(const NullableNybble &R, const NullableNybble &S);
 	Tristate GetXOROverflow(const NullableNybble &R, const NullableNybble &S) const;
-	NullableNybble GetRAMValue(const NullableNybble &_address) const;
-	void WriteToRAM(const NullableNybble &_address, const NullableNybble &_value);
 
 private:
-	Tristate clock;
+	bool clock;
 	Tristate Q0In;
 	Tristate Q3In;
 	Tristate RAM0In;
 	Tristate RAM3In;
 
-	NullableNybble ALatch;
-	NullableNybble BLatch;
-	NullableNybble QLatch;
-	NullableNybble RAM[16];
+	Nybble ALatch;
+	Nybble BLatch;
+	Nybble QLatch;
+	Nybble RAM[16];
 
 	friend class Am2901TestInterface;
 };

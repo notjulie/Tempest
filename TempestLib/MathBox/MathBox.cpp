@@ -329,11 +329,11 @@ void MathBox::SetALUInputs(void)
 	// that doesn't make sense in this state it can throw an exception.
 	if (PC.IsUnknown())
 	{
-		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = NullableNybble::Unknown;
-		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = NullableNybble::Unknown;
-		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = NullableByte::Unknown;
-		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = NullableByte::Unknown;
-		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = NullableByte::Unknown;
+		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = Nybble();
+		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = Nybble();
+		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = 0;
+		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = 0;
+		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = 0;
 		return;
 	}
 
@@ -355,7 +355,7 @@ void MathBox::SetALUInputs(void)
 	// set the data inputs accordingly
 	if (dataIn.IsUnknown())
 	{
-		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = NullableNybble::Unknown;
+		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = Nybble();
 	}
 	else
 	{
@@ -381,25 +381,25 @@ void MathBox::SetALUCarryFlags(void)
 		aluK.SetQ3In(aluF.GetQ0Out());
 		aluK.SetRAM0In(aluE.GetQ3Out());
 		aluK.SetRAM3In(aluF.GetRAM0Out());
-		aluK.CarryIn = GetTristate(C);
+		aluK.CarryIn = GetTristate(C).Value();
 
 		aluF.SetQ0In(aluK.GetQ3Out());
 		aluF.SetQ3In(aluJ.GetQ0Out());
 		aluF.SetRAM0In(aluK.GetRAM3Out());
 		aluF.SetRAM3In(aluJ.GetRAM0Out());
-		aluF.CarryIn = aluK.GetCarryOut();
+		aluF.CarryIn = aluK.GetCarryOut().Value();
 
 		aluJ.SetQ0In(aluF.GetQ3Out());
 		aluJ.SetQ3In(aluE.GetQ0Out());
 		aluJ.SetRAM0In(aluF.GetRAM3Out());
 		aluJ.SetRAM3In(aluE.GetRAM0Out());
-		aluJ.CarryIn = aluF.GetCarryOut();
+		aluJ.CarryIn = aluF.GetCarryOut().Value();
 
 		aluE.SetQ0In(aluJ.GetQ3Out());
 		aluE.SetQ3In(aluK.GetRAM0Out());
 		aluE.SetRAM0In(aluJ.GetRAM3Out());
 		aluE.SetRAM3In(GetTristate(R15));
-		aluE.CarryIn = aluJ.GetCarryOut();
+		aluE.CarryIn = aluJ.GetCarryOut().Value();
 	}
 }
 

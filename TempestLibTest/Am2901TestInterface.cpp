@@ -5,6 +5,6 @@
 
 NullableNybble Am2901TestInterface::GetRAMValue(Am2901 *alu, NullableNybble address)
 {
-	return alu->GetRAMValue(address);
+	return alu->RAM[address.Value().Value()];
 }
 
