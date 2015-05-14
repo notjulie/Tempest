@@ -42,6 +42,7 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 
 	// clear
 	PC = 0;
+	BEGIN = false;
 
 	// clear profiling info
 	totalMathBoxTime = 0;
@@ -49,6 +50,8 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 	totalRisingClockTime = 0;
 	totalFallingClockTime = 0;
 	totalGetTristateTime = 0;
+	for (int i = 0; i < BIT_COUNT; ++i)
+		bitTimes[i] = 0;
 }
 
 MathBox::~MathBox(void)
@@ -204,7 +207,7 @@ void MathBox::HandleRisingClock(void)
 	if (pcen.Value())
 	{
 		// we load the PC from whichever source is selected
-		if (BEGIN.Value())
+		if (BEGIN)
 		{
 			if (addressIn.IsUnknown())
 				throw MathBoxException("Load PC from ROM A: addressIn not set");
@@ -247,7 +250,7 @@ void MathBox::HandleFallingClock(void)
 
 	// calculate the new value of STOP
 	Tristate newSTOP;
-	if (BEGIN.Value())
+	if (BEGIN)
 		newSTOP = false;
 	else
 		newSTOP = GetTristate(A12);
@@ -285,6 +288,7 @@ void MathBox::HandleFallingClock(void)
 Tristate MathBox::GetTristate(Bit bit)
 {
 	Timer timer(environment, &totalGetTristateTime);
+	Timer timer2(environment, &bitTimes[bit]);
 
 	char buf[200];
 
@@ -299,14 +303,8 @@ Tristate MathBox::GetTristate(Bit bit)
 	case A12:
 		return ((romH[PC] & 8) != 0);
 
-	case A18:
-		return ((romF[PC] & 2) != 0);
-
 	case C:
 		return ((romE[PC] & 1) != 0);
-
-	case J:
-		return ((romE[PC] & 4) != 0);
 
 	case LDAB:
 		return ((romF[PC] & 8) != 0);
@@ -316,16 +314,16 @@ Tristate MathBox::GetTristate(Bit bit)
 
 	case PCEN:
 	{
-		Tristate E5XORout = GetTristate(S0) ^ GetTristate(S1);
-		Tristate D4NAND1out = !(E5XORout && GetTristate(S));
-		Tristate D4NAND2out = !(D4NAND1out && GetTristate(J));
+		bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
+		bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
+		bool D4NAND2out = !(D4NAND1out && ((romE[PC] & 4) != 0));
 		return BEGIN || !D4NAND2out;
 	}
 
 	case Q0:
 		{
 			Tristate aluKQ0 = aluK.GetQ0Out();
-			Tristate a18 = GetTristate(A18);
+			Tristate a18 = Tristate((romF[PC] & 2) != 0);
 
 			if (!aluKQ0.IsUnknown())
 			{
@@ -340,20 +338,12 @@ Tristate MathBox::GetTristate(Bit bit)
 
 	case R15:
 	{
-		Tristate E5XORout = GetTristate(S0) ^ GetTristate(S1);
-		Tristate D4NAND1out = !(E5XORout && GetTristate(S));
-		return !(D4NAND1out && !GetTristate(A18));
+		bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
+		bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
+		return !(D4NAND1out && !((romF[PC] & 2) != 0));
 	}
 
-	case S:
-		return ((romE[PC] & 8) != 0);
-
-	case S0:
-		return aluE.GetOVR();
-
-	case S1:
-		return aluE.GetF3();
-
+	case BIT_COUNT:
 	default:
 		sprintf_s(buf, "MathBox::GetTristate: unsupported bit: %d", bit);
 		throw MathBoxException(buf);

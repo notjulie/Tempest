@@ -24,17 +24,13 @@ private:
 		A10,
 		A10STAR,
 		A12,
-		A18,
 		C,
-		J,
 		LDAB,
 		M,
 		PCEN,
 		Q0,
 		R15,
-		S,
-		S0,
-		S1
+		BIT_COUNT
 	};
 
 public:
@@ -72,7 +68,7 @@ private:
 	// inputs
 	NullableByte dataIn;
 	NullableByte addressIn;
-	Tristate BEGIN;
+	bool BEGIN;
 
 	// state values that change on rising clock
 	uint8_t   PC;
@@ -103,6 +99,7 @@ private:
 	uint32_t totalFallingClockTime;
 	uint32_t totalRisingClockTime;
 	uint32_t totalGetTristateTime;
+	uint32_t bitTimes[BIT_COUNT];
 
 	// misc
 	std::string	error;

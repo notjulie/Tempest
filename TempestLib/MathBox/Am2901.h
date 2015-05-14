@@ -28,7 +28,7 @@ public:
 public:
 	Tristate GetCarryOut(void);
 	bool GetF3(void) const;
-	Tristate GetOVR(void) const;
+	bool GetOVR(void) const;
 	Tristate GetQ0Out(void);
 	Tristate GetQ3Out(void);
 	Tristate GetRAM0Out(void);

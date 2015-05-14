@@ -106,7 +106,7 @@ bool Am2901::GetF3(void) const
 	return (GetF().Value() & 8) != 0;
 }
 
-Tristate Am2901::GetOVR(void) const
+bool Am2901::GetOVR(void) const
 {
 	// Get R and S
 	Nybble R = GetR();
