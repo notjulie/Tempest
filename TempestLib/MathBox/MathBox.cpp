@@ -37,7 +37,13 @@ private:
 
 MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 {
+	// save parameters
 	environment = _environment;
+
+	// clear
+	PC = 0;
+
+	// clear profiling info
 	totalMathBoxTime = 0;
 	totalMathBoxWrites = 0;
 	totalRisingClockTime = 0;
@@ -183,7 +189,7 @@ void MathBox::HandleRisingClock(void)
 	uint32_t usStart = environment->GetMicrosecondCount();
 
 	// calculate the new PC 
-	NullableByte newPC;
+	uint8_t newPC;
 	Tristate pcen = GetTristate(PCEN);
 	if (pcen.IsUnknown())
 		throw MathBoxException("MathBox::HandleRisingClock: PCEN is unknown");
@@ -204,10 +210,8 @@ void MathBox::HandleRisingClock(void)
 	}
 	else
 	{
-		if (PC.IsUnknown())
-			throw MathBoxException("Can't increment PC... not set");
-		newPC = (uint8_t)(PC.Value() + 1);
-		if (newPC.Value() == 0)
+		newPC = (uint8_t)(PC + 1);
+		if (newPC == 0)
 			throw MathBoxException("PC wraparound");
 	}
 
@@ -242,12 +246,12 @@ void MathBox::HandleFallingClock(void)
 		newSTOP = GetTristate(A12);
 
 	// new value of our jump address latch
-	NullableByte newJumpLatch = JumpLatch;
+	uint8_t newJumpLatch = JumpLatch;
 	Tristate ldab = GetTristate(LDAB);
-	if (ldab.IsUnknown() || PC.IsUnknown())
-		newJumpLatch = NullableByte::Unknown;
+	if (ldab.IsUnknown())
+		newJumpLatch = 0;
 	else if (ldab.Value())
-		newJumpLatch = (uint8_t)((romL[PC.Value()]<<4) + romK[PC.Value()]);
+		newJumpLatch = (uint8_t)((romL[PC]<<4) + romK[PC]);
 
 	// let the ALUs handle the falling clock edge...
 	SetALUInputs();
@@ -280,42 +284,28 @@ Tristate MathBox::GetTristate(Bit bit)
 	switch (bit)
 	{
 	case A10:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romJ[PC.Value()] & 2) != 0);
+		return ((romJ[PC] & 2) != 0);
 
 	case A10STAR:
 		return GetTristate(A10) ^ (GetTristate(M) && Q0Latch);
 
 	case A12:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romH[PC.Value()] & 8) != 0);
+		return ((romH[PC] & 8) != 0);
 
 	case A18:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romF[PC.Value()] & 2) != 0);
+		return ((romF[PC] & 2) != 0);
 
 	case C:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romE[PC.Value()] & 1) != 0);
+		return ((romE[PC] & 1) != 0);
 
 	case J:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romE[PC.Value()] & 4) != 0);
+		return ((romE[PC] & 4) != 0);
 
 	case LDAB:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romF[PC.Value()] & 8) != 0);
+		return ((romF[PC] & 8) != 0);
 
 	case M:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romE[PC.Value()] & 2) != 0);
+		return ((romE[PC] & 2) != 0);
 
 	case PCEN:
 	{
@@ -349,9 +339,7 @@ Tristate MathBox::GetTristate(Bit bit)
 	}
 
 	case S:
-		if (PC.IsUnknown())
-			return Tristate::Unknown;
-		return ((romE[PC.Value()] & 8) != 0);
+		return ((romE[PC] & 8) != 0);
 
 	case S0:
 		return aluE.GetOVR();
@@ -368,34 +356,20 @@ Tristate MathBox::GetTristate(Bit bit)
 
 void MathBox::SetALUInputs(void)
 {
-	// If the PC is not set that should mean that this is our first rising edge;
-	// assuming that be so we just set all the ALU inputs to their unknown state.
-	// This is just a diagnostic measure so that if the ALU gets asked to do something
-	// that doesn't make sense in this state it can throw an exception.
-	if (PC.IsUnknown())
-	{
-		aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = Nybble();
-		aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = Nybble();
-		aluK.I012 = aluF.I012 = aluJ.I012 = aluE.I012 = 0;
-		aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = 0;
-		aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = 0;
-		return;
-	}
-
 	// the A & B inputs to the ALUs are all the same
-	aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC.Value()];
-	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC.Value()];
+	aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC];
+	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC];
 
 	// so are these
-	aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = (uint8_t)(romH[PC.Value()] & 7);
-	aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = (uint8_t)(romF[PC.Value()] & 7);
+	aluK.I345 = aluF.I345 = aluJ.I345 = aluE.I345 = (uint8_t)(romH[PC] & 7);
+	aluK.I678 = aluF.I678 = aluJ.I678 = aluE.I678 = (uint8_t)(romF[PC] & 7);
 
 	// I012 are a little more complicated
-	int i01 = romJ[PC.Value()] & 1;
+	int i01 = romJ[PC] & 1;
 	if (GetTristate(A10STAR).Value())
 		i01 += 2;
-	aluK.I012 = aluF.I012 = (uint8_t)(i01 + (romJ[PC.Value()] & 4));
-	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[PC.Value()] & 8) >> 1));
+	aluK.I012 = aluF.I012 = (uint8_t)(i01 + (romJ[PC] & 4));
+	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[PC] & 8) >> 1));
 
 	// set the data inputs accordingly
 	if (dataIn.IsUnknown())

@@ -75,12 +75,12 @@ private:
 	Tristate BEGIN;
 
 	// state values that change on rising clock
-	NullableByte   PC;
+	uint8_t   PC;
 	Tristate  Q0Latch;
 
 	// state values that change on falling clock
 	Tristate STOP;
-	NullableByte JumpLatch;
+	uint8_t JumpLatch;
 
 	// ALUs
 	Am2901	aluK;
