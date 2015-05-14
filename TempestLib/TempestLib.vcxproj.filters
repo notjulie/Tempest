@@ -99,9 +99,6 @@
     <ClCompile Include="EEPROM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MathBox\MathBoxLog.cpp">
-      <Filter>MathBox\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MathBox\MathBoxLogEntry.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
@@ -185,9 +182,6 @@
     <ClInclude Include="MathBox\Nybble.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MathBox\MathBoxLog.h">
-      <Filter>MathBox\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MathBox\MathBoxLogEntry.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
@@ -195,9 +189,6 @@
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MathBox\MathBoxXML.h">
-      <Filter>MathBox\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MathBox\MathBoxTracer.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pokey\Pokey.h">

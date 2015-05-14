@@ -31,7 +31,6 @@ public:
 	{
 		// create a math box and write 00 to address 0x15
 		MathBox mathBox;
-		mathBox.TraceALU('K', &tracer);
 		LoadROMs(&mathBox);
 		mathBox.Write(0x15, 0x00);
 

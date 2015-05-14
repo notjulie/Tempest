@@ -151,19 +151,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MathBoxLogWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MathBoxLog.cs" />
     <Compile Include="MathBoxLogEntry.cs" />
     <Compile Include="MathBoxLogEntryControl.xaml.cs">
       <DependentUpon>MathBoxLogEntryControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MathBoxLogWindow.xaml.cs">
-      <DependentUpon>MathBoxLogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

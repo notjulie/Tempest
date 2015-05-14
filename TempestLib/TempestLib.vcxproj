@@ -26,7 +26,6 @@
     <ClCompile Include="MathBox\Am2901.cpp" />
     <ClCompile Include="MathBox\MathBox.cpp" />
     <ClCompile Include="MathBox\MathBoxException.cpp" />
-    <ClCompile Include="MathBox\MathBoxLog.cpp" />
     <ClCompile Include="MathBox\MathBoxLogEntry.cpp" />
     <ClCompile Include="MathBox\MathBoxXML.cpp" />
     <ClCompile Include="Pokey\Pokey.cpp" />
@@ -59,9 +58,7 @@
     <ClInclude Include="MathBox\Am2901.h" />
     <ClInclude Include="MathBox\MathBox.h" />
     <ClInclude Include="MathBox\MathBoxException.h" />
-    <ClInclude Include="MathBox\MathBoxLog.h" />
     <ClInclude Include="MathBox\MathBoxLogEntry.h" />
-    <ClInclude Include="MathBox\MathBoxTracer.h" />
     <ClInclude Include="MathBox\MathBoxXML.h" />
     <ClInclude Include="MathBox\Nullable.h" />
     <ClInclude Include="MathBox\Nybble.h" />

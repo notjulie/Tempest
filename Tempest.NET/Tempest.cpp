@@ -47,11 +47,6 @@ namespace TempestDotNET {
 		return gcnew String(environment->GetAudioStatus().c_str());
 	}
 
-	String ^Tempest::GetMathBoxLogData(void)
-	{
-		return gcnew String(tempestRunner->GetMathBoxLogXML().c_str());
-	}
-
 	uint64_t Tempest::GetTotalClockCycles(void)
 	{
 		return tempestRunner->GetTotalClockCycles();

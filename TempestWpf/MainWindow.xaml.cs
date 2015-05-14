@@ -31,7 +31,6 @@ namespace TempestWpf
       private DispatcherTimer vectorTimer;
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
-      private MathBoxLogWindow mathBoxLog;
       private Debug6502Window debug6502;
       private SolidColorBrush[] vectorBrush = new SolidColorBrush[16];
 
@@ -67,7 +66,6 @@ namespace TempestWpf
          this.Loaded += MainWindow_Loaded;
          this.Closed += MainWindow_Closed;
          this.Closing += MainWindow_Closing;
-         buttonMathBoxLog.Click += buttonMathBoxLog_Click;
          buttonOnePlayerStart.Click += buttonOnePlayerStart_Click;
          view6502DebugWindowItem.Click += view6502DebugWindowItem_Click;
       }
@@ -98,25 +96,6 @@ namespace TempestWpf
          timer.IsEnabled = false;
          vectorTimer.IsEnabled = false;
          e.Cancel = false;
-      }
-
-      /// <summary>
-      /// Displays the math box log window
-      /// </summary>
-      /// <param name="sender">sender of the event</param>
-      /// <param name="e">details of the event</param>
-      private void buttonMathBoxLog_Click(object sender, RoutedEventArgs e)
-      {
-         // create the window if we haven't yet
-         if (mathBoxLog == null)
-            mathBoxLog = new MathBoxLogWindow();
-
-         // set its data
-         mathBoxLog.MathBoxLog = MathBoxLog.FromXML(tempest.GetMathBoxLogData());
-
-         // show it
-         mathBoxLog.Show();
-         mathBoxLog.Activate();
       }
 
       void MainWindow_Closed(object sender, EventArgs e)

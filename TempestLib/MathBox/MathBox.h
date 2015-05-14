@@ -44,18 +44,14 @@ public:
 	void LoadROM(const uint8_t *rom, int length, char slot);
 
 	std::string GetErrorString(void) const { return error.size() == 0 ? "OK" : error; }
-	std::string GetLogXML(void) const;
 
    uint8_t GetStatus(void);
    uint8_t ReadLow(void);
    uint8_t ReadHigh(void);
    void Write(uint8_t address, uint8_t value);
 
-	void TraceALU(char alu, MathBoxTracer *tracer);
-
 private:
 	Tristate GetTristate(Bit bit);
-	void Log(void);
 	void SetALUCarryFlags(void);
 	void SetALUInputs(void);
 	void SetError(const std::string &_status);
@@ -100,7 +96,6 @@ private:
 
 	// misc
 	std::string	error;
-	MathBoxLog *log;
 
 	friend class MathBoxTestInterface;
 };

@@ -13,19 +13,16 @@
 #include "stdafx.h"
 
 #include "MathBoxException.h"
-#include "MathBoxLog.h"
 
 #include "MathBox.h"
 
 
 MathBox::MathBox(void)
 {
-	log = new MathBoxLog();
 }
 
 MathBox::~MathBox(void)
 {
-	delete log, log = NULL;
 }
 
 void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
@@ -114,7 +111,6 @@ void MathBox::Write(uint8_t address, uint8_t value)
 
 		// shortly after the clock will fall
 		HandleFallingClock();
-		Log();
 
 		// BEGIN clears, but since our clock runs at twice the speed of the main
 		// CPU clock, the data and address lines will still be active for the beginning
@@ -126,7 +122,6 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		// do the second cycle
 		HandleRisingClock();
 		HandleFallingClock();
-		Log();
 
 		// now our inputs will clear
 		addressIn = NullableByte::Unknown;
@@ -137,7 +132,6 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		{
 			HandleRisingClock();
 			HandleFallingClock();
-			Log();
 		}
 	}
 	catch (MathBoxException &x)
@@ -417,52 +411,4 @@ void MathBox::SetError(const std::string &_status)
 }
 
 
-void MathBox::Log(void)
-{
-	// we stop logging if we reported an error
-	if (error.size() != 0)
-		return;
 
-	// create a log entry
-	MathBoxLogEntry entry;
-
-	// add bits
-	entry.BEGIN = BEGIN;
-	entry.PCEN = GetTristate(PCEN);
-	entry.J = GetTristate(J);
-	entry.S = GetTristate(S);
-	entry.S0 = GetTristate(S0);
-	entry.S1 = GetTristate(S1);
-
-	// bytes
-	entry.PC = PC;
-	entry.AddressIn = addressIn;
-	entry.DataIn = dataIn;
-	entry.JumpLatch = JumpLatch;
-
-	// ALU info
-	entry.ALUE = aluE.GetLogData();
-	entry.ALUF = aluF.GetLogData();
-	entry.ALUJ = aluJ.GetLogData();
-	entry.ALUK = aluK.GetLogData();
-
-	// add it to the log
-	log->AddEntry(entry);
-}
-
-std::string MathBox::GetLogXML(void) const
-{
-	return log->GetXML(); 
-}
-
-
-void MathBox::TraceALU(char alu, MathBoxTracer *tracer)
-{
-	switch (alu)
-	{
-	case 'E':  aluE.EnableTrace(tracer); break;
-	case 'F':  aluF.EnableTrace(tracer); break;
-	case 'J':  aluJ.EnableTrace(tracer); break;
-	case 'K':  aluK.EnableTrace(tracer); break;
-	}
-}
