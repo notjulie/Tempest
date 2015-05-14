@@ -89,6 +89,9 @@ private:
 	uint32_t totalMathBoxWrites;
 	uint32_t totalFallingClockTime;
 	uint32_t totalRisingClockTime;
+	uint32_t totalSetALUInputsTime;
+	uint32_t totalSetALUCarryTime;
+	uint32_t totalALUFallingClockTime;
 
 	// misc
 	std::string	error;

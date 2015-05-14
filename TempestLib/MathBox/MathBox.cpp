@@ -50,6 +50,9 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 	totalMathBoxWrites = 0;
 	totalRisingClockTime = 0;
 	totalFallingClockTime = 0;
+	totalSetALUInputsTime = 0;
+	totalSetALUCarryTime = 0;
+	totalALUFallingClockTime = 0;
 }
 
 MathBox::~MathBox(void)
@@ -270,10 +273,13 @@ void MathBox::HandleFallingClock(void)
 	SetALUCarryFlags();
 
 	// dropping the clock latches the result
-	aluK.SetClock(false);
-	aluF.SetClock(false);
-	aluJ.SetClock(false);
-	aluE.SetClock(false);
+	{
+		Timer timer(environment, &this->totalALUFallingClockTime);
+		aluK.SetClock(false);
+		aluF.SetClock(false);
+		aluJ.SetClock(false);
+		aluE.SetClock(false);
+	}
 
 	// latch all the state values that we are supposed to latch on the
 	// falling clock
@@ -303,6 +309,8 @@ bool MathBox::GetQ0(void)
 
 void MathBox::SetALUInputs(void)
 {
+	Timer timer(environment, &totalSetALUInputsTime);
+
 	// the A & B inputs to the ALUs are all the same
 	aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC];
 	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC];
@@ -333,47 +341,57 @@ void MathBox::SetALUInputs(void)
 
 void MathBox::SetALUCarryFlags(void)
 {
+	Timer timer(environment, &totalSetALUCarryTime);
+
 	// the actual carry flags are easy... they just cascade up
 	aluK.CarryIn = ((romE[PC] & 1) != 0);
 	aluF.CarryIn = aluK.GetCarryOut().Value();
 	aluJ.CarryIn = aluF.GetCarryOut().Value();
 	aluE.CarryIn = aluJ.GetCarryOut().Value();
 
-	// Pass the outputs of ALUs to the inputs of other ALUs... potentially this
-	// could require multiple iterations, for example carry flags on one ALU
-	// could cause a change in its carry out.  So we iterate a few times, well
-	// more than we need just in case.
-	for (int i = 0; i < 2; ++i)
+	// for our bit shifting flags between ALUs, we find what direction we're
+	// shifting from I678, which we set the same for all ALUs, so just pick one
+	switch (aluK.I678)
 	{
-		// RAM0, RAM3, Q0 and Q3 are all tristate... which is output and which is input depends
-		// on the current ALU operation; thus you'll see a lot of cases where they are both being
-		// sent both directions.  The called function will sort things out depending on who is
-		// reporting an unknown value.
-		aluK.SetQ0In(GetQ0());
-		aluK.SetQ3In(aluF.GetQ0Out());
-		aluK.SetRAM0In(aluE.GetQ3Out());
-		aluK.SetRAM3In(aluF.GetRAM0Out());
-
-		aluF.SetQ0In(aluK.GetQ3Out());
-		aluF.SetQ3In(aluJ.GetQ0Out());
-		aluF.SetRAM0In(aluK.GetRAM3Out());
-		aluF.SetRAM3In(aluJ.GetRAM0Out());
-
-		aluJ.SetQ0In(aluF.GetQ3Out());
-		aluJ.SetQ3In(aluE.GetQ0Out());
-		aluJ.SetRAM0In(aluF.GetRAM3Out());
-		aluJ.SetRAM3In(aluE.GetRAM0Out());
-
-		aluE.SetQ0In(aluJ.GetQ3Out());
-		aluE.SetQ3In(aluK.GetRAM0Out());
-		aluE.SetRAM0In(aluJ.GetRAM3Out());
-		bool r15;
+	case 4:
+	case 5:
+		// downshifting operation
 		{
-			bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
-			bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
-			r15 = !(D4NAND1out && !((romF[PC] & 2) != 0));
+			aluE.SetQ3In(aluK.GetRAM0Out());
+			aluJ.SetQ3In(aluE.GetQ0Out());
+			aluF.SetQ3In(aluJ.GetQ0Out());
+			aluK.SetQ3In(aluF.GetQ0Out());
+
+			bool r15;
+			{
+				bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
+				bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
+				r15 = !(D4NAND1out && !((romF[PC] & 2) != 0));
+			}
+			aluE.SetRAM3In(r15);
+			aluJ.SetRAM3In(aluE.GetRAM0Out());
+			aluF.SetRAM3In(aluJ.GetRAM0Out());
+			aluK.SetRAM3In(aluF.GetRAM0Out());
 		}
-		aluE.SetRAM3In(r15);
+		break;
+
+	case 6:
+	case 7:
+		// upshifting operation
+		aluK.SetQ0In(GetQ0());
+		aluF.SetQ0In(aluK.GetQ3Out());
+		aluJ.SetQ0In(aluF.GetQ3Out());
+		aluE.SetQ0In(aluJ.GetQ3Out());
+
+		aluK.SetRAM0In(aluE.GetQ3Out());
+		aluF.SetRAM0In(aluK.GetRAM3Out());
+		aluJ.SetRAM0In(aluF.GetRAM3Out());
+		aluE.SetRAM0In(aluJ.GetRAM3Out());
+		break;
+
+	default:
+		// not doing any shifting at all
+		break;
 	}
 }
 
