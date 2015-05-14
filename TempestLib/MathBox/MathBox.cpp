@@ -43,6 +43,7 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 	// clear
 	PC = 0;
 	BEGIN = false;
+	Q0Latch = false;
 
 	// clear profiling info
 	totalMathBoxTime = 0;
@@ -200,11 +201,8 @@ void MathBox::HandleRisingClock(void)
 
 	// calculate the new PC 
 	uint8_t newPC;
-	Tristate pcen = GetTristate(PCEN);
-	if (pcen.IsUnknown())
-		throw MathBoxException("MathBox::HandleRisingClock: PCEN is unknown");
-
-	if (pcen.Value())
+	bool pcen = GetBit(PCEN);
+	if (pcen)
 	{
 		// we load the PC from whichever source is selected
 		if (BEGIN)
@@ -226,7 +224,7 @@ void MathBox::HandleRisingClock(void)
 	}
 
 	// calculate the new value of Q0Latch
-	Tristate newQ0Latch = GetTristate(Q0);
+	bool newQ0Latch = GetBit(Q0);
 
 	// let the ALUs handle the rising clock edge...
 	SetALUInputs();
@@ -249,18 +247,16 @@ void MathBox::HandleFallingClock(void)
 	uint32_t usStart = environment->GetMicrosecondCount();
 
 	// calculate the new value of STOP
-	Tristate newSTOP;
+	bool newSTOP;
 	if (BEGIN)
 		newSTOP = false;
 	else
-		newSTOP = GetTristate(A12);
+		newSTOP = GetBit(A12);
 
 	// new value of our jump address latch
 	uint8_t newJumpLatch = JumpLatch;
-	Tristate ldab = GetTristate(LDAB);
-	if (ldab.IsUnknown())
-		newJumpLatch = 0;
-	else if (ldab.Value())
+	bool ldab = GetBit(LDAB);
+	if (ldab)
 		newJumpLatch = (uint8_t)((romL[PC]<<4) + romK[PC]);
 
 	// let the ALUs handle the falling clock edge...
@@ -285,7 +281,7 @@ void MathBox::HandleFallingClock(void)
 	totalFallingClockTime = totalFallingClockTime + (usEnd - usStart);
 }
 
-Tristate MathBox::GetTristate(Bit bit)
+bool MathBox::GetBit(Bit bit)
 {
 	Timer timer(environment, &totalGetTristateTime);
 	Timer timer2(environment, &bitTimes[bit]);
@@ -298,7 +294,7 @@ Tristate MathBox::GetTristate(Bit bit)
 		return ((romJ[PC] & 2) != 0);
 
 	case A10STAR:
-		return GetTristate(A10) ^ (GetTristate(M) && Q0Latch);
+		return GetBit(A10) ^ (GetBit(M) && Q0Latch);
 
 	case A12:
 		return ((romH[PC] & 8) != 0);
@@ -323,14 +319,14 @@ Tristate MathBox::GetTristate(Bit bit)
 	case Q0:
 		{
 			Tristate aluKQ0 = aluK.GetQ0Out();
-			Tristate a18 = Tristate((romF[PC] & 2) != 0);
+			bool a18 = (romF[PC] & 2) != 0;
 
 			if (!aluKQ0.IsUnknown())
 			{
 				// ASSUMPTION WARNING
 				// we have multiple sources driving Q0... I will assume that they are
 				// wired OR and see how that goes
-				return aluKQ0 || !a18;
+				return aluKQ0.Value() || !a18;
 			}
 
 			return !a18;
@@ -363,7 +359,7 @@ void MathBox::SetALUInputs(void)
 
 	// I012 are a little more complicated
 	int i01 = romJ[PC] & 1;
-	if (GetTristate(A10STAR).Value())
+	if (GetBit(A10STAR))
 		i01 += 2;
 	aluK.I012 = aluF.I012 = (uint8_t)(i01 + (romJ[PC] & 4));
 	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[PC] & 8) >> 1));
@@ -384,7 +380,7 @@ void MathBox::SetALUInputs(void)
 void MathBox::SetALUCarryFlags(void)
 {
 	// the actual carry flags are easy... they just cascade up
-	aluK.CarryIn = GetTristate(C).Value();
+	aluK.CarryIn = GetBit(C);
 	aluF.CarryIn = aluK.GetCarryOut().Value();
 	aluJ.CarryIn = aluF.GetCarryOut().Value();
 	aluE.CarryIn = aluJ.GetCarryOut().Value();
@@ -399,7 +395,7 @@ void MathBox::SetALUCarryFlags(void)
 		// on the current ALU operation; thus you'll see a lot of cases where they are both being
 		// sent both directions.  The called function will sort things out depending on who is
 		// reporting an unknown value.
-		aluK.SetQ0In(GetTristate(Q0));
+		aluK.SetQ0In(GetBit(Q0));
 		aluK.SetQ3In(aluF.GetQ0Out());
 		aluK.SetRAM0In(aluE.GetQ3Out());
 		aluK.SetRAM3In(aluF.GetRAM0Out());
@@ -417,7 +413,7 @@ void MathBox::SetALUCarryFlags(void)
 		aluE.SetQ0In(aluJ.GetQ3Out());
 		aluE.SetQ3In(aluK.GetRAM0Out());
 		aluE.SetRAM0In(aluJ.GetRAM3Out());
-		aluE.SetRAM3In(GetTristate(R15));
+		aluE.SetRAM3In(GetBit(R15));
 	}
 }
 

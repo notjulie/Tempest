@@ -47,7 +47,7 @@ public:
    void Write(uint8_t address, uint8_t value);
 
 private:
-	Tristate GetTristate(Bit bit);
+	bool GetBit(Bit bit);
 	void SetALUCarryFlags(void);
 	void SetALUInputs(void);
 	void SetError(const std::string &_status);
@@ -72,7 +72,7 @@ private:
 
 	// state values that change on rising clock
 	uint8_t   PC;
-	Tristate  Q0Latch;
+	bool  Q0Latch;
 
 	// state values that change on falling clock
 	Tristate STOP;
