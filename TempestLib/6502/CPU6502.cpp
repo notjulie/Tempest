@@ -104,7 +104,8 @@ int CPU6502::SingleStep(void)
 		case 0x55: EOR((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0x58: P.I = false; return 2; // CLI
       case 0x59: EOR((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
-      case 0x60: RTS(); return 6;
+		case 0x5D: EOR((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0x60: RTS(); return 6;
       case 0x65: ADC(bus->ReadByte(PC++)); return 3;
 		case 0x66: ROR(bus->ReadByte(PC++)); return 5;
 		case 0x68: A = Pull(); SetNZ(A); return 4; //PLA
@@ -169,7 +170,9 @@ int CPU6502::SingleStep(void)
       case 0xD1: CMP(GetIndirectYAddress()); return 6;
 		case 0xD6: DEC((uint16_t)(bus->ReadByte(PC++) + X)); return 6;
 		case 0xD8: P.D = false; return 2; //CLD
+		case 0xD9: CMP((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0xDD: CMP((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+		case 0xDE: DEC((uint16_t)(GetAbsoluteAddress() + X)); return 7;
 		case 0xE0: CPX(PC++); return 2;
 		case 0xE4: CPX(bus->ReadByte(PC++)); return 3;
 		case 0xE5: SBC(bus->ReadByte(PC++)); return 3;
