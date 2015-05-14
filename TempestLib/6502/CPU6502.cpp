@@ -129,7 +129,8 @@ int CPU6502::SingleStep(void)
       case 0x8E: STX(GetAbsoluteAddress()); return 4;
       case 0x90: BCC(); return 2;
       case 0x91: STA(GetIndirectYAddress()); return 6;
-      case 0x95: STA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0x94: STY((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0x95: STA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
       case 0x96: STX((uint16_t)(bus->ReadByte(PC++) + Y)); return 4;
       case 0x98: A = Y; SetNZ(A); return 2; //TYA
 		case 0x99: STA((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
