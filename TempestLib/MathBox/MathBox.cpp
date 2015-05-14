@@ -367,11 +367,17 @@ void MathBox::SetALUInputs(void)
 
 void MathBox::SetALUCarryFlags(void)
 {
+	// the actual carry flags are easy... they just cascade up
+	aluK.CarryIn = GetTristate(C).Value();
+	aluF.CarryIn = aluK.GetCarryOut().Value();
+	aluJ.CarryIn = aluF.GetCarryOut().Value();
+	aluE.CarryIn = aluJ.GetCarryOut().Value();
+
 	// Pass the outputs of ALUs to the inputs of other ALUs... potentially this
 	// could require multiple iterations, for example carry flags on one ALU
 	// could cause a change in its carry out.  So we iterate a few times, well
 	// more than we need just in case.
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 2; ++i)
 	{
 		// RAM0, RAM3, Q0 and Q3 are all tristate... which is output and which is input depends
 		// on the current ALU operation; thus you'll see a lot of cases where they are both being
@@ -381,25 +387,21 @@ void MathBox::SetALUCarryFlags(void)
 		aluK.SetQ3In(aluF.GetQ0Out());
 		aluK.SetRAM0In(aluE.GetQ3Out());
 		aluK.SetRAM3In(aluF.GetRAM0Out());
-		aluK.CarryIn = GetTristate(C).Value();
 
 		aluF.SetQ0In(aluK.GetQ3Out());
 		aluF.SetQ3In(aluJ.GetQ0Out());
 		aluF.SetRAM0In(aluK.GetRAM3Out());
 		aluF.SetRAM3In(aluJ.GetRAM0Out());
-		aluF.CarryIn = aluK.GetCarryOut().Value();
 
 		aluJ.SetQ0In(aluF.GetQ3Out());
 		aluJ.SetQ3In(aluE.GetQ0Out());
 		aluJ.SetRAM0In(aluF.GetRAM3Out());
 		aluJ.SetRAM3In(aluE.GetRAM0Out());
-		aluJ.CarryIn = aluF.GetCarryOut().Value();
 
 		aluE.SetQ0In(aluJ.GetQ3Out());
 		aluE.SetQ3In(aluK.GetRAM0Out());
 		aluE.SetRAM0In(aluJ.GetRAM3Out());
 		aluE.SetRAM3In(GetTristate(R15));
-		aluE.CarryIn = aluJ.GetCarryOut().Value();
 	}
 }
 
