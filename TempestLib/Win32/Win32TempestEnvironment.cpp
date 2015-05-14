@@ -5,10 +5,21 @@
 Win32TempestEnvironment::Win32TempestEnvironment(void)
 {
 	Reset();
+
+	LARGE_INTEGER	li;
+	QueryPerformanceFrequency(&li);
+	performanceCounterTicksPerMicroSecond = (uint64_t)(li.QuadPart / 1000000);
 }
 
 Win32TempestEnvironment::~Win32TempestEnvironment(void)
 {
+}
+
+uint32_t Win32TempestEnvironment::GetMicrosecondCount(void)
+{
+	LARGE_INTEGER	li;
+	QueryPerformanceCounter(&li);
+	return (uint32_t)(li.QuadPart / performanceCounterTicksPerMicroSecond);
 }
 
 void Win32TempestEnvironment::Reset(void)

@@ -97,6 +97,13 @@ private:
 	std::vector<uint8_t> romK;
 	std::vector<uint8_t> romL;
 
+	// profiling
+	uint32_t totalMathBoxTime;
+	uint32_t totalMathBoxWrites;
+	uint32_t totalFallingClockTime;
+	uint32_t totalRisingClockTime;
+	uint32_t totalGetTristateTime;
+
 	// misc
 	std::string	error;
 

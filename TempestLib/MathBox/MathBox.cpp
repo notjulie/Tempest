@@ -12,14 +12,37 @@
 
 #include "stdafx.h"
 
+#include "AbstractTempestEnvironment.h"
 #include "MathBoxException.h"
 
 #include "MathBox.h"
 
+class Timer
+{
+public:
+	Timer(AbstractTempestEnvironment	*_environment, uint32_t *_value) {
+		environment = _environment;
+		value = _value;
+		startTime = _environment->GetMicrosecondCount();
+	}
+	~Timer(void) {
+		*value = (uint32_t)(*value + (environment->GetMicrosecondCount() - startTime));
+	}
+
+private:
+	AbstractTempestEnvironment	*environment;
+	uint32_t *value;
+	uint32_t startTime;
+};
 
 MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 {
 	environment = _environment;
+	totalMathBoxTime = 0;
+	totalMathBoxWrites = 0;
+	totalRisingClockTime = 0;
+	totalFallingClockTime = 0;
+	totalGetTristateTime = 0;
 }
 
 MathBox::~MathBox(void)
@@ -101,6 +124,9 @@ uint8_t MathBox::ReadHigh(void)
 
 void MathBox::Write(uint8_t address, uint8_t value)
 {
+	++totalMathBoxWrites;
+	uint32_t usStart = environment->GetMicrosecondCount();
+
 	try
 	{
 		// set our inputs... the address strobe will assert BEGIN and cause the
@@ -143,11 +169,19 @@ void MathBox::Write(uint8_t address, uint8_t value)
 	{
 		SetError("Unknown exception in MathBox::Write");
 	}
+
+	uint32_t usEnd = environment->GetMicrosecondCount();
+	totalMathBoxTime = totalMathBoxTime + (usEnd - usStart);
+
+	if (totalMathBoxWrites == 10000)
+		totalMathBoxWrites = 10000;
 }
 
 
 void MathBox::HandleRisingClock(void)
 {
+	uint32_t usStart = environment->GetMicrosecondCount();
+
 	// calculate the new PC 
 	NullableByte newPC;
 	Tristate pcen = GetTristate(PCEN);
@@ -191,10 +225,15 @@ void MathBox::HandleRisingClock(void)
 	// rising clock
 	PC = newPC;
 	Q0Latch = newQ0Latch;
+
+	uint32_t usEnd = environment->GetMicrosecondCount();
+	totalRisingClockTime = totalRisingClockTime + (usEnd - usStart);
 }
 
 void MathBox::HandleFallingClock(void)
 {
+	uint32_t usStart = environment->GetMicrosecondCount();
+
 	// calculate the new value of STOP
 	Tristate newSTOP;
 	if (BEGIN.Value())
@@ -227,10 +266,15 @@ void MathBox::HandleFallingClock(void)
 	// falling clock
 	STOP = newSTOP;
 	JumpLatch = newJumpLatch;
+
+	uint32_t usEnd = environment->GetMicrosecondCount();
+	totalFallingClockTime = totalFallingClockTime + (usEnd - usStart);
 }
 
 Tristate MathBox::GetTristate(Bit bit)
 {
+	Timer timer(environment, &totalGetTristateTime);
+
 	char buf[200];
 
 	switch (bit)
