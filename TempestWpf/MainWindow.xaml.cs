@@ -88,6 +88,10 @@ namespace TempestWpf
             case Key.F:
                tempest.Fire(true);
                break;
+
+            case Key.V:
+               tempest.Zap(true);
+               break;
          }
       }
 
@@ -95,8 +99,20 @@ namespace TempestWpf
       {
          switch (e.Key)
          {
+            case Key.Left:
+               tempest.MoveWheel(-4);
+               break;
+
+            case Key.Right:
+               tempest.MoveWheel(4);
+               break;
+
             case Key.F:
                tempest.Fire(false);
+               break;
+
+            case Key.V:
+               tempest.Zap(false);
                break;
          }
       }

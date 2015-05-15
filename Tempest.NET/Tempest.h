@@ -41,6 +41,7 @@ namespace TempestDotNET {
 		void		SetOnePlayerButton(bool pressed) { tempestRunner->SetButtonState(ONE_PLAYER_BUTTON, pressed); }
 		void     Step(void) { tempestRunner->Step(); }
 		void     Resume(void) { tempestRunner->Resume(); }
+		void     Zap(bool pressed) { tempestRunner->SetButtonState(ZAPPER_BUTTON, pressed); }
 
 	private:
 		Win32TempestEnvironment *environment;

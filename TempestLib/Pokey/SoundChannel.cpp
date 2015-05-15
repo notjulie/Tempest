@@ -40,7 +40,9 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 	switch (outputWave)
 	{
 	case 0x0:
+	case 0x2:
 	case 0x6:
+	case 0x8:
 		// noise
 		for (int i = 0; i < count; ++i)
 		{
@@ -121,6 +123,7 @@ void SoundChannel::UpdateWaveform(void)
 		noiseWaveform = Pokey::Get17BitNoise();
 		break;
 
+	case 0x2:	// doc says these are the same?
 	case 0x6:
 		// 5-bit noise polynomial, half frequency
 		f = 64000.0F / (1 + frequency) / 2;
@@ -130,6 +133,17 @@ void SoundChannel::UpdateWaveform(void)
 			outputCounter = 0;
 		noiseWaveformLength = 32;
 		noiseWaveform = Pokey::Get5BitNoise();
+		break;
+
+	case 0x8:
+		// 17-bit noise polynomial
+		f = 64000.0F / (1 + frequency);
+		pulseWidth = 44100.0F / f;
+		noiseCounterCountsPerNoiseSample = 1790000 / f;
+		if (outputCounter > pulseWidth)
+			outputCounter = 0;
+		noiseWaveformLength = 128 * 1024;
+		noiseWaveform = Pokey::Get17BitNoise();
 		break;
 
 	case 0xA:
