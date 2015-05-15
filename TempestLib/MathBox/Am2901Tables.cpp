@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "MathBoxAFX.h"
 #include "Am2901Tables.h"
 
 

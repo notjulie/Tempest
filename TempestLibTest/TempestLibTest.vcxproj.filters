@@ -38,9 +38,6 @@
     <ClCompile Include="Am2901Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MathBoxTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Am2901TestInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

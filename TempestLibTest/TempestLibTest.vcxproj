@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Am2901TestInterface.cpp" />
-    <ClCompile Include="MathBoxTest.cpp" />
     <ClCompile Include="MathBoxTestInterface.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

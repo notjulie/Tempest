@@ -30,8 +30,6 @@ public:
 
 	void LoadROM(const uint8_t *rom, int length, char slot);
 
-	std::string GetErrorString(void) const { return error.size() == 0 ? "OK" : error; }
-
    uint8_t GetStatus(void);
    uint8_t ReadLow(void);
    uint8_t ReadHigh(void);
@@ -41,7 +39,6 @@ private:
 	bool GetQ0(void);
 	void SetALUCarryFlags(void);
 	void SetALUInputs(void);
-	void SetError(const std::string &_status);
 
 private:
 	void HandleRisingClock(void);
@@ -92,9 +89,6 @@ private:
 	uint32_t totalSetALUInputsTime;
 	uint32_t totalSetALUCarryTime;
 	uint32_t totalALUFallingClockTime;
-
-	// misc
-	std::string	error;
 
 	friend class MathBoxTestInterface;
 };

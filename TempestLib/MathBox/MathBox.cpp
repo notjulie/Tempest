@@ -9,11 +9,9 @@
 //    to the 4 Am2901 chips... those are emulated in class Am2901.
 // ====================================================================
 
-
-#include "stdafx.h"
+#include "MathBoxAFX.h"
 
 #include "AbstractTempestEnvironment.h"
-#include "MathBoxException.h"
 
 #include "MathBox.h"
 
@@ -68,48 +66,45 @@ void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
 	{
 	case 'A':
 		if (length != sizeof(romA))
-			throw MathBoxException("Invalid size for ROM A");
+			return;
 		memcpy(&romA[0], rom, (unsigned)length);
 		break;
 
 	case 'E':
 		if (length != sizeof(romE))
-			throw MathBoxException("Invalid size for ROM E");
+			return;
 		memcpy(&romE[0], rom, (unsigned)length);
 		break;
 
 	case 'F':
 		if (length != sizeof(romF))
-			throw MathBoxException("Invalid size for ROM F");
+			return;
 		memcpy(&romF[0], rom, (unsigned)length);
 		break;
 
 	case 'H':
 		if (length != sizeof(romH))
-			throw MathBoxException("Invalid size for ROM H");
+			return;
 		memcpy(&romH[0], rom, (unsigned)length);
 		break;
 
 	case 'J':
 		if (length != sizeof(romJ))
-			throw MathBoxException("Invalid size for ROM J");
+			return;
 		memcpy(&romJ[0], rom, (unsigned)length);
 		break;
 
 	case 'K':
 		if (length != sizeof(romK))
-			throw MathBoxException("Invalid size for ROM K");
+			return;
 		memcpy(&romK[0], rom, (unsigned)length);
 		break;
 
 	case 'L':
 		if (length != sizeof(romL))
-			throw MathBoxException("Invalid size for ROM L");
+			return;
 		memcpy(&romL[0], rom, (unsigned)length);
 		break;
-
-	default:
-		throw MathBoxException("MathBox::LoadROM: invalid slot letter");
 	}
 }
 
@@ -141,47 +136,36 @@ void MathBox::Write(uint8_t address, uint8_t value)
 	++totalMathBoxWrites;
 	uint32_t usStart = environment->GetMicrosecondCount();
 
-	try
+	// set our inputs... the address strobe will assert BEGIN and cause the
+	// first rising edge of the clock
+	addressIn = address;
+	dataIn = value;
+	BEGIN = true;
+	HandleRisingClock();
+
+	// shortly after the clock will fall
+	HandleFallingClock();
+
+	// BEGIN clears, but since our clock runs at twice the speed of the main
+	// CPU clock, the data and address lines will still be active for the beginning
+	// of the next cycle
+	BEGIN = false;
+	if (STOP)
+		return;
+
+	// do the second cycle
+	HandleRisingClock();
+	HandleFallingClock();
+
+	// now our inputs will clear
+	addressIn = 0;
+	dataIn = 0;
+
+	// then we can just handle clock pulses until the clock is disabled
+	while (!STOP)
 	{
-		// set our inputs... the address strobe will assert BEGIN and cause the
-		// first rising edge of the clock
-		addressIn = address;
-		dataIn = value;
-		BEGIN = true;
 		HandleRisingClock();
-
-		// shortly after the clock will fall
 		HandleFallingClock();
-
-		// BEGIN clears, but since our clock runs at twice the speed of the main
-		// CPU clock, the data and address lines will still be active for the beginning
-		// of the next cycle
-		BEGIN = false;
-		if (STOP)
-			return;
-
-		// do the second cycle
-		HandleRisingClock();
-		HandleFallingClock();
-
-		// now our inputs will clear
-		addressIn = 0;
-		dataIn = 0;
-
-		// then we can just handle clock pulses until the clock is disabled
-		while (!STOP)
-		{
-			HandleRisingClock();
-			HandleFallingClock();
-		}
-	}
-	catch (MathBoxException &x)
-	{
-		SetError(x.what());
-	}
-	catch (...)
-	{
-		SetError("Unknown exception in MathBox::Write");
 	}
 
 	uint32_t usEnd = environment->GetMicrosecondCount();
@@ -216,8 +200,6 @@ void MathBox::HandleRisingClock(void)
 	else
 	{
 		newPC = (uint8_t)(PC + 1);
-		if (newPC == 0)
-			throw MathBoxException("PC wraparound");
 	}
 
 	// calculate the new value of Q0Latch
@@ -381,13 +363,4 @@ void MathBox::SetALUCarryFlags(void)
 		break;
 	}
 }
-
-void MathBox::SetError(const std::string &_status)
-{
-	// we only record the first error
-	if (error.size() == 0)
-		error = _status;
-}
-
-
 

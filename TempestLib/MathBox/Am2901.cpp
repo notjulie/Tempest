@@ -8,10 +8,7 @@
 //    Emulation of the Am2901 ALU chip
 // ====================================================================
 
-#include "stdafx.h"
-
-#include "MathBoxException.h"
-#include "MathBoxTracer.h"
+#include "MathBoxAFX.h"
 
 #include "Am2901.h"
 
@@ -97,11 +94,7 @@ bool Am2901::GetCarryOut(void)
 		return GetXORCarry(R, S);
 
 	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetCarryOut not implemented for function: %d", I345);
-			throw MathBoxException(buf);
-		}
+		return false;
 	}
 }
 
@@ -143,11 +136,7 @@ bool Am2901::GetOVR(void) const
 		return GetXOROverflow(R, S);
 
 	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetOVR not implemented for function: %d", I345);
-			throw MathBoxException(buf);
-		}
+		return false;
 	}
 }
 
@@ -219,11 +208,7 @@ Nybble Am2901::GetF(void) const
 		return ~(GetR() ^ GetS());
 
 	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetF not implemented for function: %d", I345);
-			throw MathBoxException(buf);
-		}
+		return 0;
 	}
 }
 
@@ -238,17 +223,11 @@ Nybble Am2901::GetY(void)
 	case 5:
 	case 6:
 	case 7:
+	default:
 		return GetF();
 
 	case 2:
 		return GetA();
-
-	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetY not implemented for destination: %d", I678);
-			throw MathBoxException(buf);
-		}
 	}
 }
 
@@ -263,19 +242,13 @@ Nybble Am2901::GetR(void) const
 	case 2:
 	case 3:
 	case 4:
+	default:
 		return 0;
 
 	case 5:
 	case 6:
 	case 7:
 		return DataIn;
-
-	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetR not implemented for source: %d", I012);
-			throw MathBoxException(buf);
-		}
 	}
 }
 
@@ -298,14 +271,8 @@ Nybble Am2901::GetS(void) const
 		return GetA();
 
 	case 7:
-		return 0;
-
 	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:GetS not implemented for source: %d", I012);
-			throw MathBoxException(buf);
-		}
+		return 0;
 	}
 }
 
@@ -359,13 +326,6 @@ void Am2901::SetClock(bool newClockState)
 			RAM[BAddress.Value()] = shifted;
 			break;
 		}
-
-		default:
-		{
-			char buf[200];
-			sprintf_s(buf, "Am2901:SetClock RAM latch not implemented for destination: %d", I678);
-			throw MathBoxException(buf);
-		}
 		}
 
 		// to Q...
@@ -393,13 +353,6 @@ void Am2901::SetClock(bool newClockState)
 			if (Q0In)
 				QLatch = QLatch | Nybble(1);
 			break;
-
-		default:
-			{
-				char buf[200];
-				sprintf_s(buf, "Am2901:SetClock Q latch not implemented for destination: %d", I678);
-				throw MathBoxException(buf);
-			}
 		}
 	}
 

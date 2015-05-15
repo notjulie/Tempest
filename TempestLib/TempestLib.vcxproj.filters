@@ -90,9 +90,6 @@
     <ClCompile Include="MathBox\MathBox.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MathBox\MathBoxException.cpp">
-      <Filter>MathBox\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -161,9 +158,6 @@
     <ClInclude Include="MathBox\MathBox.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MathBox\MathBoxException.h">
-      <Filter>MathBox\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Win32\Win32.h">
       <Filter>Win32\Header Files</Filter>
     </ClInclude>
@@ -201,6 +195,9 @@
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MathBox\Nybble.h">
+      <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MathBox\MathBoxAFX.h">
       <Filter>MathBox\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
