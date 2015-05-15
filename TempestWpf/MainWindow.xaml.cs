@@ -143,7 +143,7 @@ namespace TempestWpf
          timer.Tick += timer_Tick;
 
          vectorTimer = new DispatcherTimer();
-         vectorTimer.Interval = TimeSpan.FromMilliseconds(200);
+         vectorTimer.Interval = TimeSpan.FromMilliseconds(50);
          vectorTimer.IsEnabled = true;
          vectorTimer.Tick += vectorTimer_Tick;
       }
@@ -190,6 +190,16 @@ namespace TempestWpf
                else
                {
                   line = lines[index];
+               }
+
+               // if we have a zero length line we need to fudge it... this is how
+               // Tempest draws points
+               if (endX == startX && endY==startY)
+               {
+                  endX -= 0.5F;
+                  startX += 0.5F;
+                  endY -= 0.5F;
+                  startY += 0.5F;
                }
 
                line.Stroke = vectorBrush[color];
