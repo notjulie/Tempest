@@ -9,7 +9,6 @@
 #define	MATHBOX_H
 
 #include "Am2901.h"
-#include "Nullable.h"
 
 class AbstractTempestEnvironment;
 class MathBoxLog;
@@ -58,8 +57,8 @@ private:
 	AbstractTempestEnvironment	*environment;
 
 	// inputs
-	NullableByte dataIn;
-	NullableByte addressIn;
+	uint8_t dataIn;
+	uint8_t addressIn;
 	bool BEGIN;
 
 	// state values that change on rising clock
@@ -67,7 +66,7 @@ private:
 	bool  Q0Latch;
 
 	// state values that change on falling clock
-	Tristate STOP;
+	bool STOP;
 	uint8_t JumpLatch;
 
 	// ALUs

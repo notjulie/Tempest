@@ -44,6 +44,9 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 	PC = 0;
 	BEGIN = false;
 	Q0Latch = false;
+	dataIn = 0;
+	addressIn = 0;
+	STOP = false;
 
 	// clear profiling info
 	totalMathBoxTime = 0;
@@ -121,22 +124,16 @@ uint8_t MathBox::GetStatus(void)
 
 uint8_t MathBox::ReadLow(void)
 {
-	NullableNybble yK = aluK.GetY();
-	NullableNybble yF = aluF.GetY();
-	if (yK.IsUnknown() || yF.IsUnknown())
-		throw MathBoxException("MathBox::ReadLow: value unknown");
-
-	return (uint8_t)((yF.Value().Value() << 4) +yK.Value().Value());
+	Nybble yK = aluK.GetY();
+	Nybble yF = aluF.GetY();
+	return (uint8_t)((yF.Value() << 4) +yK.Value());
 }
 
 uint8_t MathBox::ReadHigh(void)
 {
-	NullableNybble yJ = aluJ.GetY();
-	NullableNybble yE = aluE.GetY();
-	if (yJ.IsUnknown() || yE.IsUnknown())
-		throw MathBoxException("MathBox::ReadHigh: value unknown");
-
-	return (uint8_t)((yE.Value().Value() << 4) + yJ.Value().Value());
+	Nybble yJ = aluJ.GetY();
+	Nybble yE = aluE.GetY();
+	return (uint8_t)((yE.Value() << 4) + yJ.Value());
 }
 
 void MathBox::Write(uint8_t address, uint8_t value)
@@ -160,7 +157,7 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		// CPU clock, the data and address lines will still be active for the beginning
 		// of the next cycle
 		BEGIN = false;
-		if (STOP.Value())
+		if (STOP)
 			return;
 
 		// do the second cycle
@@ -168,11 +165,11 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		HandleFallingClock();
 
 		// now our inputs will clear
-		addressIn = NullableByte::Unknown;
-		dataIn = NullableByte::Unknown;
+		addressIn = 0;
+		dataIn = 0;
 
 		// then we can just handle clock pulses until the clock is disabled
-		while (!STOP.Value())
+		while (!STOP)
 		{
 			HandleRisingClock();
 			HandleFallingClock();
@@ -212,15 +209,9 @@ void MathBox::HandleRisingClock(void)
 	{
 		// we load the PC from whichever source is selected
 		if (BEGIN)
-		{
-			if (addressIn.IsUnknown())
-				throw MathBoxException("Load PC from ROM A: addressIn not set");
-			newPC = romA[(unsigned)addressIn.Value()];
-		}
+			newPC = romA[(unsigned)addressIn];
 		else
-		{
 			newPC = JumpLatch;
-		}
 	}
 	else
 	{
@@ -330,15 +321,8 @@ void MathBox::SetALUInputs(void)
 	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[PC] & 8) >> 1));
 
 	// set the data inputs accordingly
-	if (dataIn.IsUnknown())
-	{
-		aluK.DataIn = aluF.DataIn = aluJ.DataIn = aluE.DataIn = Nybble();
-	}
-	else
-	{
-		aluK.DataIn = aluJ.DataIn = (uint8_t)(dataIn.Value() & 0xF);
-		aluF.DataIn = aluE.DataIn = (uint8_t)(dataIn.Value() >> 4);
-	}
+	aluK.DataIn = aluJ.DataIn = (uint8_t)(dataIn & 0xF);
+	aluF.DataIn = aluE.DataIn = (uint8_t)(dataIn >> 4);
 }
 
 

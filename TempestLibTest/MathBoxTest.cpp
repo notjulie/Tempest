@@ -36,9 +36,8 @@ public:
 
 		// ALUF's RAM value at address 7 should be zero
 		Am2901 *aluF = MathBoxTestInterface::GetALU(&mathBox, 'F');
-		NullableNybble ram7 = Am2901TestInterface::GetRAMValue(aluF, Nybble(0x7));
-		Assert::IsFalse(ram7.IsUnknown());
-		Assert::AreEqual(ram7.Value().Value(), (uint8_t)0);
+		Nybble ram7 = Am2901TestInterface::GetRAMValue(aluF, Nybble(0x7));
+		Assert::AreEqual(ram7.Value(), (uint8_t)0);
 	}
 
 private:

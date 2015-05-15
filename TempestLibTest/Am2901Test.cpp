@@ -21,10 +21,6 @@ public:
 		// the rising edge happens before we put the new data on the lines
 		alu.SetClock(true);
 
-		// the alu writes to its RAM on the rising edge... at this point we
-		// expect our target location to be unknown
-		Assert::IsTrue(Am2901TestInterface::GetRAMValue(&alu, Nybble(0x7)).IsUnknown());
-
 		// set the inputs
 		alu.AAddress = 0x1;
 		alu.BAddress = 0x7;
@@ -41,8 +37,7 @@ public:
 		alu.SetClock(true);
 
 		// that should clear memory address 7
-		NullableNybble ram7 = Am2901TestInterface::GetRAMValue(&alu, Nybble(0x7));
-		Assert::IsFalse(ram7.IsUnknown());
-		Assert::AreEqual(ram7.Value().Value(), (uint8_t)0);
+		Nybble ram7 = Am2901TestInterface::GetRAMValue(&alu, Nybble(0x7));
+		Assert::AreEqual(ram7.Value(), (uint8_t)0);
 	}
 };

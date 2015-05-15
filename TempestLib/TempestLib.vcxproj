@@ -56,7 +56,6 @@
     <ClInclude Include="MathBox\Am2901Tables.h" />
     <ClInclude Include="MathBox\MathBox.h" />
     <ClInclude Include="MathBox\MathBoxException.h" />
-    <ClInclude Include="MathBox\Nullable.h" />
     <ClInclude Include="MathBox\Nybble.h" />
     <ClInclude Include="Pokey\Pokey.h" />
     <ClInclude Include="Pokey\SoundChannel.h" />
