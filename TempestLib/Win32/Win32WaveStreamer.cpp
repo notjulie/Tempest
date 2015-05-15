@@ -101,18 +101,26 @@ void Win32WaveStreamer::CallbackThread(void)
 		if (!GetMessage(&msg, NULL, 0, 0))
 			break;
 
-		switch (msg.message)
+		try
 		{
-		case MM_WOM_DONE:
-			ProcessFinishedBuffer((Win32WaveBuffer *)((WAVEHDR *)msg.lParam)->dwUser);
-			break;
+			switch (msg.message)
+			{
+			case MM_WOM_DONE:
+				ProcessFinishedBuffer((Win32WaveBuffer *)((WAVEHDR *)msg.lParam)->dwUser);
+				break;
 
-		case WM_USER:
-			ProcessUpdate((int)msg.lParam);
-			break;
+			case WM_USER:
+				ProcessUpdate((int)msg.lParam);
+				break;
 
-		default:
-			break;
+			default:
+				break;
+			}
+		}
+		catch (TempestException &x)
+		{
+			if (!errorReported)
+				errorString = x.what();
 		}
 	}
 }

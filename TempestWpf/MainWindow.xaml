@@ -13,12 +13,6 @@
                 <TextBlock Text="Processor Status: "/>
                 <TextBlock Name="processorStatus"/>
             </StackPanel>
-            <DockPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Math Box Status: "/>
-                    <TextBlock Name="mathBoxStatus"/>
-                </StackPanel>
-            </DockPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Audio status: "/>
                 <TextBlock Name="audioStatus"/>

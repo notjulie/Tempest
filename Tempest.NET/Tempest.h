@@ -18,7 +18,6 @@ namespace TempestDotNET {
 		Tempest();
 		~Tempest();
 
-		String ^GetMathBoxStatus(void);
 		String ^GetProcessorStatus(void);
 		String ^GetAudioStatus(void);
 		bool   IsStopped(void);

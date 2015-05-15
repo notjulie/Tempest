@@ -54,7 +54,6 @@ public:
 	uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
 
 	// simple dispatches to the TempestBus object
-	std::string GetMathBoxStatus(void) const { return tempestBus.GetMathBoxStatus(); }
 	AbstractTempestWaveStream *GetSoundStream(void) { return &tempestBus; }
 	bool HaveNewVectorData(void) { return tempestBus.HaveNewVectorData(); }
 	void PopVectorData(VectorData &vectorData) { return tempestBus.PopVectorData(vectorData); }

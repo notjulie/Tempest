@@ -37,11 +37,6 @@ namespace TempestDotNET {
 		delete environment, environment = NULL;
 	}
 
-	String ^Tempest::GetMathBoxStatus(void)
-	{
-		return gcnew String(tempestRunner->GetMathBoxStatus().c_str());
-	}
-
 	String ^Tempest::GetAudioStatus(void)
 	{
 		return gcnew String(environment->GetAudioStatus().c_str());

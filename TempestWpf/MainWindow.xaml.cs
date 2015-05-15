@@ -151,7 +151,6 @@ namespace TempestWpf
       void timer_Tick(object sender, EventArgs e)
       {
          processorStatus.Text = tempest.GetProcessorStatus();
-         mathBoxStatus.Text = tempest.GetMathBoxStatus();
          audioStatus.Text = tempest.GetAudioStatus();
 
          double processorSpeed = tempest.GetTotalClockCycles();
