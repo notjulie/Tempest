@@ -87,6 +87,7 @@
     <ClInclude Include="MathBox\Nybble.h" />
     <ClInclude Include="Pokey\Pokey.h" />
     <ClInclude Include="Pokey\SoundChannel.h" />
+    <ClInclude Include="Pokey\SoundChannelStatus.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />

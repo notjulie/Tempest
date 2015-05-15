@@ -31,7 +31,8 @@ public:
 	void LoadROM(const uint8_t *rom, int length, uint16_t address);
 	void LoadMathBoxROM(const uint8_t *rom, int length, char slot);
 
-   bool HaveNewVectorData(void);
+	void GetAudioChannelsStatus(std::vector<SoundChannelStatus> &result);
+	bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);
 
 	// simple accessors

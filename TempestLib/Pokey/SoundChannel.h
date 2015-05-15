@@ -3,6 +3,8 @@
 #define SOUNDCHANNEL_H
 
 
+struct SoundChannelStatus;
+
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
@@ -13,6 +15,7 @@ public:
 	SoundChannel(void);
 
 	void AddWaveData(int16_t *buffer, int count);
+	SoundChannelStatus GetStatus(void);
 	void SetFrequency(int frequency);
 	void SetVolume(int volume) { this->volume = volume; }
 	void SetOutputWave(int outputWave);
@@ -31,6 +34,7 @@ private:
 	int newFrequency;
 
 	// our state variables
+	float actualFrequency;
 	float pulseWidth;
 	bool outputState;
 	float outputCounter;

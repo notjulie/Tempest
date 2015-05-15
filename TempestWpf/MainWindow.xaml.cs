@@ -28,6 +28,7 @@ namespace TempestWpf
 
       private Tempest tempest;
       private DispatcherTimer timer;
+      private DispatcherTimer audioTimer;
       private DispatcherTimer vectorTimer;
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
@@ -193,6 +194,40 @@ namespace TempestWpf
          vectorTimer.Interval = TimeSpan.FromMilliseconds(50);
          vectorTimer.IsEnabled = true;
          vectorTimer.Tick += vectorTimer_Tick;
+
+         audioTimer = new DispatcherTimer();
+         audioTimer.Interval = TimeSpan.FromMilliseconds(100);
+         audioTimer.IsEnabled = true;
+         audioTimer.Tick += audioTimer_Tick;
+      }
+
+      void audioTimer_Tick(object sender, EventArgs e)
+      {
+         UInt16[] audioStatus = tempest.GetAudioChannelsStatus();
+         s1Volume.Text = audioStatus[0].ToString();
+         s1Waveform.Text = audioStatus[1].ToString();
+         s1Frequency.Text = audioStatus[2].ToString();
+         s2Volume.Text = audioStatus[3].ToString();
+         s2Waveform.Text = audioStatus[4].ToString();
+         s2Frequency.Text = audioStatus[5].ToString();
+         s3Volume.Text = audioStatus[6].ToString();
+         s3Waveform.Text = audioStatus[7].ToString();
+         s3Frequency.Text = audioStatus[8].ToString();
+         s4Volume.Text = audioStatus[9].ToString();
+         s4Waveform.Text = audioStatus[10].ToString();
+         s4Frequency.Text = audioStatus[11].ToString();
+         s5Volume.Text = audioStatus[12].ToString();
+         s5Waveform.Text = audioStatus[13].ToString();
+         s5Frequency.Text = audioStatus[14].ToString();
+         s6Volume.Text = audioStatus[15].ToString();
+         s6Waveform.Text = audioStatus[16].ToString();
+         s6Frequency.Text = audioStatus[17].ToString();
+         s7Volume.Text = audioStatus[18].ToString();
+         s7Waveform.Text = audioStatus[19].ToString();
+         s7Frequency.Text = audioStatus[20].ToString();
+         s8Volume.Text = audioStatus[21].ToString();
+         s8Waveform.Text = audioStatus[22].ToString();
+         s8Frequency.Text = audioStatus[23].ToString();
       }
 
       void timer_Tick(object sender, EventArgs e)

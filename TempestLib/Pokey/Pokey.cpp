@@ -3,6 +3,8 @@
 
 #include "TempestException.h"
 
+#include "SoundChannelStatus.h"
+
 #include "Pokey.h"
 
 
@@ -25,7 +27,24 @@ Pokey::~Pokey(void)
 }
 
 
-uint8_t Pokey::ReadByte(uint16_t address) 
+SoundChannelStatus Pokey::GetSoundChannelStatus(int channel)
+{
+	switch (channel)
+	{
+	case 0:
+		return sound1.GetStatus();
+	case 1:
+		return sound2.GetStatus();
+	case 2:
+		return sound3.GetStatus();
+	case 3:
+		return sound4.GetStatus();
+	default:
+		throw TempestException("Pokey::GetSoundChannelStatus: Invalid channel number");
+	}
+}
+
+uint8_t Pokey::ReadByte(uint16_t address)
 {
 	switch (address)
 	{

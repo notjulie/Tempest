@@ -1,8 +1,10 @@
 
 #include "stdafx.h"
 
-#include "Pokey.h"
 #include "TempestException.h"
+
+#include "Pokey.h"
+#include "SoundChannelStatus.h"
 
 #include "SoundChannel.h"
 
@@ -102,11 +104,17 @@ void SoundChannel::SetFrequency(int frequency)
 	this->newFrequency = frequency;
 }
 
+SoundChannelStatus SoundChannel::GetStatus(void)
+{
+	SoundChannelStatus result;
+	result.Frequency = (uint16_t)actualFrequency;
+	result.Volume = (uint8_t)volume;
+	result.Waveform = (uint8_t)outputWave;
+	return result;
+}
 
 void SoundChannel::UpdateWaveform(void)
 {
-	float f;
-
 	switch (outputWave)
 	{
 	case 0x0:
@@ -114,9 +122,9 @@ void SoundChannel::UpdateWaveform(void)
 		// 5-bit polynomials... note really sure what that's about.  For now I just
 		// treat it as 17-bit noise
 		// 17-bit noise polynomial
-		f = 64000.0F / (1 + frequency);
-		pulseWidth = 44100.0F / f;
-		noiseCounterCountsPerNoiseSample = 1790000 / f;
+		actualFrequency = 64000.0F / (1 + frequency);
+		pulseWidth = 44100.0F / actualFrequency;
+		noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
 		if (outputCounter > pulseWidth)
 			outputCounter = 0;
 		noiseWaveformLength = 128 * 1024;
@@ -126,9 +134,9 @@ void SoundChannel::UpdateWaveform(void)
 	case 0x2:	// doc says these are the same?
 	case 0x6:
 		// 5-bit noise polynomial, half frequency
-		f = 64000.0F / (1 + frequency) / 2;
-		pulseWidth = 44100.0F / f;
-		noiseCounterCountsPerNoiseSample = 1790000 / f;
+		actualFrequency = 64000.0F / (1 + frequency) / 2;
+		pulseWidth = 44100.0F / actualFrequency;
+		noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
 		if (outputCounter > pulseWidth)
 			outputCounter = 0;
 		noiseWaveformLength = 32;
@@ -137,9 +145,9 @@ void SoundChannel::UpdateWaveform(void)
 
 	case 0x8:
 		// 17-bit noise polynomial
-		f = 64000.0F / (1 + frequency);
-		pulseWidth = 44100.0F / f;
-		noiseCounterCountsPerNoiseSample = 1790000 / f;
+		actualFrequency = 64000.0F / (1 + frequency);
+		pulseWidth = 44100.0F / actualFrequency;
+		noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
 		if (outputCounter > pulseWidth)
 			outputCounter = 0;
 		noiseWaveformLength = 128 * 1024;
@@ -148,8 +156,8 @@ void SoundChannel::UpdateWaveform(void)
 
 	case 0xA:
 		// pure tone
-		f = 64000.0F / (1 + frequency) / 2;
-		pulseWidth = 44100.0F / f / 2;
+		actualFrequency = 64000.0F / (1 + frequency) / 2;
+		pulseWidth = 44100.0F / actualFrequency / 2;
 		outputState = true;
 		outputCounter = 0;
 		break;

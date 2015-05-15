@@ -24,6 +24,7 @@ namespace TempestDotNET {
 
 		void SetBreakpoint(int address, bool set);
 
+		array<UInt16> ^GetAudioChannelsStatus(void);
 		VectorEnumerator ^GetVectorEnumerator(void);
 		void LoadROM(array<Byte>^ rom, int address);
 		void LoadMathBoxROM(array<Byte>^ rom, char slot);
