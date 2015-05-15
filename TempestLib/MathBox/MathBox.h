@@ -9,6 +9,7 @@
 #define	MATHBOX_H
 
 #include "Am2901.h"
+#include "Nullable.h"
 
 class AbstractTempestEnvironment;
 class MathBoxLog;

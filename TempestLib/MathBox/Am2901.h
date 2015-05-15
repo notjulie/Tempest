@@ -3,7 +3,6 @@
 #define AM2901_H
 
 #include "Am2901Tables.h"
-#include "Nullable.h"
 
 class ALULogEntry;
 class MathBoxTracer;
@@ -24,9 +23,13 @@ public:
 	uint8_t I345;
 	uint8_t I678;
 	bool CarryIn;
+	bool Q0In;
+	bool Q3In;
+	bool RAM0In;
+	bool RAM3In;
 
 public:
-	Tristate GetCarryOut(void);
+	bool GetCarryOut(void);
 	bool GetF3(void) const;
 	bool GetOVR(void) const;
 	bool GetQ0Out(void);
@@ -37,10 +40,6 @@ public:
 	Nybble GetY(void);
 
 	void SetClock(bool state);
-	void SetQ0In(const Tristate &q0) { Q0In = q0; }
-	void SetQ3In(const Tristate &q3) { Q3In = q3; }
-	void SetRAM0In(const Tristate &ram0) { RAM0In = ram0; }
-	void SetRAM3In(const Tristate &ram3) { RAM3In = ram3; }
 
 private:
 	Nybble GetA(void) const;
@@ -56,10 +55,6 @@ private:
 
 private:
 	bool clock;
-	Tristate Q0In;
-	Tristate Q3In;
-	Tristate RAM0In;
-	Tristate RAM3In;
 
 	Nybble ALatch;
 	Nybble BLatch;

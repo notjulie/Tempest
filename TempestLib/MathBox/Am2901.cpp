@@ -24,6 +24,10 @@ Am2901::Am2901(void)
 	I012 = 0;
 	I345 = 0;
 	I678 = 0;
+	Q0In = false;
+	Q3In = false;
+	RAM0In = false;
+	RAM3In = false;
 }
 
 
@@ -60,7 +64,7 @@ bool Am2901::GetXOROverflow(Nybble R, Nybble S) const
 	return a ^ b;
 }
 
-Tristate Am2901::GetCarryOut(void)
+bool Am2901::GetCarryOut(void)
 {
 	// Get R and S
 	Nybble R = GetR();
@@ -340,7 +344,7 @@ void Am2901::SetClock(bool newClockState)
 		case 5:
 		{
 			Nybble shifted = GetF() >> 1;
-			if (RAM3In.Value())
+			if (RAM3In)
 				shifted = shifted | Nybble(8);
 			RAM[BAddress.Value()] = shifted;
 			break;
@@ -350,7 +354,7 @@ void Am2901::SetClock(bool newClockState)
 		case 7:
 		{
 			Nybble shifted = GetF() << 1;
-			if (RAM0In.Value())
+			if (RAM0In)
 				shifted = shifted | Nybble(1);
 			RAM[BAddress.Value()] = shifted;
 			break;
@@ -380,13 +384,13 @@ void Am2901::SetClock(bool newClockState)
 
 		case 4:
 			QLatch = QLatch >> 1;
-			if (Q3In.Value())
+			if (Q3In)
 				QLatch = QLatch | Nybble(8);
 			break;
 
 		case 6:
 			QLatch = QLatch << 1;
-			if (Q0In.Value())
+			if (Q0In)
 				QLatch = QLatch | Nybble(1);
 			break;
 

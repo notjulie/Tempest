@@ -348,9 +348,9 @@ void MathBox::SetALUCarryFlags(void)
 
 	// the actual carry flags are easy... they just cascade up
 	aluK.CarryIn = ((romE[PC] & 1) != 0);
-	aluF.CarryIn = aluK.GetCarryOut().Value();
-	aluJ.CarryIn = aluF.GetCarryOut().Value();
-	aluE.CarryIn = aluJ.GetCarryOut().Value();
+	aluF.CarryIn = aluK.GetCarryOut();
+	aluJ.CarryIn = aluF.GetCarryOut();
+	aluE.CarryIn = aluJ.GetCarryOut();
 
 	// for our bit shifting flags between ALUs, we find what direction we're
 	// shifting from I678, which we set the same for all ALUs, so just pick one
@@ -360,10 +360,10 @@ void MathBox::SetALUCarryFlags(void)
 	case 5:
 		// downshifting operation
 		{
-			aluE.SetQ3In(aluK.GetRAM0Out());
-			aluJ.SetQ3In(aluE.GetQ0Out());
-			aluF.SetQ3In(aluJ.GetQ0Out());
-			aluK.SetQ3In(aluF.GetQ0Out());
+			aluE.Q3In = aluK.GetRAM0Out();
+			aluJ.Q3In = aluE.GetQ0Out();
+			aluF.Q3In = aluJ.GetQ0Out();
+			aluK.Q3In = aluF.GetQ0Out();
 
 			bool r15;
 			{
@@ -371,25 +371,25 @@ void MathBox::SetALUCarryFlags(void)
 				bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
 				r15 = !(D4NAND1out && !((romF[PC] & 2) != 0));
 			}
-			aluE.SetRAM3In(r15);
-			aluJ.SetRAM3In(aluE.GetRAM0Out());
-			aluF.SetRAM3In(aluJ.GetRAM0Out());
-			aluK.SetRAM3In(aluF.GetRAM0Out());
+			aluE.RAM3In = r15;
+			aluJ.RAM3In = aluE.GetRAM0Out();
+			aluF.RAM3In = aluJ.GetRAM0Out();
+			aluK.RAM3In = aluF.GetRAM0Out();
 		}
 		break;
 
 	case 6:
 	case 7:
 		// upshifting operation
-		aluK.SetQ0In((romF[PC] & 2) != 0);
-		aluF.SetQ0In(aluK.GetQ3Out());
-		aluJ.SetQ0In(aluF.GetQ3Out());
-		aluE.SetQ0In(aluJ.GetQ3Out());
+		aluK.Q0In = (romF[PC] & 2) != 0;
+		aluF.Q0In = aluK.GetQ3Out();
+		aluJ.Q0In = aluF.GetQ3Out();
+		aluE.Q0In = aluJ.GetQ3Out();
 
-		aluK.SetRAM0In(aluE.GetQ3Out());
-		aluF.SetRAM0In(aluK.GetRAM3Out());
-		aluJ.SetRAM0In(aluF.GetRAM3Out());
-		aluE.SetRAM0In(aluJ.GetRAM3Out());
+		aluK.RAM0In = aluE.GetQ3Out();
+		aluF.RAM0In = aluK.GetRAM3Out();
+		aluJ.RAM0In = aluF.GetRAM3Out();
+		aluE.RAM0In = aluJ.GetRAM3Out();
 		break;
 
 	default:
