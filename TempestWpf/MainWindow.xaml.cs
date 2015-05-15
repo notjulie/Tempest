@@ -47,10 +47,10 @@ namespace TempestWpf
          // set up our vector brushes
          vectorBrush[0] = new SolidColorBrush(Colors.White);
          vectorBrush[1] = new SolidColorBrush(Colors.Yellow);
-         vectorBrush[2] = new SolidColorBrush(Colors.Red);
-         vectorBrush[3] = new SolidColorBrush(Colors.Green);
-         vectorBrush[4] = new SolidColorBrush(Colors.Lime);
-         vectorBrush[5] = new SolidColorBrush(Colors.Orange);
+         vectorBrush[2] = new SolidColorBrush(Colors.Purple);
+         vectorBrush[3] = new SolidColorBrush(Colors.Red);
+         vectorBrush[4] = new SolidColorBrush(Colors.Orange);
+         vectorBrush[5] = new SolidColorBrush(Colors.Lime);
          vectorBrush[6] = new SolidColorBrush(Colors.Blue);
          vectorBrush[7] = new SolidColorBrush(Colors.Pink);
          vectorBrush[8] = new SolidColorBrush(Colors.Gray);
