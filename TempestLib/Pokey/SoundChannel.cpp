@@ -40,6 +40,7 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 	switch (outputWave)
 	{
 	case 0x0:
+	case 0x6:
 		// noise
 		for (int i = 0; i < count; ++i)
 		{
@@ -102,6 +103,8 @@ void SoundChannel::SetFrequency(int frequency)
 
 void SoundChannel::UpdateWaveform(void)
 {
+	float f;
+
 	switch (outputWave)
 	{
 	case 0x0:
@@ -109,25 +112,32 @@ void SoundChannel::UpdateWaveform(void)
 		// 5-bit polynomials... note really sure what that's about.  For now I just
 		// treat it as 17-bit noise
 		// 17-bit noise polynomial
-		{
-			float f = 64000.0F / (1 + frequency);
-			pulseWidth = 44100.0F / f;
-			noiseCounterCountsPerNoiseSample = 1790000 / f;
-			if (outputCounter > pulseWidth)
-				outputCounter = 0;
-			noiseWaveformLength = 128 * 1024;
-			noiseWaveform = Pokey::Get17BitNoise();
-		}
+		f = 64000.0F / (1 + frequency);
+		pulseWidth = 44100.0F / f;
+		noiseCounterCountsPerNoiseSample = 1790000 / f;
+		if (outputCounter > pulseWidth)
+			outputCounter = 0;
+		noiseWaveformLength = 128 * 1024;
+		noiseWaveform = Pokey::Get17BitNoise();
+		break;
+
+	case 0x6:
+		// 5-bit noise polynomial, half frequency
+		f = 64000.0F / (1 + frequency) / 2;
+		pulseWidth = 44100.0F / f;
+		noiseCounterCountsPerNoiseSample = 1790000 / f;
+		if (outputCounter > pulseWidth)
+			outputCounter = 0;
+		noiseWaveformLength = 32;
+		noiseWaveform = Pokey::Get5BitNoise();
 		break;
 
 	case 0xA:
 		// pure tone
-		{
-			float f = 64000.0F / (1 + frequency) / 2;
-			pulseWidth = 44100.0F / f / 2;
-			outputState = true;
-			outputCounter = 0;
-		}
+		f = 64000.0F / (1 + frequency) / 2;
+		pulseWidth = 44100.0F / f / 2;
+		outputState = true;
+		outputCounter = 0;
 		break;
 
 	default:
