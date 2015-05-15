@@ -6,9 +6,17 @@
 #include "Pokey.h"
 
 
+bool Pokey::noiseWaveformsInitialized = false;
+bool Pokey::poly17[128 * 1024];
+
+
 Pokey::Pokey(void)
 {
+	// clear
 	ALLPOT = 0;
+
+	// initialize our noise buffers
+	InitializeNoiseBuffers();
 }
 
 Pokey::~Pokey(void)
@@ -114,3 +122,34 @@ void Pokey::AddWaveData(int16_t *buffer, int count)
 	sound3.AddWaveData(buffer, count);
 	sound4.AddWaveData(buffer, count);
 }
+
+
+void Pokey::InitializeNoiseBuffers(void)
+{
+	// never mind if we've already been here
+	if (noiseWaveformsInitialized)
+		return;
+
+	// 17-bit noise... just for good form I make sure there's no
+	// DC
+	int	onesLeft = 64 * 1024;
+	int   zerosLeft = 64 * 1024;
+	while (onesLeft>0 && zerosLeft>0)
+	{
+		int random = rand() % (onesLeft + zerosLeft);
+		if (random > onesLeft)
+		{
+			poly17[onesLeft + zerosLeft - 1] = false;
+			--zerosLeft;
+		}
+		else
+		{
+			poly17[onesLeft + zerosLeft - 1] = true;
+			--onesLeft;
+		}
+	}
+
+	// note that we're initialized
+	noiseWaveformsInitialized = true;
+}
+

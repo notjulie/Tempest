@@ -72,8 +72,9 @@ private:
    void  LDA(uint16_t address);
    void  LDX(uint16_t address);
    void  LDY(uint16_t address);
-   void  LSR(void);
-   void  ORA(uint16_t address);
+	void  LSR(void);
+	void  LSR(uint16_t address);
+	void  ORA(uint16_t address);
    void  ROL(void);
    void  ROL(uint16_t address);
    void  ROR(void);

@@ -27,12 +27,22 @@ public:
 
 	virtual uint8_t GetALLPOT(void) { return 0; }
 
+public:
+	static const bool *Get17BitNoise(void) { return poly17; }
+
+private:
+	static void InitializeNoiseBuffers(void);
+
 private:
 	uint8_t ALLPOT;
 	SoundChannel	sound1;
 	SoundChannel	sound2;
 	SoundChannel	sound3;
 	SoundChannel	sound4;
+
+private:
+	static bool noiseWaveformsInitialized;
+	static bool poly17[128 * 1024];
 };
 
 

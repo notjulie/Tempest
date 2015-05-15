@@ -99,7 +99,8 @@ int CPU6502::SingleStep(void)
       case 0x4A: LSR(); return 2;
       case 0x4C: PC = GetAbsoluteAddress(); return 3; //JMP
       case 0x4D: EOR(GetAbsoluteAddress()); return 4;
-      case 0x50: BVC(); return 2;
+		case 0x4E: LSR(GetAbsoluteAddress()); return 6;
+		case 0x50: BVC(); return 2;
       case 0x51: EOR(GetIndirectYAddress()); return 6;
 		case 0x55: EOR((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0x58: P.I = false; return 2; // CLI
@@ -481,6 +482,11 @@ void CPU6502::LDY(uint16_t address)
 void CPU6502::LSR(void)
 {
    A = DoLSR(A);
+}
+
+void CPU6502::LSR(uint16_t address)
+{
+	bus->WriteByte(address, DoLSR(bus->ReadByte(address)));
 }
 
 void CPU6502::ORA(uint16_t address)

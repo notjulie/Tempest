@@ -21,13 +21,23 @@ private:
 	void UpdateWaveform(void);
 
 private:
+	// our current parameters
 	int frequency;
 	int volume;
 	int outputWave;
 
+	// our requested values
+	int newOutputWave;
+	int newFrequency;
+
+	// our state variables
 	float pulseWidth;
 	bool outputState;
 	float outputCounter;
+	float noiseCounter;
+	float noiseCounterCountsPerNoiseSample;
+	int noiseWaveformLength;
+	const bool *noiseWaveform;
 };
 
 
