@@ -117,6 +117,9 @@
     <ClCompile Include="MathBox\Am2901Tables.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="6502\ProcessorStatusWord.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EEPROM.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="MathBox\MathBoxAFX.h">
       <Filter>MathBox\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\ProcessorStatusWord.h">
+      <Filter>6502\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

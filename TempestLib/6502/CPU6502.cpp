@@ -152,7 +152,7 @@ int CPU6502::SingleStep(void)
       case 0xB1: LDA(GetIndirectYAddress()); return 6;
 		case 0xB4: LDY((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0xB5: LDA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
-		case 0xB8: P.V = false; return 2; //CLV
+		case 0xB8: P.SetOverflow(false); return 2; //CLV
 		case 0xB9: LDA((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
       case 0xBA: X = S; SetNZ(X); return 2; //TSX
 		case 0xBC: LDY((uint16_t)(GetAbsoluteAddress() + X)); return 4;
@@ -303,6 +303,7 @@ void CPU6502::ADC(uint16_t address)
 		// From what I've read, the overflow result of decimal math is undefined,
 		// or useless, or varies between models of the 6502.  I'm just not going to
 		// touch it for now.
+		P.ScrozzleOverflow();
 	}
 	else
 	{
@@ -310,7 +311,7 @@ void CPU6502::ADC(uint16_t address)
 		int signedResult = (int8_t)A + (int8_t)value + (P.C ? 1 : 0);
 
 		A = (uint8_t)unsignedResult;
-		P.V = signedResult > 127 || signedResult < -128;
+		P.SetOverflow(signedResult > 127 || signedResult < -128);
 		P.C = unsignedResult > 255;
 	}
 
@@ -359,7 +360,7 @@ void CPU6502::BIT(uint16_t address)
    uint8_t memoryValue = bus->ReadByte(address);
    P.Z = (A & memoryValue) == 0;
    P.N = (memoryValue & 0x80) != 0;
-   P.V = (memoryValue & 0x40) != 0;
+   P.SetOverflow((memoryValue & 0x40) != 0);
 }
 
 void CPU6502::BMI(void)
@@ -385,25 +386,15 @@ void CPU6502::BPL(void)
 
 void CPU6502::BVC(void)
 {
-	// I don't trust my implementation of decimal overflow, so warn
-	// about it
-	if (P.D)
-		throw CPU6502Exception("BVC not supported in decimal mode");
-
 	int branchDistance = (int8_t)bus->ReadByte(PC++);
-	if (!P.V)
+	if (!P.GetOverflow())
 		PC = (uint16_t)(PC + branchDistance);
 }
 
 void CPU6502::BVS(void)
 {
-	// I don't trust my implementation of decimal overflow, so warn
-	// about it
-	if (P.D)
-		throw CPU6502Exception("BVS not supported in decimal mode");
-
 	int branchDistance = (int8_t)bus->ReadByte(PC++);
-	if (P.V)
+	if (P.GetOverflow())
 		PC = (uint16_t)(PC + branchDistance);
 }
 
@@ -550,6 +541,7 @@ void CPU6502::SBC(uint16_t address)
 		// From what I've read, the overflow result of decimal math is undefined,
 		// or useless, or varies between models of the 6502.  I'm just not going to
 		// touch it for now.
+		P.ScrozzleOverflow();
 	}
 	else
 	{
@@ -557,7 +549,7 @@ void CPU6502::SBC(uint16_t address)
 		int signedResult = (int8_t)A - (int8_t)value - (P.C ? 0 : 1);
 
 		A = (uint8_t)unsignedResult;
-		P.V = signedResult > 127 || signedResult < -128;
+		P.SetOverflow(signedResult > 127 || signedResult < -128);
 		P.C = unsignedResult >= 0;
 	}
 
