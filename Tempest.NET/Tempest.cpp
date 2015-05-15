@@ -86,12 +86,6 @@ namespace TempestDotNET {
 		tempestRunner->LoadMathBoxROM(&romCopy[0], (int)romCopy.size(), slot);
 	}
 
-	void Tempest::SetOnePlayerButton(bool pressed)
-	{
-		tempestRunner->SetButtonState(ONE_PLAYER_BUTTON, pressed);
-	}
-
-
 	void Tempest::Start(void)
 	{
 		tempestRunner->Start();

@@ -5,7 +5,9 @@
 #include "Pokey/Pokey.h"
 
 enum ButtonID {
-	ONE_PLAYER_BUTTON
+	ONE_PLAYER_BUTTON,
+	FIRE_BUTTON,
+	ZAPPER_BUTTON
 };
 
 
@@ -28,7 +30,6 @@ class TempestPokey2 : public Pokey
 public:
 	TempestPokey2(void)
 	{
-		buttons[ONE_PLAYER_BUTTON] = false;
 	}
 
 	virtual ~TempestPokey2(void) {}
@@ -43,14 +44,18 @@ public:
 		//; BIT 0: D / E2 switch #2
 		//; BIT 1: D / E2 switch #3
 		//; BIT 2: D / E2 switch #4
-		//; BIT 3: Fire Button
-		//; BIT 4: Zapper Button
+		//; BIT 3: Zapper Button
+		//; BIT 4: Fire Button
 		//; BIT 5: Start Player 1 Button
 		//; BIT 6: Start Player 2 Button
 		//; BIT 7: Unused.
 		uint8_t result = 0;
 		if (buttons[ONE_PLAYER_BUTTON])
 			result |= 0x20;
+		if (buttons[FIRE_BUTTON])
+			result |= 0x10;
+		if (buttons[ZAPPER_BUTTON])
+			result |= 0x08;
 		return result;
 	}
 

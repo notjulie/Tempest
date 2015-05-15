@@ -34,6 +34,7 @@ public:
    bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);
 
+	// simple accessors
 	void MoveWheel(int delta) { pokey1.MoveWheel(delta); }
 	void SetButtonState(ButtonID button, bool pressed) { pokey2.SetButtonState(button, pressed); }
 	void Set3KHzClockState(bool state) { clock3KHzIsHigh = state; }

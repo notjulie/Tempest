@@ -66,8 +66,39 @@ namespace TempestWpf
          this.Loaded += MainWindow_Loaded;
          this.Closed += MainWindow_Closed;
          this.Closing += MainWindow_Closing;
+         this.KeyDown += MainWindow_KeyDown;
+         this.KeyUp += MainWindow_KeyUp;
          buttonOnePlayerStart.Click += buttonOnePlayerStart_Click;
          view6502DebugWindowItem.Click += view6502DebugWindowItem_Click;
+      }
+
+
+      void MainWindow_KeyDown(object sender, KeyEventArgs e)
+      {
+         switch (e.Key)
+         {
+            case Key.Left:
+               tempest.MoveWheel(-4);
+               break;
+
+            case Key.Right:
+               tempest.MoveWheel(4);
+               break;
+
+            case Key.F:
+               tempest.Fire(true);
+               break;
+         }
+      }
+
+      void MainWindow_KeyUp(object sender, KeyEventArgs e)
+      {
+         switch (e.Key)
+         {
+            case Key.F:
+               tempest.Fire(false);
+               break;
+         }
       }
 
       void view6502DebugWindowItem_Click(object sender, RoutedEventArgs e)
@@ -161,8 +192,6 @@ namespace TempestWpf
          double irqFrequencyValue = tempest.GetIRQCount();
          irqFrequencyValue /= (DateTime.Now - startTime).TotalSeconds;
          irqFrequency.Text = irqFrequencyValue.ToString("F1");
-
-         tempest.MoveWheel(1);
       }
 
       void vectorTimer_Tick(object sender, EventArgs e)
