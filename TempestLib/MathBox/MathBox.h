@@ -81,15 +81,6 @@ private:
 	uint8_t romK[256];
 	uint8_t romL[256];
 
-	// profiling
-	uint32_t totalMathBoxTime;
-	uint32_t totalMathBoxWrites;
-	uint32_t totalFallingClockTime;
-	uint32_t totalRisingClockTime;
-	uint32_t totalSetALUInputsTime;
-	uint32_t totalSetALUCarryTime;
-	uint32_t totalALUFallingClockTime;
-
 	friend class MathBoxTestInterface;
 };
 

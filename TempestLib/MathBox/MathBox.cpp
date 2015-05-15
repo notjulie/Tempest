@@ -45,15 +45,6 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 	dataIn = 0;
 	addressIn = 0;
 	STOP = false;
-
-	// clear profiling info
-	totalMathBoxTime = 0;
-	totalMathBoxWrites = 0;
-	totalRisingClockTime = 0;
-	totalFallingClockTime = 0;
-	totalSetALUInputsTime = 0;
-	totalSetALUCarryTime = 0;
-	totalALUFallingClockTime = 0;
 }
 
 MathBox::~MathBox(void)
@@ -133,9 +124,6 @@ uint8_t MathBox::ReadHigh(void)
 
 void MathBox::Write(uint8_t address, uint8_t value)
 {
-	++totalMathBoxWrites;
-	uint32_t usStart = environment->GetMicrosecondCount();
-
 	// set our inputs... the address strobe will assert BEGIN and cause the
 	// first rising edge of the clock
 	addressIn = address;
@@ -167,19 +155,11 @@ void MathBox::Write(uint8_t address, uint8_t value)
 		HandleRisingClock();
 		HandleFallingClock();
 	}
-
-	uint32_t usEnd = environment->GetMicrosecondCount();
-	totalMathBoxTime = totalMathBoxTime + (usEnd - usStart);
-
-	if (totalMathBoxWrites == 10000)
-		totalMathBoxWrites = 10000;
 }
 
 
 void MathBox::HandleRisingClock(void)
 {
-	uint32_t usStart = environment->GetMicrosecondCount();
-
 	// calculate the new PC 
 	uint8_t newPC;
 	bool pcen;
@@ -216,15 +196,10 @@ void MathBox::HandleRisingClock(void)
 	// rising clock
 	PC = newPC;
 	Q0Latch = newQ0Latch;
-
-	uint32_t usEnd = environment->GetMicrosecondCount();
-	totalRisingClockTime = totalRisingClockTime + (usEnd - usStart);
 }
 
 void MathBox::HandleFallingClock(void)
 {
-	uint32_t usStart = environment->GetMicrosecondCount();
-
 	// calculate the new value of STOP
 	bool newSTOP;
 	if (BEGIN)
@@ -246,21 +221,15 @@ void MathBox::HandleFallingClock(void)
 	SetALUCarryFlags();
 
 	// dropping the clock latches the result
-	{
-		Timer timer(environment, &this->totalALUFallingClockTime);
-		aluK.SetClock(false);
-		aluF.SetClock(false);
-		aluJ.SetClock(false);
-		aluE.SetClock(false);
-	}
+	aluK.SetClock(false);
+	aluF.SetClock(false);
+	aluJ.SetClock(false);
+	aluE.SetClock(false);
 
 	// latch all the state values that we are supposed to latch on the
 	// falling clock
 	STOP = newSTOP;
 	JumpLatch = newJumpLatch;
-
-	uint32_t usEnd = environment->GetMicrosecondCount();
-	totalFallingClockTime = totalFallingClockTime + (usEnd - usStart);
 }
 
 bool MathBox::GetQ0(void)
@@ -285,8 +254,6 @@ bool MathBox::GetQ0(void)
 
 void MathBox::SetALUInputs(void)
 {
-	Timer timer(environment, &totalSetALUInputsTime);
-
 	// the A & B inputs to the ALUs are all the same
 	aluK.AAddress = aluF.AAddress = aluJ.AAddress = aluE.AAddress = romL[PC];
 	aluK.BAddress = aluF.BAddress = aluJ.BAddress = aluE.BAddress = romK[PC];
@@ -310,8 +277,6 @@ void MathBox::SetALUInputs(void)
 
 void MathBox::SetALUCarryFlags(void)
 {
-	Timer timer(environment, &totalSetALUCarryTime);
-
 	// the actual carry flags are easy... they just cascade up
 	aluK.CarryIn = ((romE[PC] & 1) != 0);
 	aluF.CarryIn = aluK.GetCarryOut();
