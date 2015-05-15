@@ -21,6 +21,7 @@ SoundChannel::SoundChannel(void)
 
 	// clear our state variables
 	noiseCounter = 0;
+	outputCounter = 0;
 	UpdateWaveform();
 }
 
