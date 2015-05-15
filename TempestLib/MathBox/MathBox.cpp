@@ -15,24 +15,6 @@
 
 #include "MathBox.h"
 
-class Timer
-{
-public:
-	Timer(AbstractTempestEnvironment	*_environment, uint32_t *_value) {
-		environment = _environment;
-		value = _value;
-		startTime = _environment->GetMicrosecondCount();
-	}
-	~Timer(void) {
-		*value = (uint32_t)(*value + (environment->GetMicrosecondCount() - startTime));
-	}
-
-private:
-	AbstractTempestEnvironment	*environment;
-	uint32_t *value;
-	uint32_t startTime;
-};
-
 MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 {
 	// save parameters

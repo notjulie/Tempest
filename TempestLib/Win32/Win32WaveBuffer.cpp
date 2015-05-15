@@ -16,7 +16,7 @@ Win32WaveBuffer::Win32WaveBuffer(int sampleCount)
 	waveHeader.dwUser = (DWORD_PTR)this;
 	waveHeader.lpData = (LPSTR)&waveData[0];
 	waveHeader.dwFlags = 0;
-	waveHeader.dwBufferLength = waveData.size() * sizeof(waveData[0]);
+	waveHeader.dwBufferLength = (DWORD)(waveData.size() * sizeof(waveData[0]));
 }
 
 

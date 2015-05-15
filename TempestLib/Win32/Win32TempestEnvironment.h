@@ -7,6 +7,9 @@
 
 #include "Win32WaveStreamer.h"
 
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
+
 class Win32TempestEnvironment : public AbstractTempestEnvironment
 {
 public:
@@ -29,5 +32,7 @@ private:
 
 	uint64_t performanceCounterTicksPerMicroSecond;
 };
+
+#pragma warning(pop)
 
 #endif

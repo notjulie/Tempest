@@ -126,7 +126,8 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 
       case 0x0D00:
          // DIP switch N13
-         return 0;
+			// low two bits==2 --> free play
+         return 0x02;
          
       case 0x0E00:
          // DIP switch L12

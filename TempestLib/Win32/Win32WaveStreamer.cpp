@@ -158,7 +158,7 @@ void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 	// fill up our input buffer if it's not
 	if (inputBuffer.size() < BUFFER_SAMPLE_COUNT)
 	{
-		unsigned offset = inputBuffer.size();
+		unsigned offset = (unsigned)inputBuffer.size();
 		inputBuffer.resize(BUFFER_SAMPLE_COUNT);
 		source->ReadWaveData(&inputBuffer[offset], (int)(BUFFER_SAMPLE_COUNT - offset));
 	}
