@@ -9,32 +9,6 @@
             </MenuItem>
         </Menu>
         <DockPanel DockPanel.Dock="Bottom">
-            <UniformGrid DockPanel.Dock="Right" Rows="3" Columns="8" Width="330">
-                <TextBlock Name="s1Volume" Text="0" Margin="3,0" />
-                <TextBlock Name="s2Volume" Text="0" Margin="3,0" />
-                <TextBlock Name="s3Volume" Text="0" Margin="3,0" />
-                <TextBlock Name="s4Volume" Text="0" Margin="3,0" />
-                <TextBlock Name="s5Volume" Text="0" Margin="3,0" />
-                <TextBlock Name="s6Volume" Text="0" Margin="3,0" />
-                <TextBlock Name="s7Volume" Text="0" Margin="3,0" />
-                <TextBlock Name="s8Volume" Text="0" Margin="3,0"/>
-                <TextBlock Name="s1Waveform" Text="0" Margin="3,0" />
-                <TextBlock Name="s2Waveform" Text="0" Margin="3,0" />
-                <TextBlock Name="s3Waveform" Text="0" Margin="3,0" />
-                <TextBlock Name="s4Waveform" Text="0" Margin="3,0" />
-                <TextBlock Name="s5Waveform" Text="0" Margin="3,0" />
-                <TextBlock Name="s6Waveform" Text="0" Margin="3,0" />
-                <TextBlock Name="s7Waveform" Text="0" Margin="3,0" />
-                <TextBlock Name="s8Waveform" Text="0" Margin="3,0"/>
-                <TextBlock Name="s1Frequency" Text="0" Margin="3,0" />
-                <TextBlock Name="s2Frequency" Text="0" Margin="3,0" />
-                <TextBlock Name="s3Frequency" Text="0" Margin="3,0" />
-                <TextBlock Name="s4Frequency" Text="0" Margin="3,0" />
-                <TextBlock Name="s5Frequency" Text="0" Margin="3,0" />
-                <TextBlock Name="s6Frequency" Text="0" Margin="3,0" />
-                <TextBlock Name="s7Frequency" Text="0" Margin="3,0" />
-                <TextBlock Name="s8Frequency" Text="0" Margin="3,0"/>
-            </UniformGrid>
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Processor Status: "/>

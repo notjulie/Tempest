@@ -1,8 +1,6 @@
 
 #include "stdafx.h"
 
-#include "Pokey/SoundChannelStatus.h"
-
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 
@@ -259,15 +257,3 @@ void TempestBus::ReadWaveData(int16_t *buffer, int count)
 }
 
 
-void TempestBus::GetAudioChannelsStatus(std::vector<SoundChannelStatus> &result)
-{
-	result.resize(8);
-	result[0] = pokey1.GetSoundChannelStatus(0);
-	result[1] = pokey1.GetSoundChannelStatus(1);
-	result[2] = pokey1.GetSoundChannelStatus(2);
-	result[3] = pokey1.GetSoundChannelStatus(3);
-	result[4] = pokey2.GetSoundChannelStatus(0);
-	result[5] = pokey2.GetSoundChannelStatus(1);
-	result[6] = pokey2.GetSoundChannelStatus(2);
-	result[7] = pokey2.GetSoundChannelStatus(3);
-}

@@ -4,7 +4,6 @@
 #include "TempestException.h"
 
 #include "Pokey.h"
-#include "SoundChannelStatus.h"
 
 #include "SoundChannel.h"
 
@@ -103,15 +102,6 @@ void SoundChannel::SetFrequency(int frequency)
 	// just note the change... the thread that's generating the output
 	// can actually do the update
 	this->newFrequency = frequency;
-}
-
-SoundChannelStatus SoundChannel::GetStatus(void)
-{
-	SoundChannelStatus result;
-	result.Frequency = (uint16_t)actualFrequency;
-	result.Volume = (uint8_t)volume;
-	result.Waveform = (uint8_t)outputWave;
-	return result;
 }
 
 void SoundChannel::UpdateWaveform(void)

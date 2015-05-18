@@ -206,8 +206,5 @@
     <ClInclude Include="6502\ProcessorStatusWord.h">
       <Filter>6502\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Pokey\SoundChannelStatus.h">
-      <Filter>Pokey\Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

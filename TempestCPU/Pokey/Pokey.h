@@ -20,7 +20,6 @@ public:
 	Pokey(void);
 	virtual ~Pokey(void);
 
-	SoundChannelStatus GetSoundChannelStatus(int channel);
 	uint8_t ReadByte(uint16_t address);
 	void    WriteByte(uint16_t address, uint8_t value);
 

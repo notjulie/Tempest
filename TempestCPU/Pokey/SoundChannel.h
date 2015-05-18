@@ -15,7 +15,6 @@ public:
 	SoundChannel(void);
 
 	void AddWaveData(int16_t *buffer, int count);
-	SoundChannelStatus GetStatus(void);
 	void SetFrequency(int frequency);
 	void SetVolume(int volume) { this->volume = volume; }
 	void SetOutputWave(int outputWave);

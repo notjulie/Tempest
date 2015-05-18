@@ -8,7 +8,6 @@
 #include "TempestCPU/TempestBus.h"
 #include "TempestCPU/TempestException.h"
 #include "TempestCPU/TempestRunner.h"
-#include "TempestCPU/Pokey/SoundChannelStatus.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
 #include "TempestCPU/Win32/Win32WaveStreamer.h"
 
@@ -36,23 +35,6 @@ namespace TempestDotNET {
 		delete vectorData, vectorData = NULL;
 		delete tempestRunner, tempestRunner = NULL;
 		delete environment, environment = NULL;
-	}
-
-	array<UInt16> ^Tempest::GetAudioChannelsStatus(void)
-	{
-		array<UInt16> ^result = gcnew array<UInt16>(24);
-
-		std::vector<SoundChannelStatus> status;
-		tempestRunner->GetAudioChannelsStatus(status);
-
-		for (int i = 0; i < 8; ++i)
-		{
-			result[i * 3] = status[i].Volume;
-			result[i * 3 + 1] = status[i].Waveform;
-			result[i * 3 + 2] = status[i].Frequency;
-		}
-
-		return result;
 	}
 
 	String ^Tempest::GetAudioStatus(void)
