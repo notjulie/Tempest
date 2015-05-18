@@ -166,7 +166,7 @@
     <Image Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TempestLib\TempestLib.vcxproj">
+    <ProjectReference Include="..\TempestCPU\TempestCPU.vcxproj">
       <Project>{a95eb6bb-84a8-4474-913f-d01d9fb77d24}</Project>
     </ProjectReference>
   </ItemGroup>

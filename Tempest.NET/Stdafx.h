@@ -4,6 +4,6 @@
 
 #pragma once
 
-// include whatever the TempestLib may reference
-#include "TempestLib/stdafx.h"
+// include whatever TempestCPU may reference
+#include "TempestCPU/stdafx.h"
 

@@ -5,7 +5,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "TempestLib/Vector/SimpleVector.h"
+#include "TempestCPU/Vector/SimpleVector.h"
 
 class SimpleVectorDataInterpreter;
 class VectorData;

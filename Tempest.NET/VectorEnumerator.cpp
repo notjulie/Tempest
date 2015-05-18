@@ -1,8 +1,8 @@
 
 #include "stdafx.h"
 
-#include "TempestLib/Vector/SimpleVectorDataInterpreter.h"
-#include "TempestLib/Vector/VectorData.h"
+#include "TempestCPU/Vector/SimpleVectorDataInterpreter.h"
+#include "TempestCPU/Vector/VectorData.h"
 
 #include "VectorEnumerator.h"
 

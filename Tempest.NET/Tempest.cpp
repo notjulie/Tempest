@@ -3,14 +3,14 @@
 #include "stdafx.h"
 #include <msclr\lock.h>
 
-#include "TempestLib/6502/CPU6502.h"
-#include "TempestLib/6502/CPU6502Exception.h"
-#include "TempestLib/TempestBus.h"
-#include "TempestLib/TempestException.h"
-#include "TempestLib/TempestRunner.h"
-#include "TempestLib/Pokey/SoundChannelStatus.h"
-#include "TempestLib/Win32/Win32TempestEnvironment.h"
-#include "TempestLib/Win32/Win32WaveStreamer.h"
+#include "TempestCPU/6502/CPU6502.h"
+#include "TempestCPU/6502/CPU6502Exception.h"
+#include "TempestCPU/TempestBus.h"
+#include "TempestCPU/TempestException.h"
+#include "TempestCPU/TempestRunner.h"
+#include "TempestCPU/Pokey/SoundChannelStatus.h"
+#include "TempestCPU/Win32/Win32TempestEnvironment.h"
+#include "TempestCPU/Win32/Win32WaveStreamer.h"
 
 
 #include "Tempest.h"
