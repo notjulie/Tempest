@@ -24,9 +24,6 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	theThread = NULL;
 	for (int i = 0; i < 64 * 1024; ++i)
 		breakpoints[i] = false;
-
-	// give the environment a reference to the sound stream
-	environment->SetSoundStream(GetSoundStream());
 }
 
 TempestRunner::~TempestRunner(void)

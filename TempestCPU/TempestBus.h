@@ -12,7 +12,6 @@
 #include "MathBox/MathBox.h"
 #include "Vector/VectorGenerator.h"
 
-#include "AbstractTempestWaveStream.h"
 #include "EEPROM.h"
 #include "TempestPokey.h"
 
@@ -22,7 +21,7 @@ class VectorData;
 #pragma warning(disable : 4820)	// padding in structures
 
 
-class TempestBus : public AbstractBus, public AbstractTempestWaveStream
+class TempestBus : public AbstractBus
 {
 public:
 	TempestBus(AbstractTempestEnvironment *_environment);
@@ -43,10 +42,6 @@ public:
 	// AbstractBus overrides
 	virtual uint8_t ReadByte(uint16_t address);
    virtual void    WriteByte(uint16_t address, uint8_t value);
-
-public:
-	// AbstractTempestWaveStream overrides
-	virtual void ReadWaveData(int16_t *buffer, int count);
 
 private:
 	// forbidden items

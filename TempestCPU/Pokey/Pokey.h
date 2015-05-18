@@ -8,7 +8,7 @@
 #ifndef POKEY_H
 #define	POKEY_H
 
-#include "SoundChannel.h"
+class AbstractTempestIO;
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -17,13 +17,12 @@
 class Pokey
 {
 public:
-	Pokey(void);
+	Pokey(int baseSoundChannel);
 	virtual ~Pokey(void);
+	void SetTempestIO(AbstractTempestIO *_tempestIO) { tempestIO = _tempestIO; }
 
 	uint8_t ReadByte(uint16_t address);
 	void    WriteByte(uint16_t address, uint8_t value);
-
-	void AddWaveData(int16_t *buffer, int count);
 
 	virtual uint8_t GetALLPOT(void) { return 0; }
 
@@ -37,10 +36,8 @@ private:
 
 private:
 	uint8_t ALLPOT;
-	SoundChannel	sound1;
-	SoundChannel	sound2;
-	SoundChannel	sound3;
-	SoundChannel	sound4;
+	int baseSoundChannel;
+	AbstractTempestIO *tempestIO;
 
 private:
 	static bool noiseWaveformsInitialized;

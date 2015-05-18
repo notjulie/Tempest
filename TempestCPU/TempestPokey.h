@@ -17,6 +17,11 @@ enum ButtonID {
 class TempestPokey1 : public Pokey
 {
 public:
+	TempestPokey1(void)
+		: Pokey(0)
+	{
+	}
+
 	virtual uint8_t GetALLPOT(void) { return (uint8_t)(encoder & 0xF); }
 
 	void MoveWheel(int delta) { encoder = (uint8_t)(encoder + delta); }
@@ -29,6 +34,7 @@ class TempestPokey2 : public Pokey
 {
 public:
 	TempestPokey2(void)
+		: Pokey(4)
 	{
 	}
 

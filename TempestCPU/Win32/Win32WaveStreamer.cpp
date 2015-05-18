@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #include "Win32.h"
 
-#include "AbstractTempestWaveStream.h"
 #include "TempestException.h"
 
 #include "Win32WaveStreamer.h"
@@ -160,7 +159,7 @@ void Win32WaveStreamer::ProcessFinishedBuffer(Win32WaveBuffer *waveBuffer)
 	}
 }
 
-
+#if 0
 void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 {
 	// fill up our input buffer if it's not
@@ -184,7 +183,7 @@ void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 	// empty the input buffer
 	inputBuffer.resize(0);
 }
-
+#endif
 
 void Win32WaveStreamer::Update(int msElapsed)
 {
@@ -192,7 +191,7 @@ void Win32WaveStreamer::Update(int msElapsed)
 	PostThreadMessage(callbackThreadID, WM_USER, 0, msElapsed);
 }
 
-
+#if 0
 void Win32WaveStreamer::ProcessUpdate(int msElapsed)
 {
 	// figure out how many samples we should get for the amount of
@@ -209,3 +208,4 @@ void Win32WaveStreamer::ProcessUpdate(int msElapsed)
 	inputBuffer.resize((unsigned)(offset + samplesToRead));
 	source->ReadWaveData(&inputBuffer[(unsigned)offset], samplesToRead);
 }
+#endif

@@ -1,6 +1,8 @@
 
 #include "stdafx.h"
 
+#include "../TempestIO/AbstractTempestIO.h"
+
 #include "TempestException.h"
 
 #include "Pokey.h"
@@ -11,10 +13,14 @@ bool Pokey::poly17[128 * 1024];
 bool Pokey::poly5[32];
 
 
-Pokey::Pokey(void)
+Pokey::Pokey(int _baseSoundChannel)
 {
+	// copy parameters
+	baseSoundChannel = _baseSoundChannel;
+
 	// clear
 	ALLPOT = 0;
+	tempestIO = NULL;
 
 	// initialize our noise buffers
 	InitializeNoiseBuffers();
@@ -47,42 +53,46 @@ uint8_t Pokey::ReadByte(uint16_t address)
 
 void Pokey::WriteByte(uint16_t address, uint8_t value)
 {
+	// sanity check
+	if (tempestIO == NULL)
+		throw TempestException("Pokey::WriteByte: tempestIO is NULL");
+
 	switch (address)
 	{
 	case 0x00:
-		sound1.SetFrequency(value);
+		tempestIO->SetSoundChannelFrequency(baseSoundChannel, value);
 		break;
 
 	case 0x01:
-		sound1.SetVolume(value & 0x0F);
-		sound1.SetOutputWave(value >> 4);
+		tempestIO->SetSoundChannelVolume(baseSoundChannel, value & 0x0F);
+		tempestIO->SetSoundChannelWaveform(baseSoundChannel, value >> 4);
 		break;
 
 	case 0x02:
-		sound2.SetFrequency(value);
+		tempestIO->SetSoundChannelFrequency(baseSoundChannel + 1, value);
 		break;
 
 	case 0x03:
-		sound2.SetVolume(value & 0x0F);
-		sound2.SetOutputWave(value >> 4);
+		tempestIO->SetSoundChannelVolume(baseSoundChannel + 1, value & 0x0F);
+		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 1, value >> 4);
 		break;
 
 	case 0x04:
-		sound3.SetFrequency(value);
+		tempestIO->SetSoundChannelFrequency(baseSoundChannel + 2, value);
 		break;
 
 	case 0x05:
-		sound3.SetVolume(value & 0x0F);
-		sound3.SetOutputWave(value >> 4);
+		tempestIO->SetSoundChannelVolume(baseSoundChannel + 2, value & 0x0F);
+		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 2, value >> 4);
 		break;
 
 	case 0x06:
-		sound4.SetFrequency(value);
+		tempestIO->SetSoundChannelFrequency(baseSoundChannel + 3, value);
 		break;
 
 	case 0x07:
-		sound4.SetVolume(value & 0x0F);
-		sound4.SetOutputWave(value >> 4);
+		tempestIO->SetSoundChannelVolume(baseSoundChannel + 3, value & 0x0F);
+		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 3, value >> 4);
 		break;
 
 	case 0x8:
@@ -113,15 +123,6 @@ void Pokey::WriteByte(uint16_t address, uint8_t value)
 			throw TempestException(buf);
 		}
 	}
-}
-
-
-void Pokey::AddWaveData(int16_t *buffer, int count)
-{
-	sound1.AddWaveData(buffer, count);
-	sound2.AddWaveData(buffer, count);
-	sound3.AddWaveData(buffer, count);
-	sound4.AddWaveData(buffer, count);
 }
 
 

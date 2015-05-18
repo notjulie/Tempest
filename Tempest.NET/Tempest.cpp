@@ -39,7 +39,7 @@ namespace TempestDotNET {
 
 	String ^Tempest::GetAudioStatus(void)
 	{
-		return gcnew String(environment->GetAudioStatus().c_str());
+		return gcnew String("Unknown");
 	}
 
 	uint64_t Tempest::GetTotalClockCycles(void)

@@ -54,7 +54,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Pokey\Pokey.cpp" />
-    <ClCompile Include="Pokey\SoundChannel.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -78,7 +77,6 @@
     <ClInclude Include="6502\CPU6502Exception.h" />
     <ClInclude Include="6502\ProcessorStatusWord.h" />
     <ClInclude Include="AbstractTempestEnvironment.h" />
-    <ClInclude Include="AbstractTempestWaveStream.h" />
     <ClInclude Include="EEPROM.h" />
     <ClInclude Include="MathBox\Am2901.h" />
     <ClInclude Include="MathBox\Am2901Tables.h" />
@@ -86,7 +84,6 @@
     <ClInclude Include="MathBox\MathBoxAFX.h" />
     <ClInclude Include="MathBox\Nybble.h" />
     <ClInclude Include="Pokey\Pokey.h" />
-    <ClInclude Include="Pokey\SoundChannel.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
