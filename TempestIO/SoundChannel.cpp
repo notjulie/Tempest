@@ -55,7 +55,7 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 		for (int i = 0; i < count; ++i)
 		{
 			// output a sample according to the current state
-			buffer[i] = (int16_t)(buffer[i] + outputState ? volume : -volume);
+			buffer[i] = (int16_t)(buffer[i] + (outputState ? volume : -volume));
 
 			// increment our counter that tells us how long to hold the current sample
 			outputCounter++;
@@ -76,7 +76,8 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 		// pure tone
 		for (int i = 0; i < count; ++i)
 		{
-			buffer[i] = (int16_t)(buffer[i] + outputState ? volume : -volume);
+			int n = -volume + 2 * volume * outputCounter / pulseWidth;
+			buffer[i] = (int16_t)(buffer[i] + (outputState ? volume : -volume));
 			outputCounter++;
 			if (outputCounter >= pulseWidth)
 			{
