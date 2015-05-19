@@ -76,7 +76,6 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 		// pure tone
 		for (int i = 0; i < count; ++i)
 		{
-			int n = -volume + 2 * volume * outputCounter / pulseWidth;
 			buffer[i] = (int16_t)(buffer[i] + (outputState ? volume : -volume));
 			outputCounter++;
 			if (outputCounter >= pulseWidth)
