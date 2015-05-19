@@ -1,8 +1,7 @@
 
 #include "stdafx.h"
-#include "Win32.h"
 
-#include "TempestException.h"
+#include "TempestCPU/TempestException.h"
 
 #include "Win32WaveBuffer.h"
 

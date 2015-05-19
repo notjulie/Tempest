@@ -23,6 +23,10 @@ private:
 	void UpdateWaveform(void);
 
 private:
+	static void InitializeNoiseBuffers(void);
+	static void MakeNoise(bool *buffer, int count);
+
+private:
 	// our current parameters
 	int frequency;
 	int volume;
@@ -41,6 +45,11 @@ private:
 	float noiseCounterCountsPerNoiseSample;
 	int noiseWaveformLength;
 	const bool *noiseWaveform;
+
+private:
+	static bool noiseWaveformsInitialized;
+	static bool poly5[32];
+	static bool poly17[128 * 1024];
 };
 
 

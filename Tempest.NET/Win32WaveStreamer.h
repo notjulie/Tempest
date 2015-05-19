@@ -2,9 +2,10 @@
 #ifndef WIN32WAVESTREAMER_H
 #define WIN32WAVESTREAMER_H
 
+#include "TempestIO/SoundGenerator.h"
+
 #include "Win32WaveBuffer.h"
 
-class AbstractTempestWaveStream;
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -16,7 +17,6 @@ public:
 	~Win32WaveStreamer(void);
 
 	std::string GetErrorString(void) const;
-	void SetSource(AbstractTempestWaveStream *_source) { source = _source; }
 	void Update(int msElapsed);
 
 private:
@@ -29,8 +29,6 @@ private:
 	static LONG __stdcall CallbackThreadEntry(LPVOID pThis) { ((Win32WaveStreamer *)pThis)->CallbackThread(); return 0; }
 
 private:
-	AbstractTempestWaveStream *source;
-
 	HANDLE callbackThread;
 	DWORD callbackThreadID;
 	HWAVEOUT waveOut;
@@ -38,6 +36,8 @@ private:
 	bool errorReported;
 	std::string errorString;
 	std::vector<int16_t> inputBuffer;
+
+	SoundGenerator	soundGenerator;
 
 	Win32WaveBuffer buffer1;
 	Win32WaveBuffer buffer2;

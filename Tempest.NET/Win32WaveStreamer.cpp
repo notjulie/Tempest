@@ -1,8 +1,7 @@
 
 #include "stdafx.h"
-#include "Win32.h"
 
-#include "TempestException.h"
+#include "TempestCPU/TempestException.h"
 
 #include "Win32WaveStreamer.h"
 
@@ -21,7 +20,6 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 	callbackThread = NULL;
 	terminating = false;
 	errorReported = false;
-	source = NULL;
 
 	// create our callback thread
 	callbackThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)CallbackThreadEntry, this, 0, &callbackThreadID);
@@ -159,7 +157,6 @@ void Win32WaveStreamer::ProcessFinishedBuffer(Win32WaveBuffer *waveBuffer)
 	}
 }
 
-#if 0
 void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 {
 	// fill up our input buffer if it's not
@@ -167,14 +164,14 @@ void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 	{
 		unsigned offset = (unsigned)inputBuffer.size();
 		inputBuffer.resize(BUFFER_SAMPLE_COUNT);
-		source->ReadWaveData(&inputBuffer[offset], (int)(BUFFER_SAMPLE_COUNT - offset));
+		soundGenerator.ReadWaveData(&inputBuffer[offset], (int)(BUFFER_SAMPLE_COUNT - offset));
 	}
 
 	int16_t *samples = buffer->GetBuffer();
 	int count = buffer->GetSampleCount();
 
 	// fill the buffer from the source
-	source->ReadWaveData(samples, count);
+	soundGenerator.ReadWaveData(samples, count);
 
 	// copy the data... the Pokey output is very low amplitude... beef it up to the level we like
 	for (int i = 0; i < count; ++i)
@@ -183,7 +180,7 @@ void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 	// empty the input buffer
 	inputBuffer.resize(0);
 }
-#endif
+
 
 void Win32WaveStreamer::Update(int msElapsed)
 {
@@ -191,7 +188,7 @@ void Win32WaveStreamer::Update(int msElapsed)
 	PostThreadMessage(callbackThreadID, WM_USER, 0, msElapsed);
 }
 
-#if 0
+
 void Win32WaveStreamer::ProcessUpdate(int msElapsed)
 {
 	// figure out how many samples we should get for the amount of
@@ -206,6 +203,6 @@ void Win32WaveStreamer::ProcessUpdate(int msElapsed)
 
 	int offset = (int)inputBuffer.size();
 	inputBuffer.resize((unsigned)(offset + samplesToRead));
-	source->ReadWaveData(&inputBuffer[(unsigned)offset], samplesToRead);
+	soundGenerator.ReadWaveData(&inputBuffer[(unsigned)offset], samplesToRead);
 }
-#endif
+

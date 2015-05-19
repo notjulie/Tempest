@@ -61,6 +61,7 @@ public:
 	void LoadMathBoxROM(const uint8_t *rom, int length, char slot) { tempestBus.LoadMathBoxROM(rom, length, slot); }
 	void MoveWheel(int delta) { tempestBus.MoveWheel(delta); }
 	void SetButtonState(ButtonID button, bool pressed) { tempestBus.SetButtonState(button, pressed); }
+	void SetTempestIO(AbstractTempestIO *tempestIO) { tempestBus.SetTempestIO(tempestIO); }
 
 private:
 	void	RunnerThread(void);

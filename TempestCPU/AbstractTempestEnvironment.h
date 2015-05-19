@@ -2,8 +2,6 @@
 #ifndef ABSTRACTTEMPESTENVIRONMENT_H
 #define ABSTRACTTEMPESTENVIRONMENT_H
 
-class AbstractTempestWaveStream;
-
 class AbstractTempestEnvironment
 {
 public:

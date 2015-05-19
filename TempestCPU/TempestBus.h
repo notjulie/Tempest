@@ -29,6 +29,7 @@ public:
 
 	void LoadROM(const uint8_t *rom, int length, uint16_t address);
 	void LoadMathBoxROM(const uint8_t *rom, int length, char slot);
+	void SetTempestIO(AbstractTempestIO *tempestIO);
 
 	bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);

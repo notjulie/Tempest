@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <Windows.h>
+
 // include whatever TempestCPU may reference
 #include "TempestCPU/stdafx.h"
 

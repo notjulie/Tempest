@@ -245,3 +245,9 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 }
 
 
+void TempestBus::SetTempestIO(AbstractTempestIO *tempestIO)
+{
+	pokey1.SetTempestIO(tempestIO);
+	pokey2.SetTempestIO(tempestIO);
+}
+

@@ -2,7 +2,7 @@
 #ifndef TEMPESTPOKEY_H
 #define TEMPESTPOKEY_H
 
-#include "Pokey/Pokey.h"
+#include "Pokey.h"
 
 enum ButtonID {
 	ONE_PLAYER_BUTTON,

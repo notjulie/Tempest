@@ -8,10 +8,6 @@
 #include "Pokey.h"
 
 
-bool Pokey::noiseWaveformsInitialized = false;
-bool Pokey::poly17[128 * 1024];
-bool Pokey::poly5[32];
-
 
 Pokey::Pokey(int _baseSoundChannel)
 {
@@ -21,9 +17,6 @@ Pokey::Pokey(int _baseSoundChannel)
 	// clear
 	ALLPOT = 0;
 	tempestIO = NULL;
-
-	// initialize our noise buffers
-	InitializeNoiseBuffers();
 }
 
 Pokey::~Pokey(void)
@@ -125,40 +118,4 @@ void Pokey::WriteByte(uint16_t address, uint8_t value)
 	}
 }
 
-
-void Pokey::InitializeNoiseBuffers(void)
-{
-	// never mind if we've already been here
-	if (noiseWaveformsInitialized)
-		return;
-
-	// make our noise waveforms
-	MakeNoise(poly17, 128 * 1024);
-	MakeNoise(poly5, 32);
-
-	// note that we're initialized
-	noiseWaveformsInitialized = true;
-}
-
-void Pokey::MakeNoise(bool *buffer, int count)
-{
-	// just for good form I make sure there's no DC
-	int	onesLeft = count / 2;
-	int   zerosLeft = count - onesLeft;
-	while (onesLeft>0 && zerosLeft>0)
-	{
-		int random = rand() % (onesLeft + zerosLeft);
-		if (random > onesLeft)
-		{
-			buffer[onesLeft + zerosLeft - 1] = false;
-			--zerosLeft;
-		}
-		else
-		{
-			buffer[onesLeft + zerosLeft - 1] = true;
-			--onesLeft;
-		}
-	}
-
-}
 

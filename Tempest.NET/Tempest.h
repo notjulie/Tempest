@@ -8,6 +8,7 @@ using namespace System;
 using namespace System::Threading;
 
 class Win32RealTimeClock;
+class Win32TempestIO;
 class Win32WaveStreamer;
 
 namespace TempestDotNET {
@@ -45,6 +46,7 @@ namespace TempestDotNET {
 
 	private:
 		Win32TempestEnvironment *environment;
+		Win32TempestIO *tempestIO;
 		TempestRunner *tempestRunner;
 		VectorData *vectorData;
 

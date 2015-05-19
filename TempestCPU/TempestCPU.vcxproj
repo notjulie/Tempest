@@ -53,7 +53,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Pokey\Pokey.cpp" />
+    <ClCompile Include="Pokey.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -68,8 +68,6 @@
     <ClCompile Include="Vector\VectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorGenerator.cpp" />
     <ClCompile Include="Win32\Win32TempestEnvironment.cpp" />
-    <ClCompile Include="Win32\Win32WaveBuffer.cpp" />
-    <ClCompile Include="Win32\Win32WaveStreamer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="6502\AbstractBus.h" />
@@ -83,7 +81,7 @@
     <ClInclude Include="MathBox\MathBox.h" />
     <ClInclude Include="MathBox\MathBoxAFX.h" />
     <ClInclude Include="MathBox\Nybble.h" />
-    <ClInclude Include="Pokey\Pokey.h" />
+    <ClInclude Include="Pokey.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
@@ -96,8 +94,6 @@
     <ClInclude Include="Vector\VectorGenerator.h" />
     <ClInclude Include="Win32\Win32.h" />
     <ClInclude Include="Win32\Win32TempestEnvironment.h" />
-    <ClInclude Include="Win32\Win32WaveBuffer.h" />
-    <ClInclude Include="Win32\Win32WaveStreamer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A95EB6BB-84A8-4474-913F-D01D9FB77D24}</ProjectGuid>

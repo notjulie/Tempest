@@ -147,6 +147,9 @@
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Tempest.h" />
     <ClInclude Include="VectorEnumerator.h" />
+    <ClInclude Include="Win32TempestIO.h" />
+    <ClInclude Include="Win32WaveBuffer.h" />
+    <ClInclude Include="Win32WaveStreamer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
@@ -158,6 +161,8 @@
     </ClCompile>
     <ClCompile Include="Tempest.cpp" />
     <ClCompile Include="VectorEnumerator.cpp" />
+    <ClCompile Include="Win32WaveBuffer.cpp" />
+    <ClCompile Include="Win32WaveStreamer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
@@ -168,6 +173,9 @@
   <ItemGroup>
     <ProjectReference Include="..\TempestCPU\TempestCPU.vcxproj">
       <Project>{a95eb6bb-84a8-4474-913f-d01d9fb77d24}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TempestIO\TempestIO.vcxproj">
+      <Project>{db91aa41-e33e-4fa3-a901-50daadb164d8}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

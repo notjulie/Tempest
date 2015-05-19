@@ -9,8 +9,8 @@
 #include "TempestCPU/TempestException.h"
 #include "TempestCPU/TempestRunner.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
-#include "TempestCPU/Win32/Win32WaveStreamer.h"
 
+#include "Win32TempestIO.h"
 
 #include "Tempest.h"
 
@@ -25,8 +25,12 @@ namespace TempestDotNET {
 
 		// create objects
 		environment = new Win32TempestEnvironment();
+		tempestIO = new Win32TempestIO();
 		tempestRunner = new TempestRunner(environment);
 		vectorData = new VectorData();
+
+		// hook objects together
+		tempestRunner->SetTempestIO(tempestIO);
 	}
 
 	Tempest::~Tempest(void)
@@ -34,6 +38,7 @@ namespace TempestDotNET {
 		// delete
 		delete vectorData, vectorData = NULL;
 		delete tempestRunner, tempestRunner = NULL;
+		delete tempestIO, tempestIO = NULL;
 		delete environment, environment = NULL;
 	}
 
