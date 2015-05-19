@@ -123,7 +123,8 @@ Global
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|Win32.ActiveCfg = Release|Win32
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|Win32.Build.0 = Release|Win32
-		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x64.ActiveCfg = Release|Win32
+		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x64.ActiveCfg = Release|x64
+		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x64.Build.0 = Release|x64
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x86.ActiveCfg = Release|Win32
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
