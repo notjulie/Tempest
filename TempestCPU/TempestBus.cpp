@@ -1,6 +1,8 @@
 
 #include "stdafx.h"
 
+#include "../TempestIO/AbstractTempestIO.h"
+
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 
@@ -31,6 +33,7 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 	selfTest = false;
 	clock3KHzIsHigh = false;
 	slam = false;
+	tempestIO = NULL;
 
    // create the ROM space
    rom.resize(20 * 1024);
@@ -245,9 +248,16 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 }
 
 
-void TempestBus::SetTempestIO(AbstractTempestIO *tempestIO)
+void TempestBus::SetTempestIO(AbstractTempestIO *_tempestIO)
 {
+	tempestIO = _tempestIO;
 	pokey1.SetTempestIO(tempestIO);
 	pokey2.SetTempestIO(tempestIO);
+}
+
+void TempestBus::Toggle3KHzClock(void)
+{
+	clock3KHzIsHigh = !clock3KHzIsHigh;
+	tempestIO->Tick6KHz();
 }
 

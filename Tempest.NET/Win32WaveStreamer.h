@@ -17,11 +17,11 @@ public:
 	~Win32WaveStreamer(void);
 
 	std::string GetErrorString(void) const;
-	void Update(int msElapsed);
 
 	void SetChannelFrequency(int channel, int frequency) { soundGenerator.SetChannelFrequency(channel, frequency); }
 	void SetChannelVolume(int channel, int volume) { soundGenerator.SetChannelVolume(channel, volume); }
 	void SetChannelWaveform(int channel, int waveform) { soundGenerator.SetChannelWaveform(channel, waveform); }
+	void Tick6KHz(void) {}
 
 private:
 	void	CallbackThread(void);

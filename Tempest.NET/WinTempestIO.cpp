@@ -17,3 +17,8 @@ void Win32TempestIO::SetSoundChannelWaveform(int channel, int waveform)
 {
 	waveStreamer.SetChannelWaveform(channel, waveform);
 }
+
+void Win32TempestIO::Tick6KHz(void)
+{
+	waveStreamer.Tick6KHz();
+}

@@ -182,13 +182,6 @@ void Win32WaveStreamer::FillBuffer(Win32WaveBuffer *buffer)
 }
 
 
-void Win32WaveStreamer::Update(int msElapsed)
-{
-	// this needs to happen on the callback thread
-	PostThreadMessage(callbackThreadID, WM_USER, 0, msElapsed);
-}
-
-
 void Win32WaveStreamer::ProcessUpdate(int msElapsed)
 {
 	// figure out how many samples we should get for the amount of

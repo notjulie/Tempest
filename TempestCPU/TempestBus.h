@@ -33,11 +33,11 @@ public:
 
 	bool HaveNewVectorData(void);
 	void PopVectorData(VectorData &_vectorData);
+	void Toggle3KHzClock(void);
 
 	// simple accessors
 	void MoveWheel(int delta) { pokey1.MoveWheel(delta); }
 	void SetButtonState(ButtonID button, bool pressed) { pokey2.SetButtonState(button, pressed); }
-	void Set3KHzClockState(bool state) { clock3KHzIsHigh = state; }
 
 public:
 	// AbstractBus overrides
@@ -58,6 +58,8 @@ private:
    EEPROM eeprom;
    MathBox mathBox;
    VectorGenerator vectorGenerator;
+
+	AbstractTempestIO *tempestIO;
 
 	bool selfTest;
 	bool slam;

@@ -11,6 +11,7 @@ public:
 	virtual void SetSoundChannelFrequency(int channel, int frequency);
 	virtual void SetSoundChannelVolume(int channel, int volume);
 	virtual void SetSoundChannelWaveform(int channel, int waveform);
+	virtual void Tick6KHz(void);
 
 private:
 	Win32WaveStreamer	waveStreamer;
