@@ -163,6 +163,7 @@
     <ClCompile Include="VectorEnumerator.cpp" />
     <ClCompile Include="Win32WaveBuffer.cpp" />
     <ClCompile Include="Win32WaveStreamer.cpp" />
+    <ClCompile Include="WinTempestIO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />

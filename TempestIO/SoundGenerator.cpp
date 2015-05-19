@@ -13,3 +13,4 @@ void SoundGenerator::ReadWaveData(int16_t *buffer, int sampleCount)
 		channels[i].AddWaveData(buffer, sampleCount);
 }
 
+
