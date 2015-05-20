@@ -29,10 +29,13 @@ namespace TempestWpf
       private Tempest tempest;
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
+      private DispatcherTimer spinnerTimer;
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
       private Debug6502Window debug6502;
       private SolidColorBrush[] vectorBrush = new SolidColorBrush[16];
+      private bool leftKeyDown = false;
+      private bool rightKeyDown = false;
 
       #endregion
 
@@ -79,10 +82,14 @@ namespace TempestWpf
          {
             case Key.Left:
                tempest.MoveWheel(-4);
+               leftKeyDown = true;
+               rightKeyDown = false;
                break;
 
             case Key.Right:
                tempest.MoveWheel(4);
+               leftKeyDown = false;
+               rightKeyDown = true;
                break;
 
             case Key.F:
@@ -100,11 +107,11 @@ namespace TempestWpf
          switch (e.Key)
          {
             case Key.Left:
-               tempest.MoveWheel(-4);
+               leftKeyDown = false;
                break;
 
             case Key.Right:
-               tempest.MoveWheel(4);
+               rightKeyDown = false;
                break;
 
             case Key.F:
@@ -193,6 +200,19 @@ namespace TempestWpf
          vectorTimer.Interval = TimeSpan.FromMilliseconds(50);
          vectorTimer.IsEnabled = true;
          vectorTimer.Tick += vectorTimer_Tick;
+
+         spinnerTimer = new DispatcherTimer();
+         spinnerTimer.Interval = TimeSpan.FromMilliseconds(50);
+         spinnerTimer.IsEnabled = true;
+         spinnerTimer.Tick += spinnerTimer_Tick;
+      }
+
+      void spinnerTimer_Tick(object sender, EventArgs e)
+      {
+         if (leftKeyDown)
+            tempest.MoveWheel(-1);
+         else if (rightKeyDown)
+            tempest.MoveWheel(1);
       }
 
       void timer_Tick(object sender, EventArgs e)
