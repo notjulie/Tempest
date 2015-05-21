@@ -54,9 +54,9 @@ namespace TempestDotNET {
 
 	VectorEnumerator ^Tempest::GetVectorEnumerator(void)
 	{
-		if (tempestRunner->HaveNewVectorData())
+		if (tempestIO->HaveNewVectorData())
 		{
-			tempestRunner->PopVectorData(*vectorData);
+			tempestIO->PopVectorData(*vectorData);
 			return gcnew VectorEnumerator(*vectorData);
 		}
 		else

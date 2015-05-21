@@ -31,8 +31,6 @@ public:
 	void LoadMathBoxROM(const uint8_t *rom, int length, char slot);
 	void SetTempestIO(AbstractTempestIO *tempestIO);
 
-	bool HaveNewVectorData(void);
-	void PopVectorData(VectorData &_vectorData);
 	void Toggle3KHzClock(void);
 
 	// simple accessors

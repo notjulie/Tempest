@@ -55,8 +55,6 @@ public:
 	uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
 
 	// simple dispatches to the TempestBus object
-	bool HaveNewVectorData(void) { return tempestBus.HaveNewVectorData(); }
-	void PopVectorData(VectorData &vectorData) { return tempestBus.PopVectorData(vectorData); }
 	void LoadROM(const uint8_t *rom, int length, uint16_t address) { tempestBus.LoadROM(rom, length, address); }
 	void LoadMathBoxROM(const uint8_t *rom, int length, char slot) { tempestBus.LoadMathBoxROM(rom, length, slot); }
 	void MoveWheel(int delta) { tempestBus.MoveWheel(delta); }

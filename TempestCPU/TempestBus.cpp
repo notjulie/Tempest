@@ -31,16 +31,6 @@ TempestBus::~TempestBus(void)
 {
 }
 
-bool TempestBus::HaveNewVectorData(void)
-{
-	return tempestIO->HaveNewVectorData();
-}
-
-void TempestBus::PopVectorData(VectorData &_vectorData)
-{
-	tempestIO->PopVectorData(_vectorData);
-}
-
 
 void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
 {
