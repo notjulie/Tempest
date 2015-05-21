@@ -18,7 +18,6 @@ public:
 
 	virtual bool HaveNewVectorData(void) { return vectorGenerator.HaveNewData(); }
 	virtual void PopVectorData(VectorData &_vectorData) { vectorGenerator.Pop(_vectorData); }
-	virtual uint8_t	ReadVectorRAM(uint16_t address) { return vectorGenerator.ReadVectorRAM(address); }
 	virtual void		WriteVectorRAM(uint16_t address, uint8_t value) { vectorGenerator.WriteVectorRAM(address, value); }
 	virtual bool IsVectorHalt(void) { return vectorGenerator.IsHalt(); }
 	virtual void VectorGo(void) { vectorGenerator.Go(); }

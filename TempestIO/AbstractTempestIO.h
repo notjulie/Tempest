@@ -14,7 +14,6 @@ public:
 
 	virtual bool HaveNewVectorData(void) = 0;
 	virtual void PopVectorData(VectorData &_vectorData) = 0;
-	virtual uint8_t	ReadVectorRAM(uint16_t address) = 0;
 	virtual void		WriteVectorRAM(uint16_t address, uint8_t value) = 0;
 	virtual bool IsVectorHalt(void) = 0;
 	virtual void VectorGo(void) = 0;

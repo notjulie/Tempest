@@ -12,6 +12,7 @@
 #include "MathBox/MathBox.h"
 
 #include "EEPROM.h"
+#include "TempestMemoryMap.h"
 #include "TempestPokey.h"
 
 class VectorData;
@@ -55,6 +56,7 @@ private:
    std::vector<uint8_t>  rom;
    std::vector<uint8_t>  mainRAM;
    std::vector<uint8_t>  colorRAM;
+	uint8_t vectorRAM[VECTOR_RAM_SIZE];
    TempestPokey1 pokey1;
    TempestPokey2 pokey2;
    EEPROM eeprom;

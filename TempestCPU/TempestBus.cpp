@@ -65,8 +65,8 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 		return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
 
    // vector RAM
-   if (IsVectorRAMAddress(address))
-      return tempestIO->ReadVectorRAM(address);
+	if (IsVectorRAMAddress(address))
+		return vectorRAM[address - VECTOR_RAM_BASE];
    
    // vector ROM
 	if (address >= VECTOR_ROM_BASE && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111))
@@ -154,6 +154,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    if (IsVectorRAMAddress(address))
    {
       tempestIO->WriteVectorRAM(address, value);
+		vectorRAM[address - VECTOR_RAM_BASE] = value;
       return;
    }
    

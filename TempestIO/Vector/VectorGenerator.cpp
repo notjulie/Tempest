@@ -39,11 +39,6 @@ bool VectorGenerator::HaveNewData(void)
 }
 
 
-uint8_t VectorGenerator::ReadVectorRAM(uint16_t address)
-{
-	return vectorData.ReadVectorRAM((uint16_t)(address - VECTOR_RAM_BASE));
-}
-
 void VectorGenerator::Reset(void)
 {
 }
