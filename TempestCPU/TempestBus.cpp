@@ -43,15 +43,8 @@ void TempestBus::PopVectorData(VectorData &_vectorData)
 
 void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
 {
-	if (IsVectorROMAddress(address))
-	{
-		tempestIO->LoadVectorROM(address, _rom, length);
-	}
-	else
-	{
-		for (int i = 0; i<length; ++i)
-			rom[(unsigned)(address - ROM_BASE + i)] = _rom[i];
-	}
+	for (int i = 0; i<length; ++i)
+		rom[(unsigned)(address - ROM_BASE + i)] = _rom[i];
 }
 
 void TempestBus::LoadMathBoxROM(const uint8_t *rom, int length, char slot)

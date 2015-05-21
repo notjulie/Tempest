@@ -174,10 +174,6 @@ namespace TempestWpf
          tempest.LoadROM(GetROM("136002.121"), 0xD000);
          tempest.LoadROM(GetROM("136002.122"), 0xD800);
 
-         // load the Vector ROM, too
-         tempest.LoadROM(GetROM("136002.111"), 0x3000);
-         tempest.LoadROM(GetROM("136002.112"), 0x3800);
-
          // and the math box ROM
          tempest.LoadMathBoxROM(GetROM("136002.126"), (sbyte)'A');
          tempest.LoadMathBoxROM(GetROM("136002.127"), (sbyte)'E');

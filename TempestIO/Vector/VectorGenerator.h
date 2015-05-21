@@ -21,7 +21,6 @@ public:
 	void		Go(void);
 	bool	   HaveNewData(void);
 	bool		IsHalt(void);
-	void		LoadROM(uint16_t address, const uint8_t *buffer, int count);
 	void		Pop(VectorData &_vectorData);
 	uint8_t	ReadVectorRAM(uint16_t address);
 	uint8_t	ReadVectorROM(uint16_t address);

@@ -39,11 +39,6 @@ bool VectorGenerator::HaveNewData(void)
 }
 
 
-void VectorGenerator::LoadROM(uint16_t address,const uint8_t *buffer, int count)
-{
-	vectorData.LoadROM((uint16_t)(address - VECTOR_ROM_BASE), buffer, count);
-}
-
 uint8_t VectorGenerator::ReadVectorRAM(uint16_t address)
 {
 	return vectorData.ReadVectorRAM((uint16_t)(address - VECTOR_RAM_BASE));
