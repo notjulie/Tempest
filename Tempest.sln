@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TempestCPU", "TempestCPU\Te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TempestIO", "TempestIO\TempestIO.vcxproj", "{DB91AA41-E33E-4FA3-A901-50DAADB164D8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ROMToC", "ROMToC\ROMToC.vcxproj", "{356D873A-F907-4866-A648-A549E33CD71C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,25 @@ Global
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x64.Build.0 = Release|x64
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x86.ActiveCfg = Release|Win32
 		{DB91AA41-E33E-4FA3-A901-50DAADB164D8}.Release|x86.Build.0 = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|ARM.ActiveCfg = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|Win32.Build.0 = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|x64.ActiveCfg = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|x64.Build.0 = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|x86.ActiveCfg = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Debug|x86.Build.0 = Debug|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|Any CPU.ActiveCfg = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|ARM.ActiveCfg = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|Win32.ActiveCfg = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|Win32.Build.0 = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|x64.ActiveCfg = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|x86.ActiveCfg = Release|Win32
+		{356D873A-F907-4866-A648-A549E33CD71C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
