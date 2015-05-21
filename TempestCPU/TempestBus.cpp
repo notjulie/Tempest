@@ -6,6 +6,7 @@
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 #include "TempestMemoryMap.h"
+#include "TempestROMs.h"
 
 #include "TempestBus.h"
 
@@ -68,8 +69,10 @@ uint8_t TempestBus::ReadByte(uint16_t address)
       return tempestIO->ReadVectorRAM(address);
    
    // vector ROM
-   if (IsVectorROMAddress(address))
-      return tempestIO->ReadVectorROM(address);
+	if (address >= VECTOR_ROM_BASE && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111))
+		return ROM_136002_111[address - VECTOR_ROM_BASE];
+	if (address >= VECTOR_ROM_BASE + sizeof(ROM_136002_111) && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111) + sizeof(ROM_136002_112))
+		return ROM_136002_112[address - VECTOR_ROM_BASE - sizeof(ROM_136002_111)];
    
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
@@ -245,9 +248,4 @@ bool TempestBus::IsVectorRAMAddress(uint16_t address)
 	return address >= VECTOR_RAM_BASE && address<VECTOR_RAM_BASE + VECTOR_RAM_SIZE;
 }
 
-
-bool TempestBus::IsVectorROMAddress(uint16_t address)
-{
-	return address >= VECTOR_ROM_BASE && address<VECTOR_ROM_BASE + VECTOR_ROM_SIZE;
-}
 

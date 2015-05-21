@@ -30,14 +30,6 @@ uint8_t VectorData::ReadVectorRAM(uint16_t address)
 	return vectorRAM[address];
 }
 
-uint8_t VectorData::ReadVectorROM(uint16_t address)
-{
-	if (address < sizeof(ROM_136002_111))
-		return ROM_136002_111[address];
-	else
-		return ROM_136002_112[address - sizeof(ROM_136002_111)];
-}
-
 void VectorData::WriteVectorRAM(uint16_t address, uint8_t value)
 {
 	vectorRAM[address] = value;

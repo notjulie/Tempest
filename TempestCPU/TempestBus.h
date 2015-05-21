@@ -45,7 +45,6 @@ public:
 
 private:
 	static bool		IsVectorRAMAddress(uint16_t address);
-	static bool		IsVectorROMAddress(uint16_t address);
 
 private:
 	// forbidden items

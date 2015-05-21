@@ -44,11 +44,6 @@ uint8_t VectorGenerator::ReadVectorRAM(uint16_t address)
 	return vectorData.ReadVectorRAM((uint16_t)(address - VECTOR_RAM_BASE));
 }
 
-uint8_t VectorGenerator::ReadVectorROM(uint16_t address)
-{
-	return vectorData.ReadVectorROM((uint16_t)(address - VECTOR_ROM_BASE));
-}
-
 void VectorGenerator::Reset(void)
 {
 }

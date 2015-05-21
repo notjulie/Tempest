@@ -23,7 +23,6 @@ public:
 	bool		IsHalt(void);
 	void		Pop(VectorData &_vectorData);
 	uint8_t	ReadVectorRAM(uint16_t address);
-	uint8_t	ReadVectorROM(uint16_t address);
 	void		Reset(void);
 	void		WriteVectorRAM(uint16_t address, uint8_t value);
 
