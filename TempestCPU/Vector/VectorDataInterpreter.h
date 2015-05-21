@@ -3,7 +3,7 @@
 #define VECTORDATAINTERPRETER_H
 
 
-#include "VectorData.h"
+#include "../../TempestIO/Vector/VectorData.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures

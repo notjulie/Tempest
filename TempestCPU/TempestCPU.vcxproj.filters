@@ -63,12 +63,6 @@
     <ClCompile Include="6502\CPU6502Exception.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vector\VectorGenerator.cpp">
-      <Filter>Vector\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector\VectorData.cpp">
-      <Filter>Vector\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vector\VectorDataInterpreter.cpp">
       <Filter>Vector\Source Files</Filter>
     </ClCompile>
@@ -121,12 +115,6 @@
     </ClInclude>
     <ClInclude Include="6502\CPU6502Exception.h">
       <Filter>6502\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector\VectorGenerator.h">
-      <Filter>Vector\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector\VectorData.h">
-      <Filter>Vector\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector\VectorDataInterpreter.h">
       <Filter>Vector\Header Files</Filter>

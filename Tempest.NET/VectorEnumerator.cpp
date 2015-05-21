@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 #include "TempestCPU/Vector/SimpleVectorDataInterpreter.h"
-#include "TempestCPU/Vector/VectorData.h"
+#include "TempestIO/Vector/VectorData.h"
 
 #include "VectorEnumerator.h"
 

@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Vector">
+      <UniqueIdentifier>{fd842fe3-b6cf-45cc-b374-4fdf830e5afa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vector\Source Files">
+      <UniqueIdentifier>{689eaa0c-9063-417b-83aa-34a448395674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vector\Header Files">
+      <UniqueIdentifier>{b1e56580-8a11-47e5-8cd2-6a4e91fedb4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -27,6 +36,12 @@
     <ClInclude Include="SoundGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vector\VectorData.h">
+      <Filter>Vector\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector\VectorGenerator.h">
+      <Filter>Vector\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -37,6 +52,12 @@
     </ClCompile>
     <ClCompile Include="SoundGenerator.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector\VectorData.cpp">
+      <Filter>Vector\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector\VectorGenerator.cpp">
+      <Filter>Vector\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
