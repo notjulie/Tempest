@@ -128,7 +128,10 @@
     <ClInclude Include="SoundChannel.h" />
     <ClInclude Include="SoundGenerator.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Vector\SimpleVector.h" />
+    <ClInclude Include="Vector\SimpleVectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorData.h" />
+    <ClInclude Include="Vector\VectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorGenerator.h" />
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +143,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorData.cpp" />
+    <ClCompile Include="Vector\VectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

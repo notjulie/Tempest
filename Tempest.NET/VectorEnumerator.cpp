@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 
-#include "TempestCPU/Vector/SimpleVectorDataInterpreter.h"
+#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 #include "TempestIO/Vector/VectorData.h"
 
 #include "VectorEnumerator.h"

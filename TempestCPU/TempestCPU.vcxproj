@@ -63,8 +63,6 @@
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestException.cpp" />
     <ClCompile Include="TempestRunner.cpp" />
-    <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp" />
-    <ClCompile Include="Vector\VectorDataInterpreter.cpp" />
     <ClCompile Include="Win32\Win32TempestEnvironment.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +84,6 @@
     <ClInclude Include="TempestMemoryMap.h" />
     <ClInclude Include="TempestPokey.h" />
     <ClInclude Include="TempestRunner.h" />
-    <ClInclude Include="Vector\SimpleVector.h" />
-    <ClInclude Include="Vector\SimpleVectorDataInterpreter.h" />
-    <ClInclude Include="Vector\VectorDataInterpreter.h" />
     <ClInclude Include="Win32\Win32.h" />
     <ClInclude Include="Win32\Win32TempestEnvironment.h" />
   </ItemGroup>

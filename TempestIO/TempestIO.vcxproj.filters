@@ -42,6 +42,15 @@
     <ClInclude Include="Vector\VectorGenerator.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vector\SimpleVector.h">
+      <Filter>Vector\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector\SimpleVectorDataInterpreter.h">
+      <Filter>Vector\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector\VectorDataInterpreter.h">
+      <Filter>Vector\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -57,6 +66,12 @@
       <Filter>Vector\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector\VectorGenerator.cpp">
+      <Filter>Vector\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp">
+      <Filter>Vector\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector\VectorDataInterpreter.cpp">
       <Filter>Vector\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
