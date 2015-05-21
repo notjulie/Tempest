@@ -5,25 +5,10 @@
 
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
+#include "TempestMemoryMap.h"
 
 #include "TempestBus.h"
 
-static const uint16_t ROM_BASE = 0x9000;
-static const uint16_t ROM_ECHO_START = 0xE000;
-static const uint16_t ROM_ECHO_END = 0xFFFF;
-static const uint16_t ROM_ECHO_SOURCE = 0xC000;
-static const uint16_t MAIN_RAM_BASE = 0x0;
-static const uint16_t MAIN_RAM_SIZE = 0x800;
-static const uint16_t COLOR_RAM_BASE = 0x0800;
-static const uint16_t COLOR_RAM_SIZE = 0x0010;
-static const uint16_t POKEY1_BASE = 0x60C0;
-static const uint16_t POKEY1_END = 0x60CF;
-static const uint16_t POKEY2_BASE = 0x60D0;
-static const uint16_t POKEY2_END = 0x60DF;
-static const uint16_t EEPROM_WRITE_BASE = 0x6000;
-static const uint16_t EEPROM_WRITE_END = 0x603F;
-static const uint16_t MATHBOX_WRITE_BASE = 0x6080;
-static const uint16_t MATHBOX_WRITE_END = 0x609F;
 
 TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 	:
@@ -47,20 +32,20 @@ TempestBus::~TempestBus(void)
 
 bool TempestBus::HaveNewVectorData(void)
 {
-	return vectorGenerator.HaveNewData();
+	return tempestIO->HaveNewVectorData();
 }
 
 void TempestBus::PopVectorData(VectorData &_vectorData)
 {
-	vectorGenerator.Pop(_vectorData);
+	tempestIO->PopVectorData(_vectorData);
 }
 
 
 void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
 {
-	if (vectorGenerator.IsVectorROMAddress(address))
+	if (IsVectorROMAddress(address))
 	{
-		vectorGenerator.LoadROM(address, _rom, length);
+		tempestIO->LoadVectorROM(address, _rom, length);
 	}
 	else
 	{
@@ -86,12 +71,12 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 		return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
 
    // vector RAM
-   if (vectorGenerator.IsVectorRAMAddress(address))
-      return vectorGenerator.ReadVectorRAM(address);
+   if (IsVectorRAMAddress(address))
+      return tempestIO->ReadVectorRAM(address);
    
    // vector ROM
-   if (vectorGenerator.IsVectorROMAddress(address))
-      return vectorGenerator.ReadVectorROM(address);
+   if (IsVectorROMAddress(address))
+      return tempestIO->ReadVectorROM(address);
    
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
@@ -118,7 +103,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 			uint8_t result = 0;
 			if (clock3KHzIsHigh)
 				result |= 0x80;
-			if (vectorGenerator.IsHalt())
+			if (tempestIO->IsVectorHalt())
 				result |= 0x40;
 			if (!selfTest)
 				result |= 0x10;
@@ -170,9 +155,9 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    }
    
    // vector RAM
-   if (vectorGenerator.IsVectorRAMAddress(address))
+   if (IsVectorRAMAddress(address))
    {
-      vectorGenerator.WriteVectorRAM(address, value);
+      tempestIO->WriteVectorRAM(address, value);
       return;
    }
    
@@ -219,7 +204,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
       
       case 0x4800:
          // vector state machine GO!
-         vectorGenerator.Go();
+         tempestIO->VectorGo();
          break;
          
       case 0x5000:
@@ -229,7 +214,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          
       case 0x5800:
          // vector state machine reset
-         vectorGenerator.Reset();
+         tempestIO->VectorReset();
          break;
          
       case 0x6040:
@@ -259,5 +244,17 @@ void TempestBus::Toggle3KHzClock(void)
 {
 	clock3KHzIsHigh = !clock3KHzIsHigh;
 	tempestIO->Tick6KHz();
+}
+
+
+bool TempestBus::IsVectorRAMAddress(uint16_t address)
+{
+	return address >= VECTOR_RAM_BASE && address<VECTOR_RAM_BASE + VECTOR_RAM_SIZE;
+}
+
+
+bool TempestBus::IsVectorROMAddress(uint16_t address)
+{
+	return address >= VECTOR_ROM_BASE && address<VECTOR_ROM_BASE + VECTOR_ROM_SIZE;
 }
 

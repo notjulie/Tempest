@@ -8,8 +8,6 @@
 #ifndef TEMPESTBUS_H
 #define	TEMPESTBUS_H
 
-#include "../TempestIO/Vector/VectorGenerator.h"
-
 #include "6502/AbstractBus.h"
 #include "MathBox/MathBox.h"
 
@@ -46,6 +44,10 @@ public:
    virtual void    WriteByte(uint16_t address, uint8_t value);
 
 private:
+	static bool		IsVectorRAMAddress(uint16_t address);
+	static bool		IsVectorROMAddress(uint16_t address);
+
+private:
 	// forbidden items
 	TempestBus(const TempestBus &bus);
 	TempestBus &operator=(const TempestBus &bus);
@@ -58,7 +60,6 @@ private:
    TempestPokey2 pokey2;
    EEPROM eeprom;
    MathBox mathBox;
-   VectorGenerator vectorGenerator;
 
 	AbstractTempestIO *tempestIO;
 

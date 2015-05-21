@@ -83,6 +83,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
+    <ClInclude Include="TempestMemoryMap.h" />
     <ClInclude Include="TempestPokey.h" />
     <ClInclude Include="TempestRunner.h" />
     <ClInclude Include="Vector\SimpleVector.h" />

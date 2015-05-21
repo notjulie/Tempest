@@ -21,16 +21,6 @@ uint8_t VectorData::GetAt(uint16_t address)
 		return vectorRAM[address];
 }
 
-uint16_t VectorData::GetVectorRAMSize(void)
-{
-	return VECTOR_RAM_SIZE;
-}
-
-uint16_t VectorData::GetVectorROMSize(void)
-{
-	return VECTOR_ROM_SIZE;
-}
-
 void VectorData::LoadROM(uint16_t address, const uint8_t *buffer, int count)
 {
 	for (int i = 0; i<count; ++i)

@@ -164,5 +164,8 @@
     <ClInclude Include="Pokey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempestMemoryMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
