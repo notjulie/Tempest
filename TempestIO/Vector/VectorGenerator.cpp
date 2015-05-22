@@ -26,19 +26,6 @@ bool VectorGenerator::IsHalt(void)
 	return (++haltCycle % 10) == 0;
 }
 
-void VectorGenerator::Pop(VectorData &_vectorData)
-{
-	_vectorData = vectorData;
-	haveNewData = false;
-}
-
-
-bool VectorGenerator::HaveNewData(void)
-{
-	return haveNewData;
-}
-
-
 void VectorGenerator::Reset(void)
 {
 }

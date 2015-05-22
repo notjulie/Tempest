@@ -3,7 +3,7 @@
 #define VECTORDATAINTERPRETER_H
 
 
-#include "../../TempestIO/Vector/VectorData.h"
+#include "VectorData.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -11,10 +11,14 @@
 class VectorDataInterpreter
 {
 public:
-	VectorDataInterpreter(const VectorData &_data);
+	VectorDataInterpreter(void);
 	virtual ~VectorDataInterpreter(void);
 
 	void Interpret(void);
+	void WriteVectorRAM(uint16_t address, uint8_t value) { vectorData.WriteVectorRAM(address, value); }
+	bool IsHalt(void) { return isHalt; }
+	void Go(void) { goRequested = true; }
+	void Reset(void);
 
 protected:
 	virtual void Center(void);
@@ -31,6 +35,9 @@ private:
 	VectorData vectorData;
 	uint16_t PC;
 	std::vector<uint16_t> stack;
+	bool isHalt;
+	bool resetRequested;
+	bool goRequested;
 };
 
 #pragma warning(pop)

@@ -7,6 +7,8 @@ class VectorData;
 class AbstractTempestIO
 {
 public:
+	virtual ~AbstractTempestIO(void) {}
+
 	virtual void SetSoundChannelFrequency(int channel, int frequency) = 0;
 	virtual void SetSoundChannelVolume(int channel, int volume) = 0;
 	virtual void SetSoundChannelWaveform(int channel, int waveform) = 0;

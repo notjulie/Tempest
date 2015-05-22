@@ -13,14 +13,14 @@ class VectorData;
 public ref class VectorEnumerator
 {
 public:
-	VectorEnumerator(const VectorData &vectorData);
+	VectorEnumerator(const std::vector<SimpleVector> &vectorList);
 	virtual ~VectorEnumerator(void);
 
 	bool GetNextVector([Out] float %startX, [Out] float %startY, [Out] float %endX, [Out] float %endY, [Out] int %color);
 
 private:
-	VectorData *vectorData;
-	SimpleVectorDataInterpreter *interpreter;
+	std::vector<SimpleVector> *vectorData;
+	int nextVector;
 };
 
 #endif

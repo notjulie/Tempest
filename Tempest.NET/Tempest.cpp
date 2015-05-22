@@ -27,7 +27,6 @@ namespace TempestDotNET {
 		environment = new Win32TempestEnvironment();
 		tempestIO = new Win32TempestIO();
 		tempestRunner = new TempestRunner(environment);
-		vectorData = new VectorData();
 
 		// hook objects together
 		tempestRunner->SetTempestIO(tempestIO);
@@ -36,7 +35,6 @@ namespace TempestDotNET {
 	Tempest::~Tempest(void)
 	{
 		// delete
-		delete vectorData, vectorData = NULL;
 		delete tempestRunner, tempestRunner = NULL;
 		delete tempestIO, tempestIO = NULL;
 		delete environment, environment = NULL;
@@ -54,15 +52,9 @@ namespace TempestDotNET {
 
 	VectorEnumerator ^Tempest::GetVectorEnumerator(void)
 	{
-		if (tempestIO->HaveNewVectorData())
-		{
-			tempestIO->PopVectorData(*vectorData);
-			return gcnew VectorEnumerator(*vectorData);
-		}
-		else
-		{
-			return nullptr;
-		}
+		std::vector<SimpleVector> vectorList;
+		tempestIO->GetVectorList(vectorList);
+		return gcnew VectorEnumerator(vectorList);
 	}
 
 	bool Tempest::IsStopped(void)

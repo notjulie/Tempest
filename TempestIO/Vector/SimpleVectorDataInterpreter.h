@@ -11,9 +11,11 @@
 class SimpleVectorDataInterpreter : public VectorDataInterpreter
 {
 public:
-	SimpleVectorDataInterpreter(const VectorData &_data);
+	SimpleVectorDataInterpreter(void);
 
+	void ClearVectors(void) { vectors.resize(0); }
 	bool GetNextVector(SimpleVector &_vector);
+	void GetAllVectors(std::vector<SimpleVector> &vectors) { vectors = this->vectors; }
 
 protected:
 	virtual void Center(void);

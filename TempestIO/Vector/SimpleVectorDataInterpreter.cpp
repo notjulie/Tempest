@@ -3,8 +3,7 @@
 #include "SimpleVectorDataInterpreter.h"
 
 
-SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(const VectorData &_data)
-	: VectorDataInterpreter(_data)
+SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(void)
 {
 	x = y = 0;
 	nextIndex = 0;

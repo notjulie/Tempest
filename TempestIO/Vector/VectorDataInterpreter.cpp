@@ -5,21 +5,26 @@
 
 #include "VectorDataInterpreter.h"
 
-VectorDataInterpreter::VectorDataInterpreter(const VectorData &_data)
+VectorDataInterpreter::VectorDataInterpreter(void)
 {
-	vectorData = _data;
+	isHalt = true;
+	resetRequested = true;
+	goRequested = false;
+	PC = 0;
 }
 
 VectorDataInterpreter::~VectorDataInterpreter(void)
 {
 }
 
+void VectorDataInterpreter::Reset(void)
+{
+	isHalt = true;
+	resetRequested = true;
+}
+
 void VectorDataInterpreter::Interpret(void)
 {
-	// for now just process all vector commands to see if we can
-	PC = 0;
-	stack.resize(0);
-
 	for (;;)
 	{
 		if (!SingleStep())
@@ -30,6 +35,25 @@ void VectorDataInterpreter::Interpret(void)
 
 bool VectorDataInterpreter::SingleStep(void)
 {
+	// process reset if we have one
+	if (resetRequested)
+	{
+		PC = 0;
+		stack.resize(0);
+		isHalt = true;
+		resetRequested = false;
+	}
+
+	// process go if we have one
+	if (goRequested)
+	{
+		isHalt = false;
+		goRequested = false;
+	}
+
+	if (isHalt)
+		return false;
+
 	uint8_t opByte = GetAt(1);
 	switch (opByte >> 4)
 	{
@@ -51,6 +75,7 @@ bool VectorDataInterpreter::SingleStep(void)
 	case  2: // 0010
 	case  3: // 0011
 		// HALT
+		isHalt = true;
 		return false;
 
 	case  4: // 0100         
@@ -107,6 +132,9 @@ bool VectorDataInterpreter::SingleStep(void)
 	case 15: // 1111
 		// JUMP
 		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
+
+		// a jump to address zero basically means we are done and starting over,
+		// but not halted
 		return PC != 0;
 
 	default:

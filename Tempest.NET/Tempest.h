@@ -48,7 +48,6 @@ namespace TempestDotNET {
 		Win32TempestEnvironment *environment;
 		Win32TempestIO *tempestIO;
 		TempestRunner *tempestRunner;
-		VectorData *vectorData;
 
 		Object  ^synchronizer;
 	};

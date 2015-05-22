@@ -19,9 +19,7 @@ public:
 	VectorGenerator(void);
 
 	void		Go(void);
-	bool	   HaveNewData(void);
 	bool		IsHalt(void);
-	void		Pop(VectorData &_vectorData);
 	void		Reset(void);
 	void		WriteVectorRAM(uint16_t address, uint8_t value);
 

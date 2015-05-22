@@ -7,31 +7,23 @@
 #include "VectorEnumerator.h"
 
 
-VectorEnumerator::VectorEnumerator(const VectorData &_vectorData)
+VectorEnumerator::VectorEnumerator(const std::vector<SimpleVector> &vectorList)
 {
-	vectorData = new VectorData(_vectorData);
-	interpreter = NULL;
+	vectorData = new std::vector<SimpleVector>(vectorList);
+	nextVector = 0;
 }
 
 VectorEnumerator::~VectorEnumerator(void)
 {
 	delete vectorData, vectorData = NULL;
-	delete interpreter, interpreter = NULL;
 }
 
 bool VectorEnumerator::GetNextVector([Out] float %startX, [Out] float %startY, [Out] float %endX, [Out] float %endY, [Out] int %color)
 {
-	// interpret if we haven't
-	if (interpreter == NULL)
-	{
-		interpreter = new SimpleVectorDataInterpreter(*vectorData);
-		interpreter->Interpret();
-	}
-
-	SimpleVector	vector;
-	if (!interpreter->GetNextVector(vector))
+	if (nextVector >= vectorData->size())
 		return false;
 
+	SimpleVector	vector = (*vectorData)[nextVector++];
 	startX = vector.startX;
 	startY = vector.startY;
 	endX =   vector.endX;
