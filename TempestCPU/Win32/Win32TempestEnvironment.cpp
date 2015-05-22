@@ -15,13 +15,6 @@ Win32TempestEnvironment::~Win32TempestEnvironment(void)
 {
 }
 
-uint32_t Win32TempestEnvironment::GetMicrosecondCount(void)
-{
-	LARGE_INTEGER	li;
-	QueryPerformanceCounter(&li);
-	return (uint32_t)(li.QuadPart / performanceCounterTicksPerMicroSecond);
-}
-
 void Win32TempestEnvironment::Reset(void)
 {
 	// set our current time to zero

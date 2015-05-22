@@ -14,7 +14,6 @@ public:
 	Win32TempestEnvironment(void);
 	virtual ~Win32TempestEnvironment(void);
 
-	virtual uint32_t GetMicrosecondCount(void);
 	virtual void Reset(void);
 	virtual void Sleep(int ms);
 	virtual void SynchronizeClock(uint64_t busMSCount);
