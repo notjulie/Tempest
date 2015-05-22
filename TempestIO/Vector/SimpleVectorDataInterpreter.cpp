@@ -29,8 +29,8 @@ void SimpleVectorDataInterpreter::Center(void)
 
 void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 {
-	float actualDX = (float)_x / (1 << (binaryScale - 1)) * 128 / (128 + linearScale);
-	float actualDY = (float)_y / (1 << (binaryScale - 1)) * 128 / (128 + linearScale);
+	float actualDX = (float)_x / (1 << binaryScale) * 256 / (128 + linearScale);
+	float actualDY = (float)_y / (1 << binaryScale) * 256 / (128 + linearScale);
 
 	if (_intensity != 0)
 	{
