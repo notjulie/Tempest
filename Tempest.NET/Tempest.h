@@ -20,7 +20,6 @@ namespace TempestDotNET {
 		~Tempest();
 
 		String ^GetProcessorStatus(void);
-		String ^GetAudioStatus(void);
 		bool   IsStopped(void);
 
 		void SetBreakpoint(int address, bool set);

@@ -40,11 +40,6 @@ namespace TempestDotNET {
 		delete environment, environment = NULL;
 	}
 
-	String ^Tempest::GetAudioStatus(void)
-	{
-		return gcnew String("Unknown");
-	}
-
 	uint64_t Tempest::GetTotalClockCycles(void)
 	{
 		return tempestRunner->GetTotalClockCycles();
