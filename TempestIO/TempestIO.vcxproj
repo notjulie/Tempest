@@ -132,7 +132,6 @@
     <ClInclude Include="Vector\SimpleVectorDataInterpreter.h" />
     <ClInclude Include="Vector\VectorData.h" />
     <ClInclude Include="Vector\VectorDataInterpreter.h" />
-    <ClInclude Include="Vector\VectorGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SoundChannel.cpp" />
@@ -146,7 +145,6 @@
     <ClCompile Include="Vector\SimpleVectorDataInterpreter.cpp" />
     <ClCompile Include="Vector\VectorData.cpp" />
     <ClCompile Include="Vector\VectorDataInterpreter.cpp" />
-    <ClCompile Include="Vector\VectorGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TempestCPU\TempestCPU.vcxproj">
