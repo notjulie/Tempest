@@ -20,7 +20,7 @@ VectorEnumerator::~VectorEnumerator(void)
 
 bool VectorEnumerator::GetNextVector([Out] int16_t %startX, [Out] int16_t %startY, [Out] int16_t %endX, [Out] int16_t %endY, [Out] int %color)
 {
-	if (nextVector >= vectorData->size())
+	if (nextVector >= (int)vectorData->size())
 		return false;
 
 	SimpleVector	vector = (*vectorData)[nextVector++];
