@@ -234,10 +234,17 @@ namespace TempestWpf
             int index = 0;
             for (; ; )
             {
-               float startX, startY, endX, endY;
+               // get the vector
+               Int16 startX16, startY16, endX16, endY16;
                int color;
-               if (!enumerator.GetNextVector(out startX, out startY, out endX, out endY, out color))
+               if (!enumerator.GetNextVector(out startX16, out startY16, out endX16, out endY16, out color))
                   break;
+
+               // switch to longer than 16 bits
+               int startX = startX16;
+               int startY = startY16;
+               int endX = endX16;
+               int endY = endY16;
 
                Line line;
                if (index >= lines.Count)
@@ -251,14 +258,16 @@ namespace TempestWpf
                   line = lines[index];
                }
 
+               int strokeThickness = 100;
+               
                // if we have a zero length line we need to fudge it... this is how
                // Tempest draws points
                if (endX == startX && endY==startY)
                {
-                  endX -= 0.5F;
-                  startX += 0.5F;
-                  endY -= 0.5F;
-                  startY += 0.5F;
+                  endX += strokeThickness / 2;
+                  startX += strokeThickness / 2;
+                  endY -= strokeThickness / 2;
+                  startY += strokeThickness / 2;
                }
 
                line.Stroke = vectorBrush[color];
@@ -266,6 +275,7 @@ namespace TempestWpf
                line.X2 = canvas.ActualWidth / 2 + endX;
                line.Y1 = canvas.ActualHeight / 2 - startY;
                line.Y2 = canvas.ActualHeight / 2 - endY;
+               line.StrokeThickness = 100;
                line.Visibility = System.Windows.Visibility.Visible;
 
                ++index;

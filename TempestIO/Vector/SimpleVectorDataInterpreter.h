@@ -25,10 +25,13 @@ protected:
 	virtual void Stat(int color, int intensity);
 
 private:
+	bool ClipEndPoint(int &startX, int &startY, int &endX, int &endY);
+
+private:
 	int nextIndex;
 	std::vector<SimpleVector> vectors;
 	int color;
-	float x, y;
+	int x, y;
 	int binaryScale;
 	int linearScale;
 };

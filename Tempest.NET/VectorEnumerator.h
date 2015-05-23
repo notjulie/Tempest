@@ -16,7 +16,7 @@ public:
 	VectorEnumerator(const std::vector<SimpleVector> &vectorList);
 	virtual ~VectorEnumerator(void);
 
-	bool GetNextVector([Out] float %startX, [Out] float %startY, [Out] float %endX, [Out] float %endY, [Out] int %color);
+	bool GetNextVector([Out] int16_t %startX, [Out] int16_t %startY, [Out] int16_t %endX, [Out] int16_t %endY, [Out] int %color);
 
 private:
 	std::vector<SimpleVector> *vectorData;

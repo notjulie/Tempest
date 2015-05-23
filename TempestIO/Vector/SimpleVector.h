@@ -4,10 +4,10 @@
 
 struct SimpleVector
 {
-	float startX;
-	float startY;
-	float endX;
-	float endY;
+	int16_t startX;
+	int16_t startY;
+	int16_t endX;
+	int16_t endY;
 	int color;
 };
 
