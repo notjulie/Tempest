@@ -48,6 +48,9 @@
     <ClInclude Include="Vector\VectorDataInterpreter.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempestIOStreamProxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -67,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="Vector\VectorDataInterpreter.cpp">
       <Filter>Vector\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempestIOStreamProxy.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

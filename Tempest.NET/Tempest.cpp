@@ -31,7 +31,13 @@ namespace TempestDotNET {
 
 	Tempest::Tempest(TDNIOStreamProxy ^io)
 	{
-		throw gcnew Exception("Tempest::Tempest(TDNIOStreamProxy) not implemented");
+		// create objects
+		environment = new Win32TempestEnvironment();
+		tempestIO = io->GetIOObject();
+		tempestRunner = new TempestRunner(environment);
+
+		// hook objects together
+		tempestRunner->SetTempestIO(tempestIO);
 	}
 
 	Tempest::~Tempest(void)
