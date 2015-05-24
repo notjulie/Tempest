@@ -26,8 +26,9 @@ namespace TempestWpf
    {
       #region Private Fields
 
-      private TempestIODotNet tempestIO;
+      private TDNWin32TempestIO tempestIO;
       private Tempest tempest;
+
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
       private DispatcherTimer spinnerTimer;
@@ -161,7 +162,7 @@ namespace TempestWpf
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
          // create the IO object that we represent
-         tempestIO = new TempestIODotNet();
+         tempestIO = new TDNWin32TempestIO();
 
          // create our tempest, connected to the IO object
          tempest = new Tempest(tempestIO);

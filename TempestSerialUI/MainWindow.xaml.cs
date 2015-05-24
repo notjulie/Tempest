@@ -26,8 +26,13 @@ namespace TempestWpf
    {
       #region Private Fields
 
-      private TempestIODotNet tempestIO;
+      // our Tempest objects
+      private TDNWin32TempestIO tempestIO;
       private Tempest tempest;
+      private TDNMemoryStream tempestMemoryStream;
+      private TDNTempestIOStreamListener tempestIOStreamListener;
+      private TDNIOStreamProxy tempestIOStreamProxy;
+
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
       private DispatcherTimer spinnerTimer;
@@ -132,42 +137,65 @@ namespace TempestWpf
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
       {
-         timer.IsEnabled = false;
-         vectorTimer.IsEnabled = false;
+         if (timer != null)
+            timer.IsEnabled = false;
+         if (vectorTimer != null)
+            vectorTimer.IsEnabled = false;
          e.Cancel = false;
       }
 
       void MainWindow_Closed(object sender, EventArgs e)
       {
-         tempest.Dispose();
+         if (tempest != null)
+         {
+            tempest.Dispose();
+            tempest = null;
+         }
       }
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
-         // create the IO object that we represent
-         tempestIO = new TempestIODotNet();
+         try
+         {
+            // create the stream object that's going to be in the middle of everything
+            tempestMemoryStream = new TDNMemoryStream();
 
-         // create our tempest
-         tempest = new Tempest(tempestIO);
+            // create the IO object that we represent
+            tempestIO = new TDNWin32TempestIO();
 
-         // set it to running
-         startTime = DateTime.Now;
-         tempest.Start();
+            // create the streamlistener that feeds it
+            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream, tempestIO);
 
-         timer = new DispatcherTimer();
-         timer.Interval = TimeSpan.FromMilliseconds(200);
-         timer.IsEnabled = true;
-         timer.Tick += timer_Tick;
+            // create the IO proxy
+            tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream);
 
-         vectorTimer = new DispatcherTimer();
-         vectorTimer.Interval = TimeSpan.FromMilliseconds(50);
-         vectorTimer.IsEnabled = true;
-         vectorTimer.Tick += vectorTimer_Tick;
+            // create our tempest
+            tempest = new Tempest(tempestIOStreamProxy);
 
-         spinnerTimer = new DispatcherTimer();
-         spinnerTimer.Interval = TimeSpan.FromMilliseconds(50);
-         spinnerTimer.IsEnabled = true;
-         spinnerTimer.Tick += spinnerTimer_Tick;
+            // set it to running
+            startTime = DateTime.Now;
+            tempest.Start();
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(200);
+            timer.IsEnabled = true;
+            timer.Tick += timer_Tick;
+
+            vectorTimer = new DispatcherTimer();
+            vectorTimer.Interval = TimeSpan.FromMilliseconds(50);
+            vectorTimer.IsEnabled = true;
+            vectorTimer.Tick += vectorTimer_Tick;
+
+            spinnerTimer = new DispatcherTimer();
+            spinnerTimer.Interval = TimeSpan.FromMilliseconds(50);
+            spinnerTimer.IsEnabled = true;
+            spinnerTimer.Tick += spinnerTimer_Tick;
+         }
+         catch (Exception x)
+         {
+            MessageBox.Show(x.Message);
+            Close();
+         }
       }
 
       void spinnerTimer_Tick(object sender, EventArgs e)

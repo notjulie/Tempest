@@ -2,6 +2,7 @@
 #ifndef TEMPEST_H
 #define TEMPEST_H
 
+#include "TDNIOStreamProxy.h"
 #include "VectorEnumerator.h"
 
 using namespace System;
@@ -16,7 +17,8 @@ namespace TempestDotNET {
 	public ref class Tempest
 	{
 	public:
-		Tempest(TempestIODotNet ^io);
+		Tempest(TDNIOStreamProxy ^io);
+		Tempest(TDNWin32TempestIO ^io);
 		~Tempest();
 
 		String ^GetProcessorStatus(void);

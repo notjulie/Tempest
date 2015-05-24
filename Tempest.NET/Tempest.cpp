@@ -10,7 +10,7 @@
 #include "TempestCPU/TempestRunner.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
 
-#include "TempestIODotNet.h"
+#include "TDNWin32TempestIO.h"
 
 #include "Tempest.h"
 
@@ -18,7 +18,7 @@
 using namespace System;
 
 namespace TempestDotNET {
-	Tempest::Tempest(TempestIODotNet ^io)
+	Tempest::Tempest(TDNWin32TempestIO ^io)
 	{
 		// create objects
 		environment = new Win32TempestEnvironment();
@@ -27,6 +27,11 @@ namespace TempestDotNET {
 
 		// hook objects together
 		tempestRunner->SetTempestIO(tempestIO);
+	}
+
+	Tempest::Tempest(TDNIOStreamProxy ^io)
+	{
+		throw gcnew Exception("Tempest::Tempest(TDNIOStreamProxy) not implemented");
 	}
 
 	Tempest::~Tempest(void)

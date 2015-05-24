@@ -71,15 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\$(Platform)\obj\</IntDir>
+    <OutDir>$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\$(Platform)\obj\</IntDir>
+    <OutDir>$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(Configuration)\$(Platform)\obj\</IntDir>
+    <OutDir>$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(Configuration)\$(Platform)\obj\</IntDir>
+    <OutDir>$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,8 +153,11 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="TDNIOStreamProxy.h" />
+    <ClInclude Include="TDNTempestIOStreamListener.h" />
     <ClInclude Include="Tempest.h" />
-    <ClInclude Include="TempestIODotNet.h" />
+    <ClInclude Include="TDNWin32TempestIO.h" />
+    <ClInclude Include="TDNMemoryStream.h" />
     <ClInclude Include="VectorEnumerator.h" />
     <ClInclude Include="Win32TempestIO.h" />
     <ClInclude Include="Win32WaveBuffer.h" />
@@ -160,8 +171,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TDNIOStreamProxy.cpp" />
+    <ClCompile Include="TDNTempestIOStreamListener.cpp" />
     <ClCompile Include="Tempest.cpp" />
-    <ClCompile Include="TempestIODotNet.cpp" />
+    <ClCompile Include="TDNWin32TempestIO.cpp" />
+    <ClCompile Include="TDNMemoryStream.cpp" />
     <ClCompile Include="VectorEnumerator.cpp" />
     <ClCompile Include="Win32WaveBuffer.cpp" />
     <ClCompile Include="Win32WaveStreamer.cpp" />
