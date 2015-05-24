@@ -27,8 +27,6 @@ public:
 	TempestBus(AbstractTempestEnvironment *_environment);
 	virtual ~TempestBus(void);
 
-	void LoadROM(const uint8_t *rom, int length, uint16_t address);
-	void LoadMathBoxROM(const uint8_t *rom, int length, char slot);
 	void SetTempestIO(AbstractTempestIO *tempestIO);
 
 	void Toggle3KHzClock(void);
@@ -51,7 +49,6 @@ private:
 	TempestBus &operator=(const TempestBus &bus);
 
 private:
-   std::vector<uint8_t>  rom;
    std::vector<uint8_t>  mainRAM;
    std::vector<uint8_t>  colorRAM;
 	uint8_t vectorRAM[VECTOR_RAM_SIZE];

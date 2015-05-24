@@ -21,8 +21,6 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 	slam = false;
 	tempestIO = NULL;
 
-   // create the ROM space
-   rom.resize(20 * 1024);
    mainRAM.resize(MAIN_RAM_SIZE);
    colorRAM.resize(COLOR_RAM_SIZE);
 }
@@ -32,23 +30,39 @@ TempestBus::~TempestBus(void)
 }
 
 
-void TempestBus::LoadROM(const uint8_t *_rom, int length, uint16_t address)
-{
-	for (int i = 0; i<length; ++i)
-		rom[(unsigned)(address - ROM_BASE + i)] = _rom[i];
-}
-
-void TempestBus::LoadMathBoxROM(const uint8_t *rom, int length, char slot)
-{
-	mathBox.LoadROM(rom, length, slot);
-}
-
-
 uint8_t TempestBus::ReadByte(uint16_t address)
 {
    // see if it's a ROM address
-   if (address >= ROM_BASE && address < ROM_BASE + rom.size())
-		return rom[(unsigned)(address - ROM_BASE)];
+	if (address >= 0x9000)
+	{
+		switch (address & 0xF800)
+		{
+		case 0x9000:
+			return ROM_136002_113[address & 0x7FF];
+		case 0x9800:
+			return ROM_136002_114[address & 0x7FF];
+		case 0xA000:
+			return ROM_136002_115[address & 0x7FF];
+		case 0xA800:
+			return ROM_136002_116[address & 0x7FF];
+		case 0xB000:
+			return ROM_136002_117[address & 0x7FF];
+		case 0xB800:
+			return ROM_136002_118[address & 0x7FF];
+		case 0xC000:
+		case 0xE000:
+			return ROM_136002_119[address & 0x7FF];
+		case 0xC800:
+		case 0xE800:
+			return ROM_136002_120[address & 0x7FF];
+		case 0xD000:
+		case 0xF000:
+			return ROM_136002_121[address & 0x7FF];
+		case 0xD800:
+		case 0xF800:
+			return ROM_136002_122[address & 0x7FF];
+		}
+	}
    
    // main RAM
    if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
@@ -71,11 +85,6 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    // POKEY 2
 	if (address >= POKEY2_BASE && address <= POKEY2_END)
 		return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
-   
-   // see if it's in the address range above ROM that acts like a
-   // copy of high ROM
-   if (address >= ROM_ECHO_START && address<= ROM_ECHO_END)
-      return rom[(unsigned)((ROM_ECHO_SOURCE - ROM_BASE) + (address - ROM_ECHO_START))];
    
 	// color RAM
 	if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)

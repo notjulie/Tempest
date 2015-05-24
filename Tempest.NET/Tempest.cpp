@@ -62,22 +62,6 @@ namespace TempestDotNET {
 		tempestRunner->SetBreakpoint(address, set);
 	}
 
-	void Tempest::LoadROM(array<Byte>^ rom, int address)
-	{
-		std::vector<uint8_t> romCopy;
-		for (int i = 0; i < rom->Length; ++i)
-			romCopy.push_back(rom[i]);
-		tempestRunner->LoadROM(&romCopy[0], (int)romCopy.size(), address);
-	}
-
-	void Tempest::LoadMathBoxROM(array<Byte>^ rom, char slot)
-	{
-		std::vector<uint8_t> romCopy;
-		for (int i = 0; i < rom->Length; ++i)
-			romCopy.push_back(rom[i]);
-		tempestRunner->LoadMathBoxROM(&romCopy[0], (int)romCopy.size(), slot);
-	}
-
 	void Tempest::Start(void)
 	{
 		tempestRunner->Start();

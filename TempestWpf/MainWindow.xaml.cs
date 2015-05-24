@@ -162,27 +162,6 @@ namespace TempestWpf
          // create our tempest
          tempest = new Tempest();
 
-         // load its ROMs
-         tempest.LoadROM(GetROM("136002.113"), 0x9000);
-         tempest.LoadROM(GetROM("136002.114"), 0x9800);
-         tempest.LoadROM(GetROM("136002.115"), 0xA000);
-         tempest.LoadROM(GetROM("136002.116"), 0xA800);
-         tempest.LoadROM(GetROM("136002.117"), 0xB000);
-         tempest.LoadROM(GetROM("136002.118"), 0xB800);
-         tempest.LoadROM(GetROM("136002.119"), 0xC000);
-         tempest.LoadROM(GetROM("136002.120"), 0xC800);
-         tempest.LoadROM(GetROM("136002.121"), 0xD000);
-         tempest.LoadROM(GetROM("136002.122"), 0xD800);
-
-         // and the math box ROM
-         tempest.LoadMathBoxROM(GetROM("136002.126"), (sbyte)'A');
-         tempest.LoadMathBoxROM(GetROM("136002.127"), (sbyte)'E');
-         tempest.LoadMathBoxROM(GetROM("136002.128"), (sbyte)'F');
-         tempest.LoadMathBoxROM(GetROM("136002.129"), (sbyte)'H');
-         tempest.LoadMathBoxROM(GetROM("136002.130"), (sbyte)'J');
-         tempest.LoadMathBoxROM(GetROM("136002.131"), (sbyte)'K');
-         tempest.LoadMathBoxROM(GetROM("136002.132"), (sbyte)'L');
-
          // set it to running
          startTime = DateTime.Now;
          tempest.Start();

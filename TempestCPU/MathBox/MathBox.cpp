@@ -12,6 +12,7 @@
 #include "MathBoxAFX.h"
 
 #include "AbstractTempestEnvironment.h"
+#include "TempestROMS.h"
 
 #include "MathBox.h"
 
@@ -27,60 +28,20 @@ MathBox::MathBox(AbstractTempestEnvironment	*_environment)
 	dataIn = 0;
 	addressIn = 0;
 	STOP = false;
+
+	// point to our ROMs
+	romA = ROM_136002_126;
+	romE = ROM_136002_127;
+	romF = ROM_136002_128;
+	romH = ROM_136002_129;
+	romJ = ROM_136002_130;
+	romK = ROM_136002_131;
+	romL = ROM_136002_132;
 }
 
 MathBox::~MathBox(void)
 {
 }
-
-void MathBox::LoadROM(const uint8_t *rom, int length, char slot)
-{
-	switch (slot)
-	{
-	case 'A':
-		if (length != sizeof(romA))
-			return;
-		memcpy(&romA[0], rom, (unsigned)length);
-		break;
-
-	case 'E':
-		if (length != sizeof(romE))
-			return;
-		memcpy(&romE[0], rom, (unsigned)length);
-		break;
-
-	case 'F':
-		if (length != sizeof(romF))
-			return;
-		memcpy(&romF[0], rom, (unsigned)length);
-		break;
-
-	case 'H':
-		if (length != sizeof(romH))
-			return;
-		memcpy(&romH[0], rom, (unsigned)length);
-		break;
-
-	case 'J':
-		if (length != sizeof(romJ))
-			return;
-		memcpy(&romJ[0], rom, (unsigned)length);
-		break;
-
-	case 'K':
-		if (length != sizeof(romK))
-			return;
-		memcpy(&romK[0], rom, (unsigned)length);
-		break;
-
-	case 'L':
-		if (length != sizeof(romL))
-			return;
-		memcpy(&romL[0], rom, (unsigned)length);
-		break;
-	}
-}
-
 
 uint8_t MathBox::GetStatus(void)
 {

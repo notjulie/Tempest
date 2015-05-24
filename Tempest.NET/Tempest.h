@@ -25,8 +25,6 @@ namespace TempestDotNET {
 		void SetBreakpoint(int address, bool set);
 
 		VectorEnumerator ^GetVectorEnumerator(void);
-		void LoadROM(array<Byte>^ rom, int address);
-		void LoadMathBoxROM(array<Byte>^ rom, char slot);
 		void Start(void);
 		uint64_t GetTotalClockCycles(void);
 

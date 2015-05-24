@@ -28,8 +28,6 @@ public:
 	MathBox(AbstractTempestEnvironment *_environment);
 	virtual ~MathBox(void);
 
-	void LoadROM(const uint8_t *rom, int length, char slot);
-
    uint8_t GetStatus(void);
    uint8_t ReadLow(void);
    uint8_t ReadHigh(void);
@@ -73,13 +71,13 @@ private:
 	Am2901	aluE;
 
 	// ROMs
-	uint8_t romA[32];
-	uint8_t romE[256];
-	uint8_t romF[256];
-	uint8_t romH[256];
-	uint8_t romJ[256];
-	uint8_t romK[256];
-	uint8_t romL[256];
+	const uint8_t *romA;
+	const uint8_t *romE;
+	const uint8_t *romF;
+	const uint8_t *romH;
+	const uint8_t *romJ;
+	const uint8_t *romK;
+	const uint8_t *romL;
 
 	friend class MathBoxTestInterface;
 };

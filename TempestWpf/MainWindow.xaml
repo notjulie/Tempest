@@ -27,8 +27,8 @@
         <StackPanel DockPanel.Dock="Right">
             <Button Name="buttonOnePlayerStart">One Player Start</Button>
         </StackPanel>
-        <Viewbox Stretch="Uniform" ClipToBounds="True">
-            <Canvas Name="canvas" Height="69536" Width="62352" Background="Black">
+        <Viewbox Stretch="Uniform">
+            <Canvas Name="canvas" Height="69536" Width="70536" Background="Black" ClipToBounds="True">
             </Canvas>
         </Viewbox>
     </DockPanel>
