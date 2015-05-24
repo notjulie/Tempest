@@ -10,7 +10,7 @@
 #include "TempestCPU/TempestRunner.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
 
-#include "Win32TempestIO.h"
+#include "TempestIODotNet.h"
 
 #include "Tempest.h"
 
@@ -18,11 +18,11 @@
 using namespace System;
 
 namespace TempestDotNET {
-	Tempest::Tempest(void)
+	Tempest::Tempest(TempestIODotNet ^io)
 	{
 		// create objects
 		environment = new Win32TempestEnvironment();
-		tempestIO = new Win32TempestIO();
+		tempestIO = io->GetIOObject();
 		tempestRunner = new TempestRunner(environment);
 
 		// hook objects together
@@ -40,13 +40,6 @@ namespace TempestDotNET {
 	uint64_t Tempest::GetTotalClockCycles(void)
 	{
 		return tempestRunner->GetTotalClockCycles();
-	}
-
-	VectorEnumerator ^Tempest::GetVectorEnumerator(void)
-	{
-		std::vector<SimpleVector> vectorList;
-		tempestIO->GetVectorList(vectorList);
-		return gcnew VectorEnumerator(vectorList);
 	}
 
 	bool Tempest::IsStopped(void)

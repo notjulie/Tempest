@@ -146,6 +146,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Tempest.h" />
+    <ClInclude Include="TempestIODotNet.h" />
     <ClInclude Include="VectorEnumerator.h" />
     <ClInclude Include="Win32TempestIO.h" />
     <ClInclude Include="Win32WaveBuffer.h" />
@@ -160,6 +161,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Tempest.cpp" />
+    <ClCompile Include="TempestIODotNet.cpp" />
     <ClCompile Include="VectorEnumerator.cpp" />
     <ClCompile Include="Win32WaveBuffer.cpp" />
     <ClCompile Include="Win32WaveStreamer.cpp" />

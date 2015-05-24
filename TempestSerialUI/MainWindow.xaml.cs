@@ -26,6 +26,7 @@ namespace TempestWpf
    {
       #region Private Fields
 
+      private TempestIODotNet tempestIO;
       private Tempest tempest;
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
@@ -143,8 +144,11 @@ namespace TempestWpf
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
+         // create the IO object that we represent
+         tempestIO = new TempestIODotNet();
+
          // create our tempest
-         tempest = new Tempest();
+         tempest = new Tempest(tempestIO);
 
          // set it to running
          startTime = DateTime.Now;
@@ -191,7 +195,7 @@ namespace TempestWpf
       void vectorTimer_Tick(object sender, EventArgs e)
       {
          // get a vector enumerator
-         VectorEnumerator enumerator = tempest.GetVectorEnumerator();
+         VectorEnumerator enumerator = tempestIO.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;

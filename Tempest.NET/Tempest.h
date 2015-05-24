@@ -8,7 +8,7 @@ using namespace System;
 using namespace System::Threading;
 
 class Win32RealTimeClock;
-class Win32TempestIO;
+class AbstractTempestIO;
 class Win32WaveStreamer;
 
 namespace TempestDotNET {
@@ -16,7 +16,7 @@ namespace TempestDotNET {
 	public ref class Tempest
 	{
 	public:
-		Tempest();
+		Tempest(TempestIODotNet ^io);
 		~Tempest();
 
 		String ^GetProcessorStatus(void);
@@ -24,7 +24,6 @@ namespace TempestDotNET {
 
 		void SetBreakpoint(int address, bool set);
 
-		VectorEnumerator ^GetVectorEnumerator(void);
 		void Start(void);
 		uint64_t GetTotalClockCycles(void);
 
@@ -43,7 +42,7 @@ namespace TempestDotNET {
 
 	private:
 		Win32TempestEnvironment *environment;
-		Win32TempestIO *tempestIO;
+		AbstractTempestIO *tempestIO;
 		TempestRunner *tempestRunner;
 	};
 
