@@ -20,9 +20,6 @@ using namespace System;
 namespace TempestDotNET {
 	Tempest::Tempest(void)
 	{
-		// clear
-		synchronizer = gcnew Object();
-
 		// create objects
 		environment = new Win32TempestEnvironment();
 		tempestIO = new Win32TempestIO();

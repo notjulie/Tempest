@@ -45,8 +45,6 @@ namespace TempestDotNET {
 		Win32TempestEnvironment *environment;
 		Win32TempestIO *tempestIO;
 		TempestRunner *tempestRunner;
-
-		Object  ^synchronizer;
 	};
 
 }
