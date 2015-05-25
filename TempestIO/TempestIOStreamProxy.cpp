@@ -5,6 +5,11 @@
 
 #include "TempestIOStreamProxy.h"
 
+TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
+{
+	this->stream = stream;
+}
+
 
 void TempestIOStreamProxy::SetSoundChannelFrequency(int channel, int frequency)
 {

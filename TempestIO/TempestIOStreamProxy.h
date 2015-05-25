@@ -4,9 +4,13 @@
 
 #include "AbstractTempestIO.h"
 
+class AbstractTempestStream;
+
 class TempestIOStreamProxy : public AbstractTempestIO
 {
 public:
+	TempestIOStreamProxy(AbstractTempestStream *stream);
+
 	virtual void SetSoundChannelFrequency(int channel, int frequency);
 	virtual void SetSoundChannelVolume(int channel, int volume);
 	virtual void SetSoundChannelWaveform(int channel, int waveform);
@@ -16,6 +20,9 @@ public:
 	virtual bool IsVectorHalt(void);
 	virtual void VectorGo(void);
 	virtual void VectorReset(void);
+
+private:
+	AbstractTempestStream	*stream;
 };
 
 #endif

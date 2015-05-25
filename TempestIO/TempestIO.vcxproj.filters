@@ -51,6 +51,12 @@
     <ClInclude Include="TempestIOStreamProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AbstractTempestStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TempestMemoryStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
