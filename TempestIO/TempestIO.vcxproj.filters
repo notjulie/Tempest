@@ -57,6 +57,9 @@
     <ClInclude Include="TempestMemoryStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempestStreamProtocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -78,6 +81,9 @@
       <Filter>Vector\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TempestIOStreamProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempestMemoryStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
