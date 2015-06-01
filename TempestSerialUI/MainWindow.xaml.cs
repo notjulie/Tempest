@@ -172,6 +172,15 @@ namespace TempestWpf
             // create our tempest
             tempest = new Tempest(tempestIOStreamProxy);
 
+            // at this point here's what we have:
+            //   - tempest is writing to tempestIOStreamProxy, which is its output device
+            //   - tempestIOStreamProxy is writing to tempestMemoryStream
+            //   - tempestIOStreamListener is reading from tempestMemoryStream and writing
+            //     to tempestIO, which is the actual screen output device
+            //
+            // this is basically the identical scheme that we'll use to write to the real device
+            //
+
             // set it to running
             startTime = DateTime.Now;
             tempest.Start();

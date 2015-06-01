@@ -3,6 +3,7 @@
 #include "Stdafx.h"
 
 #include "../TempestIO/TempestIOStreamListener.h"
+#include "../TempestIO/TempestMemoryStream.h"
 
 #include "TDNTempestIOStreamListener.h"
 
@@ -15,7 +16,7 @@ namespace TempestDotNET {
 		this->tempestIO = tempestIO;
 
 		// create our listener
-		listener = new TempestIOStreamListener();
+      listener = new TempestIOStreamListener(stream->GetStream(), tempestIO->GetIOObject());
 	}
 
 
