@@ -146,6 +146,13 @@ namespace TempestWpf
 
       void MainWindow_Closed(object sender, EventArgs e)
       {
+         // stop the stream listener
+         if (tempestIOStreamListener != null)
+         {
+            tempestIOStreamListener.Dispose();
+            tempestIOStreamListener = null;
+         }
+
          if (tempest != null)
          {
             tempest.Dispose();

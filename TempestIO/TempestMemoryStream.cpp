@@ -23,3 +23,16 @@ void TempestMemoryStream::Write(uint8_t b)
 	buffer[bufferIn] = b;
 	bufferIn = newBufferIn;
 }
+
+int TempestMemoryStream::Read(void)
+{
+   // never mind if there's nothing
+   if (bufferIn == bufferOut)
+      return -1;
+
+   // else just return the next
+   int result = buffer[bufferOut++];
+   if (bufferOut >= sizeof(buffer))
+      bufferOut = 0;
+   return result;
+}
