@@ -8,7 +8,7 @@
 #include "TempestIOStreamListener.h"
 
 
-TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *stream, AbstractTempestIO *tempestIO)
+TempestIOStreamListener::TempestIOStreamListener(AbstractTempestInStream *stream, AbstractTempestIO *tempestIO)
 {
    // copy parameters
    this->stream = stream;
@@ -39,7 +39,17 @@ void TempestIOStreamListener::Service(void)
             break;
 
          case OP_6KHZ_TICK:
+            // tick
             tempestIO->Tick6KHz();
+
+            // this is our cue for a response packet
+            {
+               TempestInPacket packet;
+               packet.flags1 = 0;
+               if (tempestIO->IsVectorHalt())
+                  packet.flags1 |= FLAG_VECTOR_HALT;
+               stream->Write(packet);
+            }
             break;
 
          case OP_VECTOR_GO:

@@ -13,4 +13,12 @@ enum StreamOpCodes
    OP_VECTOR_GO = 6
 };
 
+struct TempestInPacket {
+   uint8_t  flags1;
+};
+
+enum TempestInPacketFlags1 {
+   FLAG_VECTOR_HALT = 1
+};
+
 #endif

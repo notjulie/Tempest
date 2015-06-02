@@ -4,12 +4,12 @@
 
 #include "AbstractTempestIO.h"
 
-class AbstractTempestStream;
+class AbstractTempestOutStream;
 
 class TempestIOStreamProxy : public AbstractTempestIO
 {
 public:
-	TempestIOStreamProxy(AbstractTempestStream *stream);
+   TempestIOStreamProxy(AbstractTempestOutStream *stream);
 
 	virtual void SetSoundChannelFrequency(int channel, int frequency);
 	virtual void SetSoundChannelVolume(int channel, int volume);
@@ -22,7 +22,7 @@ public:
 	virtual void VectorReset(void);
 
 private:
-	AbstractTempestStream	*stream;
+   AbstractTempestOutStream	*stream;
    bool isVectorHalt;
 };
 

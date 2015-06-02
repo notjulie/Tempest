@@ -9,10 +9,26 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_vcp.c" partName="usbd_cdc_vcp.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/usbd_cdc_vcp.c" title="usbd_cdc_vcp.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/usbd_cdc_vcp.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/usbd_cdc_vcp.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6797" selectionTopPixel="3655"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="usb_dcd_int.c" partName="usb_dcd_int.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_OTG_Driver/src/usb_dcd_int.c" title="usb_dcd_int.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_OTG_Driver/src/usb_dcd_int.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/STM/USB_OTG/usb_dcd_int.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="13872" selectionTopPixel="8959"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_conf.h" partName="usbd_conf.h" title="usbd_conf.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\usbd_conf.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\usbd_conf.h" project="TempestDisco"/>
+<editorState selectionHorizontalPixel="0" selectionLength="16" selectionOffset="2560" selectionTopPixel="661"/>
+</editor>
 </editors>
 <views>
 <view id="org.coocox.builder.ui.views.ProjectView" partName="Project">
@@ -22,7 +38,7 @@
 <element path="/TempestDisco/STM"/>
 </expanded>
 <selection>
-<element path="/TempestDisco"/>
+<element path="/TempestDisco/usbd_cdc_vcp.c"/>
 </selection>
 </viewState>
 </view>
@@ -66,7 +82,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.coocox.builder.ui.views.ProjectView" activePerspective="org.coocox.builder.perspective.CoBuilder">
+<perspectives activePart="org.eclipse.ui.console.ConsoleView" activePerspective="org.coocox.builder.perspective.CoBuilder">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.coocox.builder.ui.PerspectiveCoBuilder" id="org.coocox.builder.perspective.CoBuilder" label="CooCox CoBuilder"/>
 <alwaysOnActionSet id="org.coocox.welcome.ui.actionSet"/>
@@ -88,13 +104,14 @@
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showMemoryBrowserAction"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showVariablesAction"/>
 <hide_menu_item_id id="org.coocox.builder.ui.openProjectExplorerAction"/>
-<hide_menu_item_id id="org.coocox.codebugger.trace.actions.ShowTraceControlAction"/>
 <hide_menu_item_id id="org.eclipse.debug.ui.commands.TerminateAndRelaunch"/>
+<hide_menu_item_id id="org.coocox.codebugger.trace.actions.ShowTraceControlAction"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showRegistersAction"/>
 <hide_toolbar_item_id id="org.eclipse.cdt.debug.internal.ui.actions.ToggleInstructionStepModeAction"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.eclipse.debug.ui.commands.TerminateAndRelaunch"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.coocox.builder.ui.views.ProjectView"/>
 <view id="org.coocox.component.ui.view.ComponentView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
@@ -118,11 +135,12 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@139be07" ratio="0.69953054" ratioLeft="447" ratioRight="192" relationship="4" relative="org.eclipse.ui.internal.ViewStack@1eae426">
-<folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
 </presentation>
 </folder>
 </info>
@@ -181,8 +199,8 @@
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.coocox.builder.ui.build"/>
 <hide_toolbar_item_id id="org.coocox.welcome.ui.action.welcome"/>
-<hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
 <hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
+<hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.debug.ui.DebugView"/>
 <view id="org.coocox.codebugger.trace.ui.traceview"/>
@@ -192,39 +210,55 @@
 <view id="org.coocox.builder.ui.views.ProjectView"/>
 <fastViewBars/>
 <viewLayoutRec closeable="false" id="org.eclipse.debug.ui.DebugView"/>
-<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.ui.internal.ViewStack@ca7a4c">&#x0A;<folder activePageID="org.coocox.builder.ui.views.ProjectView" appearance="2" expanded="2">&#x0A;<page content="org.coocox.builder.ui.views.ProjectView" label="Project"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@ca7a4c">
+<folder activePageID="org.coocox.builder.ui.views.ProjectView" appearance="2" expanded="2">
+<page content="org.coocox.builder.ui.views.ProjectView" label="Project"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.7496318" ratioLeft="1018" ratioRight="340" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ca7a4c">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.7496318" ratioLeft="1018" ratioRight="340" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ca7a4c">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@2de1c3" ratio="0.69953054" ratioLeft="447" ratioRight="192" relationship="4" relative="org.eclipse.ui.internal.ViewStack@ca7a4c">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@2de1c3" ratio="0.69953054" ratioLeft="447" ratioRight="192" relationship="4" relative="org.eclipse.ui.internal.ViewStack@ca7a4c">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1d69fa2" ratio="0.5" ratioLeft="679" ratioRight="679" relationship="2" relative="org.eclipse.ui.internal.ViewStack@2de1c3">&#x0A;<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">&#x0A;<page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1d69fa2" ratio="0.5" ratioLeft="679" ratioRight="679" relationship="2" relative="org.eclipse.ui.internal.ViewStack@2de1c3">
+<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
+<page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
 <page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser" label="Memory Browser"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.MemoryView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@19d20a6" ratio="0.7496318" ratioLeft="1018" ratioRight="340" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ca7a4c">&#x0A;<folder activePageID="org.eclipse.cdt.dsf.debug.ui.disassembly.view" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="Disassembly"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@19d20a6" ratio="0.7496318" ratioLeft="1018" ratioRight="340" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ca7a4c">
+<folder activePageID="org.eclipse.cdt.dsf.debug.ui.disassembly.view" appearance="2" expanded="2">
+<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="Disassembly"/>
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
 <page content="org.coocox.coassistant.view.CoAssistantView_debug" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
@@ -236,160 +270,173 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/usbd_usr.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/main.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/USB_Device/usbd_core.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/USB_OTG/usb_dcd.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/usb_bsp.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/USB_OTG/usb_dcd_int.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/startup_stm32f4xx.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/stm32f4xx_it.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/main.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/USB2Serial/STM/main.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/main.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/usbd_usr.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/usbd_desc.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/usart.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/main.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/stm32f4xx_it.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/usb_bsp.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/usbd_cdc_vcp.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/STM/USB_Device/usbd_cdc_core.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/stm32f4xx_it.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/STM/USB_OTG/usb_dcd_int.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/STM/USB_Device/usbd_core.c"/>
+<editor factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\usbd_conf.h" project="TempestDisco"/>
 </editors>
-<item historyLabel="main.c" index="1">
+<item historyLabel="main.c" index="2">
 <position/>
 </item>
-<item historyLabel="main.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="1">
-<position/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position/>
-</item>
-<item historyLabel="usb_dcd.c" index="3">
-<position info="not_deleted" x="1842" y="0"/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position info="not_deleted" x="3769" y="0"/>
-</item>
-<item historyLabel="usbd_usr.c" index="0">
-<position info="not_deleted" x="1412" y="0"/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position info="not_deleted" x="3829" y="0"/>
-</item>
-<item historyLabel="usb_bsp.c" index="4">
-<position info="not_deleted" x="8903" y="0"/>
-</item>
-<item historyLabel="usb_bsp.c" index="4">
-<position info="not_deleted" x="9037" y="0"/>
-</item>
-<item historyLabel="usb_bsp.c" index="4">
-<position info="not_deleted" x="9098" y="0"/>
-</item>
-<item historyLabel="usb_bsp.c" index="4">
-<position info="not_deleted" x="9159" y="0"/>
-</item>
-<item historyLabel="usb_bsp.c" index="4">
-<position info="not_deleted" x="9213" y="0"/>
-</item>
-<item historyLabel="usb_bsp.c" index="4">
-<position info="not_deleted" x="9264" y="0"/>
-</item>
-<item historyLabel="usb_bsp.c" index="4">
-<position info="not_deleted" x="9975" y="0"/>
-</item>
-<item historyLabel="usbd_core.c" index="2">
-<position info="not_deleted" x="3867" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2528" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2867" y="0"/>
-</item>
-<item historyLabel="usb_dcd_int.c" index="5">
+<item historyLabel="usb_dcd_int.c" index="0">
 <position info="not_deleted" x="5638" y="20"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="usb_dcd_int.c" index="5">
-<position info="not_deleted" x="5638" y="20"/>
-</item>
-<item historyLabel="stm32f4xx_it.c" index="7">
-<position info="not_deleted" x="3361" y="17"/>
-</item>
-<item historyLabel="startup_stm32f4xx.c" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="stm32f4xx_it.c" index="7">
-<position info="not_deleted" x="3395" y="0"/>
-</item>
-<item historyLabel="startup_stm32f4xx.c" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="stm32f4xx_it.c" index="7">
-<position info="not_deleted" x="3252" y="0"/>
-</item>
-<item historyLabel="startup_stm32f4xx.c" index="6">
-<position info="not_deleted" x="15906" y="0"/>
-</item>
-<item historyLabel="main.c" index="8">
-<position/>
-</item>
-<item historyLabel="usb_dcd_int.c" index="5">
-<position info="not_deleted" x="5638" y="20"/>
-</item>
-<item historyLabel="stm32f4xx_it.c" index="7">
+<item historyLabel="stm32f4xx_it.c" index="1">
 <position info="not_deleted" x="1721" y="0"/>
 </item>
-<item historyLabel="usb_dcd_int.c" index="5">
+<item historyLabel="usb_dcd_int.c" index="0">
 <position info="not_deleted" x="5638" y="20"/>
 </item>
-<item historyLabel="stm32f4xx_it.c" index="7">
+<item historyLabel="stm32f4xx_it.c" index="1">
 <position info="not_deleted" x="3361" y="17"/>
 </item>
-<item historyLabel="stm32f4xx_it.c" index="7">
+<item historyLabel="stm32f4xx_it.c" index="1">
 <position info="not_deleted" x="3361" y="17"/>
 </item>
-<item historyLabel="main.c" index="9">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="2856" y="0"/>
 </item>
-<item historyLabel="main.c" index="9">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="2869" y="0"/>
 </item>
-<item historyLabel="main.c" index="9">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="481" y="7"/>
 </item>
-<item historyLabel="main.c" index="9">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="2823" y="4"/>
 </item>
-<item historyLabel="main.c" index="9">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="2852" y="0"/>
 </item>
-<item active="true" historyLabel="stm32f4xx_it.c" index="7">
+<item historyLabel="stm32f4xx_it.c" index="1">
 <position info="not_deleted" x="3397" y="0"/>
+</item>
+<item historyLabel="main.c" index="4">
+<position info="not_deleted" x="2838" y="0"/>
+</item>
+<item historyLabel="usbd_usr.c" index="5">
+<position info="not_deleted" x="2784" y="0"/>
+</item>
+<item historyLabel="usbd_desc.c" index="6">
+<position info="not_deleted" x="1565" y="0"/>
+</item>
+<item historyLabel="usart.c" index="7">
+<position info="not_deleted" x="2053" y="0"/>
+</item>
+<item historyLabel="main.c" index="8">
+<position info="not_deleted" x="2838" y="0"/>
+</item>
+<item historyLabel="usart.c" index="7">
+<position info="not_deleted" x="2053" y="0"/>
+</item>
+<item historyLabel="stm32f4xx_it.c" index="9">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="usb_bsp.c" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="6797" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="22723" y="0"/>
+</item>
+<item historyLabel="stm32f4xx_it.c" index="13">
+<position info="not_deleted" x="3397" y="0"/>
+</item>
+<item historyLabel="usb_dcd_int.c" index="14">
+<position info="not_deleted" x="6030" y="0"/>
+</item>
+<item historyLabel="usb_dcd_int.c" index="14">
+<position info="not_deleted" x="13872" y="0"/>
+</item>
+<item historyLabel="usb_dcd_int.c" index="14">
+<position info="not_deleted" x="6030" y="0"/>
+</item>
+<item historyLabel="usb_dcd_int.c" index="14">
+<position info="not_deleted" x="13872" y="0"/>
+</item>
+<item historyLabel="usbd_core.c" index="15">
+<position info="not_deleted" x="6010" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="22723" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="22745" y="13"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="6136" y="24"/>
+</item>
+<item historyLabel="usbd_conf.h" index="16">
+<position info="not_deleted" x="2305" y="24"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="6797" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="22723" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="2078" y="8"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="22725" y="8"/>
+</item>
+<item historyLabel="usbd_conf.h" index="16">
+<position info="not_deleted" x="2560" y="16"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="2078" y="8"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="1702" y="13"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="6381" y="13"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="1427" y="13"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="6381" y="13"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="1427" y="13"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.c" index="11">
+<position info="not_deleted" x="6797" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_core.c" index="12">
+<position info="not_deleted" x="22723" y="0"/>
+</item>
+<item historyLabel="usbd_conf.h" index="16">
+<position info="not_deleted" x="2560" y="16"/>
+</item>
+<item historyLabel="usb_dcd_int.c" index="14">
+<position info="not_deleted" x="13872" y="0"/>
+</item>
+<item historyLabel="usb_dcd_int.c" index="14">
+<position info="not_deleted" x="6030" y="0"/>
+</item>
+<item active="true" historyLabel="usb_dcd_int.c" index="14">
+<position info="not_deleted" x="13872" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -398,6 +445,30 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_conf.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\usbd_conf.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\usbd_conf.h" project="TempestDisco"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="TempestDisco/main.c">
+<persistable path="/TempestDisco/main.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_vcp.c" tooltip="TempestDisco/usbd_cdc_vcp.c">
+<persistable path="/TempestDisco/usbd_cdc_vcp.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usb_bsp.c" tooltip="TempestDisco/usb_bsp.c">
+<persistable path="/TempestDisco/usb_bsp.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_it.c" tooltip="TempestDisco/stm32f4xx_it.c">
+<persistable path="/TempestDisco/stm32f4xx_it.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usart.c" tooltip="TempestDisco/usart.c">
+<persistable path="/TempestDisco/usart.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_desc.c" tooltip="TempestDisco/usbd_desc.c">
+<persistable path="/TempestDisco/usbd_desc.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_usr.c" tooltip="TempestDisco/usbd_usr.c">
+<persistable path="/TempestDisco/usbd_usr.c"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="USB2Serial/STM/main.c">
 <persistable path="/USB2Serial/STM/main.c"/>
 </file>
@@ -415,24 +486,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_vcp.c" tooltip="USB2Serial/STM/usbd_cdc_vcp.c">
 <persistable path="/USB2Serial/STM/usbd_cdc_vcp.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_it.c" tooltip="USB2Serial/STM/stm32f4xx_it.c">
-<persistable path="/USB2Serial/STM/stm32f4xx_it.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_usr.c" tooltip="USB2Serial/STM/usbd_usr.c">
-<persistable path="/USB2Serial/STM/usbd_usr.c"/>
-</file>
-<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="cdefs.h" tooltip="c:\program files (x86)\gnu tools arm embedded\4.9 2015q1\arm-none-eabi\include\sys\cdefs.h">
-<persistable uri="file:/c:/program%20files%20(x86)/gnu%20tools%20arm%20embedded/4.9%202015q1/arm-none-eabi/include/sys/cdefs.h"/>
-</file>
-<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usb_conf.h" tooltip="C:\Users\Randy\CoIDE\workspace\USB2Serial\app\usb_conf.h">
-<persistable uri="file:/C:/Users/Randy/CoIDE/workspace/USB2Serial/app/usb_conf.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usb_bsp.c" tooltip="USB2Serial/STM/usb_bsp.c">
-<persistable path="/USB2Serial/STM/usb_bsp.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_desc.c" tooltip="USB2Serial/STM/usbd_desc.c">
-<persistable path="/USB2Serial/STM/usbd_desc.c"/>
 </file>
 </mruList>
 </workbench>

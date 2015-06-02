@@ -3,11 +3,11 @@
 #define TEMPESTIOSTREAMLISTENER_H
 
 class AbstractTempestIO;
-class AbstractTempestStream;
+class AbstractTempestInStream;
 
 class TempestIOStreamListener {
 public:
-   TempestIOStreamListener(AbstractTempestStream *stream, AbstractTempestIO *tempestIO);
+   TempestIOStreamListener(AbstractTempestInStream *stream, AbstractTempestIO *tempestIO);
 
    void Service(void);
 
@@ -22,7 +22,7 @@ private:
    };
 
 private:
-   AbstractTempestStream *stream;
+   AbstractTempestInStream *stream;
    AbstractTempestIO *tempestIO;
 
    State state;
