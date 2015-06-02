@@ -42,9 +42,28 @@ void TempestIOStreamListener::Service(void)
             tempestIO->Tick6KHz();
             break;
 
+         case OP_VECTOR_GO:
+            tempestIO->VectorGo();
+            break;
+
          case OP_WRITE_VECTOR_RAM:
             state = VECTOR_RAM_ADDRESS_LOW;
             vectorRAMAddress = (b & 0xF)<<8;
+            break;
+
+         case OP_SOUND_VOLUME:
+            state = SOUND_VOLUME;
+            soundChannel = b & 7;
+            break;
+
+         case OP_SOUND_WAVE:
+            state = SOUND_WAVE;
+            soundChannel = b & 7;
+            break;
+
+         case OP_SOUND_FREQUENCY:
+            state = SOUND_FREQUENCY;
+            soundChannel = b & 7;
             break;
 
          default:
@@ -59,6 +78,21 @@ void TempestIOStreamListener::Service(void)
 
       case VECTOR_RAM_VALUE:
          tempestIO->WriteVectorRAM(vectorRAMAddress, b);
+         state = IDLE;
+         break;
+
+      case SOUND_FREQUENCY:
+         tempestIO->SetSoundChannelFrequency(soundChannel, b);
+         state = IDLE;
+         break;
+
+      case SOUND_VOLUME:
+         tempestIO->SetSoundChannelVolume(soundChannel, b);
+         state = IDLE;
+         break;
+
+      case SOUND_WAVE:
+         tempestIO->SetSoundChannelWaveform(soundChannel, b);
          state = IDLE;
          break;
 

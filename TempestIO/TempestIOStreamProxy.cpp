@@ -20,23 +20,39 @@
 
 TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
 {
+   // copy parameters
 	this->stream = stream;
+
+   // clear
+   isVectorHalt = true;
 }
 
 
 void TempestIOStreamProxy::SetSoundChannelFrequency(int channel, int frequency)
 {
-	throw TempestException("TempestIOStreamProxy::SetSoundChannelFrequency: not implemented");
+   // pack the op and the channel into the first byte
+   stream->Write((OP_SOUND_FREQUENCY << 5) | channel);
+
+   // waveform in the second byte
+   stream->Write(frequency);
 }
 
 void TempestIOStreamProxy::SetSoundChannelVolume(int channel, int volume)
 {
-	throw TempestException("TempestIOStreamProxy::SetSoundChannelVolume: not implemented");
+   // pack the op and the channel into the first byte
+   stream->Write((OP_SOUND_VOLUME << 5) | channel);
+
+   // waveform in the second byte
+   stream->Write(volume);
 }
 
 void TempestIOStreamProxy::SetSoundChannelWaveform(int channel, int waveform)
 {
-	throw TempestException("TempestIOStreamProxy::SetSoundChannelWaveform: not implemented");
+   // pack the op and the channel into the first byte
+   stream->Write((OP_SOUND_WAVE << 5) | channel);
+
+   // waveform in the second byte
+   stream->Write(waveform);
 }
 
 void TempestIOStreamProxy::Tick6KHz(void)
@@ -57,17 +73,21 @@ void TempestIOStreamProxy::WriteVectorRAM(uint16_t address, uint8_t value)
 
 bool TempestIOStreamProxy::IsVectorHalt(void)
 {
-	throw TempestException("TempestIOStreamProxy::IsVectorHalt: not implemented");
+   return isVectorHalt;
 }
 
 void TempestIOStreamProxy::VectorGo(void)
 {
-	throw TempestException("TempestIOStreamProxy::VectorGo: not implemented");
+   // send just the opcode with no data
+   stream->Write(OP_VECTOR_GO << 5);
+   isVectorHalt = false;
 }
 
 void TempestIOStreamProxy::VectorReset(void)
 {
 	// send just the opcode with no data
 	stream->Write(OP_VECTOR_RESET << 5);
+
+   isVectorHalt = true;
 }
 

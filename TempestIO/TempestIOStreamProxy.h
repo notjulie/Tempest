@@ -23,6 +23,7 @@ public:
 
 private:
 	AbstractTempestStream	*stream;
+   bool isVectorHalt;
 };
 
 #endif
