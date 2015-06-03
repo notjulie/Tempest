@@ -4,8 +4,13 @@
 
 #pragma once
 
+// Win32
 #include <Windows.h>
 
-// include whatever TempestCPU may reference
-#include "TempestCPU/stdafx.h"
+// standard C
+#include <stdint.h>
+
+// standard C++
+#include <map>
+#include <vector>
 

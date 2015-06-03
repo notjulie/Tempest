@@ -5,7 +5,7 @@
 using namespace System;
 using namespace System::Threading;
 
-#include "../TempestIO/TempestIOStreamProxy.h"
+#include "TempestIO/TempestIOStreamProxy.h"
 
 #include "TDNMemoryStream.h"
 

@@ -1,7 +1,7 @@
 
 #include "Stdafx.h"
 
-#include "../TempestIO/TempestMemoryStream.h"
+#include "TempestIO/TempestMemoryStream.h"
 
 #include "TDNMemoryStream.h"
 
