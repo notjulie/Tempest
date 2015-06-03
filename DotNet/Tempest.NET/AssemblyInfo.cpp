@@ -1,3 +1,13 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    AssemblyInfo for Tempest.NET managed C++ wrapper class library
+// ====================================================================
+
 #include "stdafx.h"
 
 using namespace System;
