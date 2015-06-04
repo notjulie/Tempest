@@ -15,7 +15,7 @@ namespace TempestDotNET {
 		managedStream = stream;
 
 		// create our native proxy object
-		tempestIO = new TempestIOStreamProxy(managedStream->GetStream());
+      tempestIO = new TempestIOStreamProxy(managedStream->GetStream()->GetLeftSide());
 	}
 
 

@@ -5,26 +5,53 @@
 #include "AbstractTempestStream.h"
 #include "TempestStreamProtocol.h"
 
-class TempestMemoryStream : public AbstractTempestInStream, public AbstractTempestOutStream
+
+class SimpleMemoryStream
 {
 public:
-	TempestMemoryStream(void);
+   SimpleMemoryStream(void);
 
-   virtual int  Read(void);
-   virtual void Write(uint8_t b);
-
-   virtual bool Read(TempestInPacket *packet);
-   virtual void Write(TempestInPacket packet);
+   int  Read(void);
+   void Write(uint8_t b);
 
 private:
 	uint8_t buffer[10000];
 	int bufferIn;
 	int bufferOut;
-
-   TempestInPacket packetBuffer[500];
-   int packetBufferIn;
-   int packetBufferOut;
 };
 
+class FullDuplexStream : public AbstractTempestStream
+{
+public:
+   FullDuplexStream(SimpleMemoryStream *readStream, SimpleMemoryStream *writeStream) {
+      this->readStream = readStream;
+      this->writeStream = writeStream;
+   }
+
+   virtual int  Read(void) { return readStream->Read(); }
+   virtual void Write(uint8_t b) { writeStream->Write(b); }
+
+private:
+   SimpleMemoryStream *readStream;
+   SimpleMemoryStream *writeStream;
+};
+
+class TempestMemoryStream
+{
+public:
+   TempestMemoryStream(void)
+      :
+      leftSide(&rightToLeft, &leftToRight),
+      rightSide(&leftToRight, &rightToLeft)
+         {}
+   AbstractTempestStream *GetLeftSide(void) { return &leftSide; }
+   AbstractTempestStream *GetRightSide(void) { return &rightSide; }
+
+private:
+   SimpleMemoryStream leftToRight;
+   SimpleMemoryStream rightToLeft;
+   FullDuplexStream leftSide;
+   FullDuplexStream rightSide;
+};
 
 #endif

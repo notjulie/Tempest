@@ -19,7 +19,7 @@ namespace TempestDotNET {
 		this->tempestIO = tempestIO;
 
 		// create our listener
-      listener = new TempestIOStreamListener(stream->GetStream(), tempestIO->GetIOObject());
+      listener = new TempestIOStreamListener(stream->GetStream()->GetRightSide(), tempestIO->GetIOObject());
 
       // create our thread that does the listening
       thread = gcnew Thread(gcnew ThreadStart(this, &TDNTempestIOStreamListener::ThreadEntry));

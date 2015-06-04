@@ -8,7 +8,7 @@
 #include "TempestIOStreamListener.h"
 
 
-TempestIOStreamListener::TempestIOStreamListener(AbstractTempestInStream *stream, AbstractTempestIO *tempestIO)
+TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *stream, AbstractTempestIO *tempestIO)
 {
    // copy parameters
    this->stream = stream;
@@ -48,7 +48,7 @@ void TempestIOStreamListener::Service(void)
                packet.flags1 = 0;
                if (tempestIO->IsVectorHalt())
                   packet.flags1 |= FLAG_VECTOR_HALT;
-               stream->Write(packet);
+               stream->Write(packet.flags1);
             }
             break;
 

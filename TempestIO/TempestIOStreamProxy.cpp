@@ -18,7 +18,7 @@
 #include "TempestIOStreamProxy.h"
 
 
-TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestOutStream *stream)
+TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
 {
    // copy parameters
 	this->stream = stream;
@@ -61,9 +61,14 @@ void TempestIOStreamProxy::Tick6KHz(void)
 	stream->Write(OP_6KHZ_TICK << 5);
 
    // and check the return stream
-   TempestInPacket packet;
-   while (stream->Read(&packet))
+   for (;;)
    {
+      int b = stream->Read();
+      if (b < 0)
+         break;
+
+      TempestInPacket packet;
+      packet.flags1 = (uint8_t)b;
       this->isVectorHalt = (packet.flags1 & FLAG_VECTOR_HALT) != 0;
    }
 }
