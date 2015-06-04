@@ -29,7 +29,8 @@ namespace TempestWpf
       // our Tempest objects
       private TDNWin32TempestIO tempestIO;
       private Tempest tempest;
-      private TDNMemoryStream tempestMemoryStream;
+      private TDNComPortStream comPortStream1;
+      private TDNComPortStream comPortStream2;
       private TDNTempestIOStreamListener tempestIOStreamListener;
       private TDNIOStreamProxy tempestIOStreamProxy;
 
@@ -165,16 +166,17 @@ namespace TempestWpf
          try
          {
             // create the stream object that's going to be in the middle of everything
-            tempestMemoryStream = new TDNMemoryStream();
+            comPortStream1 = new TDNComPortStream("COM6");
+            comPortStream2 = new TDNComPortStream("COM7");
 
             // create the IO object that we represent
             tempestIO = new TDNWin32TempestIO();
 
             // create the streamlistener that feeds it
-            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream, tempestIO);
+            tempestIOStreamListener = new TDNTempestIOStreamListener(comPortStream1, tempestIO);
 
             // create the IO proxy
-            tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream);
+            tempestIOStreamProxy = new TDNIOStreamProxy(comPortStream2);
 
             // create our tempest
             tempest = new Tempest(tempestIOStreamProxy);

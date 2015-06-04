@@ -151,8 +151,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ITDNStreamProvider.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="TDNComPortStream.h" />
     <ClInclude Include="TDNIOStreamProxy.h" />
     <ClInclude Include="TDNTempestIOStreamListener.h" />
     <ClInclude Include="Tempest.h" />
@@ -171,6 +173,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TDNComPortStream.cpp" />
     <ClCompile Include="TDNIOStreamProxy.cpp" />
     <ClCompile Include="TDNTempestIOStreamListener.cpp" />
     <ClCompile Include="Tempest.cpp" />

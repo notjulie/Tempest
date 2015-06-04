@@ -48,6 +48,12 @@
     <ClInclude Include="TDNIOStreamProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TDNComPortStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ITDNStreamProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -81,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TDNIOStreamProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TDNComPortStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

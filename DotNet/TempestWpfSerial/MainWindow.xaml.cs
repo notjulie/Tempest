@@ -171,10 +171,10 @@ namespace TempestWpf
             tempestIO = new TDNWin32TempestIO();
 
             // create the streamlistener that feeds it
-            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream, tempestIO);
+            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream.GetLeftSide(), tempestIO);
 
             // create the IO proxy
-            tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream);
+            tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream.GetRightSide());
 
             // create our tempest
             tempest = new Tempest(tempestIOStreamProxy);

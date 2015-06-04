@@ -5,6 +5,8 @@
 using namespace System;
 using namespace System::Threading;
 
+#include "ITDNStreamProvider.h"
+
 class TempestMemoryStream;
 
 namespace TempestDotNET {
@@ -14,7 +16,8 @@ namespace TempestDotNET {
 		TDNMemoryStream(void);
 		~TDNMemoryStream(void);
 
-		TempestMemoryStream *GetStream(void) { return stream; }
+      ITDNStreamProvider ^GetLeftSide();
+      ITDNStreamProvider ^GetRightSide();
 
 	private:
 		TempestMemoryStream *stream;

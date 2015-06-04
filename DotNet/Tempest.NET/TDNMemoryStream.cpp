@@ -16,4 +16,14 @@ namespace TempestDotNET {
 	{
 		delete stream, stream = NULL;
 	}
+
+   ITDNStreamProvider ^TDNMemoryStream::GetLeftSide()
+   {
+      return gcnew TDNStreamPointer(this, stream->GetLeftSide());
+   }
+
+   ITDNStreamProvider ^TDNMemoryStream::GetRightSide()
+   {
+      return gcnew TDNStreamPointer(this, stream->GetRightSide());
+   }
 };

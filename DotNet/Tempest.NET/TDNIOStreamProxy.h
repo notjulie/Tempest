@@ -15,14 +15,14 @@ namespace TempestDotNET {
 
 	public ref class TDNIOStreamProxy {
 	public:
-		TDNIOStreamProxy(TDNMemoryStream ^stream);
+      TDNIOStreamProxy(ITDNStreamProvider ^stream);
 		~TDNIOStreamProxy(void);
 
 
 		AbstractTempestIO *GetIOObject(void) { return tempestIO; }
 
 	private:
-		TDNMemoryStream ^managedStream;
+      ITDNStreamProvider ^managedStream;
 		TempestIOStreamProxy *tempestIO;
 	};
 };

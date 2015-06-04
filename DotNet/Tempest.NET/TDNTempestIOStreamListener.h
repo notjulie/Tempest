@@ -14,14 +14,14 @@ namespace TempestDotNET {
 
    public ref class TDNTempestIOStreamListener : public IDisposable {
 	public:
-		TDNTempestIOStreamListener(TDNMemoryStream ^stream, TDNWin32TempestIO ^tempestIO);
+      TDNTempestIOStreamListener(ITDNStreamProvider ^stream, TDNWin32TempestIO ^tempestIO);
 		~TDNTempestIOStreamListener(void);
 
    private:
       void ThreadEntry();
 
 	private:
-		TDNMemoryStream ^stream;
+      ITDNStreamProvider ^stream;
 		TDNWin32TempestIO ^tempestIO;
 
 		TempestIOStreamListener *listener;
