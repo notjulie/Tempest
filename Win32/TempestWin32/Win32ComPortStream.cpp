@@ -51,6 +51,7 @@ Win32ComPortStream::Win32ComPortStream(const char *portName)
 
    // create our events
    writeBufferEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+   terminateEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
    readOverlapped.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
    writeOverlapped.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 
@@ -73,12 +74,26 @@ Win32ComPortStream::Win32ComPortStream(const char *portName)
 
 Win32ComPortStream::~Win32ComPortStream(void)
 {
+   // note that we are terminating
+   SetEvent(terminateEvent);
+
+   // cancel all I/O until both threads exit... I do this repeatedly
+   // just because of the possible race condition between the terminating
+   // flag and the I/O
+   for (;;)
+   {
+      CancelIoEx(file, NULL);
+      Sleep(1);
+
+      if (WaitForSingleObject(readThread, 0) == WAIT_TIMEOUT)
+         continue;
+      if (WaitForSingleObject(writeThread, 0) == WAIT_TIMEOUT)
+         continue;
+      break;
+   }
+
    // close the file
    CloseHandle(file);
-
-   // wait for the threads to exit
-   WaitForSingleObject(readThread, INFINITE);
-   WaitForSingleObject(writeThread, INFINITE);
 
    // close the events
    CloseHandle(readOverlapped.hEvent);
@@ -120,7 +135,7 @@ int Win32ComPortStream::Read(void)
 
 void Win32ComPortStream::ReadThread(void)
 {
-   for (;;)
+   while (WaitForSingleObject(terminateEvent, 0) == WAIT_TIMEOUT)
    {
       // clear our event
       ResetEvent(readOverlapped.hEvent);
@@ -144,7 +159,15 @@ void Win32ComPortStream::ReadThread(void)
             return;
 
          // else wait
-         WaitForSingleObject(readOverlapped.hEvent, INFINITE);
+         HANDLE waitHandles[] = { terminateEvent, readOverlapped.hEvent };
+         DWORD waitResult = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
+         if (waitResult == WAIT_OBJECT_0)
+         {
+            CancelIo(file);
+            break;
+         }
+
+         // get the result
          if (!GetOverlappedResult(file, &readOverlapped, &bytesRead, FALSE))
             return;
       }
@@ -171,7 +194,12 @@ void Win32ComPortStream::WriteThread(void)
    for (;;)
    {
       // wait to be signaled that there's something to write
-      WaitForSingleObject(writeBufferEvent, INFINITE);
+      {
+         HANDLE waitHandles[] = { terminateEvent, writeBufferEvent };
+         DWORD waitResult = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
+         if (waitResult == WAIT_OBJECT_0)
+            break;
+      }
 
       // clear our event
       ResetEvent(writeOverlapped.hEvent);
@@ -198,7 +226,15 @@ void Win32ComPortStream::WriteThread(void)
             return;
 
          // else wait
-         WaitForSingleObject(writeOverlapped.hEvent, INFINITE);
+         HANDLE waitHandles[] = { terminateEvent, writeOverlapped.hEvent };
+         DWORD waitResult = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
+         if (waitResult == WAIT_OBJECT_0)
+         {
+            CancelIo(file);
+            break;
+         }
+
+         // get the result
          DWORD bytesWritten;
          if (!GetOverlappedResult(file, &writeOverlapped, &bytesWritten, FALSE))
             return;

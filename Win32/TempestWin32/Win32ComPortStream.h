@@ -30,6 +30,7 @@ private:
    DWORD    writeThreadID;
 
    HANDLE   writeBufferEvent;
+   HANDLE   terminateEvent;
    OVERLAPPED  readOverlapped;
    OVERLAPPED  writeOverlapped;
 
