@@ -15,19 +15,51 @@ namespace TempestWin32Test
 	public:	
 		TEST_METHOD(TestMethod1)
 		{
-         // try writing at gradually increasing rates to test our throughput
-         TestWriteSpeed(100);
-         TestWriteSpeed(1000);
-         TestWriteSpeed(10000);
-         TestWriteSpeed(100000);
-         TestWriteSpeed(1000000);
+         // do a binary search to estimate how fast we can write...
+         int highestSuccess = 0;
+         int lowestFailure = 0;
+
+         // we can't start our binary search until we have a failure... do increasing
+         // values until we get a failure
+         int i = 100;
+         for (;;)
+         {
+            try
+            {
+               TestWriteSpeed(i);
+               highestSuccess = i;
+               i *= 100;
+            }
+            catch (...)
+            {
+               lowestFailure = i;
+               break;
+            }
+         }
+
+         // now do our binary search
+         while (lowestFailure - highestSuccess > 10)
+         {
+            int testValue = (lowestFailure + highestSuccess) / 2;
+            try
+            {
+               TestWriteSpeed(testValue);
+               highestSuccess = testValue;
+            }
+            catch (...)
+            {
+               lowestFailure = testValue;
+            }
+         }
+
+         Assert::AreEqual(0, (lowestFailure + highestSuccess) / 2);
       }
 
    private:
       void TestWriteSpeed(int bytesPerSecond)
       {
-         Win32ComPortStream port1("COM6");
-         Win32ComPortStream port2("COM7");
+         Win32ComPortStream port1("COM3");
+         Win32ComPortStream port2("CNCB2");
 
          DWORD startTime = GetTickCount();
          int bytesWritten = 0;

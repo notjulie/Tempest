@@ -40,6 +40,8 @@ private:
    uint8_t  writeBuffer[20000];
    int      writeBufferIn;
    int      writeBufferOut;
+
+   std::string readThreadError;
 };
 
 #endif

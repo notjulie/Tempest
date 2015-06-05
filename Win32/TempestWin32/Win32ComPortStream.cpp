@@ -77,20 +77,9 @@ Win32ComPortStream::~Win32ComPortStream(void)
    // note that we are terminating
    SetEvent(terminateEvent);
 
-   // cancel all I/O until both threads exit... I do this repeatedly
-   // just because of the possible race condition between the terminating
-   // flag and the I/O
-   for (;;)
-   {
-      CancelIoEx(file, NULL);
-      Sleep(1);
-
-      if (WaitForSingleObject(readThread, 0) == WAIT_TIMEOUT)
-         continue;
-      if (WaitForSingleObject(writeThread, 0) == WAIT_TIMEOUT)
-         continue;
-      break;
-   }
+   // wait for the threads to exit
+   WaitForSingleObject(readThread, INFINITE);
+   WaitForSingleObject(writeThread, INFINITE);
 
    // close the file
    CloseHandle(file);
@@ -119,6 +108,10 @@ void Win32ComPortStream::Write(uint8_t b)
 
 int Win32ComPortStream::Read(void)
 {
+   // bail if our read thread hit an error
+   if (readThreadError.size() > 0)
+      throw TempestException(readThreadError);
+
    // never mind if there's nothing
    if (readBufferIn == readBufferOut)
       return -1;
@@ -180,7 +173,10 @@ void Win32ComPortStream::ReadThread(void)
          if (newBufferIn >= sizeof(readBuffer))
             newBufferIn = 0;
          if (newBufferIn == readBufferOut)
-            throw TempestException("Win32ComPortStream::ReadThread: buffer full");
+         {
+            readThreadError = "Win32ComPortStream::ReadThread: buffer full";
+            return;
+         }
 
          readBuffer[readBufferIn] = buffer[i];
          readBufferIn = newBufferIn;
