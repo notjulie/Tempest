@@ -219,14 +219,16 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
 
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 {
+	static int bytesReceived = 0;
+	bytesReceived += Len;
    //RSW - Receive USB, send USART
-   while (Len-- > 0) {
+/*   while (Len-- > 0) {
       USART_SendData(DISCOVERY_COM, *Buf++);
       while(USART_GetFlagStatus(DISCOVERY_COM, USART_FLAG_TXE) == RESET)
          ; 
    } 
 
-   GPIO_ToggleBits(LED_RED_GPIO_PORT, LED_RED_PIN);
+   GPIO_ToggleBits(LED_RED_GPIO_PORT, LED_RED_PIN);*/
    return USBD_OK;
 }
 
