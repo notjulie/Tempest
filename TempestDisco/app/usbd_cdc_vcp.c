@@ -27,11 +27,8 @@
 #include "usbd_cdc_vcp.h"
 #include "stm32f4xx_conf.h"
 #include "stm32f4_discovery.h"
-#include "usart.h"
 
-
-LINE_CODING g_lc;
-
+#include "SystemError.h"
 
 
 
@@ -107,10 +104,6 @@ static uint16_t VCP_DeInit(void)
  */
 static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 {
-   LINE_CODING* plc = (LINE_CODING*)Buf;
-
-   assert_param(Len>=sizeof(LINE_CODING));
-
    switch (Cmd) {
        /* Not  needed for this driver, AT modem commands */   
       case SEND_ENCAPSULATED_COMMAND:
@@ -126,15 +119,10 @@ static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
          
       //Note - hw flow control on UART 1-3 and 6 only
       case SET_LINE_CODING: 
-         if (!ust_config(DISCOVERY_COM, plc))
-            return USBD_FAIL;
-         
-         ust_cpy(&g_lc, plc);           //Copy into structure to save for later
          break;
          
          
       case GET_LINE_CODING:
-         ust_cpy(plc, &g_lc);
          break;
 
          
@@ -173,26 +161,26 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
 
    //If no buffer, we're supposed to receive USART, send USB
    if (Buf==NULL) {
-      if (g_lc.datatype == 7)
+      /*if (g_lc.datatype == 7)
          APP_Rx_Buffer[APP_Rx_ptr_in] = USART_ReceiveData(DISCOVERY_COM) & 0x7F;
       else if (g_lc.datatype == 8)
          APP_Rx_Buffer[APP_Rx_ptr_in] = USART_ReceiveData(DISCOVERY_COM);
 
-      APP_Rx_ptr_in++;
+      APP_Rx_ptr_in++;*/
   
-      /* To avoid buffer overflow */
-      if(APP_Rx_ptr_in == APP_RX_DATA_SIZE)
-         APP_Rx_ptr_in = 0;
+      // check for buffer overflow
+      if(APP_Rx_ptr_in >= APP_RX_DATA_SIZE)
+         ReportSystemError(SYSTEM_ERROR_USB_TRANSMIT_OVERFLOW);
    }
    else {      //If we were passed a buffer, transmit that
       while (i < Len) {
-         APP_Rx_Buffer[APP_Rx_ptr_in] = *(Buf + i);
+         /*APP_Rx_Buffer[APP_Rx_ptr_in] = *(Buf + i);
          APP_Rx_ptr_in++;
-         i++;
+         i++;*/
 
-         /* To avoid buffer overflow */
+         // check for buffer overflow
          if (APP_Rx_ptr_in == APP_RX_DATA_SIZE) 
-            APP_Rx_ptr_in = 0;
+             ReportSystemError(SYSTEM_ERROR_USB_TRANSMIT_OVERFLOW);
       }
    }
    
@@ -219,6 +207,9 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
 
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 {
+	// we don't have any place to put the data yet
+	ReportSystemError(SYSTEM_ERROR_USB_RECEIVE_OVERFLOW);
+
 	static int bytesReceived = 0;
 	bytesReceived += Len;
 
