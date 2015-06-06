@@ -5,8 +5,14 @@
 #include "usbd_desc.h"
 #include "usbd_cdc_vcp.h"
 
+#include "TempestIO/TempestIOStreamListener.h"
+
+#include "TempestDiscoIO.h"
+
 #include "main.h"
 
+TempestDiscoIO	IO;
+TempestIOStreamListener USBListener(&USBStream, &IO);
 
 extern "C" {
 
@@ -110,11 +116,11 @@ extern "C" {
 
 		hw_init();
 
-	   for(;;) {
-		  GPIO_ToggleBits(LED_GREEN_GPIO_PORT, LED_GREEN_PIN);
-			Delay(500);
+	    for(;;) {
+	    	USBListener.Service();
 		}
-	   return 0;
+
+	    return 0;
 	}
 
 };

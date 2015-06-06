@@ -24,17 +24,18 @@
 #endif /* USB_OTG_HS_INTERNAL_DMA_ENABLED */
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_cdc_vcp.h"
-#include "stm32f4xx_conf.h"
-#include "stm32f4_discovery.h"
+#include "TempestDisco.h"
 
 #include "TempestIO/TempestMemoryStream.h"
 
 #include "SystemError.h"
 
+#include "usbd_cdc_vcp.h"
+
 
 // our global memory stream between the USB port and the app
-TempestMemoryStream memoryStream;
+static TempestMemoryStream memoryStream;
+AbstractTempestStream &USBStream = *memoryStream.GetLeftSide();
 
 /* Private function prototypes -----------------------------------------------*/
 static uint16_t VCP_Init(void);

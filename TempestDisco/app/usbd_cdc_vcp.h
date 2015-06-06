@@ -30,6 +30,7 @@
 #include "usbd_conf.h"
 #include <stdint.h>
 
+extern class AbstractTempestStream &USBStream;
 
 #endif /* __USBD_CDC_VCP_H */
 

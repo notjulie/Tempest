@@ -28,7 +28,7 @@ void TempestIOStreamListener::Service(void)
       if (b < 0)
          break;
 
-      // switch acording to state
+      // switch according to state
       switch (state)
       {
       case IDLE:
@@ -75,9 +75,6 @@ void TempestIOStreamListener::Service(void)
             state = SOUND_FREQUENCY;
             soundChannel = b & 7;
             break;
-
-         default:
-            throw std::runtime_error("TempestIOStreamListener: unknown op");
          }
          break;
 
@@ -105,9 +102,6 @@ void TempestIOStreamListener::Service(void)
          tempestIO->SetSoundChannelWaveform(soundChannel, b);
          state = IDLE;
          break;
-
-      default:
-         throw std::runtime_error("TempestIOStreamListener: unknown state");
       }
    }
 }
