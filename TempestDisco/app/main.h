@@ -8,7 +8,18 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+#ifdef __cplusplus
+	extern "C" {
+#endif
+
+
 // Function prototypes
 void timing_handler();
+
+
+
+#ifdef __cplusplus
+	};
+#endif
 
 #endif /* MAIN_H_ */
