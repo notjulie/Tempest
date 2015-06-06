@@ -15,6 +15,11 @@ public:
    void Write(uint8_t b);
 
 private:
+   // implementation dependent... normally one would throw an exception
+   // here but for embedded exceptions may not be enabled
+   static void ReportBufferOverflow(void);
+
+private:
 	uint8_t buffer[10000];
 	int bufferIn;
 	int bufferOut;

@@ -1,8 +1,12 @@
 
 #include "TempestDisco.h"
+
+#include "TempestIO/TempestMemoryStream.h"
+
 #include "SystemError.h"
 
 static void CPUSpin(int milliseconds);
+
 
 extern "C" {
 
@@ -35,6 +39,10 @@ extern "C" {
 		}
 	}
 
+	void __cxa_pure_virtual()
+	{
+		ReportSystemError(SYSTEM_ERROR_PURE_VIRTUAL_CALLED);
+	}
 };
 
 
@@ -51,3 +59,12 @@ static void CPUSpin(int milliseconds)
 			continue;
 }
 
+void SimpleMemoryStream::ReportBufferOverflow(void)
+{
+	ReportSystemError(SYSTEM_ERROR_STREAMOVERFLOW);
+}
+
+void operator delete  ( void* ptr )
+{
+	ReportSystemError(SYSTEM_ERROR_DELETE_CALLED);
+}

@@ -1,8 +1,5 @@
 
 #include "stdafx.h"
-
-#include "../TempestCPU/TempestException.h"
-
 #include "TempestMemoryStream.h"
 
 SimpleMemoryStream::SimpleMemoryStream(void)
@@ -18,7 +15,7 @@ void SimpleMemoryStream::Write(uint8_t b)
 	if (newBufferIn >= sizeof(buffer))
 		newBufferIn = 0;
 	if (newBufferIn == bufferOut)
-		throw TempestException("SimpleMemoryStream::Write: buffer full");
+		ReportBufferOverflow();
 
 	buffer[bufferIn] = b;
 	bufferIn = newBufferIn;
@@ -32,7 +29,7 @@ int SimpleMemoryStream::Read(void)
 
    // else just return the next
    int newBufferOut = bufferOut + 1;
-   if (newBufferOut >= sizeof(buffer))
+   if (newBufferOut >= (int)sizeof(buffer))
       newBufferOut = 0;
    int result = buffer[bufferOut];
    bufferOut = newBufferOut;

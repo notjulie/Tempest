@@ -28,19 +28,13 @@
 #include "stm32f4xx_conf.h"
 #include "stm32f4_discovery.h"
 
+#include "TempestIO/TempestMemoryStream.h"
+
 #include "SystemError.h"
 
 
-
-
-/* These are external variables imported from CDC core to be used for IN 
- transfer management. */
-extern uint8_t APP_Rx_Buffer[]; /* Write CDC received data in this buffer.
- These data will be sent over USB IN endpoint
- in the CDC core functions. */
-extern uint32_t APP_Rx_ptr_in; /* Increment this pointer or roll it back to
- start address when writing received data
- in the buffer APP_Rx_Buffer. */
+// our global memory stream between the USB port and the app
+TempestMemoryStream memoryStream;
 
 /* Private function prototypes -----------------------------------------------*/
 static uint16_t VCP_Init(void);
@@ -49,7 +43,36 @@ static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len);
 static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len);
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len);
 
-CDC_IF_Prop_TypeDef VCP_fops = {VCP_Init, VCP_DeInit, VCP_Ctrl, VCP_DataTx, VCP_DataRx };
+extern "C" {
+
+	/* These are external variables imported from CDC core to be used for IN
+	 transfer management. */
+	extern uint8_t APP_Rx_Buffer[]; /* Write CDC received data in this buffer.
+	 These data will be sent over USB IN endpoint
+	 in the CDC core functions. */
+	extern uint32_t APP_Rx_ptr_in; /* Increment this pointer or roll it back to
+	 start address when writing received data
+	 in the buffer APP_Rx_Buffer. */
+
+
+	CDC_IF_Prop_TypeDef VCP_fops = {VCP_Init, VCP_DeInit, VCP_Ctrl, VCP_DataTx, VCP_DataRx };
+
+
+	void DISCOVERY_COM_IRQHandler(void)
+	{
+	   GPIO_ToggleBits(LED_BLUE_GPIO_PORT, LED_BLUE_PIN);
+
+	   // Send the received data to the PC Host
+	   if (USART_GetITStatus(DISCOVERY_COM, USART_IT_RXNE) != RESET)
+		 VCP_DataTx(0,0);    //Copies RS232 data to USB
+
+	   /* If overrun condition occurs, clear the ORE flag and recover communication */
+	   if (USART_GetFlagStatus(DISCOVERY_COM, USART_FLAG_ORE) != RESET)
+		  USART_ReceiveData(DISCOVERY_COM);
+	}
+
+};
+
 
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -207,38 +230,19 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
 
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 {
-	// we don't have any place to put the data yet
-	ReportSystemError(SYSTEM_ERROR_USB_RECEIVE_OVERFLOW);
-
 	static int bytesReceived = 0;
 	bytesReceived += Len;
 
 	// flash every 100KB or so
 	GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, ((bytesReceived/100000)&1) ? Bit_SET : Bit_RESET);
 
+    // send the data to the stream
+	AbstractTempestStream *stream = memoryStream.GetRightSide();
+    while (Len-- > 0)
+    	stream->Write(0);
+	//stream->Write(*Buf++);
 
-   //RSW - Receive USB, send USART
-/*   while (Len-- > 0) {
-      USART_SendData(DISCOVERY_COM, *Buf++);
-      while(USART_GetFlagStatus(DISCOVERY_COM, USART_FLAG_TXE) == RESET)
-         ; 
-   } 
-
-   GPIO_ToggleBits(LED_RED_GPIO_PORT, LED_RED_PIN);*/
-   return USBD_OK;
+    return USBD_OK;
 }
 
 
-
-void DISCOVERY_COM_IRQHandler(void)
-{
-   GPIO_ToggleBits(LED_BLUE_GPIO_PORT, LED_BLUE_PIN);
-
-   // Send the received data to the PC Host
-   if (USART_GetITStatus(DISCOVERY_COM, USART_IT_RXNE) != RESET) 
-     VCP_DataTx(0,0);    //Copies RS232 data to USB
-
-   /* If overrun condition occurs, clear the ORE flag and recover communication */
-   if (USART_GetFlagStatus(DISCOVERY_COM, USART_FLAG_ORE) != RESET)
-      USART_ReceiveData(DISCOVERY_COM);
-}

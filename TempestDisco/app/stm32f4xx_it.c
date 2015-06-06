@@ -6,6 +6,8 @@
 #include "usbd_core.h"
 #include "usbd_cdc_core.h"
 
+#include "SystemError.h"
+
 extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
 extern USB_OTG_CORE_HANDLE USB_OTG_dev;
 
@@ -30,10 +32,7 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+	ReportSystemError(SYSTEM_ERROR_HARD_FAULT);
 }
 
 /**
@@ -43,10 +42,7 @@ void HardFault_Handler(void)
   */
 void MemManage_Handler(void)
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+	ReportSystemError(SYSTEM_ERROR_MEMORY_MANAGEMENT_ERROR);
 }
 
 /**
@@ -56,10 +52,7 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+	ReportSystemError(SYSTEM_ERROR_BUS_FAULT);
 }
 
 /**
@@ -69,10 +62,7 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+	ReportSystemError(SYSTEM_ERROR_USAGE_FAULT);
 }
 
 /**
