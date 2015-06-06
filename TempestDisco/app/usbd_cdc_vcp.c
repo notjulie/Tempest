@@ -221,6 +221,11 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 {
 	static int bytesReceived = 0;
 	bytesReceived += Len;
+
+	// flash every 100KB or so
+	GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, ((bytesReceived/100000)&1) ? Bit_SET : Bit_RESET);
+
+
    //RSW - Receive USB, send USART
 /*   while (Len-- > 0) {
       USART_SendData(DISCOVERY_COM, *Buf++);
