@@ -25,6 +25,25 @@
 __attribute__ ((section(".co_stack")))
 unsigned long pulStack[STACK_SIZE];
 
+/* Heap Configuration
+* Note:
+* 1) You can use macro __HEAP_SIZE to set default heap size
+* 2) This value is suggest to use an even number
+* 3)
+The default linker configure file will check the size of heap, if the heap is
+*
+overflow that system ram, then linker will report error like this:
+*
+<
+--
+error: size of array '__HeapPool' is too large
+--
+>
+*/
+#define __HEAP_SIZE 0x00000400
+__attribute__ ((section(".heap")))
+unsigned long __HeapPool[__HEAP_SIZE];
+
 
 /*----------Macro definition--------------------------------------------------*/
 #define WEAK __attribute__ ((weak))
@@ -320,7 +339,9 @@ void Default_Reset_Handler(void)
   //SystemInit();
  
   /* Call the application's entry point.*/
-  main();
+  //main();
+  extern int _start(void);
+  _start();
 }
 
 
