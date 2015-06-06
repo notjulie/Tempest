@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNet", "DotNet", "{C59FDA
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tempest.NET", "DotNet\Tempest.NET\Tempest.NET.vcxproj", "{1DA6BB69-4290-49A5-A903-CBAE8752BD54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempestSerialUI", "DotNet\TempestSerialUI\TempestSerialUI.csproj", "{262D6EB9-C4BB-4270-B6B4-1FE7708A9FE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempestMirrored", "DotNet\TempestSerialUI\TempestMirrored.csproj", "{262D6EB9-C4BB-4270-B6B4-1FE7708A9FE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempestWpf", "DotNet\TempestWpf\TempestWpf.csproj", "{32295E65-DCE1-409D-86E0-F444295DB481}"
 EndProject

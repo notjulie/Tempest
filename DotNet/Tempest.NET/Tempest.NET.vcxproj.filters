@@ -54,6 +54,9 @@
     <ClInclude Include="ITDNStreamProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TDNMirroringStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -90,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TDNComPortStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TDNMirroringStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

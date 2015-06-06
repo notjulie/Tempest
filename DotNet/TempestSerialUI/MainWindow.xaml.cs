@@ -29,10 +29,11 @@ namespace TempestWpf
       // our Tempest objects
       private TDNWin32TempestIO tempestIO;
       private Tempest tempest;
-      private TDNComPortStream comPortStream1;
-      private TDNComPortStream comPortStream2;
+      private TDNMemoryStream tempestMemoryStream;
       private TDNTempestIOStreamListener tempestIOStreamListener;
       private TDNIOStreamProxy tempestIOStreamProxy;
+      private TDNComPortStream comPortStream;
+      private TDNMirroringStream mirroringStream;
 
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
@@ -166,17 +167,23 @@ namespace TempestWpf
          try
          {
             // create the stream object that's going to be in the middle of everything
-            comPortStream1 = new TDNComPortStream("COM6");
-            comPortStream2 = new TDNComPortStream("COM7");
+            tempestMemoryStream = new TDNMemoryStream();
+
+            // create our COM port stream to the TempestDisco
+            comPortStream = new TDNComPortStream("COM3");
+
+            // create a stream that redirects to the memory stream but also mirrors
+            // its output to the com port
+            mirroringStream = new TDNMirroringStream(tempestMemoryStream.GetRightSide(), comPortStream);
 
             // create the IO object that we represent
             tempestIO = new TDNWin32TempestIO();
 
             // create the streamlistener that feeds it
-            tempestIOStreamListener = new TDNTempestIOStreamListener(comPortStream1, tempestIO);
+            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream.GetLeftSide(), tempestIO);
 
             // create the IO proxy
-            tempestIOStreamProxy = new TDNIOStreamProxy(comPortStream2);
+            tempestIOStreamProxy = new TDNIOStreamProxy(mirroringStream);
 
             // create our tempest
             tempest = new Tempest(tempestIOStreamProxy);
