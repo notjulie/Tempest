@@ -5,8 +5,7 @@
 
 #include "VectorData.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
+#define VECTOR_DATA_STACK_SIZE 100
 
 class VectorDataInterpreter
 {
@@ -34,12 +33,12 @@ private:
 private:
 	VectorData vectorData;
 	uint16_t PC;
-	std::vector<uint16_t> stack;
+   uint16_t stack[VECTOR_DATA_STACK_SIZE];
+   int stackIndex;
 	bool isHalt;
 	bool resetRequested;
 	bool goRequested;
 };
 
-#pragma warning(pop)
 
 #endif

@@ -5,13 +5,11 @@
 
 #include "VectorData.h"
 
-static const uint16_t VECTOR_RAM_SIZE = 0x1000;
 static const uint16_t VECTOR_ROM_SIZE = 0x1000;
 
 
 VectorData::VectorData(void)
 {
-	vectorRAM.resize(VECTOR_RAM_SIZE);
 }
 
 

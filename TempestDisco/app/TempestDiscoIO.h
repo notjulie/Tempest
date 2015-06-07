@@ -4,6 +4,7 @@
 
 #include "TempestIO/AbstractTempestIO.h"
 
+
 class TempestDiscoIO : public AbstractTempestIO {
 public:
 	void SetSoundChannelFrequency(int channel, int frequency);

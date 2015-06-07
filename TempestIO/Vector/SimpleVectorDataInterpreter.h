@@ -5,8 +5,6 @@
 #include "SimpleVector.h"
 #include "VectorDataInterpreter.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
 
 class SimpleVectorDataInterpreter : public VectorDataInterpreter
 {
@@ -36,6 +34,5 @@ private:
 	int linearScale;
 };
 
-#pragma warning(pop)
 
 #endif

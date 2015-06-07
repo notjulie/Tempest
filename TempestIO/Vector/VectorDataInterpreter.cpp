@@ -11,6 +11,7 @@ VectorDataInterpreter::VectorDataInterpreter(void)
 	resetRequested = true;
 	goRequested = false;
 	PC = 0;
+   stackIndex = 0;
 }
 
 VectorDataInterpreter::~VectorDataInterpreter(void)
@@ -39,7 +40,7 @@ bool VectorDataInterpreter::SingleStep(void)
 	if (resetRequested)
 	{
 		PC = 0;
-		stack.resize(0);
+      stackIndex = 0;
 		isHalt = true;
 		resetRequested = false;
 	}
@@ -115,17 +116,16 @@ bool VectorDataInterpreter::SingleStep(void)
 	case 10: // 1010
 	case 11: // 1011
 		// JSR
-		stack.push_back((uint16_t)(PC + 2));
+      stack[stackIndex++] = (uint16_t)(PC + 2);
 		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
 		return true;
 
 	case 12: // 1100
 	case 13: // 1101
 		// RTS
-		if (stack.size() == 0)
+		if (stackIndex == 0)
 			return false;
-		PC = stack[stack.size() - 1];
-		stack.pop_back();
+		PC = stack[--stackIndex];
 		return true;
 
 	case 14: // 1110
