@@ -2,7 +2,7 @@
 #ifndef TEMPESTDISCO_H
 #define TEMPESTDISCO_H
 
-// this gets mostly everything
+// discovery includes
 #include <stm32f4_discovery.h>
 
 
@@ -11,6 +11,7 @@
 	extern "C" {
 #endif
 
+#include <stm32f4_discovery_audio_codec.h>
 #include <usbd_core.h>
 
 #ifdef __cplusplus

@@ -7,6 +7,7 @@
 
 #include "TempestIO/TempestIOStreamListener.h"
 
+#include "SystemError.h"
 #include "TempestDiscoIO.h"
 
 #include "main.h"
@@ -75,11 +76,11 @@ extern "C" {
 
 
 	   // ------------- USB -------------- //
-		USBD_Init(&USB_OTG_dev,
+/*		USBD_Init(&USB_OTG_dev,
 				 USB_OTG_FS_CORE_ID,
 				 &USR_desc,
 				 &USBD_CDC_cb,
-				 &USR_cb);
+				 &USR_cb);*/
 	}
 
 
@@ -116,13 +117,52 @@ extern "C" {
 
 		hw_init();
 
-	    for(;;) {
+		// initialize the audio output
+		EVAL_AUDIO_DeInit();
+		EVAL_AUDIO_SetAudioInterface(AUDIO_INTERFACE_I2S);
+		if (EVAL_AUDIO_Init(OUTPUT_DEVICE_HEADPHONE, 100, I2S_AudioFreq_48k) !=0)
+			ReportSystemError(SYSTEM_ERROR_AUDIO_INIT_FAILURE);
+
+		// play a stupid square wave... 480Hz, stereo
+		static int16_t wave[200];
+		for (int i=0; i<100; ++i)
+		{
+			wave[i] = -10000;
+			wave[100+i] = 10000;
+		}
+		EVAL_AUDIO_Play((uint16_t*)wave, sizeof(wave));
+
+
+		for(;;) {
 	    	USBListener.Service();
 		}
 
 	    return 0;
 	}
 
+
+	void EVAL_AUDIO_TransferComplete_CallBack(uint32_t pBuffer, uint32_t Size)
+	{
+
+	}
+
+	void EVAL_AUDIO_HalfTransfer_CallBack(uint32_t pBuffer, uint32_t Size)
+	{
+
+	}
+
+
+	uint32_t Codec_TIMEOUT_UserCallback(void)
+	{
+		// this gets called on startup... ignore
+		return 0;
+	}
+
+	uint16_t EVAL_AUDIO_GetSampleCallBack(void)
+	{
+		//ReportSystemError(SYSTEM_ERROR_GET_SAMPLE);
+		return 0;
+	}
 };
 
 

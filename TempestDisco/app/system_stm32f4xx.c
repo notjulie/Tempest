@@ -425,8 +425,6 @@ static void SetSysClock(void)
 	/******************************************************************************/
 	/*                          I2S clock configuration                           */
 	/******************************************************************************/
-
-#if START_I2SCLOCK
 	/* PLLI2S clock used as I2S clock source */
 	RCC->CFGR &= ~RCC_CFGR_I2SSRC;
 
@@ -440,7 +438,6 @@ static void SetSysClock(void)
 	while((RCC->CR & RCC_CR_PLLI2SRDY) == 0)
 	{
 	}
-#endif
 }
 
 /**
