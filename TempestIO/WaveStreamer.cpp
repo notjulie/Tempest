@@ -3,16 +3,26 @@
 #include "WaveStreamer.h"
 
 
-WaveStreamer::WaveStreamer(void)
+WaveStreamer::WaveStreamer(int _bufferSampleCount)
 {
+   // save parameters
+   bufferSampleCount = _bufferSampleCount;
+
+   // clear
    queueIn = 0;
    queueOut = 0;
    sampleCounter = 0;
    samplesInInputBuffer = 0;
+
+   // allocate
+   inputBuffer = (int16_t *)malloc(2 * bufferSampleCount);
+   if (inputBuffer == NULL)
+      ReportAllocError();
 }
 
 WaveStreamer::~WaveStreamer(void)
 {
+   free(inputBuffer), inputBuffer = NULL;
 }
 
 void WaveStreamer::SetChannelFrequency(int channel, int frequency)
@@ -91,12 +101,12 @@ void WaveStreamer::FillBuffer(int16_t *buffer, int sampleCount)
 {
    // if we don't have enough data in our input buffer to fill an output
    // buffer then we need to process messages
-   while (samplesInInputBuffer < WAVE_STREAM_BUFFER_SAMPLE_COUNT)
+   while (samplesInInputBuffer < sampleCount)
       if (!ProcessNextEvent())
          break;
 
    // if we don't have enough data fake the passage of time until we do
-   while (samplesInInputBuffer < WAVE_STREAM_BUFFER_SAMPLE_COUNT)
+   while (samplesInInputBuffer < sampleCount)
       ProcessTick();
 
    // copy the data... the Pokey output is very low amplitude... beef it up to the level we like
@@ -117,8 +127,8 @@ void WaveStreamer::ProcessTick(void)
    sampleCounter -= samplesToAdd * 6000;
 
    // make sure we have room
-   if (samplesInInputBuffer + samplesToAdd > WAVE_STREAM_INPUT_BUFFER_SAMPLE_COUNT)
-      samplesToAdd = WAVE_STREAM_INPUT_BUFFER_SAMPLE_COUNT - samplesInInputBuffer;
+   if (samplesInInputBuffer + samplesToAdd > bufferSampleCount)
+      samplesToAdd = bufferSampleCount - samplesInInputBuffer;
 
    // generate some samples
    soundGenerator.ReadWaveData(&inputBuffer[samplesInInputBuffer], samplesToAdd);

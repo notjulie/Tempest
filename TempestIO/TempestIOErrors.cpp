@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "../TempestCPU/TempestException.h"
 #include "TempestMemoryStream.h"
+#include "WaveStreamer.h"
 
 // I allow classes to define error reporting functions that are not
 // implemented so that the specific implementation can decide whether
@@ -11,4 +12,9 @@
 void SimpleMemoryStream::ReportBufferOverflow(void)
 {
    throw TempestException("SimpleMemoryStream: buffer overflow");
+}
+
+void WaveStreamer::ReportAllocError(void)
+{
+   throw TempestException("WaveStreamer: allocation error");
 }

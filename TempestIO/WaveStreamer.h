@@ -5,8 +5,7 @@
 #include "SoundGenerator.h"
 
 #define WAVE_STREAM_EVENT_QUEUE_SIZE 1000
-#define WAVE_STREAM_BUFFER_SAMPLE_COUNT 2000
-#define WAVE_STREAM_INPUT_BUFFER_SAMPLE_COUNT (WAVE_STREAM_BUFFER_SAMPLE_COUNT*2)
+
 
 class WaveStreamer
 {
@@ -26,7 +25,7 @@ protected:
 
 
 public:
-   WaveStreamer(void);
+   WaveStreamer(int _bufferSampleCount);
    virtual ~WaveStreamer(void);
 
    void SetChannelFrequency(int channel, int frequency);
@@ -41,15 +40,18 @@ protected:
 
 private:
    void  ProcessTick(void);
+   void  ReportAllocError(void);
 
 private:
+   int bufferSampleCount;
+   int16_t *inputBuffer;
+   int samplesInInputBuffer;
+
    SoundGenerator	soundGenerator;
    WaveStreamEvent	eventQueue[WAVE_STREAM_EVENT_QUEUE_SIZE];
    int	queueIn;
    int	queueOut;
    int   sampleCounter;
-   int16_t inputBuffer[WAVE_STREAM_INPUT_BUFFER_SAMPLE_COUNT];
-   int samplesInInputBuffer;
 };
 
 #endif
