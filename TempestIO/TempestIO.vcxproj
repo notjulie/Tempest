@@ -142,6 +142,7 @@
     <ClInclude Include="AbstractTempestStream.h" />
     <ClInclude Include="AbstractTempestIO.h" />
     <ClInclude Include="MirroringStream.h" />
+    <ClInclude Include="Noise.h" />
     <ClInclude Include="SoundChannel.h" />
     <ClInclude Include="SoundGenerator.h" />
     <ClInclude Include="stdafx.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MirroringStream.cpp" />
+    <ClCompile Include="Noise.cpp" />
     <ClCompile Include="SoundChannel.cpp" />
     <ClCompile Include="SoundGenerator.cpp" />
     <ClCompile Include="stdafx.cpp">

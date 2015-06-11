@@ -5,9 +5,6 @@
 
 struct SoundChannelStatus;
 
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
-
 
 class SoundChannel
 {
@@ -21,10 +18,6 @@ public:
 
 private:
 	void UpdateWaveform(void);
-
-private:
-	static void InitializeNoiseBuffers(void);
-	static void MakeNoise(bool *buffer, int count);
 
 private:
 	// our current parameters
@@ -45,14 +38,7 @@ private:
 	float noiseCounterCountsPerNoiseSample;
 	int noiseWaveformLength;
 	const bool *noiseWaveform;
-
-private:
-	static bool noiseWaveformsInitialized;
-	static bool poly5[32];
-	static bool poly17[128 * 1024];
 };
 
-
-#pragma warning(pop)
 
 #endif

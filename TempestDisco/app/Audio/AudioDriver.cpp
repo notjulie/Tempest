@@ -10,8 +10,7 @@
 // I think it needs to be a multiple of 64, or at least 16.  A buffer size
 // of 1024 16-bit words == 512 stereo frames, which is about 1/100th of a second
 // at 48KHz sample rate.  Somewhere around that neighborhood seems reasonable.
-#define BUFFER_SIZE 1024
-static int16_t wave[BUFFER_SIZE];
+static int16_t wave[TEMPEST_DISCO_SOUND_BUFFER_SAMPLE_COUNT];
 
 
 void AudioDriverInit(void)

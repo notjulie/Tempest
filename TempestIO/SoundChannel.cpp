@@ -2,12 +2,10 @@
 #include "stdafx.h"
 
 #include "../TempestCPU/TempestException.h"
+#include "Noise.h"
 
 #include "SoundChannel.h"
 
-bool SoundChannel::noiseWaveformsInitialized = false;
-bool SoundChannel::poly17[128 * 1024];
-bool SoundChannel::poly5[32];
 
 
 SoundChannel::SoundChannel(void)
@@ -25,9 +23,6 @@ SoundChannel::SoundChannel(void)
 	noiseCounter = 0;
 	outputCounter = 0;
 	UpdateWaveform();
-
-	// initialize our noise buffers
-	InitializeNoiseBuffers();
 }
 
 void SoundChannel::AddWaveData(int16_t *buffer, int count)
@@ -85,13 +80,6 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 			}
 		}
 		break;
-
-	default:
-		{
-			char buf[200];
-			sprintf_s(buf, "SoundChannel::AddWaveData: unsupported waveform: %d", outputWave);
-			throw TempestException(buf);
-		}
 	}
 }
 
@@ -125,7 +113,7 @@ void SoundChannel::UpdateWaveform(void)
 		if (outputCounter > pulseWidth)
 			outputCounter = 0;
 		noiseWaveformLength = 128 * 1024;
-		noiseWaveform = poly17;
+		noiseWaveform = noise17;
 		break;
 
 	case 0x2:	// doc says these are the same?
@@ -137,7 +125,7 @@ void SoundChannel::UpdateWaveform(void)
 		if (outputCounter > pulseWidth)
 			outputCounter = 0;
 		noiseWaveformLength = 32;
-		noiseWaveform = poly5;
+		noiseWaveform = noise5;
 		break;
 
 	case 0x8:
@@ -148,7 +136,7 @@ void SoundChannel::UpdateWaveform(void)
 		if (outputCounter > pulseWidth)
 			outputCounter = 0;
 		noiseWaveformLength = 128 * 1024;
-		noiseWaveform = poly17;
+		noiseWaveform = noise17;
 		break;
 
 	case 0xA:
@@ -164,40 +152,4 @@ void SoundChannel::UpdateWaveform(void)
 	}
 }
 
-
-void SoundChannel::InitializeNoiseBuffers(void)
-{
-	// never mind if we've already been here
-	if (noiseWaveformsInitialized)
-		return;
-
-	// make our noise waveforms
-	MakeNoise(poly17, 128 * 1024);
-	MakeNoise(poly5, 32);
-
-	// note that we're initialized
-	noiseWaveformsInitialized = true;
-}
-
-void SoundChannel::MakeNoise(bool *buffer, int count)
-{
-	// just for good form I make sure there's no DC
-	int	onesLeft = count / 2;
-	int   zerosLeft = count - onesLeft;
-	while (onesLeft>0 && zerosLeft>0)
-	{
-		int random = rand() % (onesLeft + zerosLeft);
-		if (random > onesLeft)
-		{
-			buffer[onesLeft + zerosLeft - 1] = false;
-			--zerosLeft;
-		}
-		else
-		{
-			buffer[onesLeft + zerosLeft - 1] = true;
-			--onesLeft;
-		}
-	}
-
-}
 
