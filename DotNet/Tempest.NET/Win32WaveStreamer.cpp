@@ -19,10 +19,6 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 	callbackThread = NULL;
 	terminating = false;
 	errorReported = false;
-	queueIn = 0;
-	queueOut = 0;
-	samplesInInputBuffer = 0;
-	sampleCounter = 0;
 
 	// create our event
 	queueEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
@@ -136,97 +132,24 @@ void Win32WaveStreamer::CallbackThread(void)
 				bufferToFill = &buffer2;
 		}
 
-		// if we don't have enough data in our input buffer to fill an output
-		// buffer then we need to process messages
-		while (samplesInInputBuffer < WAVE_STREAM_BUFFER_SAMPLE_COUNT)
-			if (!ProcessEvent())
-				break;
-
-		// if we have a buffer to fill we need to fill it
-		if (bufferToFill != NULL)
-		{
-			// if we don't have enough data fake the passage of time until we do
-			while (samplesInInputBuffer < WAVE_STREAM_BUFFER_SAMPLE_COUNT)
-				ProcessTick();
-
-			// fill the buffer
-			int16_t *samples = bufferToFill->GetBuffer();
-			int count = bufferToFill->GetSampleCount();
-
-			// copy the data... the Pokey output is very low amplitude... beef it up to the level we like
-			for (int i = 0; i < count; ++i)
-				samples[i] = (int16_t)(inputBuffer[(unsigned)i] * 256);
-
-			// remove the copied data from the input buffer
-			samplesInInputBuffer -= count;
-			memcpy(&inputBuffer[0], &inputBuffer[count], 2 * samplesInInputBuffer);
-
-			// write out the buffer
-			bufferToFill->Play(waveOut);
-		}
+      // fill the buffer to fill
+      if (bufferToFill != NULL)
+      {
+         // fill and play the buffer
+         FillBuffer(bufferToFill->GetBuffer(), bufferToFill->GetSampleCount());
+         bufferToFill->Play(waveOut);
+      }
 
 		// if we still have events to process, process them
-		while (ProcessEvent())
+		while (ProcessNextEvent())
 			continue;
+
+      // this doesn't need to be synchronized... if we don't trigger on the
+      // next event the one after it will follow shortly
+      ResetEvent(queueEvent);
 	}
 }
 
-
-bool Win32WaveStreamer::ProcessEvent(void)
-{
-	// never mind if there are none in the queue
-	if (queueIn == queueOut)
-	{
-		ResetEvent(queueEvent);
-		return false;
-	}
-
-	// grab from the queue
-	WaveStreamEvent event = eventQueue[queueOut];
-	if (queueOut == WAVE_STREAM_EVENT_QUEUE_SIZE - 1)
-		queueOut = 0;
-	else
-		queueOut++;
-
-	// process it
-	switch (event.eventType)
-	{
-	case WAVE_EVENT_VOLUME:
-		soundGenerator.SetChannelVolume(event.channel, event.value);
-		break;
-
-	case WAVE_EVENT_FREQUENCY:
-		soundGenerator.SetChannelFrequency(event.channel, event.value);
-		break;
-
-	case WAVE_EVENT_WAVEFORM:
-		soundGenerator.SetChannelWaveform(event.channel, event.value);
-		break;
-
-	case WAVE_EVENT_TICK:
-		ProcessTick();
-		break;
-	}
-
-	return true;
-}
-
-
-void Win32WaveStreamer::ProcessTick(void)
-{
-	// figure out how many samples to add for this tick
-	sampleCounter += 44100.0F / 6000.0F;
-	int samplesToAdd = (int)sampleCounter;
-	sampleCounter -= samplesToAdd;
-
-	// make sure we have room
-	if (samplesInInputBuffer + samplesToAdd > WAVE_STREAM_INPUT_BUFFER_SAMPLE_COUNT)
-		samplesToAdd = WAVE_STREAM_INPUT_BUFFER_SAMPLE_COUNT - samplesInInputBuffer;
-
-	// generate some samples
-	soundGenerator.ReadWaveData(&inputBuffer[samplesInInputBuffer], samplesToAdd);
-	samplesInInputBuffer += samplesToAdd;
-}
 
 
 
@@ -278,17 +201,6 @@ void Win32WaveStreamer::Tick6KHz(void)
 
 void Win32WaveStreamer::QueueEvent(const WaveStreamEvent &event)
 {
-	// figure out what the index will be after we add the event
-	int nextIndex = queueIn + 1;
-	if (nextIndex >= WAVE_STREAM_EVENT_QUEUE_SIZE)
-		nextIndex = 0;
-
-	// if it would result in a wraparound just drop this event
-	if (nextIndex == queueOut)
-		return;
-
-	// enqueue and set the event
-	eventQueue[queueIn] = event;
-	queueIn = nextIndex;
-	SetEvent(queueEvent);
+   WaveStreamer::QueueEvent(event);
+   SetEvent(queueEvent);
 }

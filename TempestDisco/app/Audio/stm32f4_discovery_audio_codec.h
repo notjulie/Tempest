@@ -96,8 +96,8 @@
 /* Uncomment defines below to select standard for audio communication between 
   Codec and I2S peripheral */
 #define I2S_STANDARD_PHILLIPS
-/* #define I2S_STANDARD_MSB */
-/* #define I2S_STANDARD_LSB */
+//#define I2S_STANDARD_MSB
+//#define I2S_STANDARD_LSB
 
 /* Uncomment the defines below to select if the Master clock mode should be 
   enabled or not */

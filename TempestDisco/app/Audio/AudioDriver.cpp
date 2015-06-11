@@ -5,6 +5,13 @@
 
 #include "AudioDriver.h"
 
+// About the buffer size... I haven't looked to see what the DMA burst
+// size is, but the sound doesn't loop well if it's not a nice binary number.
+// I think it needs to be a multiple of 64, or at least 16.  A buffer size
+// of 1024 16-bit words == 512 stereo frames, which is about 1/100th of a second
+// at 48KHz sample rate.  Somewhere around that neighborhood seems reasonable.
+#define BUFFER_SIZE 1024
+static int16_t wave[BUFFER_SIZE];
 
 
 void AudioDriverInit(void)
@@ -21,18 +28,22 @@ void AudioDriverInit(void)
 	if (EVAL_AUDIO_Init(OUTPUT_DEVICE_HEADPHONE, 100, I2S_AudioFreq_48k) !=0)
 		ReportSystemError(SYSTEM_ERROR_AUDIO_INIT_FAILURE);
 
-	// play a stupid square wave... 480Hz, stereo
-	static int16_t wave[200];
-	for (int i=0; i<100; ++i)
+	// play a stupid square wave
+	/*for (int i=0; i<BUFFER_SIZE; ++i)
 	{
-		wave[i] = -10000;
-		wave[100+i] = 10000;
-	}
+		if ((i/128) & 1)
+			wave[i] = -500;
+		else
+			wave[i] = 500;
+	}*/
 
 	// this will start playing the buffer in an endless loop that will call
 	// us on interrupts whenever half of the buffer has played... thus
 	// double-buffering.
-	EVAL_AUDIO_Play((uint16_t*)wave, sizeof(wave));
+
+	// NOTE: there's a factor of 4 error in the sample code... I'll
+	// just compensate here
+	EVAL_AUDIO_Play((uint16_t*)wave, sizeof(wave) * 4);
 }
 
 
@@ -41,12 +52,14 @@ extern "C" {
 
 	void EVAL_AUDIO_TransferComplete_CallBack(uint32_t pBuffer, uint32_t Size)
 	{
-
+		// this is the green heartbeat LED
+		static int cycles = 0;
+		++cycles;
+		GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, ((cycles/50) & 1) ? Bit_SET : Bit_RESET);
 	}
 
 	void EVAL_AUDIO_HalfTransfer_CallBack(uint32_t pBuffer, uint32_t Size)
 	{
-
 	}
 
 

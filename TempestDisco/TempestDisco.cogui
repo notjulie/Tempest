@@ -14,36 +14,76 @@
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
+<part id="4"/>
+<part id="5"/>
+<part id="6"/>
+<part id="7"/>
+<part id="8"/>
+<part id="9"/>
+<part id="10"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.c" partName="stm32f4_discovery_audio_codec.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/stm32f4_discovery_audio_codec.c" title="stm32f4_discovery_audio_codec.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/stm32f4_discovery_audio_codec.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/stm32f4_discovery_audio_codec.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="24" selectionOffset="23773" selectionTopPixel="9378"/>
-</editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.h" partName="stm32f4_discovery_audio_codec.h" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/stm32f4_discovery_audio_codec.h" title="stm32f4_discovery_audio_codec.h" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/stm32f4_discovery_audio_codec.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/stm32f4_discovery_audio_codec.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="7" selectionOffset="7205" selectionTopPixel="2635"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.cpp" partName="main.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/main.cpp" title="main.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/main.cpp" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.cpp" partName="main.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/main.cpp" title="main.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/main.cpp" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/main.cpp"/>
-<editorState selectionHorizontalPixel="0" selectionLength="36" selectionOffset="3432" selectionTopPixel="1147"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2875" selectionTopPixel="1863"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_it.c" partName="stm32f4xx_it.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/stm32f4xx_it.c" title="stm32f4xx_it.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/stm32f4xx_it.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/stm32f4xx_it.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="23" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" partName="startup_stm32f4xx.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/startup_stm32f4xx.c" title="startup_stm32f4xx.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/startup_stm32f4xx.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/startup_stm32f4xx.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="23" selectionOffset="4265" selectionTopPixel="1802"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="SystemError.cpp" partName="SystemError.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/SystemError.cpp" title="SystemError.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/SystemError.cpp" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/SystemError.cpp"/>
+<editorState selectionHorizontalPixel="0" selectionLength="92" selectionOffset="703" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f4xx.c" partName="system_stm32f4xx.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/system_stm32f4xx.c" title="system_stm32f4xx.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/system_stm32f4xx.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/system_stm32f4xx.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="16428" selectionTopPixel="7174"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="AudioDriver.cpp" partName="AudioDriver.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/AudioDriver.cpp" title="AudioDriver.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/AudioDriver.cpp" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/Audio/AudioDriver.cpp"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1468" selectionTopPixel="945"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="AudioDriver.h" partName="AudioDriver.h" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/AudioDriver.h" title="AudioDriver.h" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/AudioDriver.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/Audio/AudioDriver.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="29" selectionOffset="50" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="SystemError.h" partName="SystemError.h" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/SystemError.h" title="SystemError.h" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/SystemError.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/SystemError.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="761" selectionTopPixel="78"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.c" partName="stm32f4_discovery_audio_codec.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/stm32f4_discovery_audio_codec.c" title="stm32f4_discovery_audio_codec.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/stm32f4_discovery_audio_codec.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/Audio/stm32f4_discovery_audio_codec.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="9148" selectionTopPixel="3662"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.h" partName="stm32f4_discovery_audio_codec.h" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/stm32f4_discovery_audio_codec.h" title="stm32f4_discovery_audio_codec.h" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/stm32f4_discovery_audio_codec.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/Audio/stm32f4_discovery_audio_codec.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4275" selectionTopPixel="1530"/>
 </editor>
 </editors>
 <views>
+<view id="org.eclipse.debug.ui.ExpressionView" partName="Expressions">
+<viewState>
+<ExpressionKeySet ExpKeys="volume,"/>
+</viewState>
+</view>
 <view id="org.coocox.builder.ui.views.ProjectView" partName="Project">
-<viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="1">
+<viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="0">
 <expanded>
 <element path="/TempestDisco"/>
-<element path="/TempestDisco/STM"/>
+<element path="/TempestDisco/Audio"/>
 </expanded>
 <selection>
-<element path="/TempestDisco/stm32f4xx_it.c"/>
+<element path="/TempestDisco/SystemError.cpp"/>
 </selection>
 </viewState>
 </view>
@@ -53,6 +93,7 @@
 <view id="org.eclipse.search.ui.views.SearchView" partName="Search">
 <viewState isPinned="false">
 <view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
+<view IMemento.internal.id="org.eclipse.cdt.ui.pdomSearchViewPage" definitionColumnWidth="150" locationColumnWidth="300" matchColumnWidth="300" org.eclipse.search.lastActivation="1" org.eclipse.search.resultpage.layout="2" showEnclosingDefinitions="true"/>
 </viewState>
 </view>
 <view id="org.eclipse.debug.ui.DebugView" partName="Debug">
@@ -78,7 +119,7 @@
 </view>
 <view id="org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser" partName="Memory Browser">
 <viewState>
-<MemoryBroser ComboItemsValue="0x08000000;" FocuseTabIndex="0" TabsValue="" TextValue="0x8000000" horizontalPosition="0" verticalPosition="0"/>
+<MemoryBroser ComboItemsValue="(uint16_t *)pBuffer;" FocuseTabIndex="0" TabsValue="" TextValue="0x2000097c" horizontalPosition="0" verticalPosition="0"/>
 </viewState>
 </view>
 <view id="org.eclipse.cdt.dsf.debug.ui.disassembly.view" partName="Disassembly">
@@ -113,8 +154,8 @@
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showMemoryBrowserAction"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showVariablesAction"/>
 <hide_menu_item_id id="org.coocox.builder.ui.openProjectExplorerAction"/>
-<hide_menu_item_id id="org.eclipse.debug.ui.commands.TerminateAndRelaunch"/>
 <hide_menu_item_id id="org.coocox.codebugger.trace.actions.ShowTraceControlAction"/>
+<hide_menu_item_id id="org.eclipse.debug.ui.commands.TerminateAndRelaunch"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showRegistersAction"/>
 <hide_toolbar_item_id id="org.eclipse.cdt.debug.internal.ui.actions.ToggleInstructionStepModeAction"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
@@ -211,14 +252,15 @@
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.coocox.builder.ui.build"/>
 <hide_toolbar_item_id id="org.coocox.welcome.ui.action.welcome"/>
-<hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
 <hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
+<hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.debug.ui.DebugView"/>
 <view id="org.coocox.codebugger.trace.ui.traceview"/>
 <view id="org.eclipse.debug.ui.VariableView"/>
 <view id="org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser"/>
 <view id="org.eclipse.search.ui.views.SearchView"/>
+<view id="org.eclipse.debug.ui.ExpressionView"/>
 <view id="org.eclipse.cdt.dsf.debug.ui.disassembly.view"/>
 <view id="org.coocox.builder.ui.views.ProjectView"/>
 <fastViewBars/>
@@ -251,18 +293,19 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@1d69fa2" ratio="0.5" ratioLeft="679" ratioRight="679" relationship="2" relative="org.eclipse.ui.internal.ViewStack@2de1c3">
-<folder activePageID="org.eclipse.search.ui.views.SearchView" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.debug.ui.ExpressionView" appearance="2" expanded="2">
 <page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
 <page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser" label="Memory Browser"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
-<page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.ExpressionView" label="Expressions"/>
 <page content="org.eclipse.debug.ui.MemoryView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
+<part id="4"/>
 </presentation>
 </folder>
 </info>
@@ -285,162 +328,163 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/stm32f4_discovery_audio_codec.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/Audio/AudioDriver.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/main.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/stm32f4_discovery_audio_codec.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/startup_stm32f4xx.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/main.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/stm32f4xx_it.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/Audio/stm32f4_discovery_audio_codec.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/Audio/stm32f4_discovery_audio_codec.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/Audio/stm32f4_discovery_audio_codec.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/Audio/audio_sample.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/SystemError.cpp"/>
 </editors>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="51783" y="0"/>
+<item historyLabel="stm32f4_discovery_audio_codec.c" index="2">
+<position info="not_deleted" x="16661" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="54579" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="54672" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="55502" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="15570" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="15590" y="0"/>
+<item historyLabel="stm32f4_discovery_audio_codec.c" index="2">
+<position info="not_deleted" x="16770" y="0"/>
 </item>
 <item historyLabel="main.cpp" index="1">
-<position info="not_deleted" x="3211" y="0"/>
+<position info="not_deleted" x="2908" y="0"/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1871" y="0"/>
 </item>
 <item historyLabel="main.cpp" index="1">
-<position info="not_deleted" x="3297" y="0"/>
+<position info="not_deleted" x="2875" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="16382" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="929" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="16454" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="16532" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="56700" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="56804" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="56865" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="56989" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="57088" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="57655" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="57712" y="0"/>
-</item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="57750" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1524" y="0"/>
 </item>
 <item historyLabel="main.cpp" index="1">
-<position info="not_deleted" x="3297" y="0"/>
+<position info="not_deleted" x="2875" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="929" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="57750" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1524" y="0"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="3">
-<position info="not_deleted" x="4265" y="23"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="533" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="7188" y="24"/>
+<item historyLabel="stm32f4_discovery_audio_codec.c" index="3">
+<position info="not_deleted" x="50239" y="8"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="3">
-<position info="not_deleted" x="4265" y="23"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="533" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="23773" y="24"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="1960" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="3">
-<position info="not_deleted" x="16378" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="23773" y="24"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="2875" y="0"/>
 </item>
-<item historyLabel="main.cpp" index="4">
-<position info="not_deleted" x="2851" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="929" y="0"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="3">
-<position info="not_deleted" x="16378" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1524" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="23773" y="24"/>
+<item historyLabel="stm32f4_discovery_audio_codec.c" index="3">
+<position info="not_deleted" x="9148" y="0"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="3">
-<position info="not_deleted" x="16378" y="0"/>
+<item historyLabel="stm32f4_discovery_audio_codec.h" index="4">
+<position info="not_deleted" x="4360" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="23773" y="24"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="2600" y="22"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="2875" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="22255" y="22"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="2600" y="22"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1871" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="55908" y="17"/>
+<item historyLabel="stm32f4_discovery_audio_codec.c" index="3">
+<position info="not_deleted" x="9148" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="445" y="0"/>
+<item historyLabel="stm32f4_discovery_audio_codec.h" index="4">
+<position info="not_deleted" x="4275" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="55664" y="22"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="1960" y="0"/>
+<item historyLabel="stm32f4_discovery_audio_codec.c" index="3">
+<position info="not_deleted" x="9148" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="55664" y="22"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="main.cpp" index="4">
-<position info="not_deleted" x="3432" y="36"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="2875" y="0"/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="1960" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="19773" y="20"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="1637" y="0"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.c" index="0">
-<position info="not_deleted" x="23773" y="24"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4_discovery_audio_codec.h" index="2">
-<position info="not_deleted" x="7205" y="7"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
 </item>
-<item historyLabel="stm32f4xx_it.c" index="5">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="audio_sample.c" index="5">
+<position info="not_deleted" x="1874" y="12"/>
 </item>
-<item active="true" historyLabel="main.cpp" index="4">
-<position info="not_deleted" x="3432" y="36"/>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
+</item>
+<item historyLabel="audio_sample.c" index="5">
+<position info="not_deleted" x="785384" y="0"/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1068" y="0"/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position/>
+</item>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="2875" y="0"/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="994" y="3"/>
+</item>
+<item historyLabel="SystemError.cpp" index="6">
+<position info="not_deleted" x="703" y="92"/>
+</item>
+<item historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1871" y="0"/>
+</item>
+<item historyLabel="SystemError.cpp" index="6">
+<position info="not_deleted" x="703" y="92"/>
+</item>
+<item active="true" historyLabel="AudioDriver.cpp" index="0">
+<position info="not_deleted" x="1776" y="95"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -449,44 +493,47 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="audio_sample.c" tooltip="TempestDisco/Audio/audio_sample.c">
+<persistable path="/TempestDisco/Audio/audio_sample.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.h" tooltip="TempestDisco/Audio/stm32f4_discovery_audio_codec.h">
+<persistable path="/TempestDisco/Audio/stm32f4_discovery_audio_codec.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.c" tooltip="TempestDisco/Audio/stm32f4_discovery_audio_codec.c">
+<persistable path="/TempestDisco/Audio/stm32f4_discovery_audio_codec.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="SystemError.h" tooltip="TempestDisco/SystemError.h">
+<persistable path="/TempestDisco/SystemError.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="AudioDriver.h" tooltip="TempestDisco/Audio/AudioDriver.h">
+<persistable path="/TempestDisco/Audio/AudioDriver.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="AudioDriver.cpp" tooltip="TempestDisco/Audio/AudioDriver.cpp">
+<persistable path="/TempestDisco/Audio/AudioDriver.cpp"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.c" tooltip="TempestDisco/stm32f4_discovery_audio_codec.c">
+<persistable path="/TempestDisco/stm32f4_discovery_audio_codec.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f4xx.c" tooltip="TempestDisco/system_stm32f4xx.c">
+<persistable path="/TempestDisco/system_stm32f4xx.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="SystemError.cpp" tooltip="TempestDisco/SystemError.cpp">
+<persistable path="/TempestDisco/SystemError.cpp"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestMemoryStream.cpp" tooltip="TempestDisco/TempestIO/TempestMemoryStream.cpp">
+<persistable path="/TempestDisco/TempestIO/TempestMemoryStream.cpp"/>
+</file>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_it.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\stm32f4xx_it.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\stm32f4xx_it.h" project="TempestDisco"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="TempestDisco/startup_stm32f4xx.c">
+<persistable path="/TempestDisco/startup_stm32f4xx.c"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_it.c" tooltip="TempestDisco/stm32f4xx_it.c">
 <persistable path="/TempestDisco/stm32f4xx_it.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.cpp" tooltip="TempestDisco/main.cpp">
 <persistable path="/TempestDisco/main.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="TempestDisco/startup_stm32f4xx.c">
-<persistable path="/TempestDisco/startup_stm32f4xx.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.h" tooltip="TempestDisco/stm32f4_discovery_audio_codec.h">
-<persistable path="/TempestDisco/stm32f4_discovery_audio_codec.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.c" tooltip="TempestDisco/stm32f4_discovery_audio_codec.c">
-<persistable path="/TempestDisco/stm32f4_discovery_audio_codec.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestIOStreamListener.cpp" tooltip="TempestDisco/TempestIO/TempestIOStreamListener.cpp">
-<persistable path="/TempestDisco/TempestIO/TempestIOStreamListener.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usb_dcd_int.c" tooltip="TempestDisco/STM/USB_OTG/usb_dcd_int.c">
-<persistable path="/TempestDisco/STM/USB_OTG/usb_dcd_int.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="SystemError.h" tooltip="TempestDisco/SystemError.h">
-<persistable path="/TempestDisco/SystemError.h"/>
-</file>
-<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Utilities\STM32F4-Discovery\stm32f4_discovery_audio_codec.h">
-<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Utilities\STM32F4-Discovery\stm32f4_discovery_audio_codec.h" project="TempestDisco"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery_audio_codec.c" tooltip="TempestDisco/STM/Discovery/stm32f4_discovery_audio_codec.c">
-<persistable path="/TempestDisco/STM/Discovery/stm32f4_discovery_audio_codec.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestDisco.h" tooltip="TempestDisco/TempestDisco.h">
-<persistable path="/TempestDisco/TempestDisco.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestDiscoIO.h" tooltip="TempestDisco/TempestDiscoIO.h">
-<persistable path="/TempestDisco/TempestDiscoIO.h"/>
-</file>
-<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\CMSIS\ST\STM32F4xx\Include\stm32f4xx.h">
-<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\CMSIS\ST\STM32F4xx\Include\stm32f4xx.h" project="TempestDisco"/>
 </file>
 </mruList>
 </workbench>
