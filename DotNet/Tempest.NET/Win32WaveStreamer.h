@@ -19,11 +19,6 @@ public:
 
 	std::string GetErrorString(void) const;
 
-	void SetChannelFrequency(int channel, int frequency);
-	void SetChannelVolume(int channel, int volume);
-	void SetChannelWaveform(int channel, int waveform);
-	void Tick6KHz(void);
-
 protected:
    virtual void  QueueEvent(const WaveStreamEvent &event);
 

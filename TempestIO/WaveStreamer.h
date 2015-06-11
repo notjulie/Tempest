@@ -29,6 +29,11 @@ public:
    WaveStreamer(void);
    virtual ~WaveStreamer(void);
 
+   void SetChannelFrequency(int channel, int frequency);
+   void SetChannelVolume(int channel, int volume);
+   void SetChannelWaveform(int channel, int waveform);
+   void Tick6KHz(void);
+
 protected:
    void FillBuffer(int16_t *buffer, int sampleCount);
    bool ProcessNextEvent(void);

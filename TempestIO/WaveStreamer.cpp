@@ -15,6 +15,41 @@ WaveStreamer::~WaveStreamer(void)
 {
 }
 
+void WaveStreamer::SetChannelFrequency(int channel, int frequency)
+{
+   WaveStreamEvent	event;
+   event.eventType = WAVE_EVENT_FREQUENCY;
+   event.channel = channel;
+   event.value = frequency;
+   QueueEvent(event);
+}
+
+void WaveStreamer::SetChannelVolume(int channel, int volume)
+{
+   WaveStreamEvent	event;
+   event.eventType = WAVE_EVENT_VOLUME;
+   event.channel = channel;
+   event.value = volume;
+   QueueEvent(event);
+}
+
+void WaveStreamer::SetChannelWaveform(int channel, int waveform)
+{
+   WaveStreamEvent	event;
+   event.eventType = WAVE_EVENT_WAVEFORM;
+   event.channel = channel;
+   event.value = waveform;
+   QueueEvent(event);
+}
+
+void WaveStreamer::Tick6KHz(void)
+{
+   WaveStreamEvent	event;
+   event.eventType = WAVE_EVENT_TICK;
+   QueueEvent(event);
+}
+
+
 bool WaveStreamer::ProcessNextEvent(void)
 {
    // never mind if there are none in the queue

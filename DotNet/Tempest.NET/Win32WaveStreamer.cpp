@@ -164,41 +164,6 @@ std::string Win32WaveStreamer::GetErrorString(void) const
 
 
 
-void Win32WaveStreamer::SetChannelFrequency(int channel, int frequency)
-{
-	WaveStreamEvent	event;
-	event.eventType = WAVE_EVENT_FREQUENCY;
-	event.channel = channel;
-	event.value = frequency;
-	QueueEvent(event);
-}
-
-void Win32WaveStreamer::SetChannelVolume(int channel, int volume)
-{
-	WaveStreamEvent	event;
-	event.eventType = WAVE_EVENT_VOLUME;
-	event.channel = channel;
-	event.value = volume;
-	QueueEvent(event);
-}
-
-void Win32WaveStreamer::SetChannelWaveform(int channel, int waveform)
-{
-	WaveStreamEvent	event;
-	event.eventType = WAVE_EVENT_WAVEFORM;
-	event.channel = channel;
-	event.value = waveform;
-	QueueEvent(event);
-}
-
-void Win32WaveStreamer::Tick6KHz(void)
-{
-	WaveStreamEvent	event;
-	event.eventType = WAVE_EVENT_TICK;
-	QueueEvent(event);
-}
-
-
 void Win32WaveStreamer::QueueEvent(const WaveStreamEvent &event)
 {
    WaveStreamer::QueueEvent(event);
