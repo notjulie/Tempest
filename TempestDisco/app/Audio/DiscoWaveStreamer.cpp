@@ -12,7 +12,19 @@ DiscoWaveStreamer::DiscoWaveStreamer(void)
 	:
 		WaveStreamer(buffer, TEMPEST_DISCO_SOUND_BUFFER_SAMPLE_COUNT)
 {
-
 }
 
+
+void DiscoWaveStreamer::Service(void)
+{
+   // see if we have a buffer ready to fill
+   int16_t *bufferToFill;
+   int frameCount;
+   if (AudioDriverPopEmptyBuffer(&bufferToFill, &frameCount))
+      FillBuffer(bufferToFill, frameCount * 2);
+
+	// if we still have events to process, process them
+	while (ProcessNextEvent())
+		continue;
+}
 

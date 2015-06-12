@@ -8,6 +8,7 @@
 #include "Audio/AudioDriver.h"
 #include "TempestIO/TempestIOStreamListener.h"
 
+#include "DiscoWaveStreamer.h"
 #include "SystemError.h"
 #include "TempestDiscoIO.h"
 
@@ -121,7 +122,12 @@ extern "C" {
 
 		// main loop
 		for(;;) {
+			// this takes data that has been received from the USB port
+			// and interprets it, passing it to the audio or video subsystems
 	    	USBListener.Service();
+
+	    	// let the wave streamer have its time slice
+	    	DWS.Service();
 		}
 
 	    return 0;

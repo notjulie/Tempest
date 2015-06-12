@@ -10,6 +10,8 @@ class DiscoWaveStreamer : public WaveStreamer
 public:
 	DiscoWaveStreamer(void);
 
+	void Service(void);
+
 private:
 	int16_t buffer[TEMPEST_DISCO_SOUND_BUFFER_SAMPLE_COUNT];
 };
