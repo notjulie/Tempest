@@ -5,14 +5,13 @@
 
 #include "Win32WaveStreamer.h"
 
-#define WAVE_STREAM_BUFFER_SAMPLE_COUNT 2000
 
 #pragma comment(lib, "user32")
 #pragma comment(lib, "WinMM")
 
 Win32WaveStreamer::Win32WaveStreamer(void)
 	:
-      WaveStreamer(WAVE_STREAM_BUFFER_SAMPLE_COUNT * 2),
+      WaveStreamer(waveStreamBuffer, WAVE_STREAM_BUFFER_SAMPLE_COUNT * 2),
 		buffer1(WAVE_STREAM_BUFFER_SAMPLE_COUNT),
 		buffer2(WAVE_STREAM_BUFFER_SAMPLE_COUNT)
 {

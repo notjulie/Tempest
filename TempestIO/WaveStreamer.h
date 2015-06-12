@@ -25,7 +25,7 @@ protected:
 
 
 public:
-   WaveStreamer(int _bufferSampleCount);
+   WaveStreamer(int16_t *buffer, int _bufferSampleCount);
    virtual ~WaveStreamer(void);
 
    void SetChannelFrequency(int channel, int frequency);
@@ -40,7 +40,6 @@ protected:
 
 private:
    void  ProcessTick(void);
-   void  ReportAllocError(void);
 
 private:
    int bufferSampleCount;

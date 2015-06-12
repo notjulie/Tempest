@@ -54,12 +54,6 @@ extern "C" {
 	}
 
 
-	void *_sbrk(intptr_t incr)
-	{
-		ReportSystemError(SYSTEM_ERROR_SBRK_CALLED);
-		return NULL;
-	}
-
 	void __cxa_pure_virtual()
 	{
 		ReportSystemError(SYSTEM_ERROR_PURE_VIRTUAL_CALLED);

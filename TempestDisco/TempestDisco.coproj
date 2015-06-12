@@ -50,7 +50,7 @@
       <Output>
         <Option name="OutputFileType" value="0"/>
         <Option name="Path" value="./"/>
-        <Option name="Name" value="USB2Serial"/>
+        <Option name="Name" value="TempestDisco"/>
         <Option name="HEX" value="1"/>
         <Option name="BIN" value="1"/>
       </Output>

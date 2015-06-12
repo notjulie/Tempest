@@ -14,7 +14,3 @@ void SimpleMemoryStream::ReportBufferOverflow(void)
    throw TempestException("SimpleMemoryStream: buffer overflow");
 }
 
-void WaveStreamer::ReportAllocError(void)
-{
-   throw TempestException("WaveStreamer: allocation error");
-}

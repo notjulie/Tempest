@@ -10,6 +10,8 @@
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
+#define WAVE_STREAM_BUFFER_SAMPLE_COUNT 2000
+
 
 class Win32WaveStreamer : public WaveStreamer
 {
@@ -38,7 +40,8 @@ private:
 	bool errorReported;
 	std::string errorString;
 
-	Win32WaveBuffer buffer1;
+   int16_t waveStreamBuffer[WAVE_STREAM_BUFFER_SAMPLE_COUNT * 2];
+   Win32WaveBuffer buffer1;
 	Win32WaveBuffer buffer2;
 };
 

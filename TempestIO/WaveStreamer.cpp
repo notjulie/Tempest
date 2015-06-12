@@ -1,14 +1,14 @@
 
 #include "stdafx.h"
-#include <stdlib.h>
 #include <string.h>
 
 #include "WaveStreamer.h"
 
 
-WaveStreamer::WaveStreamer(int _bufferSampleCount)
+WaveStreamer::WaveStreamer(int16_t *buffer, int _bufferSampleCount)
 {
    // save parameters
+   inputBuffer = buffer;
    bufferSampleCount = _bufferSampleCount;
 
    // clear
@@ -16,16 +16,10 @@ WaveStreamer::WaveStreamer(int _bufferSampleCount)
    queueOut = 0;
    sampleCounter = 0;
    samplesInInputBuffer = 0;
-
-   // allocate
-   inputBuffer = (int16_t *)malloc(2 * bufferSampleCount);
-   if (inputBuffer == NULL)
-      ReportAllocError();
 }
 
 WaveStreamer::~WaveStreamer(void)
 {
-   free(inputBuffer), inputBuffer = NULL;
 }
 
 void WaveStreamer::SetChannelFrequency(int channel, int frequency)
