@@ -20,7 +20,7 @@ private:
    static void ReportBufferOverflow(void);
 
 private:
-	uint8_t buffer[10000];
+	uint8_t buffer[20000];
 	int bufferIn;
 	int bufferOut;
 };

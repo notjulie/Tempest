@@ -26,5 +26,8 @@ void DiscoWaveStreamer::Service(void)
 	// if we still have events to process, process them
 	while (ProcessNextEvent())
 		continue;
+
+	// set the blue LED if we have sound output
+	GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, HaveSoundOutput() ? Bit_SET : Bit_RESET);
 }
 

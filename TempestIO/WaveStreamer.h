@@ -33,6 +33,8 @@ public:
    void SetChannelWaveform(int channel, int waveform);
    void Tick6KHz(void);
 
+   bool HaveSoundOutput(void);
+
 protected:
    void FillBuffer(int16_t *buffer, int sampleCount);
    bool ProcessNextEvent(void);

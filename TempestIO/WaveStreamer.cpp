@@ -148,3 +148,9 @@ void WaveStreamer::QueueEvent(const WaveStreamEvent &event)
    eventQueue[queueIn] = event;
    queueIn = nextIndex;
 }
+
+
+bool WaveStreamer::HaveSoundOutput(void)
+{
+	return soundGenerator.HaveSoundOutput();
+}

@@ -226,7 +226,7 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
  *
  * @param  Buf: Buffer of data to be received
  * @param  Len: Number of data received (in bytes)
- * @retval Result of the opeartion: USBD_OK if all operations are OK else VCP_FAIL
+ * @retval Result of the operation: USBD_OK if all operations are OK else VCP_FAIL
  */
 
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
@@ -240,8 +240,7 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
     // send the data to the stream
 	AbstractTempestStream *stream = memoryStream.GetRightSide();
     while (Len-- > 0)
-    	stream->Write(0);
-	//stream->Write(*Buf++);
+    	stream->Write(*Buf++);
 
     return USBD_OK;
 }

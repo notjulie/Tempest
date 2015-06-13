@@ -13,6 +13,8 @@ public:
 	void SetChannelVolume(int channel, int volume) { channels[channel].SetVolume(volume); }
 	void SetChannelWaveform(int channel, int waveform) { channels[channel].SetOutputWave(waveform); }
 
+	bool HaveSoundOutput(void);
+
 private:
 	SoundChannel	channels[8];
 };

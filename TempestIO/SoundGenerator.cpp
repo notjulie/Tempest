@@ -14,3 +14,10 @@ void SoundGenerator::ReadWaveData(int16_t *buffer, int sampleCount)
 }
 
 
+bool SoundGenerator::HaveSoundOutput(void)
+{
+	for (int i = 0; i < 8; ++i)
+		if (channels[i].GetVolume() > 0)
+			return true;
+	return false;
+}

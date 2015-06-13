@@ -15,6 +15,7 @@ public:
 	void SetFrequency(int frequency);
 	void SetVolume(int volume) { this->volume = volume; }
 	void SetOutputWave(int outputWave);
+	int GetVolume(void) { return this->volume; }
 
 private:
 	void UpdateWaveform(void);
