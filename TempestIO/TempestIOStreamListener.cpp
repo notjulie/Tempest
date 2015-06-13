@@ -43,13 +43,13 @@ void TempestIOStreamListener::Service(void)
             tempestIO->Tick6KHz();
 
             // this is our cue for a response packet
-            /*{
+            {
                TempestInPacket packet;
                packet.flags1 = 0;
                if (tempestIO->IsVectorHalt())
                   packet.flags1 |= FLAG_VECTOR_HALT;
                stream->Write(packet.flags1);
-            }*/
+            }
             break;
 
          case OP_VECTOR_GO:
