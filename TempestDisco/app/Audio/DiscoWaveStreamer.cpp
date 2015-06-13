@@ -21,7 +21,15 @@ void DiscoWaveStreamer::Service(void)
    int16_t *bufferToFill;
    int frameCount;
    if (AudioDriverPopEmptyBuffer(&bufferToFill, &frameCount))
-      FillBuffer(bufferToFill, frameCount * 2);
+   {
+   	// we need to convert mono to stereo... start by filling the
+   	// buffer mono
+      FillBuffer(bufferToFill, frameCount);
+
+      // then make it stereo
+      for (int i=frameCount-1; i>=0; --i)
+      	bufferToFill[i * 2] = bufferToFill[i*2 + 1] = bufferToFill[i];
+   }
 
 	// if we still have events to process, process them
 	while (ProcessNextEvent())
