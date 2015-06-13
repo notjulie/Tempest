@@ -11,7 +11,11 @@ MirroringStream::MirroringStream(AbstractTempestStream *_target, AbstractTempest
 
 int MirroringStream::Read(void)
 {
-   // just read from the target... the mirror is not involved
+   // empty the mirroring stream
+   while (mirror->Read() >= 0)
+      continue;
+
+   // return what we read from the target
    return target->Read();
 }
 

@@ -54,64 +54,38 @@ extern "C" {
 	extern uint32_t APP_Rx_ptr_in; /* Increment this pointer or roll it back to
 	 start address when writing received data
 	 in the buffer APP_Rx_Buffer. */
+	extern uint32_t APP_Rx_ptr_out;
 
 
 	CDC_IF_Prop_TypeDef VCP_fops = {VCP_Init, VCP_DeInit, VCP_Ctrl, VCP_DataTx, VCP_DataRx };
 
 
-	void DISCOVERY_COM_IRQHandler(void)
-	{
-	   GPIO_ToggleBits(LED_BLUE_GPIO_PORT, LED_BLUE_PIN);
-
-	   // Send the received data to the PC Host
-	   if (USART_GetITStatus(DISCOVERY_COM, USART_IT_RXNE) != RESET)
-		 VCP_DataTx(0,0);    //Copies RS232 data to USB
-
-	   /* If overrun condition occurs, clear the ORE flag and recover communication */
-	   if (USART_GetFlagStatus(DISCOVERY_COM, USART_FLAG_ORE) != RESET)
-		  USART_ReceiveData(DISCOVERY_COM);
-	}
-
 };
 
 
 /* Private functions ---------------------------------------------------------*/
+
+
+
 /**
  * @brief  VCP_Init
- *         Initializes the Media on the STM32
+ *         DeInitializes the Media on the STM32
  * @param  None
- * @retval Result of the opeartion (USBD_OK in all cases)
+ * @retval Result of the operation (USBD_OK in all cases)
  */
 static uint16_t VCP_Init(void)
 {
-   NVIC_InitTypeDef NVIC_InitStructure;
-
-
-   //RSW HACK, don't set up the port here, because we don't know what the OS wants for speed
-   //settings yet...  do this in VCP_Ctrl instead..
-
-   /* Enable USART Interrupt */
-   NVIC_InitStructure.NVIC_IRQChannel = DISCOVERY_COM_IRQn;
-   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-   NVIC_Init(&NVIC_InitStructure);
-
-	return USBD_OK;
+   return USBD_OK;
 }
-
-
 
 /**
  * @brief  VCP_DeInit
  *         DeInitializes the Media on the STM32
  * @param  None
- * @retval Result of the opeartion (USBD_OK in all cases)
+ * @retval Result of the operation (USBD_OK in all cases)
  */
 static uint16_t VCP_DeInit(void)
 {
-   USART_ITConfig(DISCOVERY_COM, USART_IT_RXNE, DISABLE);
-   USART_Cmd(DISCOVERY_COM, DISABLE);
    return USBD_OK;
 }
 
@@ -179,35 +153,6 @@ static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
  */
 static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
 {
-	uint32_t i = 0;
-
-   GPIO_ToggleBits(LED_ORANGE_GPIO_PORT, LED_ORANGE_PIN);
-
-   //If no buffer, we're supposed to receive USART, send USB
-   if (Buf==NULL) {
-      /*if (g_lc.datatype == 7)
-         APP_Rx_Buffer[APP_Rx_ptr_in] = USART_ReceiveData(DISCOVERY_COM) & 0x7F;
-      else if (g_lc.datatype == 8)
-         APP_Rx_Buffer[APP_Rx_ptr_in] = USART_ReceiveData(DISCOVERY_COM);
-
-      APP_Rx_ptr_in++;*/
-  
-      // check for buffer overflow
-      if(APP_Rx_ptr_in >= APP_RX_DATA_SIZE)
-         ReportSystemError(SYSTEM_ERROR_USB_TRANSMIT_OVERFLOW);
-   }
-   else {      //If we were passed a buffer, transmit that
-      while (i < Len) {
-         /*APP_Rx_Buffer[APP_Rx_ptr_in] = *(Buf + i);
-         APP_Rx_ptr_in++;
-         i++;*/
-
-         // check for buffer overflow
-         if (APP_Rx_ptr_in == APP_RX_DATA_SIZE) 
-             ReportSystemError(SYSTEM_ERROR_USB_TRANSMIT_OVERFLOW);
-      }
-   }
-   
 	return USBD_OK;
 }
 
@@ -246,3 +191,26 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 }
 
 
+void ServiceUSB(void)
+{
+	AbstractTempestStream *stream = memoryStream.GetRightSide();
+
+	// empty out our send buffer
+    for (;;)
+    {
+    	// make sure we have room in the output buffer
+    	int newInPointer = APP_Rx_ptr_in + 1;
+    	if (newInPointer >= APP_RX_DATA_SIZE)
+    		newInPointer = 0;
+    	if (newInPointer == APP_Rx_ptr_out)
+    		break;
+
+    	// write if we have something to write
+    	int b = stream->Read();
+    	if (b < 0)
+    		break;
+
+        APP_Rx_Buffer[APP_Rx_ptr_in] = (uint8_t)b;
+        APP_Rx_ptr_in = newInPointer;
+    }
+}

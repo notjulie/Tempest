@@ -17,6 +17,8 @@
 TempestDiscoIO	IO;
 TempestIOStreamListener USBListener(&USBStream, &IO);
 
+extern void ServiceUSB(void);
+
 extern "C" {
 
 	// Private variables
@@ -125,6 +127,9 @@ extern "C" {
 			// this takes data that has been received from the USB port
 			// and interprets it, passing it to the audio or video subsystems
 	    	USBListener.Service();
+
+	    	// service the USB transmitter
+	    	ServiceUSB();
 
 	    	// let the wave streamer have its time slice
 	    	DWS.Service();
