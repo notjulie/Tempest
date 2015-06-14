@@ -7,6 +7,7 @@
 
 #include "Audio/AudioDriver.h"
 #include "TempestIO/TempestIOStreamListener.h"
+#include "Vector/DiscoVector.h"
 
 #include "DiscoWaveStreamer.h"
 #include "SystemError.h"
@@ -121,6 +122,9 @@ extern "C" {
 
 		// initialize the audio driver
 		AudioDriverInit();
+
+		// initialize the vector driver
+		Vector.Init();
 
 		// main loop
 		for(;;) {
