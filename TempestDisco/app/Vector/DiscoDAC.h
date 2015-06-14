@@ -6,7 +6,13 @@
 class DiscoDAC
 {
 public:
-	void Init(int whichDac);
+	void Init(int channel);
+
+	void SetChannelData(uint16_t value);
+
+private:
+	int channelIndex;
+	int channelMask;
 };
 
 
