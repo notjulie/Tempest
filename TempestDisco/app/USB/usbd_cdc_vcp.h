@@ -32,5 +32,26 @@
 
 extern class AbstractTempestStream &USBStream;
 
+
+class VirtualComPort
+{
+public:
+	VirtualComPort(void);
+
+	bool WasBreakReceived(void) const { return breakReceived; }
+	void ClearBreak(void) { breakReceived = false; }
+
+	void Service(void);
+
+public:
+	// the low level ops
+	uint16_t Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len);
+
+private:
+	bool breakReceived;
+};
+
+extern VirtualComPort VCP;
+
 #endif /* __USBD_CDC_VCP_H */
 

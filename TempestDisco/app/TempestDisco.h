@@ -18,4 +18,7 @@
 	};
 #endif
 
+// standard C library
+#include <string.h>
+
 #endif

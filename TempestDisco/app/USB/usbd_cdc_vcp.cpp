@@ -37,12 +37,16 @@
 static TempestMemoryStream memoryStream;
 AbstractTempestStream &USBStream = *memoryStream.GetLeftSide();
 
+// our global VirtualComPort instance
+VirtualComPort VCP;
+
 /* Private function prototypes -----------------------------------------------*/
 static uint16_t VCP_Init(void);
 static uint16_t VCP_DeInit(void);
 static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len);
 static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len);
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len);
+
 
 extern "C" {
 
@@ -61,6 +65,89 @@ extern "C" {
 
 
 };
+
+
+VirtualComPort::VirtualComPort(void)
+{
+	breakReceived = false;
+}
+
+
+void VirtualComPort::Service(void)
+{
+	AbstractTempestStream *stream = memoryStream.GetRightSide();
+
+	// empty out our send buffer
+    for (;;)
+    {
+    	 // make sure we have room in the output buffer
+    	 int newInPointer = APP_Rx_ptr_in + 1;
+    	 if (newInPointer >= APP_RX_DATA_SIZE)
+    	    newInPointer = 0;
+    	 if (newInPointer == (int)APP_Rx_ptr_out)
+    		 break;
+
+    	 // write if we have something to write
+    	 int b = stream->Read();
+    	 if (b < 0)
+    		 break;
+
+       APP_Rx_Buffer[APP_Rx_ptr_in] = (uint8_t)b;
+       APP_Rx_ptr_in = newInPointer;
+    }
+}
+
+
+/**
+ * @brief  VCP_Ctrl
+ *         Manage the CDC class requests
+ * @param  Cmd: Command code
+ * @param  Buf: Buffer containing command data (request parameters)
+ * @param  Len: Number of data to be sent (in bytes)
+ * @retval Result of the opeartion (USBD_OK in all cases)
+ */
+uint16_t VirtualComPort::Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
+{
+   switch (Cmd) {
+       /* Not  needed for this driver, AT modem commands */
+      case SEND_ENCAPSULATED_COMMAND:
+      case GET_ENCAPSULATED_RESPONSE:
+         break;
+
+      // Not needed for this driver
+      case SET_COMM_FEATURE:
+      case GET_COMM_FEATURE:
+      case CLEAR_COMM_FEATURE:
+         break;
+
+
+      //Note - hw flow control on UART 1-3 and 6 only
+      case SET_LINE_CODING:
+         break;
+
+
+      case GET_LINE_CODING:
+         break;
+
+
+      case SET_CONTROL_LINE_STATE:
+         /* Not  needed for this driver */
+         //RSW - This tells how to set RTS and DTR
+         break;
+
+      case SEND_BREAK:
+      	breakReceived = true;
+         break;
+
+      default:
+         break;
+	}
+
+   return USBD_OK;
+}
+
+
+
 
 
 /* Private functions ---------------------------------------------------------*/
@@ -102,42 +189,7 @@ static uint16_t VCP_DeInit(void)
  */
 static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 {
-   switch (Cmd) {
-       /* Not  needed for this driver, AT modem commands */   
-      case SEND_ENCAPSULATED_COMMAND:
-      case GET_ENCAPSULATED_RESPONSE:
-         break;
-
-      // Not needed for this driver
-      case SET_COMM_FEATURE:                  
-      case GET_COMM_FEATURE:
-      case CLEAR_COMM_FEATURE:
-         break;
-
-         
-      //Note - hw flow control on UART 1-3 and 6 only
-      case SET_LINE_CODING: 
-         break;
-         
-         
-      case GET_LINE_CODING:
-         break;
-
-         
-      case SET_CONTROL_LINE_STATE:
-         /* Not  needed for this driver */
-         //RSW - This tells how to set RTS and DTR
-         break;
-
-      case SEND_BREAK:
-         /* Not  needed for this driver */
-         break;
-
-      default:
-         break;
-	}
-
-   return USBD_OK;
+	return VCP.Ctrl(Cmd, Buf, Len);
 }
 
 
@@ -191,26 +243,3 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 }
 
 
-void ServiceUSB(void)
-{
-	AbstractTempestStream *stream = memoryStream.GetRightSide();
-
-	// empty out our send buffer
-    for (;;)
-    {
-    	// make sure we have room in the output buffer
-    	int newInPointer = APP_Rx_ptr_in + 1;
-    	if (newInPointer >= APP_RX_DATA_SIZE)
-    		newInPointer = 0;
-    	if (newInPointer == APP_Rx_ptr_out)
-    		break;
-
-    	// write if we have something to write
-    	int b = stream->Read();
-    	if (b < 0)
-    		break;
-
-        APP_Rx_Buffer[APP_Rx_ptr_in] = (uint8_t)b;
-        APP_Rx_ptr_in = newInPointer;
-    }
-}
