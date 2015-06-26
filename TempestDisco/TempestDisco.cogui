@@ -11,13 +11,38 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="DiscoWaveStreamer.cpp" partName="DiscoWaveStreamer.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/DiscoWaveStreamer.cpp" title="DiscoWaveStreamer.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/Audio/DiscoWaveStreamer.cpp" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/Audio/DiscoWaveStreamer.cpp"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="650" selectionTopPixel="180"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_vcp.cpp" partName="usbd_cdc_vcp.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/USB/usbd_cdc_vcp.cpp" title="usbd_cdc_vcp.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/USB/usbd_cdc_vcp.cpp" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/USB/usbd_cdc_vcp.cpp"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2449" selectionTopPixel="3117"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_vcp.h" partName="usbd_cdc_vcp.h" title="usbd_cdc_vcp.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\USB\usbd_cdc_vcp.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\USB\usbd_cdc_vcp.h" project="TempestDisco"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1560" selectionTopPixel="435"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="AbstractTempestStream.cpp" partName="AbstractTempestStream.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestIO/AbstractTempestStream.cpp" title="AbstractTempestStream.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestIO/AbstractTempestStream.cpp" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/TempestIO/AbstractTempestStream.cpp"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="155" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" partName="startup_stm32f4xx.c" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/startup_stm32f4xx.c" title="startup_stm32f4xx.c" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/startup_stm32f4xx.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/startup_stm32f4xx.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="16378" selectionTopPixel="5083"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="CommandMode.cpp" partName="CommandMode.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/CommandMode.cpp" title="CommandMode.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/CommandMode.cpp" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/CommandMode.cpp"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="711" selectionTopPixel="510"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.cpp" partName="main.cpp" path="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/main.cpp" title="main.cpp" tooltip="C:/Users/Randy/Documents/Visual Studio 2013/Projects/Tempest/TempestDisco/app/main.cpp" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TempestDisco/main.cpp"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3431" selectionTopPixel="2186"/>
 </editor>
 </editors>
 <views>
@@ -30,10 +55,10 @@
 <viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="0">
 <expanded>
 <element path="/TempestDisco"/>
-<element path="/TempestDisco/Audio"/>
+<element path="/TempestDisco/USB"/>
 </expanded>
 <selection>
-<element path="/TempestDisco"/>
+<element path="/TempestDisco/main.cpp"/>
 </selection>
 </viewState>
 </view>
@@ -42,8 +67,8 @@
 </view>
 <view id="org.eclipse.search.ui.views.SearchView" partName="Search">
 <viewState isPinned="false">
-<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
 <view IMemento.internal.id="org.eclipse.cdt.ui.pdomSearchViewPage" definitionColumnWidth="150" locationColumnWidth="300" matchColumnWidth="300" org.eclipse.search.lastActivation="1" org.eclipse.search.resultpage.layout="2" showEnclosingDefinitions="true"/>
+<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
 </viewState>
 </view>
 <view id="org.eclipse.debug.ui.DebugView" partName="Debug">
@@ -54,7 +79,8 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>&#x0A;<category IMemento.internal.id="Warnings (1 item)"/>
+<expanded>
+<category IMemento.internal.id="Warnings (1 item)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -104,8 +130,8 @@
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showMemoryBrowserAction"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showVariablesAction"/>
 <hide_menu_item_id id="org.coocox.builder.ui.openProjectExplorerAction"/>
-<hide_menu_item_id id="org.coocox.codebugger.trace.actions.ShowTraceControlAction"/>
 <hide_menu_item_id id="org.eclipse.debug.ui.commands.TerminateAndRelaunch"/>
+<hide_menu_item_id id="org.coocox.codebugger.trace.actions.ShowTraceControlAction"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showRegistersAction"/>
 <hide_toolbar_item_id id="org.eclipse.cdt.debug.internal.ui.actions.ToggleInstructionStepModeAction"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
@@ -202,8 +228,8 @@
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.coocox.builder.ui.build"/>
 <hide_toolbar_item_id id="org.coocox.welcome.ui.action.welcome"/>
-<hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
 <hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
+<hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.debug.ui.DebugView"/>
 <view id="org.coocox.codebugger.trace.ui.traceview"/>
@@ -232,7 +258,7 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@2de1c3" ratio="0.69953054" ratioLeft="447" ratioRight="192" relationship="4" relative="org.eclipse.ui.internal.ViewStack@ca7a4c">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
@@ -243,7 +269,7 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@1d69fa2" ratio="0.5" ratioLeft="679" ratioRight="679" relationship="2" relative="org.eclipse.ui.internal.ViewStack@2de1c3">
-<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.search.ui.views.SearchView" appearance="2" expanded="2">
 <page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
 <page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser" label="Memory Browser"/>
@@ -279,168 +305,163 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/USB/usbd_cdc_vcp.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/startup_stm32f4xx.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/TempestIO/TempestMemoryStream.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/STM/USB_Device/usbd_cdc_core.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/main.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/TempestIO/TempestIOStreamListener.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/SystemError.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/SystemError.h"/>
-<editor factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestIO\TempestMemoryStream.h" project="TempestDisco"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/TempestIO/WaveStreamer.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/TempestIO/SoundGenerator.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/TempestIO/SoundChannel.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/Audio/DiscoWaveStreamer.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/CommandMode.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/TempestDisco.h"/>
+<editor factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestIO\AbstractTempestStream.h" project="TempestDisco"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/TempestIO/AbstractTempestStream.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/TempestDisco/startup_stm32f4xx.c"/>
+<editor factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\USB\usbd_cdc_vcp.h" project="TempestDisco"/>
 </editors>
-<item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="3236" y="23"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="23756" y="0"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="246" y="0"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="23848" y="0"/>
+<item historyLabel="TempestDisco.h" index="3">
+<position info="not_deleted" x="254" y="0"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="23951" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="981" y="0"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24103" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="493" y="29"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24294" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="103" y="0"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24351" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="493" y="29"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24387" y="0"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="139" y="48"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24443" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="493" y="29"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24494" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="75" y="0"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24722" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="67" y="0"/>
 </item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="23756" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="23848" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="23951" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24103" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24294" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24567" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24603" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24649" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="24689" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_core.c" index="3">
-<position info="not_deleted" x="23756" y="0"/>
-</item>
-<item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position/>
-</item>
-<item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position info="not_deleted" x="5625" y="23"/>
-</item>
-<item historyLabel="main.cpp" index="4">
+<item historyLabel="AbstractTempestStream.h" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="main.cpp" index="4">
-<position info="not_deleted" x="409" y="0"/>
+<item historyLabel="AbstractTempestStream.h" index="4">
+<position info="not_deleted" x="266" y="0"/>
+</item>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="680" y="35"/>
+</item>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="1129" y="0"/>
+</item>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="1126" y="0"/>
+</item>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="587" y="0"/>
 </item>
 <item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position info="not_deleted" x="6201" y="0"/>
+<position/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="1">
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="561" y="32"/>
+</item>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="534" y="0"/>
+</item>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="808" y="0"/>
+</item>
+<item historyLabel="AbstractTempestStream.cpp" index="5">
+<position info="not_deleted" x="165" y="0"/>
+</item>
+<item historyLabel="AbstractTempestStream.cpp" index="5">
+<position info="not_deleted" x="163" y="0"/>
+</item>
+<item historyLabel="AbstractTempestStream.h" index="4">
+<position info="not_deleted" x="229" y="37"/>
+</item>
+<item historyLabel="AbstractTempestStream.cpp" index="5">
+<position info="not_deleted" x="163" y="0"/>
+</item>
+<item historyLabel="AbstractTempestStream.cpp" index="5">
+<position info="not_deleted" x="158" y="0"/>
+</item>
+<item historyLabel="AbstractTempestStream.cpp" index="5">
+<position info="not_deleted" x="156" y="0"/>
+</item>
+<item historyLabel="AbstractTempestStream.cpp" index="5">
+<position info="not_deleted" x="155" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.cpp" index="0">
+<position/>
+</item>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="139" y="48"/>
+</item>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="808" y="0"/>
+</item>
+<item historyLabel="usbd_cdc_vcp.cpp" index="0">
+<position info="not_deleted" x="4155" y="0"/>
+</item>
+<item historyLabel="startup_stm32f4xx.c" index="6">
 <position info="not_deleted" x="16378" y="0"/>
 </item>
-<item historyLabel="TempestIOStreamListener.cpp" index="5">
-<position info="not_deleted" x="1520" y="0"/>
+<item historyLabel="usbd_cdc_vcp.cpp" index="0">
+<position info="not_deleted" x="4155" y="0"/>
 </item>
 <item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position info="not_deleted" x="5845" y="13"/>
+<position info="not_deleted" x="4148" y="0"/>
 </item>
-<item historyLabel="SystemError.cpp" index="6">
-<position info="not_deleted" x="2169" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="808" y="0"/>
 </item>
-<item historyLabel="SystemError.h" index="7">
-<position info="not_deleted" x="461" y="27"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="328" y="0"/>
 </item>
-<item historyLabel="SystemError.cpp" index="6">
-<position info="not_deleted" x="2169" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="534" y="0"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="1">
-<position info="not_deleted" x="16378" y="0"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="3433" y="59"/>
 </item>
-<item historyLabel="SystemError.cpp" index="6">
-<position info="not_deleted" x="2275" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="394" y="10"/>
 </item>
-<item historyLabel="TempestMemoryStream.cpp" index="2">
-<position info="not_deleted" x="379" y="0"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="435" y="0"/>
 </item>
-<item historyLabel="TempestMemoryStream.h" index="8">
-<position/>
-</item>
-<item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position info="not_deleted" x="5566" y="0"/>
-</item>
-<item historyLabel="TempestMemoryStream.cpp" index="2">
-<position info="not_deleted" x="379" y="0"/>
-</item>
-<item historyLabel="TempestMemoryStream.h" index="8">
-<position info="not_deleted" x="824" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="394" y="10"/>
 </item>
 <item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position info="not_deleted" x="5566" y="0"/>
+<position info="not_deleted" x="4148" y="0"/>
 </item>
-<item historyLabel="main.cpp" index="4">
-<position info="not_deleted" x="409" y="0"/>
+<item historyLabel="usbd_cdc_vcp.h" index="7">
+<position info="not_deleted" x="1534" y="0"/>
 </item>
-<item historyLabel="TempestMemoryStream.h" index="8">
-<position info="not_deleted" x="824" y="0"/>
+<item historyLabel="usbd_cdc_vcp.h" index="7">
+<position info="not_deleted" x="1560" y="0"/>
 </item>
 <item historyLabel="usbd_cdc_vcp.cpp" index="0">
-<position info="not_deleted" x="5932" y="0"/>
+<position info="not_deleted" x="2550" y="0"/>
 </item>
-<item historyLabel="WaveStreamer.cpp" index="9">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="405" y="0"/>
 </item>
-<item historyLabel="SoundGenerator.cpp" index="10">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="main.cpp" index="1">
+<position info="not_deleted" x="3431" y="0"/>
 </item>
-<item historyLabel="SoundChannel.cpp" index="11">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="usbd_cdc_vcp.cpp" index="0">
+<position info="not_deleted" x="2449" y="0"/>
 </item>
-<item historyLabel="DiscoWaveStreamer.cpp" index="12">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="DiscoWaveStreamer.cpp" index="12">
-<position/>
-</item>
-<item historyLabel="DiscoWaveStreamer.cpp" index="12">
-<position info="not_deleted" x="722" y="0"/>
-</item>
-<item active="true" historyLabel="DiscoWaveStreamer.cpp" index="12">
-<position info="not_deleted" x="720" y="0"/>
+<item active="true" historyLabel="CommandMode.cpp" index="2">
+<position info="not_deleted" x="405" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -449,47 +470,50 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="DiscoWaveStreamer.cpp" tooltip="TempestDisco/Audio/DiscoWaveStreamer.cpp">
-<persistable path="/TempestDisco/Audio/DiscoWaveStreamer.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="SoundChannel.cpp" tooltip="TempestDisco/TempestIO/SoundChannel.cpp">
-<persistable path="/TempestDisco/TempestIO/SoundChannel.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="SoundGenerator.cpp" tooltip="TempestDisco/TempestIO/SoundGenerator.cpp">
-<persistable path="/TempestDisco/TempestIO/SoundGenerator.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="WaveStreamer.cpp" tooltip="TempestDisco/TempestIO/WaveStreamer.cpp">
-<persistable path="/TempestDisco/TempestIO/WaveStreamer.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="SystemError.h" tooltip="TempestDisco/SystemError.h">
-<persistable path="/TempestDisco/SystemError.h"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.cpp" tooltip="TempestDisco/main.cpp">
 <persistable path="/TempestDisco/main.cpp"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_core.c" tooltip="TempestDisco/STM/USB_Device/usbd_cdc_core.c">
-<persistable path="/TempestDisco/STM/USB_Device/usbd_cdc_core.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="CommandMode.cpp" tooltip="TempestDisco/CommandMode.cpp">
+<persistable path="/TempestDisco/CommandMode.cpp"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="TempestDisco/startup_stm32f4xx.c">
 <persistable path="/TempestDisco/startup_stm32f4xx.c"/>
 </file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="AbstractTempestStream.cpp" tooltip="TempestDisco/TempestIO/AbstractTempestStream.cpp">
+<persistable path="/TempestDisco/TempestIO/AbstractTempestStream.cpp"/>
+</file>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="AbstractTempestStream.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestIO\AbstractTempestStream.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestIO\AbstractTempestStream.h" project="TempestDisco"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestDisco.h" tooltip="TempestDisco/TempestDisco.h">
+<persistable path="/TempestDisco/TempestDisco.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="CommandMode.h" tooltip="TempestDisco/CommandMode.h">
+<persistable path="/TempestDisco/CommandMode.h"/>
+</file>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_vcp.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\USB\usbd_cdc_vcp.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\USB\usbd_cdc_vcp.h" project="TempestDisco"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_vcp.cpp" tooltip="TempestDisco/USB/usbd_cdc_vcp.cpp">
 <persistable path="/TempestDisco/USB/usbd_cdc_vcp.cpp"/>
 </file>
-<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_def.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\stm32f4-discovery_fw_v1.1.0\libraries\stm32_usb_device_library\core\inc\usbd_def.h">
-<persistable uri="file:/C:/Users/Randy/Documents/Visual%20Studio%202013/Projects/stm32f4-discovery_fw_v1.1.0/libraries/stm32_usb_device_library/core/inc/usbd_def.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usbd_cdc_core.c" tooltip="TempestDisco/STM/USB_Device/usbd_cdc_core.c">
+<persistable path="/TempestDisco/STM/USB_Device/usbd_cdc_core.c"/>
 </file>
-<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="usb_core.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\stm32f4-discovery_fw_v1.1.0\libraries\stm32_usb_otg_driver\inc\usb_core.h">
-<persistable uri="file:/C:/Users/Randy/Documents/Visual%20Studio%202013/Projects/stm32f4-discovery_fw_v1.1.0/libraries/stm32_usb_otg_driver/inc/usb_core.h"/>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="VirtualComPort.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\USB\VirtualComPort.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app\USB\VirtualComPort.h" project="TempestDisco"/>
 </file>
-<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestMemoryStream.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestIO\TempestMemoryStream.h">
-<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestIO\TempestMemoryStream.h" project="TempestDisco"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="VirtualComPort.cpp" tooltip="TempestDisco/USB/VirtualComPort.cpp">
+<persistable path="/TempestDisco/USB/VirtualComPort.cpp"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestMemoryStream.cpp" tooltip="TempestDisco/TempestIO/TempestMemoryStream.cpp">
-<persistable path="/TempestDisco/TempestIO/TempestMemoryStream.cpp"/>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h" project="TempestDisco"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="TempestIOStreamListener.cpp" tooltip="TempestDisco/TempestIO/TempestIOStreamListener.cpp">
-<persistable path="/TempestDisco/TempestIO/TempestIOStreamListener.cpp"/>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_dac.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h" project="TempestDisco"/>
+</file>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.h" tooltip="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h">
+<persistable path="C:\Users\Randy\Documents\Visual Studio 2013\Projects\STM32F4-Discovery_FW_V1.1.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h" project="TempestDisco"/>
 </file>
 </mruList>
 </workbench>
