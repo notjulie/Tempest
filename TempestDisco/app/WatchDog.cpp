@@ -75,28 +75,19 @@ void InitializeWatchdog(void)
    RCC->APB1ENR |= RCC_APB1ENR_WWDGEN;
 
    WWDG_SetPrescaler(WWDG_Prescaler_8);
-   WWDG_SetWindowValue(65);
+   WWDG_SetWindowValue(127);
    WWDG_Enable(64 + wwdgTimerCounts - 1);
    WWDG_ClearFlag();
    WWDG_EnableIT();
-
-   // set its config register:
-   //    - early wakeup interrupt enabled
-   //    - prescaler as calculated above
-   //    - window value
-   //WWDG->CFR = (1<<9) | (preScaleIndex<<7) | 0x41;
-
-   // set it
-   //WWDG->CR = (1<<7) | (64 + wwdgTimerCounts - 1);
 }
 
 extern "C" {
 	void WWDG_IRQHandler(void)
 	{
-		// clear the interrupt
-		WWDG->SR = 0;
-
 		// reset the counter
 	   WWDG->CR = (1<<7) | (64 + wwdgTimerCounts - 1);
+
+	   // clear the interrupt
+		WWDG->SR = 0;
 	}
 };
