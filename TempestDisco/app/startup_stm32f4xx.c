@@ -64,7 +64,7 @@ void WEAK  DebugMon_Handler(void);
 void WEAK  PendSV_Handler(void);
 void WEAK  SysTick_Handler(void);
 
-void WEAK  WWDG_IRQHandler(void);
+void WWDG_IRQHandler(void);
 void WEAK  PVD_IRQHandler(void);
 void WEAK  TAMP_STAMP_IRQHandler(void);
 void WEAK  RTC_WKUP_IRQHandler(void);

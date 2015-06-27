@@ -117,6 +117,9 @@ extern "C" {
 
 	int main(void)
 	{
+		// for now freeze timers during debug
+		DBGMCU->APB1FZ = 0xFFFFFFFF;
+
 		// initialize our system error manager first... this checks
 		// to see if we are here because of a watchdog reset or such
 		SystemErrorInit();

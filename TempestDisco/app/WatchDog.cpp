@@ -19,7 +19,15 @@ void InitializeWatchdog(void)
 	// it's a software watchdog, but one that has a hardware watchdog
 	// as a failsafe.
 
-	// get clock info
+   // enable the WWDG interrupt
+	NVIC_InitTypeDef   NVIC_InitStructure;
+   NVIC_InitStructure.NVIC_IRQChannel = WWDG_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   NVIC_Init(&NVIC_InitStructure);
+
+   // get clock info
 	RCC_ClocksTypeDef clockInfo;
 	RCC_GetClocksFreq(&clockInfo);
 
@@ -34,45 +42,61 @@ void InitializeWatchdog(void)
 	int preScaleIndex;
 	if (wwdgClockTicksPerPeriod == 0)
 	{
-		preScaleIndex = 0;
+		preScaleIndex = WWDG_Prescaler_1;
 		wwdgTimerCounts = 1;
 	}
 	if (wwdgClockTicksPerPeriod <= 64)
 	{
-		preScaleIndex = 0;
+		preScaleIndex = WWDG_Prescaler_1;
 		wwdgTimerCounts = wwdgClockTicksPerPeriod - 1;
 	}
 	else if (wwdgClockTicksPerPeriod <= 128)
 	{
-		preScaleIndex = 1;
+		preScaleIndex = WWDG_Prescaler_2;
 		wwdgTimerCounts = wwdgClockTicksPerPeriod/2 - 1;
 	}
 	else if (wwdgClockTicksPerPeriod <= 256)
 	{
-		preScaleIndex = 2;
+		preScaleIndex = WWDG_Prescaler_4;
 		wwdgTimerCounts = wwdgClockTicksPerPeriod/4 - 1;
 	}
 	else if (wwdgClockTicksPerPeriod <= 512)
 	{
-		preScaleIndex = 3;
+		preScaleIndex = WWDG_Prescaler_8;
 		wwdgTimerCounts = wwdgClockTicksPerPeriod/8 - 1;
 	}
 	else
 	{
-		preScaleIndex = 3;
+		preScaleIndex = WWDG_Prescaler_8;
 		wwdgTimerCounts = 64;
 	}
 
 	// enable its clock
    RCC->APB1ENR |= RCC_APB1ENR_WWDGEN;
 
+   WWDG_SetPrescaler(WWDG_Prescaler_8);
+   WWDG_SetWindowValue(65);
+   WWDG_Enable(64 + wwdgTimerCounts - 1);
+   WWDG_ClearFlag();
+   WWDG_EnableIT();
+
    // set its config register:
    //    - early wakeup interrupt enabled
    //    - prescaler as calculated above
    //    - window value
-   WWDG->CFR = (1<<9) | (preScaleIndex<<7) | 0x41;
+   //WWDG->CFR = (1<<9) | (preScaleIndex<<7) | 0x41;
 
    // set it
-   WWDG->CR = (1<<7) | (wwdgTimerCounts - 1);
+   //WWDG->CR = (1<<7) | (64 + wwdgTimerCounts - 1);
 }
 
+extern "C" {
+	void WWDG_IRQHandler(void)
+	{
+		// clear the interrupt
+		WWDG->SR = 0;
+
+		// reset the counter
+	   WWDG->CR = (1<<7) | (64 + wwdgTimerCounts - 1);
+	}
+};

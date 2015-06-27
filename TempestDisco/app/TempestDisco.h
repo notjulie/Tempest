@@ -5,7 +5,6 @@
 // discovery includes
 #include <stm32f4_discovery.h>
 
-
 // these aren't C++ friendly
 #ifdef __cplusplus
 	extern "C" {
