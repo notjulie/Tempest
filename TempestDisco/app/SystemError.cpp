@@ -8,6 +8,15 @@
 static void CPUSpin(int milliseconds);
 
 
+void SystemErrorInit(void)
+{
+	// check for watchdog timeout reset
+	if (RCC->CSR & (1<<30))
+		ReportSystemError(SYSTEM_ERROR_WINDOW_WATCHDOG_TIMEOUT);
+	if (RCC->CSR & (1<<29))
+		ReportSystemError(SYSTEM_ERROR_INDEPENDENT_WATCHDOG_TIMEOUT);
+}
+
 extern "C" {
 
 	void ReportSystemError(SystemError systemError)

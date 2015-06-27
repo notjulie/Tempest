@@ -13,6 +13,7 @@
 #include "DiscoWaveStreamer.h"
 #include "SystemError.h"
 #include "TempestDiscoIO.h"
+#include "WatchDog.h"
 
 #include "main.h"
 
@@ -116,6 +117,10 @@ extern "C" {
 
 	int main(void)
 	{
+		// initialize our system error manager first... this checks
+		// to see if we are here because of a watchdog reset or such
+		SystemErrorInit();
+
 		SystemInit();
 
 		hw_init();
@@ -125,6 +130,9 @@ extern "C" {
 
 		// initialize the vector driver
 		Vector.Init();
+
+		// initialize the watchdog just before we enter the main loop
+		InitializeWatchdog();
 
 		// main loop
 		for(;;) {
