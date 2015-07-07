@@ -6,10 +6,16 @@
 #include "SystemError.h"
 
 static void CPUSpin(int milliseconds);
+static void DisplaySystemError(SystemError systemError);
 
+static SystemError theSystemError = SYSTEM_ERROR_NONE;
 
 void SystemErrorInit(void)
 {
+	// NOTE: this gets called before the global memory is cleared
+	// and the runtime is initialized... don't do anything too
+	// crazy
+
 	// get the CSR
 	uint32_t resetFlags = RCC->CSR;
 
@@ -21,51 +27,30 @@ void SystemErrorInit(void)
 		ReportSystemError(SYSTEM_ERROR_WINDOW_WATCHDOG_TIMEOUT);
 	if (resetFlags & (1<<29))
 		ReportSystemError(SYSTEM_ERROR_INDEPENDENT_WATCHDOG_TIMEOUT);
+
+	// check to see if we are restarting due to a software reset in order
+	// to report a system error
+	if (resetFlags & (1<<28))
+	{
+		if (theSystemError != SYSTEM_ERROR_NONE)
+		{
+			SystemError e = theSystemError;
+			theSystemError = SYSTEM_ERROR_NONE;
+			DisplaySystemError(e);
+		}
+	}
 }
 
 extern "C" {
 
 	void ReportSystemError(SystemError systemError)
 	{
-		// all we do is take over the CPU, hopefully shut down anything
-		// harmful, then blink forever
-		__disable_irq();
+		// record the system error
+		theSystemError = systemError;
 
-		// call SystemInit in case we need to again
-		SystemInit();
-
-		// Configure PD12, PD13, PD14 and PD15 in output pushpull mode...
-		// we can't assume this has been done, of course
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);      // The LEDs are on GPIOD
-        GPIO_InitTypeDef  GPIO_InitStructure;
-		GPIO_InitStructure.GPIO_Pin = LED_GREEN_PIN|LED_ORANGE_PIN|LED_RED_PIN|LED_BLUE_PIN;
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-		GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-		for (;;)
-		{
-			int hundreds = systemError / 100;
-			int tens = (systemError / 10) % 10;
-			int ones = systemError % 10;
-
-			while (hundreds>0 || tens>0 || ones>0)
-			{
-				GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, (hundreds-- > 0) ? Bit_SET : Bit_RESET);
-				GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, (tens-- > 0) ? Bit_SET : Bit_RESET);
-				GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, (ones-- > 0) ? Bit_SET : Bit_RESET);
-				CPUSpin(200);
-
-				GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, Bit_RESET);
-				GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, Bit_RESET);
-				GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, Bit_RESET);
-				CPUSpin(200);
-			}
-
-			CPUSpin(800);
-		}
+		// do a software reset... the error will get displayed
+		// after the reset so that we trust we are in a safe state
+		SCB->AIRCR = 0x05FA0000 | SCB_AIRCR_SYSRESETREQ_Msk;
 	}
 
 
@@ -75,6 +60,49 @@ extern "C" {
 	}
 };
 
+
+static void DisplaySystemError(SystemError systemError)
+{
+	// all we do is take over the CPU, hopefully shut down anything
+	// harmful, then blink forever
+	__disable_irq();
+
+	// call SystemInit in case we need to again
+	SystemInit();
+
+	// Configure PD12, PD13, PD14 and PD15 in output pushpull mode...
+	// we can't assume this has been done, of course
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);      // The LEDs are on GPIOD
+     GPIO_InitTypeDef  GPIO_InitStructure;
+	GPIO_InitStructure.GPIO_Pin = LED_GREEN_PIN|LED_ORANGE_PIN|LED_RED_PIN|LED_BLUE_PIN;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+	for (;;)
+	{
+		int hundreds = systemError / 100;
+		int tens = (systemError / 10) % 10;
+		int ones = systemError % 10;
+
+		while (hundreds>0 || tens>0 || ones>0)
+		{
+			GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, (hundreds-- > 0) ? Bit_SET : Bit_RESET);
+			GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, (tens-- > 0) ? Bit_SET : Bit_RESET);
+			GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, (ones-- > 0) ? Bit_SET : Bit_RESET);
+			CPUSpin(200);
+
+			GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, Bit_RESET);
+			GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, Bit_RESET);
+			GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, Bit_RESET);
+			CPUSpin(200);
+		}
+
+		CPUSpin(800);
+	}
+}
 
 static void CPUSpin(int milliseconds)
 {

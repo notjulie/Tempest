@@ -13,8 +13,10 @@ typedef enum {
 	// by flashing one of the LEDs... red for hundreds,
 	// blue for tens, green for ones... that makes a nice
 	// left-to-right readout on the board
+	SYSTEM_ERROR_NONE = 0,
 	SYSTEM_ERROR_PURE_VIRTUAL_CALLED = 111,
 	SYSTEM_ERROR_AUDIO_INIT_FAILURE = 112,
+	SYSTEM_ERROR_HALT_REQUESTED = 113,
 	SYSTEM_ERROR_STREAMOVERFLOW = 123,
 	SYSTEM_ERROR_USB_TRANSMIT_OVERFLOW = 124,
 	SYSTEM_ERROR_DELETE_CALLED = 125,

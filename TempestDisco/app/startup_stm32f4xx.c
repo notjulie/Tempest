@@ -305,6 +305,13 @@ void (* const g_pfnVectors[])(void) =
   */
 void Default_Reset_Handler(void)
 {
+	// initialize our system error manager first... this needs to happen
+	// here because when a system error occurs it does a processor reset
+	// and post-reset it checks to see if it needs to report the error...
+	// this is a good safe way of making sure that bad things don't
+	// leave the processor in a bad state
+	SystemErrorInit();
+
   /* Initialize data and bss */
   unsigned long *pulSrc, *pulDest;
 
@@ -335,13 +342,9 @@ void Default_Reset_Handler(void)
         "  STR R1, [R0]");
 #endif	
 
-  //Configure CLOCK
-  //SystemInit();
- 
-  /* Call the application's entry point.*/
-  //main();
-  extern int _start(void);
-  _start();
+	// this initializes the C++ runtime and calls main()
+	extern int _start(void);
+	_start();
 }
 
 

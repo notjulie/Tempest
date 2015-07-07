@@ -50,7 +50,7 @@ void DiscoVector::Init(void)
    TIM1->CCER = 0x0111;
 
    // no prescale... run it fast
-   TIM1->PSC = 100;
+   TIM1->PSC = 0;
 
    // our auto reload value
    TIM1->ARR = RGB_MAX_VALUE - 1;
@@ -88,8 +88,8 @@ void DiscoVector::Init(void)
 
 
    // set the channels to something interesting for testing
-   TIM1->CCR1 = RGB_MAX_VALUE / 4 - 1;
-   TIM1->CCR2 = RGB_MAX_VALUE * 2 / 4 - 1;
-   TIM1->CCR3 = RGB_MAX_VALUE * 3 / 4 - 1;
+   TIM1->CCR1 = RGB_MAX_VALUE / 4;
+   TIM1->CCR2 = RGB_MAX_VALUE * 2 / 4;
+   TIM1->CCR3 = RGB_MAX_VALUE * 4 / 4;
 }
 

@@ -34,7 +34,6 @@ extern "C" {
 	   GPIO_InitTypeDef  GPIO_InitStructure;
 
 
-
 		// ---------- SysTick timer -------- //
 		if (SysTick_Config(SystemCoreClock / 1000)) {
 			while (true)    // Capture error
@@ -60,31 +59,15 @@ extern "C" {
 
 
 
-	   // ------------- USART -------------- //
-	   RCC_APB1PeriphClockCmd(DISCOVERY_COM_CLK, ENABLE);         //USART1+6=APB2, 2-5=APB1
-
-
-	   /* Configure USART Tx+Rx as alternate function  */
-	   GPIO_InitStructure.GPIO_Pin = DISCOVERY_COM_TX_PIN| DISCOVERY_COM_RX_PIN;
-	   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-	   GPIO_Init(GPIOA, &GPIO_InitStructure);    //Both signals are on port GPIOA
-
-	   /* Connect PXx to USARTx_Tx* + Rx*/
-	   GPIO_PinAFConfig(DISCOVERY_COM_TX_GPIO_PORT, DISCOVERY_COM_TX_SOURCE, DISCOVERY_COM_TX_AF);
-	   GPIO_PinAFConfig(DISCOVERY_COM_RX_GPIO_PORT, DISCOVERY_COM_RX_SOURCE, DISCOVERY_COM_RX_AF);
-
-
-
-
 	   // ------------- USB -------------- //
 		USBD_Init(&USB_OTG_dev,
 				 USB_OTG_FS_CORE_ID,
 				 &USR_desc,
 				 &USBD_CDC_cb,
 				 &USR_cb);
+
+		// set up the push button as an interrupt
+		STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_EXTI);
 	}
 
 
@@ -113,16 +96,10 @@ extern "C" {
 	}
 	
 
-
-
 	int main(void)
 	{
 		// for now freeze timers during debug
 		DBGMCU->APB1FZ = 0xFFFFFFFF;
-
-		// initialize our system error manager first... this checks
-		// to see if we are here because of a watchdog reset or such
-		SystemErrorInit();
 
 		SystemInit();
 
@@ -158,6 +135,11 @@ extern "C" {
 		}
 
 	    return 0;
+	}
+
+	void EXTI0_IRQHandler(void)
+	{
+		ReportSystemError(SYSTEM_ERROR_HALT_REQUESTED);
 	}
 
 };
