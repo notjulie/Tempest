@@ -18,4 +18,7 @@ public:
 	void VectorReset(void);
 };
 
+extern TempestDiscoIO	IO;
+
+
 #endif

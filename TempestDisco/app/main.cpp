@@ -12,19 +12,18 @@
 #include "CommandMode.h"
 #include "DiscoWaveStreamer.h"
 #include "SystemError.h"
+#include "SystemTime.h"
 #include "TempestDiscoIO.h"
 #include "WatchDog.h"
 
 #include "main.h"
 
-TempestDiscoIO	IO;
 TempestIOStreamListener USBListener(&USBStream, &IO);
 
 
 extern "C" {
 
 	// Private variables
-	volatile uint32_t time_var1, time_var2;
 	__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
 
@@ -32,13 +31,6 @@ extern "C" {
 	void hw_init()
 	{
 	   GPIO_InitTypeDef  GPIO_InitStructure;
-
-
-		// ---------- SysTick timer -------- //
-		if (SysTick_Config(SystemCoreClock / 1000)) {
-			while (true)    // Capture error
-			 ;
-		}
 
 		// ---------- GPIO -------- //
 		// GPIOD Periph clock enable,
@@ -71,31 +63,6 @@ extern "C" {
 	}
 
 
-
-	/*
-	 * Called from systick handler
-	 */
-	void timing_handler()
-	{
-		if (time_var1)
-			time_var1--;
-
-		time_var2++;
-	}
-
-
-
-	/*
-	 * Delay a number of systick cycles (1ms)
-	 */
-	void Delay(volatile uint32_t nCount)
-	{
-		time_var1 = nCount;
-		while (time_var1)
-		  ;
-	}
-	
-
 	int main(void)
 	{
 		// for now freeze timers during debug
@@ -104,6 +71,9 @@ extern "C" {
 		SystemInit();
 
 		hw_init();
+
+		// initialize our main counters, SysTick, etc.
+		InitializeSystemTime();
 
 		// initialize the audio driver
 		AudioDriverInit();

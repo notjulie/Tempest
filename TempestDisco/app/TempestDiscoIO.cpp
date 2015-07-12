@@ -6,6 +6,7 @@
 
 #include "TempestDiscoIO.h"
 
+TempestDiscoIO	IO;
 
 void TempestDiscoIO::SetSoundChannelFrequency(int channel, int frequency)
 {
