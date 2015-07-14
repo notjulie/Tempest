@@ -93,37 +93,34 @@
     <File name="SystemTime.cpp" path="app/SystemTime.cpp" type="1"/>
     <File name="Audio/DiscoWaveStreamer.cpp" path="app/Audio/DiscoWaveStreamer.cpp" type="1"/>
     <File name="STM/USB_Device/usbd_req.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Core/src/usbd_req.c" type="1"/>
+    <File name="TempestDisco.cpp" path="app/TempestDisco.cpp" type="1"/>
     <File name="STM/USB_Device/usbd_ioreq.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c" type="1"/>
     <File name="system_stm32f4xx.c" path="app/system_stm32f4xx.c" type="1"/>
-    <File name="TempestDisco.cpp" path="app/TempestDisco.cpp" type="1"/>
     <File name="WatchDog.cpp" path="app/WatchDog.cpp" type="1"/>
-    <File name="Vector/DiscoDAC.cpp" path="app/Vector/DiscoDAC.cpp" type="1"/>
     <File name="STM/USB_OTG/usb_core.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_OTG_Driver/src/usb_core.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_dma.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dma.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_spi.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.c" type="1"/>
     <File name="Audio" path="" type="2"/>
     <File name="TempestIO/AbstractTempestStream.cpp" path="../TempestIO/AbstractTempestStream.cpp" type="1"/>
     <File name="stm32f4xx_it.c" path="app/stm32f4xx_it.c" type="1"/>
-    <File name="STM" path="" type="2"/>
     <File name="TempestDiscoIO.h" path="app/TempestDiscoIO.h" type="1"/>
+    <File name="STM" path="" type="2"/>
     <File name="STM/USB_Device" path="" type="2"/>
     <File name="TempestIO/WaveStreamer.cpp" path="../TempestIO/WaveStreamer.cpp" type="1"/>
     <File name="STM/USB_Device/usbd_core.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Core/src/usbd_core.c" type="1"/>
     <File name="TempestIO/Noise.cpp" path="../TempestIO/Noise.cpp" type="1"/>
     <File name="Audio/stm32f4_discovery_audio_codec.h" path="app/Audio/stm32f4_discovery_audio_codec.h" type="1"/>
-    <File name="USB/usbd_usr.c" path="app/USB/usbd_usr.c" type="1"/>
     <File name="USB" path="" type="2"/>
+    <File name="USB/usbd_usr.c" path="app/USB/usbd_usr.c" type="1"/>
     <File name="SystemError.cpp" path="app/SystemError.cpp" type="1"/>
     <File name="TempestIO/TempestIOStreamListener.cpp" path="../TempestIO/TempestIOStreamListener.cpp" type="1"/>
     <File name="TempestDisco.h" path="app/TempestDisco.h" type="1"/>
     <File name="Audio/DiscoWaveStreamer.h" path="app/Audio/DiscoWaveStreamer.h" type="1"/>
-    <File name="Vector/DiscoVector.h" path="app/Vector/DiscoVector.h" type="1"/>
     <File name="Audio/stm32f4_discovery_audio_codec.c" path="app/Audio/stm32f4_discovery_audio_codec.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_i2c.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_i2c.c" type="1"/>
     <File name="USB/usbd_cdc_vcp.cpp" path="app/USB/usbd_cdc_vcp.cpp" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_wwdg.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_wwdg.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_gpio.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_gpio.c" type="1"/>
-    <File name="Vector/DiscoVector.cpp" path="app/Vector/DiscoVector.cpp" type="1"/>
     <File name="CommandMode.cpp" path="app/CommandMode.cpp" type="1"/>
     <File name="STM/Discovery" path="" type="2"/>
     <File name="Audio/AudioDriver.h" path="app/Audio/AudioDriver.h" type="1"/>
@@ -131,17 +128,15 @@
     <File name="STM/StdPeriph/stm32f4xx_dac.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dac.c" type="1"/>
     <File name="TempestIO/SoundChannel.cpp" path="../TempestIO/SoundChannel.cpp" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_tim.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_tim.c" type="1"/>
-    <File name="Vector/DiscoDAC.h" path="app/Vector/DiscoDAC.h" type="1"/>
-    <File name="Vector" path="" type="2"/>
     <File name="Audio/AudioDriver.cpp" path="app/Audio/AudioDriver.cpp" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_exti.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_exti.c" type="1"/>
     <File name="STM/StdPeriph/misc.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c" type="1"/>
     <File name="STM/USB_OTG" path="" type="2"/>
-    <File name="main.cpp" path="app/main.cpp" type="1"/>
     <File name="startup_stm32f4xx.c" path="app/startup_stm32f4xx.c" type="1"/>
     <File name="USB/usbd_desc.c" path="app/USB/usbd_desc.c" type="1"/>
-    <File name="STM/StdPeriph" path="" type="2"/>
     <File name="TempestIO/SoundGenerator.cpp" path="../TempestIO/SoundGenerator.cpp" type="1"/>
+    <File name="STM/StdPeriph" path="" type="2"/>
+    <File name="TempestDiscoAudio.cpp" path="app/TempestDiscoAudio.cpp" type="1"/>
     <File name="TempestIO" path="" type="2"/>
     <File name="TempestIO/TempestMemoryStream.cpp" path="../TempestIO/TempestMemoryStream.cpp" type="1"/>
     <File name="SystemError.h" path="app/SystemError.h" type="1"/>
