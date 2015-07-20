@@ -82,13 +82,6 @@ extern "C" {
 
 		// main loop
 		for(;;) {
-			// check for serial break
-			if (VCP.WasBreakReceived())
-			{
-				VCP.ClearBreak();
-				RunCommandMode();
-			}
-
 			// this takes data that has been received from the USB port
 			// and interprets it, passing it to the audio or video subsystems
 	    	USBListener.Service();
@@ -105,7 +98,15 @@ extern "C" {
 
 	void EXTI0_IRQHandler(void)
 	{
-		ReportSystemError(SYSTEM_ERROR_HALT_REQUESTED);
+		static int testBeepVolume = 0;
+
+	   // we need to clear line pending bit manually
+	   EXTI_ClearITPendingBit(EXTI_Line0);
+
+		// for now just start playing a note just to see if we can
+		IO.SetSoundChannelWaveform(1, 10);	// square wave
+		IO.SetSoundChannelFrequency(1, 108);
+		IO.SetSoundChannelVolume(1, ++testBeepVolume & 15);
 	}
 
 };
