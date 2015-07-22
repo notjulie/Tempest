@@ -6,16 +6,15 @@
 #include "usbd_cdc_vcp.h"
 
 #include "Audio/AudioDriver.h"
+#include "Audio/TempestDiscoAudioIO.h"
 #include "TempestIO/TempestIOStreamListener.h"
 
-#include "CommandMode.h"
 #include "DiscoWaveStreamer.h"
 #include "SystemError.h"
 #include "SystemTime.h"
-#include "TempestDiscoIO.h"
 #include "WatchDog.h"
 
-#include "main.h"
+#include "TempestDiscoAudio.h"
 
 TempestIOStreamListener USBListener(&USBStream, &IO);
 

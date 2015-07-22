@@ -111,7 +111,7 @@ void WEAK  TIM8_BRK_TIM12_IRQHandler(void);
 void WEAK  TIM8_UP_TIM13_IRQHandler(void);
 void WEAK  TIM8_TRG_COM_TIM14_IRQHandler(void);
 void WEAK  TIM8_CC_IRQHandler(void);
-void DMA1_Stream7_IRQHandler(void);
+void WEAK  DMA1_Stream7_IRQHandler(void);
 void WEAK  FMC_IRQHandler(void);
 void WEAK  SDIO_IRQHandler(void);
 void WEAK  TIM5_IRQHandler(void);

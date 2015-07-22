@@ -3,10 +3,10 @@
 
 #include "TempestIO/AbstractTempestStream.h"
 
-#include "DiscoWaveStreamer.h"
 #include "SystemTime.h"
-#include "TempestDiscoIO.h"
 #include "usbd_cdc_vcp.h"
+
+#include "TempestDiscoVectorIO.h"
 
 #include "CommandMode.h"
 
@@ -32,9 +32,6 @@ void RunCommandMode(void)
 
     	// service our test sound
     	ServiceCharge();
-
-    	// let the wave streamer have its time slice
-    	DWS.Service();
 	}
 }
 

@@ -5,18 +5,16 @@
 #include "usbd_desc.h"
 #include "usbd_cdc_vcp.h"
 
-#include "Audio/AudioDriver.h"
 #include "TempestIO/TempestIOStreamListener.h"
 #include "Vector/DiscoVector.h"
+#include "Vector/TempestDiscoVectorIO.h"
 
 #include "CommandMode.h"
-#include "DiscoWaveStreamer.h"
 #include "SystemError.h"
 #include "SystemTime.h"
-#include "TempestDiscoIO.h"
 #include "WatchDog.h"
 
-#include "main.h"
+#include "TempestDiscoVector.h"
 
 TempestIOStreamListener USBListener(&USBStream, &IO);
 
@@ -75,9 +73,6 @@ extern "C" {
 		// initialize our main counters, SysTick, etc.
 		InitializeSystemTime();
 
-		// initialize the audio driver
-		AudioDriverInit();
-
 		// initialize the vector driver
 		Vector.Init();
 
@@ -99,9 +94,6 @@ extern "C" {
 
 	    	// service the USB transmitter
 	    	VCP.Service();
-
-	    	// let the wave streamer have its time slice
-	    	DWS.Service();
 		}
 
 	    return 0;

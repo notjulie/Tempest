@@ -1,11 +1,11 @@
 
-#ifndef TEMPESTDISCOIO_H
-#define TEMPESTDISCOIO_H
+#ifndef TEMPESTDISCOAUDIOIO_H
+#define TEMPESTDISCOAUDIOIO_H
 
 #include "TempestIO/AbstractTempestIO.h"
 
 
-class TempestDiscoIO : public AbstractTempestIO {
+class TempestDiscoAudioIO : public AbstractTempestIO {
 public:
 	void SetSoundChannelFrequency(int channel, int frequency);
 	void SetSoundChannelVolume(int channel, int volume);
@@ -18,7 +18,7 @@ public:
 	void VectorReset(void);
 };
 
-extern TempestDiscoIO	IO;
+extern TempestDiscoAudioIO	IO;
 
 
 #endif
