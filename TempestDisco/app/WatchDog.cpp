@@ -74,7 +74,7 @@ void InitializeWatchdog(void)
 	// enable its clock
    RCC->APB1ENR |= RCC_APB1ENR_WWDGEN;
 
-   WWDG_SetPrescaler(WWDG_Prescaler_8);
+   WWDG_SetPrescaler(preScaleIndex);
    WWDG_SetWindowValue(127);
    WWDG_Enable(64 + wwdgTimerCounts - 1);
    WWDG_ClearFlag();

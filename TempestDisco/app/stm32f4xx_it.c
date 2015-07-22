@@ -1,6 +1,5 @@
 #include "stm32f4xx_it.h"
 #include "stm32f4xx_conf.h"
-#include "main.h"
 
 #include "usb_core.h"
 #include "usbd_core.h"

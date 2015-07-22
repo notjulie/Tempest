@@ -12,7 +12,7 @@ void SimpleMemoryStream::Write(uint8_t b)
 {
 	// figure out what our index will be after appending the byte
 	int newBufferIn = bufferIn + 1;
-	if (newBufferIn >= sizeof(buffer))
+	if (newBufferIn >= (int)sizeof(buffer))
 		newBufferIn = 0;
 	if (newBufferIn == bufferOut)
 		ReportBufferOverflow();

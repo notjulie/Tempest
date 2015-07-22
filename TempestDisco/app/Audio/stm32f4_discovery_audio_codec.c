@@ -514,7 +514,7 @@ static void Audio_MAL_IRQHandler(void)
  #elif defined(AUDIO_MAL_MODE_CIRCULAR)
     /* Manage the remaining file size and new address offset: This function 
        should be coded by user (its prototype is already declared in stm32f4_discovery_audio_codec.h) */  
-    EVAL_AUDIO_TransferComplete_CallBack(pAddr, Size);    
+    EVAL_AUDIO_TransferComplete_CallBack((uint32_t)pAddr, Size);
     
     /* Clear the Interrupt flag */
     DMA_ClearFlag(AUDIO_MAL_DMA_STREAM, AUDIO_MAL_DMA_FLAG_TC);
