@@ -16,7 +16,6 @@
 
 #include "TempestDiscoVector.h"
 
-TempestIOStreamListener USBListener(&USBStream, &IO);
 
 
 extern "C" {
@@ -67,6 +66,9 @@ extern "C" {
 		DBGMCU->APB1FZ = 0xFFFFFFFF;
 
 		SystemInit();
+
+		// create our object that passes USB data to the IO objects
+		TempestIOStreamListener USBListener(&USBStream, &IO);
 
 		hw_init();
 
