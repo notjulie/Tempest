@@ -81,15 +81,15 @@ void DiscoVector::Init(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
-	// connect TIM1 to the outputs
+   // make sure our PWMs start out at zero
+   TIM1->CCR1 = 0;
+   TIM1->CCR2 = 0;
+   TIM1->CCR3 = 0;
+
+   // connect TIM1 to the outputs
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_TIM1);
-
-   // set the channels to something interesting for testing
-   TIM1->CCR1 = RGB_MAX_VALUE / 4;
-   TIM1->CCR2 = RGB_MAX_VALUE * 2 / 4;
-   TIM1->CCR3 = RGB_MAX_VALUE * 4 / 4;
 
    // enable our +/- 15V supply by setting PC1 to zero
    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
