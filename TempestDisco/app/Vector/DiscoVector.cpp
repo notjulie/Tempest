@@ -86,10 +86,19 @@ void DiscoVector::Init(void)
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_TIM1);
 
-
    // set the channels to something interesting for testing
    TIM1->CCR1 = RGB_MAX_VALUE / 4;
    TIM1->CCR2 = RGB_MAX_VALUE * 2 / 4;
    TIM1->CCR3 = RGB_MAX_VALUE * 4 / 4;
+
+   // enable our +/- 15V supply by setting PC1 to zero
+   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	GPIOC->BSRRH = (1<<1);
 }
 
