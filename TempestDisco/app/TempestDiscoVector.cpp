@@ -83,6 +83,9 @@ extern "C" {
 
 		// main loop
 		for(;;) {
+			// reset the dog
+			ResetIndependentWatchdogCounter();
+
 			// check for serial break
 			if (VCP.WasBreakReceived())
 			{

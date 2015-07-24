@@ -4,13 +4,8 @@
 
 static int wwdgTimerCounts;
 
-void InitializeWatchdog(void)
+static void InitializeWindowWatchdog(void)
 {
-	// We use both watchdogs... the window watch dog is what
-	// we use primarily, but the independent watchdog runs on
-	// a separate clock so it's just there as a sanity check in case
-	// things go really wrong.
-
 	// Initialize the window watchdog... we actually clear this one
 	// ourself in the window watchdog's own interrupt, so the only
 	// way it would reset the processor is if our interrupt got
@@ -79,6 +74,38 @@ void InitializeWatchdog(void)
    WWDG_Enable(64 + wwdgTimerCounts - 1);
    WWDG_ClearFlag();
    WWDG_EnableIT();
+}
+
+static void InitializeIndependentWatchdog(void)
+{
+	// this is the secret handshake to allow access to its registers
+	IWDG->KR = 0x5555;
+
+	// set the prescaler to 4
+	IWDG->PR = 0;
+
+	// set the reload register so that the clock signals about every
+	// 100ms... this is perfectly fine, as I say the window watchdog is our
+	// workhorse... this is just a sanity check
+	IWDG->RLR = 800;
+
+	// this starts the watchdog
+	IWDG->KR = 0xCCCC;
+}
+
+void InitializeWatchdog(void)
+{
+	// We use both watchdogs... the window watch dog is what
+	// we use primarily, but the independent watchdog runs on
+	// a separate clock so it's just there as a sanity check in case
+	// things go really wrong.
+	InitializeWindowWatchdog();
+	InitializeIndependentWatchdog();
+}
+
+void ResetIndependentWatchdogCounter(void)
+{
+	IWDG->KR = 0xAAAA;
 }
 
 extern "C" {
