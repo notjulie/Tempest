@@ -87,6 +87,9 @@ extern "C" {
 
 	    	// service the USB transmitter
 	    	VCP.Service();
+
+	    	// service Vector
+	    	Vector.Service();
 		}
 
 	    return 0;

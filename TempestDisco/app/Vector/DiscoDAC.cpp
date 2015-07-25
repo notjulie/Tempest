@@ -12,6 +12,9 @@ void DiscoDAC::Init(int _channel)
 	// save the parameter
 	channelIndex = _channel;
 
+	// clear
+	dmaRequested = false;
+
 	// initialize things
 	channelMask = (channelIndex==1) ? DAC_Channel_1 : DAC_Channel_2;
 
@@ -48,20 +51,22 @@ void DiscoDAC::Init(int _channel)
    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
    GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-   DAC_InitTypeDef DAC_InitStructure;
-   DAC_InitStructure.DAC_Trigger = DAC_Trigger_None ;
-   DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
-   DAC_Init(channelMask, &DAC_InitStructure);
-
-   /* Enable DAC Channel: Once the DAC channel is enabled, the pin is
-      automatically connected to the DAC converter. */
-   DAC_Cmd(channelMask, ENABLE);
-
-   // set it to something
-   SetChannelData(0x4000);
 }
 
+
+bool DiscoDAC::IsDMARunning(void)
+{
+	bool running;
+	if (channelIndex == 1)
+		running = dmaRequested && DMA_GetFlagStatus(DMA1_Stream6, DMA_FLAG_TCIF6) == RESET;
+	else
+		running = dmaRequested && DMA_GetFlagStatus(DMA1_Stream5, DMA_FLAG_TCIF5) == RESET;
+
+	if (!running)
+		dmaRequested = false;
+
+	return running;
+}
 
 void DiscoDAC::SetChannelData(uint16_t value)
 {
@@ -99,7 +104,17 @@ void DiscoDAC::StartRamp(uint16_t from, uint16_t to, uint32_t usDuration)
 		ReportSystemError(SYSTEM_ERROR_DAC_DURATION_TOO_LONG);
 	uint32_t cyclesPerSample = (uint32_t)cyclesPerSample64;
 
-	// set up our clock
+	// set up the DAC
+   DAC_InitTypeDef DAC_InitStructure;
+   DAC_InitStructure.DAC_Trigger = DAC_Trigger_None ;
+   DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
+   DAC_Init(channelMask, &DAC_InitStructure);
+
+   /* Enable DAC Channel: Once the DAC channel is enabled, the pin is
+      automatically connected to the DAC converter. */
+   DAC_Cmd(channelMask, ENABLE);
+
+   // set up our clock
    timer->CR1 = 0;
    timer->PSC = cyclesPerSample >> 16;
    timer->ARR = cyclesPerSample / (timer->PSC + 1) - 1;
@@ -129,7 +144,7 @@ void DiscoDAC::StartRamp(uint16_t from, uint16_t to, uint32_t usDuration)
    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-   DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+   DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
    DMA_InitStructure.DMA_Priority = DMA_Priority_High;
    DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;
    DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
@@ -145,5 +160,6 @@ void DiscoDAC::StartRamp(uint16_t from, uint16_t to, uint32_t usDuration)
 
    // Enable DMA for DAC Channel
    DAC_DMACmd(channelMask, ENABLE);
+   dmaRequested = true;
 }
 
