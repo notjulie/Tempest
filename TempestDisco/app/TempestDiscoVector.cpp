@@ -5,6 +5,7 @@
 #include "usbd_desc.h"
 #include "usbd_cdc_vcp.h"
 
+#include "Discovery/LED.h"
 #include "TempestIO/TempestIOStreamListener.h"
 #include "Vector/DiscoVector.h"
 #include "Vector/TempestDiscoVectorIO.h"
@@ -27,26 +28,12 @@ extern "C" {
 	//Configure pins and clocks
 	void hw_init()
 	{
-	   GPIO_InitTypeDef  GPIO_InitStructure;
-
 		// ---------- GPIO -------- //
 		// GPIOD Periph clock enable,
 	   // Need to enable GPIOA because that's where the UART pins are.
 	   // (Some of the USB is also on that port, and usb modules turn it on later...
 	   //  but anyway, UART started working correctly when I turned clock on first)
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);      // The LEDs are on GPIOD
-
-
-		// Configure PD12, PD13, PD14 and PD15 in output pushpull mode
-		GPIO_InitStructure.GPIO_Pin = LED_GREEN_PIN|LED_ORANGE_PIN|LED_RED_PIN|LED_BLUE_PIN;
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-		GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-
 
 	   // ------------- USB -------------- //
 		USBD_Init(&USB_OTG_dev,
@@ -71,6 +58,7 @@ extern "C" {
 		TempestIOStreamListener USBListener(&USBStream, &IO);
 
 		hw_init();
+		InitializeLEDs();
 
 		// initialize our main counters, SysTick, etc.
 		InitializeSystemTime();

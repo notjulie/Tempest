@@ -1,6 +1,7 @@
 
 #include "TempestDisco.h"
 
+#include "Discovery/LED.h"
 #include "TempestIO/TempestMemoryStream.h"
 
 #include "SystemError.h"
@@ -67,19 +68,9 @@ static void DisplaySystemError(SystemError systemError)
 	// harmful, then blink forever
 	__disable_irq();
 
-	// call SystemInit in case we need to again
+	// call SystemInit to set up the clocks, then initialize the LEDs
 	SystemInit();
-
-	// Configure PD12, PD13, PD14 and PD15 in output pushpull mode...
-	// we can't assume this has been done, of course
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);      // The LEDs are on GPIOD
-     GPIO_InitTypeDef  GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Pin = LED_GREEN_PIN|LED_ORANGE_PIN|LED_RED_PIN|LED_BLUE_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
+	InitializeLEDs();
 
 	for (;;)
 	{
@@ -89,14 +80,14 @@ static void DisplaySystemError(SystemError systemError)
 
 		while (hundreds>0 || tens>0 || ones>0)
 		{
-			GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, (hundreds-- > 0) ? Bit_SET : Bit_RESET);
-			GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, (tens-- > 0) ? Bit_SET : Bit_RESET);
-			GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, (ones-- > 0) ? Bit_SET : Bit_RESET);
+			LEDRed(hundreds-- > 0);
+			LEDBlue(tens-- > 0);
+			LEDGreen(ones-- > 0);
 			CPUSpin(200);
 
-			GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, Bit_RESET);
-			GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, Bit_RESET);
-			GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, Bit_RESET);
+			LEDRed(false);
+			LEDBlue(false);
+			LEDGreen(false);
 			CPUSpin(200);
 		}
 

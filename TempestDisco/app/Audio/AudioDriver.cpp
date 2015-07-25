@@ -65,7 +65,7 @@ extern "C" {
 		// this is the green heartbeat LED
 		static int cycles = 0;
 		++cycles;
-		GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, ((cycles/50) & 1) ? Bit_SET : Bit_RESET);
+      LEDGreen((cycles / 50) & 1);
 
 		// this means the first half of the buffer is starting to play
 		// and the second half is ready to be filled

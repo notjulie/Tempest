@@ -1,5 +1,9 @@
 
 #include "TempestDisco.h"
+
+#include "Discovery/LED.h"
+#include "SystemTime.h"
+
 #include "WatchDog.h"
 
 static int wwdgTimerCounts;
@@ -28,7 +32,7 @@ static void InitializeWindowWatchdog(void)
 
 	// figure out how to program our counter's duration
 	uint32_t watchdogPeriodMicroseconds = 1000;
-	uint32_t wwdgMasterFrequency = clockInfo.PCLK1_Frequency / 4096;
+	uint32_t wwdgMasterFrequency = GetAPB1TimerClockSpeed() / 4096;
 	uint32_t wwdgClockTicksPerPeriod = watchdogPeriodMicroseconds * wwdgMasterFrequency / 1000000;
 
 	// we are allowed choices of 1, 2, 4, 8 as a prescaler and a range of 1 to 64
@@ -43,22 +47,22 @@ static void InitializeWindowWatchdog(void)
 	if (wwdgClockTicksPerPeriod <= 64)
 	{
 		preScaleIndex = WWDG_Prescaler_1;
-		wwdgTimerCounts = wwdgClockTicksPerPeriod - 1;
+		wwdgTimerCounts = wwdgClockTicksPerPeriod;
 	}
 	else if (wwdgClockTicksPerPeriod <= 128)
 	{
 		preScaleIndex = WWDG_Prescaler_2;
-		wwdgTimerCounts = wwdgClockTicksPerPeriod/2 - 1;
+		wwdgTimerCounts = wwdgClockTicksPerPeriod/2;
 	}
 	else if (wwdgClockTicksPerPeriod <= 256)
 	{
 		preScaleIndex = WWDG_Prescaler_4;
-		wwdgTimerCounts = wwdgClockTicksPerPeriod/4 - 1;
+		wwdgTimerCounts = wwdgClockTicksPerPeriod/4;
 	}
 	else if (wwdgClockTicksPerPeriod <= 512)
 	{
 		preScaleIndex = WWDG_Prescaler_8;
-		wwdgTimerCounts = wwdgClockTicksPerPeriod/8 - 1;
+		wwdgTimerCounts = wwdgClockTicksPerPeriod/8;
 	}
 	else
 	{
@@ -71,7 +75,12 @@ static void InitializeWindowWatchdog(void)
 
    WWDG_SetPrescaler(preScaleIndex);
    WWDG_SetWindowValue(127);
-   WWDG_Enable(64 + wwdgTimerCounts - 1);
+
+   // this would be one more than this, but our interrupt comes one tick
+   // before timeout... basically we are trying to roughly set the
+   // frequency of the interrupt
+   WWDG_Enable(64 + wwdgTimerCounts);
+
    WWDG_ClearFlag();
    WWDG_EnableIT();
 }
@@ -112,7 +121,12 @@ extern "C" {
 	void WWDG_IRQHandler(void)
 	{
 		// reset the counter
-	   WWDG->CR = (1<<7) | (64 + wwdgTimerCounts - 1);
+	   WWDG->CR = (1<<7) | (64 + wwdgTimerCounts);
+
+	   // set the orange LED as about a one second heart beat... this assumes a
+	   // 1ms period
+	   static unsigned int count = 0;
+	   LEDOrange((++count % 1000) > 500);
 
 	   // clear the interrupt
 		WWDG->SR = 0;

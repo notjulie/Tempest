@@ -26,6 +26,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "TempestDisco.h"
 
+#include "Discovery/LED.h"
 #include "TempestIO/TempestMemoryStream.h"
 
 #include "SystemError.h"
@@ -232,7 +233,7 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 	bytesReceived += Len;
 
 	// flash every 100KB or so
-	GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, ((bytesReceived/100000)&1) ? Bit_SET : Bit_RESET);
+   LEDRed((bytesReceived / 100000) & 1);
 
     // send the data to the stream
 	AbstractTempestStream *stream = memoryStream.GetRightSide();
