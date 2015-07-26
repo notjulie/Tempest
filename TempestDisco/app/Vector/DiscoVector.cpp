@@ -45,43 +45,44 @@ DiscoVector::DiscoVector(void)
 
 void DiscoVector::Init(void)
 {
-	// initialize the DACs for XY
-	dac1.Init(1);
-	dac2.Init(2);
+	// initialize the DAC for XY
+	dac.Init();
 
 	// initialize RGB
 	InitializeRGB();
 }
 
 
-int DiscoVector::CreateRamp(uint16_t *rampBuffer, uint16_t from, uint16_t to)
+int DiscoVector::CreateDualRamp(uint16_t fromX, uint16_t toX, uint16_t fromY, uint16_t toY)
 {
-   // create the ramp
+	// for now it's just always 1024 uniform for a test
 	int index = 0;
-	int value = from;
+	int xValue = fromX;
+	int yValue = fromY;
 	for (;;)
 	{
-		rampBuffer[index++] = value;
-		if (from < to)
-		{
-			if (++value > to)
-				break;
-		}
+		// quit at 1024 for now
+		if (index >= 1024)
+			return index;
+
+		// add the current values
+		dacBuffer[index++] = (yValue<<16) + xValue;
+
+		// increment/decrement/whatever
+		if (xValue > toX)
+			--xValue;
 		else
-		{
-			if (--value < to)
-				break;
-		}
+			++xValue;
+		if (yValue > toY)
+			--yValue;
+		else
+			++yValue;
 	}
-	int sampleCount = index;
-	return sampleCount;
 }
 
 void DiscoVector::Service(void)
 {
-	bool dac1Running = dac1.IsDMARunning();
-	bool dac2Running = dac2.IsDMARunning();
-	if (dac1Running || dac2Running)
+	if (dac.IsDMARunning())
 		return;
 
 	// reset DMA1... ugly hack for now... will figure out the
@@ -93,26 +94,23 @@ void DiscoVector::Service(void)
 	int usDuration = 5000000;
 
 	static unsigned phase = 0;
+
+	int sampleCount;
 	switch ((++phase) & 3)
 	{
 	case 0:
-		CreateRamp(xDacBuffer, 1024, 2048);
-		CreateRamp(yDacBuffer, 2048, 3072);
+		sampleCount = CreateDualRamp(1024, 2048, 2048, 3072);
 		break;
 	case 1:
-		CreateRamp(xDacBuffer, 2048, 3072);
-		CreateRamp(yDacBuffer, 3072, 2048);
+		sampleCount = CreateDualRamp(2048, 3072, 3072, 2048);
 		break;
 	case 2:
-		CreateRamp(xDacBuffer, 3072, 2048);
-		CreateRamp(yDacBuffer, 2048, 1024);
+		sampleCount = CreateDualRamp(3072, 2048, 2048, 1024);
 		break;
 	case 3:
-		CreateRamp(xDacBuffer, 2048, 1024);
-		CreateRamp(yDacBuffer, 1024, 2048);
+		sampleCount = CreateDualRamp(2048, 1024, 1024, 2048);
 		break;
 	}
 
-	dac1.StartRamp(xDacBuffer, 1024, usDuration);
-	dac2.StartRamp(yDacBuffer, 1024, usDuration);
+	dac.StartOutput(dacBuffer, sampleCount, usDuration);
 }

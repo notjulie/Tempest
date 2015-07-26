@@ -3,7 +3,7 @@
 #define DISCOVECTOR_H
 
 #include "TempestIO/Vector/SimpleVector.h"
-#include "DiscoDAC.h"
+#include "Drivers/DualDAC.h"
 
 
 class DiscoVector
@@ -14,16 +14,14 @@ public:
 	void Service(void);
 
 private:
-	int CreateRamp(uint16_t *rampBuffer, uint16_t from, uint16_t to);
+	int CreateDualRamp(uint16_t fromX, uint16_t toX, uint16_t fromY, uint16_t toY);
 
 private:
-	DiscoDAC dac1;
-	DiscoDAC dac2;
+	DualDAC dac;
 	SimpleVector *currentVectors;
 	int		currentVectorCount;
 	SimpleVector	defaultVectorList[4];
-	uint16_t xDacBuffer[4096];
-	uint16_t yDacBuffer[4096];
+	uint32_t dacBuffer[4096];
 };
 
 extern DiscoVector Vector;
