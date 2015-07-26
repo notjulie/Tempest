@@ -54,6 +54,29 @@ void DiscoVector::Init(void)
 }
 
 
+int DiscoVector::CreateRamp(uint16_t *rampBuffer, uint16_t from, uint16_t to)
+{
+   // create the ramp
+	int index = 0;
+	int value = from;
+	for (;;)
+	{
+		rampBuffer[index++] = value;
+		if (from < to)
+		{
+			if (++value > to)
+				break;
+		}
+		else
+		{
+			if (--value < to)
+				break;
+		}
+	}
+	int sampleCount = index;
+	return sampleCount;
+}
+
 void DiscoVector::Service(void)
 {
 	bool dac1Running = dac1.IsDMARunning();
@@ -63,9 +86,9 @@ void DiscoVector::Service(void)
 
 	// reset DMA1... ugly hack for now... will figure out the
 	// gentler way to do this later
-	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_DMA1, DISABLE);
-	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_DMA1, ENABLE);
-	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_DMA1, DISABLE);
+	RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, DISABLE);
+	RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, ENABLE);
+	RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, DISABLE);
 
 	int usDuration = 5000000;
 
@@ -73,20 +96,23 @@ void DiscoVector::Service(void)
 	switch ((++phase) & 3)
 	{
 	case 0:
-		dac1.StartRamp(1024, 2048, usDuration);
-		dac2.StartRamp(2048, 3072, usDuration);
+		CreateRamp(xDacBuffer, 1024, 2048);
+		CreateRamp(yDacBuffer, 2048, 3072);
 		break;
 	case 1:
-		dac1.StartRamp(2048, 3072, usDuration);
-		dac2.StartRamp(3072, 2048, usDuration);
+		CreateRamp(xDacBuffer, 2048, 3072);
+		CreateRamp(yDacBuffer, 3072, 2048);
 		break;
 	case 2:
-		dac1.StartRamp(3072, 2048, usDuration);
-		dac2.StartRamp(2048, 1024, usDuration);
+		CreateRamp(xDacBuffer, 3072, 2048);
+		CreateRamp(yDacBuffer, 2048, 1024);
 		break;
 	case 3:
-		dac1.StartRamp(2048, 1024, usDuration);
-		dac2.StartRamp(1024, 2048, usDuration);
+		CreateRamp(xDacBuffer, 2048, 1024);
+		CreateRamp(yDacBuffer, 1024, 2048);
 		break;
 	}
+
+	dac1.StartRamp(xDacBuffer, 1024, usDuration);
+	dac2.StartRamp(yDacBuffer, 1024, usDuration);
 }

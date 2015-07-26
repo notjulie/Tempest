@@ -10,7 +10,7 @@ public:
 
 	bool IsDMARunning(void);
 	void SetChannelData(uint16_t value);
-	void StartRamp(uint16_t from, uint16_t to, uint32_t usDuration);
+	void StartRamp(uint16_t *buffer, int sampleCount, uint32_t usDuration);
 
 private:
 	bool dmaRequested;
@@ -18,7 +18,6 @@ private:
 	int channelMask;
 	TIM_TypeDef *timer;
 	DMA_Stream_TypeDef *dmaStream;
-	uint16_t rampBuffer[4096];
 };
 
 

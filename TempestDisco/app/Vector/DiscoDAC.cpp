@@ -77,27 +77,8 @@ void DiscoDAC::SetChannelData(uint16_t value)
 }
 
 
-void DiscoDAC::StartRamp(uint16_t from, uint16_t to, uint32_t usDuration)
+void DiscoDAC::StartRamp(uint16_t *buffer, int sampleCount, uint32_t usDuration)
 {
-   // create the ramp
-	int index = 0;
-	int value = from;
-	for (;;)
-	{
-		rampBuffer[index++] = value;
-		if (from < to)
-		{
-			if (++value > to)
-				break;
-		}
-		else
-		{
-			if (--value < to)
-				break;
-		}
-	}
-	int sampleCount = index;
-
 	uint64_t totalClockCycles = (uint64_t)GetAPB1TimerClockSpeed() * (uint64_t)usDuration / 1000000;
 	uint64_t cyclesPerSample64 = totalClockCycles / sampleCount;
 	if ((cyclesPerSample64 >> 32) != 0)
@@ -137,7 +118,7 @@ void DiscoDAC::StartRamp(uint16_t from, uint16_t to, uint32_t usDuration)
    DMA_DeInit(dmaStream);
    DMA_InitStructure.DMA_Channel = DMA_Channel_7;
    DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(channelIndex == 1 ? &DAC->DHR12R1 : &DAC->DHR12R2);
-   DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)rampBuffer;
+   DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)buffer;
    DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
    DMA_InitStructure.DMA_BufferSize = sampleCount;
    DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
