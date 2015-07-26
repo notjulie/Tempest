@@ -2,11 +2,62 @@
 #include "TempestDisco.h"
 
 #include "Discovery/LED.h"
+#include "SystemError.h"
 #include "SystemTime.h"
 
 #include "WatchDog.h"
 
+#define MAX_WATCHDOG_FUNCTIONS 5
+
 static int wwdgTimerCounts;
+static WatchdogInterruptFunction *watchdogFunctions[MAX_WATCHDOG_FUNCTIONS];
+static int watchdogFunctionCount;
+
+static void InitializeIndependentWatchdog(void);
+static void InitializeWindowWatchdog(void);
+
+void AddWatchdogInterruptFunction(WatchdogInterruptFunction *function)
+{
+	if (watchdogFunctionCount >= MAX_WATCHDOG_FUNCTIONS-1)
+		ReportSystemError(SYSTEM_ERROR_TOO_MANY_WATCHDOG_FUNCTIONS);
+
+	watchdogFunctions[watchdogFunctionCount] = function;
+	++watchdogFunctionCount;
+}
+
+void InitializeWatchdog(void)
+{
+	// We use both watchdogs... the window watch dog is what
+	// we use primarily, but the independent watchdog runs on
+	// a separate clock so it's just there as a sanity check in case
+	// things go really wrong.
+	InitializeWindowWatchdog();
+	InitializeIndependentWatchdog();
+}
+
+
+void ResetIndependentWatchdogCounter(void)
+{
+	IWDG->KR = 0xAAAA;
+}
+
+
+static void InitializeIndependentWatchdog(void)
+{
+	// this is the secret handshake to allow access to its registers
+	IWDG->KR = 0x5555;
+
+	// set the prescaler to 4
+	IWDG->PR = 0;
+
+	// set the reload register so that the clock signals about every
+	// 100ms... this is perfectly fine, as I say the window watchdog is our
+	// workhorse... this is just a sanity check
+	IWDG->RLR = 800;
+
+	// this starts the watchdog
+	IWDG->KR = 0xCCCC;
+}
 
 static void InitializeWindowWatchdog(void)
 {
@@ -85,37 +136,6 @@ static void InitializeWindowWatchdog(void)
    WWDG_EnableIT();
 }
 
-static void InitializeIndependentWatchdog(void)
-{
-	// this is the secret handshake to allow access to its registers
-	IWDG->KR = 0x5555;
-
-	// set the prescaler to 4
-	IWDG->PR = 0;
-
-	// set the reload register so that the clock signals about every
-	// 100ms... this is perfectly fine, as I say the window watchdog is our
-	// workhorse... this is just a sanity check
-	IWDG->RLR = 800;
-
-	// this starts the watchdog
-	IWDG->KR = 0xCCCC;
-}
-
-void InitializeWatchdog(void)
-{
-	// We use both watchdogs... the window watch dog is what
-	// we use primarily, but the independent watchdog runs on
-	// a separate clock so it's just there as a sanity check in case
-	// things go really wrong.
-	InitializeWindowWatchdog();
-	InitializeIndependentWatchdog();
-}
-
-void ResetIndependentWatchdogCounter(void)
-{
-	IWDG->KR = 0xAAAA;
-}
 
 extern "C" {
 	void WWDG_IRQHandler(void)
@@ -127,6 +147,10 @@ extern "C" {
 	   // 1ms period
 	   static unsigned int count = 0;
 	   LEDOrange((++count % 1000) > 500);
+
+	   // call our watchdog functions
+	   for (int i=0; i<watchdogFunctionCount; ++i)
+	   	watchdogFunctions[i]();
 
 	   // clear the interrupt
 		WWDG->SR = 0;

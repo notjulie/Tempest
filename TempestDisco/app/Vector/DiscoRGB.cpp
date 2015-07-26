@@ -1,5 +1,8 @@
 
 #include "TempestDisco.h"
+
+#include "WatchDog.h"
+
 #include "DiscoRGB.h"
 
 // There is a great deal of caution written and designed into this so that
@@ -24,7 +27,9 @@
 // plans for.
 
 
-#define RGB_MAX_VALUE 16
+static uint8_t rgbTimer = 0;
+
+static void RGBTimer(void);
 
 void InitializeRGB(void)
 {
@@ -91,11 +96,6 @@ void InitializeRGB(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
-   // make sure our PWMs start out at zero
-   TIM1->CCR1 = 0;
-   TIM1->CCR2 = 0;
-   TIM1->CCR3 = 0;
-
    // connect TIM1 to the outputs
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
@@ -110,4 +110,45 @@ void InitializeRGB(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 	GPIOC->BSRRH = (1<<1);
+
+	// request that we get called by the watchdog
+	AddWatchdogInterruptFunction(RGBTimer);
+}
+
+
+void PulseRGB(uint8_t red, uint8_t green, uint8_t blue, uint8_t msFailsafeOffTime)
+{
+	// disable interrupts
+	__disable_irq();
+
+   // set RGB outputs
+   TIM1->CCR1 = red;
+   TIM1->CCR2 = green;
+   TIM1->CCR3 = blue;
+
+   // set the timer... I really don't think we'll have any call for being
+   // on longer than this
+	#define MAX_RGB_PULSE_MS 5
+   if (msFailsafeOffTime > MAX_RGB_PULSE_MS)
+   	msFailsafeOffTime = MAX_RGB_PULSE_MS;
+
+   // add one to our pulse width since we're inexact and we could be near
+   // the end of a cycle
+   rgbTimer = msFailsafeOffTime + 1;
+
+	__enable_irq();
+}
+
+
+static void RGBTimer(void)
+{
+	// check the timer and shut off RGB output if we've exceeded it
+	if (rgbTimer > 0)
+		--rgbTimer;
+	if (rgbTimer == 0)
+	{
+	   TIM1->CCR1 = 0;
+	   TIM1->CCR2 = 0;
+	   TIM1->CCR3 = 0;
+	}
 }

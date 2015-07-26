@@ -18,7 +18,6 @@
 #include "TempestDiscoVector.h"
 
 
-
 extern "C" {
 
 	// Private variables
@@ -97,6 +96,9 @@ extern "C" {
 
 	void EXTI0_IRQHandler(void)
 	{
+	   // we need to clear line pending bit manually
+	   EXTI_ClearITPendingBit(EXTI_Line0);
+
 		ReportSystemError(SYSTEM_ERROR_HALT_REQUESTED);
 	}
 
