@@ -22,7 +22,7 @@ void DualDAC::Init(void)
    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
 
    // enable clock for TIM6, which we use to trigger both channels
-   RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
+   RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
 
    /* Once the DAC channel is enabled, the corresponding GPIO pin is automatically
       connected to the DAC converter. In order to avoid parasitic consumption,
@@ -58,19 +58,19 @@ void DualDAC::StartOutput(uint32_t *buffer, int sampleCount, uint32_t usDuration
    DAC_Cmd(DAC_Channel_2, ENABLE);
 
    // set up our clock... we use
-   TIM6->CR1 = 0;
-   TIM6->PSC = cyclesPerSample >> 16;
-   TIM6->ARR = cyclesPerSample / (TIM6->PSC + 1) - 1;
-   TIM6->DIER = 0x100U;
-   TIM6->CR2 = 0;
-   TIM6->CR1 = 1;
+   TIM5->CR1 = 0;
+   TIM5->PSC = cyclesPerSample >> 16;
+   TIM5->ARR = cyclesPerSample / (TIM5->PSC + 1) - 1;
+   TIM5->DIER = 0x100U;
+   TIM5->CR2 = 0;
+   TIM5->CR1 = 1;
 
-   TIM_SelectOutputTrigger(TIM6, TIM_TRGOSource_Update);
-   TIM_DMACmd(TIM6, TIM_DMA_Update, ENABLE);
+   TIM_SelectOutputTrigger(TIM5, TIM_TRGOSource_Update);
+   TIM_DMACmd(TIM5, TIM_DMA_Update, ENABLE);
 
    // set up the DACs
    DAC_InitTypeDef dacInitStructure;
-   dacInitStructure.DAC_Trigger = DAC_Trigger_T6_TRGO;
+   dacInitStructure.DAC_Trigger = DAC_Trigger_T5_TRGO;
    dacInitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;
    dacInitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;
    dacInitStructure.DAC_LFSRUnmask_TriangleAmplitude = 0;
@@ -80,7 +80,7 @@ void DualDAC::StartOutput(uint32_t *buffer, int sampleCount, uint32_t usDuration
    // set up the DMA stream
    DMA_InitTypeDef DMA_InitStructure;
    DMA_DeInit(DMA1_Stream6);
-   DMA_InitStructure.DMA_Channel = DMA_Channel_7;
+   DMA_InitStructure.DMA_Channel = DMA_Channel_6;
    DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&DAC->DHR12RD);
    DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)buffer;
    DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
@@ -105,8 +105,8 @@ void DualDAC::StartOutput(uint32_t *buffer, int sampleCount, uint32_t usDuration
    DAC_Cmd(DAC_Channel_2, ENABLE);
 
    // Enable DMA for DAC Channels
-   DAC_DMACmd(DAC_Channel_1, ENABLE);
-   DAC_DMACmd(DAC_Channel_2, ENABLE);
+   //DAC_DMACmd(DAC_Channel_1, ENABLE);
+   //DAC_DMACmd(DAC_Channel_2, ENABLE);
    dmaRequested = true;
 }
 

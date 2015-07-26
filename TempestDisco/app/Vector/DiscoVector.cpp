@@ -85,12 +85,6 @@ void DiscoVector::Service(void)
 	if (dac.IsDMARunning())
 		return;
 
-	// reset DMA1... ugly hack for now... will figure out the
-	// gentler way to do this later
-	RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, DISABLE);
-	RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, ENABLE);
-	RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, DISABLE);
-
 	int usDuration = 5000000;
 
 	static unsigned phase = 0;
