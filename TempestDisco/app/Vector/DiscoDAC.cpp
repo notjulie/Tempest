@@ -79,7 +79,7 @@ void DiscoDAC::SetChannelData(uint16_t value)
 
 void DiscoDAC::StartRamp(uint16_t from, uint16_t to, uint32_t usDuration)
 {
-	// create the ramp
+   // create the ramp
 	int index = 0;
 	int value = from;
 	for (;;)

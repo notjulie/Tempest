@@ -58,9 +58,35 @@ void DiscoVector::Service(void)
 {
 	bool dac1Running = dac1.IsDMARunning();
 	bool dac2Running = dac2.IsDMARunning();
-	if (!dac1Running && !dac2Running)
+	if (dac1Running || dac2Running)
+		return;
+
+	// reset DMA1... ugly hack for now... will figure out the
+	// gentler way to do this later
+	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_DMA1, DISABLE);
+	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_DMA1, ENABLE);
+	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_DMA1, DISABLE);
+
+	int usDuration = 5000000;
+
+	static unsigned phase = 0;
+	switch ((++phase) & 3)
 	{
-		dac1.StartRamp(0, 4095, 10000000);
-		dac2.StartRamp(0, 4095, 10000000);
+	case 0:
+		dac1.StartRamp(1024, 2048, usDuration);
+		dac2.StartRamp(2048, 3072, usDuration);
+		break;
+	case 1:
+		dac1.StartRamp(2048, 3072, usDuration);
+		dac2.StartRamp(3072, 2048, usDuration);
+		break;
+	case 2:
+		dac1.StartRamp(3072, 2048, usDuration);
+		dac2.StartRamp(2048, 1024, usDuration);
+		break;
+	case 3:
+		dac1.StartRamp(2048, 1024, usDuration);
+		dac2.StartRamp(1024, 2048, usDuration);
+		break;
 	}
 }
