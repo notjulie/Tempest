@@ -85,7 +85,7 @@ void DiscoVector::Service(void)
 	if (dac.IsDMARunning())
 		return;
 
-	int usDuration = 5000000;
+	int usDuration = 1000;
 
 	static unsigned phase = 0;
 

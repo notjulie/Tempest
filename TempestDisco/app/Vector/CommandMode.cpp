@@ -3,7 +3,7 @@
 
 #include "TempestIO/AbstractTempestStream.h"
 
-#include "SystemTime.h"
+#include "DiscoRGB.h"
 #include "usbd_cdc_vcp.h"
 
 #include "TempestDiscoVectorIO.h"
@@ -12,27 +12,18 @@
 
 
 static char commandBuffer[100];
-static bool chargePlaying;
-static uint32_t chargeStartMillisecondCount;
 
-static void ServiceCharge(void);
 static void ProcessCommands(void);
 static void ProcessCommand(const char *command);
 
 
-void RunCommandMode(void)
+void ServiceCommandMode(void)
 {
-	for (;;)
-	{
-		// process input
-		ProcessCommands();
+	// process input
+	ProcessCommands();
 
-    	// service the USB transmitter
-    	VCP.Service();
-
-    	// service our test sound
-    	ServiceCharge();
-	}
+	// service the USB transmitter
+	VCP.Service();
 }
 
 static void ProcessCommands(void)
@@ -70,56 +61,26 @@ static void ProcessCommands(void)
 
 static void ProcessCommand(const char *command)
 {
-	if (strcasecmp(command, "charge") == 0)
+	int rgbPulseIntensity = 1;
+
+	if (strcasecmp(command, "r") == 0)
 	{
-		chargePlaying = true;
-		chargeStartMillisecondCount = GetMillisecondCount();
+		PulseRGB(rgbPulseIntensity, 0, 0, 5);
+		return;
+	}
+
+	if (strcasecmp(command, "g") == 0)
+	{
+		PulseRGB(0, rgbPulseIntensity, 0, 5);
+		return;
+	}
+
+	if (strcasecmp(command, "b") == 0)
+	{
+		PulseRGB(0, 0, rgbPulseIntensity, 5);
 		return;
 	}
 
 	USBStream.WriteString("I don't do that.\r\n");
 }
 
-static void ServiceCharge(void)
-{
-	// never mind if we're not playing
-	if (!chargePlaying)
-		return;
-
-	// set channel one to square wave
-	IO.SetSoundChannelWaveform(1, 10);
-
-	// just do this brainless
-	uint32_t elapsed = GetMillisecondCount() - chargeStartMillisecondCount;
-	switch (elapsed / 125)
-	{
-	case 0:
-		IO.SetSoundChannelFrequency(1, 108);
-		IO.SetSoundChannelVolume(1, 15);
-		break;
-	case 1:
-		IO.SetSoundChannelFrequency(1, 81);
-		IO.SetSoundChannelVolume(1, 15);
-		break;
-	case 2:
-	case 5:
-		IO.SetSoundChannelFrequency(1, 64);
-		IO.SetSoundChannelVolume(1, 15);
-		break;
-	case 3:
-	case 6:
-	case 7:
-	case 8:
-		IO.SetSoundChannelFrequency(1, 53);
-		IO.SetSoundChannelVolume(1, 15);
-		break;
-	case 4:
-		IO.SetSoundChannelVolume(1, 0);
-		break;
-
-	default:
-		chargePlaying = false;
-		IO.SetSoundChannelVolume(1, 0);
-		break;
-	}
-}

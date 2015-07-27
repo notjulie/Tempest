@@ -3,7 +3,7 @@
 #define COMMANDMODE_H
 
 
-void RunCommandMode(void);
+void ServiceCommandMode(void);
 
 
 #endif

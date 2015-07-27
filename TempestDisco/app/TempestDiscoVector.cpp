@@ -68,6 +68,8 @@ extern "C" {
 		// initialize the watchdog just before we enter the main loop
 		InitializeWatchdog();
 
+		bool commandMode = false;
+
 		// main loop
 		for(;;) {
 			// reset the dog
@@ -77,12 +79,20 @@ extern "C" {
 			if (VCP.WasBreakReceived())
 			{
 				VCP.ClearBreak();
-				RunCommandMode();
+				commandMode = true;
 			}
 
-			// this takes data that has been received from the USB port
-			// and interprets it, passing it to the audio or video subsystems
-	    	USBListener.Service();
+			// process incoming USB data according to our mode
+			if (commandMode)
+			{
+				ServiceCommandMode();
+			}
+			else
+			{
+				// this takes data that has been received from the USB port
+				// and interprets it, passing it to the audio or video subsystems
+				USBListener.Service();
+			}
 
 	    	// service the USB transmitter
 	    	VCP.Service();
