@@ -13,7 +13,12 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../.." />
+					<Add directory="." />
 				</Compiler>
+				<Linker>
+					<Add library="pthread" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/TempestPi" prefix_auto="1" extension_auto="1" />
@@ -33,6 +38,18 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="main.cpp" />
+		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
+		<Unit filename="../../TempestCPU/6502/CPU6502Exception.cpp" />
+		<Unit filename="../../TempestCPU/6502/ProcessorStatusWord.cpp" />
+		<Unit filename="../../TempestCPU/EEPROM.cpp" />
+		<Unit filename="../../TempestCPU/MathBox/Am2901.cpp" />
+		<Unit filename="../../TempestCPU/MathBox/Am2901Tables.cpp" />
+		<Unit filename="../../TempestCPU/MathBox/MathBox.cpp" />
+		<Unit filename="../../TempestCPU/Pokey.cpp" />
+		<Unit filename="../../TempestCPU/TempestBus.cpp" />
+		<Unit filename="../../TempestCPU/TempestException.cpp" />
+		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
+		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
