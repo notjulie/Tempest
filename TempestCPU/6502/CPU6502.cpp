@@ -66,7 +66,7 @@ int CPU6502::SingleStep(void)
    // load the instruction
 	uint16_t instructionAddress = PC;
 	uint8_t opCode = bus->ReadByte(PC++);
-   
+
    // process the instruction
    switch (opCode)
    {
@@ -197,7 +197,7 @@ int CPU6502::SingleStep(void)
       default:
       {
          char  buffer[100];
-			sprintf_s(buffer, "Unimplemented op code at %04X: %02X", instructionAddress, opCode);
+			sprintf(buffer, "Unimplemented op code at %04X: %02X", instructionAddress, opCode);
          throw CPU6502Exception(buffer);
       }
    }

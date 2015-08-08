@@ -6,7 +6,7 @@
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 #include "TempestMemoryMap.h"
-#include "TempestROMs.h"
+#include "TempestROMS.h"
 
 #include "TempestBus.h"
 
@@ -63,7 +63,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 			return ROM_136002_122[address & 0x7FF];
 		}
 	}
-   
+
    // main RAM
    if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
 		return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
@@ -71,21 +71,21 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    // vector RAM
 	if (IsVectorRAMAddress(address))
 		return vectorRAM[address - VECTOR_RAM_BASE];
-   
+
    // vector ROM
 	if (address >= VECTOR_ROM_BASE && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111))
 		return ROM_136002_111[address - VECTOR_ROM_BASE];
 	if (address >= VECTOR_ROM_BASE + sizeof(ROM_136002_111) && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111) + sizeof(ROM_136002_112))
 		return ROM_136002_112[address - VECTOR_ROM_BASE - sizeof(ROM_136002_111)];
-   
+
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
       return pokey1.ReadByte((uint16_t)(address - POKEY1_BASE));
-   
+
    // POKEY 2
 	if (address >= POKEY2_BASE && address <= POKEY2_END)
 		return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
-   
+
 	// color RAM
 	if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
 		return colorRAM[(unsigned)(address - COLOR_RAM_BASE)];
@@ -111,33 +111,33 @@ uint8_t TempestBus::ReadByte(uint16_t address)
          // DIP switch N13
 			// low two bits==2 --> free play
          return 0x02;
-         
+
       case 0x0E00:
          // DIP switch L12
          return 0;
-         
+
       case 0x4000:
          //TODO register with the coin inputs
          return 0;
-         
+
       case 0x6040:
          return mathBox.GetStatus();
-         
+
       case 0x6050:
          return eeprom.ReadByte();
-         
+
       case 0x6060:
          return mathBox.ReadLow();
-         
+
       case 0x6070:
          return mathBox.ReadHigh();
-         
+
       default:
          char buffer[200];
-         sprintf_s(buffer, "Invalid read address: %X", address);
+         sprintf(buffer, "Invalid read address: %X", address);
          throw TempestException(buffer);
    }
-}   
+}
 
 
 void TempestBus::WriteByte(uint16_t address, uint8_t value)
@@ -148,7 +148,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
       mainRAM[(unsigned)(address - MAIN_RAM_BASE)] = value;
       return;
    }
-   
+
    // vector RAM
    if (IsVectorRAMAddress(address))
    {
@@ -156,74 +156,74 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 		vectorRAM[address - VECTOR_RAM_BASE] = value;
       return;
    }
-   
+
    // color RAM
    if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
    {
 		colorRAM[(unsigned)(address - COLOR_RAM_BASE)] = value;
       return;
    }
-   
+
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
    {
       pokey1.WriteByte((uint16_t)(address - POKEY1_BASE), value);
       return;
    }
-   
+
    // POKEY 2
    if (address >= POKEY2_BASE && address <= POKEY2_END)
    {
 		pokey2.WriteByte((uint16_t)(address - POKEY2_BASE), value);
       return;
    }
-   
+
    // EEPROM
    if (address >= EEPROM_WRITE_BASE && address <= EEPROM_WRITE_END)
    {
 		eeprom.WriteByte((uint16_t)(address - EEPROM_WRITE_BASE), value);
       return;
    }
-   
+
    if (address >= MATHBOX_WRITE_BASE && address <= MATHBOX_WRITE_END)
    {
       mathBox.Write((uint8_t)(address - MATHBOX_WRITE_BASE), value);
       return;
    }
-   
+
    // miscellaneous other cases
    switch (address)
    {
       case 0x4000:
          // video invert register
          break;
-      
+
       case 0x4800:
          // vector state machine GO!
          tempestIO->VectorGo();
          break;
-         
+
       case 0x5000:
          // watchdog timer clear... this is also what clears the IRQ,
 			// but we don't worry about either of those things
          break;
-         
+
       case 0x5800:
          // vector state machine reset
          tempestIO->VectorReset();
          break;
-         
+
       case 0x6040:
          // doc says mathbox status, readonly, but the code writes to it
          break;
-         
+
       case 0x60E0:
          // register for flashing the start buttons
          break;
-         
+
       default:
          char  buffer[200];
-         sprintf_s(buffer, "Invalid write address: 0x%X", address);
+         sprintf(buffer, "Invalid write address: 0x%X", address);
          throw TempestException(buffer);
    }
 }

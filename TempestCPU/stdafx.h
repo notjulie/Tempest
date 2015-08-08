@@ -24,7 +24,6 @@
 
 // C++
 #ifndef _M_CEE	// these are not allowed when compiling for .NET CLR
-	#include <mutex>
 	#include <thread>
 #endif
 #include <map>

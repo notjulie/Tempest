@@ -1,0 +1,131 @@
+# depslib dependency file v1.0
+1438992781 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
+	"stdafx.h"
+	"TempestCPU/AbstractTempestEnvironment.h"
+	"TempestCPU/TempestRunner.h"
+	"TempestIO/AbstractTempestIO.h"
+
+1438991891 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
+	<stdint.h>
+	<map>
+	<string>
+	<vector>
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+	"6502/CPU6502.h"
+	"TempestBus.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
+	"ProcessorStatusWord.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
+	"6502/AbstractBus.h"
+	"MathBox/MathBox.h"
+	"EEPROM.h"
+	"TempestMemoryMap.h"
+	"TempestPokey.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
+	"Am2901.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901.h
+	"Am2901Tables.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901Tables.h
+	"Nybble.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/Nybble.h
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/EEPROM.h
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
+	"Pokey.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/Pokey.h
+
+1438987276 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
+
+1438987276 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
+	"stdafx.h"
+	"6502/CPU6502Exception.h"
+	"AbstractTempestEnvironment.h"
+	"TempestException.h"
+	"TempestRunner.h"
+
+1438993496 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
+	<stdint.h>
+	<stdio.h>
+	<thread>
+	<map>
+	<string>
+	<vector>
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Exception.h
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
+
+1438994055 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
+	"stdafx.h"
+	"../TempestIO/AbstractTempestIO.h"
+	"AbstractTempestEnvironment.h"
+	"TempestException.h"
+	"TempestMemoryMap.h"
+	"TempestROMS.h"
+	"TempestBus.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestROMS.h
+
+1438994203 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.cpp
+	"MathBoxAFX.h"
+	"../AbstractTempestEnvironment.h"
+	"../TempestROMS.h"
+	"MathBox.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBoxAFX.h
+	<stdint.h>
+	<string.h>
+
+1438987276 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901.cpp
+	"MathBoxAFX.h"
+	"Am2901.h"
+
+1438987276 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901Tables.cpp
+	"MathBoxAFX.h"
+	"Am2901Tables.h"
+
+1438987276 source:/home/pi/Documents/Tempest/TempestCPU/TempestROMS.cpp
+	"stdafx.h"
+
+1438994388 source:/home/pi/Documents/Tempest/TempestCPU/Pokey.cpp
+	"stdafx.h"
+	"../TempestIO/AbstractTempestIO.h"
+	"TempestException.h"
+	"Pokey.h"
+
+1438987276 source:/home/pi/Documents/Tempest/TempestCPU/TempestException.cpp
+	"stdafx.h"
+	"TempestException.h"
+
+1438987276 source:/home/pi/Documents/Tempest/TempestCPU/EEPROM.cpp
+	"stdafx.h"
+	"EEPROM.h"
+
+1438994980 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
+	"stdafx.h"
+	"AbstractBus.h"
+	"CPU6502Exception.h"
+	"CPU6502.h"
+
+1438987276 source:/home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.cpp
+	"stdafx.h"
+	"CPU6502Exception.h"
+	"ProcessorStatusWord.h"
+

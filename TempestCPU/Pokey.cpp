@@ -38,7 +38,7 @@ uint8_t Pokey::ReadByte(uint16_t address)
 	default:
 		{
 			char buf[200];
-			sprintf_s(buf, "Invalid Pokey read: %02X", address);
+			sprintf(buf, "Invalid Pokey read: %02X", address);
 			throw TempestException(buf);
 		}
 	}
@@ -94,7 +94,7 @@ void Pokey::WriteByte(uint16_t address, uint8_t value)
 		if (value != 0)
 		{
 			char buf[200];
-			sprintf_s(buf, "Invalid Pokey write: %02X, %02X", address, value);
+			sprintf(buf, "Invalid Pokey write: %02X, %02X", address, value);
 			throw TempestException(buf);
 		}
 		break;
@@ -112,7 +112,7 @@ void Pokey::WriteByte(uint16_t address, uint8_t value)
 	default:
 		{
 			char buf[200];
-			sprintf_s(buf, "Invalid Pokey write: %02X, %02X", address, value);
+			sprintf(buf, "Invalid Pokey write: %02X, %02X", address, value);
 			throw TempestException(buf);
 		}
 	}

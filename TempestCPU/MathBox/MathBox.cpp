@@ -11,8 +11,8 @@
 
 #include "MathBoxAFX.h"
 
-#include "AbstractTempestEnvironment.h"
-#include "TempestROMS.h"
+#include "../AbstractTempestEnvironment.h"
+#include "../TempestROMS.h"
 
 #include "MathBox.h"
 
@@ -103,7 +103,7 @@ void MathBox::Write(uint8_t address, uint8_t value)
 
 void MathBox::HandleRisingClock(void)
 {
-	// calculate the new PC 
+	// calculate the new PC
 	uint8_t newPC;
 	bool pcen;
 	{
