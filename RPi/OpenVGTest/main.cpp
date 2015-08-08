@@ -214,7 +214,6 @@ VGfloat randf(int n) {
 void rshapes(int width, int height, int n) {
     float rcolor[4], scolor[4], bgcolor[4] = {0,0,0,1};
     scolor[3] = 1;                                // strokes are solid
-    srand ( time(NULL) );
     Start(width, height, bgcolor);
     int i;
     for (i=0; i < n; i++) {
@@ -260,11 +259,15 @@ int main (int argc, char **argv) {
     init_ogl(state);                              // Start OGLES
     w = state->screen_width;
     h = state->screen_height;
-    n = 500;
+    n = 50;
     if (argc > 1) {
         n = atoi(argv[1]);
     }
-    rshapes(w, h, n);
+
+    srand ( time(NULL) );
+
+    for (int i=0; i<100; ++i)
+        rshapes(w, h, n);
     while (getchar() != '\n') {
         ;
     }
