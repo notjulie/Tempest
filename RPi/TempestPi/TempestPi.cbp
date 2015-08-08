@@ -15,9 +15,15 @@
 					<Add option="-g" />
 					<Add directory="../.." />
 					<Add directory="." />
+					<Add directory="../../../RPiLib/opt/vc/include" />
+					<Add directory="../../../RPiLib/opt/vc/include/interface/vcos/pthreads" />
+					<Add directory="../../../RPiLib/opt/vc/include/interface/vmcs_host/linux" />
 				</Compiler>
 				<Linker>
 					<Add library="pthread" />
+					<Add library="libbcm_host" />
+					<Add library="libEGL" />
+					<Add library="libGLESv2" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -37,6 +43,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Linker>
+			<Add directory="../../../RPiLib/opt/vc/lib" />
+		</Linker>
+		<Unit filename="PiScreen.cpp" />
 		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />

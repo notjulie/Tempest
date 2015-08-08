@@ -5,10 +5,15 @@
 #include "TempestIO/AbstractTempestIO.h"
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 
+#include "PiScreen.h"
+
+
 class TempestPiIO : public AbstractTempestIO
 {
 public:
    TempestPiIO() {}
+
+   void PushFrameToScreen(void);
 
 	virtual void SetSoundChannelFrequency(int channel, int frequency) {}
 	virtual void SetSoundChannelVolume(int channel, int volume) {}
@@ -22,6 +27,7 @@ public:
 
 private:
 	SimpleVectorDataInterpreter	vectorInterpreter;
+	PiScreen screen;
 };
 
 #endif

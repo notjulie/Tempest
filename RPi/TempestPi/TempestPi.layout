@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="PiScreen.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="138" topLine="2" />
+	</File>
+	<File name="TempestPiIO.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="266" topLine="0" />
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1490" topLine="51" />
+	</File>
+	<File name="../../TempestCPU/6502/CPU6502.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="7618" topLine="190" />
+	</File>
+	<File name="../../TempestCPU/MathBox/Am2901.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="411" topLine="4" />
+	</File>
+	<File name="../../TempestCPU/MathBox/MathBox.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="980" topLine="29" />
+	</File>
+	<File name="../../TempestCPU/Pokey.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="527" topLine="31" />
+	</File>
+	<File name="../../TempestCPU/TempestBus.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2954" topLine="116" />
+	</File>
+	<File name="../../TempestCPU/TempestRunner.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="258" topLine="2" />
+	</File>
+</CodeBlocks_layout_file>
