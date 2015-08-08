@@ -45,6 +45,7 @@
 					<Add library="libbcm_host" />
 					<Add library="libEGL" />
 					<Add library="libGLESv2" />
+					<Add library="librt" />
 					<Add directory="../../../RPiLib/opt/vc/lib" />
 				</Linker>
 			</Target>
@@ -57,6 +58,7 @@
 			<Add directory="../../../RPiLib/opt/vc/lib" />
 		</Linker>
 		<Unit filename="PiScreen.cpp" />
+		<Unit filename="TempestPiEnvironment.cpp" />
 		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
