@@ -33,9 +33,19 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="../.." />
+					<Add directory="." />
+					<Add directory="../../../RPiLib/opt/vc/include" />
+					<Add directory="../../../RPiLib/opt/vc/include/interface/vcos/pthreads" />
+					<Add directory="../../../RPiLib/opt/vc/include/interface/vmcs_host/linux" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="pthread" />
+					<Add library="libbcm_host" />
+					<Add library="libEGL" />
+					<Add library="libGLESv2" />
+					<Add directory="../../../RPiLib/opt/vc/lib" />
 				</Linker>
 			</Target>
 		</Build>
