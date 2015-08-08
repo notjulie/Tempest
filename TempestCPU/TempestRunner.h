@@ -5,10 +5,8 @@
 #include "6502/CPU6502.h"
 #include "TempestBus.h"
 
-namespace std {
-	class thread;
-};
 class AbstractTempestEnvironment;
+class AbstractThread;
 struct SoundChannelStatus;
 
 
@@ -63,7 +61,7 @@ private:
 	void	RunnerThread(void);
 
 private:
-	static void RunnerThreadEntry(TempestRunner *pThis) { pThis->RunnerThread(); }
+	static void RunnerThreadEntry(void *pThis) { ((TempestRunner*)pThis)->RunnerThread(); }
 
 private:
 	// forbidden
@@ -83,7 +81,7 @@ private:
 	TempestBus	tempestBus;
 
 	std::string processorStatus;
-	std::thread *theThread;
+	AbstractThread *theThread;
 	bool	breakpoints[64 * 1024];
 };
 

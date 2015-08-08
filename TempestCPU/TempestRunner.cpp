@@ -31,7 +31,6 @@ TempestRunner::~TempestRunner(void)
 	if (theThread != NULL)
 	{
 		terminateRequested = true;
-		theThread->join();
 		delete theThread, theThread = NULL;
 	}
 }
@@ -40,7 +39,7 @@ TempestRunner::~TempestRunner(void)
 void TempestRunner::Start(void)
 {
 	// create the thread is all
-	theThread = new std::thread(RunnerThreadEntry, this);
+   theThread = environment->CreateThread(RunnerThreadEntry, this);
 }
 
 

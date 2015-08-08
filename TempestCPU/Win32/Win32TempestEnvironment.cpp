@@ -2,6 +2,43 @@
 #include "stdafx.h"
 #include "Win32TempestEnvironment.h"
 
+
+class Win32Thread : public AbstractThread
+{
+public:
+   Win32Thread(Win32TempestEnvironment::ThreadEntry *entry, void *param)
+   {
+      this->entry = entry;
+      this->param = param;
+      thread = CreateThread(
+         NULL,
+         0,
+         (LPTHREAD_START_ROUTINE)Entry,
+         this,
+         0,
+         &threadID
+         );
+   }
+
+   virtual ~Win32Thread(void)
+   {
+      WaitForSingleObject(thread, INFINITE);
+   }
+
+private:
+   static DWORD WINAPI Entry(LPVOID pThis) {
+      ((Win32Thread*)pThis)->entry(((Win32Thread*)pThis)->param);
+      return 0;
+   }
+
+private:
+   Win32TempestEnvironment::ThreadEntry *entry;
+   void *param;
+   HANDLE thread;
+   DWORD threadID;
+};
+
+
 Win32TempestEnvironment::Win32TempestEnvironment(void)
 {
 	Reset();
@@ -13,6 +50,11 @@ Win32TempestEnvironment::Win32TempestEnvironment(void)
 
 Win32TempestEnvironment::~Win32TempestEnvironment(void)
 {
+}
+
+AbstractThread *Win32TempestEnvironment::CreateThread(ThreadEntry *entry, void *param)
+{
+   return new Win32Thread(entry, param);
 }
 
 void Win32TempestEnvironment::Reset(void)

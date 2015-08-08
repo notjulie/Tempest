@@ -23,9 +23,6 @@
 #include <stdio.h>
 
 // C++
-#ifndef _M_CEE	// these are not allowed when compiling for .NET CLR
-	#include <thread>
-#endif
 #include <map>
 #include <string>
 #include <vector>
