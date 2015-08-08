@@ -37,6 +37,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502Exception.cpp" />
@@ -50,6 +51,9 @@
 		<Unit filename="../../TempestCPU/TempestException.cpp" />
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
+		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
+		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />
+		<Unit filename="../../TempestIO/Vector/VectorDataInterpreter.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

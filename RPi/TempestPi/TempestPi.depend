@@ -1,11 +1,10 @@
 # depslib dependency file v1.0
-1439054323 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
+1439056355 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
 	"stdafx.h"
 	<stdio.h>
 	<pthread.h>
 	"TempestCPU/AbstractTempestEnvironment.h"
 	"TempestCPU/TempestRunner.h"
-	"TempestIO/AbstractTempestIO.h"
 	"TempestPiIO.h"
 
 1439002036 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
@@ -137,5 +136,32 @@
 	"stdafx.h"
 	"CPU6502Exception.h"
 
-1439054303 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
+1439056371 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
+	"TempestIO/AbstractTempestIO.h"
+	"TempestIO/Vector/SimpleVectorDataInterpreter.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
+	"SimpleVector.h"
+	"VectorDataInterpreter.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVector.h
+
+1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
+	"VectorData.h"
+
+1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
+
+1439055564 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
+	"stdafx.h"
+	"TempestPiIO.h"
+
+1438987276 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorData.cpp
+	"stdafx.h"
+	"../../TempestCPU/TempestROMS.h"
+	"VectorData.h"
+
+1438987276 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.cpp
+	"stdafx.h"
+	"../../TempestCPU/TempestException.h"
+	"VectorDataInterpreter.h"
 

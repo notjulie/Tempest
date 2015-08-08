@@ -5,7 +5,6 @@
 
 #include "TempestCPU/AbstractTempestEnvironment.h"
 #include "TempestCPU/TempestRunner.h"
-#include "TempestIO/AbstractTempestIO.h"
 
 #include "TempestPiIO.h"
 
