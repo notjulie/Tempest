@@ -21,6 +21,7 @@
 // old school C
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // C++
 #include <map>
