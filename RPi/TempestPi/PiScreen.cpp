@@ -161,6 +161,7 @@ void PiScreen::StartFrame(void)
    vgLoadIdentity();
 
    currentPath = 0;
+   currentPolyline.resize(0);
 }
 
 void PiScreen::EndFrame(void)
@@ -181,6 +182,13 @@ void PiScreen::CloseCurrentPath(void)
    if (currentPath == 0)
       return;
 
+   // add the current polyline if we have one
+   if (currentPolyline.size() > 0)
+   {
+      vguPolygon(currentPath, &currentPolyline[0], currentPolyline.size() / 2, false);
+      currentPolyline.resize(0);
+   }
+
    vgSetPaint(strokes[currentColor], VG_STROKE_PATH);
    vgSetf(VG_STROKE_LINE_WIDTH, 1);
    vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
@@ -189,6 +197,7 @@ void PiScreen::CloseCurrentPath(void)
    vgDrawPath(currentPath, VG_STROKE_PATH);
    vgDestroyPath(currentPath);
    currentPath = 0;
+   currentPolyline.resize(0);
 }
 
 void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
@@ -212,22 +221,41 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
       currentColor = vector.color;
    }
 
+   // calculate our screen coordinates
    float x1 = (float)(vector.startX + 32768) * state.screen_height / 65536;
    float y1 = (float)(vector.startY + 32768) * state.screen_height / 65536;
    float x2 = (float)(vector.endX + 32768) * state.screen_height / 65536;
    float y2 = (float)(vector.endY + 32768) * state.screen_height / 65536;
 
-   // if this isjust a dot widen it to pixel size
+   // if this is just a dot widen it to pixel size
    if (vector.startX==vector.endX && vector.startY==vector.endY)
    {
       x1 -= 0.5F;
       x2 += 0.5F;
    }
 
-   // add a line to the path
-   vguLine(
-      currentPath,
-      x1, y1, x2, y2
-      );
+   // if we have an open polyline and this does not connect to it, close the
+   // polyline
+   if (currentPolyline.size() > 0)
+   {
+      if (lastX!=vector.startX || lastY!=vector.startY)
+      {
+         vguPolygon(currentPath, &currentPolyline[0], currentPolyline.size() / 2, false);
+         currentPolyline.resize(0);
+      }
+   }
+
+   // if our current polyline is empty start it with our starting point
+   if (currentPolyline.size() == 0)
+   {
+      currentPolyline.push_back(x1);
+      currentPolyline.push_back(y1);
+   }
+
+   // add our end point
+   currentPolyline.push_back(x2);
+   currentPolyline.push_back(y2);
+   lastX = vector.endX;
+   lastY = vector.endY;
 }
 

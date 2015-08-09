@@ -37,6 +37,8 @@ private:
 private:
    STATE_T state;
    std::vector<VGPaint> strokes;
+   std::vector<VGfloat> currentPolyline;
+   int lastX, lastY;
    VGPath currentPath;
    int currentColor;
 };
