@@ -155,31 +155,18 @@ void PiScreen::init_ogl(void) {
 
 void PiScreen::StartFrame(void)
 {
-    float bgcolor[4] = {0,0,0,1};
-    vgSetfv(VG_CLEAR_COLOR, 4, bgcolor);
-    vgClear(0, 0, state.screen_width, state.screen_height);
-    vgLoadIdentity();
+   float bgcolor[4] = {0,0,0,1};
+   vgSetfv(VG_CLEAR_COLOR, 4, bgcolor);
+   vgClear(0, 0, state.screen_width, state.screen_height);
+   vgLoadIdentity();
 
-    for (int i=0; i<16; ++i)
-      paths[i] = 0;
+   currentPath = 0;
 }
 
 void PiScreen::EndFrame(void)
 {
-   // draw all the paths
-   for (int i=0; i<16; ++i)
-   {
-      if (paths[i] != 0)
-      {
-         vgSetPaint(strokes[i], VG_STROKE_PATH);
-         vgSetf(VG_STROKE_LINE_WIDTH, 1);
-         vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
-         vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
-
-         vgDrawPath(paths[i], VG_STROKE_PATH);
-         vgDestroyPath(paths[i]);
-      }
-   }
+   // draw the current path
+   CloseCurrentPath();
 
    if (vgGetError() != VG_NO_ERROR)
       throw "EndFrame error";
@@ -187,6 +174,21 @@ void PiScreen::EndFrame(void)
    int error = eglGetError();
    if (error != EGL_SUCCESS)
       throw "EndFrame error";
+}
+
+void PiScreen::CloseCurrentPath(void)
+{
+   if (currentPath == 0)
+      return;
+
+   vgSetPaint(strokes[currentColor], VG_STROKE_PATH);
+   vgSetf(VG_STROKE_LINE_WIDTH, 1);
+   vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
+   vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
+
+   vgDrawPath(currentPath, VG_STROKE_PATH);
+   vgDestroyPath(currentPath);
+   currentPath = 0;
 }
 
 void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
@@ -199,9 +201,16 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
 
 void PiScreen::DisplayVector(const SimpleVector &vector)
 {
-   // create a path for the color if we haven't already
-   if (paths[vector.color] == 0)
-      paths[vector.color] = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
+   // end the current path if we are changing colors
+   if (currentPath != 0 && vector.color!=currentColor)
+      CloseCurrentPath();
+
+   // create a path if we don't have one
+   if (currentPath == 0)
+   {
+      currentPath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
+      currentColor = vector.color;
+   }
 
    float x1 = (float)(vector.startX + 32768) * state.screen_height / 65536;
    float y1 = (float)(vector.startY + 32768) * state.screen_height / 65536;
@@ -217,7 +226,7 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
 
    // add a line to the path
    vguLine(
-      paths[vector.color],
+      currentPath,
       x1, y1, x2, y2
       );
 }

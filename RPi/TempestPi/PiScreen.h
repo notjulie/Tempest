@@ -27,6 +27,7 @@ public:
    void DisplayVectors(const std::vector<SimpleVector> &vectors);
 
 private:
+   void CloseCurrentPath(void);
    void StartFrame(void);
    void EndFrame(void);
    void DisplayVector(const SimpleVector &vector);
@@ -36,7 +37,8 @@ private:
 private:
    STATE_T state;
    std::vector<VGPaint> strokes;
-   VGPath paths[16];
+   VGPath currentPath;
+   int currentColor;
 };
 
 #endif
