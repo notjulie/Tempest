@@ -33,8 +33,6 @@ void TempestPiEnvironment::SynchronizeClock(uint64_t busMSCount)
    // calculate elapsed milliseconds
    uint64_t elapsedMS = 1000 * (now.tv_sec - startTime.tv_sec);
    elapsedMS += (now.tv_nsec - startTime.tv_nsec) / 1000000;
-   if (now.tv_nsec < startTime.tv_nsec)
-   elapsedMS -= 1000;
 
    // dawdle if real time has gottem behind bus time
    if (busMSCount > elapsedMS)

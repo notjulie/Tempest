@@ -5,3 +5,5 @@
 #include <map>
 #include <string>
 #include <vector>
+
+#include <VG/openvg.h>

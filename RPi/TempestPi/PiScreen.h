@@ -22,18 +22,21 @@ private:
 
 public:
    PiScreen(void);
+   ~PiScreen(void);
+
    void DisplayVectors(const std::vector<SimpleVector> &vectors);
 
 private:
-   void Line(float x1, float y1, float x2, float y2, float sw, float stroke[4]);
    void StartFrame(void);
    void EndFrame(void);
    void DisplayVector(const SimpleVector &vector);
    void init_ogl(void);
-   void setstroke(float color[4], float width);
+   void createStroke(const float color[4]);
 
 private:
    STATE_T state;
+   std::vector<VGPaint> strokes;
+   VGPath paths[16];
 };
 
 #endif
