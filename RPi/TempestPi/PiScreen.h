@@ -4,8 +4,7 @@
 
 #include "EGL/egl.h"
 
-#include "TempestIO/Vector/SimpleVector.h"
-
+class PiVector;
 
 class PiScreen
 {
@@ -24,13 +23,13 @@ public:
    PiScreen(void);
    ~PiScreen(void);
 
-   void DisplayVectors(const std::vector<SimpleVector> &vectors);
+   void DisplayVectors(const std::vector<PiVector> &vectors);
 
 private:
    void CloseCurrentPath(void);
    void StartFrame(void);
    void EndFrame(void);
-   void DisplayVector(const SimpleVector &vector);
+   void DisplayVector(const PiVector &vector);
    void init_ogl(void);
    void createStroke(const float color[4]);
 

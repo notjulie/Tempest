@@ -7,6 +7,8 @@
 #include "VG/openvg.h"
 #include "VG/vgu.h"
 
+#include "PiVectorInterpreter.h"
+
 #include "PiScreen.h"
 
 static const float strokeColors[16][4] = {
@@ -200,7 +202,7 @@ void PiScreen::CloseCurrentPath(void)
    currentPolyline.resize(0);
 }
 
-void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
+void PiScreen::DisplayVectors(const std::vector<PiVector> &vectors)
 {
    StartFrame();
    for (unsigned i=0; i<vectors.size(); ++i)
@@ -208,7 +210,7 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
    EndFrame();
 }
 
-void PiScreen::DisplayVector(const SimpleVector &vector)
+void PiScreen::DisplayVector(const PiVector &vector)
 {
    // end the current path if we are changing colors
    if (currentPath != 0 && vector.color!=currentColor)

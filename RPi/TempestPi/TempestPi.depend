@@ -137,10 +137,10 @@
 	"stdafx.h"
 	"CPU6502Exception.h"
 
-1439062454 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
+1439255545 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
 	"TempestIO/AbstractTempestIO.h"
-	"TempestIO/Vector/SimpleVectorDataInterpreter.h"
 	"PiScreen.h"
+	"PiVectorInterpreter.h"
 
 1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
 	"SimpleVector.h"
@@ -171,9 +171,8 @@
 	"stdafx.h"
 	"SimpleVectorDataInterpreter.h"
 
-1439086204 /home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.h
+1439256444 /home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.h
 	"EGL/egl.h"
-	"TempestIO/Vector/SimpleVector.h"
 
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/EGL/egl.h
 	"eglplatform.h"
@@ -447,13 +446,14 @@
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vchi/vchi_mh.h
 	<interface/vcos/vcos.h>
 
-1439082695 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.cpp
+1439256535 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.cpp
 	"stdafx.h"
 	"bcm_host.h"
 	"EGL/egl.h"
 	"GLES/gl.h"
 	"VG/openvg.h"
 	"VG/vgu.h"
+	"PiVectorInterpreter.h"
 	"PiScreen.h"
 
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/bcm_host.h
@@ -532,4 +532,11 @@
 	<time.h>
 	"TempestCPU/TempestException.h"
 	"TempestPiEnvironment.h"
+
+1439256463 /home/pi/Documents/Tempest/RPi/TempestPi/PiVectorInterpreter.h
+	"TempestIO/Vector/VectorDataInterpreter.h"
+
+1439256574 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiVectorInterpreter.cpp
+	"stdafx.h"
+	"PiVectorInterpreter.h"
 

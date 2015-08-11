@@ -58,6 +58,7 @@
 			<Add directory="../../../RPiLib/opt/vc/lib" />
 		</Linker>
 		<Unit filename="PiScreen.cpp" />
+		<Unit filename="PiVectorInterpreter.cpp" />
 		<Unit filename="TempestPiEnvironment.cpp" />
 		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
@@ -73,7 +74,6 @@
 		<Unit filename="../../TempestCPU/TempestException.cpp" />
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
-		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorDataInterpreter.cpp" />
 		<Extensions>
