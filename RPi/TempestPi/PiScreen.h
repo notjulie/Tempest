@@ -37,8 +37,6 @@ private:
 private:
    STATE_T state;
    std::vector<VGPaint> strokes;
-   int lastX, lastY;
-   int currentColor;
 };
 
 #endif

@@ -11,20 +11,20 @@ class PiVector
 public:
    PiVector(void);
    PiVector(
-      int16_t startX,
-      int16_t startY,
-      int16_t endX,
-      int16_t endY,
+      float startX,
+      float startY,
+      float endX,
+      float endY,
       int color
       );
 
    void Display(PiScreen *screen) const;
 
 private:
-	int16_t startX;
-	int16_t startY;
-	int16_t endX;
-	int16_t endY;
+	float startX;
+	float startY;
+	float endX;
+	float endY;
 	int color;
 };
 
@@ -45,15 +45,12 @@ protected:
 	virtual void Stat(int color, int intensity);
 
 private:
-	bool ClipEndPoint(int &startX, int &startY, int &endX, int &endY);
-
-private:
 	int nextIndex;
 	std::vector<PiVector> vectors;
 	int color;
-	int x, y;
-	int binaryScale;
-	int linearScale;
+	float x, y;
+	float scale;
 };
 
 #endif
+
