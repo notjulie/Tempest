@@ -24,9 +24,10 @@ public:
    ~PiScreen(void);
 
    void DisplayVectors(const std::vector<PiVector> &vectors);
+   uint32_t GetHeight(void) const { return state.screen_height; }
+   void SetColor(int color);
 
 private:
-   void CloseCurrentPath(void);
    void StartFrame(void);
    void EndFrame(void);
    void DisplayVector(const PiVector &vector);
@@ -36,9 +37,7 @@ private:
 private:
    STATE_T state;
    std::vector<VGPaint> strokes;
-   std::vector<VGfloat> currentPolyline;
    int lastX, lastY;
-   VGPath currentPath;
    int currentColor;
 };
 

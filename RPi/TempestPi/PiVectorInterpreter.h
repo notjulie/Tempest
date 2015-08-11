@@ -4,9 +4,23 @@
 
 #include "TempestIO/Vector/VectorDataInterpreter.h"
 
+class PiScreen;
+
 class PiVector
 {
 public:
+   PiVector(void);
+   PiVector(
+      int16_t startX,
+      int16_t startY,
+      int16_t endX,
+      int16_t endY,
+      int color
+      );
+
+   void Display(PiScreen *screen) const;
+
+private:
 	int16_t startX;
 	int16_t startY;
 	int16_t endX;
