@@ -41,6 +41,7 @@ private:
    int lastX, lastY;
    VGPath currentPath;
    int currentColor;
+   VGPath dotPath;
 };
 
 #endif

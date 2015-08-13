@@ -10,7 +10,7 @@
 #include "PiScreen.h"
 
 static const float strokeColors[16][4] = {
-   {0,0,0,1},
+   {1,1,1,1},
    {0,1,0,1},
    {1,1,0,1},
    {1,0,0,1},
@@ -37,14 +37,20 @@ PiScreen::PiScreen(void)
    memset(&state, 0, sizeof(state));         // clear application state
    init_ogl();                              // Start OGLES
 
+   // create our colors
    for (int i=0; i<16; ++i)
       createStroke(strokeColors[i]);
+
+   // create the path we use for drawing single pixels
+   dotPath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
+   vguLine(dotPath, 0, 0, 0, 1);
 }
 
 PiScreen::~PiScreen(void)
 {
    for (int i=0; i<strokes.size(); ++i)
       vgDestroyPaint(strokes[i]);
+   vgDestroyPath(dotPath);
 }
 
 void PiScreen::createStroke(const float color[4])
@@ -227,11 +233,18 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    float x2 = (float)(vector.endX + 32768) * state.screen_height / 65536;
    float y2 = (float)(vector.endY + 32768) * state.screen_height / 65536;
 
-   // if this is just a dot widen it to pixel size
+   // if this is just a dot draw our dot path
    if (vector.startX==vector.endX && vector.startY==vector.endY)
    {
-      x1 -= 0.5F;
-      x2 += 0.5F;
+      vgSetPaint(strokes[currentColor], VG_STROKE_PATH);
+      vgSetf(VG_STROKE_LINE_WIDTH, 1);
+      vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
+      vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
+
+      vgTranslate(x1, y1 - 0.5);
+      vgDrawPath(dotPath, VG_STROKE_PATH);
+      vgLoadIdentity();
+      return;
    }
 
    // if we have an open polyline and this does not connect to it, close the
