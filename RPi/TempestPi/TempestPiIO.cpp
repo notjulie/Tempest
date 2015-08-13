@@ -7,7 +7,7 @@
 void TempestPiIO::PushFrameToScreen(void)
 {
    // get the vectors
-   std::vector<PiVector> vectors;
+   std::vector<SimpleVector> vectors;
    vectorInterpreter.ClearVectors();
    vectorInterpreter.Interpret();
    vectorInterpreter.GetAllVectors(vectors);

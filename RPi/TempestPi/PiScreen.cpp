@@ -5,13 +5,12 @@
 #include "EGL/egl.h"
 #include "GLES/gl.h"
 #include "VG/openvg.h"
-
-#include "PiVectorInterpreter.h"
+#include "VG/vgu.h"
 
 #include "PiScreen.h"
 
 static const float strokeColors[16][4] = {
-   {1,1,1,1},
+   {0,0,0,1},
    {0,1,0,1},
    {1,1,0,1},
    {1,0,0,1},
@@ -160,10 +159,16 @@ void PiScreen::StartFrame(void)
    vgSetfv(VG_CLEAR_COLOR, 4, bgcolor);
    vgClear(0, 0, state.screen_width, state.screen_height);
    vgLoadIdentity();
+
+   currentPath = 0;
+   currentPolyline.resize(0);
 }
 
 void PiScreen::EndFrame(void)
 {
+   // draw the current path
+   CloseCurrentPath();
+
    if (vgGetError() != VG_NO_ERROR)
       throw "EndFrame error";
    eglSwapBuffers(state.display, state.surface);
@@ -172,13 +177,30 @@ void PiScreen::EndFrame(void)
       throw "EndFrame error";
 }
 
-void PiScreen::SetColor(int color)
+void PiScreen::CloseCurrentPath(void)
 {
-   vgSetPaint(strokes[color], VG_STROKE_PATH);
+   if (currentPath == 0)
+      return;
+
+   // add the current polyline if we have one
+   if (currentPolyline.size() > 0)
+   {
+      vguPolygon(currentPath, &currentPolyline[0], currentPolyline.size() / 2, false);
+      currentPolyline.resize(0);
+   }
+
+   vgSetPaint(strokes[currentColor], VG_STROKE_PATH);
+   vgSetf(VG_STROKE_LINE_WIDTH, 1);
+   vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
+   vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
+
+   vgDrawPath(currentPath, VG_STROKE_PATH);
+   vgDestroyPath(currentPath);
+   currentPath = 0;
+   currentPolyline.resize(0);
 }
 
-
-void PiScreen::DisplayVectors(const std::vector<PiVector> &vectors)
+void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
 {
    StartFrame();
    for (unsigned i=0; i<vectors.size(); ++i)
@@ -186,10 +208,9 @@ void PiScreen::DisplayVectors(const std::vector<PiVector> &vectors)
    EndFrame();
 }
 
-void PiScreen::DisplayVector(const PiVector &vector)
+void PiScreen::DisplayVector(const SimpleVector &vector)
 {
-   vector.Display(this);
-/*   // end the current path if we are changing colors
+   // end the current path if we are changing colors
    if (currentPath != 0 && vector.color!=currentColor)
       CloseCurrentPath();
 
@@ -235,6 +256,6 @@ void PiScreen::DisplayVector(const PiVector &vector)
    currentPolyline.push_back(x2);
    currentPolyline.push_back(y2);
    lastX = vector.endX;
-   lastY = vector.endY;*/
+   lastY = vector.endY;
 }
 

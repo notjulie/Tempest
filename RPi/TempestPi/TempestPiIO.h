@@ -3,9 +3,9 @@
 #define TEMPESTPIIO_H
 
 #include "TempestIO/AbstractTempestIO.h"
+#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 
 #include "PiScreen.h"
-#include "PiVectorInterpreter.h"
 
 
 class TempestPiIO : public AbstractTempestIO
@@ -26,7 +26,7 @@ public:
 	virtual void VectorReset(void) { vectorInterpreter.Reset(); }
 
 private:
-	PiVectorInterpreter	vectorInterpreter;
+	SimpleVectorDataInterpreter	vectorInterpreter;
 	PiScreen screen;
 };
 

@@ -1,211 +1,22 @@
 # depslib dependency file v1.0
-1439083172 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
-	"stdafx.h"
-	<stdio.h>
-	<pthread.h>
-	"TempestCPU/TempestRunner.h"
-	"TempestPiEnvironment.h"
-	"TempestPiIO.h"
-
-1439077363 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
-	<stdint.h>
-	<stdio.h>
-	<map>
-	<string>
-	<vector>
-	<VG/openvg.h>
-
-1438999581 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
-
-1438999581 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
-	"6502/CPU6502.h"
-	"TempestBus.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
-	"ProcessorStatusWord.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
-	"6502/AbstractBus.h"
-	"MathBox/MathBox.h"
-	"EEPROM.h"
-	"TempestMemoryMap.h"
-	"TempestPokey.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
-	"Am2901.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901.h
-	"Am2901Tables.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901Tables.h
-	"Nybble.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/Nybble.h
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/EEPROM.h
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
-	"Pokey.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/Pokey.h
-
-1438987276 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
-
-1438999581 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
-	"stdafx.h"
-	"6502/CPU6502Exception.h"
-	"AbstractTempestEnvironment.h"
-	"TempestException.h"
-	"TempestRunner.h"
-
-1439002176 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
-	<stdint.h>
+1439047298 source:/home/pi/Documents/Tempest/RPi/OpenVGTest/main.cpp
 	<stdio.h>
 	<stdlib.h>
-	<map>
-	<string>
-	<vector>
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Exception.h
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
-
-1438994055 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
-	"stdafx.h"
-	"../TempestIO/AbstractTempestIO.h"
-	"AbstractTempestEnvironment.h"
-	"TempestException.h"
-	"TempestMemoryMap.h"
-	"TempestROMS.h"
-	"TempestBus.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/TempestROMS.h
-
-1438994203 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.cpp
-	"MathBoxAFX.h"
-	"../AbstractTempestEnvironment.h"
-	"../TempestROMS.h"
-	"MathBox.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBoxAFX.h
-	<stdint.h>
-	<string.h>
-
-1438987276 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901.cpp
-	"MathBoxAFX.h"
-	"Am2901.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901Tables.cpp
-	"MathBoxAFX.h"
-	"Am2901Tables.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestCPU/TempestROMS.cpp
-	"stdafx.h"
-
-1438994388 source:/home/pi/Documents/Tempest/TempestCPU/Pokey.cpp
-	"stdafx.h"
-	"../TempestIO/AbstractTempestIO.h"
-	"TempestException.h"
-	"Pokey.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestCPU/TempestException.cpp
-	"stdafx.h"
-	"TempestException.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestCPU/EEPROM.cpp
-	"stdafx.h"
-	"EEPROM.h"
-
-1438994980 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
-	"stdafx.h"
-	"AbstractBus.h"
-	"CPU6502Exception.h"
-	"CPU6502.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.cpp
-	"stdafx.h"
-	"CPU6502Exception.h"
-	"ProcessorStatusWord.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Exception.cpp
-	"stdafx.h"
-	"CPU6502Exception.h"
-
-1439062454 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
-	"TempestIO/AbstractTempestIO.h"
-	"TempestIO/Vector/SimpleVectorDataInterpreter.h"
-	"PiScreen.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
-	"SimpleVector.h"
-	"VectorDataInterpreter.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVector.h
-
-1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
-	"VectorData.h"
-
-1438987276 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
-
-1439068999 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
-	"stdafx.h"
-	"TempestPiIO.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorData.cpp
-	"stdafx.h"
-	"../../TempestCPU/TempestROMS.h"
-	"VectorData.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.cpp
-	"stdafx.h"
-	"../../TempestCPU/TempestException.h"
-	"VectorDataInterpreter.h"
-
-1438987276 source:/home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.cpp
-	"stdafx.h"
-	"SimpleVectorDataInterpreter.h"
-
-1439086204 /home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.h
+	<assert.h>
+	<time.h>
+	"bcm_host.h"
+	"VG/openvg.h"
+	"VG/vgu.h"
 	"EGL/egl.h"
-	"TempestIO/Vector/SimpleVector.h"
+	"GLES/gl.h"
 
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/EGL/egl.h
-	"eglplatform.h"
-
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/EGL/eglplatform.h
-	"../KHR/khrplatform.h"
-	"begl_memplatform.h"
-	"begl_hwplatform.h"
-	"begl_dispplatform.h"
-	<X headers>
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/bcm_host.h
+	<stdint.h>
 	"interface/vmcs_host/vc_dispmanx.h"
-	"interface/khronos/common/khrn_client_mangle.h"
-
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/KHR/khrplatform.h
-	<stdint.h>
-	<inttypes.h>
-	<vcinclude/common.h>
-	<stdint.h>
-
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/vcinclude/common.h
-	"interface/vcos/vcos_stdint.h"
-	"interface/vctypes/vc_image_types.h"
-	<vc/intrinsics.h>
-	<limits.h>
-	<limits.h>
-
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vcos/vcos_stdint.h
-	<limits.h>
-	<stdint.h>
-
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vctypes/vc_image_types.h
-	"interface/vcos/vcos_stdint.h"
+	"interface/vmcs_host/vc_tvservice.h"
+	"interface/vmcs_host/vc_cec.h"
+	"interface/vmcs_host/vc_cecservice.h"
+	"interface/vmcs_host/vcgencmd.h"
 
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vmcs_host/vc_dispmanx.h
 	"interface/vcos/vcos.h"
@@ -344,6 +155,10 @@
 	"interface/vcos/vcos.h"
 	"interface/vcos/vcos_stdint.h"
 
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vcos/vcos_stdint.h
+	<limits.h>
+	<stdint.h>
+
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vcos/vcos_string.h
 	"interface/vcos/vcos_types.h"
 	"vcos_platform.h"
@@ -412,6 +227,9 @@
 	"interface/vcos/vcos_types.h"
 	"vcos_platform.h"
 
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vctypes/vc_image_types.h
+	"interface/vcos/vcos_stdint.h"
+
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vmcs_host/vc_dispservice_x_defs.h
 	"interface/vctypes/vc_image_types.h"
 
@@ -447,23 +265,6 @@
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vchi/vchi_mh.h
 	<interface/vcos/vcos.h>
 
-1439082695 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.cpp
-	"stdafx.h"
-	"bcm_host.h"
-	"EGL/egl.h"
-	"GLES/gl.h"
-	"VG/openvg.h"
-	"VG/vgu.h"
-	"PiScreen.h"
-
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/bcm_host.h
-	<stdint.h>
-	"interface/vmcs_host/vc_dispmanx.h"
-	"interface/vmcs_host/vc_tvservice.h"
-	"interface/vmcs_host/vc_cec.h"
-	"interface/vmcs_host/vc_cecservice.h"
-	"interface/vmcs_host/vcgencmd.h"
-
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vmcs_host/vc_tvservice.h
 	"vcinclude/common.h"
 	"interface/vcos/vcos.h"
@@ -471,6 +272,13 @@
 	"interface/vmcs_host/vc_tvservice_defs.h"
 	"interface/vmcs_host/vc_hdmi.h"
 	"interface/vmcs_host/vc_sdtv.h"
+
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/vcinclude/common.h
+	"interface/vcos/vcos_stdint.h"
+	"interface/vctypes/vc_image_types.h"
+	<vc/intrinsics.h>
+	<limits.h>
+	<limits.h>
 
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vmcs_host/vc_tvservice_defs.h
 	"vcinclude/common.h"
@@ -508,28 +316,47 @@
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vmcs_host/linux/vchost_config.h
 	"interface/vcos/vcos.h"
 
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/GLES/gl.h
-	"glplatform.h"
-
-1438879518 /home/pi/Documents/RPiLib/opt/vc/include/GLES/glplatform.h
-	"../KHR/khrplatform.h"
-
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/VG/openvg.h
 	"vgplatform.h"
 
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/VG/vgplatform.h
 	"../KHR/khrplatform.h"
 
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/KHR/khrplatform.h
+	<stdint.h>
+	<inttypes.h>
+	<vcinclude/common.h>
+	<stdint.h>
+
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/VG/vgu.h
 	"openvg.h"
 
-1439075393 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.h
-	<time.h>
-	"TempestCPU/AbstractTempestEnvironment.h"
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/EGL/egl.h
+	"eglplatform.h"
 
-1439076619 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.cpp
-	"stdafx.h"
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/EGL/eglplatform.h
+	"../KHR/khrplatform.h"
+	"begl_memplatform.h"
+	"begl_hwplatform.h"
+	"begl_dispplatform.h"
+	<X headers>
+	"interface/vmcs_host/vc_dispmanx.h"
+	"interface/khronos/common/khrn_client_mangle.h"
+
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/GLES/gl.h
+	"glplatform.h"
+
+1438879518 /home/pi/Documents/RPiLib/opt/vc/include/GLES/glplatform.h
+	"../KHR/khrplatform.h"
+
+1439341577 source:/home/pi/Documents/Tempest/RPi/OpenVGBench/main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
 	<time.h>
-	"TempestCPU/TempestException.h"
-	"TempestPiEnvironment.h"
+	"bcm_host.h"
+	"VG/openvg.h"
+	"VG/vgu.h"
+	"EGL/egl.h"
+	"GLES/gl.h"
 

@@ -4,7 +4,8 @@
 
 #include "EGL/egl.h"
 
-class PiVector;
+#include "TempestIO/Vector/SimpleVector.h"
+
 
 class PiScreen
 {
@@ -23,20 +24,23 @@ public:
    PiScreen(void);
    ~PiScreen(void);
 
-   void DisplayVectors(const std::vector<PiVector> &vectors);
-   uint32_t GetHeight(void) const { return state.screen_height; }
-   void SetColor(int color);
+   void DisplayVectors(const std::vector<SimpleVector> &vectors);
 
 private:
+   void CloseCurrentPath(void);
    void StartFrame(void);
    void EndFrame(void);
-   void DisplayVector(const PiVector &vector);
+   void DisplayVector(const SimpleVector &vector);
    void init_ogl(void);
    void createStroke(const float color[4]);
 
 private:
    STATE_T state;
    std::vector<VGPaint> strokes;
+   std::vector<VGfloat> currentPolyline;
+   int lastX, lastY;
+   VGPath currentPath;
+   int currentColor;
 };
 
 #endif
