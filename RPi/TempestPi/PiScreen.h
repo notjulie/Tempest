@@ -42,6 +42,7 @@ private:
    VGPath currentPath;
    int currentColor;
    VGPath dotPath;
+   std::vector<VGPath> linePaths;
 };
 
 #endif

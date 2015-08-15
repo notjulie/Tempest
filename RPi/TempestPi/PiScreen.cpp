@@ -1,5 +1,6 @@
 
 #include "stdafx.h"
+#include <math.h>
 
 #include "bcm_host.h"
 #include "EGL/egl.h"
@@ -44,6 +45,12 @@ PiScreen::PiScreen(void)
    // create the path we use for drawing single pixels
    dotPath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
    vguLine(dotPath, 0, 0, 0, 1);
+   for (int i=0; i<512; ++i)
+   {
+      VGPath linePath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
+      vguLine(linePath, 0, 0, i, 0);
+      linePaths.push_back(linePath);
+   }
 }
 
 PiScreen::~PiScreen(void)
@@ -216,6 +223,8 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
 
 void PiScreen::DisplayVector(const SimpleVector &vector)
 {
+   vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
+
    // end the current path if we are changing colors
    if (currentPath != 0 && vector.color!=currentColor)
       CloseCurrentPath();
@@ -236,13 +245,31 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    // if this is just a dot draw our dot path
    if (vector.startX==vector.endX && vector.startY==vector.endY)
    {
-      vgSetPaint(strokes[currentColor], VG_STROKE_PATH);
+      vgSetPaint(strokes[vector.color], VG_STROKE_PATH);
       vgSetf(VG_STROKE_LINE_WIDTH, 1);
       vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
       vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
 
       vgTranslate(x1, y1 - 0.5);
       vgDrawPath(dotPath, VG_STROKE_PATH);
+      vgLoadIdentity();
+      return;
+   }
+
+   // transform our dot to the line we want
+   float dx = x2 - x1;
+   float dy = y2 - y1;
+   int length = (int)(sqrtf(dx*dx + dy*dy) + 0.5);
+   if (length < linePaths.size())
+   {
+      vgSetPaint(strokes[vector.color], VG_STROKE_PATH);
+      vgSetf(VG_STROKE_LINE_WIDTH, 1);
+      vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
+      vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
+
+      vgTranslate(x1, y1);
+      vgRotate(180 * atan2f(dy, dx) / 3.1415927);
+      vgDrawPath(linePaths[length], VG_STROKE_PATH);
       vgLoadIdentity();
       return;
    }
