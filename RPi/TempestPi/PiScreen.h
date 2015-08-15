@@ -27,7 +27,6 @@ public:
    void DisplayVectors(const std::vector<SimpleVector> &vectors);
 
 private:
-   void CloseCurrentPath(void);
    void StartFrame(void);
    void EndFrame(void);
    void DisplayVector(const SimpleVector &vector);
@@ -37,10 +36,6 @@ private:
 private:
    STATE_T state;
    std::vector<VGPaint> strokes;
-   std::vector<VGfloat> currentPolyline;
-   int lastX, lastY;
-   VGPath currentPath;
-   int currentColor;
    VGPath dotPath;
    std::vector<VGPath> linePaths;
 };

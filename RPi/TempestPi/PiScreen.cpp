@@ -45,7 +45,7 @@ PiScreen::PiScreen(void)
    // create the path we use for drawing single pixels
    dotPath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
    vguLine(dotPath, 0, 0, 0, 1);
-   for (int i=0; i<512; ++i)
+   for (int i=0; i<1024; ++i)
    {
       VGPath linePath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
       vguLine(linePath, 0, 0, i, 0);
@@ -172,45 +172,16 @@ void PiScreen::StartFrame(void)
    vgSetfv(VG_CLEAR_COLOR, 4, bgcolor);
    vgClear(0, 0, state.screen_width, state.screen_height);
    vgLoadIdentity();
-
-   currentPath = 0;
-   currentPolyline.resize(0);
 }
 
 void PiScreen::EndFrame(void)
 {
-   // draw the current path
-   CloseCurrentPath();
-
    if (vgGetError() != VG_NO_ERROR)
       throw "EndFrame error";
    eglSwapBuffers(state.display, state.surface);
    int error = eglGetError();
    if (error != EGL_SUCCESS)
       throw "EndFrame error";
-}
-
-void PiScreen::CloseCurrentPath(void)
-{
-   if (currentPath == 0)
-      return;
-
-   // add the current polyline if we have one
-   if (currentPolyline.size() > 0)
-   {
-      vguPolygon(currentPath, &currentPolyline[0], currentPolyline.size() / 2, false);
-      currentPolyline.resize(0);
-   }
-
-   vgSetPaint(strokes[currentColor], VG_STROKE_PATH);
-   vgSetf(VG_STROKE_LINE_WIDTH, 1);
-   vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
-   vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
-
-   vgDrawPath(currentPath, VG_STROKE_PATH);
-   vgDestroyPath(currentPath);
-   currentPath = 0;
-   currentPolyline.resize(0);
 }
 
 void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
@@ -224,17 +195,10 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
 void PiScreen::DisplayVector(const SimpleVector &vector)
 {
    vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
-
-   // end the current path if we are changing colors
-   if (currentPath != 0 && vector.color!=currentColor)
-      CloseCurrentPath();
-
-   // create a path if we don't have one
-   if (currentPath == 0)
-   {
-      currentPath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
-      currentColor = vector.color;
-   }
+   vgSetPaint(strokes[vector.color], VG_STROKE_PATH);
+   vgSetf(VG_STROKE_LINE_WIDTH, 1);
+   vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
+   vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
 
    // calculate our screen coordinates
    float x1 = (float)(vector.startX + 32768) * state.screen_height / 65536;
@@ -245,28 +209,18 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    // if this is just a dot draw our dot path
    if (vector.startX==vector.endX && vector.startY==vector.endY)
    {
-      vgSetPaint(strokes[vector.color], VG_STROKE_PATH);
-      vgSetf(VG_STROKE_LINE_WIDTH, 1);
-      vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
-      vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
-
       vgTranslate(x1, y1 - 0.5);
       vgDrawPath(dotPath, VG_STROKE_PATH);
       vgLoadIdentity();
       return;
    }
 
-   // transform our dot to the line we want
+   // if we have a line of the correct length just transform it to the right location
    float dx = x2 - x1;
    float dy = y2 - y1;
    int length = (int)(sqrtf(dx*dx + dy*dy) + 0.5);
    if (length < linePaths.size())
    {
-      vgSetPaint(strokes[vector.color], VG_STROKE_PATH);
-      vgSetf(VG_STROKE_LINE_WIDTH, 1);
-      vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
-      vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
-
       vgTranslate(x1, y1);
       vgRotate(180 * atan2f(dy, dx) / 3.1415927);
       vgDrawPath(linePaths[length], VG_STROKE_PATH);
@@ -274,28 +228,10 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
       return;
    }
 
-   // if we have an open polyline and this does not connect to it, close the
-   // polyline
-   if (currentPolyline.size() > 0)
-   {
-      if (lastX!=vector.startX || lastY!=vector.startY)
-      {
-         vguPolygon(currentPath, &currentPolyline[0], currentPolyline.size() / 2, false);
-         currentPolyline.resize(0);
-      }
-   }
-
-   // if our current polyline is empty start it with our starting point
-   if (currentPolyline.size() == 0)
-   {
-      currentPolyline.push_back(x1);
-      currentPolyline.push_back(y1);
-   }
-
-   // add our end point
-   currentPolyline.push_back(x2);
-   currentPolyline.push_back(y2);
-   lastX = vector.endX;
-   lastY = vector.endY;
+   // fall back on old school line draw
+   VGPath path = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
+   vguLine(path, x1, y1, x2, y2);
+   vgDrawPath(path, VG_STROKE_PATH);
+   vgDestroyPath(path);
 }
 
