@@ -34,10 +34,6 @@ void TempestIOStreamListener::Service(void)
       case IDLE:
          switch (b>>5)
          {
-         case OP_VECTOR_RESET:
-            tempestIO->VectorReset();
-            break;
-
          case OP_6KHZ_TICK:
             // tick
             tempestIO->Tick6KHz();
@@ -46,19 +42,8 @@ void TempestIOStreamListener::Service(void)
             {
                TempestInPacket packet;
                packet.flags1 = 0;
-               if (tempestIO->IsVectorHalt())
-                  packet.flags1 |= FLAG_VECTOR_HALT;
                stream->Write(packet.flags1);
             }
-            break;
-
-         case OP_VECTOR_GO:
-            tempestIO->VectorGo();
-            break;
-
-         case OP_WRITE_VECTOR_RAM:
-            state = VECTOR_RAM_ADDRESS_LOW;
-            vectorRAMAddress = (b & 0xF)<<8;
             break;
 
          case OP_SOUND_VOLUME:

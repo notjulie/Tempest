@@ -22,9 +22,6 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
 {
    // copy parameters
 	this->stream = stream;
-
-   // clear
-   isVectorHalt = true;
 }
 
 
@@ -69,37 +66,23 @@ void TempestIOStreamProxy::Tick6KHz(void)
 
       TempestInPacket packet;
       packet.flags1 = (uint8_t)b;
-      this->isVectorHalt = (packet.flags1 & FLAG_VECTOR_HALT) != 0;
    }
 }
 
 void TempestIOStreamProxy::WriteVectorRAM(uint16_t address, uint8_t value)
 {
-	// the address is 12 bits, so the 4 high bits go in the op byte
-	stream->Write((OP_WRITE_VECTOR_RAM << 5) | (address>>8));
-
-	// then the rest of the address and the value
-	stream->Write((uint8_t)address);
-	stream->Write(value);
 }
 
 bool TempestIOStreamProxy::IsVectorHalt(void)
 {
-   return isVectorHalt;
+   return false;
 }
 
 void TempestIOStreamProxy::VectorGo(void)
 {
-   // send just the opcode with no data
-   stream->Write(OP_VECTOR_GO << 5);
-   isVectorHalt = false;
 }
 
 void TempestIOStreamProxy::VectorReset(void)
 {
-	// send just the opcode with no data
-	stream->Write(OP_VECTOR_RESET << 5);
-
-   isVectorHalt = true;
 }
 
