@@ -27,21 +27,3 @@ void TempestDiscoAudioIO::Tick6KHz(void)
 {
 	DWS.Tick6KHz();
 }
-
-void TempestDiscoAudioIO::WriteVectorRAM(uint16_t address, uint8_t value)
-{
-}
-
-bool TempestDiscoAudioIO::IsVectorHalt(void)
-{
-	return true;
-}
-
-void TempestDiscoAudioIO::VectorGo(void)
-{
-}
-
-void TempestDiscoAudioIO::VectorReset(void)
-{
-}
-

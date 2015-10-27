@@ -2,6 +2,7 @@
 #include "TempestDisco.h"
 
 #include "SystemError.h"
+#include "Discovery/LED.h"
 
 #include "AudioDriver.h"
 

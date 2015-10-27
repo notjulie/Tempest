@@ -2,6 +2,7 @@
 #include "TempestDisco.h"
 
 #include "AudioDriver.h"
+#include "Discovery/LED.h"
 
 #include "DiscoWaveStreamer.h"
 
