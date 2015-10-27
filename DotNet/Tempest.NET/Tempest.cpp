@@ -30,10 +30,10 @@ namespace TempestDotNET {
 		tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
 	}
 
-   class NullTempestVectorIO : public AbstractTempestVectorIO
+   class NullVectorIO : public AbstractTempestVectorIO
    {
    public:
-      virtual ~NullTempestVectorIO(void) {}
+      virtual ~NullVectorIO(void) {}
 
       virtual void WriteVectorRAM(uint16_t address, uint8_t value) {}
       virtual bool IsVectorHalt(void) { return false; }
@@ -42,19 +42,31 @@ namespace TempestDotNET {
    };
 
 
-	Tempest::Tempest(TDNIOStreamProxy ^io)
-	{
-		// create objects
-		environment = new Win32TempestEnvironment();
+   Tempest::Tempest(TDNIOStreamProxy ^io)
+   {
+      // create objects
+      environment = new Win32TempestEnvironment();
       tempestSoundIO = io->GetIOObject();
-      tempestVectorIO = new NullTempestVectorIO();
+      tempestVectorIO = new NullVectorIO();
       tempestRunner = new TempestRunner(environment);
 
-		// hook objects together
-		tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
-	}
+      // hook objects together
+      tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
+   }
 
-	Tempest::~Tempest(void)
+   Tempest::Tempest(TDNIOStreamProxy ^soundIO, TDNWin32TempestIO ^vectorIO)
+   {
+      // create objects
+      environment = new Win32TempestEnvironment();
+      tempestSoundIO = soundIO->GetIOObject();
+      tempestVectorIO = vectorIO->GetIOObject();
+      tempestRunner = new TempestRunner(environment);
+
+      // hook objects together
+      tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
+   }
+
+   Tempest::~Tempest(void)
 	{
 		// delete
 		delete tempestRunner, tempestRunner = NULL;

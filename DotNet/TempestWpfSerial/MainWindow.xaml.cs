@@ -177,7 +177,7 @@ namespace TempestWpf
             tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream.GetRightSide());
 
             // create our tempest
-            tempest = new Tempest(tempestIOStreamProxy);
+            tempest = new Tempest(tempestIOStreamProxy, tempestIO);
 
             // at this point here's what we have:
             //   - tempest is writing to tempestIOStreamProxy, which is its output device

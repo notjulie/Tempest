@@ -18,8 +18,9 @@ namespace TempestDotNET {
 	public ref class Tempest
 	{
 	public:
-		Tempest(TDNIOStreamProxy ^io);
-		Tempest(TDNWin32TempestIO ^io);
+      Tempest(TDNIOStreamProxy ^io);
+      Tempest(TDNIOStreamProxy ^soundIO, TDNWin32TempestIO ^vectorIO);
+      Tempest(TDNWin32TempestIO ^io);
 		~Tempest();
 
 		String ^GetProcessorStatus(void);
