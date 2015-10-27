@@ -19,7 +19,8 @@ namespace TempestDotNET {
 
 		VectorEnumerator ^GetVectorEnumerator(void);
 
-		AbstractTempestIO *GetIOObject(void) { return tempestIO; }
+      AbstractTempestVectorIO *GetVectorIOObject(void) { return tempestIO; }
+      AbstractTempestSoundIO *GetSoundIOObject(void) { return tempestIO; }
 
 	private:
 		Win32TempestIO *tempestIO;

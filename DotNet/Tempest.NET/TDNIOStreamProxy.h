@@ -9,8 +9,6 @@ using namespace System::Threading;
 
 #include "TDNMemoryStream.h"
 
-class AbstractTempestIO;
-
 namespace TempestDotNET {
 
 	public ref class TDNIOStreamProxy {

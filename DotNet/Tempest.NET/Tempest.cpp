@@ -22,8 +22,8 @@ namespace TempestDotNET {
 	{
 		// create objects
 		environment = new Win32TempestEnvironment();
-      tempestSoundIO = io->GetIOObject();
-      tempestVectorIO = io->GetIOObject();
+      tempestSoundIO = io->GetSoundIOObject();
+      tempestVectorIO = io->GetVectorIOObject();
       tempestRunner = new TempestRunner(environment);
 
 		// hook objects together
@@ -59,7 +59,7 @@ namespace TempestDotNET {
       // create objects
       environment = new Win32TempestEnvironment();
       tempestSoundIO = soundIO->GetIOObject();
-      tempestVectorIO = vectorIO->GetIOObject();
+      tempestVectorIO = vectorIO->GetVectorIOObject();
       tempestRunner = new TempestRunner(environment);
 
       // hook objects together

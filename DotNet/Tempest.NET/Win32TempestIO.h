@@ -9,7 +9,7 @@
 
 struct SimpleVector;
 
-class Win32TempestIO : public AbstractTempestIO
+class Win32TempestIO : public AbstractTempestVectorIO, public AbstractTempestSoundIO
 {
 public:
 	Win32TempestIO(void);

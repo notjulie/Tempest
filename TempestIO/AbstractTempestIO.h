@@ -26,8 +26,5 @@ public:
    virtual void VectorReset(void) = 0;
 };
 
-class AbstractTempestIO : public AbstractTempestSoundIO, public AbstractTempestVectorIO
-{
-};
 
 #endif
