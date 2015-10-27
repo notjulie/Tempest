@@ -19,7 +19,7 @@ namespace TempestDotNET {
 		~TDNIOStreamProxy(void);
 
 
-		AbstractTempestIO *GetIOObject(void) { return tempestIO; }
+		AbstractTempestSoundIO *GetIOObject(void) { return tempestIO; }
 
 	private:
       ITDNStreamProvider ^managedStream;

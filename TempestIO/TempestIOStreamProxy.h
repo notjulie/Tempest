@@ -6,7 +6,7 @@
 
 class AbstractTempestStream;
 
-class TempestIOStreamProxy : public AbstractTempestIO
+class TempestIOStreamProxy : public AbstractTempestSoundIO
 {
 public:
    TempestIOStreamProxy(AbstractTempestStream *stream);
@@ -15,11 +15,6 @@ public:
 	virtual void SetSoundChannelVolume(int channel, int volume);
 	virtual void SetSoundChannelWaveform(int channel, int waveform);
 	virtual void Tick6KHz(void);
-
-	virtual void WriteVectorRAM(uint16_t address, uint8_t value);
-	virtual bool IsVectorHalt(void);
-	virtual void VectorGo(void);
-	virtual void VectorReset(void);
 
 private:
    AbstractTempestStream	*stream;

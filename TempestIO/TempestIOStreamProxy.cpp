@@ -69,20 +69,3 @@ void TempestIOStreamProxy::Tick6KHz(void)
    }
 }
 
-void TempestIOStreamProxy::WriteVectorRAM(uint16_t address, uint8_t value)
-{
-}
-
-bool TempestIOStreamProxy::IsVectorHalt(void)
-{
-   return false;
-}
-
-void TempestIOStreamProxy::VectorGo(void)
-{
-}
-
-void TempestIOStreamProxy::VectorReset(void)
-{
-}
-

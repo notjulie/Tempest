@@ -22,30 +22,43 @@ namespace TempestDotNET {
 	{
 		// create objects
 		environment = new Win32TempestEnvironment();
-		tempestIO = io->GetIOObject();
-		tempestRunner = new TempestRunner(environment);
+      tempestSoundIO = io->GetIOObject();
+      tempestVectorIO = io->GetIOObject();
+      tempestRunner = new TempestRunner(environment);
 
 		// hook objects together
-		tempestRunner->SetTempestIO(tempestIO);
+		tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
 	}
+
+   class NullTempestVectorIO : public AbstractTempestVectorIO
+   {
+   public:
+      virtual ~NullTempestVectorIO(void) {}
+
+      virtual void WriteVectorRAM(uint16_t address, uint8_t value) {}
+      virtual bool IsVectorHalt(void) { return false; }
+      virtual void VectorGo(void) {}
+      virtual void VectorReset(void) {}
+   };
+
 
 	Tempest::Tempest(TDNIOStreamProxy ^io)
 	{
 		// create objects
 		environment = new Win32TempestEnvironment();
-		tempestIO = io->GetIOObject();
-		tempestRunner = new TempestRunner(environment);
+      tempestSoundIO = io->GetIOObject();
+      tempestVectorIO = new NullTempestVectorIO();
+      tempestRunner = new TempestRunner(environment);
 
 		// hook objects together
-		tempestRunner->SetTempestIO(tempestIO);
+		tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
 	}
 
 	Tempest::~Tempest(void)
 	{
 		// delete
 		delete tempestRunner, tempestRunner = NULL;
-		delete tempestIO, tempestIO = NULL;
-		delete environment, environment = NULL;
+      delete environment, environment = NULL;
 	}
 
 	uint64_t Tempest::GetTotalClockCycles(void)

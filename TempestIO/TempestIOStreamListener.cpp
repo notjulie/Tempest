@@ -8,7 +8,7 @@
 #include "TempestIOStreamListener.h"
 
 
-TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *stream, AbstractTempestIO *tempestIO)
+TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *stream, AbstractTempestSoundIO *tempestIO)
 {
    // copy parameters
    this->stream = stream;
@@ -61,16 +61,6 @@ void TempestIOStreamListener::Service(void)
             soundChannel = b & 7;
             break;
          }
-         break;
-
-      case VECTOR_RAM_ADDRESS_LOW:
-         state = VECTOR_RAM_VALUE;
-         vectorRAMAddress += b;
-         break;
-
-      case VECTOR_RAM_VALUE:
-         tempestIO->WriteVectorRAM(vectorRAMAddress, b);
-         state = IDLE;
          break;
 
       case SOUND_FREQUENCY:

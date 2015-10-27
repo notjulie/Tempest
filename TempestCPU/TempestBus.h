@@ -16,6 +16,7 @@
 #include "TempestPokey.h"
 
 class AbstractTempestIO;
+class AbstractTempestVectorIO;
 class VectorData;
 
 #pragma warning(push)
@@ -28,7 +29,7 @@ public:
 	TempestBus(AbstractTempestEnvironment *_environment);
 	virtual ~TempestBus(void);
 
-	void SetTempestIO(AbstractTempestIO *tempestIO);
+   void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO);
 
 	void Toggle3KHzClock(void);
 
@@ -58,7 +59,8 @@ private:
    EEPROM eeprom;
    MathBox mathBox;
 
-	AbstractTempestIO *tempestIO;
+   AbstractTempestSoundIO *tempestSoundIO;
+   AbstractTempestVectorIO *tempestVectorIO;
 
 	bool selfTest;
 	bool slam;

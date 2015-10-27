@@ -6,6 +6,7 @@
 #include "TempestBus.h"
 
 class AbstractTempestEnvironment;
+class AbstractTempestVectorIO;
 class AbstractThread;
 struct SoundChannelStatus;
 
@@ -55,7 +56,7 @@ public:
 	// simple dispatches to the TempestBus object
 	void MoveWheel(int delta) { tempestBus.MoveWheel(delta); }
 	void SetButtonState(ButtonID button, bool pressed) { tempestBus.SetButtonState(button, pressed); }
-	void SetTempestIO(AbstractTempestIO *tempestIO) { tempestBus.SetTempestIO(tempestIO); }
+   void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO) { tempestBus.SetTempestIO(tempestSoundIO, tempestVectorIO); }
 
 private:
 	void	RunnerThread(void);

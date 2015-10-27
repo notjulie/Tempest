@@ -19,7 +19,8 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 	selfTest = false;
 	clock3KHzIsHigh = false;
 	slam = false;
-	tempestIO = NULL;
+   tempestSoundIO = NULL;
+   tempestVectorIO = NULL;
 
    mainRAM.resize(MAIN_RAM_SIZE);
    colorRAM.resize(COLOR_RAM_SIZE);
@@ -98,7 +99,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 			uint8_t result = 0;
 			if (clock3KHzIsHigh)
 				result |= 0x80;
-			if (tempestIO->IsVectorHalt())
+			if (tempestVectorIO->IsVectorHalt())
 				result |= 0x40;
 			if (!selfTest)
 				result |= 0x10;
@@ -152,7 +153,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // vector RAM
    if (IsVectorRAMAddress(address))
    {
-		tempestIO->WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
+		tempestVectorIO->WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
 		vectorRAM[address - VECTOR_RAM_BASE] = value;
       return;
    }
@@ -200,7 +201,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 
       case 0x4800:
          // vector state machine GO!
-         tempestIO->VectorGo();
+         tempestVectorIO->VectorGo();
          break;
 
       case 0x5000:
@@ -210,7 +211,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 
       case 0x5800:
          // vector state machine reset
-         tempestIO->VectorReset();
+         tempestVectorIO->VectorReset();
          break;
 
       case 0x6040:
@@ -229,17 +230,18 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 }
 
 
-void TempestBus::SetTempestIO(AbstractTempestIO *_tempestIO)
+void TempestBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO, AbstractTempestVectorIO *_tempestVectorIO)
 {
-	tempestIO = _tempestIO;
-	pokey1.SetTempestIO(tempestIO);
-	pokey2.SetTempestIO(tempestIO);
+   tempestSoundIO = _tempestSoundIO;
+   tempestVectorIO = _tempestVectorIO;
+   pokey1.SetTempestIO(tempestSoundIO);
+	pokey2.SetTempestIO(tempestSoundIO);
 }
 
 void TempestBus::Toggle3KHzClock(void)
 {
 	clock3KHzIsHigh = !clock3KHzIsHigh;
-	tempestIO->Tick6KHz();
+	tempestSoundIO->Tick6KHz();
 }
 
 
