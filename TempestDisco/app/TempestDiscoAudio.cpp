@@ -79,6 +79,9 @@ extern "C" {
 
 	    	// let the wave streamer have its time slice
 	    	DWS.Service();
+
+	    	// kick the dog
+	    	ResetIndependentWatchdogCounter();
 		}
 
 	    return 0;
