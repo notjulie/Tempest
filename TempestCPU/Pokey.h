@@ -8,7 +8,7 @@
 #ifndef POKEY_H
 #define	POKEY_H
 
-class AbstractTempestIO;
+class AbstractTempestSoundIO;
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -19,7 +19,7 @@ class Pokey
 public:
 	Pokey(int baseSoundChannel);
 	virtual ~Pokey(void);
-	void SetTempestIO(AbstractTempestIO *_tempestIO) { tempestIO = _tempestIO; }
+	void SetTempestIO(AbstractTempestSoundIO *_tempestIO) { tempestIO = _tempestIO; }
 
 	uint8_t ReadByte(uint16_t address);
 	void    WriteByte(uint16_t address, uint8_t value);
@@ -29,7 +29,7 @@ public:
 private:
 	uint8_t ALLPOT;
 	int baseSoundChannel;
-	AbstractTempestIO *tempestIO;
+	AbstractTempestSoundIO *tempestIO;
 };
 
 

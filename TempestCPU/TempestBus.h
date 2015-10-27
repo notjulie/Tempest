@@ -15,6 +15,7 @@
 #include "TempestMemoryMap.h"
 #include "TempestPokey.h"
 
+class AbstractTempestIO;
 class VectorData;
 
 #pragma warning(push)
