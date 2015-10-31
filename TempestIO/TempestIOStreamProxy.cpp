@@ -67,8 +67,10 @@ void TempestIOStreamProxy::Tick6KHz(void)
       if (b < 0)
          break;
 
+      // this is silly, it's just a bit of documentation
       TempestInPacket packet;
       packet.flags1 = (uint8_t)b;
+      this->buttons = packet.flags1;
    }
 }
 

@@ -77,6 +77,19 @@ namespace TempestWpf
          this.Closing += MainWindow_Closing;
          this.KeyDown += MainWindow_KeyDown;
          this.KeyUp += MainWindow_KeyUp;
+         onePlayer.MouseLeftButtonDown += onePlayer_MouseLeftButtonDown;
+         onePlayer.MouseLeftButtonUp += onePlayer_MouseLeftButtonUp;
+      }
+
+      void onePlayer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+      {
+         // this goes to our simulated sound IO device
+         tempestSoundIO.OnePlayer(true);
+      }
+
+      void onePlayer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+      {
+         tempestSoundIO.OnePlayer(false);
       }
 
       void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -94,6 +107,14 @@ namespace TempestWpf
                leftKeyDown = false;
                rightKeyDown = true;
                break;
+
+            case Key.F:
+               tempestSoundIO.Fire(true);
+               break;
+
+            case Key.V:
+               tempestSoundIO.Zap(true);
+               break;
          }
       }
 
@@ -108,8 +129,18 @@ namespace TempestWpf
             case Key.Right:
                rightKeyDown = false;
                break;
+
+
+            case Key.F:
+               tempestSoundIO.Fire(false);
+               break;
+
+            case Key.V:
+               tempestSoundIO.Zap(false);
+               break;
          }
       }
+
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
       {
          if (timer != null)

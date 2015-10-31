@@ -41,7 +41,7 @@ void TempestIOStreamListener::Service(void)
             // this is our cue for a response packet
             {
                TempestInPacket packet;
-               packet.flags1 = 0;
+               packet.flags1 = tempestIO->GetButtons();
                stream->Write(packet.flags1);
             }
             break;
