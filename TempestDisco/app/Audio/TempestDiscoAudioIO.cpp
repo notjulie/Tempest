@@ -27,3 +27,14 @@ void TempestDiscoAudioIO::Tick6KHz(void)
 {
 	DWS.Tick6KHz();
 }
+
+uint8_t TempestDiscoAudioIO::GetButtons(void)
+{
+	return 0;
+}
+
+uint8_t TempestDiscoAudioIO::GetEncoder(void)
+{
+	return 0;
+}
+
