@@ -16,6 +16,7 @@ TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *stream, 
 
    // clear
    state = IDLE;
+   encoder = 0;
 }
 
 void TempestIOStreamListener::Service(void)
@@ -42,6 +43,20 @@ void TempestIOStreamListener::Service(void)
             {
                TempestInPacket packet;
                packet.flags1 = tempestIO->GetButtons();
+
+               uint8_t newEncoder = tempestIO->GetEncoder();
+               int8_t encoderChanged = (int8_t)(newEncoder - encoder);
+               if (encoderChanged > 0)
+               {
+                  packet.flags1 |= ENCODER_UP;
+                  ++encoder;
+               }
+               else if (encoderChanged < 0)
+               {
+                  packet.flags1 |= ENCODER_DOWN;
+                  --encoder;
+               }
+
                stream->Write(packet.flags1);
             }
             break;

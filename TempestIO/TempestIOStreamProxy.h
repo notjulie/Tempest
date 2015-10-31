@@ -16,10 +16,12 @@ public:
 	virtual void SetSoundChannelWaveform(int channel, int waveform);
 	virtual void Tick6KHz(void);
    virtual uint8_t GetButtons(void) { return buttons; }
+   virtual uint8_t GetEncoder(void) { return encoder; }
 
 private:
    AbstractTempestStream	*stream;
    uint8_t buttons;
+   uint8_t encoder;
 };
 
 #endif

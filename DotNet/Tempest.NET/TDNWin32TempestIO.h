@@ -21,6 +21,7 @@ namespace TempestDotNET {
       void Fire(bool state) { tempestSoundIO->Fire(state); }
       void OnePlayer(bool state) { tempestSoundIO->OnePlayer(state); }
       void Zap(bool state) { tempestSoundIO->Zap(state); }
+      void MoveWheel(int distance) { tempestSoundIO->MoveWheel(distance); }
 
    private:
       Win32TempestSoundIO *tempestSoundIO;

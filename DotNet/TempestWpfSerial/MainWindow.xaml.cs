@@ -97,13 +97,13 @@ namespace TempestWpf
          switch (e.Key)
          {
             case Key.Left:
-               tempest.MoveWheel(-4);
+               tempestSoundIO.MoveWheel(-4);
                leftKeyDown = true;
                rightKeyDown = false;
                break;
 
             case Key.Right:
-               tempest.MoveWheel(4);
+               tempestSoundIO.MoveWheel(4);
                leftKeyDown = false;
                rightKeyDown = true;
                break;
@@ -210,7 +210,7 @@ namespace TempestWpf
             vectorTimer.Tick += vectorTimer_Tick;
 
             spinnerTimer = new DispatcherTimer();
-            spinnerTimer.Interval = TimeSpan.FromMilliseconds(50);
+            spinnerTimer.Interval = TimeSpan.FromMilliseconds(10);
             spinnerTimer.IsEnabled = true;
             spinnerTimer.Tick += spinnerTimer_Tick;
          }
@@ -224,9 +224,9 @@ namespace TempestWpf
       void spinnerTimer_Tick(object sender, EventArgs e)
       {
          if (leftKeyDown)
-            tempest.MoveWheel(-1);
+            tempestSoundIO.MoveWheel(-1);
          else if (rightKeyDown)
-            tempest.MoveWheel(1);
+            tempestSoundIO.MoveWheel(1);
       }
 
       void timer_Tick(object sender, EventArgs e)

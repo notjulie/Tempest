@@ -32,9 +32,6 @@ public:
 
 	void Toggle3KHzClock(void);
 
-	// simple accessors
-	void MoveWheel(int delta) { pokey1.MoveWheel(delta); }
-
 public:
 	// AbstractBus overrides
 	virtual uint8_t ReadByte(uint16_t address);

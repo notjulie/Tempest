@@ -25,6 +25,7 @@ private:
 
    State state;
    uint8_t soundChannel;
+   uint8_t encoder;
 };
 
 #endif

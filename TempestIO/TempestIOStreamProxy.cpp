@@ -22,6 +22,7 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
 {
    // clear
    buttons = 0;
+   encoder = 0;
 
    // copy parameters
 	this->stream = stream;
@@ -71,6 +72,10 @@ void TempestIOStreamProxy::Tick6KHz(void)
       TempestInPacket packet;
       packet.flags1 = (uint8_t)b;
       this->buttons = packet.flags1;
+      if (packet.flags1 & ENCODER_DOWN)
+         --encoder;
+      if (packet.flags1 & ENCODER_UP)
+         ++encoder;
    }
 }
 

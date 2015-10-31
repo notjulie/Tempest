@@ -16,12 +16,7 @@ public:
 	{
 	}
 
-	virtual uint8_t GetALLPOT(void) { return (uint8_t)(encoder & 0xF); }
-
-	void MoveWheel(int delta) { encoder = (uint8_t)(encoder + delta); }
-
-private:
-	uint8_t encoder;
+	virtual uint8_t GetALLPOT(void) { return GetIO()->GetEncoder(); }
 };
 
 class TempestPokey2 : public Pokey

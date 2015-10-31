@@ -7,7 +7,9 @@ class VectorData;
 enum ButtonFlag {
    ONE_PLAYER_BUTTON = 1,
    FIRE_BUTTON = 2,
-   ZAPPER_BUTTON = 4
+   ZAPPER_BUTTON = 4,
+   ENCODER_UP = 8,
+   ENCODER_DOWN = 16
 };
 
 class AbstractTempestSoundIO
@@ -20,6 +22,7 @@ public:
 	virtual void SetSoundChannelWaveform(int channel, int waveform) = 0;
 	virtual void Tick6KHz(void) = 0;
    virtual uint8_t GetButtons(void) = 0;
+   virtual uint8_t GetEncoder(void) = 0;
 };
 
 class AbstractTempestVectorIO

@@ -6,6 +6,7 @@
 Win32TempestSoundIO::Win32TempestSoundIO(void)
 {
    buttons = 0;
+   encoder = 0;
 }
 
 Win32TempestSoundIO::~Win32TempestSoundIO(void)

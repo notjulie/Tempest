@@ -54,7 +54,6 @@ public:
 	uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
 
 	// simple dispatches to the TempestBus object
-	void MoveWheel(int delta) { tempestBus.MoveWheel(delta); }
    void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO) { tempestBus.SetTempestIO(tempestSoundIO, tempestVectorIO); }
 
 private:

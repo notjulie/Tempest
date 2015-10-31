@@ -36,7 +36,6 @@ namespace TempestDotNET {
 		int      GetProgramCounter(void) { return tempestRunner->GetProgramCounter(); }
 		uint8_t  GetXRegister(void) { return tempestRunner->GetXRegister(); }
 		uint8_t  GetYRegister(void) { return tempestRunner->GetYRegister(); }
-		void     MoveWheel(int delta) { tempestRunner->MoveWheel(delta); }
 		void     Step(void) { tempestRunner->Step(); }
 		void     Resume(void) { tempestRunner->Resume(); }
 

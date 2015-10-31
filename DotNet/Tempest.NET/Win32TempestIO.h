@@ -50,14 +50,17 @@ public:
    virtual void SetSoundChannelWaveform(int channel, int waveform);
    virtual void Tick6KHz(void);
    virtual uint8_t GetButtons(void) { return buttons; }
+   virtual uint8_t GetEncoder(void) { return encoder; }
 
    void OnePlayer(bool state);
    void Fire(bool state);
    void Zap(bool state);
+   void MoveWheel(int distance) { encoder += distance; }
 
 private:
    Win32WaveStreamer	waveStreamer;
    uint8_t buttons;
+   uint8_t encoder;
 };
 
 
