@@ -14,7 +14,7 @@ namespace TempestDotNET {
 
    public ref class TDNTempestIOStreamListener : public IDisposable {
 	public:
-      TDNTempestIOStreamListener(ITDNStreamProvider ^stream, TDNWin32TempestIO ^tempestIO);
+      TDNTempestIOStreamListener(ITDNStreamProvider ^stream, TDNWin32TempestSoundIO ^tempestIO);
 		~TDNTempestIOStreamListener(void);
 
    private:
@@ -22,7 +22,7 @@ namespace TempestDotNET {
 
 	private:
       ITDNStreamProvider ^stream;
-		TDNWin32TempestIO ^tempestIO;
+		TDNWin32TempestSoundIO ^tempestIO;
 
 		TempestIOStreamListener *listener;
 

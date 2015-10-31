@@ -34,7 +34,6 @@ public:
 
 	// simple accessors
 	void MoveWheel(int delta) { pokey1.MoveWheel(delta); }
-	void SetButtonState(ButtonID button, bool pressed) { pokey2.SetButtonState(button, pressed); }
 
 public:
 	// AbstractBus overrides

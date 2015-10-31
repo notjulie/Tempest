@@ -26,7 +26,8 @@ namespace TempestWpf
    {
       #region Private Fields
 
-      private TDNWin32TempestIO tempestIO;
+      private TDNWin32TempestVectorIO tempestVectorIO;
+      private TDNWin32TempestSoundIO tempestSoundIO;
       private Tempest tempest;
 
       private DispatcherTimer timer;
@@ -95,11 +96,11 @@ namespace TempestWpf
                break;
 
             case Key.F:
-               tempest.Fire(true);
+               tempestSoundIO.Fire(true);
                break;
 
             case Key.V:
-               tempest.Zap(true);
+               tempestSoundIO.Zap(true);
                break;
          }
       }
@@ -117,11 +118,11 @@ namespace TempestWpf
                break;
 
             case Key.F:
-               tempest.Fire(false);
+               tempestSoundIO.Fire(false);
                break;
 
             case Key.V:
-               tempest.Zap(false);
+               tempestSoundIO.Zap(false);
                break;
          }
       }
@@ -142,9 +143,9 @@ namespace TempestWpf
 
       void buttonOnePlayerStart_Click(object sender, RoutedEventArgs e)
       {
-         tempest.SetOnePlayerButton(true);
+         tempestSoundIO.OnePlayer(true);
          System.Threading.Thread.Sleep(100);
-         tempest.SetOnePlayerButton(false);
+         tempestSoundIO.OnePlayer(false);
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -162,10 +163,11 @@ namespace TempestWpf
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
          // create the IO object that we represent
-         tempestIO = new TDNWin32TempestIO();
+         tempestSoundIO = new TDNWin32TempestSoundIO();
+         tempestVectorIO = new TDNWin32TempestVectorIO();
 
          // create our tempest, connected to the IO object
-         tempest = new Tempest(tempestIO);
+         tempest = new Tempest(tempestSoundIO, tempestVectorIO);
 
          // set it to running
          startTime = DateTime.Now;
@@ -212,7 +214,7 @@ namespace TempestWpf
       void vectorTimer_Tick(object sender, EventArgs e)
       {
          // get a vector enumerator
-         VectorEnumerator enumerator = tempestIO.GetVectorEnumerator();
+         VectorEnumerator enumerator = tempestVectorIO.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;

@@ -9,39 +9,55 @@
 
 struct SimpleVector;
 
-class Win32TempestIO : public AbstractTempestVectorIO, public AbstractTempestSoundIO
+
+class Win32TempestVectorIO : public AbstractTempestVectorIO
 {
 public:
-	Win32TempestIO(void);
-	virtual ~Win32TempestIO(void);
+   Win32TempestVectorIO(void);
+   virtual ~Win32TempestVectorIO(void);
 
-	void GetVectorList(std::vector<SimpleVector> &_vectorList);
+   void GetVectorList(std::vector<SimpleVector> &_vectorList);
 
-	virtual void SetSoundChannelFrequency(int channel, int frequency);
-	virtual void SetSoundChannelVolume(int channel, int volume);
-	virtual void SetSoundChannelWaveform(int channel, int waveform);
-	virtual void Tick6KHz(void);
-
-	virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
-	virtual bool IsVectorHalt(void) { return vectorInterpreter.IsHalt(); }
-	virtual void VectorGo(void) { vectorInterpreter.Go(); }
-	virtual void VectorReset(void) { vectorInterpreter.Reset(); }
+   virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
+   virtual bool IsVectorHalt(void) { return vectorInterpreter.IsHalt(); }
+   virtual void VectorGo(void) { vectorInterpreter.Go(); }
+   virtual void VectorReset(void) { vectorInterpreter.Reset(); }
 
 private:
-	void VectorThread(void);
+   void VectorThread(void);
 
 private:
-	static long VectorThreadEntry(Win32TempestIO *pThis) { pThis->VectorThread(); return 0; }
+   static long VectorThreadEntry(Win32TempestVectorIO *pThis) { pThis->VectorThread(); return 0; }
 
 private:
-	Win32WaveStreamer	waveStreamer;
+   HANDLE vectorThread;
+   HANDLE vectorGeneratorMutex;
+   DWORD vectorThreadID;
+   bool terminating;
+   SimpleVectorDataInterpreter	vectorInterpreter;
+   std::vector<SimpleVector> currentVectors;
+};
 
-	HANDLE vectorThread;
-	HANDLE vectorGeneratorMutex;
-	DWORD vectorThreadID;
-	bool terminating;
-	SimpleVectorDataInterpreter	vectorInterpreter;
-	std::vector<SimpleVector> currentVectors;
+
+class Win32TempestSoundIO : public AbstractTempestSoundIO
+{
+public:
+   Win32TempestSoundIO(void);
+   virtual ~Win32TempestSoundIO(void);
+
+   virtual void SetSoundChannelFrequency(int channel, int frequency);
+   virtual void SetSoundChannelVolume(int channel, int volume);
+   virtual void SetSoundChannelWaveform(int channel, int waveform);
+   virtual void Tick6KHz(void);
+   virtual uint8_t GetButtons(void) { return buttons; }
+
+   void OnePlayer(bool state);
+   void Fire(bool state);
+   void Zap(bool state);
+
+private:
+   Win32WaveStreamer	waveStreamer;
+   uint8_t buttons;
 };
 
 

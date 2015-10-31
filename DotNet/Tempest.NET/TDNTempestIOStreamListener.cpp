@@ -9,7 +9,7 @@
 
 namespace TempestDotNET {
 
-	TDNTempestIOStreamListener::TDNTempestIOStreamListener(ITDNStreamProvider ^stream, TDNWin32TempestIO ^tempestIO)
+	TDNTempestIOStreamListener::TDNTempestIOStreamListener(ITDNStreamProvider ^stream, TDNWin32TempestSoundIO ^tempestIO)
 	{
       // clear
       terminated = false;

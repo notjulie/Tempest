@@ -27,7 +27,8 @@ namespace TempestWpf
       #region Private Fields
 
       // our Tempest objects
-      private TDNWin32TempestIO tempestIO;
+      private TDNWin32TempestSoundIO tempestSoundIO;
+      private TDNWin32TempestVectorIO tempestVectorIO;
       private Tempest tempest;
       private TDNMemoryStream tempestMemoryStream;
       private TDNTempestIOStreamListener tempestIOStreamListener;
@@ -76,9 +77,7 @@ namespace TempestWpf
          this.Closing += MainWindow_Closing;
          this.KeyDown += MainWindow_KeyDown;
          this.KeyUp += MainWindow_KeyUp;
-         buttonOnePlayerStart.Click += buttonOnePlayerStart_Click;
       }
-
 
       void MainWindow_KeyDown(object sender, KeyEventArgs e)
       {
@@ -95,14 +94,6 @@ namespace TempestWpf
                leftKeyDown = false;
                rightKeyDown = true;
                break;
-
-            case Key.F:
-               tempest.Fire(true);
-               break;
-
-            case Key.V:
-               tempest.Zap(true);
-               break;
          }
       }
 
@@ -117,24 +108,8 @@ namespace TempestWpf
             case Key.Right:
                rightKeyDown = false;
                break;
-
-            case Key.F:
-               tempest.Fire(false);
-               break;
-
-            case Key.V:
-               tempest.Zap(false);
-               break;
          }
       }
-
-      void buttonOnePlayerStart_Click(object sender, RoutedEventArgs e)
-      {
-         tempest.SetOnePlayerButton(true);
-         System.Threading.Thread.Sleep(100);
-         tempest.SetOnePlayerButton(false);
-      }
-
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
       {
          if (timer != null)
@@ -168,16 +143,17 @@ namespace TempestWpf
             tempestMemoryStream = new TDNMemoryStream();
 
             // create the IO object that we represent
-            tempestIO = new TDNWin32TempestIO();
+            tempestVectorIO = new TDNWin32TempestVectorIO();
+            tempestSoundIO = new TDNWin32TempestSoundIO();
 
             // create the streamlistener that feeds it
-            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream.GetLeftSide(), tempestIO);
+            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream.GetLeftSide(), tempestSoundIO);
 
             // create the IO proxy
             tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream.GetRightSide());
 
             // create our tempest
-            tempest = new Tempest(tempestIOStreamProxy, tempestIO);
+            tempest = new Tempest(tempestIOStreamProxy, tempestVectorIO);
 
             // at this point here's what we have:
             //   - tempest is writing to tempestIOStreamProxy, which is its output device
@@ -239,7 +215,7 @@ namespace TempestWpf
       void vectorTimer_Tick(object sender, EventArgs e)
       {
          // get a vector enumerator
-         VectorEnumerator enumerator = tempestIO.GetVectorEnumerator();
+         VectorEnumerator enumerator = tempestVectorIO.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;

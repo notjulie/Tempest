@@ -12,19 +12,33 @@ class Win32TempestIO;
 
 namespace TempestDotNET {
 
-	public ref class TDNWin32TempestIO {
-	public:
-		TDNWin32TempestIO(void);
-		~TDNWin32TempestIO(void);
+   public ref class TDNWin32TempestSoundIO {
+   public:
+      TDNWin32TempestSoundIO(void);
+      ~TDNWin32TempestSoundIO(void);
 
-		VectorEnumerator ^GetVectorEnumerator(void);
+      AbstractTempestSoundIO *GetSoundIOObject(void) { return tempestSoundIO; }
+      void Fire(bool state) { tempestSoundIO->Fire(state); }
+      void OnePlayer(bool state) { tempestSoundIO->OnePlayer(state); }
+      void Zap(bool state) { tempestSoundIO->Zap(state); }
 
-      AbstractTempestVectorIO *GetVectorIOObject(void) { return tempestIO; }
-      AbstractTempestSoundIO *GetSoundIOObject(void) { return tempestIO; }
+   private:
+      Win32TempestSoundIO *tempestSoundIO;
+   };
 
-	private:
-		Win32TempestIO *tempestIO;
-	};
+
+   public ref class TDNWin32TempestVectorIO {
+   public:
+      TDNWin32TempestVectorIO(void);
+      ~TDNWin32TempestVectorIO(void);
+
+      VectorEnumerator ^GetVectorEnumerator(void);
+
+      AbstractTempestVectorIO *GetVectorIOObject(void) { return tempestVectorIO; }
+
+   private:
+      Win32TempestVectorIO *tempestVectorIO;
+   };
 
 };
 

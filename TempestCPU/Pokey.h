@@ -26,6 +26,9 @@ public:
 
 	virtual uint8_t GetALLPOT(void) { return 0; }
 
+protected:
+   AbstractTempestSoundIO *GetIO(void) { return tempestIO; }
+
 private:
 	uint8_t ALLPOT;
 	int baseSoundChannel;

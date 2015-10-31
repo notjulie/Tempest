@@ -55,7 +55,6 @@ public:
 
 	// simple dispatches to the TempestBus object
 	void MoveWheel(int delta) { tempestBus.MoveWheel(delta); }
-	void SetButtonState(ButtonID button, bool pressed) { tempestBus.SetButtonState(button, pressed); }
    void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO) { tempestBus.SetTempestIO(tempestSoundIO, tempestVectorIO); }
 
 private:
