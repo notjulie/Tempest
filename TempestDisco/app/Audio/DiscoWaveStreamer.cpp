@@ -42,6 +42,6 @@ void DiscoWaveStreamer::Service(void)
 		continue;
 
 	// set the blue LED if we have sound output
-   LEDBlueOn(HaveSoundOutput());
+   LEDOn(DISCO_LED_BLUE, HaveSoundOutput());
 }
 

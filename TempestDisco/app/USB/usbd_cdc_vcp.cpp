@@ -233,7 +233,7 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 	bytesReceived += Len;
 
 	// flash every 100KB or so
-   LEDRedOn((bytesReceived / 100000) & 1);
+   LEDOn(DISCO_LED_RED, (bytesReceived / 100000) & 1);
 
     // send the data to the stream
 	AbstractTempestStream *stream = memoryStream.GetRightSide();

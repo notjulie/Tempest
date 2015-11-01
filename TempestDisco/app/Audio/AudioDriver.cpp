@@ -66,7 +66,7 @@ extern "C" {
 		// this is the green heartbeat LED
 		static int cycles = 0;
 		++cycles;
-      LEDGreenOn((cycles / 50) & 1);
+      LEDOn(DISCO_LED_GREEN, (cycles / 50) & 1);
 
 		// this means the first half of the buffer is starting to play
 		// and the second half is ready to be filled

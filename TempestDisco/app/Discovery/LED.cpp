@@ -3,22 +3,23 @@
 #include "LED.h"
 
 #define LED_GREEN_PIN                    GPIO_Pin_12
-#define LED_GREEN_GPIO_PORT              GPIOD
-#define LED_GREEN_GPIO_CLK               RCC_AHB1Periph_GPIOD
-
 #define LED_ORANGE_PIN                   GPIO_Pin_13
-#define LED_ORANGE_GPIO_PORT             GPIOD
-#define LED_ORANGE_GPIO_CLK              RCC_AHB1Periph_GPIOD
-
 #define LED_RED_PIN                      GPIO_Pin_14
-#define LED_RED_GPIO_PORT                GPIOD
-#define LED_RED_GPIO_CLK                 RCC_AHB1Periph_GPIOD
-
 #define LED_BLUE_PIN                     GPIO_Pin_15
-#define LED_BLUE_GPIO_PORT               GPIOD
-#define LED_BLUE_GPIO_CLK                RCC_AHB1Periph_GPIOD
+
+struct LEDDefinition
+{
+	uint16_t  gpioPin;
+	volatile uint32_t  *ccr;
+};
 
 static bool usingPWM = false;
+static const LEDDefinition LEDs[] = {
+		{ LED_RED_PIN,    &TIM4->CCR3 },
+		{ LED_GREEN_PIN,  &TIM4->CCR1 },
+		{ LED_BLUE_PIN,   &TIM4->CCR4 },
+		{ LED_ORANGE_PIN, &TIM4->CCR2 }
+};
 
 void InitializeLEDs(bool usePWM)
 {
@@ -102,54 +103,16 @@ void InitializeLEDs(bool usePWM)
 }
 
 
-void LEDRedOn(bool on)
+void LEDOn(DiscoLED led, bool on)
 {
-	LEDRedValue(on ? 0xFFFF : 0);
+	LEDValue(led, on ? 0xFFFF : 0);
 }
 
-void LEDRedValue(uint16_t value)
+void LEDValue(DiscoLED led, uint16_t value)
 {
 	if (usingPWM)
-		TIM4->CCR3 = value;
+		*LEDs[led].ccr = value;
 	else
-		GPIO_WriteBit(LED_RED_GPIO_PORT, LED_RED_PIN, (value!=0) ? Bit_SET : Bit_RESET);
+		GPIO_WriteBit(GPIOD, LEDs[led].gpioPin, (value!=0) ? Bit_SET : Bit_RESET);
 }
 
-void LEDGreenOn(bool on)
-{
-	LEDGreenValue(on ? 0xFFFF : 0);
-}
-
-void LEDGreenValue(uint16_t value)
-{
-	if (usingPWM)
-		TIM4->CCR1 = value;
-	else
-		GPIO_WriteBit(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, (value!=0) ? Bit_SET : Bit_RESET);
-}
-
-void LEDBlueOn(bool on)
-{
-	LEDBlueValue(on ? 0xFFFF : 0);
-}
-
-void LEDBlueValue(uint16_t value)
-{
-	if (usingPWM)
-		TIM4->CCR4 = value;
-	else
-		GPIO_WriteBit(LED_BLUE_GPIO_PORT, LED_BLUE_PIN, (value!=0) ? Bit_SET : Bit_RESET);
-}
-
-void LEDOrangeOn(bool on)
-{
-	LEDOrangeValue(on ? 0xFFFF : 0);
-}
-
-void LEDOrangeValue(uint16_t value)
-{
-	if (usingPWM)
-		TIM4->CCR2 = value;
-	else
-		GPIO_WriteBit(LED_ORANGE_GPIO_PORT, LED_ORANGE_PIN, (value!=0) ? Bit_SET : Bit_RESET);
-}

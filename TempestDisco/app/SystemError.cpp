@@ -80,14 +80,14 @@ static void DisplaySystemError(SystemError systemError)
 
 		while (hundreds>0 || tens>0 || ones>0)
 		{
-			LEDRedOn(hundreds-- > 0);
-			LEDBlueOn(tens-- > 0);
-			LEDGreenOn(ones-- > 0);
+			LEDOn(DISCO_LED_RED, hundreds-- > 0);
+			LEDOn(DISCO_LED_BLUE, tens-- > 0);
+			LEDOn(DISCO_LED_GREEN, ones-- > 0);
 			CPUSpin(200);
 
-			LEDRedOn(false);
-			LEDBlueOn(false);
-			LEDGreenOn(false);
+			LEDOn(DISCO_LED_RED, false);
+			LEDOn(DISCO_LED_BLUE, false);
+			LEDOn(DISCO_LED_GREEN, false);
 			CPUSpin(200);
 		}
 
