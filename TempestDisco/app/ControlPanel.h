@@ -7,5 +7,6 @@
 void InitializeControlPanel(void);
 void ServiceControlPanel(void);
 bool GetButton(ButtonFlag button);
+uint16_t GetEncoder(void);
 
 #endif

@@ -36,6 +36,19 @@ void ServiceAudioLEDs(void)
 		++greenIntensity;
 	if (GetButton(TWO_PLAYER_BUTTON))
 		++blueIntensity;
+
+	switch (GetEncoder() & 3)
+	{
+	case 0:
+		++orangeIntensity; break;
+	case 1:
+		++redIntensity; break;
+	case 2:
+		++blueIntensity; break;
+	case 3:
+		++greenIntensity; break;
+	}
+
 	
 	LEDValue(DISCO_LED_BLUE, 0x2000 * blueIntensity);
 	LEDValue(DISCO_LED_RED, 0x2000 * redIntensity);
