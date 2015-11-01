@@ -2,7 +2,6 @@
 #include "TempestDisco.h"
 
 #include "SystemError.h"
-#include "Discovery/LED.h"
 
 #include "AudioDriver.h"
 
@@ -14,6 +13,7 @@
 static int16_t wave[TEMPEST_DISCO_SOUND_BUFFER_SAMPLE_COUNT];
 static bool firstHalfReady;
 static bool secondHalfReady;
+static bool heartBeat = false;
 
 
 void AudioDriverInit(void)
@@ -58,6 +58,12 @@ bool AudioDriverPopEmptyBuffer(int16_t **buffer, int *frameCount)
 	return false;
 }
 
+bool AudioDriverHeartbeat(void)
+{
+	return heartBeat;
+}
+
+
 // "C" callback functions that get called from the interrupt handlers
 extern "C" {
 
@@ -66,7 +72,7 @@ extern "C" {
 		// this is the green heartbeat LED
 		static int cycles = 0;
 		++cycles;
-      LEDOn(DISCO_LED_GREEN, (cycles / 50) & 1);
+		heartBeat = ((cycles / 50) & 1) != 0;
 
 		// this means the first half of the buffer is starting to play
 		// and the second half is ready to be filled

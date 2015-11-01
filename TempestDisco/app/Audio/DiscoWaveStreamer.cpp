@@ -2,7 +2,6 @@
 #include "TempestDisco.h"
 
 #include "AudioDriver.h"
-#include "Discovery/LED.h"
 
 #include "DiscoWaveStreamer.h"
 
@@ -40,8 +39,5 @@ void DiscoWaveStreamer::Service(void)
 	// if we still have events to process, process them
 	while (ProcessNextEvent())
 		continue;
-
-	// set the blue LED if we have sound output
-   LEDOn(DISCO_LED_BLUE, HaveSoundOutput());
 }
 

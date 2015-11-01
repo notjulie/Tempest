@@ -53,5 +53,7 @@ private:
 
 extern VirtualComPort VCP;
 
+bool GetUSBReceiveHeartbeat();
+
 #endif /* __USBD_CDC_VCP_H */
 

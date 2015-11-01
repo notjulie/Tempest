@@ -6,5 +6,6 @@
 
 void AudioDriverInit(void);
 bool AudioDriverPopEmptyBuffer(int16_t **buffer, int *frameCount);
+bool AudioDriverHeartbeat(void);
 
 #endif

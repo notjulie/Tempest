@@ -7,9 +7,11 @@
 
 #include "Audio/AudioDriver.h"
 #include "Audio/TempestDiscoAudioIO.h"
-#include "Discovery/LED.h"
 #include "TempestIO/TempestIOStreamListener.h"
 
+#include "LED.h"
+
+#include "AudioLEDs.h"
 #include "DiscoWaveStreamer.h"
 #include "SystemError.h"
 #include "SystemTime.h"
@@ -79,6 +81,9 @@ extern "C" {
 
 	    	// let the wave streamer have its time slice
 	    	DWS.Service();
+
+	    	// update the LEDs
+	    	ServiceAudioLEDs();
 
 	    	// kick the dog
 	    	ResetIndependentWatchdogCounter();

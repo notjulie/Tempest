@@ -26,10 +26,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "TempestDisco.h"
 
-#include "Discovery/LED.h"
 #include "TempestIO/TempestMemoryStream.h"
 
 #include "SystemError.h"
+#include "SystemTime.h"
 
 #include "usbd_cdc_vcp.h"
 
@@ -40,6 +40,9 @@ AbstractTempestStream &USBStream = *memoryStream.GetLeftSide();
 
 // our global VirtualComPort instance
 VirtualComPort VCP;
+
+static bool newDataReceived = false;
+
 
 /* Private function prototypes -----------------------------------------------*/
 static uint16_t VCP_Init(void);
@@ -229,11 +232,9 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
 
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 {
-	static int bytesReceived = 0;
-	bytesReceived += Len;
-
-	// flash every 100KB or so
-   LEDOn(DISCO_LED_RED, (bytesReceived / 100000) & 1);
+	// note that we got some data
+	if (Len > 0)
+		newDataReceived = true;
 
     // send the data to the stream
 	AbstractTempestStream *stream = memoryStream.GetRightSide();
@@ -244,3 +245,35 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 }
 
 
+bool GetUSBReceiveHeartbeat()
+{
+	static bool flashOn = false;
+	static uint32_t lastTick = 0;
+
+	// get the current millisecond count
+	uint32_t millisecondCount = GetMillisecondCount();
+
+	// our clock is 20Hz so that we flash at most 10Hz
+	uint32_t tickCount = millisecondCount / 50;
+
+	// never mind of the tick count hasn't changed
+	if (tickCount == lastTick)
+		return flashOn;
+	lastTick = tickCount;
+
+	// update
+	if (flashOn)
+	{
+		flashOn = false;
+	}
+	else
+	{
+		if (newDataReceived)
+		{
+			newDataReceived = false;
+			flashOn = true;
+		}
+	}
+
+	return flashOn;
+}
