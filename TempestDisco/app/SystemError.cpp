@@ -70,7 +70,7 @@ static void DisplaySystemError(SystemError systemError)
 
 	// call SystemInit to set up the clocks, then initialize the LEDs
 	SystemInit();
-	InitializeLEDs();
+	InitializeLEDs(false);
 
 	for (;;)
 	{
@@ -80,14 +80,14 @@ static void DisplaySystemError(SystemError systemError)
 
 		while (hundreds>0 || tens>0 || ones>0)
 		{
-			LEDRed(hundreds-- > 0);
-			LEDBlue(tens-- > 0);
-			LEDGreen(ones-- > 0);
+			LEDRedOn(hundreds-- > 0);
+			LEDBlueOn(tens-- > 0);
+			LEDGreenOn(ones-- > 0);
 			CPUSpin(200);
 
-			LEDRed(false);
-			LEDBlue(false);
-			LEDGreen(false);
+			LEDRedOn(false);
+			LEDBlueOn(false);
+			LEDGreenOn(false);
 			CPUSpin(200);
 		}
 

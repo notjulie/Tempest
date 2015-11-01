@@ -57,7 +57,7 @@ extern "C" {
 		SystemInit();
 
 		hw_init();
-      InitializeLEDs();
+      InitializeLEDs(true);
 
 		// initialize our main counters, SysTick, etc.
 		InitializeSystemTime();

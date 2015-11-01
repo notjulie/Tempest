@@ -146,7 +146,7 @@ extern "C" {
 	   // set the orange LED as about a one second heart beat... this assumes a
 	   // 1ms period
 	   static unsigned int count = 0;
-	   LEDOrange((++count % 1000) > 500);
+	   LEDOrangeOn((++count % 1000) > 500);
 
 	   // call our watchdog functions
 	   for (int i=0; i<watchdogFunctionCount; ++i)
