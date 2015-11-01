@@ -12,6 +12,7 @@
 #include "LED.h"
 
 #include "AudioLEDs.h"
+#include "ControlPanel.h"
 #include "DiscoWaveStreamer.h"
 #include "SystemError.h"
 #include "SystemTime.h"
@@ -67,6 +68,9 @@ extern "C" {
 		// initialize the audio driver
 		AudioDriverInit();
 
+		// control panel
+		InitializeControlPanel();
+
 		// initialize the watchdog just before we enter the main loop
 		InitializeWatchdog();
 
@@ -85,7 +89,10 @@ extern "C" {
 	    	// update the LEDs
 	    	ServiceAudioLEDs();
 
-	    	// kick the dog
+			// control panel
+			ServiceControlPanel();
+
+			// kick the dog
 	    	ResetIndependentWatchdogCounter();
 		}
 

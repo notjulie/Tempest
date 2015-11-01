@@ -9,7 +9,8 @@ enum ButtonFlag {
    FIRE_BUTTON = 2,
    ZAPPER_BUTTON = 4,
    ENCODER_UP = 8,
-   ENCODER_DOWN = 16
+   ENCODER_DOWN = 16,
+   TWO_PLAYER_BUTTON = 32
 };
 
 class AbstractTempestSoundIO
