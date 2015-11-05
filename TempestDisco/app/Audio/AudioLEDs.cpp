@@ -19,7 +19,7 @@ void ServiceAudioLEDs(void)
 	int greenIntensity = 0;
 	int orangeIntensity = 0;
 
-	if (DWS.HaveSoundOutput())
+/*	if (DWS.HaveSoundOutput())
 		++blueIntensity;
 	if (GetUSBReceiveHeartbeat())
 		++redIntensity;
@@ -35,7 +35,7 @@ void ServiceAudioLEDs(void)
 	if (GetButton(ONE_PLAYER_BUTTON))
 		++greenIntensity;
 	if (GetButton(TWO_PLAYER_BUTTON))
-		++blueIntensity;
+		++blueIntensity;*/
 
 	switch (GetEncoder() & 3)
 	{
