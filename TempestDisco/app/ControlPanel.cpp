@@ -57,48 +57,67 @@ void InitializeControlPanel(void)
 
 void ServiceControlPanel(void)
 {
+	// get a snapshot of the ADCs so we're not dealing with a moving target
+	uint16_t adc1 = ADC1->DR;
+	uint16_t adc2 = ADC2->DR;
+
+	// each of the encoder inputs goes through a 1/2 voltage divider, and
+	// the empirical data is this: one input maxes at about 40000 ADC counts,
+	// the other at 30000.  The minimum for each is about 1000 counts.  So
+	// selecting a midpoint of 15000 counts and hysteresis of 5000 counts
+	// seems like it should work pretty well for both of them.
+	static const uint16_t turnOnLevel = 20000;
+	static const uint16_t turnOffLevel = 10000;
+
+	static bool input1 = false;
+	static bool input2 = false;
+
+	if (adc1 > turnOnLevel)
+		input1 = true;
+	else if (adc1 < turnOffLevel)
+		input1 = false;
+	if (adc2 > turnOnLevel)
+		input2 = true;
+	else if (adc2 < turnOffLevel)
+		input2 = false;
+
 	// read the encoder bits
 	uint8_t newEncoderBits = 0;
-	if (ADC1->DR > 0x2000)
+	if (input1)
 		newEncoderBits += 2;
-	if (ADC2->DR > 0x2000)
+	if (input2)
 		newEncoderBits += 1;
-	//if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_6) == Bit_SET)
-		//newEncoderBits += 2;
-	//if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8) == Bit_SET)
-		//newEncoderBits += 1;
 
-#if 0
 	if (newEncoderBits != encoderBits)
 	{
-		// the encoder goes 1-3-2 or 2-3-1 depending on the direction;
+		// the encoder goes 0-1-3-2 or 2-3-1-0 depending on the direction;
 		// combine the previous value and the current value and switch
 		// on the combination
 		uint8_t transition = (encoderBits<<4) + newEncoderBits;
 
 		switch (transition)
 		{
+		case 0x01:
 		case 0x13:
-		//case 0x32:
-			--encoder;
-			break;
-
-		case 0x23:
-		//case 0x31:
+		case 0x32:
+		case 0x20:
 			++encoder;
 			break;
 
+		case 0x23:
+		case 0x31:
+		case 0x10:
+		case 0x02:
+			--encoder;
+			break;
+
 		default:
-			encoder = encoder + 0;
 			break;
 		}
 
 		// save the current state
 		encoderBits = newEncoderBits;
 	}
-#else
-	encoder = newEncoderBits;
-#endif
 }
 
 bool GetButton(ButtonFlag button)
