@@ -40,13 +40,13 @@ void ServiceAudioLEDs(void)
 	switch (GetEncoder() & 3)
 	{
 	case 0:
-		++orangeIntensity; break;
-	case 1:
-		++redIntensity; break;
-	case 2:
-		++blueIntensity; break;
-	case 3:
 		++greenIntensity; break;
+	case 1:
+		++blueIntensity; break;
+	case 2:
+		++redIntensity; break;
+	case 3:
+		++orangeIntensity; break;
 	}
 
 	

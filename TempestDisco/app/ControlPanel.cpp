@@ -113,14 +113,14 @@ void ServiceControlPanel(void)
 		case 0x13:
 		case 0x32:
 		case 0x20:
-			++encoder;
+			--encoder;
 			break;
 
 		case 0x23:
 		case 0x31:
 		case 0x10:
 		case 0x02:
-			--encoder;
+			++encoder;
 			break;
 
 		default:
@@ -166,16 +166,16 @@ void SetButtonLED(ButtonFlag button, bool value)
 	{
 	case ONE_PLAYER_BUTTON:
 		if (value)
-			GPIOE->BSRRL = 0x10;
+			GPIOE->BSRRL = 0x20;
 		else
-			GPIOE->BSRRH = 0x10;
+			GPIOE->BSRRH = 0x20;
 		break;
 
 	case TWO_PLAYER_BUTTON:
 		if (value)
-			GPIOE->BSRRL = 0x20;
+			GPIOE->BSRRL = 0x10;
 		else
-			GPIOE->BSRRH = 0x20;
+			GPIOE->BSRRH = 0x10;
 		break;
 
 	default:
