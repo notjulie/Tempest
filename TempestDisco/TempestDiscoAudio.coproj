@@ -90,32 +90,32 @@
     <File name="STM/Discovery/stm32f4_discovery.c" path="../../STM32F4-Discovery_FW_V1.1.0/Utilities/STM32F4-Discovery/stm32f4_discovery.c" type="1"/>
     <File name="ControlPanel.cpp" path="app/ControlPanel.cpp" type="1"/>
     <File name="Discovery" path="" type="2"/>
-    <File name="SystemTime.cpp" path="app/SystemTime.cpp" type="1"/>
     <File name="TempestIO/AbstractTempestIO.h" path="../TempestIO/AbstractTempestIO.h" type="1"/>
-    <File name="STM/USB_Device/usbd_req.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Core/src/usbd_req.c" type="1"/>
+    <File name="SystemTime.cpp" path="app/SystemTime.cpp" type="1"/>
     <File name="Audio/DiscoWaveStreamer.cpp" path="app/Audio/DiscoWaveStreamer.cpp" type="1"/>
-    <File name="TempestDisco.cpp" path="app/TempestDisco.cpp" type="1"/>
-    <File name="system_stm32f4xx.c" path="app/system_stm32f4xx.c" type="1"/>
+    <File name="STM/USB_Device/usbd_req.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Core/src/usbd_req.c" type="1"/>
     <File name="STM/USB_Device/usbd_ioreq.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c" type="1"/>
+    <File name="system_stm32f4xx.c" path="app/system_stm32f4xx.c" type="1"/>
+    <File name="TempestDisco.cpp" path="app/TempestDisco.cpp" type="1"/>
     <File name="WatchDog.cpp" path="app/WatchDog.cpp" type="1"/>
     <File name="STM/USB_OTG/usb_core.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_OTG_Driver/src/usb_core.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_dma.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dma.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_spi.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.c" type="1"/>
     <File name="Audio" path="" type="2"/>
-    <File name="TempestIO/AbstractTempestStream.cpp" path="../TempestIO/AbstractTempestStream.cpp" type="1"/>
     <File name="USB/usbd_cdc_vcp.h" path="app/USB/usbd_cdc_vcp.h" type="1"/>
+    <File name="TempestIO/AbstractTempestStream.cpp" path="../TempestIO/AbstractTempestStream.cpp" type="1"/>
     <File name="stm32f4xx_it.c" path="app/stm32f4xx_it.c" type="1"/>
     <File name="STM" path="" type="2"/>
     <File name="STM/USB_Device" path="" type="2"/>
     <File name="TempestIO/WaveStreamer.cpp" path="../TempestIO/WaveStreamer.cpp" type="1"/>
     <File name="STM/USB_Device/usbd_core.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Core/src/usbd_core.c" type="1"/>
-    <File name="Audio/stm32f4_discovery_audio_codec.h" path="app/Audio/stm32f4_discovery_audio_codec.h" type="1"/>
     <File name="TempestIO/Noise.cpp" path="../TempestIO/Noise.cpp" type="1"/>
+    <File name="Audio/stm32f4_discovery_audio_codec.h" path="app/Audio/stm32f4_discovery_audio_codec.h" type="1"/>
     <File name="Discovery/LED.cpp" path="app/Discovery/LED.cpp" type="1"/>
     <File name="USB/usbd_usr.c" path="app/USB/usbd_usr.c" type="1"/>
     <File name="USB" path="" type="2"/>
-    <File name="SystemError.cpp" path="app/SystemError.cpp" type="1"/>
     <File name="Audio/TempestDiscoAudioIO.cpp" path="app/Audio/TempestDiscoAudioIO.cpp" type="1"/>
+    <File name="SystemError.cpp" path="app/SystemError.cpp" type="1"/>
     <File name="TempestIO/TempestIOStreamListener.cpp" path="../TempestIO/TempestIOStreamListener.cpp" type="1"/>
     <File name="TempestDisco.h" path="app/TempestDisco.h" type="1"/>
     <File name="Audio/TempestDiscoAudioIO.h" path="app/Audio/TempestDiscoAudioIO.h" type="1"/>
@@ -146,8 +146,8 @@
     <File name="TempestIO/SoundGenerator.cpp" path="../TempestIO/SoundGenerator.cpp" type="1"/>
     <File name="TempestIO" path="" type="2"/>
     <File name="TempestIO/TempestMemoryStream.cpp" path="../TempestIO/TempestMemoryStream.cpp" type="1"/>
-    <File name="STM/USB_OTG/usb_dcd.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_OTG_Driver/src/usb_dcd.c" type="1"/>
     <File name="SystemError.h" path="app/SystemError.h" type="1"/>
+    <File name="STM/USB_OTG/usb_dcd.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_OTG_Driver/src/usb_dcd.c" type="1"/>
     <File name="STM/USB_Device/usbd_cdc_core.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32_USB_Device_Library/Class/cdc/src/usbd_cdc_core.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_syscfg.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c" type="1"/>
     <File name="USB/usb_bsp.c" path="app/USB/usb_bsp.c" type="1"/>

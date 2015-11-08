@@ -14,9 +14,29 @@ public:
 	TempestPokey1(void)
 		: Pokey(0)
 	{
+      lastReadEncoder = 0;
 	}
 
-	virtual uint8_t GetALLPOT(void) { return GetIO()->GetEncoder(); }
+	virtual uint8_t GetALLPOT(void) {
+      // get the encoder
+      uint8_t encoder = GetIO()->GetEncoder();
+
+      // see how much it has changed since last time
+      int8_t encoderChange = encoder - lastReadEncoder;
+
+      // don't let it change too much in a single cycle... prevent wraparound
+      if (encoderChange > 7)
+         encoder = (uint8_t)(lastReadEncoder + 7);
+      else if (encoderChange < - 7)
+         encoder = (uint8_t)(lastReadEncoder - 7);
+
+      // save and return
+      lastReadEncoder = encoder;
+      return encoder;
+   }
+
+private:
+   uint8_t lastReadEncoder;
 };
 
 class TempestPokey2 : public Pokey
