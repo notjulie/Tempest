@@ -14,6 +14,7 @@ public:
 private:
    enum State {
       IDLE,
+      BUTTON_LEDS,
       SOUND_VOLUME,
       SOUND_WAVE,
       SOUND_FREQUENCY

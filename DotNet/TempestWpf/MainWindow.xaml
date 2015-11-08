@@ -25,7 +25,8 @@
             </StackPanel>
         </DockPanel>
         <StackPanel DockPanel.Dock="Right">
-            <Button Name="buttonOnePlayerStart">One Player Start</Button>
+            <Ellipse Name="buttonOnePlayerStart" Width="20" Height="20" Margin="5" Fill="Black"/>
+            <Ellipse Name="buttonTwoPlayerStart" Width="20" Height="20" Margin="5" Fill="Black"/>
         </StackPanel>
         <Viewbox Stretch="Uniform">
             <Canvas Name="canvas" Height="69536" Width="70536" Background="Black" ClipToBounds="True">

@@ -7,6 +7,7 @@ Win32TempestSoundIO::Win32TempestSoundIO(void)
 {
    buttons = 0;
    encoder = 0;
+   leds = 0;
 }
 
 Win32TempestSoundIO::~Win32TempestSoundIO(void)
@@ -52,6 +53,15 @@ void Win32TempestSoundIO::OnePlayer(bool state)
 }
 
 
+void Win32TempestSoundIO::TwoPlayer(bool state)
+{
+   if (state)
+      buttons |= TWO_PLAYER_BUTTON;
+   else
+      buttons &= ~TWO_PLAYER_BUTTON;
+}
+
+
 void Win32TempestSoundIO::Zap(bool state)
 {
    if (state)
@@ -61,6 +71,13 @@ void Win32TempestSoundIO::Zap(bool state)
 }
 
 
+void Win32TempestSoundIO::SetButtonLED(ButtonFlag button, bool value)
+{
+   if (value)
+      leds |= button;
+   else
+      leds &= ~button;
+}
 
 
 Win32TempestVectorIO::Win32TempestVectorIO(void)

@@ -74,10 +74,10 @@ namespace TempestWpf
          this.Closing += MainWindow_Closing;
          this.KeyDown += MainWindow_KeyDown;
          this.KeyUp += MainWindow_KeyUp;
-         buttonOnePlayerStart.Click += buttonOnePlayerStart_Click;
+         buttonOnePlayerStart.MouseLeftButtonDown += buttonOnePlayerStart_MouseLeftButtonDown;
+         buttonTwoPlayerStart.MouseLeftButtonDown += buttonTwoPlayerStart_MouseLeftButtonDown;
          view6502DebugWindowItem.Click += view6502DebugWindowItem_Click;
       }
-
 
       void MainWindow_KeyDown(object sender, KeyEventArgs e)
       {
@@ -141,11 +141,18 @@ namespace TempestWpf
          debug6502.Activate();
       }
 
-      void buttonOnePlayerStart_Click(object sender, RoutedEventArgs e)
+      void buttonOnePlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
          tempestSoundIO.OnePlayer(true);
          System.Threading.Thread.Sleep(100);
          tempestSoundIO.OnePlayer(false);
+      }
+
+      void buttonTwoPlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+      {
+         tempestSoundIO.TwoPlayer(true);
+         System.Threading.Thread.Sleep(100);
+         tempestSoundIO.TwoPlayer(false);
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -191,10 +198,14 @@ namespace TempestWpf
 
       void spinnerTimer_Tick(object sender, EventArgs e)
       {
+         // update the spinner if we should
          if (leftKeyDown)
             tempestSoundIO.MoveWheel(-1);
          else if (rightKeyDown)
             tempestSoundIO.MoveWheel(1);
+
+         // update our LED's
+
       }
 
       void timer_Tick(object sender, EventArgs e)

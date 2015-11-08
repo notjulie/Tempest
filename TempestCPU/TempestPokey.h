@@ -40,9 +40,11 @@ public:
 		//; BIT 7: Unused.
 		uint8_t result = 0;
       uint8_t buttons = GetIO()->GetButtons();
-		if (buttons & ONE_PLAYER_BUTTON)
-			result |= 0x20;
-		if (buttons & FIRE_BUTTON)
+      if (buttons & ONE_PLAYER_BUTTON)
+         result |= 0x20;
+      if (buttons & TWO_PLAYER_BUTTON)
+         result |= 0x40;
+      if (buttons & FIRE_BUTTON)
 			result |= 0x10;
 		if (buttons & ZAPPER_BUTTON)
 			result |= 0x08;

@@ -14,7 +14,8 @@ public:
 	virtual void SetSoundChannelFrequency(int channel, int frequency);
 	virtual void SetSoundChannelVolume(int channel, int volume);
 	virtual void SetSoundChannelWaveform(int channel, int waveform);
-	virtual void Tick6KHz(void);
+   virtual void SetButtonLED(ButtonFlag button, bool value);
+   virtual void Tick6KHz(void);
    virtual uint8_t GetButtons(void) { return buttons; }
    virtual uint8_t GetEncoder(void) { return encoder; }
 
@@ -22,6 +23,7 @@ private:
    AbstractTempestStream	*stream;
    uint8_t buttons;
    uint8_t encoder;
+   uint8_t leds;
 };
 
 #endif

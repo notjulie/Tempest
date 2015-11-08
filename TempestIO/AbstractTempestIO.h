@@ -24,6 +24,7 @@ public:
 	virtual void Tick6KHz(void) = 0;
    virtual uint8_t GetButtons(void) = 0;
    virtual uint8_t GetEncoder(void) = 0;
+   virtual void SetButtonLED(ButtonFlag button, bool value) = 0;
 };
 
 class AbstractTempestVectorIO

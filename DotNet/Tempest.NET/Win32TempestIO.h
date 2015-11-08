@@ -51,8 +51,10 @@ public:
    virtual void Tick6KHz(void);
    virtual uint8_t GetButtons(void) { return buttons; }
    virtual uint8_t GetEncoder(void) { return encoder; }
+   virtual void SetButtonLED(ButtonFlag button, bool value);
 
    void OnePlayer(bool state);
+   void TwoPlayer(bool state);
    void Fire(bool state);
    void Zap(bool state);
    void MoveWheel(int distance) { encoder += distance; }
@@ -61,6 +63,7 @@ private:
    Win32WaveStreamer	waveStreamer;
    uint8_t buttons;
    uint8_t encoder;
+   uint8_t leds;
 };
 
 

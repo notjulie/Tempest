@@ -61,6 +61,10 @@ void TempestIOStreamListener::Service(void)
             }
             break;
 
+         case OP_BUTTON_LEDS:
+            state = BUTTON_LEDS;
+            break;
+
          case OP_SOUND_VOLUME:
             state = SOUND_VOLUME;
             soundChannel = b & 7;
@@ -90,6 +94,12 @@ void TempestIOStreamListener::Service(void)
 
       case SOUND_WAVE:
          tempestIO->SetSoundChannelWaveform(soundChannel, b);
+         state = IDLE;
+         break;
+
+      case BUTTON_LEDS:
+         tempestIO->SetButtonLED(ONE_PLAYER_BUTTON, (b&ONE_PLAYER_BUTTON) != 0);
+         tempestIO->SetButtonLED(TWO_PLAYER_BUTTON, (b&TWO_PLAYER_BUTTON) != 0);
          state = IDLE;
          break;
       }

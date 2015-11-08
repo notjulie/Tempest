@@ -23,6 +23,7 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
    // clear
    buttons = 0;
    encoder = 0;
+   leds = 0;
 
    // copy parameters
 	this->stream = stream;
@@ -79,3 +80,21 @@ void TempestIOStreamProxy::Tick6KHz(void)
    }
 }
 
+
+void TempestIOStreamProxy::SetButtonLED(ButtonFlag button, bool value)
+{
+   uint8_t oldLEDs = leds;
+
+   // update our local value
+   if (value)
+      leds |= button;
+   else
+      leds &= ~button;
+
+   // send it if it changed
+   if (leds != oldLEDs)
+   {
+      stream->Write(OP_BUTTON_LEDS << 5);
+      stream->Write(leds);
+   }
+}
