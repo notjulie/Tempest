@@ -23,6 +23,8 @@ namespace TempestDotNET {
       void TwoPlayer(bool state) { tempestSoundIO->TwoPlayer(state); }
       void Zap(bool state) { tempestSoundIO->Zap(state); }
       void MoveWheel(int distance) { tempestSoundIO->MoveWheel(distance); }
+      bool OnePlayerLED(void) { return tempestSoundIO->OnePlayerLED(); }
+      bool TwoPlayerLED(void) { return tempestSoundIO->TwoPlayerLED(); }
 
    private:
       Win32TempestSoundIO *tempestSoundIO;

@@ -40,6 +40,9 @@ namespace TempestWpf
       private bool leftKeyDown = false;
       private bool rightKeyDown = false;
 
+      private SolidColorBrush ledOnBrush = new SolidColorBrush(Colors.Red);
+      private SolidColorBrush ledOffBrush = new SolidColorBrush(Colors.Black);
+
       #endregion
 
       /// <summary>
@@ -205,7 +208,14 @@ namespace TempestWpf
             tempestSoundIO.MoveWheel(1);
 
          // update our LED's
-
+         if (tempestSoundIO.OnePlayerLED())
+            buttonOnePlayerStart.Fill = ledOnBrush;
+         else
+            buttonOnePlayerStart.Fill = ledOffBrush;
+         if (tempestSoundIO.TwoPlayerLED())
+            buttonTwoPlayerStart.Fill = ledOnBrush;
+         else
+            buttonTwoPlayerStart.Fill = ledOffBrush;
       }
 
       void timer_Tick(object sender, EventArgs e)

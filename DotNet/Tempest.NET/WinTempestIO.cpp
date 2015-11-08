@@ -62,6 +62,17 @@ void Win32TempestSoundIO::TwoPlayer(bool state)
 }
 
 
+bool Win32TempestSoundIO::OnePlayerLED(void)
+{
+   return (leds & ONE_PLAYER_BUTTON) != 0;
+}
+
+bool Win32TempestSoundIO::TwoPlayerLED(void)
+{
+   return (leds & TWO_PLAYER_BUTTON) != 0;
+}
+
+
 void Win32TempestSoundIO::Zap(bool state)
 {
    if (state)

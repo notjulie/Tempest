@@ -55,6 +55,8 @@ public:
 
    void OnePlayer(bool state);
    void TwoPlayer(bool state);
+   bool OnePlayerLED(void);
+   bool TwoPlayerLED(void);
    void Fire(bool state);
    void Zap(bool state);
    void MoveWheel(int distance) { encoder += distance; }

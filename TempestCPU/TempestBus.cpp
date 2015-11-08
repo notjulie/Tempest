@@ -220,6 +220,8 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 
       case 0x60E0:
          // register for flashing the start buttons
+         tempestSoundIO->SetButtonLED(ONE_PLAYER_BUTTON, (value & 1) != 0);
+         tempestSoundIO->SetButtonLED(TWO_PLAYER_BUTTON, (value & 2) != 0);
          break;
 
       default:
