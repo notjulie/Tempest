@@ -21,6 +21,18 @@ void InitializeControlPanel(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
+	// enable the peripheral clock for GPIOE
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
+
+	// Configure PE4 and PE5 as open collector outputs, and set them high
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4|GPIO_Pin_5;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOE, &GPIO_InitStructure);
+	GPIOE->BSRRL = 0x30;
+
 	// PB0 and PB1 are the inputs for the encoder
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1;
@@ -145,3 +157,29 @@ uint16_t GetEncoder(void)
 {
 	return encoder;
 }
+
+
+void SetButtonLED(ButtonFlag button, bool value)
+{
+	// the LEDs are at PE4 (one player) and PE5 (two player)
+	switch (button)
+	{
+	case ONE_PLAYER_BUTTON:
+		if (value)
+			GPIOE->BSRRL = 0x10;
+		else
+			GPIOE->BSRRH = 0x10;
+		break;
+
+	case TWO_PLAYER_BUTTON:
+		if (value)
+			GPIOE->BSRRL = 0x20;
+		else
+			GPIOE->BSRRH = 0x20;
+		break;
+
+	default:
+		break;
+	}
+}
+

@@ -13,6 +13,7 @@ public:
 	virtual void Tick6KHz(void);
    virtual uint8_t GetButtons(void);
    virtual uint8_t GetEncoder(void);
+   virtual void SetButtonLED(ButtonFlag button, bool value);
 };
 
 extern TempestDiscoAudioIO	IO;
