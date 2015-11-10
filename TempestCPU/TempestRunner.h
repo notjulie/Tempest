@@ -76,8 +76,8 @@ private:
 	uint64_t irqCount;
 	uint64_t totalClockCycles;
 
-	CPU6502		cpu6502;
 	TempestBus	tempestBus;
+	CPU6502		cpu6502;
 
 	std::string processorStatus;
 	AbstractThread *theThread;

@@ -8,17 +8,12 @@
 #include "PiScreen.h"
 
 
-class TempestPiIO : public AbstractTempestIO
+class TempestPiIO : public AbstractTempestVectorIO
 {
 public:
    TempestPiIO() {}
 
    void PushFrameToScreen(void);
-
-	virtual void SetSoundChannelFrequency(int channel, int frequency) {}
-	virtual void SetSoundChannelVolume(int channel, int volume) {}
-	virtual void SetSoundChannelWaveform(int channel, int waveform) {}
-	virtual void Tick6KHz(void) {}
 
 	virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
 	virtual bool IsVectorHalt(void) { return vectorInterpreter.IsHalt(); }

@@ -4,7 +4,9 @@
 #include <pthread.h>
 
 #include "TempestCPU/TempestRunner.h"
+#include "TempestIO/TempestIOStreamProxy.h"
 
+#include "PiSerialStream.h"
 #include "TempestPiEnvironment.h"
 #include "TempestPiIO.h"
 
@@ -14,11 +16,13 @@ int main()
 {
     // create our peripherals
     TempestPiEnvironment environment;
-    TempestPiIO io;
+    TempestPiIO vectorIO;
+    PiSerialStream serialStream;
+    TempestIOStreamProxy soundIO(&serialStream);
 
     // create the runner object that drives the fake 6502
     TempestRunner tempestRunner(&environment);
-    tempestRunner.SetTempestIO(&io);
+    tempestRunner.SetTempestIO(&soundIO, &vectorIO);
 
     // go
     tempestRunner.Start();
@@ -29,7 +33,7 @@ int main()
    int framesPerSecond = 0;
    for (;;)
    {
-      io.PushFrameToScreen();
+      vectorIO.PushFrameToScreen();
       ++framesPerSecond;
 
       timespec now;
