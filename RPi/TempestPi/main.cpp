@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <pthread.h>
 
+#include "TempestCPU/TempestException.h"
 #include "TempestCPU/TempestRunner.h"
 #include "TempestIO/TempestIOStreamProxy.h"
 
@@ -11,8 +12,22 @@
 #include "TempestPiIO.h"
 
 
+static void Run(void);
 
 int main()
+{
+   try
+   {
+      Run();
+   }
+   catch (TempestException &te)
+   {
+      printf("%s\n", te.what());
+      getchar();
+   }
+}
+
+static void Run(void)
 {
     // create our peripherals
     TempestPiEnvironment environment;

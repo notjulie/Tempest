@@ -4,6 +4,8 @@
 #include <fcntl.h>
 #include <termios.h>
 
+#include "TempestCPU/TempestException.h"
+
 #include "PiSerialStream.h"
 
 
@@ -13,7 +15,7 @@ PiSerialStream::PiSerialStream(void)
 
    fileStream = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);
    if (fileStream == -1)
-      return;
+      throw TempestException("Failure connecting to Disco");
 }
 
 PiSerialStream::~PiSerialStream(void)
@@ -37,6 +39,7 @@ int PiSerialStream::Read(void)
 
 void PiSerialStream::Write(uint8_t b)
 {
-   if (fileStream != -1)
-      write(fileStream, &b, 1);
+   ssize_t bytesWritten = write(fileStream, &b, 1);
+   if (bytesWritten != 1)
+      throw TempestException("Serial write error");
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="PiScreen.cpp" open="1" top="0" tabpos="4">
 		<Cursor position="6128" topLine="150" />
 	</File>
 	<File name="PiSerialStream.cpp" open="1" top="1" tabpos="5">
-		<Cursor position="564" topLine="20" />
+		<Cursor position="798" topLine="22" />
 	</File>
 	<File name="PiSerialStream.h" open="1" top="0" tabpos="1">
 		<Cursor position="237" topLine="0" />
@@ -14,7 +14,7 @@
 		<Cursor position="48" topLine="0" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="775" topLine="24" />
+		<Cursor position="99" topLine="3" />
 	</File>
 	<File name="../../TempestCPU/6502/CPU6502.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="7618" topLine="190" />
@@ -33,6 +33,9 @@
 	</File>
 	<File name="../../TempestCPU/TempestRunner.cpp" open="1" top="0" tabpos="3">
 		<Cursor position="156" topLine="0" />
+	</File>
+	<File name="../../TempestIO/TempestIOStreamProxy.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="2455" topLine="85" />
 	</File>
 	<File name="../../TempestIO/Vector/VectorDataInterpreter.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="106" topLine="0" />
