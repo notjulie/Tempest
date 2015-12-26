@@ -19,6 +19,7 @@ public:
          );
       if (result != 0)
          throw "";
+      pthread_setname_np(thread, "RPiThread");
    }
 
    virtual ~RPiThread(void) {
