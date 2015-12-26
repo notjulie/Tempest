@@ -24,6 +24,7 @@
 					<Add library="libbcm_host" />
 					<Add library="libEGL" />
 					<Add library="libGLESv2" />
+					<Add library="librt" />
 				</Linker>
 			</Target>
 			<Target title="Release">
