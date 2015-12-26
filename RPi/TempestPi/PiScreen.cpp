@@ -201,10 +201,16 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
 
    // calculate our screen coordinates
-   float x1 = (float)(vector.startX + 32768) * state.screen_height / 65536;
-   float y1 = (float)(vector.startY + 32768) * state.screen_height / 65536;
-   float x2 = (float)(vector.endX + 32768) * state.screen_height / 65536;
-   float y2 = (float)(vector.endY + 32768) * state.screen_height / 65536;
+   float x1 = (float)state.screen_width - (float)(32768 - vector.startY) * state.screen_height / 65536;
+   float y1 = (float)(32768 - vector.startX) * state.screen_height / 65536;
+   float x2 = (float)state.screen_width - (float)(32768 - vector.endY) * state.screen_height / 65536;
+   float y2 = (float)(32768 - vector.endX) * state.screen_height / 65536;
+
+   // center vertically... note that the display is rotated so that X is the vertical
+   // axis
+   float verticalOffset = 200;
+   x1 -= verticalOffset;
+   x2 -= verticalOffset;
 
    // if this is just a dot draw our dot path
    if (vector.startX==vector.endX && vector.startY==vector.endY)

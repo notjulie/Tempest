@@ -58,6 +58,7 @@
 			<Add directory="../../../RPiLib/opt/vc/lib" />
 		</Linker>
 		<Unit filename="PiScreen.cpp" />
+		<Unit filename="PiSerialStream.cpp" />
 		<Unit filename="PiSerialStream.h" />
 		<Unit filename="TempestPiEnvironment.cpp" />
 		<Unit filename="TempestPiIO.cpp" />

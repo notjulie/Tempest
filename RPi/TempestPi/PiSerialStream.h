@@ -7,8 +7,14 @@
 class PiSerialStream : public AbstractTempestStream
 {
 public:
-   virtual int  Read(void) { return -1; }
-   virtual void Write(uint8_t b) {}
+   PiSerialStream(void);
+   virtual ~PiSerialStream(void);
+
+   virtual int  Read(void);
+   virtual void Write(uint8_t b);
+
+private:
+   int fileStream;
 };
 
 #endif
