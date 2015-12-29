@@ -156,7 +156,6 @@
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="TDNComPortStream.h" />
     <ClInclude Include="TDNIOStreamProxy.h" />
-    <ClInclude Include="TDNMirroringStream.h" />
     <ClInclude Include="TDNTempestIOStreamListener.h" />
     <ClInclude Include="Tempest.h" />
     <ClInclude Include="TDNWin32TempestIO.h" />
@@ -176,7 +175,6 @@
     </ClCompile>
     <ClCompile Include="TDNComPortStream.cpp" />
     <ClCompile Include="TDNIOStreamProxy.cpp" />
-    <ClCompile Include="TDNMirroringStream.cpp" />
     <ClCompile Include="TDNTempestIOStreamListener.cpp" />
     <ClCompile Include="Tempest.cpp" />
     <ClCompile Include="TDNWin32TempestIO.cpp" />

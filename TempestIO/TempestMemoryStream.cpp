@@ -21,6 +21,17 @@ void SimpleMemoryStream::Write(uint8_t b)
 	bufferIn = newBufferIn;
 }
 
+int SimpleMemoryStream::Peek(void)
+{
+   // never mind if there's nothing
+   if (bufferIn == bufferOut)
+      return -1;
+
+   // else just return the next
+   return buffer[bufferOut];
+}
+
+
 int SimpleMemoryStream::Read(void)
 {
    // never mind if there's nothing

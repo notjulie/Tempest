@@ -17,11 +17,37 @@ TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *stream, 
    // clear
    state = IDLE;
    encoder = 0;
+   buttons = 0;
 }
 
 void TempestIOStreamListener::Service(void)
 {
-   // process any new data on the stream
+   // send a message with control panel information if anything
+	// has changed
+	uint8_t newButtons = tempestIO->GetButtons();
+	uint8_t newEncoder = tempestIO->GetEncoder();
+	if (newButtons!=buttons || newEncoder!=encoder)
+   {
+      TempestInPacket packet;
+      packet.flags1 = newButtons;
+      buttons = newButtons;
+
+      int8_t encoderChange = (int8_t)(newEncoder - encoder);
+      if (encoderChange > 0)
+      {
+         packet.flags1 |= ENCODER_UP;
+         ++encoder;
+      }
+      else if (encoderChange < 0)
+      {
+         packet.flags1 |= ENCODER_DOWN;
+         --encoder;
+      }
+
+      stream->Write(packet.flags1);
+   }
+
+	// process any new data on the stream
    for (;;)
    {
       // get a byte from the stream
@@ -38,27 +64,6 @@ void TempestIOStreamListener::Service(void)
          case OP_6KHZ_TICK:
             // tick
             tempestIO->Tick6KHz();
-
-            // this is our cue for a response packet
-            {
-               TempestInPacket packet;
-               packet.flags1 = tempestIO->GetButtons();
-
-               uint8_t newEncoder = tempestIO->GetEncoder();
-               int8_t encoderChanged = (int8_t)(newEncoder - encoder);
-               if (encoderChanged > 0)
-               {
-                  packet.flags1 |= ENCODER_UP;
-                  ++encoder;
-               }
-               else if (encoderChanged < 0)
-               {
-                  packet.flags1 |= ENCODER_DOWN;
-                  --encoder;
-               }
-
-               stream->Write(packet.flags1);
-            }
             break;
 
          case OP_BUTTON_LEDS:

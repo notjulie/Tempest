@@ -11,6 +11,7 @@ public:
    Win32ComPortStream(const char *portName);
    virtual ~Win32ComPortStream(void);
 
+   virtual int  Peek(void);
    virtual int  Read(void);
    virtual void Write(uint8_t b);
 

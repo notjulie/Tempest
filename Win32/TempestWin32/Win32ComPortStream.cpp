@@ -106,6 +106,20 @@ void Win32ComPortStream::Write(uint8_t b)
    SetEvent(writeBufferEvent);
 }
 
+int Win32ComPortStream::Peek(void)
+{
+   // bail if our read thread hit an error
+   if (readThreadError.size() > 0)
+      throw TempestException(readThreadError);
+
+   // never mind if there's nothing
+   if (readBufferIn == readBufferOut)
+      return -1;
+
+   // else just return the next
+   return readBuffer[readBufferOut];
+}
+
 int Win32ComPortStream::Read(void)
 {
    // bail if our read thread hit an error

@@ -11,6 +11,7 @@ class SimpleMemoryStream
 public:
    SimpleMemoryStream(void);
 
+   int  Peek(void);
    int  Read(void);
    void Write(uint8_t b);
 
@@ -33,6 +34,7 @@ public:
       this->writeStream = writeStream;
    }
 
+   virtual int  Peek(void) { return readStream->Peek(); }
    virtual int  Read(void) { return readStream->Read(); }
    virtual void Write(uint8_t b) { writeStream->Write(b); }
 

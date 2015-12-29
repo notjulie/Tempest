@@ -7,6 +7,7 @@
 
 #include "Audio/AudioDriver.h"
 #include "Audio/TempestDiscoAudioIO.h"
+#include "TempestIO/AbstractTempestStream.h"
 #include "TempestIO/TempestIOStreamListener.h"
 
 #include "LED.h"
@@ -19,6 +20,12 @@
 #include "WatchDog.h"
 
 #include "TempestDiscoAudio.h"
+
+
+static AppState appState;
+
+static void ServiceConnected(void);
+static void ServiceUnconnected(void);
 
 TempestIOStreamListener USBListener(&USBStream, &IO);
 
@@ -76,12 +83,17 @@ extern "C" {
 
 		// main loop
 		for(;;) {
-			// this takes data that has been received from the USB port
-			// and interprets it, passing it to the audio or video subsystems
-	    	USBListener.Service();
+			// process according to state
+			switch (appState)
+			{
+			case UNCONNECTED:
+				ServiceUnconnected();
+				break;
 
-	    	// service the USB transmitter
-	    	VCP.Service();
+			case CONNECTED:
+				ServiceConnected();
+				break;
+			}
 
 	    	// let the wave streamer have its time slice
 	    	DWS.Service();
@@ -96,7 +108,7 @@ extern "C" {
 	    	ResetIndependentWatchdogCounter();
 		}
 
-	    return 0;
+	   return 0;
 	}
 
 	void EXTI0_IRQHandler(void)
@@ -115,3 +127,24 @@ extern "C" {
 };
 
 
+static void ServiceConnected(void)
+{
+	// this takes data that has been received from the USB port
+	// and interprets it, passing it to the audio or video subsystems
+ 	USBListener.Service();
+
+ 	// service the USB transmitter
+ 	VCP.Service();
+}
+
+static void ServiceUnconnected(void)
+{
+	// see if we have a connection
+	if (USBStream.Peek() >= 0)
+		appState = CONNECTED;
+}
+
+AppState GetAppState(void)
+{
+	return appState;
+}
