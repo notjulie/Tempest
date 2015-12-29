@@ -21,7 +21,7 @@ PiSerialStream::PiSerialStream(void)
    writeThreadFailed = false;
 
    // open the serial device
-   fileStream = open("/dev/ttyACM0", O_RDWR | O_NOCTTY);
+   fileStream = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);
    if (fileStream == -1)
       throw TempestException("Failure connecting to Disco");
 

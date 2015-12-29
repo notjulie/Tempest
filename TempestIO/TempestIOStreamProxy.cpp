@@ -68,6 +68,7 @@ void TempestIOStreamProxy::Tick6KHz(void)
 #if 0
 	// send just the opcode with no data
 	stream->Write(OP_6KHZ_TICK << 5);
+#endif
 
    // and check the return stream
    for (;;)
@@ -85,7 +86,6 @@ void TempestIOStreamProxy::Tick6KHz(void)
       if (packet.flags1 & ENCODER_UP)
          ++encoder;
    }
-#endif
 }
 
 
