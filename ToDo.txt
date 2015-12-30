@@ -1,9 +1,11 @@
 
-Uncomment sound support
-
 Fix Blue W screen lockup
 	- report the error onscreen
 	- implement support for flythrough mode as command line parameter
+
+Add Tempest to RPi boot
+
+Start backing up RPi images
 
 Fix errors in clipping lines
 
