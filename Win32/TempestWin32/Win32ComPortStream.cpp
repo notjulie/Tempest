@@ -46,7 +46,7 @@ Win32ComPortStream::Win32ComPortStream(const char *portName)
    //   - if no bytes arrive before ReadTotalTimeoutConstant it times out
    commTimeouts.ReadIntervalTimeout = MAXDWORD;
    commTimeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
-   commTimeouts.ReadTotalTimeoutConstant = MAXDWORD;
+   commTimeouts.ReadTotalTimeoutConstant = 100;
    SetCommTimeouts(file, &commTimeouts);
 
    // create our events

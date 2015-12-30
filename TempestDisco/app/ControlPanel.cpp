@@ -5,8 +5,21 @@
 
 #include "ControlPanel.h"
 
+struct ButtonState {
+	ButtonState(void) { on = false; }
+	bool  on;
+	uint32_t onTime;
+};
+
 static uint32_t encoder = 0;
 static uint8_t encoderBits = 0;
+static ButtonState fireButton;
+static ButtonState zapButton;
+static ButtonState onePlayerButton;
+static ButtonState twoPlayerButton;
+
+static void ServiceEncoder(void);
+static void ServiceButton(ButtonState *button, bool state);
 
 void InitializeControlPanel(void)
 {
@@ -68,6 +81,15 @@ void InitializeControlPanel(void)
 
 
 void ServiceControlPanel(void)
+{
+	ServiceEncoder();
+	ServiceButton(&onePlayerButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) == Bit_RESET);
+	ServiceButton(&twoPlayerButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == Bit_RESET);
+	ServiceButton(&fireButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1) == Bit_RESET);
+	ServiceButton(&zapButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2) == Bit_RESET);
+}
+
+void ServiceEncoder(void)
 {
 	// get a snapshot of the ADCs so we're not dealing with a moving target
 	uint16_t adc1 = ADC1->DR;
@@ -132,21 +154,48 @@ void ServiceControlPanel(void)
 	}
 }
 
+static void ServiceButton(ButtonState *button, bool state)
+{
+	// our purpose is to debounce the button state by holding it high
+	// for a certain interval after it goes low
+	const int BUTTON_HOLD_MS = 10;
+
+	// nab the system time
+	uint32_t now = GetMillisecondCount();
+
+	// if the new state is on, then we update the button's on time
+	if (state)
+	{
+		button->on = true;
+		button->onTime = now;
+		return;
+	}
+
+	// the new state is off... if we're already off that's fine
+	if (!button->on)
+		return;
+
+	// we can only turn it off if the hold time has elapsed
+	uint32_t elapsed = now - button->onTime;
+	if (elapsed >= BUTTON_HOLD_MS)
+		button->on = false;
+}
+
 bool GetButton(ButtonFlag button)
 {
 	switch (button)
 	{
 	case ONE_PLAYER_BUTTON:
-		return GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) == Bit_RESET;
+		return onePlayerButton.on;
 
 	case TWO_PLAYER_BUTTON:
-		return GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == Bit_RESET;
+		return twoPlayerButton.on;
 
 	case FIRE_BUTTON:
-		return GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1) == Bit_RESET;
+		return fireButton.on;
 
 	case ZAPPER_BUTTON:
-		return GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2) == Bit_RESET;
+		return zapButton.on;
 
 	default:
 		return false;
