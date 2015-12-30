@@ -13,17 +13,32 @@ PiSerialStream::PiSerialStream(void)
 {
    // clear
    fileStream = -1;
+   terminated = false;
+
    writeBufferIn = 0;
    writeBufferOut = 0;
    writeBufferMutex = PTHREAD_MUTEX_INITIALIZER;
    writeBufferEvent = PTHREAD_COND_INITIALIZER;
-   terminated = false;
    writeThreadFailed = false;
 
+   readBufferIn = 0;
+   readBufferOut = 0;
+   readThreadFailed = false;
+
    // open the serial device
-   fileStream = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);
+   fileStream = open("/dev/ttyACM0", O_RDWR | O_NOCTTY);
    if (fileStream == -1)
       throw TempestException("Failure connecting to Disco");
+
+   // set options
+   termios options;
+   tcgetattr(fileStream, &options);
+   options.c_cflag = B9600 | CS8 | CLOCAL | CREAD;
+   options.c_iflag = IGNPAR;
+   options.c_oflag = 0;
+   options.c_lflag = 0;
+   tcflush(fileStream, TCIFLUSH);
+   tcsetattr(fileStream, TCSANOW, &options);
 
    // start our write thread
    int result = pthread_create(
@@ -35,6 +50,17 @@ PiSerialStream::PiSerialStream(void)
    if (result != 0)
       throw TempestException("Error creating serial write thread");
    pthread_setname_np(writeThread, "SerialWrite");
+
+   // start our read thread
+   result = pthread_create(
+      &readThread,
+      NULL,
+      &ReadThreadEntry,
+      this
+      );
+   if (result != 0)
+      throw TempestException("Error creating serial read thread");
+   pthread_setname_np(readThread, "SerialRead");
 }
 
 PiSerialStream::~PiSerialStream(void)
@@ -44,6 +70,7 @@ PiSerialStream::~PiSerialStream(void)
 
    // wait for threads to exit
    pthread_join(writeThread, NULL);
+   pthread_join(readThread, NULL);
 
    // close
    pthread_cond_destroy(&writeBufferEvent);
@@ -51,17 +78,32 @@ PiSerialStream::~PiSerialStream(void)
       close(fileStream), fileStream = -1;
 }
 
-int PiSerialStream::Read(void)
+int PiSerialStream::Peek(void)
 {
-   if (fileStream == -1)
+   // never mind if there's nothing
+   if (readBufferIn == readBufferOut)
       return -1;
 
-   uint8_t b;
-   int bytesRead = read(fileStream, &b, 1);
-   if (bytesRead == 1)
-      return b;
-   else
+   // else just return the next
+   int newBufferOut = readBufferOut + 1;
+   if (newBufferOut >= sizeof(readBuffer))
+      newBufferOut = 0;
+   return readBuffer[readBufferOut];
+}
+
+int PiSerialStream::Read(void)
+{
+   // never mind if there's nothing
+   if (readBufferIn == readBufferOut)
       return -1;
+
+   // else just return the next
+   int newBufferOut = readBufferOut + 1;
+   if (newBufferOut >= sizeof(readBuffer))
+      newBufferOut = 0;
+   int result = readBuffer[readBufferOut];
+   readBufferOut = newBufferOut;
+   return result;
 }
 
 void PiSerialStream::Write(uint8_t b)
@@ -91,7 +133,6 @@ void *PiSerialStream::WriteThreadEntry(void *pThis)
    try
    {
       stream->WriteThread();
-      return NULL;
    }
    catch (TempestException &te)
    {
@@ -103,6 +144,8 @@ void *PiSerialStream::WriteThreadEntry(void *pThis)
       stream->writeThreadFailed = true;
       stream->writeThreadError = "Unknown exception";
    }
+
+   return NULL;
 }
 
 void PiSerialStream::WriteThread(void)
@@ -149,5 +192,51 @@ void PiSerialStream::WriteThread(void)
          pthread_cond_signal(&writeBufferEvent);
          pthread_mutex_unlock(&writeBufferMutex);
       }
+   }
+}
+
+
+void *PiSerialStream::ReadThreadEntry(void *pThis)
+{
+   PiSerialStream *stream = (PiSerialStream*)pThis;
+
+   try
+   {
+      stream->ReadThread();
+   }
+   catch (TempestException &te)
+   {
+      stream->readThreadFailed = true;
+      stream->readThreadError = te.what();
+   }
+   catch (...)
+   {
+      stream->readThreadFailed = true;
+      stream->readThreadError = "Unknown exception";
+   }
+
+   return NULL;
+}
+
+void PiSerialStream::ReadThread(void)
+{
+   while (!terminated)
+   {
+      // read a byte
+      uint8_t b;
+      int bytesRead = read(fileStream, &b, 1);
+      if (bytesRead != 1)
+         break;
+
+      // figure out what our index will be after appending the byte
+      int newBufferIn = readBufferIn + 1;
+      if (newBufferIn >= sizeof(readBuffer))
+         newBufferIn = 0;
+      if (newBufferIn == readBufferOut)
+         throw TempestException("Serial read buffer full");
+
+      // append
+      readBuffer[readBufferIn] = b;
+      readBufferIn = newBufferIn;
    }
 }
