@@ -179,6 +179,10 @@ namespace TempestWpf
          // create our tempest, connected to the IO object
          tempest = new Tempest(tempestSoundIO, tempestVectorIO);
 
+         // see if we're in Demo mode
+         if (Environment.CommandLine.ToLower().IndexOf(" demo ") >= 0)
+            tempest.SetDemoMode();
+
          // set it to running
          startTime = DateTime.Now;
          tempest.Start();

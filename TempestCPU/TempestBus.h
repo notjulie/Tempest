@@ -28,6 +28,7 @@ public:
 	TempestBus(AbstractTempestEnvironment *_environment);
 	virtual ~TempestBus(void);
 
+   void SetDemoMode(void) { demoMode = true; }
    void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO);
 
 	void Toggle3KHzClock(void);
@@ -57,6 +58,7 @@ private:
    AbstractTempestSoundIO *tempestSoundIO;
    AbstractTempestVectorIO *tempestVectorIO;
 
+   bool demoMode;
 	bool selfTest;
 	bool slam;
 	bool clock3KHzIsHigh;

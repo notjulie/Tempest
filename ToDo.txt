@@ -3,9 +3,11 @@ Fix Blue W screen lockup
 	- report the error onscreen
 	- implement support for flythrough mode as command line parameter
 
-Add Tempest to RPi boot
+Fix 6502 zero page indexed OPs
 
 Start backing up RPi images
+
+Add Tempest to RPi boot
 
 Fix errors in clipping lines
 

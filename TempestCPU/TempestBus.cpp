@@ -110,7 +110,10 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 
       case 0x0D00:
          // DIP switch N13
-			// low two bits==2 --> free play
+         if (demoMode)
+            return 0x42;
+
+			// our default is low two bits==2 --> free play
          return 0x02;
 
       case 0x0E00:
