@@ -32,43 +32,35 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
 
 void TempestIOStreamProxy::SetSoundChannelFrequency(int channel, int frequency)
 {
-#if 0
    // pack the op and the channel into the first byte
    stream->Write((OP_SOUND_FREQUENCY << 5) | channel);
 
    // waveform in the second byte
    stream->Write(frequency);
-#endif
 }
 
 void TempestIOStreamProxy::SetSoundChannelVolume(int channel, int volume)
 {
-#if 0
    // pack the op and the channel into the first byte
    stream->Write((OP_SOUND_VOLUME << 5) | channel);
 
    // waveform in the second byte
    stream->Write(volume);
-#endif
 }
 
 void TempestIOStreamProxy::SetSoundChannelWaveform(int channel, int waveform)
 {
-#if 0
    // pack the op and the channel into the first byte
    stream->Write((OP_SOUND_WAVE << 5) | channel);
 
    // waveform in the second byte
    stream->Write(waveform);
-#endif
 }
 
 void TempestIOStreamProxy::Tick6KHz(void)
 {
-#if 0
 	// send just the opcode with no data
 	stream->Write(OP_6KHZ_TICK << 5);
-#endif
 
    // and check the return stream
    for (;;)
