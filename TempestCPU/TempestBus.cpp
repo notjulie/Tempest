@@ -164,7 +164,8 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // color RAM
    if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
    {
-		colorRAM[(unsigned)(address - COLOR_RAM_BASE)] = value;
+      tempestVectorIO->WriteColorRAM((uint16_t)(address - COLOR_RAM_BASE), value);
+      colorRAM[(unsigned)(address - COLOR_RAM_BASE)] = value;
       return;
    }
 
