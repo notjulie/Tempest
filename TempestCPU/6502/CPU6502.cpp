@@ -78,8 +78,9 @@ int CPU6502::SingleStep(void)
 		case 0x0D: ORA(GetAbsoluteAddress()); return 4;
 		case 0x10: BPL(); return 2;
       case 0x18: P.C = false; return 2; //CLC
-		case 0x1D: ORA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
-		case 0x1E: ASL((uint16_t)(GetAbsoluteAddress() + X)); return 7;
+      case 0x19: ORA((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
+      case 0x1D: ORA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+      case 0x1E: ASL((uint16_t)(GetAbsoluteAddress() + X)); return 7;
 		case 0x20: JSR(GetAbsoluteAddress()); return 6;
 		case 0x24: BIT(bus->ReadByte(PC++)); return 3;
 		case 0x25: AND(bus->ReadByte(PC++)); return 2;

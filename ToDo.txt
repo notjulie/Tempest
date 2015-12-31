@@ -1,6 +1,4 @@
 
-Fix unimplemented op code on red circle
-
 Fix colors on RPi blue screen
 
 Fix color issue where all screens are blue screens
