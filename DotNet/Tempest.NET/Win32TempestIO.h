@@ -19,6 +19,7 @@ public:
    void GetVectorList(std::vector<SimpleVector> &_vectorList);
 
    virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
+   virtual void WriteColorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteColorRAM(address, value); }
    virtual bool IsVectorHalt(void) { return vectorInterpreter.IsHalt(); }
    virtual void VectorGo(void) { vectorInterpreter.Go(); }
    virtual void VectorReset(void) { vectorInterpreter.Reset(); }

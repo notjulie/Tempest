@@ -25,5 +25,11 @@ uint8_t VectorData::GetAt(uint16_t address)
 
 void VectorData::WriteVectorRAM(uint16_t address, uint8_t value)
 {
-	vectorRAM[address] = value;
+   vectorRAM[address] = value;
+}
+
+void VectorData::WriteColorRAM(uint16_t address, uint8_t value)
+{
+   // color RAM is only 4 bits
+   colorRAM[address] = value & 0x0F;
 }

@@ -15,7 +15,8 @@ public:
 
 	void Interpret(void);
 	void WriteVectorRAM(uint16_t address, uint8_t value) { vectorData.WriteVectorRAM(address, value); }
-	bool IsHalt(void) { return isHalt; }
+   void WriteColorRAM(uint16_t address, uint8_t value) { vectorData.WriteColorRAM(address, value); }
+   bool IsHalt(void) { return isHalt; }
 	void Go(void) { goRequested = true; }
 	void Reset(void);
 
