@@ -2,12 +2,18 @@
 #include "stdafx.h"
 #include "Noise.h"
 
+// lookup table for 4-bit noise polynomial
+const bool noise4[] = {
+   false, true, false, false, true, true, false, true,
+   true, true, false, false, false, true, true, false
+};
+
 // lookup table for 5-bit noise polynomial
 const bool noise5[] = {
    false, true, false, false, true, true, false, true,
-    true, true, false, false, false, true, true, false,
-    true, true, true, true, false, false, false, true,
-    true, false, true, false, false, false, true, false
+   true, true, false, false, false, true, true, false,
+   true, true, true, true, false, false, false, true,
+   true, false, true, false, false, false, true, false
 };
 
 // lookup table for 17-bit noise polynomial

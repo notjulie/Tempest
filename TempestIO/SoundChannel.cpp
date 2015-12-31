@@ -44,8 +44,10 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 	{
 	case 0x0:
 	case 0x2:
+   case 0x4:
 	case 0x6:
 	case 0x8:
+   case 0xC:
 		// noise
 		for (int i = 0; i < count; ++i)
 		{
@@ -128,6 +130,19 @@ void SoundChannel::UpdateWaveform(void)
 		noiseWaveform = noise5;
 		break;
 
+   case 0x4:
+   case 0xC:
+      // these may be the same or not... the doc is strange... anyway,
+      // it's a 4-bit noise polynomial
+      actualFrequency = 64000.0F / (1 + frequency);
+      pulseWidth = 44100.0F / actualFrequency;
+      noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
+      if (outputCounter > pulseWidth)
+         outputCounter = 0;
+      noiseWaveformLength = 16;
+      noiseWaveform = noise4;
+      break;
+
 	case 0x8:
 		// 17-bit noise polynomial
 		actualFrequency = 64000.0F / (1 + frequency);
@@ -148,7 +163,8 @@ void SoundChannel::UpdateWaveform(void)
 		break;
 
 	default:
-		break;
+      outputCounter = 0;
+      break;
 	}
 }
 
