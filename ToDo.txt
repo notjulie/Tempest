@@ -1,9 +1,9 @@
 
-Fix Blue W screen lockup
-	- report the error onscreen
-	- implement support for flythrough mode as command line parameter
-
 Fix 6502 zero page indexed OPs
+
+Fix colors on RPi blue screen
+
+Fix color issue where all screens are blue screens
 
 Start backing up RPi images
 
@@ -13,3 +13,4 @@ Fix errors in clipping lines
 
 Fix screen width so that bowling alley (etc.) is not clipped
 
+Logging/reporting of errors on TempestPi screen

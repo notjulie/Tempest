@@ -30,8 +30,9 @@ protected:
    AbstractTempestSoundIO *GetIO(void) { return tempestIO; }
 
 private:
-	uint8_t ALLPOT;
-	int baseSoundChannel;
+   uint8_t ALLPOT;
+   uint8_t SKCTLS;
+   int baseSoundChannel;
 	AbstractTempestSoundIO *tempestIO;
 };
 

@@ -5239,12 +5239,14 @@ B7CF 20:FD BC   JSR:abs    $BCFD
 B7D2 C6:37      DEC:zp     Zp RAM 0037
 B7D4 10:CC      BPL:rel    Branch->$B7A2
 B7D6 AD:20 07   LDA:abs    $0720
-B7D9 F0:09      BEQ:rel    Branch->$B7E4
-B7DB A5:9F      LDA:zp     Zp RAM 009F 	 ; Are we ??? [near] level
-B7DD C9:0D      CMP:imm    #0D		 ; 14?
+B7D9 F0:09      BEQ:rel    Branch->$B7E4	; branch always taken; $0720 is always zero
+B7DB A5:9F      LDA:zp     Zp RAM 009F 	 ; unreachable
+B7DD C9:0D      CMP:imm    #0D
 B7DF 90:03      BCC:rel    Branch->$B7E4
 B7E1 8D:FF 01   STA:abs    $01FF
 B7E4 60:        RTS:imp    Ret from Sub
+;
+;
 B7E5 00:        BRK:imp    BREAK
 B7E6 00:        BRK:imp    BREAK
 B7E7 5A:        Illegal Opcode
@@ -8426,17 +8428,23 @@ CD95 A9:00      LDA:imm    #00
 CD97 8D:CF 60   STA:abs    $60CF	 ; Zero out Pokey #1 control reg
 CD9A 8D:DF 60   STA:abs    $60DF	 ; Zero out Pokey #2 control reg
 CD9D 8D:20 07   STA:abs    $0720
+;
+; Make sure random numbers aren't changing... the Pokeys are in initializing
+; state so they should always be reporting 0xFF; this is probably
+; just a self test
 CDA0 A2:04      LDX:imm    #04
-CDA2 AD:CA 60   LDA:abs    $60CA	 ; Randomize the accumulator.
-CDA5 AC:DA 60   LDY:abs    $60DA	 ; Randomize the Y register.
-CDA8 CD:CA 60   CMP:abs    $60CA	 ; Compare ACC w/random number.
-CDAB D0:03      BNE:rel    Branch->$CDB0 ; 254/255 chance of branching.
-CDAD CC:DA 60   CPY:abs    $60DA	 ; Compare w/random number.
-CDB0 F0:05      BEQ:rel    Branch->$CDB7 ; 1/255 chance of branching.
-CDB2 8D:20 07   STA:abs    $0720
+CDA2 AD:CA 60   LDA:abs    $60CA	 ; A <= Pokey 1's random value
+CDA5 AC:DA 60   LDY:abs    $60DA	 ; Y <= Pokey 2's random value
+CDA8 CD:CA 60   CMP:abs    $60CA	 ; test that Pokey 1's value is not changing
+CDAB D0:03      BNE:rel    Branch->$CDB0
+CDAD CC:DA 60   CPY:abs    $60DA	 ; test that Pokey 2's value is not changing
+CDB0 F0:05      BEQ:rel    Branch->$CDB7 ; branch should always be taken
+CDB2 8D:20 07   STA:abs    $0720	 
 CDB5 A2:00      LDX:imm    #00           
 CDB7 CA:        DEX:imp    X=X-1
 CDB8 10:EE      BPL:rel    Branch->$CDA8
+;
+;
 CDBA A9:07      LDA:imm    #07           ; Enable sound *and* fast
 					 ; potentiumeter scanning on
 					 ; the Pokey.

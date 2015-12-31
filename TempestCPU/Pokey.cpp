@@ -16,6 +16,7 @@ Pokey::Pokey(int _baseSoundChannel)
 
 	// clear
 	ALLPOT = 0;
+   SKCTLS = 0;
 	tempestIO = NULL;
 }
 
@@ -32,8 +33,13 @@ uint8_t Pokey::ReadByte(uint16_t address)
 		return ALLPOT;
 
 	case 0x0A:
-		// random number
-		return (uint8_t)rand();
+      // if the control register has us on the initialize state we return
+      // all ones
+      if ((SKCTLS & 3) == 0)
+         return 0xFF;
+
+      // else we oblige with a random number
+      return (uint8_t)rand();
 
 	default:
 		{
@@ -106,7 +112,7 @@ void Pokey::WriteByte(uint16_t address, uint8_t value)
 		break;
 
 	case 0xF:
-		// serial port control... not supported
+      SKCTLS = value;
 		break;
 
 	default:
