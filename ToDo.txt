@@ -1,5 +1,5 @@
 
-Fix 6502 zero page indexed OPs
+Fix unimplemented op code on red circle
 
 Fix colors on RPi blue screen
 

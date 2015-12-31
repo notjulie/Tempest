@@ -103,7 +103,7 @@ int CPU6502::SingleStep(void)
 		case 0x4E: LSR(GetAbsoluteAddress()); return 6;
 		case 0x50: BVC(); return 2;
       case 0x51: EOR(GetIndirectYAddress()); return 6;
-		case 0x55: EOR((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0x55: EOR((uint8_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0x58: P.I = false; return 2; // CLI
       case 0x59: EOR((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
 		case 0x5D: EOR((uint16_t)(GetAbsoluteAddress() + X)); return 4;
@@ -117,7 +117,7 @@ int CPU6502::SingleStep(void)
 		case 0x6E: ROR(GetAbsoluteAddress()); return 6;
 		case 0x70: BVS(); return 2;
 		case 0x71: ADC(GetIndirectYAddress()); return 5;
-		case 0x75: ADC((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0x75: ADC((uint8_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0x78: P.I = true; return 2; //SEI
 		case 0x79: ADC((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0x7D: ADC((uint16_t)(GetAbsoluteAddress() + X)); return 4;
@@ -131,9 +131,9 @@ int CPU6502::SingleStep(void)
       case 0x8E: STX(GetAbsoluteAddress()); return 4;
       case 0x90: BCC(); return 2;
       case 0x91: STA(GetIndirectYAddress()); return 6;
-		case 0x94: STY((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
-		case 0x95: STA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
-      case 0x96: STX((uint16_t)(bus->ReadByte(PC++) + Y)); return 4;
+		case 0x94: STY((uint8_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0x95: STA((uint8_t)(bus->ReadByte(PC++) + X)); return 4;
+      case 0x96: STX((uint8_t)(bus->ReadByte(PC++) + Y)); return 4;
       case 0x98: A = Y; SetNZ(A); return 2; //TYA
 		case 0x99: STA((uint16_t)(GetAbsoluteAddress() + Y)); return 5;
       case 0x9A: S = X; SetNZ(S); return 2; //TXS
@@ -151,8 +151,8 @@ int CPU6502::SingleStep(void)
       case 0xAE: LDX(GetAbsoluteAddress()); return 4;
       case 0xB0: BCS(); return 2;
       case 0xB1: LDA(GetIndirectYAddress()); return 6;
-		case 0xB4: LDY((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
-		case 0xB5: LDA((uint16_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0xB4: LDY((uint8_t)(bus->ReadByte(PC++) + X)); return 4;
+		case 0xB5: LDA((uint8_t)(bus->ReadByte(PC++) + X)); return 4;
 		case 0xB8: P.SetOverflow(false); return 2; //CLV
 		case 0xB9: LDA((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
       case 0xBA: X = S; SetNZ(X); return 2; //TSX
@@ -171,7 +171,7 @@ int CPU6502::SingleStep(void)
 		case 0xCE: DEC(GetAbsoluteAddress()); return 6;
 		case 0xD0: BNE(); return 2;
       case 0xD1: CMP(GetIndirectYAddress()); return 6;
-		case 0xD6: DEC((uint16_t)(bus->ReadByte(PC++) + X)); return 6;
+		case 0xD6: DEC((uint8_t)(bus->ReadByte(PC++) + X)); return 6;
 		case 0xD8: P.D = false; return 2; //CLD
 		case 0xD9: CMP((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0xDD: CMP((uint16_t)(GetAbsoluteAddress() + X)); return 4;
@@ -188,8 +188,8 @@ int CPU6502::SingleStep(void)
 		case 0xEE: INC(GetAbsoluteAddress()); return 6;
 		case 0xF0: BEQ(); return 2;
 		case 0xF1: SBC(GetIndirectYAddress()); return 5;
-		case 0xF5: SBC((uint16_t)(bus->ReadByte(PC++) + X)); return 3;
-		case 0xF6: INC((uint16_t)(bus->ReadByte(PC++) + X)); return 6;
+		case 0xF5: SBC((uint8_t)(bus->ReadByte(PC++) + X)); return 3;
+		case 0xF6: INC((uint8_t)(bus->ReadByte(PC++) + X)); return 6;
 		case 0xF8: P.D = true; return 2; //SED
 		case 0xF9: SBC((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0xFD: SBC((uint16_t)(GetAbsoluteAddress() + X)); return 4;
