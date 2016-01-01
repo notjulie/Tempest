@@ -30,21 +30,43 @@ PiScreen::PiScreen(void)
 PiScreen::~PiScreen(void)
 {
    vgDestroyPath(dotPath);
+   DeleteStrokes();
 }
 
 void PiScreen::DeleteStrokes(void)
 {
-   for (int i=0; i<strokes.size(); ++i)
-      vgDestroyPaint(strokes[i]);
-   strokes.resize(0);
+   for (StrokeMap::iterator i=strokeMap.begin(); i!=strokeMap.end(); ++i)
+      vgDestroyPaint((*i).second);
+   strokeMap.clear();
 }
 
-void PiScreen::createStroke(const float color[4])
+VGPaint PiScreen::GetStroke(const TempestColor &color)
 {
+   // make a key based on the color
+   uint32_t key =
+      (color.GetR() << 16) +
+      (color.GetG() << 8) +
+      (color.GetB());
+
+   // if we already have a stroke for that color, return it
+   StrokeMap::iterator existingStroke = strokeMap.find(key);
+   if (existingStroke != strokeMap.end())
+      return (*existingStroke).second;
+
+   // create a new stroke
+   float rgba[] = {
+      color.GetR() / 255.0F,
+      color.GetG() / 255.0F,
+      color.GetB() / 255.0F,
+      1.0F
+   };
    VGPaint stroke = vgCreatePaint();
    vgSetParameteri(stroke, VG_PAINT_TYPE, VG_PAINT_TYPE_COLOR);
-   vgSetParameterfv(stroke, VG_PAINT_COLOR, 4, color);
-   strokes.push_back(stroke);
+   vgSetParameterfv(stroke, VG_PAINT_COLOR, 4, rgba);
+
+   // add it to the map and return it
+   strokeMap[key] = stroke;
+   return stroke;
 }
 
 
@@ -169,23 +191,12 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
    for (unsigned i=0; i<vectors.size(); ++i)
       DisplayVector(vectors[i]);
    EndFrame();
-
-   DeleteStrokes();
 }
 
 void PiScreen::DisplayVector(const SimpleVector &vector)
 {
-   // create our color stroke
-   float color[] {
-      vector.color.GetR() / 255.0F,
-      vector.color.GetG() / 255.0F,
-      vector.color.GetB() / 255.0F,
-      1.0F
-      };
-   createStroke(color);
-
    vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
-   vgSetPaint(strokes[strokes.size() - 1], VG_STROKE_PATH);
+   vgSetPaint(GetStroke(vector.color), VG_STROKE_PATH);
    vgSetf(VG_STROKE_LINE_WIDTH, 1);
    vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
    vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);

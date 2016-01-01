@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1451615738 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
+1451629149 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
 	"stdafx.h"
 	<stdio.h>
+	<string.h>
 	<pthread.h>
 	"TempestCPU/TempestException.h"
 	"TempestCPU/TempestRunner.h"
@@ -176,7 +177,7 @@
 	"stdafx.h"
 	"SimpleVectorDataInterpreter.h"
 
-1451615601 /home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.h
+1451660029 /home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.h
 	"EGL/egl.h"
 	"TempestIO/Vector/SimpleVector.h"
 

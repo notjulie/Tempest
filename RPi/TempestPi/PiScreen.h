@@ -28,15 +28,18 @@ public:
 
 private:
    void DeleteStrokes(void);
+   VGPaint GetStroke(const TempestColor &color);
    void StartFrame(void);
    void EndFrame(void);
    void DisplayVector(const SimpleVector &vector);
    void init_ogl(void);
-   void createStroke(const float color[4]);
+
+private:
+   typedef std::map<uint32_t, VGPaint> StrokeMap;
 
 private:
    STATE_T state;
-   std::vector<VGPaint> strokes;
+   StrokeMap strokeMap;
    VGPath dotPath;
    std::vector<VGPath> linePaths;
 };
