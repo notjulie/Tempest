@@ -57,26 +57,7 @@ static void Run(bool demo)
     // go
     tempestRunner.Start();
 
-   // push to the screen
-   timespec startTime;
-   clock_gettime(CLOCK_REALTIME, &startTime);
-   int framesPerSecond = 0;
-   for (;;)
-   {
-      vectorIO.PushFrameToScreen();
-      ++framesPerSecond;
-
-      timespec now;
-      clock_gettime(CLOCK_REALTIME, &now);
-      if (now.tv_sec != startTime.tv_sec)
-      {
-         printf("%d\n", framesPerSecond);
-         framesPerSecond = 0;
-         startTime = now;
-      }
-   }
-
-    sleep(10);
-    uint64_t clockCycles = tempestRunner.GetTotalClockCycles();
-    printf("Total clock cycles: %d\n", (int)clockCycles);
+   // the IO object (i.e. the screen) takes over the main thread
+   // from here
+   vectorIO.Run();
 }

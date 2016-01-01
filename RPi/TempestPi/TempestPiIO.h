@@ -13,13 +13,16 @@ class TempestPiIO : public AbstractTempestVectorIO
 public:
    TempestPiIO() {}
 
-   void PushFrameToScreen(void);
+   void Run(void);
 
 	virtual void WriteColorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteColorRAM(address, value); }
 	virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
 	virtual bool IsVectorHalt(void) { return vectorInterpreter.IsHalt(); }
 	virtual void VectorGo(void) { vectorInterpreter.Go(); }
 	virtual void VectorReset(void) { vectorInterpreter.Reset(); }
+
+private:
+   void PushFrameToScreen(void);
 
 private:
 	SimpleVectorDataInterpreter	vectorInterpreter;
