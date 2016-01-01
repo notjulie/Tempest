@@ -23,6 +23,9 @@ int main(int argc, char **argv)
    for (int i=0; i<argc; ++i)
       if (strcmp(argv[i], "demo") == 0)
          isDemo = true;
+#ifdef DEBUG
+   isDemo = true;
+#endif
 
    try
    {
