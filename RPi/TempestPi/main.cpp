@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 #include <stdio.h>
+#include <string.h>
 #include <pthread.h>
 
 #include "TempestCPU/TempestException.h"
@@ -12,13 +13,20 @@
 #include "TempestPiIO.h"
 
 
-static void Run(void);
+static void Run(bool demo);
 
-int main()
+
+int main(int argc, char **argv)
 {
+   bool isDemo = false;
+
+   for (int i=0; i<argc; ++i)
+      if (strcmp(argv[i], "demo") == 0)
+         isDemo = true;
+
    try
    {
-      Run();
+      Run(isDemo);
    }
    catch (TempestException &te)
    {
@@ -32,7 +40,7 @@ int main()
    }
 }
 
-static void Run(void)
+static void Run(bool demo)
 {
     // create our peripherals
     TempestPiEnvironment environment;
@@ -43,6 +51,8 @@ static void Run(void)
     // create the runner object that drives the fake 6502
     TempestRunner tempestRunner(&environment);
     tempestRunner.SetTempestIO(&soundIO, &vectorIO);
+    if (demo)
+      tempestRunner.SetDemoMode();
 
     // go
     tempestRunner.Start();
