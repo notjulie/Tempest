@@ -9,7 +9,7 @@ public:
       this->colorRAMValue = colorRAMValue;
    }
 
-   uint8_t GetR(void) {
+   uint8_t GetR(void) const {
       if ((colorRAMValue & 2) == 0)
          return 255;
       else if ((colorRAMValue & 1) == 0)
@@ -18,14 +18,14 @@ public:
          return 0;
    }
 
-   uint8_t GetG(void) {
+   uint8_t GetG(void) const {
       if ((colorRAMValue & 8) == 0)
          return 255;
       else
          return 0;
    }
 
-   uint8_t GetB(void) {
+   uint8_t GetB(void) const {
       if ((colorRAMValue & 4) == 0)
          return 255;
       else

@@ -25,6 +25,11 @@ int main()
       printf("%s\n", te.what());
       getchar();
    }
+   catch (const char *s)
+   {
+      printf("%s\n", s);
+      getchar();
+   }
 }
 
 static void Run(void)

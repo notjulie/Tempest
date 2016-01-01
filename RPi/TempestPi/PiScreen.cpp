@@ -10,37 +10,11 @@
 
 #include "PiScreen.h"
 
-static const float strokeColors[16][4] = {
-   {1,1,1,1},
-   {0,1,0,1},
-   {1,1,0,1},
-   {1,0,0,1},
-
-   {0,1,1,1},
-   {1,1,1,1},
-   {0,0,1,1},
-   {1,0,1,1},
-
-   {1,1,1,1},
-   {0,1,0,1},
-   {1,1,0,1},
-   {1,0,0,1},
-
-   {0,1,1,1},
-   {1,1,1,1},
-   {0,0,1,1},
-   {1,0,1,1}
-};
-
 PiScreen::PiScreen(void)
 {
    bcm_host_init();
    memset(&state, 0, sizeof(state));         // clear application state
    init_ogl();                              // Start OGLES
-
-   // create our colors
-   for (int i=0; i<16; ++i)
-      createStroke(strokeColors[i]);
 
    // create the path we use for drawing single pixels
    dotPath = vgCreatePath(VG_PATH_FORMAT_STANDARD, VG_PATH_DATATYPE_F, 1.0f, 0.0f, 0, 0, VG_PATH_CAPABILITY_ALL);
@@ -55,9 +29,14 @@ PiScreen::PiScreen(void)
 
 PiScreen::~PiScreen(void)
 {
+   vgDestroyPath(dotPath);
+}
+
+void PiScreen::DeleteStrokes(void)
+{
    for (int i=0; i<strokes.size(); ++i)
       vgDestroyPaint(strokes[i]);
-   vgDestroyPath(dotPath);
+   strokes.resize(0);
 }
 
 void PiScreen::createStroke(const float color[4])
@@ -190,12 +169,23 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
    for (unsigned i=0; i<vectors.size(); ++i)
       DisplayVector(vectors[i]);
    EndFrame();
+
+   DeleteStrokes();
 }
 
 void PiScreen::DisplayVector(const SimpleVector &vector)
 {
+   // create our color stroke
+   float color[] {
+      vector.color.GetR() / 255.0F,
+      vector.color.GetG() / 255.0F,
+      vector.color.GetB() / 255.0F,
+      1.0F
+      };
+   createStroke(color);
+
    vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
-   vgSetPaint(strokes[vector.color], VG_STROKE_PATH);
+   vgSetPaint(strokes[strokes.size() - 1], VG_STROKE_PATH);
    vgSetf(VG_STROKE_LINE_WIDTH, 1);
    vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
    vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);

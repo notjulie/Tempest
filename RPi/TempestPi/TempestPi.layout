@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="PiScreen.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="1185" topLine="46" />
+	<File name="PiScreen.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="984" topLine="21" />
 	</File>
-	<File name="PiSerialStream.cpp" open="1" top="0" tabpos="5">
+	<File name="PiSerialStream.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="798" topLine="22" />
 	</File>
-	<File name="PiSerialStream.h" open="1" top="0" tabpos="1">
+	<File name="PiSerialStream.h" open="0" top="0" tabpos="1">
 		<Cursor position="237" topLine="0" />
 	</File>
-	<File name="TempestPiIO.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="48" topLine="0" />
+	<File name="TempestPiIO.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="35" topLine="0" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="99" topLine="3" />
+		<Cursor position="1353" topLine="46" />
 	</File>
 	<File name="../../TempestCPU/6502/CPU6502.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="7618" topLine="190" />
@@ -31,11 +31,11 @@
 	<File name="../../TempestCPU/TempestBus.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2954" topLine="116" />
 	</File>
-	<File name="../../TempestCPU/TempestRunner.cpp" open="1" top="0" tabpos="3">
+	<File name="../../TempestCPU/TempestRunner.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="156" topLine="0" />
 	</File>
-	<File name="../../TempestIO/TempestIOStreamProxy.cpp" open="1" top="1" tabpos="6">
-		<Cursor position="2483" topLine="77" />
+	<File name="../../TempestIO/TempestIOStreamProxy.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="2283" topLine="77" />
 	</File>
 	<File name="../../TempestIO/Vector/VectorDataInterpreter.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="106" topLine="0" />

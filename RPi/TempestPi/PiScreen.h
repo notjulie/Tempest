@@ -27,6 +27,7 @@ public:
    void DisplayVectors(const std::vector<SimpleVector> &vectors);
 
 private:
+   void DeleteStrokes(void);
    void StartFrame(void);
    void EndFrame(void);
    void DisplayVector(const SimpleVector &vector);
