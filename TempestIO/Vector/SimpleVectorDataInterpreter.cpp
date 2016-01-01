@@ -71,7 +71,7 @@ void SimpleVectorDataInterpreter::SDraw(int x, int y, int intensity)
 
 void SimpleVectorDataInterpreter::Stat(int color, int)
 {
-	this->color = color;
+	this->color = ReadColorRAM((uint8_t)color);
 }
 
 void SimpleVectorDataInterpreter::Scale(int binaryScale, int linearScale)

@@ -267,8 +267,8 @@ namespace TempestWpf
             {
                // get the vector
                Int16 startX16, startY16, endX16, endY16;
-               int color;
-               if (!enumerator.GetNextVector(out startX16, out startY16, out endX16, out endY16, out color))
+               byte r, g, b;
+               if (!enumerator.GetNextVector(out startX16, out startY16, out endX16, out endY16, out r, out g, out b))
                   break;
 
                // switch to longer than 16 bits
@@ -301,7 +301,7 @@ namespace TempestWpf
                   startY += strokeThickness / 2;
                }
 
-               line.Stroke = vectorBrush[color];
+               line.Stroke = new SolidColorBrush(Color.FromRgb(r, g, b));
                line.X1 = canvas.ActualWidth / 2 + startX;
                line.X2 = canvas.ActualWidth / 2 + endX;
                line.Y1 = canvas.ActualHeight / 2 - startY;

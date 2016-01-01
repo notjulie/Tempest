@@ -18,7 +18,15 @@ VectorEnumerator::~VectorEnumerator(void)
 	delete vectorData, vectorData = NULL;
 }
 
-bool VectorEnumerator::GetNextVector([Out] int16_t %startX, [Out] int16_t %startY, [Out] int16_t %endX, [Out] int16_t %endY, [Out] int %color)
+bool VectorEnumerator::GetNextVector(
+   [Out] int16_t %startX,
+   [Out] int16_t %startY,
+   [Out] int16_t %endX,
+   [Out] int16_t %endY,
+   [Out] uint8_t %r,
+   [Out] uint8_t %g,
+   [Out] uint8_t %b
+   )
 {
 	if (nextVector >= (int)vectorData->size())
 		return false;
@@ -28,6 +36,8 @@ bool VectorEnumerator::GetNextVector([Out] int16_t %startX, [Out] int16_t %start
 	startY = vector.startY;
 	endX =   vector.endX;
 	endY =   vector.endY;
-	color =  vector.color;
-	return true;
+   r = vector.color.GetR();
+   g = vector.color.GetG();
+   b = vector.color.GetB();
+   return true;
 }

@@ -11,6 +11,7 @@ public:
 	VectorData(void);
 
 	uint8_t	GetAt(uint16_t address);
+   uint8_t  ReadColorRAM(uint16_t address) { return colorRAM[address]; }
    void		WriteColorRAM(uint16_t address, uint8_t value);
    void		WriteVectorRAM(uint16_t address, uint8_t value);
 

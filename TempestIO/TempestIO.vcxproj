@@ -151,6 +151,7 @@
     <ClInclude Include="TempestStreamProtocol.h" />
     <ClInclude Include="Vector\SimpleVector.h" />
     <ClInclude Include="Vector\SimpleVectorDataInterpreter.h" />
+    <ClInclude Include="Vector\TempestColor.h" />
     <ClInclude Include="Vector\VectorData.h" />
     <ClInclude Include="Vector\VectorDataInterpreter.h" />
     <ClInclude Include="WaveStreamer.h" />
