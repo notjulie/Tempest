@@ -1,13 +1,7 @@
 
-Fix colors on RPi blue screen
-
-Fix color issue where all screens are blue screens
-
 Start backing up RPi images
 
 Add Tempest to RPi boot
-
-Fix errors in clipping lines
 
 Fix screen width so that bowling alley (etc.) is not clipped
 

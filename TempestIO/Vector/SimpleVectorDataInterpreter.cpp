@@ -1,5 +1,6 @@
 
 #include "stdafx.h"
+#include <stdint.h>
 #include "SimpleVectorDataInterpreter.h"
 
 
@@ -47,11 +48,21 @@ void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 	if (_intensity == 0)
 		return;
 
+   int originalStartX = startX;
+   int originalStartY = startY;
+   int originalEndX = endX;
+   int originalEndY = endY;
+
 	// we need to clip the line to the bounds of signed 16 bits
 	if (!ClipEndPoint(startX, startY, endX, endY))
 		return;
 	if (!ClipEndPoint(endX, endY, startX, startY))
 		return;
+
+   if ((int64_t)(endY - startY) * actualDY < 0)
+      x += 0;
+   if ((int64_t)(endX - startX) * actualDX < 0)
+      x += 0;
 
 	// add the vector to the list
 	SimpleVector vector;
@@ -86,7 +97,7 @@ bool SimpleVectorDataInterpreter::ClipEndPoint(int &startX, int &startY, int &en
 	{
 		if (startX < -32768)
 			return false;
-		endY = startY + (endY - startY) * (-32768 - startX) / (endX - startX);
+      endY = startY + (int64_t)(endY - startY) * (-32768 - startX) / (endX - startX);
 		endX = -32768;
 	}
 
@@ -94,7 +105,7 @@ bool SimpleVectorDataInterpreter::ClipEndPoint(int &startX, int &startY, int &en
 	{
 		if (startY < -32768)
 			return false;
-		endX = startX + (endX - startX) * (-32768 - startY) / (endY - startY);
+      endX = startX + (int64_t)(endX - startX) * (-32768 - startY) / (endY - startY);
 		endY = -32768;
 	}
 
@@ -102,7 +113,7 @@ bool SimpleVectorDataInterpreter::ClipEndPoint(int &startX, int &startY, int &en
 	{
 		if (startX > 32767)
 			return false;
-		endY = startY + (endY - startY) * (32767 - startX) / (endX - startX);
+      endY = startY + (int64_t)(endY - startY) * (32767 - startX) / (endX - startX);
 		endX = 32767;
 	}
 
@@ -110,7 +121,7 @@ bool SimpleVectorDataInterpreter::ClipEndPoint(int &startX, int &startY, int &en
 	{
 		if (startY > 32767)
 			return false;
-		endX = startX + (endX - startX) * (32767 - startY) / (endY - startY);
+      endX = startX + (int64_t)(endX - startX) * (32767 - startY) / (endY - startY);
 		endY = 32767;
 	}
 
