@@ -252,7 +252,9 @@ uint8_t CPU6502::DoROR(uint8_t value)
 
 uint16_t CPU6502::GetAbsoluteAddress(void)
 {
-	return (uint16_t)(bus->ReadByte(PC++) + 256 * bus->ReadByte(PC++));
+   uint16_t result = bus->ReadByte(PC++);
+   result += bus->ReadByte(PC++) << 8;
+   return result;
 }
 
 uint16_t CPU6502::GetIndirectYAddress(void)

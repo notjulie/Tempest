@@ -226,7 +226,7 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    float dx = x2 - x1;
    float dy = y2 - y1;
    int length = (int)(sqrtf(dx*dx + dy*dy) + 0.5);
-   if (length < linePaths.size())
+   if (length < (int)linePaths.size())
    {
       vgTranslate(x1, y1);
       vgRotate(180 * atan2f(dy, dx) / 3.1415927);

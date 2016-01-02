@@ -86,7 +86,7 @@ int PiSerialStream::Peek(void)
 
    // else just return the next
    int newBufferOut = readBufferOut + 1;
-   if (newBufferOut >= sizeof(readBuffer))
+   if (newBufferOut >= (int)sizeof(readBuffer))
       newBufferOut = 0;
    return readBuffer[readBufferOut];
 }
@@ -99,7 +99,7 @@ int PiSerialStream::Read(void)
 
    // else just return the next
    int newBufferOut = readBufferOut + 1;
-   if (newBufferOut >= sizeof(readBuffer))
+   if (newBufferOut >= (int)sizeof(readBuffer))
       newBufferOut = 0;
    int result = readBuffer[readBufferOut];
    readBufferOut = newBufferOut;
@@ -110,7 +110,7 @@ void PiSerialStream::Write(uint8_t b)
 {
    // figure out what our index will be after appending the byte
    int newBufferIn = writeBufferIn + 1;
-   if (newBufferIn >= sizeof(writeBuffer))
+   if (newBufferIn >= (int)sizeof(writeBuffer))
       newBufferIn = 0;
    if (newBufferIn == writeBufferOut)
       throw TempestException("Serial write buffer full");
@@ -180,7 +180,7 @@ void PiSerialStream::WriteThread(void)
       }
 
       // remove the data from the buffer
-      if (writeEnd >= sizeof(writeBuffer))
+      if (writeEnd >= (int)sizeof(writeBuffer))
          writeBufferOut = 0;
       else
          writeBufferOut = writeEnd;
@@ -230,7 +230,7 @@ void PiSerialStream::ReadThread(void)
 
       // figure out what our index will be after appending the byte
       int newBufferIn = readBufferIn + 1;
-      if (newBufferIn >= sizeof(readBuffer))
+      if (newBufferIn >= (int)sizeof(readBuffer))
          newBufferIn = 0;
       if (newBufferIn == readBufferOut)
          throw TempestException("Serial read buffer full");

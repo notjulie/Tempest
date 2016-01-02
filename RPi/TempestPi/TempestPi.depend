@@ -15,16 +15,16 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 
-1451533483 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1451701342 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	"6502/CPU6502.h"
 	"TempestBus.h"
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
+1451701342 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
 
-1451533483 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
+1451701342 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
 	"6502/AbstractBus.h"
 	"MathBox/MathBox.h"
 	"EEPROM.h"
@@ -33,10 +33,10 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
+1451701342 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
 	"Am2901.h"
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901.h
+1451701342 /home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901.h
 	"Am2901Tables.h"
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/MathBox/Am2901Tables.h
@@ -48,11 +48,11 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
 
-1447123429 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
+1451701342 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
 	"../TempestIO/AbstractTempestIO.h"
 	"Pokey.h"
 
-1451533483 /home/pi/Documents/Tempest/TempestCPU/Pokey.h
+1451701342 /home/pi/Documents/Tempest/TempestCPU/Pokey.h
 
 1451614501 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
 
@@ -63,7 +63,7 @@
 	"TempestException.h"
 	"TempestRunner.h"
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
+1451701544 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
 	<stdint.h>
 	<stdio.h>
 	<stdlib.h>
@@ -92,7 +92,7 @@
 	"../TempestROMS.h"
 	"MathBox.h"
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBoxAFX.h
+1451701410 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBoxAFX.h
 	<stdint.h>
 	<string.h>
 
@@ -567,8 +567,9 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1451698416 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1451700523 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
+	<pthread.h>
 	"TempestCPU/TempestException.h"
 	"TempestCPU/TempestRunner.h"
 	"TempestIO/TempestIOStreamProxy.h"

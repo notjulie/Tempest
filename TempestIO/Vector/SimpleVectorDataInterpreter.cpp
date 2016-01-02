@@ -48,11 +48,6 @@ void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 	if (_intensity == 0)
 		return;
 
-   int originalStartX = startX;
-   int originalStartY = startY;
-   int originalEndX = endX;
-   int originalEndY = endY;
-
 	// we need to clip the line to the bounds of signed 16 bits
 	if (!ClipEndPoint(startX, startY, endX, endY))
 		return;
