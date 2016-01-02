@@ -1,15 +1,9 @@
 # depslib dependency file v1.0
-1451671441 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
+1451699086 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
 	"stdafx.h"
 	<stdio.h>
 	<string.h>
-	<pthread.h>
-	"TempestCPU/TempestException.h"
-	"TempestCPU/TempestRunner.h"
-	"TempestIO/TempestIOStreamProxy.h"
-	"PiSerialStream.h"
-	"TempestPiEnvironment.h"
-	"TempestPiIO.h"
+	"TempestPi.h"
 
 1439424979 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
 	<stdint.h>
@@ -572,4 +566,16 @@
 	"PiSerialStream.h"
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
+
+1451698416 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+	"stdafx.h"
+	"TempestCPU/TempestException.h"
+	"TempestCPU/TempestRunner.h"
+	"TempestIO/TempestIOStreamProxy.h"
+	"PiSerialStream.h"
+	"TempestPiEnvironment.h"
+	"TempestPiIO.h"
+	"TempestPi.h"
+
+1451700283 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.h
 
