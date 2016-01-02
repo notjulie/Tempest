@@ -23,12 +23,12 @@
 
 
 static AppState appState;
+static uint32_t lastUSBInputTime;
 
 static void ServiceConnected(void);
 static void ServiceUnconnected(void);
 
 TempestIOStreamListener USBListener(&USBStream, &IO);
-
 
 extern "C" {
 
@@ -129,6 +129,26 @@ extern "C" {
 
 static void ServiceConnected(void)
 {
+	// check for disconnect
+	uint32_t now = GetMillisecondCount();
+	if (USBStream.Peek() < 0)
+	{
+		uint32_t idleTime = now - lastUSBInputTime;
+		if (idleTime > 100)
+		{
+			// we went too long without receiving something from the other end;
+			// switch to unconnected and kill all sound
+			appState = UNCONNECTED;
+			for (int i=0; i<8; ++i)
+				IO.SetSoundChannelVolume(i, 0);
+			return;
+		}
+	}
+	else
+	{
+		lastUSBInputTime = now;
+	}
+
 	// this takes data that has been received from the USB port
 	// and interprets it, passing it to the audio or video subsystems
  	USBListener.Service();
@@ -141,7 +161,10 @@ static void ServiceUnconnected(void)
 {
 	// see if we have a connection
 	if (USBStream.Peek() >= 0)
+	{
+		lastUSBInputTime = GetMillisecondCount();
 		appState = CONNECTED;
+	}
 }
 
 AppState GetAppState(void)
