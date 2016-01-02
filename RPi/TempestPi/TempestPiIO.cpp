@@ -19,7 +19,7 @@ void TempestPiIO::Run(void)
       clock_gettime(CLOCK_REALTIME, &now);
       if (now.tv_sec != startTime.tv_sec)
       {
-         printf("%d\n", framesPerSecond);
+         //printf("%d\n", framesPerSecond);
          framesPerSecond = 0;
          startTime = now;
       }

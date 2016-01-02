@@ -79,7 +79,16 @@ void TempestPi::MonitorThread(void)
 
    while (!terminated)
    {
+      // pause
       sleep(100);
+
+      // look for any issues
+      if (tempestRunner.IsTerminated())
+      {
+         Log("Tempest terminated");
+         Log(tempestRunner.GetProcessorStatus().c_str());
+         return;
+      }
    }
 }
 
