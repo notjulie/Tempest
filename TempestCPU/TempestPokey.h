@@ -5,8 +5,10 @@
 #include "../TempestIO/AbstractTempestIO.h"
 #include "Pokey.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
 class TempestPokey1 : public Pokey
 {
@@ -72,6 +74,8 @@ public:
 	}
 };
 
-#pragma warning(pop)
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif

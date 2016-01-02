@@ -13,9 +13,10 @@
 class AbstractTempestEnvironment;
 class MathBoxLog;
 
-
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
 class MathBox
 {
@@ -82,7 +83,9 @@ private:
 	friend class MathBoxTestInterface;
 };
 
-#pragma warning(pop)
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif	/* MATHBOX_H */
 

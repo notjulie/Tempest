@@ -10,8 +10,10 @@
 
 class AbstractTempestSoundIO;
 
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
 
 class Pokey
@@ -36,8 +38,9 @@ private:
 	AbstractTempestSoundIO *tempestIO;
 };
 
-
-#pragma warning(pop)
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif	/* POKEY_H */
 

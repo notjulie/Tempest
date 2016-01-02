@@ -18,9 +18,10 @@
 class AbstractTempestVectorIO;
 class VectorData;
 
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
-
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
 class TempestBus : public AbstractBus
 {
@@ -64,7 +65,9 @@ private:
 	bool clock3KHzIsHigh;
 };
 
-#pragma warning(pop)
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif	/* TEMPESTBUS_H */
 

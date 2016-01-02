@@ -12,9 +12,10 @@
 
 class AbstractBus;
 
-
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
 class CPU6502
 {
@@ -101,7 +102,9 @@ private:
    uint16_t PC;
 };
 
-#pragma warning(pop)
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif	/* CPU6502_H */
 

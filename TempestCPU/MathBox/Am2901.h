@@ -7,8 +7,10 @@
 class ALULogEntry;
 class MathBoxTracer;
 
-#pragma warning(push)
-#pragma warning(disable : 4820)	// padding in structures
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
 class Am2901
 {
@@ -64,6 +66,8 @@ private:
 	friend class Am2901TestInterface;
 };
 
-#pragma warning(pop)
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif
