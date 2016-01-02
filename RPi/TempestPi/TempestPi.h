@@ -16,6 +16,7 @@ public:
 private:
    void Log(const char *s);
    void MonitorThread(void);
+   void ProcessCommand(const char *command);
 
 private:
    static void *MonitorThreadEntry(void *pThis);

@@ -24,6 +24,7 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	theThread = NULL;
 	for (int i = 0; i < 64 * 1024; ++i)
 		breakpoints[i] = false;
+   resetRequested = false;
 }
 
 TempestRunner::~TempestRunner(void)
@@ -35,6 +36,15 @@ TempestRunner::~TempestRunner(void)
 	}
 }
 
+
+void TempestRunner::SetDemoMode(void)
+{
+   // tell the bus to set the proper DIP switches
+   tempestBus.SetDemoMode();
+
+   // force a reset
+   resetRequested = true;
+}
 
 void TempestRunner::Start(void)
 {
@@ -63,6 +73,13 @@ void TempestRunner::RunnerThread(void)
 		// run
 		while (!terminateRequested)
 		{
+		   // reset if so requested
+		   if (resetRequested)
+		   {
+		      cpu6502.Reset();
+		      resetRequested = false;
+		   }
+
 			// Run the processor until the 3KHz clock changes
 			int cyclesToRun = (int)(clockCyclesPer3KHzHalfWave - (totalClockCycles % clockCyclesPer3KHzHalfWave));
 			int newClockCycles = 0;

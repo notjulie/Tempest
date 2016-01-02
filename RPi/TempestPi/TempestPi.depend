@@ -15,7 +15,7 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 
-1451701342 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1451707937 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	"6502/CPU6502.h"
 	"TempestBus.h"
 
@@ -56,7 +56,7 @@
 
 1451614501 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
 
-1439424979 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
+1451708015 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
 	"stdafx.h"
 	"6502/CPU6502Exception.h"
 	"AbstractTempestEnvironment.h"
@@ -568,7 +568,7 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1451703403 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1451708543 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
 	"TempestCPU/TempestException.h"
@@ -577,7 +577,7 @@
 	"TempestPiIO.h"
 	"TempestPi.h"
 
-1451702330 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.h
+1451708051 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.h
 	"TempestCPU/TempestRunner.h"
 	"TempestPiEnvironment.h"
 

@@ -78,6 +78,7 @@
 		<Unit filename="../../TempestCPU/TempestException.cpp" />
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
+		<Unit filename="../../TempestCPU/TempestRunner.h" />
 		<Unit filename="../../TempestIO/TempestIOStreamProxy.cpp" />
 		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />
