@@ -62,6 +62,7 @@
 		<Unit filename="PiScreen.cpp" />
 		<Unit filename="PiSerialStream.cpp" />
 		<Unit filename="PiSerialStream.h" />
+		<Unit filename="TempestPi.cpp" />
 		<Unit filename="TempestPiEnvironment.cpp" />
 		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
