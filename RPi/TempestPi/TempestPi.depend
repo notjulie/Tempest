@@ -121,7 +121,7 @@
 	"stdafx.h"
 	"EEPROM.h"
 
-1451533483 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
+1451701965 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
 	"stdafx.h"
 	"AbstractBus.h"
 	"CPU6502Exception.h"
@@ -151,7 +151,8 @@
 1451614501 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
 	"VectorData.h"
 
-1451614501 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
+1451702872 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
+	"TempestCPU/TempestMemoryMap.h"
 
 1451664720 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
 	"stdafx.h"
@@ -167,7 +168,7 @@
 	"../../TempestCPU/TempestException.h"
 	"VectorDataInterpreter.h"
 
-1451669502 source:/home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.cpp
+1451701980 source:/home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.cpp
 	"stdafx.h"
 	<stdint.h>
 	"SimpleVectorDataInterpreter.h"
@@ -448,7 +449,7 @@
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/interface/vchi/vchi_mh.h
 	<interface/vcos/vcos.h>
 
-1451664720 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.cpp
+1451701744 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiScreen.cpp
 	"stdafx.h"
 	<math.h>
 	"bcm_host.h"
@@ -557,7 +558,7 @@
 
 1447123429 /home/pi/Documents/Tempest/TempestIO/TempestStreamProtocol.h
 
-1451441036 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiSerialStream.cpp
+1451701987 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiSerialStream.cpp
 	<stdafx.h>
 	<unistd.h>
 	<fcntl.h>
@@ -567,16 +568,16 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1451700523 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1451702624 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
 	"TempestCPU/TempestException.h"
-	"TempestCPU/TempestRunner.h"
 	"TempestIO/TempestIOStreamProxy.h"
 	"PiSerialStream.h"
-	"TempestPiEnvironment.h"
 	"TempestPiIO.h"
 	"TempestPi.h"
 
-1451700283 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.h
+1451702330 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.h
+	"TempestCPU/TempestRunner.h"
+	"TempestPiEnvironment.h"
 

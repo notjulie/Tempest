@@ -2,6 +2,9 @@
 #ifndef TEMPESTPI_H
 #define TEMPESTPI_H
 
+#include "TempestCPU/TempestRunner.h"
+#include "TempestPiEnvironment.h"
+
 class TempestPi {
 public:
    TempestPi(void);
@@ -21,6 +24,9 @@ private:
    bool demo;
    bool terminated;
    pthread_t monitorThread;
+
+   TempestPiEnvironment environment;
+   TempestRunner tempestRunner;
 };
 
 #endif

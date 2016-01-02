@@ -3,17 +3,17 @@
 #include <pthread.h>
 
 #include "TempestCPU/TempestException.h"
-#include "TempestCPU/TempestRunner.h"
 #include "TempestIO/TempestIOStreamProxy.h"
 
 #include "PiSerialStream.h"
-#include "TempestPiEnvironment.h"
 #include "TempestPiIO.h"
 
 #include "TempestPi.h"
 
 
 TempestPi::TempestPi(void)
+   :
+      tempestRunner(&environment)
 {
    // clear
    demo = false;
@@ -47,13 +47,11 @@ void TempestPi::Run(void)
       }
 
        // create our peripherals
-       TempestPiEnvironment environment;
        TempestPiIO vectorIO;
        PiSerialStream serialStream;
        TempestIOStreamProxy soundIO(&serialStream);
 
        // create the runner object that drives the fake 6502
-       TempestRunner tempestRunner(&environment);
        tempestRunner.SetTempestIO(&soundIO, &vectorIO);
        if (demo)
          tempestRunner.SetDemoMode();

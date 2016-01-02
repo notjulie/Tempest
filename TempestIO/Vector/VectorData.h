@@ -2,8 +2,7 @@
 #ifndef VECTORDATA_H
 #define VECTORDATA_H
 
-#define COLOR_RAM_SIZE 0x10
-#define VECTOR_RAM_SIZE 0x1000
+#include "TempestCPU/TempestMemoryMap.h"
 
 class VectorData
 {
