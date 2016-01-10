@@ -144,6 +144,10 @@ void TempestRunner::RunnerThread(void)
 		// for now this goes as the processor status, too
 		processorStatus = _xTempest.what();
 	}
+	catch (...)
+	{
+	   processorStatus = "Tempest runner unknown exception";
+	}
 
 	state = Terminated;
 }
