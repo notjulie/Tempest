@@ -17,6 +17,7 @@ private:
    void Log(const char *s);
    void MonitorThread(void);
    void ProcessCommand(const char *command);
+   void ProcessKeyboardInput(void);
 
 private:
    static void *MonitorThreadEntry(void *pThis);
@@ -25,6 +26,8 @@ private:
    bool demo;
    bool terminated;
    pthread_t monitorThread;
+   FILE *log;
+   char currentCommand [100];
 
    TempestPiEnvironment environment;
    TempestRunner tempestRunner;

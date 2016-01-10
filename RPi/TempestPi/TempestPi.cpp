@@ -19,6 +19,14 @@ TempestPi::TempestPi(void)
    demo = false;
    terminated = false;
    monitorThread = 0;
+   log = NULL;
+   currentCommand[0] = 0;
+
+   // open the log
+   log = fopen("TempestMonitor.log", "a");
+   fprintf(log, "\n\n\n=====================================================\n");
+   fprintf(log, "=====================================================\n");
+   fprintf(log, "=====================================================\n");
 }
 
 TempestPi::~TempestPi(void)
@@ -77,8 +85,6 @@ void TempestPi::MonitorThread(void)
 {
    Log("Monitor running");
 
-   char currentCommand [100] = "";
-
    while (!terminated)
    {
       // pause
@@ -92,31 +98,8 @@ void TempestPi::MonitorThread(void)
          return;
       }
 
-      // check for incoming keyboard data
-      for (;;)
-      {
-         // get a character
-         int c = getc(stdin);
-         if (c < 0)
-            break;
-
-         // if this is an enter process the command
-         if (c=='\r' || c=='\n')
-         {
-            ProcessCommand(currentCommand);
-            currentCommand[0] = 0;
-         }
-
-         // add it to our buffer
-         int len = strlen(currentCommand);
-         currentCommand[len++] = c;
-         currentCommand[len] = 0;
-         if (len >= sizeof(currentCommand) - 3)
-         {
-            Log("Input overflow, ignored");
-            currentCommand[0] = 0;
-         }
-      }
+      // look for keyboard input
+      ProcessKeyboardInput();
    }
 }
 
@@ -129,9 +112,41 @@ void TempestPi::ProcessCommand(const char *command)
    }
 }
 
+void TempestPi::ProcessKeyboardInput(void)
+{
+   // check for incoming keyboard data
+   for (;;)
+   {
+      // get a character
+      int c = getc(stdin);
+      if (c < 0)
+         break;
+
+      // if this is an enter process the command
+      if (c=='\r' || c=='\n')
+      {
+         ProcessCommand(currentCommand);
+         currentCommand[0] = 0;
+      }
+
+      // add it to our buffer
+      int len = strlen(currentCommand);
+      currentCommand[len++] = c;
+      currentCommand[len] = 0;
+      if (len >= (int)sizeof(currentCommand) - 3)
+      {
+         printf("Input overflow, ignored\n");
+         currentCommand[0] = 0;
+      }
+   }
+}
+
+
 void TempestPi::Log(const char *s)
 {
    printf("%s\n", s);
+   fprintf(log, "%s\n", s);
+   fflush(log);
 }
 
 
