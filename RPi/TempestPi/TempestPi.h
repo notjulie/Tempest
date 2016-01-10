@@ -16,16 +16,18 @@ public:
 private:
    void Log(const char *s);
    void MonitorThread(void);
+   void KeyboardThread(void);
    void ProcessCommand(const char *command);
-   void ProcessKeyboardInput(void);
 
 private:
+   static void *KeyboardThreadEntry(void *pThis);
    static void *MonitorThreadEntry(void *pThis);
 
 private:
    bool demo;
    bool terminated;
    pthread_t monitorThread;
+   pthread_t keyboardThread;
    FILE *log;
    char currentCommand [100];
 

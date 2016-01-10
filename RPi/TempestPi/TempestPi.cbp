@@ -75,7 +75,9 @@
 		<Unit filename="../../TempestCPU/MathBox/MathBox.cpp" />
 		<Unit filename="../../TempestCPU/Pokey.cpp" />
 		<Unit filename="../../TempestCPU/TempestBus.cpp" />
+		<Unit filename="../../TempestCPU/TempestBus.h" />
 		<Unit filename="../../TempestCPU/TempestException.cpp" />
+		<Unit filename="../../TempestCPU/TempestMemoryMap.h" />
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.h" />

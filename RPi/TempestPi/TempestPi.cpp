@@ -19,6 +19,7 @@ TempestPi::TempestPi(void)
    demo = false;
    terminated = false;
    monitorThread = 0;
+   keyboardThread = 0;
    log = NULL;
    currentCommand[0] = 0;
 
@@ -40,6 +41,16 @@ void TempestPi::Run(void)
 {
    try
    {
+       // create our peripherals
+       TempestPiIO vectorIO;
+       PiSerialStream serialStream;
+       TempestIOStreamProxy soundIO(&serialStream);
+
+       // create the runner object that drives the fake 6502
+       tempestRunner.SetTempestIO(&soundIO, &vectorIO);
+       if (demo)
+         tempestRunner.SetDemoMode();
+
       // start the monitor thread if it's not running
       if (monitorThread == 0)
       {
@@ -54,15 +65,19 @@ void TempestPi::Run(void)
          pthread_setname_np(monitorThread, "Monitor");
       }
 
-       // create our peripherals
-       TempestPiIO vectorIO;
-       PiSerialStream serialStream;
-       TempestIOStreamProxy soundIO(&serialStream);
-
-       // create the runner object that drives the fake 6502
-       tempestRunner.SetTempestIO(&soundIO, &vectorIO);
-       if (demo)
-         tempestRunner.SetDemoMode();
+      // start the keyboard thread if it's not running
+      if (keyboardThread == 0)
+      {
+         int result = pthread_create(
+            &keyboardThread,
+            NULL,
+            &KeyboardThreadEntry,
+            this
+            );
+         if (result != 0)
+            throw TempestException("Error creating keyboard thread");
+         pthread_setname_np(keyboardThread, "Keyboard");
+      }
 
        // go
        tempestRunner.Start();
@@ -97,22 +112,10 @@ void TempestPi::MonitorThread(void)
          Log(tempestRunner.GetProcessorStatus().c_str());
          return;
       }
-
-      // look for keyboard input
-      ProcessKeyboardInput();
    }
 }
 
-void TempestPi::ProcessCommand(const char *command)
-{
-   if (strcmp(command, "demo") == 0)
-   {
-      tempestRunner.SetDemoMode();
-      return;
-   }
-}
-
-void TempestPi::ProcessKeyboardInput(void)
+void TempestPi::KeyboardThread(void)
 {
    // check for incoming keyboard data
    for (;;)
@@ -141,6 +144,14 @@ void TempestPi::ProcessKeyboardInput(void)
    }
 }
 
+void TempestPi::ProcessCommand(const char *command)
+{
+   if (strcmp(command, "demo") == 0)
+   {
+      tempestRunner.SetDemoMode();
+      return;
+   }
+}
 
 void TempestPi::Log(const char *s)
 {
@@ -149,6 +160,23 @@ void TempestPi::Log(const char *s)
    fflush(log);
 }
 
+
+void *TempestPi::KeyboardThreadEntry(void *pThis)
+{
+   TempestPi *tempest = (TempestPi*)pThis;
+
+   try
+   {
+      tempest->KeyboardThread();
+      tempest->Log("Keyboard thread exit");
+   }
+   catch (...)
+   {
+      tempest->Log("Keyboard thread unhandled exception");
+   }
+
+   return NULL;
+}
 
 void *TempestPi::MonitorThreadEntry(void *pThis)
 {
