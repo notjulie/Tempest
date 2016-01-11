@@ -98,6 +98,8 @@ void TempestPi::Run(void)
 
 void TempestPi::MonitorThread(void)
 {
+   char s[200];
+
    Log("Monitor running");
 
    while (!terminated)
@@ -110,6 +112,17 @@ void TempestPi::MonitorThread(void)
       {
          Log("Tempest terminated");
          Log(tempestRunner.GetProcessorStatus().c_str());
+
+         sprintf(s, "Program terminated at address %X", tempestRunner.GetProgramCounter());
+         Log(s);
+         sprintf(s, "A=%X, X=%X, Y=%X, S=%X",
+                 tempestRunner.GetAccumulator(),
+                 tempestRunner.GetXRegister(),
+                 tempestRunner.GetYRegister(),
+                 tempestRunner.GetStackPointer()
+                 );
+         Log(s);
+
          return;
       }
    }

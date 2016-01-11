@@ -54,6 +54,7 @@ public:
 	uint16_t GetProgramCounter(void) { return cpu6502.GetPC(); }
 	uint8_t  GetXRegister(void) { return cpu6502.GetX(); }
 	uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
+	uint8_t  GetStackPointer(void) { return cpu6502.GetS(); }
 
 	// simple dispatches to the TempestBus object
    void SetDemoMode(void);

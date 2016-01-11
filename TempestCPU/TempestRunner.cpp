@@ -85,8 +85,10 @@ void TempestRunner::RunnerThread(void)
 			int newClockCycles = 0;
 			while (newClockCycles < cyclesToRun)
 			{
+			   uint16_t pc = cpu6502.GetPC();
+
 				// pause if we hit a breakpoint
-				if (breakpoints[cpu6502.GetPC()] || state == StepState)
+				if (breakpoints[pc] || state == StepState)
 				{
 					state = Stopped;
 					requestedAction = NoAction;
@@ -109,6 +111,13 @@ void TempestRunner::RunnerThread(void)
 
 				// execute the next instruction
 				newClockCycles += cpu6502.SingleStep();
+			   uint16_t newPC = cpu6502.GetPC();
+            if (newPC < 0x9000)
+			   {
+			      char s[100];
+			      sprintf(s, "Bad address %X jumped to from %X", newPC, pc);
+			      throw TempestException(s);
+			   }
 			}
 
 			// update our master counter

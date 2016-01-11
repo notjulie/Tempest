@@ -15,11 +15,11 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 
-1452391616 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1452399852 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	"6502/CPU6502.h"
 	"TempestBus.h"
 
-1451701342 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
+1452399876 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
@@ -56,7 +56,7 @@
 
 1451614501 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
 
-1452391608 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
+1452396104 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
 	"stdafx.h"
 	"6502/CPU6502Exception.h"
 	"AbstractTempestEnvironment.h"
@@ -568,7 +568,7 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1452392818 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1452399730 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
 	"TempestCPU/TempestException.h"
