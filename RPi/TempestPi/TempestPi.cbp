@@ -62,6 +62,7 @@
 		<Unit filename="PiScreen.cpp" />
 		<Unit filename="PiSerialStream.cpp" />
 		<Unit filename="PiSerialStream.h" />
+		<Unit filename="TempestPi.cpp" />
 		<Unit filename="TempestPiEnvironment.cpp" />
 		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
@@ -74,9 +75,12 @@
 		<Unit filename="../../TempestCPU/MathBox/MathBox.cpp" />
 		<Unit filename="../../TempestCPU/Pokey.cpp" />
 		<Unit filename="../../TempestCPU/TempestBus.cpp" />
+		<Unit filename="../../TempestCPU/TempestBus.h" />
 		<Unit filename="../../TempestCPU/TempestException.cpp" />
+		<Unit filename="../../TempestCPU/TempestMemoryMap.h" />
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
+		<Unit filename="../../TempestCPU/TempestRunner.h" />
 		<Unit filename="../../TempestIO/TempestIOStreamProxy.cpp" />
 		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />

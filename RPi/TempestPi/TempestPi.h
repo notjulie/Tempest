@@ -16,14 +16,20 @@ public:
 private:
    void Log(const char *s);
    void MonitorThread(void);
+   void KeyboardThread(void);
+   void ProcessCommand(const char *command);
 
 private:
+   static void *KeyboardThreadEntry(void *pThis);
    static void *MonitorThreadEntry(void *pThis);
 
 private:
    bool demo;
    bool terminated;
    pthread_t monitorThread;
+   pthread_t keyboardThread;
+   FILE *log;
+   char currentCommand [100];
 
    TempestPiEnvironment environment;
    TempestRunner tempestRunner;

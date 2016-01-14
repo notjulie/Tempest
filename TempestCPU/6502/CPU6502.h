@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   CPU6502.h
  * Author: Randy
  *
@@ -32,6 +32,7 @@ public:
 	uint16_t GetPC(void) const { return PC; }
 	uint8_t  GetX(void) const { return X; }
 	uint8_t  GetY(void) const { return Y; }
+	uint8_t  GetS(void) const { return S; }
 
 private:
    void     Compare(uint8_t a, uint8_t b);
@@ -46,7 +47,7 @@ private:
    uint8_t  Pull(void);
    void     Push(uint8_t value);
    void     SetNZ(uint8_t value);
-   
+
 private:
    void  ADC(uint16_t address);
    void  AND(uint16_t address);
@@ -86,7 +87,7 @@ private:
 	void  STA(uint16_t address);
 	void  STX(uint16_t address);
    void  STY(uint16_t address);
-   
+
 private:
 	static uint8_t FromBCD(uint8_t value);
 	static uint8_t ToBCD(uint8_t value);

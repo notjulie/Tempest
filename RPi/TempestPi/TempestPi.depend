@@ -15,11 +15,11 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 
-1451701342 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1452399852 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	"6502/CPU6502.h"
 	"TempestBus.h"
 
-1451701342 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
+1452399876 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
@@ -46,7 +46,7 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/EEPROM.h
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
+1452391659 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
 
 1451701342 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
 	"../TempestIO/AbstractTempestIO.h"
@@ -56,7 +56,7 @@
 
 1451614501 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
 
-1439424979 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
+1452555706 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
 	"stdafx.h"
 	"6502/CPU6502Exception.h"
 	"AbstractTempestEnvironment.h"
@@ -75,7 +75,7 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
 
-1451614501 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
+1452555592 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
 	"stdafx.h"
 	"../TempestIO/AbstractTempestIO.h"
 	"AbstractTempestEnvironment.h"
@@ -141,7 +141,7 @@
 	"TempestIO/Vector/SimpleVectorDataInterpreter.h"
 	"PiScreen.h"
 
-1439424979 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
+1452637484 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
 	"SimpleVector.h"
 	"VectorDataInterpreter.h"
 
@@ -154,7 +154,7 @@
 1451702872 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
 	"TempestCPU/TempestMemoryMap.h"
 
-1451664720 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
+1451704831 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
 	"stdafx.h"
 	"TempestPiIO.h"
 
@@ -526,11 +526,11 @@
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/VG/vgu.h
 	"openvg.h"
 
-1451169725 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.h
+1452563573 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.h
 	<time.h>
 	"TempestCPU/AbstractTempestEnvironment.h"
 
-1439424979 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.cpp
+1452566826 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.cpp
 	"stdafx.h"
 	<time.h>
 	"TempestCPU/TempestException.h"
@@ -568,7 +568,7 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1451703403 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1452399730 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
 	"TempestCPU/TempestException.h"
@@ -577,7 +577,7 @@
 	"TempestPiIO.h"
 	"TempestPi.h"
 
-1451702330 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.h
+1452392763 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.h
 	"TempestCPU/TempestRunner.h"
 	"TempestPiEnvironment.h"
 

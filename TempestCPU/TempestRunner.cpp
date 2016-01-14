@@ -24,6 +24,7 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	theThread = NULL;
 	for (int i = 0; i < 64 * 1024; ++i)
 		breakpoints[i] = false;
+   resetRequested = false;
 }
 
 TempestRunner::~TempestRunner(void)
@@ -35,6 +36,15 @@ TempestRunner::~TempestRunner(void)
 	}
 }
 
+
+void TempestRunner::SetDemoMode(void)
+{
+   // tell the bus to set the proper DIP switches
+   tempestBus.SetDemoMode();
+
+   // force a reset
+   resetRequested = true;
+}
 
 void TempestRunner::Start(void)
 {
@@ -63,13 +73,22 @@ void TempestRunner::RunnerThread(void)
 		// run
 		while (!terminateRequested)
 		{
+		   // reset if so requested
+		   if (resetRequested)
+		   {
+		      cpu6502.Reset();
+		      resetRequested = false;
+		   }
+
 			// Run the processor until the 3KHz clock changes
 			int cyclesToRun = (int)(clockCyclesPer3KHzHalfWave - (totalClockCycles % clockCyclesPer3KHzHalfWave));
 			int newClockCycles = 0;
 			while (newClockCycles < cyclesToRun)
 			{
+			   uint16_t pc = cpu6502.GetPC();
+
 				// pause if we hit a breakpoint
-				if (breakpoints[cpu6502.GetPC()] || state == StepState)
+				if (breakpoints[pc] || state == StepState)
 				{
 					state = Stopped;
 					requestedAction = NoAction;
@@ -92,6 +111,13 @@ void TempestRunner::RunnerThread(void)
 
 				// execute the next instruction
 				newClockCycles += cpu6502.SingleStep();
+			   uint16_t newPC = cpu6502.GetPC();
+            if (newPC < 0x9000)
+			   {
+			      char s[100];
+			      sprintf(s, "Bad address %X jumped to from %X", newPC, pc);
+			      throw TempestException(s);
+			   }
 			}
 
 			// update our master counter
@@ -126,6 +152,10 @@ void TempestRunner::RunnerThread(void)
 	{
 		// for now this goes as the processor status, too
 		processorStatus = _xTempest.what();
+	}
+	catch (...)
+	{
+	   processorStatus = "Tempest runner unknown exception";
 	}
 
 	state = Terminated;

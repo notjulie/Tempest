@@ -29,7 +29,7 @@ private:
 	int nextIndex;
 	std::vector<SimpleVector> vectors;
 	int color;
-	int x, y;
+	float x, y;
 	int binaryScale;
 	int linearScale;
 };

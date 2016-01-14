@@ -67,7 +67,20 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 
    // main RAM
    if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
-		return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
+   {
+      switch (address)
+      {
+      case 0x011F:
+         // this is a value that gets set on startup that seems to be a
+         // POKEY copy-protection thing that scrozzles things and causes
+         // unpredictable lockups if it is not zero... so just force it to
+         // zero
+         return 0;
+
+      default:
+         return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
+      }
+   }
 
    // vector RAM
 	if (IsVectorRAMAddress(address))

@@ -31,8 +31,10 @@ void SimpleVectorDataInterpreter::Center(void)
 void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 {
 	// calculate the XY displacement
-	int actualDX = (_x << (15 - binaryScale)) / (128 + linearScale);
-	int actualDY = (_y << (15 - binaryScale)) / (128 + linearScale);
+	float actualDX = (_x << (15 - binaryScale));
+	actualDX /= (128 + linearScale);
+	float actualDY = (_y << (15 - binaryScale));
+	actualDY /= (128 + linearScale);
 
 	// calculate the line endpoints extended to 32 bit
 	int startX = x;
@@ -53,11 +55,6 @@ void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 		return;
 	if (!ClipEndPoint(endX, endY, startX, startY))
 		return;
-
-   if ((int64_t)(endY - startY) * actualDY < 0)
-      x += 0;
-   if ((int64_t)(endX - startX) * actualDX < 0)
-      x += 0;
 
 	// add the vector to the list
 	SimpleVector vector;

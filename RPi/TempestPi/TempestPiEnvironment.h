@@ -43,6 +43,8 @@ private:
 class TempestPiEnvironment : public AbstractTempestEnvironment
 {
 public:
+   TempestPiEnvironment(void);
+
    virtual AbstractThread *CreateThread(ThreadEntry *entry, void *param);
 	virtual void Reset(void);
 	virtual void Sleep(int ms);
@@ -50,6 +52,7 @@ public:
 
 private:
    timespec startTime;
+   uint64_t realTimeMS;
 };
 
 
