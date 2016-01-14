@@ -2,7 +2,7 @@
 #ifndef VECTORDATA_H
 #define VECTORDATA_H
 
-#include "TempestCPU/TempestMemoryMap.h"
+#include "../../TempestCPU/TempestMemoryMap.h"
 
 class VectorData
 {
