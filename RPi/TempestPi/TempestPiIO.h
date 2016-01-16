@@ -11,9 +11,11 @@
 class TempestPiIO : public AbstractTempestVectorIO
 {
 public:
-   TempestPiIO() {}
+   TempestPiIO(void);
 
    void Run(void);
+
+   void LogFrameRate(void) { logFrameRate = true; }
 
 	virtual void WriteColorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteColorRAM(address, value); }
 	virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
@@ -27,6 +29,7 @@ private:
 private:
 	SimpleVectorDataInterpreter	vectorInterpreter;
 	PiScreen screen;
+	bool logFrameRate;
 };
 
 #endif

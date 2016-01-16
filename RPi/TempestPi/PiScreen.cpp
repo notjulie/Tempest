@@ -244,6 +244,17 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
 
 void PiScreen::DrawDot(float x, float y, const TempestColor &color)
 {
+   // In general it appears that openVG on the RPi is most efficient
+   // at drawing lines, moreso than filling shapes.  We have a path
+   // that we use that consists of a line of length one which we
+   // transform to the correct location and draw with a line width of 1.
+   // I've also found that 1.75 is a really good scale factor for the line.
+   // Smaller than that it is difficult to see the bullets and very difficult
+   // to tell when it's time to zap.  Bigger than that and they just seem
+   // too much.
+
+   // A useful performance test would be to see if it's quicker to change the
+   // length of the line and width of the stroke versus scaling the line.
    vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
    vgSetPaint(GetStroke(color), VG_STROKE_PATH);
    vgSetf(VG_STROKE_LINE_WIDTH, 1);

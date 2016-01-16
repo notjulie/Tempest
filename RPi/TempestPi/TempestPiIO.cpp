@@ -4,6 +4,12 @@
 #include "TempestPiIO.h"
 
 
+TempestPiIO::TempestPiIO(void)
+{
+   logFrameRate = false;
+}
+
+
 void TempestPiIO::Run(void)
 {
    // push to the screen
@@ -19,7 +25,8 @@ void TempestPiIO::Run(void)
       clock_gettime(CLOCK_REALTIME, &now);
       if (now.tv_sec != startTime.tv_sec)
       {
-         //printf("%d\n", framesPerSecond);
+         if (logFrameRate)
+            printf("%d\n", framesPerSecond);
          framesPerSecond = 0;
          startTime = now;
       }

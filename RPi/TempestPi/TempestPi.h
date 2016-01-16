@@ -4,6 +4,8 @@
 
 #include "TempestCPU/TempestRunner.h"
 #include "TempestPiEnvironment.h"
+#include "TempestPiIO.h"
+
 
 class TempestPi {
 public:
@@ -33,6 +35,7 @@ private:
 
    TempestPiEnvironment environment;
    TempestRunner tempestRunner;
+   TempestPiIO vectorIO;
 };
 
 #endif
