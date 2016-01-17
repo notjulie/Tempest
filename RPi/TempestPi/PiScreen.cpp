@@ -195,12 +195,6 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
 
 void PiScreen::DisplayVector(const SimpleVector &vector)
 {
-   vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
-   vgSetPaint(GetStroke(vector.color), VG_STROKE_PATH);
-   vgSetf(VG_STROKE_LINE_WIDTH, 1);
-   vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
-   vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
-
    // calculate our screen coordinates
    float x1 = (float)state.screen_width - (float)(32768 - vector.startY) * state.screen_height / 65536;
    float y1 = (float)(32768 - vector.startX) * state.screen_height / 65536;
@@ -216,11 +210,16 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    // if this is just a dot draw our dot path
    if (vector.startX==vector.endX && vector.startY==vector.endY)
    {
-      vgTranslate(x1, y1 - 0.5);
-      vgDrawPath(dotPath, VG_STROKE_PATH);
-      vgLoadIdentity();
+      DrawDot(x1, y1, vector.color);
       return;
    }
+
+   // set our line drawing parameters
+   vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
+   vgSetPaint(GetStroke(vector.color), VG_STROKE_PATH);
+   vgSetf(VG_STROKE_LINE_WIDTH, 1);
+   vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
+   vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
 
    // if we have a line of the correct length just transform it to the right location
    float dx = x2 - x1;
@@ -242,3 +241,28 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    vgDestroyPath(path);
 }
 
+
+void PiScreen::DrawDot(float x, float y, const TempestColor &color)
+{
+   // In general it appears that openVG on the RPi is most efficient
+   // at drawing lines, moreso than filling shapes.  We have a path
+   // that we use that consists of a line of length one which we
+   // transform to the correct location and draw with a line width of 1.
+   // I've also found that 1.75 is a really good scale factor for the line.
+   // Smaller than that it is difficult to see the bullets and very difficult
+   // to tell when it's time to zap.  Bigger than that and they just seem
+   // too much.
+
+   // A useful performance test would be to see if it's quicker to change the
+   // length of the line and width of the stroke versus scaling the line.
+   vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
+   vgSetPaint(GetStroke(color), VG_STROKE_PATH);
+   vgSetf(VG_STROKE_LINE_WIDTH, 1);
+   vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
+   vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
+
+   vgTranslate(x, y - 0.5);
+   vgScale(1.75, 1.75);
+   vgDrawPath(dotPath, VG_STROKE_PATH);
+   vgLoadIdentity();
+}

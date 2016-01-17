@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "TempestCPU/TempestException.h"
+
 #include "TempestPi.h"
 
 
@@ -18,8 +20,23 @@ int main(int argc, char **argv)
    isDemo = true;
 #endif
 
-   TempestPi tempest;
-   tempest.SetDemoMode(isDemo);
-   tempest.Run();
+   try
+   {
+      TempestPi tempest;
+      tempest.SetDemoMode(isDemo);
+      tempest.Run();
+   }
+   catch (TempestException &x)
+   {
+      printf("%s\n", x.what());
+   }
+   catch (const char *s)
+   {
+      printf("%s\n", s);
+   }
+   catch (...)
+   {
+      printf("Unknown exception\n");
+   }
 }
 

@@ -7,26 +7,38 @@
 
 #include "PiScreen.h"
 
-
 class TempestPiIO : public AbstractTempestVectorIO
 {
 public:
-   TempestPiIO() {}
+   TempestPiIO(void);
 
    void Run(void);
 
+   void LogFrameRate(void) { logFrameRate = true; }
+
 	virtual void WriteColorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteColorRAM(address, value); }
 	virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
-	virtual bool IsVectorHalt(void) { return vectorInterpreter.IsHalt(); }
-	virtual void VectorGo(void) { vectorInterpreter.Go(); }
-	virtual void VectorReset(void) { vectorInterpreter.Reset(); }
+	virtual bool IsVectorHalt(void);
+	virtual void VectorGo(void);
+	virtual void VectorReset(void);
 
 private:
    void PushFrameToScreen(void);
 
 private:
+   typedef std::vector<SimpleVector> VectorList;
+
+private:
 	SimpleVectorDataInterpreter	vectorInterpreter;
+	std::vector<VectorList> vectorLists;
+	int mostRecentVectors;
 	PiScreen screen;
+	bool logFrameRate;
+	uint64_t vectorGoCount;
+	uint64_t vectorResetCount;
+
+	bool isGo;
+	bool isHalt;
 };
 
 #endif

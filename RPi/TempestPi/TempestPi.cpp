@@ -6,7 +6,6 @@
 #include "TempestIO/TempestIOStreamProxy.h"
 
 #include "PiSerialStream.h"
-#include "TempestPiIO.h"
 
 #include "TempestPi.h"
 
@@ -42,7 +41,6 @@ void TempestPi::Run(void)
    try
    {
        // create our peripherals
-       TempestPiIO vectorIO;
        PiSerialStream serialStream;
        TempestIOStreamProxy soundIO(&serialStream);
 
@@ -143,6 +141,7 @@ void TempestPi::KeyboardThread(void)
       {
          ProcessCommand(currentCommand);
          currentCommand[0] = 0;
+         continue;
       }
 
       // add it to our buffer
@@ -159,9 +158,15 @@ void TempestPi::KeyboardThread(void)
 
 void TempestPi::ProcessCommand(const char *command)
 {
-   if (strcmp(command, "demo") == 0)
+   if (strcasecmp(command, "demo") == 0)
    {
       tempestRunner.SetDemoMode();
+      return;
+   }
+
+   if (strcasecmp(command, "logframerate") == 0)
+   {
+      vectorIO.LogFrameRate();
       return;
    }
 }

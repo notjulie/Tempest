@@ -33,6 +33,7 @@ private:
    void EndFrame(void);
    void DisplayVector(const SimpleVector &vector);
    void init_ogl(void);
+   void DrawDot(float x, float y, const TempestColor &color);
 
 private:
    typedef std::map<uint32_t, VGPaint> StrokeMap;
