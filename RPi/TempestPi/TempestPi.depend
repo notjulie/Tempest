@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1451699086 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
+1453006885 source:/home/pi/Documents/Tempest/RPi/TempestPi/main.cpp
 	"stdafx.h"
 	<stdio.h>
 	<string.h>
+	"TempestCPU/TempestException.h"
 	"TempestPi.h"
 
 1439424979 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
@@ -136,7 +137,7 @@
 	"stdafx.h"
 	"CPU6502Exception.h"
 
-1453005042 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
+1453009782 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
 	"TempestIO/AbstractTempestIO.h"
 	"TempestIO/Vector/SimpleVectorDataInterpreter.h"
 	"PiScreen.h"
@@ -154,7 +155,7 @@
 1452742677 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
 	"../../TempestCPU/TempestMemoryMap.h"
 
-1453006596 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
+1453009724 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
 	"stdafx.h"
 	"TempestPiIO.h"
 
