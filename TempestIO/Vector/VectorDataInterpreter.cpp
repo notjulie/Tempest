@@ -68,7 +68,7 @@ bool VectorDataInterpreter::SingleStep(void)
 		int y = (GetAt(0) + 256 * GetAt(1)) & 0x1FFF;
 		if (y & 0x1000)
 			y = -0x1000 + (y & ~0x1000);
-		LDraw(x/2, y/2, GetAt(3) >> 5);
+		LDraw(x, y, GetAt(3) >> 5);
 		PC += 4;
 		return true;
 	}
