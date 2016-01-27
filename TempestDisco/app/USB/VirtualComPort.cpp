@@ -31,7 +31,7 @@
 #include "SystemError.h"
 #include "SystemTime.h"
 
-#include "usbd_cdc_vcp.h"
+#include "VirtualComPort.h"
 
 
 // our global memory stream between the USB port and the app

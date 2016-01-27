@@ -1,7 +1,7 @@
 
 #include "TempestDisco.h"
 
-#include "USB/usbd_cdc_vcp.h"
+#include "USB/VirtualComPort.h"
 
 #include "AudioDriver.h"
 #include "ControlPanel.h"

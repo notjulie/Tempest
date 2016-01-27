@@ -3,7 +3,6 @@
 
 #include "usbd_usr.h"
 #include "usbd_desc.h"
-#include "usbd_cdc_vcp.h"
 
 #include "Audio/AudioDriver.h"
 #include "Audio/TempestDiscoAudioIO.h"
@@ -17,6 +16,7 @@
 #include "DiscoWaveStreamer.h"
 #include "SystemError.h"
 #include "SystemTime.h"
+#include "VirtualComPort.h"
 #include "WatchDog.h"
 
 #include "TempestDiscoAudio.h"
