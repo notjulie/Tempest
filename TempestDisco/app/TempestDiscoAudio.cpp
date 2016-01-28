@@ -159,6 +159,16 @@ static void ServiceConnected(void)
 
 static void ServiceUnconnected(void)
 {
+	uint32_t now = GetMillisecondCount();
+
+	static uint32_t lastQ;
+	if (now - lastQ > 10000)
+	{
+		USBStream.Write('q');
+		VCP.Service();
+		lastQ = now;
+	}
+
 	// see if we have a connection
 	if (USBStream.Peek() >= 0)
 	{

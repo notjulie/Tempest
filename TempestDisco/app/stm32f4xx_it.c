@@ -140,7 +140,7 @@ void OTG_HS_IRQHandler(void)
 void OTG_FS_IRQHandler(void)
 #endif
 {
-  USBD_OTG_ISR_Handler (&USB_OTG_dev);
+	VirtualComPortISR();
 }
 
 #ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED

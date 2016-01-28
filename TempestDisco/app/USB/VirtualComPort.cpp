@@ -67,6 +67,8 @@ extern "C" {
 
 	CDC_IF_Prop_TypeDef VCP_fops = {VCP_Init, VCP_DeInit, VCP_Ctrl, VCP_DataTx, VCP_DataRx };
 
+	extern USB_OTG_CORE_HANDLE USB_OTG_dev;
+	extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
 
 };
 
@@ -99,6 +101,9 @@ void VirtualComPort::Service(void)
        APP_Rx_Buffer[APP_Rx_ptr_in] = (uint8_t)b;
        APP_Rx_ptr_in = newInPointer;
     }
+
+    // reenable the interrupt we disable in the ISR
+    USB_OTG_dev.regs.GREGS->GINTMSK |= (1<<18);
 }
 
 
@@ -277,3 +282,33 @@ bool GetUSBReceiveHeartbeat()
 
 	return flashOn;
 }
+
+extern "C" {
+	void VirtualComPortISR(void)
+	{
+		// There are situations, such as when a write is requested while the
+		// device is not open, where the "in" endpoint handler can go on a
+		// rampage and hog the CPU.  My solution to that is simple: the interrupt
+		// handler disables the interrupt now and then, and the service method reenables it.
+		USB_OTG_GINTSTS_TypeDef  gintr_status;
+		gintr_status.d32 = USB_OTG_ReadCoreItr(&USB_OTG_dev);
+		if (gintr_status.b.inepint)
+		{
+			// In my application, the watchdog timer goes off if I set this value at 100,000,
+			// but 10,000 doesn't seem to be a problem.  I frankly dont't see a need to handle
+			// more than 1000 interrupts for outbound data every time through the main loop, so
+			// that's the number I'll go with.  If I needed more strict timing I would set up a
+			// timer interrupt to reenable the USB interrupt, but this approach is simple and
+			// should work just fine.
+			static int interruptCount = 0;
+			if (++interruptCount >= 1000)
+			{
+				USB_OTG_dev.regs.GREGS->GINTMSK &= ~(1<<18);
+				interruptCount = 0;
+			}
+		}
+
+		// pass control to the actual ISR
+		USBD_OTG_ISR_Handler(&USB_OTG_dev);
+	}
+};
