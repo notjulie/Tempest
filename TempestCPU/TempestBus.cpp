@@ -12,8 +12,6 @@
 
 
 TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
-	:
-		mathBox(_environment)
 {
    // copy parameters
    environment = _environment;

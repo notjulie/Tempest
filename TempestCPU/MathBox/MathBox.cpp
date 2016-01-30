@@ -11,16 +11,12 @@
 
 #include "MathBoxAFX.h"
 
-#include "../AbstractTempestEnvironment.h"
 #include "../TempestROMS.h"
 
 #include "MathBox.h"
 
-MathBox::MathBox(AbstractTempestEnvironment	*_environment)
+MathBox::MathBox(void)
 {
-	// save parameters
-	environment = _environment;
-
 	// clear
 	PC = 0;
 	BEGIN = false;

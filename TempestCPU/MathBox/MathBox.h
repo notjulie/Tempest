@@ -10,7 +10,6 @@
 
 #include "Am2901.h"
 
-class AbstractTempestEnvironment;
 class MathBoxLog;
 
 #ifdef _WIN32
@@ -26,7 +25,7 @@ private:
 	};
 
 public:
-	MathBox(AbstractTempestEnvironment *_environment);
+	MathBox(void);
 	virtual ~MathBox(void);
 
    uint8_t GetStatus(void);
@@ -49,9 +48,6 @@ private:
 	MathBox &operator=(const MathBox &mathBox);
 
 private:
-	// construction parameters
-	AbstractTempestEnvironment	*environment;
-
 	// inputs
 	uint8_t dataIn;
 	uint8_t addressIn;

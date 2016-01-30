@@ -15,6 +15,7 @@
 #include "TempestMemoryMap.h"
 #include "TempestPokey.h"
 
+class AbstractTempestEnvironment;
 class AbstractTempestVectorIO;
 class VectorData;
 
