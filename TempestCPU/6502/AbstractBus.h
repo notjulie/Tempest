@@ -25,7 +25,10 @@ public:
    void IncrementClockCycleCount(int clockCycles);
 
 protected:
-   void StartTimer(int cycleCount, const std::function<void()> &f);
+   typedef void TimerFunction(AbstractBus *bus);
+
+protected:
+   void StartTimer(int cycleCount, TimerFunction *f);
 
 private:
    void UpdateTimers(void);
@@ -33,7 +36,7 @@ private:
 private:
    typedef struct BusTimer {
       uint64_t time;
-      std::function<void()> timerFunction;
+      TimerFunction *timerFunction;
    };
 
 private:

@@ -24,7 +24,7 @@ void AbstractBus::IncrementClockCycleCount(int clockCycles)
       {
          if (totalClockCycles >= timers[i].time)
          {
-            timers[i].timerFunction();
+            timers[i].timerFunction(this);
             timers[i] = timers[timers.size() - 1];
             timers.resize(timers.size() - 1);
          }
@@ -38,7 +38,7 @@ void AbstractBus::IncrementClockCycleCount(int clockCycles)
    }
 }
 
-void AbstractBus::StartTimer(int cycleCount, const std::function<void()> &f)
+void AbstractBus::StartTimer(int cycleCount, TimerFunction *f)
 {
    BusTimer timer;
    timer.time = totalClockCycles + cycleCount;

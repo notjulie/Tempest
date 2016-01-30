@@ -38,7 +38,7 @@ public:
    virtual void    WriteByte(uint16_t address, uint8_t value);
 
 private:
-   void Tick6KHz(void);
+   static void Tick6KHz(AbstractBus *bus);
 
 private:
 	static bool		IsVectorRAMAddress(uint16_t address);
