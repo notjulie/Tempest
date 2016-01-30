@@ -110,7 +110,9 @@ void TempestRunner::RunnerThread(void)
 				}
 
 				// execute the next instruction
-				newClockCycles += cpu6502.SingleStep();
+            int clockCyclesThisInstruction = cpu6502.SingleStep();
+            newClockCycles += clockCyclesThisInstruction;
+            tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
 			   uint16_t newPC = cpu6502.GetPC();
             if (newPC < 0x9000)
 			   {
