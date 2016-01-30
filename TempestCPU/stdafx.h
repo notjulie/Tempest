@@ -27,6 +27,7 @@
 #include <stdlib.h>
 
 // C++
+#include <functional>
 #include <map>
 #include <string>
 #include <vector>

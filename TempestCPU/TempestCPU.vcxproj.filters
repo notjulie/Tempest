@@ -84,6 +84,9 @@
     <ClCompile Include="TempestROMS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="6502\AbstractBus.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EEPROM.h">

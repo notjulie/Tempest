@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="6502\AbstractBus.cpp" />
     <ClCompile Include="6502\CPU6502.cpp" />
     <ClCompile Include="6502\CPU6502Exception.cpp" />
     <ClCompile Include="6502\ProcessorStatusWord.cpp" />

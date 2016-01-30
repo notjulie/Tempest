@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 // standard C++
+#include <functional>
 #include <map>
 #include <vector>
 

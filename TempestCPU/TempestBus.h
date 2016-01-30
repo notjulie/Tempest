@@ -32,12 +32,13 @@ public:
    void SetDemoMode(void) { demoMode = true; }
    void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO);
 
-	void Toggle3KHzClock(void);
-
 public:
 	// AbstractBus overrides
 	virtual uint8_t ReadByte(uint16_t address);
    virtual void    WriteByte(uint16_t address, uint8_t value);
+
+private:
+   void Tick6KHz(void);
 
 private:
 	static bool		IsVectorRAMAddress(uint16_t address);

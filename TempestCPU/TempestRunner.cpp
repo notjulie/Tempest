@@ -125,9 +125,6 @@ void TempestRunner::RunnerThread(void)
 			// update our master counter
 			totalClockCycles += newClockCycles;
 
-			// set the value of the 3KHz clock
-			tempestBus.Toggle3KHzClock();
-
 			// update the IRQ counter
 			irqTimer += newClockCycles;
 			if (irqTimer >= clockCyclesPerIRQ)

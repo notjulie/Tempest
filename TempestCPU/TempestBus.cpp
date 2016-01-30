@@ -24,6 +24,10 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 
    mainRAM.resize(MAIN_RAM_SIZE);
    colorRAM.resize(COLOR_RAM_SIZE);
+
+   // install our event for the 6KHz tick
+   std::function<void()> f = [this]() { Tick6KHz(); };
+   StartTimer(250, f);
 }
 
 TempestBus::~TempestBus(void)
@@ -257,12 +261,6 @@ void TempestBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO, AbstractT
 	pokey2.SetTempestIO(tempestSoundIO);
 }
 
-void TempestBus::Toggle3KHzClock(void)
-{
-	clock3KHzIsHigh = !clock3KHzIsHigh;
-	tempestSoundIO->Tick6KHz();
-}
-
 
 bool TempestBus::IsVectorRAMAddress(uint16_t address)
 {
@@ -270,3 +268,11 @@ bool TempestBus::IsVectorRAMAddress(uint16_t address)
 }
 
 
+void TempestBus::Tick6KHz(void)
+{
+   clock3KHzIsHigh = !clock3KHzIsHigh;
+   tempestSoundIO->Tick6KHz();
+
+   std::function<void()> f = [this]() { Tick6KHz(); };
+   StartTimer(250, f);
+}
