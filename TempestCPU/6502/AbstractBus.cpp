@@ -19,18 +19,12 @@ void AbstractBus::IncrementClockCycleCount(int clockCycles)
    totalClockCycles += clockCycles;
    if (totalClockCycles >= nextTimerTime)
    {
-      unsigned i = 0;
-      while (i < timers.size())
+      for (unsigned i = 0; i < timers.size(); ++i)
       {
-         if (totalClockCycles >= timers[i].time)
+         if (totalClockCycles >= timers[i].nextIteration)
          {
             timers[i].timerFunction(this);
-            timers[i] = timers[timers.size() - 1];
-            timers.resize(timers.size() - 1);
-         }
-         else
-         {
-            ++i;
+            timers[i].nextIteration += timers[i].period;
          }
       }
 
@@ -38,10 +32,16 @@ void AbstractBus::IncrementClockCycleCount(int clockCycles)
    }
 }
 
-void AbstractBus::StartTimer(int cycleCount, TimerFunction *f)
+uint64_t AbstractBus::GetTotalClockCycles(void)
+{
+   return totalClockCycles;
+}
+
+void AbstractBus::StartTimer(uint32_t period, TimerFunction *f)
 {
    BusTimer timer;
-   timer.time = totalClockCycles + cycleCount;
+   timer.period = period;
+   timer.nextIteration = totalClockCycles + period;
    timer.timerFunction = f;
    timers.push_back(timer);
 
@@ -52,7 +52,7 @@ void AbstractBus::UpdateTimers(void)
 {
    uint64_t soonestTimerTime = (uint64_t)(int64_t)-1;
    for (unsigned i = 0; i < timers.size(); ++i)
-      if (timers[i].time < soonestTimerTime)
-         soonestTimerTime = timers[i].time;
+      if (timers[i].nextIteration < soonestTimerTime)
+         soonestTimerTime = timers[i].nextIteration;
    nextTimerTime = soonestTimerTime;
 }

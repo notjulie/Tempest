@@ -39,6 +39,7 @@ public:
 
 private:
    static void Tick6KHz(AbstractBus *bus);
+   static void Tick250Hz(AbstractBus *bus);
 
 private:
 	static bool		IsVectorRAMAddress(uint16_t address);
@@ -49,6 +50,8 @@ private:
 	TempestBus &operator=(const TempestBus &bus);
 
 private:
+   AbstractTempestEnvironment *environment;
+
    std::vector<uint8_t>  mainRAM;
    std::vector<uint8_t>  colorRAM;
 	uint8_t vectorRAM[VECTOR_RAM_SIZE];

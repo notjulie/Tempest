@@ -15,6 +15,9 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 	:
 		mathBox(_environment)
 {
+   // copy parameters
+   environment = _environment;
+
 	// clear
 	selfTest = false;
 	clock3KHzIsHigh = false;
@@ -25,8 +28,9 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
    mainRAM.resize(MAIN_RAM_SIZE);
    colorRAM.resize(COLOR_RAM_SIZE);
 
-   // install our event for the 6KHz tick
+   // install our timers
    StartTimer(250, &Tick6KHz);
+   StartTimer(6000, &Tick250Hz);
 }
 
 TempestBus::~TempestBus(void)
@@ -270,8 +274,18 @@ bool TempestBus::IsVectorRAMAddress(uint16_t address)
 void TempestBus::Tick6KHz(AbstractBus *bus)
 {
    TempestBus *pThis = static_cast<TempestBus *>(bus);
-   pThis->clock3KHzIsHigh = !pThis->clock3KHzIsHigh;
-   pThis->tempestSoundIO->Tick6KHz();
 
-   pThis->StartTimer(250, &Tick6KHz);
+   // toggle the 3 KHz clock
+   pThis->clock3KHzIsHigh = !pThis->clock3KHzIsHigh;
+
+   // give the sound output its heartbeat
+   pThis->tempestSoundIO->Tick6KHz();
+}
+
+void TempestBus::Tick250Hz(AbstractBus *bus)
+{
+   TempestBus *pThis = static_cast<TempestBus *>(bus);
+
+   // synchronize the CPU with the realtime clock
+   pThis->environment->SynchronizeClock(pThis->GetTotalClockCycles() / 1500);
 }

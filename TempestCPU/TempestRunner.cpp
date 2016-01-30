@@ -134,10 +134,6 @@ void TempestRunner::RunnerThread(void)
 				// tell the CPU about the IRQ
 				cpu6502.IRQ();
 				++irqCount;
-
-				// this happens every 4ms in processor time, so it's a good time to synch
-				// up with the real world clock
-				environment->SynchronizeClock(totalClockCycles / 1500);
 			}
 		}
 
