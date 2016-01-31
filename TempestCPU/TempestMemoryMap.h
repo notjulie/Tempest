@@ -32,5 +32,7 @@ const uint16_t MATHBOX_WRITE_END = 0x609F;
 // program variable addresses
 const uint16_t PLAYER1_LEVEL_ADDRESS = 0x0046;
 const uint16_t PLAYER2_LEVEL_ADDRESS = 0x0047;
+const uint16_t COPY_PROTECTION_FLAG_ADDRESS = 0x011F;
+const uint16_t MAX_START_LEVEL_ADDRESS = 0x0126;
 
 #endif

@@ -75,12 +75,17 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    {
       switch (address)
       {
-      case 0x011F:
+      case COPY_PROTECTION_FLAG_ADDRESS:
          // this is a value that gets set on startup that seems to be a
          // POKEY copy-protection thing that scrozzles things and causes
          // unpredictable lockups if it is not zero... so just force it to
          // zero
          return 0;
+
+      case MAX_START_LEVEL_ADDRESS:
+         // if I set this I can start on level 80 without the other features
+         // of demo mode enabled
+         return 80;
 
       default:
          return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
