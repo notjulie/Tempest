@@ -239,10 +239,6 @@ namespace TempestWpf
          processorSpeed /= (DateTime.Now - startTime).TotalSeconds;
          processorSpeed /= 1000000;
          processorSpeedText.Text = processorSpeed.ToString("F1") + " MHz";
-
-         double irqFrequencyValue = tempest.GetIRQCount();
-         irqFrequencyValue /= (DateTime.Now - startTime).TotalSeconds;
-         irqFrequency.Text = irqFrequencyValue.ToString("F1");
       }
 
       void vectorTimer_Tick(object sender, EventArgs e)

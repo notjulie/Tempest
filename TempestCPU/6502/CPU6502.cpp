@@ -18,10 +18,6 @@ CPU6502::CPU6502(AbstractBus *_bus)
 
 void CPU6502::IRQ(void)
 {
-	// ignore if interrupts are disabled
-	if (P.I)
-		return;
-
 	// push the current PC
 	Push((uint8_t)(PC >> 8));
 	Push((uint8_t)PC);
@@ -63,6 +59,10 @@ void CPU6502::Run(void)
 
 int CPU6502::SingleStep(void)
 {
+   // check for IRQ
+   if (!P.I && bus->IsIRQ())
+      IRQ();
+
    // load the instruction
 	uint16_t instructionAddress = PC;
 	uint8_t opCode = bus->ReadByte(PC++);

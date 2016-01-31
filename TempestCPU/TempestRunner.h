@@ -40,7 +40,6 @@ public:
 	void	Start(void);
 
 	// simple accessors
-	uint64_t    GetIRQCount(void) { return irqCount; }
 	std::string GetProcessorStatus(void) { return processorStatus; }
 	uint64_t    GetTotalClockCycles(void) { return totalClockCycles; }
 	bool        IsStopped(void) { return state == Stopped && requestedAction==NoAction; }
@@ -78,7 +77,6 @@ private:
 	bool     resetRequested;
 	State    state;
 	Action   requestedAction;
-	uint64_t irqCount;
 	uint64_t totalClockCycles;
 
 	TempestBus	tempestBus;

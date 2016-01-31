@@ -19,7 +19,6 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	state = Unstarted;
 	requestedAction = NoAction;
 	terminateRequested = false;
-	irqCount = 0;
 	totalClockCycles = 0;
 	theThread = NULL;
 	for (int i = 0; i < 64 * 1024; ++i)
@@ -65,8 +64,6 @@ void TempestRunner::RunnerThread(void)
 
 		// synchronize our clock with the real world
 		int clockCyclesPer3KHzHalfWave = 1500000 / 6000;
-		int clockCyclesPerIRQ = 1500000 / 250;
-		int irqTimer = 0;
 		environment->Reset();
 		totalClockCycles = 0;
 
@@ -124,17 +121,6 @@ void TempestRunner::RunnerThread(void)
 
 			// update our master counter
 			totalClockCycles += newClockCycles;
-
-			// update the IRQ counter
-			irqTimer += newClockCycles;
-			if (irqTimer >= clockCyclesPerIRQ)
-			{
-				irqTimer -= clockCyclesPerIRQ;
-
-				// tell the CPU about the IRQ
-				cpu6502.IRQ();
-				++irqCount;
-			}
 		}
 
 		processorStatus = "Exited normally";

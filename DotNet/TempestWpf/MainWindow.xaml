@@ -18,10 +18,6 @@
                     <TextBlock Text="Processor speed: "/>
                     <TextBlock Name="processorSpeedText"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="IRQ frequency: "/>
-                    <TextBlock Name="irqFrequency"/>
-                </StackPanel>
             </StackPanel>
         </DockPanel>
         <StackPanel DockPanel.Dock="Right">

@@ -24,11 +24,13 @@ public:
 
    uint64_t GetTotalClockCycles(void);
    void IncrementClockCycleCount(int clockCycles);
+   bool IsIRQ(void) { return irq; }
 
 protected:
    typedef void TimerFunction(AbstractBus *bus);
 
 protected:
+   void SetIRQ(bool irq) { this->irq = irq; }
    void StartTimer(uint32_t period, TimerFunction *f);
 
 private:
@@ -42,6 +44,7 @@ private:
    };
 
 private:
+   bool irq;
    uint64_t totalClockCycles;
    uint64_t nextTimerTime;
    std::vector<BusTimer> timers;

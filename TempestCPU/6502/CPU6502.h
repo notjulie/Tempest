@@ -22,7 +22,6 @@ class CPU6502
 public:
    CPU6502(AbstractBus *_bus);
 
-	void		IRQ(void);
 	void     Reset(void);
    void     Run(void);
    int		SingleStep(void);
@@ -35,6 +34,7 @@ public:
 	uint8_t  GetS(void) const { return S; }
 
 private:
+   void		IRQ(void);
    void     Compare(uint8_t a, uint8_t b);
    uint8_t  DoASL(uint8_t value);
    uint8_t  DoLSR(uint8_t value);

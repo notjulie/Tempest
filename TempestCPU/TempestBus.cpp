@@ -227,8 +227,8 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          break;
 
       case 0x5000:
-         // watchdog timer clear... this is also what clears the IRQ,
-			// but we don't worry about either of those things
+         // watchdog timer clear, and this is also what clears the IRQ
+         SetIRQ(false);
          break;
 
       case 0x5800:
@@ -286,4 +286,7 @@ void TempestBus::Tick250Hz(AbstractBus *bus)
 
    // synchronize the CPU with the realtime clock
    pThis->environment->SynchronizeClock(pThis->GetTotalClockCycles() / 1500);
+
+   // generate an IRQ
+   pThis->SetIRQ(true);
 }
