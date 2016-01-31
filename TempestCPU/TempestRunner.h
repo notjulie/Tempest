@@ -41,7 +41,6 @@ public:
 
 	// simple accessors
 	std::string GetProcessorStatus(void) { return processorStatus; }
-	uint64_t    GetTotalClockCycles(void) { return totalClockCycles; }
 	bool        IsStopped(void) { return state == Stopped && requestedAction==NoAction; }
 	bool		   IsTerminated(void) { return state == Terminated; }
 	void        SetBreakpoint(uint16_t address, bool set) { breakpoints[address] = set; }
@@ -56,8 +55,9 @@ public:
 	uint8_t  GetStackPointer(void) { return cpu6502.GetS(); }
 
 	// simple dispatches to the TempestBus object
-   void SetDemoMode(void);
-   void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO) { tempestBus.SetTempestIO(tempestSoundIO, tempestVectorIO); }
+   uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
+   void     SetDemoMode(void);
+   void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO) { tempestBus.SetTempestIO(tempestSoundIO, tempestVectorIO); }
 
 private:
 	void	RunnerThread(void);
@@ -77,7 +77,6 @@ private:
 	bool     resetRequested;
 	State    state;
 	Action   requestedAction;
-	uint64_t totalClockCycles;
 
 	TempestBus	tempestBus;
 	CPU6502		cpu6502;

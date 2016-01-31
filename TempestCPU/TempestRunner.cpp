@@ -19,7 +19,6 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	state = Unstarted;
 	requestedAction = NoAction;
 	terminateRequested = false;
-	totalClockCycles = 0;
 	theThread = NULL;
 	for (int i = 0; i < 64 * 1024; ++i)
 		breakpoints[i] = false;
@@ -63,9 +62,7 @@ void TempestRunner::RunnerThread(void)
 		cpu6502.Reset();
 
 		// synchronize our clock with the real world
-		int clockCyclesPer3KHzHalfWave = 1500000 / 6000;
 		environment->Reset();
-		totalClockCycles = 0;
 
 		// run
 		while (!terminateRequested)
@@ -77,50 +74,40 @@ void TempestRunner::RunnerThread(void)
 		      resetRequested = false;
 		   }
 
-			// Run the processor until the 3KHz clock changes
-			int cyclesToRun = (int)(clockCyclesPer3KHzHalfWave - (totalClockCycles % clockCyclesPer3KHzHalfWave));
-			int newClockCycles = 0;
-			while (newClockCycles < cyclesToRun)
+			uint16_t pc = cpu6502.GetPC();
+
+			// pause if we hit a breakpoint
+			if (breakpoints[pc] || state == StepState)
 			{
-			   uint16_t pc = cpu6502.GetPC();
+				state = Stopped;
+				requestedAction = NoAction;
 
-				// pause if we hit a breakpoint
-				if (breakpoints[pc] || state == StepState)
+				while (!terminateRequested)
 				{
-					state = Stopped;
-					requestedAction = NoAction;
-
-					while (!terminateRequested)
+					if (requestedAction == StepAction)
 					{
-						if (requestedAction == StepAction)
-						{
-							state = StepState;
-							break;
-						}
-						else if (requestedAction == ResumeAction)
-						{
-							state = Running;
-							break;
-						}
-						environment->Sleep(50);
+						state = StepState;
+						break;
 					}
+					else if (requestedAction == ResumeAction)
+					{
+						state = Running;
+						break;
+					}
+					environment->Sleep(50);
 				}
-
-				// execute the next instruction
-            int clockCyclesThisInstruction = cpu6502.SingleStep();
-            newClockCycles += clockCyclesThisInstruction;
-            tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
-			   uint16_t newPC = cpu6502.GetPC();
-            if (newPC < 0x9000)
-			   {
-			      char s[100];
-			      sprintf(s, "Bad address %X jumped to from %X", newPC, pc);
-			      throw TempestException(s);
-			   }
 			}
 
-			// update our master counter
-			totalClockCycles += newClockCycles;
+			// execute the next instruction
+         int clockCyclesThisInstruction = cpu6502.SingleStep();
+         tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
+			uint16_t newPC = cpu6502.GetPC();
+         if (newPC < 0x9000)
+			{
+			   char s[100];
+			   sprintf(s, "Bad address %X jumped to from %X", newPC, pc);
+			   throw TempestException(s);
+			}
 		}
 
 		processorStatus = "Exited normally";
