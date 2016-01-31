@@ -7,6 +7,7 @@ AbstractBus::AbstractBus(void)
 {
    // clear
    irq = false;
+   isPaused = false;
    totalClockCycles = 0;
    nextTimerTime = (uint64_t)(int64_t)-1;
 }
