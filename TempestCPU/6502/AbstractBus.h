@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   AbstractBus.h
  * Author: Randy
  *
@@ -37,7 +37,7 @@ private:
    void UpdateTimers(void);
 
 private:
-   typedef struct BusTimer {
+   struct BusTimer {
       uint64_t nextIteration;
       uint32_t period;
       TimerFunction *timerFunction;

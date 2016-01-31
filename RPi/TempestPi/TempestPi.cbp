@@ -67,6 +67,7 @@
 		<Unit filename="TempestPiEnvironment.cpp" />
 		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="../../TempestCPU/6502/AbstractBus.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502Exception.cpp" />
 		<Unit filename="../../TempestCPU/6502/ProcessorStatusWord.cpp" />

@@ -17,12 +17,13 @@ public:
    void LogFrameRate(void) { logFrameRate = true; }
 
 	virtual void WriteColorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteColorRAM(address, value); }
-	virtual void WriteVectorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteVectorRAM(address, value); }
+	virtual void WriteVectorRAM(uint16_t address, uint8_t value, uint64_t cpuTime);
 	virtual bool IsVectorHalt(void);
 	virtual void VectorGo(void);
 	virtual void VectorReset(void);
 
 private:
+   void ProcessVectorData(void);
    void PushFrameToScreen(void);
 
 private:
@@ -36,6 +37,7 @@ private:
 	bool logFrameRate;
 	uint64_t vectorGoCount;
 	uint64_t vectorResetCount;
+	uint64_t lastVectorRAMWrite;
 
 	bool isGo;
 	bool isHalt;

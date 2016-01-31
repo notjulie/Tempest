@@ -33,7 +33,7 @@ public:
    virtual ~AbstractTempestVectorIO(void) {}
 
    virtual void WriteColorRAM(uint16_t address, uint8_t value) = 0;
-   virtual void WriteVectorRAM(uint16_t address, uint8_t value) = 0;
+   virtual void WriteVectorRAM(uint16_t address, uint8_t value, uint64_t cpuTime) = 0;
    virtual bool IsVectorHalt(void) = 0;
    virtual void VectorGo(void) = 0;
    virtual void VectorReset(void) = 0;

@@ -174,7 +174,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // vector RAM
    if (IsVectorRAMAddress(address))
    {
-		tempestVectorIO->WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
+		tempestVectorIO->WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value, GetTotalClockCycles());
 		vectorRAM[address - VECTOR_RAM_BASE] = value;
       return;
    }

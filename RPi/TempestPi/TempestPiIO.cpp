@@ -9,6 +9,7 @@ TempestPiIO::TempestPiIO(void)
    logFrameRate = false;
    vectorGoCount = 0;
    vectorResetCount = 0;
+   lastVectorRAMWrite = 0;
 
    vectorLists.resize(20);
    mostRecentVectors = 0;
@@ -55,13 +56,20 @@ void TempestPiIO::PushFrameToScreen(void)
 }
 
 
-void TempestPiIO::VectorGo(void)
+void TempestPiIO::WriteVectorRAM(uint16_t address, uint8_t value, uint64_t cpuTime)
 {
-   // make a note of it for diagnostic purposes
-   ++vectorGoCount;
+   // do the write
+   vectorInterpreter.WriteVectorRAM(address, value);
 
-   // this is the 6502 app telling us that the vector data is ready to go to
-   // the screen, so interpret the vectors and store them in the next slot
+   // if it's been a while since the last write we assume that the vector
+   // data is stable and now is a good time to process it
+   if (cpuTime - lastVectorRAMWrite > 800)
+      ProcessVectorData();
+   lastVectorRAMWrite = cpuTime;
+}
+
+void TempestPiIO::ProcessVectorData(void)
+{
    int nextIndex = mostRecentVectors + 1;
    if (nextIndex >= vectorLists.size())
       nextIndex = 0;
@@ -73,6 +81,12 @@ void TempestPiIO::VectorGo(void)
 
    // set this vector list as the new official list to display
    mostRecentVectors = nextIndex;
+}
+
+void TempestPiIO::VectorGo(void)
+{
+   // make a note of it for diagnostic purposes
+   ++vectorGoCount;
 }
 
 void TempestPiIO::VectorReset(void)

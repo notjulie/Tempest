@@ -1,10 +1,8 @@
 
-Implement OP #C2
-
-Start backing up RPi images
-
-Add Tempest to RPi boot
 
 Fix screen width so that bowling alley (etc.) is not clipped
 
-Logging/reporting of errors on TempestPi screen
+Averaging of vectors to deal with jitter
+
+Onscreen menu for selecting options
+
