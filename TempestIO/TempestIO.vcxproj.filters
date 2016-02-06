@@ -72,6 +72,9 @@
     <ClInclude Include="Vector\TempestColor.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PacketStream.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Noise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

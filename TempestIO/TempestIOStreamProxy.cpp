@@ -18,7 +18,9 @@
 #include "TempestIOStreamProxy.h"
 
 
-TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
+TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
+   :
+      stream(_stream)
 {
    // clear
    buttons = 0;
@@ -33,39 +35,43 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *stream)
 void TempestIOStreamProxy::SetSoundChannelFrequency(int channel, int frequency)
 {
    // pack the op and the channel into the first byte
-   stream->Write((OP_SOUND_FREQUENCY << 5) | channel);
+   stream.Write((OP_SOUND_FREQUENCY << 5) | channel);
 
    // waveform in the second byte
-   stream->Write(frequency);
+   stream.Write(frequency);
 }
 
 void TempestIOStreamProxy::SetSoundChannelVolume(int channel, int volume)
 {
    // pack the op and the channel into the first byte
-   stream->Write((OP_SOUND_VOLUME << 5) | channel);
+   stream.Write((OP_SOUND_VOLUME << 5) | channel);
 
    // waveform in the second byte
-   stream->Write(volume);
+   stream.Write(volume);
 }
 
 void TempestIOStreamProxy::SetSoundChannelWaveform(int channel, int waveform)
 {
    // pack the op and the channel into the first byte
-   stream->Write((OP_SOUND_WAVE << 5) | channel);
+   stream.Write((OP_SOUND_WAVE << 5) | channel);
 
    // waveform in the second byte
-   stream->Write(waveform);
+   stream.Write(waveform);
 }
 
 void TempestIOStreamProxy::Tick6KHz(void)
 {
+   // end the current packet and start a new one
+   stream.EndPacket();
+   stream.StartPacket();
+
 	// send just the opcode with no data
-	stream->Write(OP_6KHZ_TICK << 5);
+	stream.Write(OP_6KHZ_TICK << 5);
 
    // and check the return stream
    for (;;)
    {
-      int b = stream->Read();
+      int b = stream.Read();
       if (b < 0)
          break;
 
@@ -94,7 +100,7 @@ void TempestIOStreamProxy::SetButtonLED(ButtonFlag button, bool value)
    // send it if it changed
    if (leds != oldLEDs)
    {
-      stream->Write(OP_BUTTON_LEDS << 5);
-      stream->Write(leds);
+      stream.Write(OP_BUTTON_LEDS << 5);
+      stream.Write(leds);
    }
 }

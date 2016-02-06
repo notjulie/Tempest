@@ -2,6 +2,8 @@
 #ifndef TEMPESTIOSTREAMLISTENER_H
 #define TEMPESTIOSTREAMLISTENER_H
 
+#include "PacketStream.h"
+
 class AbstractTempestSoundIO;
 class AbstractTempestStream;
 
@@ -21,7 +23,7 @@ private:
    };
 
 private:
-   AbstractTempestStream *stream;
+   PacketStream stream;
    AbstractTempestSoundIO *tempestIO;
 
    State state;

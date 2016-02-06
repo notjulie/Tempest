@@ -3,6 +3,7 @@
 #define TEMPESTIOSTREAMPROXY_H
 
 #include "AbstractTempestIO.h"
+#include "PacketStream.h"
 
 class AbstractTempestStream;
 
@@ -20,7 +21,7 @@ public:
    virtual uint8_t GetEncoder(void) { return encoder; }
 
 private:
-   AbstractTempestStream	*stream;
+   PacketStream stream;
    uint8_t buttons;
    uint8_t encoder;
    uint8_t leds;

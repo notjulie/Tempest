@@ -142,6 +142,7 @@
     <ClInclude Include="AbstractTempestStream.h" />
     <ClInclude Include="AbstractTempestIO.h" />
     <ClInclude Include="Noise.h" />
+    <ClInclude Include="PacketStream.h" />
     <ClInclude Include="SoundChannel.h" />
     <ClInclude Include="SoundGenerator.h" />
     <ClInclude Include="stdafx.h" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Noise.cpp" />
+    <ClCompile Include="PacketStream.cpp" />
     <ClCompile Include="SoundChannel.cpp" />
     <ClCompile Include="SoundGenerator.cpp" />
     <ClCompile Include="stdafx.cpp">

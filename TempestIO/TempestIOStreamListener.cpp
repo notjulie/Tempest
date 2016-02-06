@@ -8,7 +8,9 @@
 #include "TempestIOStreamListener.h"
 
 
-TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *stream, AbstractTempestSoundIO *tempestIO)
+TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *_stream, AbstractTempestSoundIO *tempestIO)
+   :
+   stream(_stream)
 {
    // copy parameters
    this->stream = stream;
@@ -44,14 +46,16 @@ void TempestIOStreamListener::Service(void)
          --encoder;
       }
 
-      stream->Write(packet.flags1);
+      stream.StartPacket();
+      stream.Write(packet.flags1);
+      stream.EndPacket();
    }
 
 	// process any new data on the stream
    for (;;)
    {
       // get a byte from the stream
-      int b = stream->Read();
+      int b = stream.Read();
       if (b < 0)
          break;
 
