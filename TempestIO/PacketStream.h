@@ -14,7 +14,15 @@ public:
    int Read(void);
 
 private:
+   enum ReadState {
+      ReadIdle,
+      InPacket,
+      Escape
+   };
+
+private:
    AbstractTempestStream *stream;
+   ReadState readState;
 };
 
 #endif
