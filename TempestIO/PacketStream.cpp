@@ -22,24 +22,37 @@ PacketStream::PacketStream(AbstractTempestStream *stream)
 
 int PacketStream::Read(void)
 {
-   for (;;)
+   // process incoming data if we can
+   while (readState != HavePacket)
    {
       int b = stream->Read();
       if (b < 0)
-         return b;
+         return -1;
 
       switch (readState)
       {
       case ReadIdle:
          if (b == START_OF_PACKET)
+         {
             readState = InPacket;
+            incomingPacketLength = 0;
+         }
          break;
 
       case InPacket:
          switch (b)
          {
          case END_OF_PACKET:
-            readState = ReadIdle;
+            if (VerifyIncomingPacket())
+            {
+               readState = HavePacket;
+               incomingPacketLength -= 2;
+               incomingPacketReadIndex = 0;
+            }
+            else
+            {
+               readState = ReadIdle;
+            }
             break;
 
          case ESCAPE:
@@ -47,7 +60,10 @@ int PacketStream::Read(void)
             break;
 
          default:
-            return b;
+            incomingPacket[incomingPacketLength++] = b;
+            if (incomingPacketLength >= sizeof(incomingPacket))
+               readState = ReadIdle;
+            break;
          }
          break;
 
@@ -55,14 +71,42 @@ int PacketStream::Read(void)
          b += ESCAPE;
          if (b <= 255)
          {
-            readState = InPacket;
-            return b;
+            incomingPacket[incomingPacketLength++] = b;
+            if (incomingPacketLength >= sizeof(incomingPacket))
+               readState = ReadIdle;
          }
-         readState = ReadIdle;
+         else
+         {
+            readState = ReadIdle;
+         }
          break;
       }
    }
+
+   // we're in HavePacket state
+   uint8_t result = incomingPacket[incomingPacketReadIndex++];
+   if (incomingPacketReadIndex >= incomingPacketLength)
+      readState = ReadIdle;
+   return result;
 }
+
+bool PacketStream::VerifyIncomingPacket(void)
+{
+   // it must be greater than two bytes long: length and checksum and one data byte
+   if (incomingPacketLength < 3)
+      return false;
+   if (incomingPacket[incomingPacketLength - 1] != (uint8_t)(incomingPacketLength-1))
+      return false;
+
+   uint8_t checksum = 0;
+   for (int i = 0; i < incomingPacketLength - 2; ++i)
+      checksum += incomingPacket[i];
+   if (incomingPacket[incomingPacketLength - 2] != (uint8_t)checksum)
+      return false;
+
+   return true;
+}
+
 
 void PacketStream::Write(uint8_t b)
 {
@@ -75,15 +119,26 @@ void PacketStream::Write(uint8_t b)
    {
       stream->Write(b);
    }
+
+   ++outgoingPacketLength;
+   outgoingPacketCheckSum += b;
 }
 
 
 void PacketStream::StartPacket(void)
 {
    stream->Write(START_OF_PACKET);
+   outgoingPacketCheckSum = 0;
+   outgoingPacketLength = 0;
 }
 
 void PacketStream::EndPacket(void)
 {
+   // write the length and checksum with escaping
+   Write(outgoingPacketCheckSum);
+   Write(outgoingPacketLength);
+
+   // write the end of packet without escaping
    stream->Write(END_OF_PACKET);
 }
+
