@@ -68,6 +68,7 @@
 		<Unit filename="TempestPiIO.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="../../TempestCPU/6502/AbstractBus.cpp" />
+		<Unit filename="../../TempestCPU/6502/AbstractBus.h" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502Exception.cpp" />
 		<Unit filename="../../TempestCPU/6502/ProcessorStatusWord.cpp" />
@@ -83,6 +84,7 @@
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.h" />
+		<Unit filename="../../TempestIO/AbstractTempestIO.h" />
 		<Unit filename="../../TempestIO/TempestIOStreamProxy.cpp" />
 		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />

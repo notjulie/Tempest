@@ -22,9 +22,11 @@ public:
    virtual uint8_t ReadByte(uint16_t address) = 0;
    virtual void    WriteByte(uint16_t address, uint8_t value) = 0;
 
+   bool IsPaused(void) { return isPaused; }
    uint64_t GetTotalClockCycles(void);
    void IncrementClockCycleCount(int clockCycles);
    bool IsIRQ(void) { return irq; }
+   void SetIsPaused(bool isPaused) { this->isPaused = isPaused; }
 
 protected:
    typedef void TimerFunction(AbstractBus *bus);
@@ -45,6 +47,7 @@ private:
 
 private:
    bool irq;
+   bool isPaused;
    uint64_t totalClockCycles;
    uint64_t nextTimerTime;
    std::vector<BusTimer> timers;

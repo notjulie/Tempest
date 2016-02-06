@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   TempestBus.h
  * Author: Randy
  *
@@ -39,11 +39,12 @@ public:
    virtual void    WriteByte(uint16_t address, uint8_t value);
 
 private:
-   static void Tick6KHz(AbstractBus *bus);
-   static void Tick250Hz(AbstractBus *bus);
+   void  HandleTick250Hz(void);
 
 private:
 	static bool		IsVectorRAMAddress(uint16_t address);
+   static void Tick6KHz(AbstractBus *bus);
+   static void Tick250Hz(AbstractBus *bus);
 
 private:
 	// forbidden items
@@ -64,10 +65,12 @@ private:
    AbstractTempestSoundIO *tempestSoundIO;
    AbstractTempestVectorIO *tempestVectorIO;
 
+   uint64_t lastPlayer2ButtonDownTime;
    bool demoMode;
 	bool selfTest;
 	bool slam;
 	bool clock3KHzIsHigh;
+	bool lastPlayer2ButtonState;
 };
 
 #ifdef _WIN32

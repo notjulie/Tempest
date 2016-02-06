@@ -22,6 +22,8 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 	slam = false;
    tempestSoundIO = NULL;
    tempestVectorIO = NULL;
+   lastPlayer2ButtonState = false;
+   lastPlayer2ButtonDownTime = 0;
 
    mainRAM.resize(MAIN_RAM_SIZE);
    colorRAM.resize(COLOR_RAM_SIZE);
@@ -75,12 +77,17 @@ uint8_t TempestBus::ReadByte(uint16_t address)
    {
       switch (address)
       {
-      case 0x011F:
+      case COPY_PROTECTION_FLAG_ADDRESS:
          // this is a value that gets set on startup that seems to be a
          // POKEY copy-protection thing that scrozzles things and causes
          // unpredictable lockups if it is not zero... so just force it to
          // zero
          return 0;
+
+      case MAX_START_LEVEL_ADDRESS:
+         // if I set this I can start on level 80 without the other features
+         // of demo mode enabled
+         return 80;
 
       default:
          return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
@@ -283,10 +290,34 @@ void TempestBus::Tick6KHz(AbstractBus *bus)
 void TempestBus::Tick250Hz(AbstractBus *bus)
 {
    TempestBus *pThis = static_cast<TempestBus *>(bus);
+   pThis->HandleTick250Hz();
+}
+
+void TempestBus::HandleTick250Hz(void)
+{
+   uint64_t now = GetTotalClockCycles();
+
+   // check for double tap on player two button
+   bool player2ButtonDown = (tempestSoundIO->GetButtons() & TWO_PLAYER_BUTTON) != 0;
+   if (player2ButtonDown != lastPlayer2ButtonState)
+   {
+      lastPlayer2ButtonState = player2ButtonDown;
+      if (player2ButtonDown)
+      {
+         // if this is a double tap we toggle the paused state
+         if (now - lastPlayer2ButtonDownTime < 500000)
+         {
+            SetIsPaused(!IsPaused());
+            if (IsPaused())
+               tempestSoundIO->AllSoundOff();
+         }
+         lastPlayer2ButtonDownTime = now;
+      }
+   }
 
    // synchronize the CPU with the realtime clock
-   pThis->environment->SynchronizeClock(pThis->GetTotalClockCycles() / 1500);
+   environment->SynchronizeClock(now / 1500);
 
    // generate an IRQ
-   pThis->SetIRQ(true);
+   SetIRQ(true);
 }

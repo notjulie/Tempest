@@ -36,6 +36,10 @@ void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 	float actualDY = (_y << (14 - binaryScale));
 	actualDY /= (128 + linearScale);
 
+	// some of the screens are wider than our 16-bit range that we clip to.
+	// so downscale the X distance a little
+	actualDX *= 0.93F;
+
 	// calculate the line endpoints extended to 32 bit
 	int startX = x;
 	int startY = y;

@@ -25,6 +25,11 @@ public:
    virtual uint8_t GetButtons(void) = 0;
    virtual uint8_t GetEncoder(void) = 0;
    virtual void SetButtonLED(ButtonFlag button, bool value) = 0;
+
+   void AllSoundOff(void) {
+      for (int i=0; i<8; ++i)
+         SetSoundChannelVolume(i, 0);
+   }
 };
 
 class AbstractTempestVectorIO
