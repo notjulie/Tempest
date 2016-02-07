@@ -3,6 +3,7 @@
 
 #include "AbstractTempestIO.h"
 #include "AbstractTempestStream.h"
+#include "SoundIOPacket.h"
 #include "TempestStreamProtocol.h"
 
 #include "TempestIOStreamListener.h"
@@ -17,7 +18,6 @@ TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *_stream,
    this->tempestIO = tempestIO;
 
    // clear
-   state = IDLE;
    encoder = 0;
    buttons = 0;
 }
@@ -54,63 +54,25 @@ void TempestIOStreamListener::Service(void)
 	// process any new data on the stream
    for (;;)
    {
-      // get a byte from the stream
-      int b = stream.Read();
-      if (b < 0)
+      // read a packet from the stream
+      uint8_t packetBuffer[SoundIOPacket::PacketLength];
+      int packetLength = stream.ReadPacket(packetBuffer, sizeof(packetBuffer));
+      if (packetLength != SoundIOPacket::PacketLength)
          break;
+      SoundIOPacket packet(packetBuffer);
 
-      // switch according to state
-      switch (state)
+      // sent the packet data to the I/O module
+      for (int i = 0; i < packet.GetElapsedTicks(); ++i)
+         tempestIO->Tick6KHz();
+
+      for (int channel = 0; channel < 8; ++channel)
       {
-      case IDLE:
-         switch (b>>5)
-         {
-         case OP_6KHZ_TICK:
-            // tick
-            tempestIO->Tick6KHz();
-            break;
-
-         case OP_BUTTON_LEDS:
-            state = BUTTON_LEDS;
-            break;
-
-         case OP_SOUND_VOLUME:
-            state = SOUND_VOLUME;
-            soundChannel = b & 7;
-            break;
-
-         case OP_SOUND_WAVE:
-            state = SOUND_WAVE;
-            soundChannel = b & 7;
-            break;
-
-         case OP_SOUND_FREQUENCY:
-            state = SOUND_FREQUENCY;
-            soundChannel = b & 7;
-            break;
-         }
-         break;
-
-      case SOUND_FREQUENCY:
-         tempestIO->SetSoundChannelFrequency(soundChannel, b);
-         state = IDLE;
-         break;
-
-      case SOUND_VOLUME:
-         tempestIO->SetSoundChannelVolume(soundChannel, b);
-         state = IDLE;
-         break;
-
-      case SOUND_WAVE:
-         tempestIO->SetSoundChannelWaveform(soundChannel, b);
-         state = IDLE;
-         break;
-
-      case BUTTON_LEDS:
-         tempestIO->SetButtonLED(ONE_PLAYER_BUTTON, (b&ONE_PLAYER_BUTTON) != 0);
-         tempestIO->SetButtonLED(TWO_PLAYER_BUTTON, (b&TWO_PLAYER_BUTTON) != 0);
-         state = IDLE;
-         break;
+         tempestIO->SetSoundChannelFrequency(channel, packet.GetSoundChannelFrequency(channel));
+         tempestIO->SetSoundChannelWaveform(channel, packet.GetSoundChannelWaveform(channel));
+         tempestIO->SetSoundChannelVolume(channel, packet.GetSoundChannelVolume(channel));
       }
+
+      tempestIO->SetButtonLED(ONE_PLAYER_BUTTON, packet.GetButtonLED(ONE_PLAYER_BUTTON));
+      tempestIO->SetButtonLED(TWO_PLAYER_BUTTON, packet.GetButtonLED(TWO_PLAYER_BUTTON));
    }
 }

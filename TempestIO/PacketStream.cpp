@@ -22,12 +22,55 @@ PacketStream::PacketStream(AbstractTempestStream *stream)
 
 int PacketStream::Read(void)
 {
-   // process incoming data if we can
+   // process incoming data
+   ProcessIncomingData();
+
+   // if we don't have a fully received packet never mind
+   if (readState != HavePacket)
+      return -1;
+
+   // return the next byte in the packet
+   uint8_t result = incomingPacket[incomingPacketReadIndex++];
+   if (incomingPacketReadIndex >= incomingPacketLength)
+      readState = ReadIdle;
+   return result;
+}
+
+int PacketStream::ReadPacket(uint8_t *buffer, int bufferLength)
+{
+   // process incoming data
+   ProcessIncomingData();
+
+   // if we don't have a fully received packet never mind
+   if (readState != HavePacket)
+      return -1;
+
+   // return the whole packet if we can
+   if (incomingPacketReadIndex != 0)
+   {
+      readState = ReadIdle;
+      return -1;
+   }
+   if (incomingPacketLength > bufferLength)
+   {
+      readState = ReadIdle;
+      return -1;
+   }
+
+   for (int i = 0; i < incomingPacketLength; ++i)
+      buffer[i] = incomingPacket[i];
+   readState = ReadIdle;
+   return incomingPacketLength;
+}
+
+
+void PacketStream::ProcessIncomingData(void)
+{
    while (readState != HavePacket)
    {
       int b = stream->Read();
       if (b < 0)
-         return -1;
+         return;
 
       switch (readState)
       {
@@ -82,12 +125,6 @@ int PacketStream::Read(void)
          break;
       }
    }
-
-   // we're in HavePacket state
-   uint8_t result = incomingPacket[incomingPacketReadIndex++];
-   if (incomingPacketReadIndex >= incomingPacketLength)
-      readState = ReadIdle;
-   return result;
 }
 
 bool PacketStream::VerifyIncomingPacket(void)

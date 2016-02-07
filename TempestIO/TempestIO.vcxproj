@@ -145,6 +145,7 @@
     <ClInclude Include="PacketStream.h" />
     <ClInclude Include="SoundChannel.h" />
     <ClInclude Include="SoundGenerator.h" />
+    <ClInclude Include="SoundIOPacket.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TempestIOStreamListener.h" />
     <ClInclude Include="TempestIOStreamProxy.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="PacketStream.cpp" />
     <ClCompile Include="SoundChannel.cpp" />
     <ClCompile Include="SoundGenerator.cpp" />
+    <ClCompile Include="SoundIOPacket.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

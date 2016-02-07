@@ -66,14 +66,17 @@
     <ClInclude Include="WaveStreamer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Noise.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector\TempestColor.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PacketStream.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundIOPacket.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +117,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PacketStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundIOPacket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

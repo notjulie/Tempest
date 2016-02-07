@@ -22,51 +22,46 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
    :
       stream(_stream)
 {
+   // copy parameters
+   this->stream = stream;
+
    // clear
    buttons = 0;
    encoder = 0;
-   leds = 0;
-
-   // copy parameters
-	this->stream = stream;
+   ticksSinceLastSend = 0;
 }
 
 
 void TempestIOStreamProxy::SetSoundChannelFrequency(int channel, int frequency)
 {
-   // pack the op and the channel into the first byte
-   stream.Write((OP_SOUND_FREQUENCY << 5) | channel);
-
-   // waveform in the second byte
-   stream.Write(frequency);
+   currentState.SetSoundChannelFrequency(channel, frequency);
 }
 
 void TempestIOStreamProxy::SetSoundChannelVolume(int channel, int volume)
 {
-   // pack the op and the channel into the first byte
-   stream.Write((OP_SOUND_VOLUME << 5) | channel);
-
-   // waveform in the second byte
-   stream.Write(volume);
+   currentState.SetSoundChannelVolume(channel, volume);
 }
 
 void TempestIOStreamProxy::SetSoundChannelWaveform(int channel, int waveform)
 {
-   // pack the op and the channel into the first byte
-   stream.Write((OP_SOUND_WAVE << 5) | channel);
-
-   // waveform in the second byte
-   stream.Write(waveform);
+   currentState.SetSoundChannelWaveform(channel, waveform);
 }
 
 void TempestIOStreamProxy::Tick6KHz(void)
 {
-   // end the current packet and start a new one
-   stream.EndPacket();
-   stream.StartPacket();
+   // send a packet if it's time
+   if (++ticksSinceLastSend >= 6)
+   {
+      currentState.SetElapsedTicks(6);
 
-	// send just the opcode with no data
-	stream.Write(OP_6KHZ_TICK << 5);
+      stream.StartPacket();
+      const uint8_t* packet = currentState.GetPacketData();
+      int packetLength = currentState.GetLength();
+      for (int i = 0; i < packetLength; ++i)
+         stream.Write(packet[i]);
+      stream.EndPacket();
+      ticksSinceLastSend = 0;
+   }
 
    // and check the return stream
    for (;;)
@@ -89,18 +84,5 @@ void TempestIOStreamProxy::Tick6KHz(void)
 
 void TempestIOStreamProxy::SetButtonLED(ButtonFlag button, bool value)
 {
-   uint8_t oldLEDs = leds;
-
-   // update our local value
-   if (value)
-      leds |= button;
-   else
-      leds &= ~button;
-
-   // send it if it changed
-   if (leds != oldLEDs)
-   {
-      stream.Write(OP_BUTTON_LEDS << 5);
-      stream.Write(leds);
-   }
+   currentState.SetButtonLED(button, value);
 }

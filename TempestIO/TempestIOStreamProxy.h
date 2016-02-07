@@ -4,6 +4,7 @@
 
 #include "AbstractTempestIO.h"
 #include "PacketStream.h"
+#include "SoundIOPacket.h"
 
 class AbstractTempestStream;
 
@@ -22,9 +23,10 @@ public:
 
 private:
    PacketStream stream;
+   SoundIOPacket currentState;
    uint8_t buttons;
    uint8_t encoder;
-   uint8_t leds;
+   int ticksSinceLastSend;
 };
 
 #endif

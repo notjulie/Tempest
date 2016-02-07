@@ -12,8 +12,10 @@ public:
    void StartPacket(void);
    void Write(uint8_t b);
    int Read(void);
+   int ReadPacket(uint8_t *buffer, int bufferLength);
 
 private:
+   void ProcessIncomingData(void);
    bool VerifyIncomingPacket(void);
 
 private:
