@@ -36,7 +36,7 @@ int PacketStream::Read(void)
    return result;
 }
 
-int PacketStream::ReadPacket(uint8_t *buffer, int bufferLength)
+int PacketStream::ReadPacket(uint8_t *buffer, unsigned bufferLength)
 {
    // process incoming data
    ProcessIncomingData();
@@ -57,7 +57,7 @@ int PacketStream::ReadPacket(uint8_t *buffer, int bufferLength)
       return -1;
    }
 
-   for (int i = 0; i < incomingPacketLength; ++i)
+   for (unsigned i = 0; i < incomingPacketLength; ++i)
       buffer[i] = incomingPacket[i];
    readState = ReadIdle;
    return incomingPacketLength;
@@ -123,6 +123,9 @@ void PacketStream::ProcessIncomingData(void)
             readState = ReadIdle;
          }
          break;
+
+      case HavePacket:
+      	break;
       }
    }
 }
@@ -136,7 +139,7 @@ bool PacketStream::VerifyIncomingPacket(void)
       return false;
 
    uint8_t checksum = 0;
-   for (int i = 0; i < incomingPacketLength - 2; ++i)
+   for (unsigned i = 0; i < incomingPacketLength - 2; ++i)
       checksum += incomingPacket[i];
    if (incomingPacket[incomingPacketLength - 2] != (uint8_t)checksum)
       return false;

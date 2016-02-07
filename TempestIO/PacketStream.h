@@ -12,7 +12,7 @@ public:
    void StartPacket(void);
    void Write(uint8_t b);
    int Read(void);
-   int ReadPacket(uint8_t *buffer, int bufferLength);
+   int ReadPacket(uint8_t *buffer, unsigned bufferLength);
 
 private:
    void ProcessIncomingData(void);
@@ -31,9 +31,9 @@ private:
    ReadState readState;
    uint8_t outgoingPacketLength;
    uint8_t outgoingPacketCheckSum;
-   int incomingPacketLength;
+   unsigned incomingPacketLength;
    uint8_t incomingPacket[2048];
-   int incomingPacketReadIndex;
+   unsigned incomingPacketReadIndex;
 };
 
 #endif
