@@ -17,7 +17,7 @@ public:
 	virtual void SetSoundChannelVolume(int channel, int volume);
 	virtual void SetSoundChannelWaveform(int channel, int waveform);
    virtual void SetButtonLED(ButtonFlag button, bool value);
-   virtual void Tick6KHz(void);
+   virtual void Delay(int clockCycles);
    virtual uint8_t GetButtons(void) { return buttons; }
    virtual uint8_t GetEncoder(void) { return encoder; }
 
@@ -26,7 +26,7 @@ private:
    SoundIOPacket currentState;
    uint8_t buttons;
    uint8_t encoder;
-   int ticksSinceLastSend;
+   int clockCyclesSinceLastSend;
 };
 
 #endif

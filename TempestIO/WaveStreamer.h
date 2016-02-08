@@ -14,13 +14,13 @@ protected:
       WAVE_EVENT_VOLUME,
       WAVE_EVENT_FREQUENCY,
       WAVE_EVENT_WAVEFORM,
-      WAVE_EVENT_TICK
+      WAVE_EVENT_DELAY
    };
 
    struct WaveStreamEvent {
       WaveStreamEventType	eventType;
       uint8_t	channel;
-      uint8_t	value;
+      int	value;
    };
 
 
@@ -31,7 +31,7 @@ public:
    void SetChannelFrequency(int channel, int frequency);
    void SetChannelVolume(int channel, int volume);
    void SetChannelWaveform(int channel, int waveform);
-   void Tick6KHz(void);
+   void Delay(int clockCycles);
 
    bool HaveSoundOutput(void);
 
@@ -41,7 +41,7 @@ protected:
    virtual void  QueueEvent(const WaveStreamEvent &event);
 
 private:
-   void  ProcessTick(void);
+   void  ProcessDelay(int clockCycles);
 
 private:
    int bufferSampleCount;
@@ -52,7 +52,7 @@ private:
    WaveStreamEvent	eventQueue[WAVE_STREAM_EVENT_QUEUE_SIZE];
    int	queueIn;
    int	queueOut;
-   int   sampleCounter;
+   int clockCycleCounter;
 };
 
 #endif

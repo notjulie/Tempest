@@ -14,7 +14,7 @@ WaveStreamer::WaveStreamer(int16_t *buffer, int _bufferSampleCount)
    // clear
    queueIn = 0;
    queueOut = 0;
-   sampleCounter = 0;
+   clockCycleCounter = 0;
    samplesInInputBuffer = 0;
 }
 
@@ -49,10 +49,11 @@ void WaveStreamer::SetChannelWaveform(int channel, int waveform)
    QueueEvent(event);
 }
 
-void WaveStreamer::Tick6KHz(void)
+void WaveStreamer::Delay(int clockCycles)
 {
    WaveStreamEvent	event;
-   event.eventType = WAVE_EVENT_TICK;
+   event.eventType = WAVE_EVENT_DELAY;
+   event.value = clockCycles;
    QueueEvent(event);
 }
 
@@ -85,8 +86,8 @@ bool WaveStreamer::ProcessNextEvent(void)
       soundGenerator.SetChannelWaveform(event.channel, event.value);
       break;
 
-   case WAVE_EVENT_TICK:
-      ProcessTick();
+   case WAVE_EVENT_DELAY:
+      ProcessDelay(event.value);
       break;
    }
 
@@ -104,7 +105,7 @@ void WaveStreamer::FillBuffer(int16_t *buffer, int sampleCount)
 
    // if we don't have enough data fake the passage of time until we do
    while (samplesInInputBuffer < sampleCount)
-      ProcessTick();
+      ProcessDelay(250);
 
    // copy the data... the Pokey output is very low amplitude... beef it up to the level we like
    for (int i = 0; i < sampleCount; ++i)
@@ -116,12 +117,14 @@ void WaveStreamer::FillBuffer(int16_t *buffer, int sampleCount)
 }
 
 
-void WaveStreamer::ProcessTick(void)
+void WaveStreamer::ProcessDelay(int clockCycles)
 {
+   // update our clock cycle count
+   clockCycleCounter += clockCycles;
+
    // figure out how many samples to add for this tick
-   sampleCounter += 44100;
-   int samplesToAdd = (int)(sampleCounter / 6000);
-   sampleCounter -= samplesToAdd * 6000;
+   int samplesToAdd = clockCycleCounter * 44100 / 1500000;
+   clockCycleCounter -= samplesToAdd * 1500000 / 44100;
 
    // make sure we have room
    if (samplesInInputBuffer + samplesToAdd > bufferSampleCount)

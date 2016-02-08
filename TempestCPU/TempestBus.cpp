@@ -284,7 +284,7 @@ void TempestBus::Tick6KHz(AbstractBus *bus)
    pThis->clock3KHzIsHigh = !pThis->clock3KHzIsHigh;
 
    // give the sound output its heartbeat
-   pThis->tempestSoundIO->Tick6KHz();
+   pThis->tempestSoundIO->Delay(250);
 }
 
 void TempestBus::Tick250Hz(AbstractBus *bus)

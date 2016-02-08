@@ -61,9 +61,8 @@ void TempestIOStreamListener::Service(void)
          break;
       SoundIOPacket packet(packetBuffer);
 
-      // sent the packet data to the I/O module
-      for (int i = 0; i < packet.GetElapsedTicks(); ++i)
-         tempestIO->Tick6KHz();
+      // send the packet data to the I/O module
+      tempestIO->Delay(1500);
 
       for (int channel = 0; channel < 8; ++channel)
       {
