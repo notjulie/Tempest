@@ -8,6 +8,7 @@ Win32TempestSoundIO::Win32TempestSoundIO(void)
    buttons = 0;
    encoder = 0;
    leds = 0;
+   cpuTime = 0;
 }
 
 Win32TempestSoundIO::~Win32TempestSoundIO(void)
@@ -29,9 +30,10 @@ void Win32TempestSoundIO::SetSoundChannelWaveform(int channel, int waveform)
 	waveStreamer.SetChannelWaveform(channel, waveform);
 }
 
-void Win32TempestSoundIO::Delay(int clockCycles)
+void Win32TempestSoundIO::SetTime(uint64_t clockCycles)
 {
-	waveStreamer.Delay(clockCycles);
+	waveStreamer.Delay((int)(clockCycles - cpuTime));
+   cpuTime = clockCycles;
 }
 
 

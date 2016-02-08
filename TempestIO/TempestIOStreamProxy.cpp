@@ -28,7 +28,8 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
    // clear
    buttons = 0;
    encoder = 0;
-   clockCyclesSinceLastSend = 0;
+   cpuTime = 0;
+   lastSendTime = 0;
 }
 
 
@@ -47,15 +48,15 @@ void TempestIOStreamProxy::SetSoundChannelWaveform(int channel, int waveform)
    currentState.SetSoundChannelWaveform(channel, waveform);
 }
 
-void TempestIOStreamProxy::Delay(int clockCycles)
+void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
 {
    // increment our clock
-   clockCyclesSinceLastSend += clockCycles;
+   cpuTime += clockCycles;
 
    // send a packet if it's time
-   if (clockCyclesSinceLastSend > 1500)
+   if ((cpuTime - lastSendTime) > 3000)
    {
-      clockCyclesSinceLastSend -= 1500;
+      lastSendTime += 3000;
       currentState.SetElapsedTicks(6);
 
       stream.StartPacket();

@@ -197,14 +197,14 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
    {
-      pokey1.WriteByte((uint16_t)(address - POKEY1_BASE), value);
+      pokey1.WriteByte((uint16_t)(address - POKEY1_BASE), value, GetTotalClockCycles());
       return;
    }
 
    // POKEY 2
    if (address >= POKEY2_BASE && address <= POKEY2_END)
    {
-		pokey2.WriteByte((uint16_t)(address - POKEY2_BASE), value);
+      pokey2.WriteByte((uint16_t)(address - POKEY2_BASE), value, GetTotalClockCycles());
       return;
    }
 
@@ -284,7 +284,7 @@ void TempestBus::Tick6KHz(AbstractBus *bus)
    pThis->clock3KHzIsHigh = !pThis->clock3KHzIsHigh;
 
    // give the sound output its heartbeat
-   pThis->tempestSoundIO->Delay(250);
+   pThis->tempestSoundIO->SetTime(pThis->GetTotalClockCycles());
 }
 
 void TempestBus::Tick250Hz(AbstractBus *bus)

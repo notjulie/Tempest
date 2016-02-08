@@ -49,7 +49,7 @@ public:
    virtual void SetSoundChannelFrequency(int channel, int frequency);
    virtual void SetSoundChannelVolume(int channel, int volume);
    virtual void SetSoundChannelWaveform(int channel, int waveform);
-   virtual void Delay(int clockCycles);
+   virtual void SetTime(uint64_t clockCycles);
    virtual uint8_t GetButtons(void) { return buttons; }
    virtual uint8_t GetEncoder(void) { return encoder; }
    virtual void SetButtonLED(ButtonFlag button, bool value);
@@ -67,6 +67,7 @@ private:
    uint8_t buttons;
    uint8_t encoder;
    uint8_t leds;
+   uint64_t cpuTime;
 };
 
 

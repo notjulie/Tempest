@@ -50,7 +50,7 @@ uint8_t Pokey::ReadByte(uint16_t address)
 	}
 }
 
-void Pokey::WriteByte(uint16_t address, uint8_t value)
+void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
 {
 	// sanity check
 	if (tempestIO == NULL)
@@ -59,38 +59,46 @@ void Pokey::WriteByte(uint16_t address, uint8_t value)
 	switch (address)
 	{
 	case 0x00:
+      tempestIO->SetTime(busTime);
 		tempestIO->SetSoundChannelFrequency(baseSoundChannel, value);
 		break;
 
 	case 0x01:
-		tempestIO->SetSoundChannelVolume(baseSoundChannel, value & 0x0F);
+      tempestIO->SetTime(busTime);
+      tempestIO->SetSoundChannelVolume(baseSoundChannel, value & 0x0F);
 		tempestIO->SetSoundChannelWaveform(baseSoundChannel, value >> 4);
 		break;
 
 	case 0x02:
-		tempestIO->SetSoundChannelFrequency(baseSoundChannel + 1, value);
+      tempestIO->SetTime(busTime);
+      tempestIO->SetSoundChannelFrequency(baseSoundChannel + 1, value);
 		break;
 
 	case 0x03:
-		tempestIO->SetSoundChannelVolume(baseSoundChannel + 1, value & 0x0F);
+      tempestIO->SetTime(busTime);
+      tempestIO->SetSoundChannelVolume(baseSoundChannel + 1, value & 0x0F);
 		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 1, value >> 4);
 		break;
 
 	case 0x04:
-		tempestIO->SetSoundChannelFrequency(baseSoundChannel + 2, value);
+      tempestIO->SetTime(busTime);
+      tempestIO->SetSoundChannelFrequency(baseSoundChannel + 2, value);
 		break;
 
 	case 0x05:
-		tempestIO->SetSoundChannelVolume(baseSoundChannel + 2, value & 0x0F);
+      tempestIO->SetTime(busTime);
+      tempestIO->SetSoundChannelVolume(baseSoundChannel + 2, value & 0x0F);
 		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 2, value >> 4);
 		break;
 
 	case 0x06:
-		tempestIO->SetSoundChannelFrequency(baseSoundChannel + 3, value);
+      tempestIO->SetTime(busTime);
+      tempestIO->SetSoundChannelFrequency(baseSoundChannel + 3, value);
 		break;
 
 	case 0x07:
-		tempestIO->SetSoundChannelVolume(baseSoundChannel + 3, value & 0x0F);
+      tempestIO->SetTime(busTime);
+      tempestIO->SetSoundChannelVolume(baseSoundChannel + 3, value & 0x0F);
 		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 3, value >> 4);
 		break;
 

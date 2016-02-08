@@ -24,7 +24,7 @@ public:
 	void SetTempestIO(AbstractTempestSoundIO *_tempestIO) { tempestIO = _tempestIO; }
 
 	uint8_t ReadByte(uint16_t address);
-	void    WriteByte(uint16_t address, uint8_t value);
+   void    WriteByte(uint16_t address, uint8_t value, uint64_t busTime);
 
 	virtual uint8_t GetALLPOT(void) { return 0; }
 

@@ -20,6 +20,7 @@ TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *_stream,
    // clear
    encoder = 0;
    buttons = 0;
+   cpuTime = 0;
 }
 
 void TempestIOStreamListener::Service(void)
@@ -62,7 +63,8 @@ void TempestIOStreamListener::Service(void)
       SoundIOPacket packet(packetBuffer);
 
       // send the packet data to the I/O module
-      tempestIO->Delay(1500);
+      cpuTime += 3000;
+      tempestIO->SetTime(cpuTime);
 
       for (int channel = 0; channel < 8; ++channel)
       {
