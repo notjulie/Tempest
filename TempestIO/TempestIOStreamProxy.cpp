@@ -54,10 +54,9 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
    cpuTime += clockCycles;
 
    // send a packet if it's time
-   if ((cpuTime - lastSendTime) > 3000)
+   if ((cpuTime - lastSendTime) > SoundIOPacket::ClockCyclesPerPacket)
    {
-      lastSendTime += 3000;
-      currentState.SetElapsedTicks(6);
+      lastSendTime += SoundIOPacket::ClockCyclesPerPacket;
 
       stream.StartPacket();
       const uint8_t* packet = currentState.GetPacketData();

@@ -10,13 +10,11 @@ public:
    SoundIOPacket(const uint8_t *data);
 
    bool GetButtonLED(ButtonFlag button);
-   uint8_t GetElapsedTicks(void) const { return packet[TicksOffset]; }
    uint8_t GetSoundChannelFrequency(uint8_t channel);
    uint8_t GetSoundChannelVolume(uint8_t channel);
    uint8_t GetSoundChannelWaveform(uint8_t channel);
 
    void SetButtonLED(ButtonFlag button, bool value);
-   void SetElapsedTicks(uint8_t elapsedTicks){ packet[TicksOffset] = elapsedTicks; }
    void SetSoundChannelFrequency(uint8_t channel, uint8_t frequency);
    void SetSoundChannelVolume(uint8_t channel, uint8_t volume);
    void SetSoundChannelWaveform(uint8_t channel, uint8_t waveform);
@@ -27,11 +25,11 @@ public:
 private:
    static const int FrequencyOffset = 0;
    static const int WaveformVolumeOffset = 8;
-   static const int TicksOffset = 16;
-   static const int ButtonsOffset = 17;
+   static const int ButtonsOffset = 16;
 
 public:
-   static const int PacketLength = 18;
+   static const int PacketLength = 17;
+   static const int ClockCyclesPerPacket = 3000;
 
 private:
    uint8_t packet[PacketLength];

@@ -9,7 +9,6 @@ SoundIOPacket::SoundIOPacket(void)
       SetSoundChannelVolume(i, 0);
    SetButtonLED(ONE_PLAYER_BUTTON, false);
    SetButtonLED(TWO_PLAYER_BUTTON, false);
-   SetElapsedTicks(0);
 }
 
 SoundIOPacket::SoundIOPacket(const uint8_t *data)

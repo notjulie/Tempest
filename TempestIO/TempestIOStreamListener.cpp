@@ -63,7 +63,7 @@ void TempestIOStreamListener::Service(void)
       SoundIOPacket packet(packetBuffer);
 
       // send the packet data to the I/O module
-      cpuTime += 3000;
+      cpuTime += SoundIOPacket::ClockCyclesPerPacket;
       tempestIO->SetTime(cpuTime);
 
       for (int channel = 0; channel < 8; ++channel)
