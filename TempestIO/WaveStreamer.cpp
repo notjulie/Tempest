@@ -16,6 +16,12 @@ WaveStreamer::WaveStreamer(int16_t *buffer, int _bufferSampleCount)
    queueOut = 0;
    clockCycleCounter = 0;
    samplesInInputBuffer = 0;
+   for (int i = 0; i < 8; ++i)
+   {
+      lastFrequency[i] = 0;
+      lastVolume[i] = 0;
+      lastWaveform[i] = 0;
+   }
 }
 
 WaveStreamer::~WaveStreamer(void)
@@ -24,6 +30,11 @@ WaveStreamer::~WaveStreamer(void)
 
 void WaveStreamer::SetChannelFrequency(int channel, int frequency)
 {
+   // don't bother queueing no-op commands
+   if (lastFrequency[channel] == frequency)
+      return;
+   lastFrequency[channel] = frequency;
+
    WaveStreamEvent	event;
    event.eventType = WAVE_EVENT_FREQUENCY;
    event.channel = channel;
@@ -33,6 +44,11 @@ void WaveStreamer::SetChannelFrequency(int channel, int frequency)
 
 void WaveStreamer::SetChannelVolume(int channel, int volume)
 {
+   // don't bother queueing no-op commands
+   if (lastVolume[channel] == volume)
+      return;
+   lastVolume[channel] = volume;
+
    WaveStreamEvent	event;
    event.eventType = WAVE_EVENT_VOLUME;
    event.channel = channel;
@@ -42,6 +58,11 @@ void WaveStreamer::SetChannelVolume(int channel, int volume)
 
 void WaveStreamer::SetChannelWaveform(int channel, int waveform)
 {
+   // don't bother queueing no-op commands
+   if (lastWaveform[channel] == waveform)
+      return;
+   lastWaveform[channel] = waveform;
+
    WaveStreamEvent	event;
    event.eventType = WAVE_EVENT_WAVEFORM;
    event.channel = channel;

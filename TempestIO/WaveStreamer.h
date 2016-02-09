@@ -48,6 +48,10 @@ private:
    int16_t *inputBuffer;
    int samplesInInputBuffer;
 
+   uint8_t lastFrequency[8];
+   uint8_t lastWaveform[8];
+   uint8_t lastVolume[8];
+
    SoundGenerator	soundGenerator;
    WaveStreamEvent	eventQueue[WAVE_STREAM_EVENT_QUEUE_SIZE];
    int	queueIn;
