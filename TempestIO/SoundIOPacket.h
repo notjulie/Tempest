@@ -4,35 +4,30 @@
 
 #include "AbstractTempestIO.h"
 
-class SoundIOPacket {
+class SoundIOPacketReader {
 public:
-   SoundIOPacket(void);
-   SoundIOPacket(const uint8_t *data);
+   SoundIOPacketReader(const uint8_t *data, int length);
 
    bool GetButtonLED(ButtonFlag button);
    uint8_t GetSoundChannelFrequency(uint8_t channel);
    uint8_t GetSoundChannelVolume(uint8_t channel);
    uint8_t GetSoundChannelWaveform(uint8_t channel);
 
-   void SetButtonLED(ButtonFlag button, bool value);
-   void SetSoundChannelFrequency(uint8_t channel, uint8_t frequency);
-   void SetSoundChannelVolume(uint8_t channel, uint8_t volume);
-   void SetSoundChannelWaveform(uint8_t channel, uint8_t waveform);
-
-   const uint8_t *GetPacketData(void) const { return packet; }
-   int GetLength(void) const { return PacketLength; }
-
 private:
-   static const int FrequencyOffset = 0;
-   static const int WaveformVolumeOffset = 8;
-   static const int ButtonsOffset = 16;
+   static const int ButtonsOffset = 0;
+   static const int ChannelMaskOffset = 1;
+   static const int ChannelDataOffset = 2;
 
 public:
-   static const int PacketLength = 17;
-   static const int ClockCyclesPerPacket = 3000;
+   static const int MaxPacketLength = 1000;
+   static const int ClockCyclesPerPacket = 250;
 
 private:
-   uint8_t packet[PacketLength];
+   const uint8_t *packet;
+   int length;
+   uint8_t frequencies[8];
+   uint8_t volumes[8];
+   uint8_t waveforms[8];
 };
 
 #endif

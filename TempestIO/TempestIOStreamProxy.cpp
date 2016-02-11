@@ -30,39 +30,65 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
    encoder = 0;
    cpuTime = 0;
    lastSendTime = 0;
+   leds = 0;
+   for (int i = 0; i < 8; ++i)
+   {
+      frequencies[i] = 0;
+      volumes[i] = 0;
+      waveforms[i] = 0;
+   }
 }
 
 
 void TempestIOStreamProxy::SetSoundChannelFrequency(int channel, int frequency)
 {
-   currentState.SetSoundChannelFrequency(channel, frequency);
+   frequencies[channel] = frequency;
 }
 
 void TempestIOStreamProxy::SetSoundChannelVolume(int channel, int volume)
 {
-   currentState.SetSoundChannelVolume(channel, volume);
+   volumes[channel] = volume;
 }
 
 void TempestIOStreamProxy::SetSoundChannelWaveform(int channel, int waveform)
 {
-   currentState.SetSoundChannelWaveform(channel, waveform);
+   waveforms[channel] = waveform;
 }
 
 void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
 {
    // increment our clock
-   cpuTime += clockCycles;
+   cpuTime = clockCycles;
 
    // send a packet if it's time
-   if ((cpuTime - lastSendTime) > SoundIOPacket::ClockCyclesPerPacket)
+   if ((cpuTime - lastSendTime) > SoundIOPacketReader::ClockCyclesPerPacket)
    {
-      lastSendTime += SoundIOPacket::ClockCyclesPerPacket;
+      lastSendTime += SoundIOPacketReader::ClockCyclesPerPacket;
 
+      // send the start packet
       stream.StartPacket();
-      const uint8_t* packet = currentState.GetPacketData();
-      int packetLength = currentState.GetLength();
-      for (int i = 0; i < packetLength; ++i)
-         stream.Write(packet[i]);
+
+      // send the flags byte
+      stream.Write(leds);
+
+      // send the mask of channels that are currently on
+      uint8_t channelMask = 0;
+      for (int i = 0; i < 8; ++i)
+         if (volumes[i] != 0)
+            channelMask |= (1<<i);
+      stream.Write(channelMask);
+
+      // for each channel in the channel mask send its data
+      for (int i = 0; i < 8; ++i)
+      {
+         if (channelMask & (1 << i))
+         {
+            stream.Write(frequencies[i]);
+            stream.Write((volumes[i]<<4) | waveforms[i]);
+         }
+      }
+
+      // end packet
       stream.EndPacket();
    }
 
@@ -87,5 +113,8 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
 
 void TempestIOStreamProxy::SetButtonLED(ButtonFlag button, bool value)
 {
-   currentState.SetButtonLED(button, value);
+   if (value)
+      leds |= button;
+   else
+      leds &= ~button;
 }

@@ -23,11 +23,14 @@ public:
 
 private:
    PacketStream stream;
-   SoundIOPacket currentState;
    uint8_t buttons;
    uint8_t encoder;
    uint64_t cpuTime;
    uint64_t lastSendTime;
+   uint8_t leds;
+   uint8_t frequencies[8];
+   uint8_t volumes[8];
+   uint8_t waveforms[8];
 };
 
 #endif

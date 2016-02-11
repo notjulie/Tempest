@@ -56,14 +56,14 @@ void TempestIOStreamListener::Service(void)
    for (;;)
    {
       // read a packet from the stream
-      uint8_t packetBuffer[SoundIOPacket::PacketLength];
+      uint8_t packetBuffer[SoundIOPacketReader::MaxPacketLength];
       int packetLength = stream.ReadPacket(packetBuffer, sizeof(packetBuffer));
-      if (packetLength != SoundIOPacket::PacketLength)
+      if (packetLength <= 0)
          break;
-      SoundIOPacket packet(packetBuffer);
+      SoundIOPacketReader packet(packetBuffer, packetLength);
 
       // send the packet data to the I/O module
-      cpuTime += SoundIOPacket::ClockCyclesPerPacket;
+      cpuTime += SoundIOPacketReader::ClockCyclesPerPacket;
       tempestIO->SetTime(cpuTime);
 
       for (int channel = 0; channel < 8; ++channel)
