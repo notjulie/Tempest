@@ -31,28 +31,12 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
    cpuTime = 0;
    lastSendTime = 0;
    leds = 0;
-   for (int i = 0; i < 8; ++i)
-   {
-      frequencies[i] = 0;
-      volumes[i] = 0;
-      waveforms[i] = 0;
-   }
 }
 
 
-void TempestIOStreamProxy::SetSoundChannelFrequency(int channel, int frequency)
+void TempestIOStreamProxy::SetSoundChannelState(int channel, SoundChannelState state)
 {
-   frequencies[channel] = frequency;
-}
-
-void TempestIOStreamProxy::SetSoundChannelVolume(int channel, int volume)
-{
-   volumes[channel] = volume;
-}
-
-void TempestIOStreamProxy::SetSoundChannelWaveform(int channel, int waveform)
-{
-   waveforms[channel] = waveform;
+   channelState[channel] = state;
 }
 
 void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
@@ -74,7 +58,7 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
       // send the mask of channels that are currently on
       uint8_t channelMask = 0;
       for (int i = 0; i < 8; ++i)
-         if (volumes[i] != 0)
+         if (channelState[i].GetVolume() != 0)
             channelMask |= (1<<i);
       stream.Write(channelMask);
 
@@ -83,8 +67,8 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
       {
          if (channelMask & (1 << i))
          {
-            stream.Write(frequencies[i]);
-            stream.Write((volumes[i]<<4) | waveforms[i]);
+            stream.Write(channelState[i].GetFrequency());
+            stream.Write(channelState[i].GetVolumeAndWaveform());
          }
       }
 

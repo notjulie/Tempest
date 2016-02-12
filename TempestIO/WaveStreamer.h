@@ -11,26 +11,22 @@ class WaveStreamer
 {
 protected:
    enum WaveStreamEventType {
-      WAVE_EVENT_VOLUME,
-      WAVE_EVENT_FREQUENCY,
-      WAVE_EVENT_WAVEFORM,
+      WAVE_EVENT_CHANNEL_STATE,
       WAVE_EVENT_DELAY
    };
 
    struct WaveStreamEvent {
       WaveStreamEventType	eventType;
       uint8_t	channel;
-      int	value;
+      SoundChannelState channelState;
+      int  delay;
    };
-
 
 public:
    WaveStreamer(int16_t *buffer, int _bufferSampleCount);
    virtual ~WaveStreamer(void);
 
-   void SetChannelFrequency(int channel, int frequency);
-   void SetChannelVolume(int channel, int volume);
-   void SetChannelWaveform(int channel, int waveform);
+   void SetChannelState(int channel, SoundChannelState state);
    void Delay(int clockCycles);
 
    bool HaveSoundOutput(void);
@@ -48,9 +44,7 @@ private:
    int16_t *inputBuffer;
    int samplesInInputBuffer;
 
-   uint8_t lastFrequency[8];
-   uint8_t lastWaveform[8];
-   uint8_t lastVolume[8];
+   SoundChannelState previousState[8];
 
    SoundGenerator	soundGenerator;
    WaveStreamEvent	eventQueue[WAVE_STREAM_EVENT_QUEUE_SIZE];

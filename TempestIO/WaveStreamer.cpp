@@ -16,57 +16,23 @@ WaveStreamer::WaveStreamer(int16_t *buffer, int _bufferSampleCount)
    queueOut = 0;
    clockCycleCounter = 0;
    samplesInInputBuffer = 0;
-   for (int i = 0; i < 8; ++i)
-   {
-      lastFrequency[i] = 0;
-      lastVolume[i] = 0;
-      lastWaveform[i] = 0;
-   }
 }
 
 WaveStreamer::~WaveStreamer(void)
 {
 }
 
-void WaveStreamer::SetChannelFrequency(int channel, int frequency)
+void WaveStreamer::SetChannelState(int channel, SoundChannelState state)
 {
    // don't bother queueing no-op commands
-   if (lastFrequency[channel] == frequency)
+   if (previousState[channel] == state)
       return;
-   lastFrequency[channel] = frequency;
+   previousState[channel] = state;
 
    WaveStreamEvent	event;
-   event.eventType = WAVE_EVENT_FREQUENCY;
+   event.eventType = WAVE_EVENT_CHANNEL_STATE;
    event.channel = channel;
-   event.value = frequency;
-   QueueEvent(event);
-}
-
-void WaveStreamer::SetChannelVolume(int channel, int volume)
-{
-   // don't bother queueing no-op commands
-   if (lastVolume[channel] == volume)
-      return;
-   lastVolume[channel] = volume;
-
-   WaveStreamEvent	event;
-   event.eventType = WAVE_EVENT_VOLUME;
-   event.channel = channel;
-   event.value = volume;
-   QueueEvent(event);
-}
-
-void WaveStreamer::SetChannelWaveform(int channel, int waveform)
-{
-   // don't bother queueing no-op commands
-   if (lastWaveform[channel] == waveform)
-      return;
-   lastWaveform[channel] = waveform;
-
-   WaveStreamEvent	event;
-   event.eventType = WAVE_EVENT_WAVEFORM;
-   event.channel = channel;
-   event.value = waveform;
+   event.channelState = state;
    QueueEvent(event);
 }
 
@@ -74,7 +40,7 @@ void WaveStreamer::Delay(int clockCycles)
 {
    WaveStreamEvent	event;
    event.eventType = WAVE_EVENT_DELAY;
-   event.value = clockCycles;
+   event.delay = clockCycles;
    QueueEvent(event);
 }
 
@@ -95,20 +61,12 @@ bool WaveStreamer::ProcessNextEvent(void)
    // process it
    switch (event.eventType)
    {
-   case WAVE_EVENT_VOLUME:
-      soundGenerator.SetChannelVolume(event.channel, event.value);
-      break;
-
-   case WAVE_EVENT_FREQUENCY:
-      soundGenerator.SetChannelFrequency(event.channel, event.value);
-      break;
-
-   case WAVE_EVENT_WAVEFORM:
-      soundGenerator.SetChannelWaveform(event.channel, event.value);
+   case WAVE_EVENT_CHANNEL_STATE:
+      soundGenerator.SetChannelState(event.channel, event.channelState);
       break;
 
    case WAVE_EVENT_DELAY:
-      ProcessDelay(event.value);
+      ProcessDelay(event.delay);
       break;
    }
 

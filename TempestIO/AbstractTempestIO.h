@@ -2,6 +2,8 @@
 #ifndef ABSTRACTTEMPESTIO_H
 #define ABSTRACTTEMPESTIO_H
 
+#include "SoundChannel.h"
+
 class VectorData;
 
 enum ButtonFlag {
@@ -18,17 +20,16 @@ class AbstractTempestSoundIO
 public:
    virtual ~AbstractTempestSoundIO(void) {}
 
-	virtual void SetSoundChannelFrequency(int channel, int frequency) = 0;
-	virtual void SetSoundChannelVolume(int channel, int volume) = 0;
-	virtual void SetSoundChannelWaveform(int channel, int waveform) = 0;
+	virtual void SetSoundChannelState(int channel, SoundChannelState state) = 0;
 	virtual void SetTime(uint64_t clockCycles) = 0;
    virtual uint8_t GetButtons(void) = 0;
    virtual uint8_t GetEncoder(void) = 0;
    virtual void SetButtonLED(ButtonFlag button, bool value) = 0;
 
    void AllSoundOff(void) {
+      SoundChannelState state;
       for (int i=0; i<8; ++i)
-         SetSoundChannelVolume(i, 0);
+         SetSoundChannelState(i, state);
    }
 };
 

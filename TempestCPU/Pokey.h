@@ -35,6 +35,7 @@ private:
    uint8_t ALLPOT;
    uint8_t SKCTLS;
    int baseSoundChannel;
+   SoundChannelState soundChannelState[4];
 	AbstractTempestSoundIO *tempestIO;
 };
 

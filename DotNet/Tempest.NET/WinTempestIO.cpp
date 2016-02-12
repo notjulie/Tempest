@@ -15,19 +15,9 @@ Win32TempestSoundIO::~Win32TempestSoundIO(void)
 {
 }
 
-void Win32TempestSoundIO::SetSoundChannelFrequency(int channel, int frequency)
+void Win32TempestSoundIO::SetSoundChannelState(int channel, SoundChannelState state)
 {
-	waveStreamer.SetChannelFrequency(channel, frequency);
-}
-
-void Win32TempestSoundIO::SetSoundChannelVolume(int channel, int volume)
-{
-	waveStreamer.SetChannelVolume(channel, volume);
-}
-
-void Win32TempestSoundIO::SetSoundChannelWaveform(int channel, int waveform)
-{
-	waveStreamer.SetChannelWaveform(channel, waveform);
+	waveStreamer.SetChannelState(channel, state);
 }
 
 void Win32TempestSoundIO::SetTime(uint64_t clockCycles)

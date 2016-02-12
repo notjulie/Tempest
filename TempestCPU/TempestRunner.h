@@ -8,7 +8,6 @@
 class AbstractTempestEnvironment;
 class AbstractTempestVectorIO;
 class AbstractThread;
-struct SoundChannelStatus;
 
 
 #ifdef _WIN32

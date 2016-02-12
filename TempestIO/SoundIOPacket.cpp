@@ -16,16 +16,12 @@ SoundIOPacketReader::SoundIOPacketReader(const uint8_t *data, int length)
    {
       if (channelMask & (1<<i))
       {
-         frequencies[i] = packet[offset++];
-         uint8_t b = packet[offset++];
-         waveforms[i] = b & 0x0F;
-         volumes[i] = b >> 4;
+         channelState[i].SetFrequency(packet[offset++]);
+         channelState[i].SetVolumeAndWaveform(packet[offset++]);
       }
       else
       {
-         frequencies[i] = 0;
-         waveforms[i] = 0;
-         volumes[i] = 0;
+         channelState[i] = SoundChannelState();
       }
    }
 }
@@ -36,18 +32,8 @@ bool SoundIOPacketReader::GetButtonLED(ButtonFlag button)
    return (packet[ButtonsOffset] & button) != 0;
 }
 
-uint8_t SoundIOPacketReader::GetSoundChannelFrequency(uint8_t channel)
+SoundChannelState SoundIOPacketReader::GetSoundChannelState(uint8_t channel)
 {
-   return frequencies[channel];
-}
-
-uint8_t SoundIOPacketReader::GetSoundChannelVolume(uint8_t channel)
-{
-   return volumes[channel];
-}
-
-uint8_t SoundIOPacketReader::GetSoundChannelWaveform(uint8_t channel)
-{
-   return waveforms[channel];
+   return channelState[channel];
 }
 

@@ -59,47 +59,27 @@ void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
 	switch (address)
 	{
 	case 0x00:
-      tempestIO->SetTime(busTime);
-		tempestIO->SetSoundChannelFrequency(baseSoundChannel, value);
+   case 0x02:
+   case 0x04:
+   case 0x06:
+      {
+         uint8_t channel = (uint8_t)(address / 2);
+         tempestIO->SetTime(busTime);
+         soundChannelState[channel].SetFrequency(value);
+         tempestIO->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
+      }
 		break;
 
-	case 0x01:
-      tempestIO->SetTime(busTime);
-      tempestIO->SetSoundChannelVolume(baseSoundChannel, value & 0x0F);
-		tempestIO->SetSoundChannelWaveform(baseSoundChannel, value >> 4);
-		break;
-
-	case 0x02:
-      tempestIO->SetTime(busTime);
-      tempestIO->SetSoundChannelFrequency(baseSoundChannel + 1, value);
-		break;
-
-	case 0x03:
-      tempestIO->SetTime(busTime);
-      tempestIO->SetSoundChannelVolume(baseSoundChannel + 1, value & 0x0F);
-		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 1, value >> 4);
-		break;
-
-	case 0x04:
-      tempestIO->SetTime(busTime);
-      tempestIO->SetSoundChannelFrequency(baseSoundChannel + 2, value);
-		break;
-
-	case 0x05:
-      tempestIO->SetTime(busTime);
-      tempestIO->SetSoundChannelVolume(baseSoundChannel + 2, value & 0x0F);
-		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 2, value >> 4);
-		break;
-
-	case 0x06:
-      tempestIO->SetTime(busTime);
-      tempestIO->SetSoundChannelFrequency(baseSoundChannel + 3, value);
-		break;
-
-	case 0x07:
-      tempestIO->SetTime(busTime);
-      tempestIO->SetSoundChannelVolume(baseSoundChannel + 3, value & 0x0F);
-		tempestIO->SetSoundChannelWaveform(baseSoundChannel + 3, value >> 4);
+   case 0x01:
+   case 0x03:
+   case 0x05:
+   case 0x07:
+      {
+         uint8_t channel = (uint8_t)(address / 2);
+         tempestIO->SetTime(busTime);
+         soundChannelState[channel].SetVolumeAndWaveform(value);
+         tempestIO->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
+      }
 		break;
 
 	case 0x8:

@@ -67,11 +67,7 @@ void TempestIOStreamListener::Service(void)
       tempestIO->SetTime(cpuTime);
 
       for (int channel = 0; channel < 8; ++channel)
-      {
-         tempestIO->SetSoundChannelFrequency(channel, packet.GetSoundChannelFrequency(channel));
-         tempestIO->SetSoundChannelWaveform(channel, packet.GetSoundChannelWaveform(channel));
-         tempestIO->SetSoundChannelVolume(channel, packet.GetSoundChannelVolume(channel));
-      }
+         tempestIO->SetSoundChannelState(channel, packet.GetSoundChannelState(channel));
 
       tempestIO->SetButtonLED(ONE_PLAYER_BUTTON, packet.GetButtonLED(ONE_PLAYER_BUTTON));
       tempestIO->SetButtonLED(TWO_PLAYER_BUTTON, packet.GetButtonLED(TWO_PLAYER_BUTTON));

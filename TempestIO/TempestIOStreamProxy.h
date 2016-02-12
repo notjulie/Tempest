@@ -13,9 +13,7 @@ class TempestIOStreamProxy : public AbstractTempestSoundIO
 public:
    TempestIOStreamProxy(AbstractTempestStream *stream);
 
-	virtual void SetSoundChannelFrequency(int channel, int frequency);
-	virtual void SetSoundChannelVolume(int channel, int volume);
-	virtual void SetSoundChannelWaveform(int channel, int waveform);
+	virtual void SetSoundChannelState(int channel, SoundChannelState state);
    virtual void SetButtonLED(ButtonFlag button, bool value);
    virtual void SetTime(uint64_t clockCycles);
    virtual uint8_t GetButtons(void) { return buttons; }
@@ -28,9 +26,7 @@ private:
    uint64_t cpuTime;
    uint64_t lastSendTime;
    uint8_t leds;
-   uint8_t frequencies[8];
-   uint8_t volumes[8];
-   uint8_t waveforms[8];
+   SoundChannelState channelState[8];
 };
 
 #endif

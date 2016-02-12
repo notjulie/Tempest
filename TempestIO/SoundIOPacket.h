@@ -9,9 +9,7 @@ public:
    SoundIOPacketReader(const uint8_t *data, int length);
 
    bool GetButtonLED(ButtonFlag button);
-   uint8_t GetSoundChannelFrequency(uint8_t channel);
-   uint8_t GetSoundChannelVolume(uint8_t channel);
-   uint8_t GetSoundChannelWaveform(uint8_t channel);
+   SoundChannelState GetSoundChannelState(uint8_t channel);
 
 private:
    static const int ButtonsOffset = 0;
@@ -25,9 +23,7 @@ public:
 private:
    const uint8_t *packet;
    int length;
-   uint8_t frequencies[8];
-   uint8_t volumes[8];
-   uint8_t waveforms[8];
+   SoundChannelState channelState[8];
 };
 
 #endif

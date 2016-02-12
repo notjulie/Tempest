@@ -2,8 +2,31 @@
 #ifndef SOUNDCHANNEL_H
 #define SOUNDCHANNEL_H
 
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
-struct SoundChannelStatus;
+class SoundChannelState
+{
+public:
+   SoundChannelState(void);
+
+   uint8_t GetFrequency(void) const { return frequency; }
+   uint8_t GetVolume(void) const { return volume; }
+   uint8_t GetVolumeAndWaveform(void) const;
+   uint8_t GetWaveform(void) const { return waveform; }
+   void SetFrequency(uint8_t frequency) { this->frequency = frequency; }
+   void SetVolumeAndWaveform(uint8_t volumeAndWaveform);
+
+   bool operator==(const SoundChannelState &state) const;
+   bool operator!=(const SoundChannelState &state) const;
+
+private:
+   uint8_t frequency;
+   uint8_t volume;
+   uint8_t waveform;
+};
 
 
 class SoundChannel
@@ -12,23 +35,18 @@ public:
 	SoundChannel(void);
 
 	void AddWaveData(int16_t *buffer, int count);
-	void SetFrequency(int frequency);
-	void SetVolume(int volume) { this->volume = volume; }
-	void SetOutputWave(int outputWave);
-	int GetVolume(void) { return this->volume; }
+   uint8_t GetVolume(void) const { return requestedState.GetVolume(); }
+   void SetState(SoundChannelState state) { requestedState = state; }
 
 private:
 	void UpdateWaveform(void);
 
 private:
-	// our current parameters
-	int frequency;
-	int volume;
-	int outputWave;
+	// our current state
+   SoundChannelState currentState;
 
-	// our requested values
-	int newOutputWave;
-	int newFrequency;
+	// our requested state
+   SoundChannelState requestedState;
 
 	// our state variables
 	float actualFrequency;
@@ -41,5 +59,8 @@ private:
 	const bool *noiseWaveform;
 };
 
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif
