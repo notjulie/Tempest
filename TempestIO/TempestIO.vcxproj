@@ -162,6 +162,7 @@
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="PacketStream.cpp" />
     <ClCompile Include="SoundChannel.cpp" />
+    <ClCompile Include="SoundChannelState.cpp" />
     <ClCompile Include="SoundGenerator.cpp" />
     <ClCompile Include="SoundIOPacket.cpp" />
     <ClCompile Include="stdafx.cpp">
