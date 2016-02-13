@@ -86,6 +86,8 @@
 		<Unit filename="../../TempestCPU/TempestRunner.h" />
 		<Unit filename="../../TempestIO/AbstractTempestIO.h" />
 		<Unit filename="../../TempestIO/PacketStream.cpp" />
+		<Unit filename="../../TempestIO/SoundChannelState.cpp" />
+		<Unit filename="../../TempestIO/SoundChannelState.h" />
 		<Unit filename="../../TempestIO/SoundIOPacket.cpp" />
 		<Unit filename="../../TempestIO/TempestIOStreamProxy.cpp" />
 		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />

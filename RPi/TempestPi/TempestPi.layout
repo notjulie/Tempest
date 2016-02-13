@@ -16,8 +16,8 @@
 	<File name="TempestPi.h" open="0" top="0" tabpos="0">
 		<Cursor position="41" topLine="0" />
 	</File>
-	<File name="TempestPiIO.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="2072" topLine="67" />
+	<File name="TempestPiIO.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="1769" topLine="62" />
 	</File>
 	<File name="main.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="616" topLine="18" />
@@ -40,7 +40,7 @@
 	<File name="../../TempestCPU/Pokey.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="527" topLine="31" />
 	</File>
-	<File name="../../TempestCPU/TempestBus.cpp" open="1" top="0" tabpos="1">
+	<File name="../../TempestCPU/TempestBus.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="7878" topLine="296" />
 	</File>
 	<File name="../../TempestCPU/TempestBus.h" open="0" top="0" tabpos="0">
@@ -52,8 +52,14 @@
 	<File name="../../TempestCPU/TempestRunner.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="156" topLine="0" />
 	</File>
-	<File name="../../TempestIO/AbstractTempestIO.h" open="1" top="1" tabpos="2">
+	<File name="../../TempestIO/AbstractTempestIO.h" open="0" top="0" tabpos="2">
 		<Cursor position="800" topLine="19" />
+	</File>
+	<File name="../../TempestIO/SoundChannelState.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="48" topLine="0" />
+	</File>
+	<File name="../../TempestIO/SoundChannelState.h" open="1" top="0" tabpos="1">
+		<Cursor position="406" topLine="4" />
 	</File>
 	<File name="../../TempestIO/TempestIOStreamProxy.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="692" topLine="0" />

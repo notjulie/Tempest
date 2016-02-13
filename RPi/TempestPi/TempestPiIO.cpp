@@ -70,7 +70,7 @@ void TempestPiIO::WriteVectorRAM(uint16_t address, uint8_t value, uint64_t cpuTi
 
 void TempestPiIO::ProcessVectorData(void)
 {
-   int nextIndex = mostRecentVectors + 1;
+   unsigned nextIndex = mostRecentVectors + 1;
    if (nextIndex >= vectorLists.size())
       nextIndex = 0;
    vectorInterpreter.ClearVectors();
