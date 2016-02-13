@@ -12,24 +12,21 @@
 TempestDiscoAudioIO	IO;
 
 
-void TempestDiscoAudioIO::SetSoundChannelFrequency(int channel, int frequency)
+TempestDiscoAudioIO::TempestDiscoAudioIO(void)
 {
-	DWS.SetChannelFrequency(channel, frequency);
+	// clear
+	cpuTime = 0;
 }
 
-void TempestDiscoAudioIO::SetSoundChannelVolume(int channel, int volume)
+void TempestDiscoAudioIO::SetSoundChannelState(int channel, SoundChannelState state)
 {
-	DWS.SetChannelVolume(channel, volume);
+	DWS.SetChannelState(channel, state);
 }
 
-void TempestDiscoAudioIO::SetSoundChannelWaveform(int channel, int waveform)
+void TempestDiscoAudioIO::SetTime(uint64_t clockCycles)
 {
-	DWS.SetChannelWaveform(channel, waveform);
-}
-
-void TempestDiscoAudioIO::Tick6KHz(void)
-{
-	DWS.Tick6KHz();
+	DWS.Delay((int)(clockCycles - cpuTime));
+   cpuTime = clockCycles;
 }
 
 uint8_t TempestDiscoAudioIO::GetButtons(void)

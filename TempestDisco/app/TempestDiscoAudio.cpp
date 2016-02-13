@@ -53,9 +53,6 @@ extern "C" {
 				 &USR_desc,
 				 &USBD_CDC_cb,
 				 &USR_cb);
-
-		// set up the push button as an interrupt
-		STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_EXTI);
 	}
 
 
@@ -110,20 +107,6 @@ extern "C" {
 
 	   return 0;
 	}
-
-	void EXTI0_IRQHandler(void)
-	{
-		static int testBeepVolume = 0;
-
-	   // we need to clear line pending bit manually
-	   EXTI_ClearITPendingBit(EXTI_Line0);
-
-		// for now just start playing a note just to see if we can
-		IO.SetSoundChannelWaveform(1, 10);	// square wave
-		IO.SetSoundChannelFrequency(1, 108);
-		IO.SetSoundChannelVolume(1, ++testBeepVolume & 15);
-	}
-
 };
 
 
@@ -139,8 +122,7 @@ static void ServiceConnected(void)
 			// we went too long without receiving something from the other end;
 			// switch to unconnected and kill all sound
 			appState = UNCONNECTED;
-			for (int i=0; i<8; ++i)
-				IO.SetSoundChannelVolume(i, 0);
+			IO.AllSoundOff();
 			return;
 		}
 	}

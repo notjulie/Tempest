@@ -7,13 +7,16 @@
 
 class TempestDiscoAudioIO : public AbstractTempestSoundIO {
 public:
-	virtual void SetSoundChannelFrequency(int channel, int frequency);
-	virtual void SetSoundChannelVolume(int channel, int volume);
-	virtual void SetSoundChannelWaveform(int channel, int waveform);
-	virtual void Tick6KHz(void);
+	TempestDiscoAudioIO(void);
+
+	virtual void SetSoundChannelState(int channel, SoundChannelState state);
+	virtual void SetTime(uint64_t clockCycles);
    virtual uint8_t GetButtons(void);
    virtual uint8_t GetEncoder(void);
    virtual void SetButtonLED(ButtonFlag button, bool value);
+
+private:
+   uint64_t cpuTime;
 };
 
 extern TempestDiscoAudioIO	IO;
