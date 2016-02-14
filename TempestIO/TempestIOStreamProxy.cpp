@@ -31,6 +31,9 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
    cpuTime = 0;
    lastSendTime = 0;
    leds = 0;
+
+   // start the first packet
+   StartPacket();
 }
 
 
@@ -41,7 +44,7 @@ void TempestIOStreamProxy::SetSoundChannelState(int channel, SoundChannelState s
 
 void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
 {
-   // increment our clock
+   // update our clock
    cpuTime = clockCycles;
 
    // send a packet if it's time
@@ -49,31 +52,11 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
    {
       lastSendTime += SoundIOPacketReader::ClockCyclesPerPacket;
 
-      // send the start packet
-      stream.StartPacket();
-
-      // send the flags byte
-      stream.Write(leds);
-
-      // send the mask of channels that are currently on
-      uint8_t channelMask = 0;
-      for (int i = 0; i < 8; ++i)
-         if (channelState[i].GetVolume() != 0)
-            channelMask |= (1<<i);
-      stream.Write(channelMask);
-
-      // for each channel in the channel mask send its data
-      for (int i = 0; i < 8; ++i)
-      {
-         if (channelMask & (1 << i))
-         {
-            stream.Write(channelState[i].GetFrequency());
-            stream.Write(channelState[i].GetVolumeAndWaveform());
-         }
-      }
-
-      // end packet
+      // end the packet
       stream.EndPacket();
+
+      // start the next packet
+      StartPacket();
    }
 
    // and check the return stream
@@ -102,3 +85,31 @@ void TempestIOStreamProxy::SetButtonLED(ButtonFlag button, bool value)
    else
       leds &= ~button;
 }
+
+
+void TempestIOStreamProxy::StartPacket(void)
+{
+   // send the start packet
+   stream.StartPacket();
+
+   // send the flags byte
+   stream.Write(leds);
+
+   // send the mask of channels that are currently on
+   uint8_t channelMask = 0;
+   for (int i = 0; i < 8; ++i)
+      if (channelState[i].GetVolume() != 0)
+         channelMask |= (1 << i);
+   stream.Write(channelMask);
+
+   // for each channel in the channel mask send its data
+   for (int i = 0; i < 8; ++i)
+   {
+      if (channelMask & (1 << i))
+      {
+         stream.Write(channelState[i].GetFrequency());
+         stream.Write(channelState[i].GetVolumeAndWaveform());
+      }
+   }
+}
+

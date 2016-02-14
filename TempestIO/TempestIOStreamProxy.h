@@ -20,6 +20,9 @@ public:
    virtual uint8_t GetEncoder(void) { return encoder; }
 
 private:
+   void StartPacket(void);
+
+private:
    PacketStream stream;
    uint8_t buttons;
    uint8_t encoder;
