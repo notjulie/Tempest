@@ -1,5 +1,8 @@
 
 #include "stdafx.h"
+
+#include "PacketStream.h"
+
 #include "SoundIOPacket.h"
 
 
@@ -50,3 +53,10 @@ bool SoundIOPacketReader::GetSoundCommand(uint8_t *delay, uint8_t *channel, Soun
    return true;
 }
 
+
+
+bool TempestInPacket::ReadFromStream(PacketStream *stream)
+{
+   int bytesRead = stream->ReadPacket(&flags1, 1);
+   return bytesRead == 1;
+}

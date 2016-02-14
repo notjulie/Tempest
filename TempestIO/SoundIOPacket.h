@@ -4,6 +4,8 @@
 
 #include "AbstractTempestIO.h"
 
+class PacketStream;
+
 class SoundIOPacketReader {
 public:
    SoundIOPacketReader(const uint8_t *data, int length);
@@ -31,6 +33,15 @@ private:
    int length;
    SoundChannelState initialChannelState[8];
    int offset;
+};
+
+
+class TempestInPacket {
+public:
+   bool ReadFromStream(PacketStream *stream);
+
+public:
+   uint8_t  flags1;
 };
 
 #endif

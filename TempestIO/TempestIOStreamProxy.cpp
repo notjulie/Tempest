@@ -13,7 +13,6 @@
 
 #include "../TempestCPU/TempestException.h"
 #include "AbstractTempestStream.h"
-#include "TempestStreamProtocol.h"
 
 #include "TempestIOStreamProxy.h"
 
@@ -104,15 +103,9 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
    }
 
    // and check the return stream
-   for (;;)
+   TempestInPacket packet;
+   while (packet.ReadFromStream(&stream))
    {
-      int b = stream.Read();
-      if (b < 0)
-         break;
-
-      // this is silly, it's just a bit of documentation
-      TempestInPacket packet;
-      packet.flags1 = (uint8_t)b;
       this->buttons = packet.flags1;
       if (packet.flags1 & ENCODER_DOWN)
          --encoder;

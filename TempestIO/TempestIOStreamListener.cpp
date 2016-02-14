@@ -4,7 +4,6 @@
 #include "AbstractTempestIO.h"
 #include "AbstractTempestStream.h"
 #include "SoundIOPacket.h"
-#include "TempestStreamProtocol.h"
 
 #include "TempestIOStreamListener.h"
 
@@ -79,8 +78,6 @@ void TempestIOStreamListener::Service(void)
          while (packet.GetSoundCommand(&delay, &channel, &state))
          {
             ticksThisPacket += delay;
-            if (ticksThisPacket > SoundIOPacketReader::TicksPerPacket)
-               throw "bleem";
             tempestIO->SetTime(lastPacketCpuTime + ticksThisPacket * SoundIOPacketReader::ClockCyclesPerTick);
             tempestIO->SetSoundChannelState(channel, state);
          }

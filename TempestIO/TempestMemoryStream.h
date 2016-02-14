@@ -3,7 +3,6 @@
 #define TEMPESTMEMORYSTREAM_H
 
 #include "AbstractTempestStream.h"
-#include "TempestStreamProtocol.h"
 
 
 class SimpleMemoryStream
