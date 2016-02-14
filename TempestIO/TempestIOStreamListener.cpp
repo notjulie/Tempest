@@ -20,7 +20,7 @@ TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *_stream,
    // clear
    encoder = 0;
    buttons = 0;
-   cpuTime = 0;
+   lastPacketCpuTime = 0;
 }
 
 void TempestIOStreamListener::Service(void)
@@ -62,14 +62,32 @@ void TempestIOStreamListener::Service(void)
          break;
       SoundIOPacketReader packet(packetBuffer, packetLength);
 
-      // send the packet data to the I/O module
-      cpuTime += SoundIOPacketReader::ClockCyclesPerPacket;
-      tempestIO->SetTime(cpuTime);
-
-      for (int channel = 0; channel < 8; ++channel)
-         tempestIO->SetSoundChannelState(channel, packet.GetSoundChannelState(channel));
-
+      // set the buttons
       tempestIO->SetButtonLED(ONE_PLAYER_BUTTON, packet.GetButtonLED(ONE_PLAYER_BUTTON));
       tempestIO->SetButtonLED(TWO_PLAYER_BUTTON, packet.GetButtonLED(TWO_PLAYER_BUTTON));
+
+      // send the initial sound channel data to the I/O module
+      for (int channel = 0; channel < 8; ++channel)
+         tempestIO->SetSoundChannelState(channel, packet.GetInitialSoundChannelState(channel));
+
+      // add additional sound commands
+      int ticksThisPacket = 0;
+      {
+         uint8_t channel;
+         SoundChannelState state;
+         uint8_t delay;
+         while (packet.GetSoundCommand(&delay, &channel, &state))
+         {
+            ticksThisPacket += delay;
+            if (ticksThisPacket > SoundIOPacketReader::TicksPerPacket)
+               throw "bleem";
+            tempestIO->SetTime(lastPacketCpuTime + ticksThisPacket * SoundIOPacketReader::ClockCyclesPerTick);
+            tempestIO->SetSoundChannelState(channel, state);
+         }
+      }
+
+      // update our time
+      lastPacketCpuTime += SoundIOPacketReader::ClockCyclesPerPacket;
+      tempestIO->SetTime(lastPacketCpuTime);
    }
 }

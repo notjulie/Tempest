@@ -28,6 +28,8 @@ private:
    uint8_t encoder;
    uint64_t cpuTime;
    uint64_t lastSendTime;
+   int ticksThisPacket;
+   bool initialStatesSent;
    uint8_t leds;
    SoundChannelState channelState[8];
 };

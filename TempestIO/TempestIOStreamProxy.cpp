@@ -39,13 +39,57 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
 
 void TempestIOStreamProxy::SetSoundChannelState(int channel, SoundChannelState state)
 {
+   // copy the value
    channelState[channel] = state;
+
+   // if this is still the first tick of the packet this will get reported
+   // as the channel's initial state, and we don't report it here
+   int elapsedTicks = (int)((cpuTime - lastSendTime) / SoundIOPacketReader::ClockCyclesPerTick);
+   if (elapsedTicks == 0)
+      return;
+
+   // add the value to the current packet... the first byte is:
+   //  - channel number (high 3 bits)
+   //  - number of ticks to delay (low 5 bits)
+   stream.Write((channel<<5) | (elapsedTicks - ticksThisPacket));
+   ticksThisPacket = elapsedTicks;
+
+   // then we write the channel data
+   stream.Write(channelState[channel].GetFrequency());
+   stream.Write(channelState[channel].GetVolumeAndWaveform());
 }
 
 void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
 {
    // update our clock
    cpuTime = clockCycles;
+
+   // figure out how much time has elapsed since packet start
+   int elapsedTicks = (int)((clockCycles - lastSendTime) / SoundIOPacketReader::ClockCyclesPerTick);
+
+   // if we are no longer in the first tick of the packet it's time to send
+   // the packet's initial state
+   if (elapsedTicks != 0 && !initialStatesSent)
+   {
+      // send the mask of channels that are currently on
+      uint8_t channelMask = 0;
+      for (int i = 0; i < 8; ++i)
+         if (channelState[i].GetVolume() != 0)
+            channelMask |= (1 << i);
+      stream.Write(channelMask);
+
+      // for each channel in the channel mask send its data
+      for (int i = 0; i < 8; ++i)
+      {
+         if (channelMask & (1 << i))
+         {
+            stream.Write(channelState[i].GetFrequency());
+            stream.Write(channelState[i].GetVolumeAndWaveform());
+         }
+      }
+
+      initialStatesSent = true;
+   }
 
    // send a packet if it's time
    if ((cpuTime - lastSendTime) > SoundIOPacketReader::ClockCyclesPerPacket)
@@ -89,27 +133,14 @@ void TempestIOStreamProxy::SetButtonLED(ButtonFlag button, bool value)
 
 void TempestIOStreamProxy::StartPacket(void)
 {
+   // clear
+   ticksThisPacket = 0;
+   initialStatesSent = false;
+
    // send the start packet
    stream.StartPacket();
 
    // send the flags byte
    stream.Write(leds);
-
-   // send the mask of channels that are currently on
-   uint8_t channelMask = 0;
-   for (int i = 0; i < 8; ++i)
-      if (channelState[i].GetVolume() != 0)
-         channelMask |= (1 << i);
-   stream.Write(channelMask);
-
-   // for each channel in the channel mask send its data
-   for (int i = 0; i < 8; ++i)
-   {
-      if (channelMask & (1 << i))
-      {
-         stream.Write(channelState[i].GetFrequency());
-         stream.Write(channelState[i].GetVolumeAndWaveform());
-      }
-   }
 }
 

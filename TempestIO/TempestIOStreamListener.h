@@ -19,7 +19,7 @@ private:
 
    uint8_t encoder;
    uint8_t buttons;
-   uint64_t cpuTime;
+   uint64_t lastPacketCpuTime;
 };
 
 #endif

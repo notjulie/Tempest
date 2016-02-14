@@ -9,7 +9,8 @@ public:
    SoundIOPacketReader(const uint8_t *data, int length);
 
    bool GetButtonLED(ButtonFlag button);
-   SoundChannelState GetSoundChannelState(uint8_t channel);
+   SoundChannelState GetInitialSoundChannelState(uint8_t channel);
+   bool GetSoundCommand(uint8_t *delay, uint8_t *channel, SoundChannelState *state);
 
 private:
    static const int ButtonsOffset = 0;
@@ -18,12 +19,18 @@ private:
 
 public:
    static const int MaxPacketLength = 1000;
-   static const int ClockCyclesPerPacket = 250;
+   static const int ClockCyclesPerTick = 250;
+
+   // 31 is the maximum value without changing the current implementation; every command has
+   // a delay associated with it and 31 is the maximum delay
+   static const int TicksPerPacket = 31;
+   static const int ClockCyclesPerPacket = ClockCyclesPerTick * TicksPerPacket;
 
 private:
    const uint8_t *packet;
    int length;
-   SoundChannelState channelState[8];
+   SoundChannelState initialChannelState[8];
+   int offset;
 };
 
 #endif
