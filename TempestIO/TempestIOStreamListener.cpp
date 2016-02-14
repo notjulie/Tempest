@@ -20,37 +20,11 @@ TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *_stream,
    encoder = 0;
    buttons = 0;
    lastPacketCpuTime = 0;
+   lastResponsePacketTime = 0;
 }
 
 void TempestIOStreamListener::Service(void)
 {
-   // send a message with control panel information if anything
-	// has changed
-	uint8_t newButtons = tempestIO->GetButtons();
-	uint8_t newEncoder = tempestIO->GetEncoder();
-	if (newButtons!=buttons || newEncoder!=encoder)
-   {
-      TempestInPacket packet;
-      packet.flags1 = newButtons;
-      buttons = newButtons;
-
-      int8_t encoderChange = (int8_t)(newEncoder - encoder);
-      if (encoderChange > 0)
-      {
-         packet.flags1 |= ENCODER_UP;
-         ++encoder;
-      }
-      else if (encoderChange < 0)
-      {
-         packet.flags1 |= ENCODER_DOWN;
-         --encoder;
-      }
-
-      stream.StartPacket();
-      stream.Write(packet.flags1);
-      stream.EndPacket();
-   }
-
 	// process any new data on the stream
    for (;;)
    {
@@ -86,5 +60,17 @@ void TempestIOStreamListener::Service(void)
       // update our time
       lastPacketCpuTime += SoundIOPacketReader::ClockCyclesPerPacket;
       tempestIO->SetTime(lastPacketCpuTime);
+   }
+
+   // send a message with control panel information if anything
+   // has changed or enough time has passed
+   TempestInPacket packet;
+   packet.SetButtons(tempestIO->GetButtons());
+   packet.SetEncoder(tempestIO->GetEncoder());
+   if (packet != lastResponsePacket || (lastPacketCpuTime - lastResponsePacketTime) >= SoundIOPacketReader::MaxResponsePacketPeriod)
+   {
+      packet.WriteToStream(&stream);
+      lastResponsePacket = packet;
+      lastResponsePacketTime = lastPacketCpuTime;
    }
 }

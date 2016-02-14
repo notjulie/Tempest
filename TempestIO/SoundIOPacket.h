@@ -28,6 +28,10 @@ public:
    static const int TicksPerPacket = 31;
    static const int ClockCyclesPerPacket = ClockCyclesPerTick * TicksPerPacket;
 
+   // we try to make sure to send the control panel info 50 times a second even if
+   // it hasn't changed
+   static const int MaxResponsePacketPeriod = 1500000 / 50;
+
 private:
    const uint8_t *packet;
    int length;
@@ -38,10 +42,26 @@ private:
 
 class TempestInPacket {
 public:
-   bool ReadFromStream(PacketStream *stream);
+   TempestInPacket(void);
 
-public:
-   uint8_t  flags1;
+   uint8_t GetButtons(void) const { return packet[ButtonsOffset]; }
+   uint8_t GetEncoder(void) const { return packet[EncoderOffset]; }
+
+   void SetButtons(uint8_t buttons) { packet[ButtonsOffset] = buttons; }
+   void SetEncoder(uint8_t encoder) { packet[EncoderOffset] = encoder; }
+
+   bool ReadFromStream(PacketStream *stream);
+   void WriteToStream(PacketStream *stream);
+
+   bool operator!=(const TempestInPacket &packet);
+
+private:
+   static const int ButtonsOffset = 0;
+   static const int EncoderOffset = 1;
+   static const int PacketLength = 2;
+
+private:
+   uint8_t  packet[PacketLength];
 };
 
 #endif

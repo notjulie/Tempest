@@ -3,6 +3,7 @@
 #define TEMPESTIOSTREAMLISTENER_H
 
 #include "PacketStream.h"
+#include "SoundIOPacket.h"
 
 class AbstractTempestSoundIO;
 class AbstractTempestStream;
@@ -20,6 +21,8 @@ private:
    uint8_t encoder;
    uint8_t buttons;
    uint64_t lastPacketCpuTime;
+   TempestInPacket lastResponsePacket;
+   uint64_t lastResponsePacketTime;
 };
 
 #endif

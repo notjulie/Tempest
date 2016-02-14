@@ -106,11 +106,8 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
    TempestInPacket packet;
    while (packet.ReadFromStream(&stream))
    {
-      this->buttons = packet.flags1;
-      if (packet.flags1 & ENCODER_DOWN)
-         --encoder;
-      if (packet.flags1 & ENCODER_UP)
-         ++encoder;
+      this->buttons = packet.GetButtons();
+      this->encoder = packet.GetEncoder();
    }
 }
 

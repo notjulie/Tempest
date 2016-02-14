@@ -10,8 +10,6 @@ enum ButtonFlag {
    ONE_PLAYER_BUTTON = 1,
    FIRE_BUTTON = 2,
    ZAPPER_BUTTON = 4,
-   ENCODER_UP = 8,
-   ENCODER_DOWN = 16,
    TWO_PLAYER_BUTTON = 32
 };
 

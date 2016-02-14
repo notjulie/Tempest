@@ -55,8 +55,26 @@ bool SoundIOPacketReader::GetSoundCommand(uint8_t *delay, uint8_t *channel, Soun
 
 
 
+TempestInPacket::TempestInPacket(void)
+{
+   memset(packet, 0, sizeof(packet));
+}
+
 bool TempestInPacket::ReadFromStream(PacketStream *stream)
 {
-   int bytesRead = stream->ReadPacket(&flags1, 1);
-   return bytesRead == 1;
+   int bytesRead = stream->ReadPacket(packet, sizeof(packet));
+   return bytesRead == sizeof(packet);
+}
+
+void TempestInPacket::WriteToStream(PacketStream *stream)
+{
+   stream->StartPacket();
+   for (unsigned i = 0; i < sizeof(packet); ++i)
+      stream->Write(packet[i]);
+   stream->EndPacket();
+}
+
+bool TempestInPacket::operator!=(const TempestInPacket &packet)
+{
+   return memcmp(packet.packet, this->packet, PacketLength) != 0;
 }
