@@ -3,6 +3,11 @@
 #include "Win32TempestEnvironment.h"
 
 
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
+
 class Win32Thread : public AbstractThread
 {
 public:
@@ -38,6 +43,9 @@ private:
    DWORD threadID;
 };
 
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 Win32TempestEnvironment::Win32TempestEnvironment(void)
 {

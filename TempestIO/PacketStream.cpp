@@ -72,14 +72,20 @@ void PacketStream::ProcessIncomingData(void)
       if (b < 0)
          return;
 
+      // START_OF_PACKET always means START_OF_PACKET regardless
+      // of whatever state we think we're in
+      if (b == START_OF_PACKET)
+      {
+         readState = InPacket;
+         incomingPacketLength = 0;
+         continue;
+      }
+
+      // process the byte according to state
       switch (readState)
       {
       case ReadIdle:
-         if (b == START_OF_PACKET)
-         {
-            readState = InPacket;
-            incomingPacketLength = 0;
-         }
+         // the only thing we accept is START_OF_PACKET
          break;
 
       case InPacket:
@@ -117,6 +123,8 @@ void PacketStream::ProcessIncomingData(void)
             incomingPacket[incomingPacketLength++] = b;
             if (incomingPacketLength >= sizeof(incomingPacket))
                readState = ReadIdle;
+            else
+               readState = InPacket;
          }
          else
          {
