@@ -21,7 +21,7 @@ Win32ComPortStream::Win32ComPortStream(const char *portName)
    deviceName += portName;
 
    // open it
-   file = CreateFile(
+   file = CreateFileA(
       deviceName.c_str(),
       GENERIC_READ | GENERIC_WRITE,
       0,

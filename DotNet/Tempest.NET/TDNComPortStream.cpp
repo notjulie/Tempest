@@ -2,7 +2,7 @@
 #include "Stdafx.h"
 
 #include "TempestCPU/TempestException.h"
-#include "Win32/TempestWin32/Win32ComPortStream.h"
+#include "Win32ComPortStream.h"
 
 #include "TDNComPortStream.h"
 

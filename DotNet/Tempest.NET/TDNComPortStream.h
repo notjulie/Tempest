@@ -5,7 +5,7 @@
 using namespace System;
 using namespace System::Threading;
 
-#include "Win32/TempestWin32/Win32ComPortStream.h"
+#include "Win32ComPortStream.h"
 #include "ITDNStreamProvider.h"
 
 class Win32ComPortStream;

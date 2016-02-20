@@ -180,6 +180,7 @@
     <ClCompile Include="TDNWin32TempestIO.cpp" />
     <ClCompile Include="TDNMemoryStream.cpp" />
     <ClCompile Include="VectorEnumerator.cpp" />
+    <ClCompile Include="Win32ComPortStream.cpp" />
     <ClCompile Include="Win32WaveBuffer.cpp" />
     <ClCompile Include="Win32WaveStreamer.cpp" />
     <ClCompile Include="WinTempestIO.cpp" />
@@ -196,9 +197,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\TempestIO\TempestIO.vcxproj">
       <Project>{db91aa41-e33e-4fa3-a901-50daadb164d8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Win32\TempestWin32\TempestWin32.vcxproj">
-      <Project>{937dadc2-d50a-49c7-8986-89b2eb64a471}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
