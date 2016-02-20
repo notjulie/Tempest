@@ -66,6 +66,7 @@ private:
    AbstractTempestVectorIO *tempestVectorIO;
 
    uint64_t lastPlayer2ButtonDownTime;
+   uint64_t lastWatchdogTime;
    bool demoMode;
 	bool selfTest;
 	bool slam;

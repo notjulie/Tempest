@@ -24,6 +24,7 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
    tempestVectorIO = NULL;
    lastPlayer2ButtonState = false;
    lastPlayer2ButtonDownTime = 0;
+   lastWatchdogTime = 0;
 
    mainRAM.resize(MAIN_RAM_SIZE);
    colorRAM.resize(COLOR_RAM_SIZE);
@@ -236,6 +237,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
       case 0x5000:
          // watchdog timer clear, and this is also what clears the IRQ
          SetIRQ(false);
+         lastWatchdogTime = GetTotalClockCycles();
          break;
 
       case 0x5800:
@@ -296,6 +298,10 @@ void TempestBus::Tick250Hz(AbstractBus *bus)
 void TempestBus::HandleTick250Hz(void)
 {
    uint64_t now = GetTotalClockCycles();
+
+   // check the watchdog
+   if (now - lastWatchdogTime > 1500000)
+      throw TempestException("Watchdog timer timeout");
 
    // check for double tap on player two button
    bool player2ButtonDown = (tempestSoundIO->GetButtons() & TWO_PLAYER_BUTTON) != 0;
