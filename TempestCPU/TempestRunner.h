@@ -7,8 +7,7 @@
 
 class AbstractTempestEnvironment;
 class AbstractTempestVectorIO;
-class AbstractThread;
-
+class TempestRunnerThread;
 
 #ifdef _WIN32
    #pragma warning(push)
@@ -81,7 +80,7 @@ private:
 	CPU6502		cpu6502;
 
 	std::string processorStatus;
-	AbstractThread *theThread;
+   TempestRunnerThread *theThread;
 	bool	breakpoints[64 * 1024];
 };
 
