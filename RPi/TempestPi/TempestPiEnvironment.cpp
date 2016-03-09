@@ -13,11 +13,6 @@ TempestPiEnvironment::TempestPiEnvironment(void)
 }
 
 
-AbstractThread *TempestPiEnvironment::CreateThread(ThreadEntry *entry, void *param)
-{
-   return new RPiThread(entry, param);
-}
-
 void TempestPiEnvironment::Reset(void)
 {
    if (0 != clock_gettime(CLOCK_REALTIME, &startTime))
