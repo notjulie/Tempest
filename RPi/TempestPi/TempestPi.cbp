@@ -53,6 +53,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
