@@ -78,6 +78,9 @@
     <ClInclude Include="SoundIOPacket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempestConsole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -123,6 +126,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SoundChannelState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempestConsole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

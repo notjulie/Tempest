@@ -10,6 +10,8 @@
 #include "TempestCPU/TempestRunner.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
 
+#include "TempestIO/TempestConsole.h"
+
 #include "TDNWin32TempestIO.h"
 
 #include "Tempest.h"
@@ -25,6 +27,7 @@ namespace TempestDotNET {
       tempestSoundIO = soundIO->GetIOObject();
       tempestVectorIO = vectorIO->GetVectorIOObject();
       tempestRunner = new TempestRunner(environment);
+      tempestConsole = new TempestConsole();
 
       // hook objects together
       tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
@@ -37,6 +40,7 @@ namespace TempestDotNET {
       tempestSoundIO = soundIO->GetSoundIOObject();
       tempestVectorIO = vectorIO->GetVectorIOObject();
       tempestRunner = new TempestRunner(environment);
+      tempestConsole = new TempestConsole();
 
       // hook objects together
       tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
@@ -45,7 +49,8 @@ namespace TempestDotNET {
    Tempest::~Tempest(void)
 	{
 		// delete
-		delete tempestRunner, tempestRunner = NULL;
+      delete tempestConsole, tempestConsole = NULL;
+      delete tempestRunner, tempestRunner = NULL;
       delete environment, environment = NULL;
 	}
 
