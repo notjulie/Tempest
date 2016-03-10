@@ -10,5 +10,4 @@
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
 
-#include <thread>
 #include <vector>

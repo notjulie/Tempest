@@ -14,6 +14,7 @@ public:
 	Win32TempestEnvironment(void);
 	virtual ~Win32TempestEnvironment(void);
 
+   virtual AbstractThread *CreateThread(ThreadEntry *entry, void *param);
    virtual void Reset(void);
 	virtual void Sleep(int ms);
 	virtual void SynchronizeClock(uint64_t busMSCount);

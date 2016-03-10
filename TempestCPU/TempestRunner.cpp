@@ -7,7 +7,6 @@
 
 #include "TempestRunner.h"
 
-
 TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	:
 		tempestBus(_environment),
@@ -28,15 +27,10 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 
 TempestRunner::~TempestRunner(void)
 {
-   // we hide the fact that the thread is an std::thread because having it in the
-   // header file perturbs some environments
-   std::thread *theActualThread = (std::thread *)theThread;
-
-   if (theActualThread != NULL)
+	if (theThread != NULL)
 	{
 		terminateRequested = true;
-      theActualThread->join();
-      delete theActualThread, theThread = NULL;
+		delete theThread, theThread = NULL;
 	}
 }
 
@@ -53,9 +47,7 @@ void TempestRunner::SetDemoMode(void)
 void TempestRunner::Start(void)
 {
 	// create the thread is all
-   theThread = (TempestRunnerThread *)new std::thread(
-      [this]() { RunnerThread(); }
-      );
+   theThread = environment->CreateThread(RunnerThreadEntry, this);
 }
 
 
