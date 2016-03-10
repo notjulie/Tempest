@@ -12,7 +12,6 @@ class Win32RealTimeClock;
 class AbstractTempestSoundIO;
 class AbstractTempestVectorIO;
 class Win32WaveStreamer;
-class TempestConsole;
 
 namespace TempestDotNET {
 
@@ -45,7 +44,6 @@ namespace TempestDotNET {
       AbstractTempestSoundIO *tempestSoundIO;
       AbstractTempestVectorIO *tempestVectorIO;
       TempestRunner *tempestRunner;
-      TempestConsole *tempestConsole;
 	};
 
 }
