@@ -3,6 +3,7 @@
 #define TEMPESTPI_H
 
 #include "TempestCPU/TempestRunner.h"
+#include "TempestSocketListener.h"
 #include "TempestPiEnvironment.h"
 #include "TempestPiIO.h"
 
@@ -36,6 +37,7 @@ private:
    TempestPiEnvironment environment;
    TempestRunner tempestRunner;
    TempestPiIO vectorIO;
+   TempestSocketListener socketListener;
 };
 
 #endif

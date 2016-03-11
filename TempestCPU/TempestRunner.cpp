@@ -47,7 +47,9 @@ void TempestRunner::SetDemoMode(void)
 void TempestRunner::Start(void)
 {
 	// create the thread is all
-   theThread = environment->CreateThread(RunnerThreadEntry, this);
+	theThread = new std::thread(
+      [this]() { RunnerThread(); }
+      );
 }
 
 

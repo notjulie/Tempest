@@ -7,7 +7,6 @@
 
 class AbstractTempestEnvironment;
 class AbstractTempestVectorIO;
-class AbstractThread;
 
 
 #ifdef _WIN32
@@ -62,9 +61,6 @@ private:
 	void	RunnerThread(void);
 
 private:
-	static void RunnerThreadEntry(void *pThis) { ((TempestRunner*)pThis)->RunnerThread(); }
-
-private:
 	// forbidden
 	TempestRunner(const TempestRunner &tr);
 	TempestRunner &operator=(const TempestRunner &tr);
@@ -81,7 +77,7 @@ private:
 	CPU6502		cpu6502;
 
 	std::string processorStatus;
-	AbstractThread *theThread;
+	std::thread *theThread;
 	bool	breakpoints[64 * 1024];
 };
 
