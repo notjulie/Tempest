@@ -6,7 +6,8 @@
 	"TempestCPU/TempestException.h"
 	"TempestPi.h"
 
-1457669582 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
+1457672823 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
+	<memory.h>
 	<stdint.h>
 	<stdio.h>
 	<map>
@@ -615,5 +616,13 @@
 	"stdafx.h"
 	"SoundChannelState.h"
 
-1457669239 /home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.h
+1457792764 /home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.h
+
+1457837681 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.cpp
+	"stdafx.h"
+	<netinet/in.h>
+	<sys/types.h>
+	<sys/socket.h>
+	"../../TempestCPU/TempestException.h"
+	"TempestSocketListener.h"
 

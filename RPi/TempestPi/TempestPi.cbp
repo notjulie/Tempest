@@ -66,8 +66,12 @@
 		<Unit filename="TempestPi.cpp" />
 		<Unit filename="TempestPi.h" />
 		<Unit filename="TempestPiEnvironment.cpp" />
+		<Unit filename="TempestPiEnvironment.h" />
 		<Unit filename="TempestPiIO.cpp" />
+		<Unit filename="TempestSocketListener.cpp" />
+		<Unit filename="TempestSocketListener.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="stdafx.h" />
 		<Unit filename="../../TempestCPU/6502/AbstractBus.cpp" />
 		<Unit filename="../../TempestCPU/6502/AbstractBus.h" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
@@ -85,6 +89,7 @@
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.h" />
+		<Unit filename="../../TempestCPU/stdafx.h" />
 		<Unit filename="../../TempestIO/AbstractTempestIO.h" />
 		<Unit filename="../../TempestIO/PacketStream.cpp" />
 		<Unit filename="../../TempestIO/SoundChannelState.cpp" />
