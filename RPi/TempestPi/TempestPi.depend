@@ -16,7 +16,7 @@
 	<vector>
 	<VG/openvg.h>
 
-1457669401 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
+1457838303 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 
 1457670130 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	"6502/CPU6502.h"
@@ -574,7 +574,7 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1453005042 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1457838590 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
 	"TempestCPU/TempestException.h"
@@ -616,13 +616,25 @@
 	"stdafx.h"
 	"SoundChannelState.h"
 
-1457792764 /home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.h
+1457838413 /home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.h
 
-1457837681 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.cpp
+1457838988 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.cpp
 	"stdafx.h"
 	<netinet/in.h>
 	<sys/types.h>
 	<sys/socket.h>
+	"../../TempestCPU/AbstractTempestEnvironment.h"
+	"../../TempestCPU/CommandLine.h"
 	"../../TempestCPU/TempestException.h"
 	"TempestSocketListener.h"
+
+1457839013 /home/pi/Documents/Tempest/TempestCPU/CommandLine.h
+
+1457838947 source:/home/pi/Documents/Tempest/TempestCPU/CommandLine.cpp
+	"stdafx.h"
+	"CommandLine.h"
+
+1457839182 source:/home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.cpp
+	"stdafx.h"
+	"AbstractTempestEnvironment.h"
 

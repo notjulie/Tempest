@@ -12,7 +12,8 @@
 
 TempestPi::TempestPi(void)
    :
-      tempestRunner(&environment)
+      tempestRunner(&environment),
+      socketListener(&environment)
 {
    // clear
    demo = false;

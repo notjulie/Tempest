@@ -77,6 +77,10 @@
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502Exception.cpp" />
 		<Unit filename="../../TempestCPU/6502/ProcessorStatusWord.cpp" />
+		<Unit filename="../../TempestCPU/AbstractTempestEnvironment.cpp" />
+		<Unit filename="../../TempestCPU/AbstractTempestEnvironment.h" />
+		<Unit filename="../../TempestCPU/CommandLine.cpp" />
+		<Unit filename="../../TempestCPU/CommandLine.h" />
 		<Unit filename="../../TempestCPU/EEPROM.cpp" />
 		<Unit filename="../../TempestCPU/MathBox/Am2901.cpp" />
 		<Unit filename="../../TempestCPU/MathBox/Am2901Tables.cpp" />

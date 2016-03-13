@@ -4,15 +4,22 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
+#include "../../TempestCPU/AbstractTempestEnvironment.h"
+#include "../../TempestCPU/CommandLine.h"
 #include "../../TempestCPU/TempestException.h"
 
 #include "TempestSocketListener.h"
 
-TempestSocketListener::TempestSocketListener(void)
+TempestSocketListener::TempestSocketListener(AbstractTempestEnvironment *environment)
 {
+   // copy parameters
+   this->environment = environment;
+
+   // clear
    terminated = false;
    theSocket = -1;
 
+   // start our listener
    connectionThread = new std::thread(
       [this]() { ListenForConnections(); }
       );
@@ -114,7 +121,8 @@ void TempestSocketListener::ListenToClient(int client)
          {
          case '\n':
             {
-               std::string response = "bleem\r\n";
+               std::string response = environment->ExecuteCommand(command);
+               response += "\r\n";
                send(client, response.c_str(), response.size(), 0);
                command = std::string();
                break;
