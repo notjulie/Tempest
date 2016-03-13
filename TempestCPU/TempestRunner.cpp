@@ -30,6 +30,7 @@ TempestRunner::~TempestRunner(void)
 	if (theThread != NULL)
 	{
 		terminateRequested = true;
+		theThread->join();
 		delete theThread, theThread = NULL;
 	}
 }

@@ -11,17 +11,14 @@
 
 
 TempestPi::TempestPi(void)
-   :
-      tempestRunner(&environment),
-      socketListener(&environment)
 {
    // clear
    demo = false;
    terminated = false;
    monitorThread = 0;
-   keyboardThread = 0;
    log = NULL;
    currentCommand[0] = 0;
+   tempestRunner = NULL;
 
    // open the log
    log = fopen("TempestMonitor.log", "a");
@@ -32,18 +29,41 @@ TempestPi::TempestPi(void)
    // register our commands
    environment.RegisterCommand(
       "exit",
-      [=](const CommandLine &command) {
+      [this](const CommandLine &command) {
          vectorIO.Terminate();
          return "OK";
          }
       );
+
+   // create the runner; it doesn't get started until later
+   tempestRunner = new TempestRunner(&environment);
+
+   // start our socket listener
+   socketListener = new TempestSocketListener(&environment);
 }
 
 TempestPi::~TempestPi(void)
 {
+   // start by terminating our threads
    terminated = true;
-   if (monitorThread != 0)
-      pthread_join(monitorThread, NULL);
+   if (monitorThread != NULL)
+   {
+      monitorThread->join();
+      delete monitorThread, monitorThread = NULL;
+   }
+
+   // the socket listener can make calls almost anywhere, so we need to
+   // shut it down before we start tearing down the rest of the app
+   if (socketListener != NULL)
+      delete socketListener, socketListener = NULL;
+
+   // the runner is also a thread and it needs to get shut down before
+   // we delete objects it uses
+   if (tempestRunner != NULL)
+      delete tempestRunner, tempestRunner = NULL;
+
+   delete soundIO, soundIO = NULL;
+   delete serialStream, serialStream = NULL;
 }
 
 void TempestPi::Run(void)
@@ -51,44 +71,22 @@ void TempestPi::Run(void)
    try
    {
        // create our peripherals
-       PiSerialStream serialStream;
-       TempestIOStreamProxy soundIO(&serialStream);
+       serialStream = new PiSerialStream();
+       soundIO = new TempestIOStreamProxy(serialStream);
 
        // create the runner object that drives the fake 6502
-       tempestRunner.SetTempestIO(&soundIO, &vectorIO);
+       tempestRunner->SetTempestIO(soundIO, &vectorIO);
        if (demo)
-         tempestRunner.SetDemoMode();
+         tempestRunner->SetDemoMode();
 
       // start the monitor thread if it's not running
-      if (monitorThread == 0)
-      {
-         int result = pthread_create(
-            &monitorThread,
-            NULL,
-            &MonitorThreadEntry,
-            this
+      if (monitorThread == NULL)
+         monitorThread = new std::thread(
+               [this]() { MonitorThread(); }
             );
-         if (result != 0)
-            throw TempestException("Error creating Monitor thread");
-         pthread_setname_np(monitorThread, "Monitor");
-      }
-
-      // start the keyboard thread if it's not running
-      if (keyboardThread == 0)
-      {
-         int result = pthread_create(
-            &keyboardThread,
-            NULL,
-            &KeyboardThreadEntry,
-            this
-            );
-         if (result != 0)
-            throw TempestException("Error creating keyboard thread");
-         pthread_setname_np(keyboardThread, "Keyboard");
-      }
 
        // go
-       tempestRunner.Start();
+       tempestRunner->Start();
 
       // the IO object (i.e. the screen) takes over the main thread
       // from here
@@ -116,68 +114,23 @@ void TempestPi::MonitorThread(void)
       usleep(100000);
 
       // look for any issues
-      if (tempestRunner.IsTerminated())
+      if (tempestRunner->IsTerminated())
       {
          Log("Tempest terminated");
-         Log(tempestRunner.GetProcessorStatus().c_str());
+         Log(tempestRunner->GetProcessorStatus().c_str());
 
-         sprintf(s, "Program terminated at address %X", tempestRunner.GetProgramCounter());
+         sprintf(s, "Program terminated at address %X", tempestRunner->GetProgramCounter());
          Log(s);
          sprintf(s, "A=%X, X=%X, Y=%X, S=%X",
-                 tempestRunner.GetAccumulator(),
-                 tempestRunner.GetXRegister(),
-                 tempestRunner.GetYRegister(),
-                 tempestRunner.GetStackPointer()
+                 tempestRunner->GetAccumulator(),
+                 tempestRunner->GetXRegister(),
+                 tempestRunner->GetYRegister(),
+                 tempestRunner->GetStackPointer()
                  );
          Log(s);
 
          return;
       }
-   }
-}
-
-void TempestPi::KeyboardThread(void)
-{
-   // check for incoming keyboard data
-   for (;;)
-   {
-      // get a character
-      int c = getc(stdin);
-      if (c < 0)
-         break;
-
-      // if this is an enter process the command
-      if (c=='\r' || c=='\n')
-      {
-         ProcessCommand(currentCommand);
-         currentCommand[0] = 0;
-         continue;
-      }
-
-      // add it to our buffer
-      int len = strlen(currentCommand);
-      currentCommand[len++] = c;
-      currentCommand[len] = 0;
-      if (len >= (int)sizeof(currentCommand) - 3)
-      {
-         printf("Input overflow, ignored\n");
-         currentCommand[0] = 0;
-      }
-   }
-}
-
-void TempestPi::ProcessCommand(const char *command)
-{
-   if (strcasecmp(command, "demo") == 0)
-   {
-      tempestRunner.SetDemoMode();
-      return;
-   }
-
-   if (strcasecmp(command, "logframerate") == 0)
-   {
-      vectorIO.LogFrameRate();
-      return;
    }
 }
 
@@ -189,37 +142,4 @@ void TempestPi::Log(const char *s)
 }
 
 
-void *TempestPi::KeyboardThreadEntry(void *pThis)
-{
-   TempestPi *tempest = (TempestPi*)pThis;
-
-   try
-   {
-      tempest->KeyboardThread();
-      tempest->Log("Keyboard thread exit");
-   }
-   catch (...)
-   {
-      tempest->Log("Keyboard thread unhandled exception");
-   }
-
-   return NULL;
-}
-
-void *TempestPi::MonitorThreadEntry(void *pThis)
-{
-   TempestPi *tempest = (TempestPi*)pThis;
-
-   try
-   {
-      tempest->MonitorThread();
-      tempest->Log("Monitor thread exit");
-   }
-   catch (...)
-   {
-      tempest->Log("Monitor thread unhandled exception");
-   }
-
-   return NULL;
-}
 

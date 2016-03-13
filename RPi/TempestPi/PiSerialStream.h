@@ -19,26 +19,22 @@ private:
    void WriteThread(void);
 
 private:
-   static void *ReadThreadEntry(void *pThis);
-   static void *WriteThreadEntry(void *pThis);
-
-private:
    int fileStream;
    bool terminated;
 
+   std::thread *writeThread;
    uint8_t writeBuffer[20000];
    int writeBufferIn;
    int writeBufferOut;
-   pthread_mutex_t writeBufferMutex;
-   pthread_cond_t writeBufferEvent;
-   pthread_t writeThread;
+   std::mutex writeBufferMutex;
+   std::condition_variable writeBufferEvent;
    bool writeThreadFailed;
    std::string writeThreadError;
 
+   std::thread *readThread;
    uint8_t readBuffer[20000];
    int readBufferIn;
    int readBufferOut;
-   pthread_t readThread;
    bool readThreadFailed;
    std::string readThreadError;
 };

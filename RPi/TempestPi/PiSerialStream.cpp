@@ -17,8 +17,6 @@ PiSerialStream::PiSerialStream(void)
 
    writeBufferIn = 0;
    writeBufferOut = 0;
-   writeBufferMutex = PTHREAD_MUTEX_INITIALIZER;
-   writeBufferEvent = PTHREAD_COND_INITIALIZER;
    writeThreadFailed = false;
 
    readBufferIn = 0;
@@ -41,26 +39,14 @@ PiSerialStream::PiSerialStream(void)
    tcsetattr(fileStream, TCSANOW, &options);
 
    // start our write thread
-   int result = pthread_create(
-      &writeThread,
-      NULL,
-      &WriteThreadEntry,
-      this
+   writeThread = new std::thread(
+      [this]() { WriteThread(); }
       );
-   if (result != 0)
-      throw TempestException("Error creating serial write thread");
-   pthread_setname_np(writeThread, "SerialWrite");
 
    // start our read thread
-   result = pthread_create(
-      &readThread,
-      NULL,
-      &ReadThreadEntry,
-      this
+   readThread = new std::thread(
+      [this]() { ReadThread(); }
       );
-   if (result != 0)
-      throw TempestException("Error creating serial read thread");
-   pthread_setname_np(readThread, "SerialRead");
 }
 
 PiSerialStream::~PiSerialStream(void)
@@ -69,11 +55,13 @@ PiSerialStream::~PiSerialStream(void)
    terminated = true;
 
    // wait for threads to exit
-   pthread_join(writeThread, NULL);
-   pthread_join(readThread, NULL);
+   writeThread->join();
+   readThread->join();
+
+   delete writeThread, writeThread = NULL;
+   delete readThread, readThread = NULL;
 
    // close
-   pthread_cond_destroy(&writeBufferEvent);
    if (fileStream != -1)
       close(fileStream), fileStream = -1;
 }
@@ -120,46 +108,22 @@ void PiSerialStream::Write(uint8_t b)
    writeBufferIn = newBufferIn;
 
    // set the event
-   pthread_mutex_lock(&writeBufferMutex);
-   pthread_cond_signal(&writeBufferEvent);
-   pthread_mutex_unlock(&writeBufferMutex);
+   writeBufferEvent.notify_all();
 }
 
-
-void *PiSerialStream::WriteThreadEntry(void *pThis)
-{
-   PiSerialStream *stream = (PiSerialStream*)pThis;
-
-   try
-   {
-      stream->WriteThread();
-   }
-   catch (TempestException &te)
-   {
-      stream->writeThreadFailed = true;
-      stream->writeThreadError = te.what();
-   }
-   catch (...)
-   {
-      stream->writeThreadFailed = true;
-      stream->writeThreadError = "Unknown exception";
-   }
-
-   return NULL;
-}
 
 void PiSerialStream::WriteThread(void)
 {
    for (;;)
    {
       // wait to be signalled
-      timespec waitUntil;
-      clock_gettime(CLOCK_REALTIME, &waitUntil);
-      waitUntil.tv_nsec += 1000000;
-
-      pthread_mutex_lock(&writeBufferMutex);
-      pthread_cond_timedwait(&writeBufferEvent, &writeBufferMutex, &waitUntil);
-      pthread_mutex_unlock(&writeBufferMutex);
+      {
+         std::unique_lock<std::mutex> lock(writeBufferMutex);
+         writeBufferEvent.wait_until(
+            lock,
+            std::chrono::system_clock::now() + std::chrono::seconds(1)
+            );
+      }
 
       // check for termination
       if (terminated)
@@ -187,36 +151,10 @@ void PiSerialStream::WriteThread(void)
 
       // set the event again if there's still data to write
       if (writeBufferIn != writeBufferOut)
-      {
-         pthread_mutex_lock(&writeBufferMutex);
-         pthread_cond_signal(&writeBufferEvent);
-         pthread_mutex_unlock(&writeBufferMutex);
-      }
+         writeBufferEvent.notify_all();
    }
 }
 
-
-void *PiSerialStream::ReadThreadEntry(void *pThis)
-{
-   PiSerialStream *stream = (PiSerialStream*)pThis;
-
-   try
-   {
-      stream->ReadThread();
-   }
-   catch (TempestException &te)
-   {
-      stream->readThreadFailed = true;
-      stream->readThreadError = te.what();
-   }
-   catch (...)
-   {
-      stream->readThreadFailed = true;
-      stream->readThreadError = "Unknown exception";
-   }
-
-   return NULL;
-}
 
 void PiSerialStream::ReadThread(void)
 {

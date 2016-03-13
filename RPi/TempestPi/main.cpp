@@ -8,7 +8,6 @@
 #include "TempestPi.h"
 
 
-
 int main(int argc, char **argv)
 {
    bool isDemo = false;
