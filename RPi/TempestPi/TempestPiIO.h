@@ -15,6 +15,7 @@ public:
    void Run(void);
 
    void LogFrameRate(void) { logFrameRate = true; }
+   void Terminate(void) { terminated = true; }
 
 	virtual void WriteColorRAM(uint16_t address, uint8_t value) { vectorInterpreter.WriteColorRAM(address, value); }
 	virtual void WriteVectorRAM(uint16_t address, uint8_t value, uint64_t cpuTime);
@@ -35,6 +36,7 @@ private:
 	int mostRecentVectors;
 	PiScreen screen;
 	bool logFrameRate;
+	bool terminated;
 	uint64_t vectorGoCount;
 	uint64_t vectorResetCount;
 	uint64_t lastVectorRAMWrite;

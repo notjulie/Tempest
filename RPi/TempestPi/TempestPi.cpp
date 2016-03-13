@@ -28,6 +28,15 @@ TempestPi::TempestPi(void)
    fprintf(log, "\n\n\n=====================================================\n");
    fprintf(log, "=====================================================\n");
    fprintf(log, "=====================================================\n");
+
+   // register our commands
+   environment.RegisterCommand(
+      "exit",
+      [=](const CommandLine &command) {
+         vectorIO.Terminate();
+         return "OK";
+         }
+      );
 }
 
 TempestPi::~TempestPi(void)

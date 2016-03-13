@@ -7,6 +7,7 @@
 TempestPiIO::TempestPiIO(void)
 {
    logFrameRate = false;
+   terminated = false;
    vectorGoCount = 0;
    vectorResetCount = 0;
    lastVectorRAMWrite = 0;
@@ -25,7 +26,7 @@ void TempestPiIO::Run(void)
    uint64_t lastVectorGoCount = vectorGoCount;
    uint64_t lastVectorResetCount = vectorResetCount;
 
-   for (;;)
+   while (!terminated)
    {
       PushFrameToScreen();
       ++framesPerSecond;
