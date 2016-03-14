@@ -7,13 +7,13 @@
 	<File name="PiSerialStream.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="1407" topLine="51" />
 	</File>
-	<File name="PiSerialStream.h" open="1" top="0" tabpos="2">
+	<File name="PiSerialStream.h" open="0" top="0" tabpos="2">
 		<Cursor position="586" topLine="18" />
 	</File>
-	<File name="TempestPi.cpp" open="1" top="0" tabpos="3">
+	<File name="TempestPi.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="1749" topLine="51" />
 	</File>
-	<File name="TempestPi.h" open="1" top="0" tabpos="4">
+	<File name="TempestPi.h" open="0" top="0" tabpos="4">
 		<Cursor position="433" topLine="18" />
 	</File>
 	<File name="TempestPiEnvironment.cpp" open="0" top="0" tabpos="5">
@@ -31,7 +31,7 @@
 	<File name="TempestSocketListener.h" open="0" top="0" tabpos="2">
 		<Cursor position="99" topLine="2" />
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="5">
+	<File name="main.cpp" open="1" top="0" tabpos="2">
 		<Cursor position="356" topLine="18" />
 	</File>
 	<File name="stdafx.h" open="0" top="0" tabpos="3">
@@ -43,8 +43,8 @@
 	<File name="../../TempestCPU/6502/AbstractBus.h" open="0" top="0" tabpos="0">
 		<Cursor position="663" topLine="22" />
 	</File>
-	<File name="../../TempestCPU/6502/CPU6502.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1233" topLine="47" />
+	<File name="../../TempestCPU/6502/CPU6502.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="355" topLine="0" />
 	</File>
 	<File name="../../TempestCPU/AbstractTempestEnvironment.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="39" topLine="0" />
@@ -76,14 +76,14 @@
 	<File name="../../TempestCPU/TempestMemoryMap.h" open="0" top="0" tabpos="0">
 		<Cursor position="1074" topLine="13" />
 	</File>
-	<File name="../../TempestCPU/TempestRunner.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="647" topLine="26" />
+	<File name="../../TempestCPU/TempestRunner.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="598" topLine="19" />
 	</File>
 	<File name="../../TempestCPU/TempestRunner.h" open="0" top="0" tabpos="0">
 		<Cursor position="1700" topLine="61" />
 	</File>
-	<File name="../../TempestCPU/stdafx.h" open="0" top="0" tabpos="0">
-		<Cursor position="1056" topLine="9" />
+	<File name="../../TempestCPU/stdafx.h" open="1" top="0" tabpos="5">
+		<Cursor position="1023" topLine="17" />
 	</File>
 	<File name="../../TempestIO/AbstractTempestIO.h" open="0" top="0" tabpos="2">
 		<Cursor position="800" topLine="19" />

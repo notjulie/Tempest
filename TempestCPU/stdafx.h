@@ -27,7 +27,9 @@
 #include <stdlib.h>
 
 // C++
+#include <iomanip>
 #include <map>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <vector>

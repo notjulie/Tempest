@@ -67,11 +67,13 @@
 	"TempestException.h"
 	"TempestRunner.h"
 
-1457669867 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
+1457915653 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
 	<stdint.h>
 	<stdio.h>
 	<stdlib.h>
+	<iomanip>
 	<map>
+	<sstream>
 	<string>
 	<thread>
 	<vector>

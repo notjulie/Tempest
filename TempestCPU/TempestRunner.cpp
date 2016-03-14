@@ -23,6 +23,17 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	for (int i = 0; i < 64 * 1024; ++i)
 		breakpoints[i] = false;
    resetRequested = false;
+
+   // register commands
+   environment->RegisterCommand(
+      "?pc",
+      [this](const CommandLine &) {
+            std::ostringstream s;
+            s << std::setfill('0') << std::hex << std::uppercase;
+            s << "PC: " << std::setw(4) << cpu6502.GetPC();
+            return s.str();
+         }
+      );
 }
 
 TempestRunner::~TempestRunner(void)
