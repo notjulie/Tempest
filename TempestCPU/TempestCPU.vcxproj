@@ -23,6 +23,7 @@
     <ClCompile Include="6502\CPU6502.cpp" />
     <ClCompile Include="6502\CPU6502Exception.cpp" />
     <ClCompile Include="6502\ProcessorStatusWord.cpp" />
+    <ClCompile Include="AbstractTempestEnvironment.cpp" />
     <ClCompile Include="EEPROM.cpp" />
     <ClCompile Include="MathBox\Am2901.cpp">
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExceptionHandling>

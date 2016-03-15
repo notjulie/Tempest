@@ -8,6 +8,9 @@
 class AbstractTempestEnvironment;
 class AbstractTempestVectorIO;
 
+namespace std {
+   class thread;
+};
 
 #ifdef _WIN32
    #pragma warning(push)
