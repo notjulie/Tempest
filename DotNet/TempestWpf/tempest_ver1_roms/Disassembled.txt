@@ -29,6 +29,14 @@
 ; NOTE: Yes, the format SUCKS. Ken Lui has provided a better disassembler
 ;       and matching assembler. We *will* migrate to this.
 ;       Tenative migration volunteer: Joey Oravec.
+;
+;
+; Memory addresses:
+;   000A: shadow of 0E00
+;   0156: points per bonus life/10000, 0 --> no bonus lives
+;	0E00: DIP switch L12
+;
+;
 
 9000 02:BB      DATA			 ; Intuitive guess: CRC data?
 9002 5A:30      DATA			 ; The self-test will give the
@@ -3447,6 +3455,11 @@ A9D9 84:2A      STY:zp     Zp RAM 002A
 A9DB 38:        SEC:imp    Set Carry
 A9DC 08:        PHP:imp    Push P
 A9DD A0:00      LDY:imm    #00
+;
+;	This appears to be where the digits in the score are displayed; this
+;	cycles through them and pushes them to a hardcoded location in vector
+;	RAM
+;
 A9DF B1:3B      LDA:ind,y  3B
 A9E1 4A:        LSR:accum  
 A9E2 4A:        LSR:accum  
@@ -3464,6 +3477,10 @@ A9F5 C6:3B      DEC:zp     Zp RAM 003B
 A9F7 C6:2A      DEC:zp     Zp RAM 002A
 A9F9 10:E1      BPL:rel    Branch->$A9DC
 A9FB 60:        RTS:imp    Ret from Sub
+;
+;	The accumulator contains a decimal digit to write to the screen; vector
+;	RAM already has a space for it, and this just puts it there
+;
 A9FC 29:0F      AND:imm    #0F
 A9FE A8:        TAY:imp    A-->Y
 A9FF F0:01      BEQ:rel    Branch->$AA02
@@ -7865,6 +7882,9 @@ CA68 CA:        DEX:imp    X=X-1	 ;
 CA69 10:FB      BPL:rel    Branch->$CA66 ;
 CA6B 60:        RTS:imp    Ret from Sub	 ;
 ;
+; Routine for adding to the score; the value to add is either a 24 bit BCD value at [29][2A][2B]
+; or a value from a lookup table it X<8 on entry; this also handles bonus lives
+;
 CA6C F8:        SED:imp    Set Decimal	 ; Decimal math mode used for scores.
 CA6D 24:05      BIT:zp     Zp RAM 0005
 CA6F 10:7E      BPL:rel    Branch->$CAEF
@@ -7884,6 +7904,10 @@ CA89 99:41 00   STA:abs,y  $0041,Y
 CA8C A5:2B      LDA:zp     Zp RAM 002B
 CA8E B8:        CLV:imp    Clear Overflow
 CA8F 50:15      BVC:rel    Branch->$CAA6
+;
+; NOTE: this section is NOP'ed out by the previous branch
+; which is always taken
+;
 CA91 BD:F1 CA   LDA:abs,x  $CAF1,X
 CA94 18:        CLC:imp    Clear Carry
 CA95 79:40 00   ADC:abs,y  $0040,Y	 ; Update the score.
@@ -7892,16 +7916,28 @@ CA9B BD:F9 CA   LDA:abs,x  $CAF9,X
 CA9E 79:41 00   ADC:abs,y  $0041,Y
 CAA1 99:41 00   STA:abs,y  $0041,Y
 CAA4 A9:00      LDA:imm    #00
+;
+; Resume...
+;
 CAA6 08:        PHP:imp    Push P
 CAA7 79:42 00   ADC:abs,y  $0042,Y
 CAAA 99:42 00   STA:abs,y  $0042,Y
 CAAD 28:        PLP:imp    Pull P
 CAAE F0:0B      BEQ:rel    Branch->$CABB
+;
+; This section is only called if the points added are 10000 or
+; more, thus when there's a bonus added; it checks to see if the
+; bonus should add an extra life
+;
 CAB0 AE:56 01   LDX:abs    $0156
 CAB3 F0:06      BEQ:rel    Branch->$CABB
 CAB5 E4:2B      CPX:zp     Zp RAM 002B
 CAB7 F0:23      BEQ:rel    Branch->$CADC
 CAB9 90:21      BCC:rel    Branch->$CADC
+;
+; Else if there was a carry into the 10000's we check to see
+; if a life should be added
+;
 CABB 90:32      BCC:rel    Branch->$CAEF
 CABD AE:56 01   LDX:abs    $0156
 CAC0 F0:2C      BEQ:rel    Branch->$CAEE
@@ -7931,19 +7967,28 @@ CAEE 38:        SEC:imp    Set Carry
 CAEF D8:        CLD:imp    Unset Decimal ; Set normal math mode and
 CAF0 60:        RTS:imp    Ret from Sub  ; return.
 ;
-; Multiple DATA segments of unknown size
-; CAF1-CAF8  CAF9-CB00  CB01-
+; low byte of look up table for object scores
 ;
-CAF1 00:        BRK:imp    BREAK
-CAF2 50:00      BVC:rel    Branch->$CAF4
-CAF4 00:        BRK:imp    BREAK
-CAF5 50:50      BVC:rel    Branch->$CB47
-CAF7 00:        BRK:imp    BREAK
-CAF8 50:00      BVC:rel    Branch->$CAFA
-CAFA 01:02      ORA:ind,x  02
-CAFC 01:00      ORA:ind,x  00
-CAFE 02:        Illegal Opcode
-CAFF 05:07      ORA:zp     Zp RAM 0007
+CAF1 00
+CAF2 50
+CAF3 00
+CAF4 00
+CAF5 50
+CAF6 50
+CAF7 00
+CAF8 50
+;
+; high byte of look up table for object scores
+;
+CAF9 00
+CAFA 01
+CAFB 02
+CAFC 01
+CAFD 00
+CAFE 02
+CAFF 05
+CB00 07
+;
 CB01 00:        BRK:imp    BREAK
 CB02 00:        BRK:imp    BREAK
 CB03 00:        BRK:imp    BREAK
@@ -9759,9 +9804,12 @@ D6B1 1E:B8 31   ASL:abs,x  $31B8,X
 D6B4 D0:6D      BNE:rel    Branch->$D723
 D6B6 D0:A9      BNE:rel    Branch->$D661
 D6B8 D0:E5      BNE:rel    Branch->$D69F
-D6BA D0:AD      BNE:rel    Branch->$D669
-D6BC 00:        BRK:imp    BREAK
-D6BD 0E:85 0A   ASL:abs    $0A85
+D6BA D0
+;
+; Look at DIP switch L12, store the points per bonus life at $0156
+;
+D6BB AD:00 0E   LDA $0E00	; DIP switch L12
+D6BE 85 0A      STA:zp	   Zp RAM 000A
 D6C0 29:38      AND:imm    #38
 D6C2 4A:        LSR:accum  
 D6C3 4A:        LSR:accum  
@@ -9769,6 +9817,7 @@ D6C4 4A:        LSR:accum
 D6C5 AA:        TAX:imp    A-->X
 D6C6 BD:F7 D6   LDA:abs,x  $D6F7,X
 D6C9 8D:56 01   STA:abs    $0156
+;
 D6CC AD:00 0D   LDA:abs    $0D00         ; Get the contents of DIP N13,
 D6CF 49:02      EOR:imm    #02           ; EOR with 02 (reason unknown) and
 D6D1 85:09      STA:zp     Zp RAM 0009   ; store into 0009.
@@ -9791,12 +9840,17 @@ D6F0 20:E0 DB   JSR:abs    $DBE0	 ; Read D/E2 switch (special format)
 					 ; and store into $0037.
 D6F3 8D:6A 01   STA:abs    $016A
 D6F6 60:        RTS:imp    Ret from Sub
-D6F7 02:        Illegal Opcode
-D6F8 01:03      ORA:ind,x  03
-D6FA 04:        Illegal Opcode
-D6FB 05:06      ORA:zp     Zp RAM 0006
-D6FD 07:        Illegal Opcode
-D6FE 00:        BRK:imp    BREAK
+;
+; lookup table for points per bonus life
+;
+D6F7 02 ; every 20,000
+D6F8 01 ; every 10,000
+D6F9 03 ; every 30,000
+D6FA 04 ; every 40,000
+D6FB 05 ; every 50,000
+D6FC 06 ; every 60,000
+D6FD 07 ; every 70,000
+D6FE 00 ; never
 ;
 ; Table believed to store the number of lives to start with
 ;

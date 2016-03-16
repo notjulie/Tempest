@@ -34,6 +34,11 @@ private:
 		StepAction
 	};
 
+   enum AddressFlags {
+      BREAKPOINT = 1,
+      HOOK = 2
+   };
+
 public:
 	TempestRunner(AbstractTempestEnvironment *environment);
 	virtual ~TempestRunner(void);
@@ -44,7 +49,7 @@ public:
 	std::string GetProcessorStatus(void) { return processorStatus; }
 	bool        IsStopped(void) { return state == Stopped && requestedAction==NoAction; }
 	bool		   IsTerminated(void) { return state == Terminated; }
-	void        SetBreakpoint(uint16_t address, bool set) { breakpoints[address] = set; }
+   void        SetBreakpoint(uint16_t address, bool set);
 	void			Step(void) { requestedAction = StepAction; }
 	void			Resume(void) { requestedAction = ResumeAction; }
 
@@ -61,6 +66,8 @@ public:
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO) { tempestBus.SetTempestIO(tempestSoundIO, tempestVectorIO); }
 
 private:
+   void  AddToScore(void);
+   void  RegisterHook(uint16_t address, std::function<void()> hook);
 	void	RunnerThread(void);
 
 private:
@@ -75,13 +82,15 @@ private:
 	bool     resetRequested;
 	State    state;
 	Action   requestedAction;
+   int pointsPerBonusLife;
 
 	TempestBus	tempestBus;
 	CPU6502		cpu6502;
 
 	std::string processorStatus;
 	std::thread *theThread;
-	bool	breakpoints[64 * 1024];
+	uint8_t	addressFlags[64 * 1024];
+   std::map<uint16_t, std::function<void()> > hooks;
 };
 
 #ifdef _WIN32

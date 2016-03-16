@@ -33,6 +33,15 @@ public:
 	uint8_t  GetY(void) const { return Y; }
 	uint8_t  GetS(void) const { return S; }
 
+   // ops... not all are implemented in a way that makes sense to make them
+   // public... I'm publicizing as I need them as to not let things get crazy
+   void  JMP(uint16_t address) { PC = address; }
+   void  RTS(void);
+
+   // utility
+   static uint8_t FromBCD(uint8_t value);
+   static uint8_t ToBCD(uint8_t value);
+
 private:
    void		IRQ(void);
    void     Compare(uint8_t a, uint8_t b);
@@ -82,15 +91,10 @@ private:
    void  ROR(void);
    void  ROR(uint16_t address);
 	void  RTI(void);
-	void  RTS(void);
 	void  SBC(uint16_t address);
 	void  STA(uint16_t address);
 	void  STX(uint16_t address);
    void  STY(uint16_t address);
-
-private:
-	static uint8_t FromBCD(uint8_t value);
-	static uint8_t ToBCD(uint8_t value);
 
 private:
    AbstractBus *bus;
