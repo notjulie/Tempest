@@ -20,6 +20,10 @@ public:
    bool IsHalt(void) { return isHalt; }
 	void Go(void) { goRequested = true; }
 	void Reset(void);
+   void RegisterHook(uint16_t address, std::function<void()> hook);
+
+   uint16_t GetPC(void) const { return PC; }
+   void Jump(uint16_t pc) { PC = pc; }
 
 protected:
 	virtual void Center(void);
@@ -30,7 +34,7 @@ protected:
 
 private:
 	uint8_t GetAt(uint16_t pcOffset);
-	bool SingleStep(void);
+   bool SingleStep(void);
 
 private:
 	VectorData vectorData;
@@ -40,6 +44,8 @@ private:
 	bool isHalt;
 	bool resetRequested;
 	bool goRequested;
+   bool hookFlags[16 * 1024];
+   std::map<uint16_t, std::function<void()> > hooks;
 };
 
 

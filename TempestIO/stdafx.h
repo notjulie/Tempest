@@ -8,5 +8,7 @@
 #include <stdint.h>
 #include <string.h>
 
+#include <functional>
+#include <map>
 #include <string>
 #include <vector>

@@ -3450,16 +3450,19 @@ A9CE B9:7D A9   LDA:abs,y  $A97D,Y
 A9D1 85:3B      STA:zp     Zp RAM 003B
 A9D3 A9:00      LDA:imm    #00
 A9D5 85:3C      STA:zp     Zp RAM 003C
+;
+;	This appears to be where the digits in the score are displayed; this
+;	cycles through them and pushes them to a hardcoded location in vector
+;	RAM
+;	
+;	[3B][39] contains the address of the score
+;	$2F60,X is the address in vector RAM of where to write the vector
+;
 A9D7 A0:02      LDY:imm    #02
 A9D9 84:2A      STY:zp     Zp RAM 002A
 A9DB 38:        SEC:imp    Set Carry
 A9DC 08:        PHP:imp    Push P
 A9DD A0:00      LDY:imm    #00
-;
-;	This appears to be where the digits in the score are displayed; this
-;	cycles through them and pushes them to a hardcoded location in vector
-;	RAM
-;
 A9DF B1:3B      LDA:ind,y  3B
 A9E1 4A:        LSR:accum  
 A9E2 4A:        LSR:accum  

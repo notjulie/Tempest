@@ -11,6 +11,13 @@ SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(void)
 	color = 0;
 	binaryScale = 1;
 	linearScale = 0;
+
+   // add a hook that skips over the player one score display
+   RegisterHook(0x2f74 - VECTOR_RAM_BASE,
+      [this]() { 
+         Jump(GetPC() + 12);
+      }
+      );
 }
 
 

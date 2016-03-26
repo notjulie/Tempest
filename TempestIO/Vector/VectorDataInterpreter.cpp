@@ -12,6 +12,8 @@ VectorDataInterpreter::VectorDataInterpreter(void)
 	goRequested = false;
 	PC = 0;
    stackIndex = 0;
+   for (int i = 0; i < 16 * 1024; ++i)
+      hookFlags[i] = false;
 }
 
 VectorDataInterpreter::~VectorDataInterpreter(void)
@@ -54,6 +56,13 @@ bool VectorDataInterpreter::SingleStep(void)
 
 	if (isHalt)
 		return false;
+
+   // see if there's a hook
+   if (hookFlags[PC])
+   {
+      hooks[PC]();
+      return !isHalt;
+   }
 
 	uint8_t opByte = GetAt(1);
 	switch (opByte >> 4)
@@ -148,6 +157,12 @@ uint8_t VectorDataInterpreter::GetAt(uint16_t pcOffset)
 	return vectorData.GetAt((uint16_t)(PC + pcOffset));
 }
 
+
+void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<void()> hook)
+{
+   hookFlags[address] = true;
+   hooks[address] = hook;
+}
 
 void VectorDataInterpreter::Center(void)
 {
