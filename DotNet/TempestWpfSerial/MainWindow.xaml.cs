@@ -28,7 +28,6 @@ namespace TempestWpf
 
       // our Tempest objects
       private TDNWin32TempestSoundIO tempestSoundIO;
-      private TDNWin32TempestVectorIO tempestVectorIO;
       private Tempest tempest;
       private TDNMemoryStream tempestMemoryStream;
       private TDNTempestIOStreamListener tempestIOStreamListener;
@@ -177,7 +176,6 @@ namespace TempestWpf
             tempestMemoryStream = new TDNMemoryStream();
 
             // create the IO object that we represent
-            tempestVectorIO = new TDNWin32TempestVectorIO();
             tempestSoundIO = new TDNWin32TempestSoundIO();
 
             // create the streamlistener that feeds it
@@ -187,7 +185,7 @@ namespace TempestWpf
             tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream.GetRightSide());
 
             // create our tempest
-            tempest = new Tempest(tempestIOStreamProxy, tempestVectorIO);
+            tempest = new Tempest(tempestIOStreamProxy);
 
             // at this point here's what we have:
             //   - tempest is writing to tempestIOStreamProxy, which is its output device
@@ -255,7 +253,7 @@ namespace TempestWpf
       void vectorTimer_Tick(object sender, EventArgs e)
       {
          // get a vector enumerator
-         VectorEnumerator enumerator = tempestVectorIO.GetVectorEnumerator();
+         VectorEnumerator enumerator = tempest.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;

@@ -28,7 +28,6 @@ namespace TempestWpf
 
       // our Tempest objects
       private TDNWin32TempestSoundIO tempestSoundIO;
-      private TDNWin32TempestVectorIO tempestVectorIO;
       private Tempest tempest;
       private TDNComPortStream tempestComPortStream;
       private TDNIOStreamProxy tempestIOStreamProxy;
@@ -169,14 +168,13 @@ namespace TempestWpf
             tempestComPortStream = new TDNComPortStream("COM3");
 
             // create the IO object that we represent
-            tempestVectorIO = new TDNWin32TempestVectorIO();
             tempestSoundIO = new TDNWin32TempestSoundIO();
 
             // create the IO proxy
             tempestIOStreamProxy = new TDNIOStreamProxy(tempestComPortStream);
 
             // create our tempest
-            tempest = new Tempest(tempestIOStreamProxy, tempestVectorIO);
+            tempest = new Tempest(tempestIOStreamProxy);
 
             // at this point here's what we have:
             //   - tempest is writing to tempestIOStreamProxy, which is its output device
@@ -244,7 +242,7 @@ namespace TempestWpf
       void vectorTimer_Tick(object sender, EventArgs e)
       {
          // get a vector enumerator
-         VectorEnumerator enumerator = tempestVectorIO.GetVectorEnumerator();
+         VectorEnumerator enumerator = tempest.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;

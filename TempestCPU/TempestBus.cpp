@@ -21,13 +21,16 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 	clock3KHzIsHigh = false;
 	slam = false;
    tempestSoundIO = NULL;
-   tempestVectorIO = NULL;
    lastPlayer2ButtonState = false;
    lastPlayer2ButtonDownTime = 0;
    lastWatchdogTime = 0;
+   lastVectorRAMWrite = 0;
+   vectorGoRequested = false;
+   vectorRAMReady = false;
 
+   // allocate
+   vectorDataSnapshotMutex = new std::mutex();
    mainRAM.resize(MAIN_RAM_SIZE);
-   colorRAM.resize(COLOR_RAM_SIZE);
 
    // install our timers
    StartTimer(250, &Tick6KHz);
@@ -36,6 +39,7 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 
 TempestBus::~TempestBus(void)
 {
+   delete vectorDataSnapshotMutex, vectorDataSnapshotMutex = NULL;
 }
 
 
@@ -97,7 +101,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 
    // vector RAM
 	if (IsVectorRAMAddress(address))
-		return vectorRAM[address - VECTOR_RAM_BASE];
+		return vectorData.GetAt((uint16_t)(address - VECTOR_RAM_BASE));
 
    // vector ROM
 	if (address >= VECTOR_ROM_BASE && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111))
@@ -115,7 +119,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 
 	// color RAM
 	if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
-		return colorRAM[(unsigned)(address - COLOR_RAM_BASE)];
+		return vectorData.ReadColorRAM((unsigned)(address - COLOR_RAM_BASE));
 
 	// miscellaneous other cases
    switch (address)
@@ -125,8 +129,9 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 			uint8_t result = 0;
 			if (clock3KHzIsHigh)
 				result |= 0x80;
-			if (tempestVectorIO->IsVectorHalt())
-				result |= 0x40;
+         // the Tempest app works just fine if it always thinks the vector
+         // state machine is halted
+         result |= 0x40;
 			if (!selfTest)
 				result |= 0x10;
 			if (!slam)
@@ -170,6 +175,19 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 }
 
 
+void TempestBus::GetVectorData(VectorData &vectorData)
+{
+   std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+
+   // if we don't have a valid snapshot yet just set the first instruction to be
+   // a HALT instruction
+   if (!vectorRAMReady)
+      vectorData.WriteVectorRAM(1, 0x20);
+   else
+      vectorData = vectorDataSnapshot;
+}
+
+
 void TempestBus::WriteByte(uint16_t address, uint8_t value)
 {
    // main RAM
@@ -182,16 +200,29 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
    // vector RAM
    if (IsVectorRAMAddress(address))
    {
-		tempestVectorIO->WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value, GetTotalClockCycles());
-		vectorRAM[address - VECTOR_RAM_BASE] = value;
+      // If it has been a while (as measured in clock cycles) since the last write to
+      // vector RAM we can conclude that it is stable and take a snapshot of it so that
+      // the display doesn't catch it in the middle of updating; 800 clock ticks appears
+      // to be a trustworthy number.  In the near future I expect to locate a particular
+      // place in the 6502 code that I can use instead as a trigger.
+      if (GetTotalClockCycles() - lastVectorRAMWrite > 800)
+      {
+         std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+
+         vectorDataSnapshot = vectorData;
+         lastVectorRAMWrite = GetTotalClockCycles();
+         if (vectorGoRequested)
+            vectorRAMReady = true;
+      }
+
+		vectorData.WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
       return;
    }
 
    // color RAM
    if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
    {
-      tempestVectorIO->WriteColorRAM((uint16_t)(address - COLOR_RAM_BASE), value);
-      colorRAM[(unsigned)(address - COLOR_RAM_BASE)] = value;
+      vectorData.WriteColorRAM((unsigned)(address - COLOR_RAM_BASE), value);
       return;
    }
 
@@ -230,8 +261,8 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          break;
 
       case 0x4800:
-         // vector state machine GO!
-         tempestVectorIO->VectorGo();
+         // vector state machine go
+         vectorGoRequested = true;
          break;
 
       case 0x5000:
@@ -241,8 +272,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          break;
 
       case 0x5800:
-         // vector state machine reset
-         tempestVectorIO->VectorReset();
+         // vector state machine reset... not needed
          break;
 
       case 0x6040:
@@ -263,10 +293,9 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
 }
 
 
-void TempestBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO, AbstractTempestVectorIO *_tempestVectorIO)
+void TempestBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
 {
    tempestSoundIO = _tempestSoundIO;
-   tempestVectorIO = _tempestVectorIO;
    pokey1.SetTempestIO(tempestSoundIO);
 	pokey2.SetTempestIO(tempestSoundIO);
 }

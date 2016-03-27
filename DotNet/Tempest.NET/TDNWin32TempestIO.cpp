@@ -19,22 +19,4 @@ namespace TempestDotNET {
    {
       delete tempestSoundIO, tempestSoundIO = NULL;
    }
-
-   TDNWin32TempestVectorIO::TDNWin32TempestVectorIO(void)
-   {
-      tempestVectorIO = new Win32TempestVectorIO();
-   }
-
-   TDNWin32TempestVectorIO::~TDNWin32TempestVectorIO(void)
-   {
-      delete tempestVectorIO, tempestVectorIO = NULL;
-   }
-
-   VectorEnumerator ^TDNWin32TempestVectorIO::GetVectorEnumerator(void)
-	{
-		std::vector<SimpleVector> vectorList;
-		tempestVectorIO->GetVectorList(vectorList);
-		return gcnew VectorEnumerator(vectorList);
-	}
-
 };

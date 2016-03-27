@@ -29,6 +29,7 @@
 // C++
 #include <iomanip>
 #include <map>
+#include <mutex>
 #include <sstream>
 #include <string>
 #include <thread>

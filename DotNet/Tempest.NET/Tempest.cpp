@@ -10,6 +10,8 @@
 #include "TempestCPU/TempestRunner.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
 
+#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
+
 #include "TDNWin32TempestIO.h"
 
 #include "Tempest.h"
@@ -18,28 +20,26 @@
 using namespace System;
 
 namespace TempestDotNET {
-   Tempest::Tempest(TDNIOStreamProxy ^soundIO, TDNWin32TempestVectorIO ^vectorIO)
+   Tempest::Tempest(TDNIOStreamProxy ^soundIO)
    {
       // create objects
       environment = new Win32TempestEnvironment();
       tempestSoundIO = soundIO->GetIOObject();
-      tempestVectorIO = vectorIO->GetVectorIOObject();
       tempestRunner = new TempestRunner(environment);
 
       // hook objects together
-      tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
+      tempestRunner->SetTempestIO(tempestSoundIO);
    }
 
-   Tempest::Tempest(TDNWin32TempestSoundIO ^soundIO, TDNWin32TempestVectorIO ^vectorIO)
+   Tempest::Tempest(TDNWin32TempestSoundIO ^soundIO)
    {
       // create objects
       environment = new Win32TempestEnvironment();
       tempestSoundIO = soundIO->GetSoundIOObject();
-      tempestVectorIO = vectorIO->GetVectorIOObject();
       tempestRunner = new TempestRunner(environment);
 
       // hook objects together
-      tempestRunner->SetTempestIO(tempestSoundIO, tempestVectorIO);
+      tempestRunner->SetTempestIO(tempestSoundIO);
    }
 
    Tempest::~Tempest(void)
@@ -54,7 +54,24 @@ namespace TempestDotNET {
 		return tempestRunner->GetTotalClockCycles();
 	}
 
-	bool Tempest::IsStopped(void)
+   VectorEnumerator ^Tempest::GetVectorEnumerator(void)
+   {
+      // get the latest vector data
+      VectorData  vectorData;
+      tempestRunner->GetVectorData(vectorData);
+
+      // interpret it
+      SimpleVectorDataInterpreter vectorInterpretor;
+      vectorInterpretor.SetVectorData(vectorData);
+      vectorInterpretor.Interpret();
+
+      // return the result
+      std::vector<SimpleVector> vectors;
+      vectorInterpretor.GetAllVectors(vectors);
+      return gcnew VectorEnumerator(vectors);
+   }
+   
+   bool Tempest::IsStopped(void)
 	{
 		return tempestRunner->IsStopped();
 	}

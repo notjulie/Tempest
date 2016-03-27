@@ -9,6 +9,8 @@
 
 VectorData::VectorData(void)
 {
+   // start out with a HALT as the first instruction
+   vectorRAM[1] = 0x20;
 }
 
 

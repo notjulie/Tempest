@@ -8,6 +8,8 @@
 #ifndef TEMPESTBUS_H
 #define	TEMPESTBUS_H
 
+#include "../TempestIO/Vector/VectorData.h"
+
 #include "6502/AbstractBus.h"
 #include "MathBox/MathBox.h"
 
@@ -15,9 +17,14 @@
 #include "TempestMemoryMap.h"
 #include "TempestPokey.h"
 
+
+// forward declarations
 class AbstractTempestEnvironment;
-class AbstractTempestVectorIO;
-class VectorData;
+namespace std {
+   // CLR code can't include <mutex>
+   class mutex;
+};
+
 
 #ifdef _WIN32
    #pragma warning(push)
@@ -30,8 +37,9 @@ public:
 	TempestBus(AbstractTempestEnvironment *_environment);
 	virtual ~TempestBus(void);
 
+   void GetVectorData(VectorData &vectorData);
    void SetDemoMode(void) { demoMode = true; }
-   void SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO);
+   void SetTempestIO(AbstractTempestSoundIO *tempestSoundIOs);
 
 public:
 	// AbstractBus overrides
@@ -55,23 +63,26 @@ private:
    AbstractTempestEnvironment *environment;
 
    std::vector<uint8_t>  mainRAM;
-   std::vector<uint8_t>  colorRAM;
-	uint8_t vectorRAM[VECTOR_RAM_SIZE];
+   VectorData vectorData;
+   VectorData vectorDataSnapshot;
+   std::mutex *vectorDataSnapshotMutex;
    TempestPokey1 pokey1;
    TempestPokey2 pokey2;
    EEPROM eeprom;
    MathBox mathBox;
 
    AbstractTempestSoundIO *tempestSoundIO;
-   AbstractTempestVectorIO *tempestVectorIO;
 
    uint64_t lastPlayer2ButtonDownTime;
    uint64_t lastWatchdogTime;
+   uint64_t lastVectorRAMWrite;
    bool demoMode;
 	bool selfTest;
 	bool slam;
 	bool clock3KHzIsHigh;
 	bool lastPlayer2ButtonState;
+   bool vectorGoRequested;
+   bool vectorRAMReady;
 };
 
 #ifdef _WIN32

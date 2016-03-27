@@ -10,7 +10,6 @@ using namespace System::Threading;
 
 class Win32RealTimeClock;
 class AbstractTempestSoundIO;
-class AbstractTempestVectorIO;
 class Win32WaveStreamer;
 
 namespace TempestDotNET {
@@ -18,11 +17,12 @@ namespace TempestDotNET {
 	public ref class Tempest
 	{
 	public:
-      Tempest(TDNIOStreamProxy ^soundIO, TDNWin32TempestVectorIO ^vectorIO);
-      Tempest(TDNWin32TempestSoundIO ^soundIO, TDNWin32TempestVectorIO ^vectorIO);
+      Tempest(TDNIOStreamProxy ^soundIO);
+      Tempest(TDNWin32TempestSoundIO ^soundIO);
 		~Tempest(void);
 
 		String ^GetProcessorStatus(void);
+      VectorEnumerator ^GetVectorEnumerator(void);
 		bool   IsStopped(void);
 
 		void SetBreakpoint(int address, bool set);
@@ -42,7 +42,6 @@ namespace TempestDotNET {
 	private:
 		Win32TempestEnvironment *environment;
       AbstractTempestSoundIO *tempestSoundIO;
-      AbstractTempestVectorIO *tempestVectorIO;
       TempestRunner *tempestRunner;
 	};
 

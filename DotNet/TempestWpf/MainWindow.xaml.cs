@@ -26,7 +26,6 @@ namespace TempestWpf
    {
       #region Private Fields
 
-      private TDNWin32TempestVectorIO tempestVectorIO;
       private TDNWin32TempestSoundIO tempestSoundIO;
       private Tempest tempest;
 
@@ -174,10 +173,9 @@ namespace TempestWpf
       {
          // create the IO object that we represent
          tempestSoundIO = new TDNWin32TempestSoundIO();
-         tempestVectorIO = new TDNWin32TempestVectorIO();
 
          // create our tempest, connected to the IO object
-         tempest = new Tempest(tempestSoundIO, tempestVectorIO);
+         tempest = new Tempest(tempestSoundIO);
 
          // see if we're in Demo mode
          if (Environment.CommandLine.ToLower().IndexOf(" demo ") >= 0)
@@ -235,7 +233,7 @@ namespace TempestWpf
       void vectorTimer_Tick(object sender, EventArgs e)
       {
          // get a vector enumerator
-         VectorEnumerator enumerator = tempestVectorIO.GetVectorEnumerator();
+         VectorEnumerator enumerator = tempest.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;

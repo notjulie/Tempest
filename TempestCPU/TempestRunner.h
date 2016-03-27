@@ -6,7 +6,6 @@
 #include "TempestBus.h"
 
 class AbstractTempestEnvironment;
-class AbstractTempestVectorIO;
 
 namespace std {
    class thread;
@@ -62,8 +61,9 @@ public:
 
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
+   void     GetVectorData(VectorData &vectorData) { tempestBus.GetVectorData(vectorData); }
    void     SetDemoMode(void);
-   void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO, AbstractTempestVectorIO *tempestVectorIO) { tempestBus.SetTempestIO(tempestSoundIO, tempestVectorIO); }
+   void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
 
 private:
    void  AddToScore(void);

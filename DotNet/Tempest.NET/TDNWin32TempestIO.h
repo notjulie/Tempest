@@ -31,19 +31,6 @@ namespace TempestDotNET {
    };
 
 
-   public ref class TDNWin32TempestVectorIO {
-   public:
-      TDNWin32TempestVectorIO(void);
-      ~TDNWin32TempestVectorIO(void);
-
-      VectorEnumerator ^GetVectorEnumerator(void);
-
-      AbstractTempestVectorIO *GetVectorIOObject(void) { return tempestVectorIO; }
-
-   private:
-      Win32TempestVectorIO *tempestVectorIO;
-   };
-
 };
 
 #endif

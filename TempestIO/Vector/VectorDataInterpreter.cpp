@@ -28,7 +28,10 @@ void VectorDataInterpreter::Reset(void)
 
 void VectorDataInterpreter::Interpret(void)
 {
-	for (;;)
+   resetRequested = true;
+   goRequested = true;
+   
+   for (;;)
 	{
 		if (!SingleStep())
 			break;
