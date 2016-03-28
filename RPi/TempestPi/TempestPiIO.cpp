@@ -1,6 +1,10 @@
 
 #include "stdafx.h"
 
+#include "../../TempestCPU/TempestRunner.h"
+#include "../../TempestIO/Vector/SimpleVectorDataInterpreter.h"
+#include "../../TempestIO/Vector/VectorData.h"
+
 #include "TempestPiIO.h"
 
 
@@ -8,23 +12,18 @@ TempestPiIO::TempestPiIO(void)
 {
    logFrameRate = false;
    terminated = false;
-   vectorGoCount = 0;
-   vectorResetCount = 0;
-   lastVectorRAMWrite = 0;
-
-   vectorLists.resize(20);
-   mostRecentVectors = 0;
+   this->tempestRunner = NULL;
 }
 
 
-void TempestPiIO::Run(void)
+void TempestPiIO::Run(TempestRunner *tempestRunner)
 {
+   this->tempestRunner = tempestRunner;
+
    // push to the screen
    timespec startTime;
    clock_gettime(CLOCK_REALTIME, &startTime);
    int framesPerSecond = 0;
-   uint64_t lastVectorGoCount = vectorGoCount;
-   uint64_t lastVectorResetCount = vectorResetCount;
 
    while (!terminated)
    {
@@ -37,13 +36,9 @@ void TempestPiIO::Run(void)
       {
          if (logFrameRate)
             printf(
-                   "%d,%d,%d\n",
-                   framesPerSecond,
-                   (int)(vectorGoCount - lastVectorGoCount),
-                   (int)(vectorResetCount - lastVectorResetCount)
+                   "%d\n",
+                   framesPerSecond
                    );
-         lastVectorGoCount = vectorGoCount;
-         lastVectorResetCount = vectorResetCount;
          framesPerSecond = 0;
          startTime = now;
       }
@@ -52,51 +47,18 @@ void TempestPiIO::Run(void)
 
 void TempestPiIO::PushFrameToScreen(void)
 {
+   // get the vector data
+   VectorData vectorData;
+   tempestRunner->GetVectorData(vectorData);
+
+   SimpleVectorDataInterpreter vectorInterpretor;
+   vectorInterpretor.SetVectorData(vectorData);
+   vectorInterpretor.Interpret();
+
    // dump them to the screen
-   screen.DisplayVectors(vectorLists[mostRecentVectors]);
+   std::vector<SimpleVector> vectors;
+   vectorInterpretor.GetAllVectors(vectors);
+   screen.DisplayVectors(vectors);
 }
 
-
-void TempestPiIO::WriteVectorRAM(uint16_t address, uint8_t value, uint64_t cpuTime)
-{
-   // do the write
-   vectorInterpreter.WriteVectorRAM(address, value);
-
-   // if it's been a while since the last write we assume that the vector
-   // data is stable and now is a good time to process it
-   if (cpuTime - lastVectorRAMWrite > 800)
-      ProcessVectorData();
-   lastVectorRAMWrite = cpuTime;
-}
-
-void TempestPiIO::ProcessVectorData(void)
-{
-   unsigned nextIndex = mostRecentVectors + 1;
-   if (nextIndex >= vectorLists.size())
-      nextIndex = 0;
-   vectorInterpreter.ClearVectors();
-   vectorInterpreter.Reset();
-   vectorInterpreter.Go();
-   vectorInterpreter.Interpret();
-   vectorInterpreter.GetAllVectors(vectorLists[nextIndex]);
-
-   // set this vector list as the new official list to display
-   mostRecentVectors = nextIndex;
-}
-
-void TempestPiIO::VectorGo(void)
-{
-   // make a note of it for diagnostic purposes
-   ++vectorGoCount;
-}
-
-void TempestPiIO::VectorReset(void)
-{
-   ++vectorResetCount;
-}
-
-bool TempestPiIO::IsVectorHalt(void)
-{
-   return true;
-}
 

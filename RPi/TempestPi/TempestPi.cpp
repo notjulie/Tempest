@@ -75,7 +75,7 @@ void TempestPi::Run(void)
        soundIO = new TempestIOStreamProxy(serialStream);
 
        // create the runner object that drives the fake 6502
-       tempestRunner->SetTempestIO(soundIO, &vectorIO);
+       tempestRunner->SetTempestIO(soundIO);
        if (demo)
          tempestRunner->SetDemoMode();
 
@@ -90,7 +90,7 @@ void TempestPi::Run(void)
 
       // the IO object (i.e. the screen) takes over the main thread
       // from here
-      vectorIO.Run();
+      vectorIO.Run(tempestRunner);
    }
    catch (TempestException &te)
    {
