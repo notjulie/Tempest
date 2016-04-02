@@ -12,7 +12,6 @@ struct ButtonState {
 };
 
 static uint32_t encoder = 0;
-static uint8_t encoderBits = 0;
 static ButtonState fireButton;
 static ButtonState zapButton;
 static ButtonState onePlayerButton;
@@ -91,31 +90,24 @@ void ServiceControlPanel(void)
 
 void ServiceEncoder(void)
 {
+	static uint8_t encoderBits = 0;
+	static uint32_t rawEncoder = 0;
+
 	// get a snapshot of the ADCs so we're not dealing with a moving target
 	uint16_t adc1 = ADC1->DR;
 	uint16_t adc2 = ADC2->DR;
 
-	// each of the encoder inputs goes through a 1/2 voltage divider, and
+	// Each of the encoder inputs goes through a 1/2 voltage divider, and
 	// the empirical data is this: one input maxes at about 40000 ADC counts,
-	// the other at 30000.  The minimum for each is about 1000 counts.  So
-	// selecting a midpoint of 15000 counts and hysteresis of 5000 counts
-	// seems like it should work pretty well for both of them.
-	static const uint16_t turnOnLevel = 20000;
-	static const uint16_t turnOffLevel = 10000;
+	// the other at 30000.  The minimum for each is about 1000 counts.  Now this
+	// was back when I used an actual 5V supply instead of USB which is slightly
+	// lower.  In any case, it's fair to say anything above 10000 counts is high.
+	static const uint16_t onLevel = 10000;
 
-	static bool input1 = false;
-	static bool input2 = false;
+	bool input1 = adc1 > onLevel;
+	bool input2 = adc2 > onLevel;
 
-	if (adc1 > turnOnLevel)
-		input1 = true;
-	else if (adc1 < turnOffLevel)
-		input1 = false;
-	if (adc2 > turnOnLevel)
-		input2 = true;
-	else if (adc2 < turnOffLevel)
-		input2 = false;
-
-	// read the encoder bits
+	// pop the two bits int a byte
 	uint8_t newEncoderBits = 0;
 	if (input1)
 		newEncoderBits += 2;
@@ -135,19 +127,25 @@ void ServiceEncoder(void)
 		case 0x13:
 		case 0x32:
 		case 0x20:
-			--encoder;
+			--rawEncoder;
 			break;
 
 		case 0x23:
 		case 0x31:
 		case 0x10:
 		case 0x02:
-			++encoder;
+			++rawEncoder;
 			break;
 
 		default:
 			break;
 		}
+
+		// to debounce, I only update the encoder value if the raw value
+		// is different by two or more
+		int32_t encoderDifference = (int32_t)(encoder - rawEncoder);
+		if (encoderDifference>=2 || encoderDifference<=-2)
+			encoder = rawEncoder;
 
 		// save the current state
 		encoderBits = newEncoderBits;

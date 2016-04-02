@@ -17,25 +17,16 @@ static void ServiceLEDsUnconnected(void);
 
 void ServiceAudioLEDs(void)
 {
-	if (GetAppState() == UNCONNECTED)
+	/*if (GetAppState() == UNCONNECTED)
 	{
 		ServiceLEDsUnconnected();
 		return;
-	}
+	}*/
 
 	int blueIntensity = 0;
 	int redIntensity = 0;
 	int greenIntensity = 0;
 	int orangeIntensity = 0;
-
-	if (DWS.HaveSoundOutput())
-		++blueIntensity;
-	if (GetUSBReceiveHeartbeat())
-		++redIntensity;
-	if (AudioDriverHeartbeat())
-		++greenIntensity;
-	if (WatchdogHeartbeat())
-		++orangeIntensity;
 
 	if (GetButton(FIRE_BUTTON))
 		++orangeIntensity;
@@ -46,7 +37,7 @@ void ServiceAudioLEDs(void)
 	if (GetButton(TWO_PLAYER_BUTTON))
 		++blueIntensity;
 
-	switch (GetEncoder() & 3)
+	switch ((GetEncoder()/2) & 3)
 	{
 	case 0:
 		++greenIntensity; break;
