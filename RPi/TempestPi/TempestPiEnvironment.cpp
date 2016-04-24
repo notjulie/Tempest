@@ -1,6 +1,5 @@
 
 #include "stdafx.h"
-#include <time.h>
 
 #include "TempestCPU/TempestException.h"
 
