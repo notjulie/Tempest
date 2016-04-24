@@ -97,8 +97,9 @@ int CPU6502::SingleStep(void)
       case 0x2D: AND(GetAbsoluteAddress()); return 4;
       case 0x30: BMI(); return 2;
       case 0x38: P.C = true; return 2; //SEC
-		case 0x39: AND((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
-		case 0x40: RTI(); return 6;
+      case 0x39: AND((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
+      case 0x3D: AND((uint16_t)(GetAbsoluteAddress() + X)); return 4;
+      case 0x40: RTI(); return 6;
       case 0x45: EOR(bus->ReadByte(PC++)); return 3;
       case 0x46: LSR(bus->ReadByte(PC++)); return 5;
       case 0x48: Push(A); return 3; //PHA
