@@ -6,11 +6,17 @@
 	"TempestCPU/TempestException.h"
 	"TempestPi.h"
 
-1457672823 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
+1461512645 /home/pi/Documents/Tempest/RPi/TempestPi/stdafx.h
+	<fcntl.h>
 	<memory.h>
 	<stdint.h>
 	<stdio.h>
+	<termios.h>
+	<time.h>
+	<unistd.h>
+	<condition_variable>
 	<map>
+	<mutex>
 	<string>
 	<thread>
 	<vector>
@@ -84,7 +90,7 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
 
-1456001700 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
+1459127156 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
 	"stdafx.h"
 	"../TempestIO/AbstractTempestIO.h"
 	"AbstractTempestEnvironment.h"
@@ -129,7 +135,7 @@
 	"stdafx.h"
 	"EEPROM.h"
 
-1454209287 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
+1461511683 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
 	"stdafx.h"
 	"AbstractBus.h"
 	"CPU6502Exception.h"
@@ -160,21 +166,24 @@
 1452742677 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
 	"../../TempestCPU/TempestMemoryMap.h"
 
-1457839926 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
+1459128940 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
 	"stdafx.h"
+	"../../TempestCPU/TempestRunner.h"
+	"../../TempestIO/Vector/SimpleVectorDataInterpreter.h"
+	"../../TempestIO/Vector/VectorData.h"
 	"TempestPiIO.h"
 
-1451702905 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorData.cpp
+1459127156 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorData.cpp
 	"stdafx.h"
 	"../../TempestCPU/TempestROMS.h"
 	"VectorData.h"
 
-1454194725 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.cpp
+1459127156 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.cpp
 	"stdafx.h"
 	"../../TempestCPU/TempestException.h"
 	"VectorDataInterpreter.h"
 
-1455484333 source:/home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.cpp
+1459127156 source:/home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.cpp
 	"stdafx.h"
 	<stdint.h>
 	"SimpleVectorDataInterpreter.h"
@@ -536,9 +545,8 @@
 	<time.h>
 	"TempestCPU/AbstractTempestEnvironment.h"
 
-1457499552 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.cpp
+1461512616 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.cpp
 	"stdafx.h"
-	<time.h>
 	"TempestCPU/TempestException.h"
 	"TempestPiEnvironment.h"
 
@@ -547,7 +555,7 @@
 	"PacketStream.h"
 	"SoundIOPacket.h"
 
-1457844166 /home/pi/Documents/Tempest/RPi/TempestPi/PiSerialStream.h
+1461512622 /home/pi/Documents/Tempest/RPi/TempestPi/PiSerialStream.h
 	"TempestIO/AbstractTempestStream.h"
 
 1451439305 /home/pi/Documents/Tempest/TempestIO/AbstractTempestStream.h
@@ -568,11 +576,8 @@
 
 1454880751 /home/pi/Documents/Tempest/TempestIO/TempestStreamProtocol.h
 
-1457845280 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiSerialStream.cpp
+1461512654 source:/home/pi/Documents/Tempest/RPi/TempestPi/PiSerialStream.cpp
 	<stdafx.h>
-	<unistd.h>
-	<fcntl.h>
-	<termios.h>
 	"TempestCPU/TempestException.h"
 	"PiSerialStream.h"
 
@@ -598,7 +603,7 @@
 
 1454880751 /home/pi/Documents/Tempest/TempestIO/PacketStream.h
 
-1455484333 /home/pi/Documents/Tempest/TempestIO/SoundIOPacket.h
+1461512905 /home/pi/Documents/Tempest/TempestIO/SoundIOPacket.h
 	"AbstractTempestIO.h"
 
 1456001700 source:/home/pi/Documents/Tempest/TempestIO/PacketStream.cpp

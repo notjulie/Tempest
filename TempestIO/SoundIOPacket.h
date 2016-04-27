@@ -26,7 +26,7 @@ public:
    // 31 is the maximum value without changing the current implementation; every command has
    // a delay associated with it and 31 is the maximum delay
    static const int TicksPerPacket = 31;
-   static const int ClockCyclesPerPacket = ClockCyclesPerTick * TicksPerPacket;
+   static const unsigned ClockCyclesPerPacket = ClockCyclesPerTick * TicksPerPacket;
 
    // we try to make sure to send the control panel info 50 times a second even if
    // it hasn't changed
