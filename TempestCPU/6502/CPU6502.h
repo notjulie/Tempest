@@ -69,7 +69,8 @@ private:
    void  BMI(void);
    void  BNE(void);
    void  BPL(void);
-	void  BVC(void);
+   void  BRK(void);
+   void  BVC(void);
 	void  BVS(void);
 	void  CMP(uint16_t address);
 	void  CPX(uint16_t address);

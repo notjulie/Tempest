@@ -75,6 +75,7 @@ int CPU6502::SingleStep(void)
    // process the instruction
    switch (opCode)
    {
+      case 0x00: BRK(); return 7;
       case 0x05: ORA(bus->ReadByte(PC++)); return 2;
       case 0x06: ASL(bus->ReadByte(PC++)); return 5;
       case 0x08: Push(P.ToByte()); return 3; //PHP
@@ -391,7 +392,13 @@ void CPU6502::BPL(void)
 {
    int branchDistance = (int8_t)bus->ReadByte(PC++);
    if (!P.N)
-		PC = (uint16_t)(PC + branchDistance);
+      PC = (uint16_t)(PC + branchDistance);
+}
+
+void CPU6502::BRK(void)
+{
+   PC++;
+   IRQ();
 }
 
 void CPU6502::BVC(void)
