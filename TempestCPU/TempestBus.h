@@ -47,10 +47,11 @@ public:
    virtual void    WriteByte(uint16_t address, uint8_t value);
 
 private:
+   void  ConfigureAddressSpace(void);
    void  HandleTick250Hz(void);
 
 private:
-	static bool		IsVectorRAMAddress(uint16_t address);
+	static bool	IsVectorRAMAddress(uint16_t address);
    static void Tick6KHz(AbstractBus *bus);
    static void Tick250Hz(AbstractBus *bus);
 
@@ -62,7 +63,6 @@ private:
 private:
    AbstractTempestEnvironment *environment;
 
-   std::vector<uint8_t>  mainRAM;
    VectorData vectorData;
    VectorData vectorDataSnapshot;
    std::mutex *vectorDataSnapshotMutex;

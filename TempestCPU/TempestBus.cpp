@@ -30,11 +30,13 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 
    // allocate
    vectorDataSnapshotMutex = new std::mutex();
-   mainRAM.resize(MAIN_RAM_SIZE);
 
    // install our timers
    StartTimer(250, &Tick6KHz);
    StartTimer(6000, &Tick250Hz);
+
+   // configure address space
+   ConfigureAddressSpace();
 }
 
 TempestBus::~TempestBus(void)
@@ -76,28 +78,6 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 			return ROM_136002_122[address & 0x7FF];
 		}
 	}
-
-   // main RAM
-   if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
-   {
-      switch (address)
-      {
-      case COPY_PROTECTION_FLAG_ADDRESS:
-         // this is a value that gets set on startup that seems to be a
-         // POKEY copy-protection thing that scrozzles things and causes
-         // unpredictable lockups if it is not zero... so just force it to
-         // zero
-         return 0;
-
-      case MAX_START_LEVEL_ADDRESS:
-         // if I set this I can start on level 80 without the other features
-         // of demo mode enabled
-         return 80;
-
-      default:
-         return mainRAM[(unsigned)(address - MAIN_RAM_BASE)];
-      }
-   }
 
    // vector RAM
 	if (IsVectorRAMAddress(address))
@@ -168,9 +148,7 @@ uint8_t TempestBus::ReadByte(uint16_t address)
          return mathBox.ReadHigh();
 
       default:
-         char buffer[200];
-         sprintf(buffer, "Invalid read address: %X", address);
-         throw TempestException(buffer);
+         return AbstractBus::ReadByte(address);
    }
 }
 
@@ -190,13 +168,6 @@ void TempestBus::GetVectorData(VectorData &vectorData)
 
 void TempestBus::WriteByte(uint16_t address, uint8_t value)
 {
-   // main RAM
-   if (address >= MAIN_RAM_BASE && address < MAIN_RAM_BASE + MAIN_RAM_SIZE)
-   {
-      mainRAM[(unsigned)(address - MAIN_RAM_BASE)] = value;
-      return;
-   }
-
    // vector RAM
    if (IsVectorRAMAddress(address))
    {
@@ -286,9 +257,7 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          break;
 
       default:
-         char  buffer[200];
-         sprintf(buffer, "Invalid write address: 0x%X", address);
-         throw TempestException(buffer);
+         AbstractBus::WriteByte(address, value);
    }
 }
 
@@ -355,4 +324,22 @@ void TempestBus::HandleTick250Hz(void)
 
    // generate an IRQ
    SetIRQ(true);
+}
+
+
+void TempestBus::ConfigureAddressSpace(void)
+{
+   // configure main RAM as RAM
+   for (unsigned i = 0; i < MAIN_RAM_SIZE; ++i)
+      ConfigureAddressAsRAM((uint16_t)(MAIN_RAM_BASE + i));
+
+   // this is a main RAM address that gets set on startup that seems to be a
+   // POKEY copy-protection thing that scrozzles things and causes
+   // unpredictable lockups if it is not zero... so just force it to
+   // zero
+   ConfigureAddress(COPY_PROTECTION_FLAG_ADDRESS, 0, ReadAddressNormal, WriteAddressNoOp);
+
+   // if I set this to a fixed value I can start on level 80 without the other features
+   // of demo mode enabled
+   ConfigureAddress(MAX_START_LEVEL_ADDRESS, 80, ReadAddressNormal, WriteAddressNoOp);
 }
