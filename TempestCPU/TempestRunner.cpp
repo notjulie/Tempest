@@ -37,7 +37,7 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
       );
 
    // register hooks
-   RegisterHook(0xCA6C, [this]() { AddToScore(); });
+   RegisterHook(0xCA6C, [this]() { return AddToScore(); });
 }
 
 TempestRunner::~TempestRunner(void)
@@ -51,7 +51,7 @@ TempestRunner::~TempestRunner(void)
 }
 
 
-void TempestRunner::RegisterHook(uint16_t address, std::function<void()> hook)
+void TempestRunner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)
 {
    hooks[address] = hook;
    addressFlags[address] |= HOOK;
@@ -126,7 +126,7 @@ void TempestRunner::RunnerThread(void)
          // execute a hook if we have one at this address
          if (flags & HOOK)
          {
-            hooks[pc]();
+            tempestBus.IncrementClockCycleCount(hooks[pc]());
 
             // if the program counter has changed we should skip to the top of the loop
             // in case it brought us to a break point
@@ -135,7 +135,7 @@ void TempestRunner::RunnerThread(void)
          }
 
 			// execute the next instruction
-         int clockCyclesThisInstruction = cpu6502.SingleStep();
+         uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
          tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
 			uint16_t newPC = cpu6502.GetPC();
          if (newPC < 0x9000)
@@ -173,7 +173,7 @@ void TempestRunner::SetBreakpoint(uint16_t address, bool set)
       addressFlags[address] &= ~BREAKPOINT;
 }
 
-void TempestRunner::AddToScore(void)
+uint32_t TempestRunner::AddToScore(void)
 {
    // this does nothing if we're not in the right mode... for now I just know
    // that the high bit of address 0005 should be set, but probably I can learn
@@ -181,11 +181,10 @@ void TempestRunner::AddToScore(void)
    if ((tempestBus.ReadByte(0x0005) & 0x80) == 0)
    {
       cpu6502.RTS();
-      return;
+      return 10;
    }
 
    // get the value we are adding from either [29][2A][2B] or a lookup table based on X
-
    int value = 0;
    switch (cpu6502.GetX())
    {
@@ -243,10 +242,15 @@ void TempestRunner::AddToScore(void)
 
          // jump to the routine that starts the fanfare
          cpu6502.JMP(0xCCB9);
-         return;
+         return 100;
       }
    }
 
    // exit the subroutine... we just did all it's work for it
    cpu6502.RTS();
+
+   // return the approximate number of clock cycles we think the old routine would have
+   // taken... this doesn't have to be at all exact, it just helps try to keep things
+   // running the way they always have
+   return 100;
 }

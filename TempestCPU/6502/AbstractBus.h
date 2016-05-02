@@ -24,7 +24,7 @@ public:
 
    bool IsPaused(void) { return isPaused; }
    uint64_t GetTotalClockCycles(void);
-   void IncrementClockCycleCount(int clockCycles);
+   void IncrementClockCycleCount(uint32_t clockCycles);
    bool IsIRQ(void) { return irq; }
    void SetIsPaused(bool isPaused) { this->isPaused = isPaused; }
 

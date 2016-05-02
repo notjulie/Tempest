@@ -19,7 +19,7 @@ AbstractBus::~AbstractBus(void)
 {
 }
 
-void AbstractBus::IncrementClockCycleCount(int clockCycles)
+void AbstractBus::IncrementClockCycleCount(uint32_t clockCycles)
 {
    totalClockCycles += clockCycles;
    if (totalClockCycles >= nextTimerTime)

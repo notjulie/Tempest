@@ -66,8 +66,8 @@ public:
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
 
 private:
-   void  AddToScore(void);
-   void  RegisterHook(uint16_t address, std::function<void()> hook);
+   uint32_t  AddToScore(void);
+   void  RegisterHook(uint16_t address, std::function<uint32_t()> hook);
 	void	RunnerThread(void);
 
 private:
@@ -90,7 +90,7 @@ private:
 	std::string processorStatus;
 	std::thread *theThread;
 	uint8_t	addressFlags[64 * 1024];
-   std::map<uint16_t, std::function<void()> > hooks;
+   std::map<uint16_t, std::function<uint32_t()> > hooks;
 };
 
 #ifdef _WIN32

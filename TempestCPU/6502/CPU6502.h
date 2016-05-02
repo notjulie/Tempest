@@ -24,7 +24,7 @@ public:
 
 	void     Reset(void);
    void     Run(void);
-   int		SingleStep(void);
+   uint8_t  SingleStep(void);
 
 	// simple accessors
 	uint8_t  GetA(void) const { return A; }

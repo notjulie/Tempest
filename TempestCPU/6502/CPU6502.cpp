@@ -57,7 +57,7 @@ void CPU6502::Run(void)
 	   SingleStep();
 }
 
-int CPU6502::SingleStep(void)
+uint8_t CPU6502::SingleStep(void)
 {
    // if we are paused we just pretend that we did something and it took some time
    // without changing the processor state
