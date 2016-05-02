@@ -105,5 +105,8 @@ void AbstractBus::WriteAddressInvalid(AbstractBus *, uint16_t address, uint8_t)
 
 void AbstractBus::WriteAddressNormal(AbstractBus *bus, uint16_t address, uint8_t value)
 {
-   bus->memory[address].value = value;
+   if (address == 0x40)
+      bus->memory[address].value = value;
+   else
+      bus->memory[address].value = value;
 }

@@ -66,9 +66,13 @@ public:
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
 
 private:
-   uint32_t  AddToScore(void);
    void  RegisterHook(uint16_t address, std::function<uint32_t()> hook);
 	void	RunnerThread(void);
+
+private:
+   // game modifications and hooks
+   uint32_t  AddToScore(void);
+   void      SetPlayerScore(uint8_t playerIndex, uint32_t score);
 
 private:
 	// forbidden
@@ -91,6 +95,7 @@ private:
 	std::thread *theThread;
 	uint8_t	addressFlags[64 * 1024];
    std::map<uint16_t, std::function<uint32_t()> > hooks;
+   uint32_t playerScores[2];
 };
 
 #ifdef _WIN32

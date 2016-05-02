@@ -23,7 +23,8 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	for (int i = 0; i < 64 * 1024; ++i)
 		addressFlags[i] = 0;
    resetRequested = false;
-   pointsPerBonusLife = 20000;
+   pointsPerBonusLife = 10000;
+   playerScores[0] = playerScores[1] = 0;
 
    // register commands
    environment->RegisterCommand(
@@ -38,6 +39,7 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 
    // register hooks
    RegisterHook(0xCA6C, [this]() { return AddToScore(); });
+   RegisterHook(0xCA62, [this]() { SetPlayerScore(0, 0); SetPlayerScore(1, 0); cpu6502.RTS();  return 30; });
 }
 
 TempestRunner::~TempestRunner(void)
@@ -204,30 +206,11 @@ uint32_t TempestRunner::AddToScore(void)
       break;
    }
 
-   // get the score we're adding it to... either [40][41][42] for
-   // player 1 or [43][44][45] for player 2
+   // get the score we're adding it to and add
    uint8_t playerIndex = tempestBus.ReadByte(0x003D);
-   uint8_t playerScoreOffset = (uint8_t)(3 * playerIndex);
-   int score =
-      CPU6502::FromBCD(tempestBus.ReadByte((uint16_t)(0x40 + playerScoreOffset))) +
-      100 * CPU6502::FromBCD(tempestBus.ReadByte((uint16_t)(0x41 + playerScoreOffset))) +
-      10000 * CPU6502::FromBCD(tempestBus.ReadByte((uint16_t)(0x42 + playerScoreOffset)))
-      ;
-
-   // add and store
-   int newScore = score + value;
-   tempestBus.WriteByte(
-      (uint16_t)(0x40 + playerScoreOffset),
-      CPU6502::ToBCD((uint8_t)(newScore % 100))
-      );
-   tempestBus.WriteByte(
-      (uint16_t)(0x41 + playerScoreOffset),
-      CPU6502::ToBCD((uint8_t)((newScore / 100) % 100))
-      );
-   tempestBus.WriteByte(
-      (uint16_t)(0x42 + playerScoreOffset),
-      CPU6502::ToBCD((uint8_t)(newScore / 10000))
-      );
+   uint32_t score = playerScores[playerIndex];
+   uint32_t newScore = score + value;
+   SetPlayerScore(playerIndex, newScore);
 
    // add a life if necessary
    uint8_t lives = tempestBus.ReadByte((uint16_t)(0x0048 + playerIndex));
@@ -253,4 +236,26 @@ uint32_t TempestRunner::AddToScore(void)
    // taken... this doesn't have to be at all exact, it just helps try to keep things
    // running the way they always have
    return 100;
+}
+
+void TempestRunner::SetPlayerScore(uint8_t playerIndex, uint32_t newScore)
+{
+   // update our copy of the score
+   playerScores[playerIndex] = newScore;
+
+   // store the updated score to Tempest RAM so that Tempest can
+   // write it to the screen
+   uint8_t playerScoreOffset = (uint8_t)(3 * playerIndex);
+   tempestBus.WriteByte(
+      (uint16_t)(0x40 + playerScoreOffset),
+      CPU6502::ToBCD((uint8_t)(newScore % 100))
+      );
+   tempestBus.WriteByte(
+      (uint16_t)(0x41 + playerScoreOffset),
+      CPU6502::ToBCD((uint8_t)((newScore / 100) % 100))
+      );
+   tempestBus.WriteByte(
+      (uint16_t)(0x42 + playerScoreOffset),
+      CPU6502::ToBCD((uint8_t)(newScore / 10000))
+      );
 }
