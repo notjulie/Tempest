@@ -84,6 +84,11 @@ void AbstractBus::ConfigureAddressAsRAM(uint16_t address)
    ConfigureAddress(address, 0, ReadAddressNormal, WriteAddressNormal);
 }
 
+void AbstractBus::ConfigureAddressAsROM(uint16_t address, uint8_t value)
+{
+   ConfigureAddress(address, value, ReadAddressNormal, WriteAddressInvalid);
+}
+
 uint8_t AbstractBus::ReadAddressInvalid(AbstractBus *, uint16_t address)
 {
    char buffer[200];

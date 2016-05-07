@@ -36,6 +36,7 @@ protected:
 protected:
    void ConfigureAddress(uint16_t address, uint8_t value, ReadFunction *reader, WriteFunction *writer);
    void ConfigureAddressAsRAM(uint16_t address);
+   void ConfigureAddressAsROM(uint16_t address, uint8_t value);
    void SetIRQ(bool irq) { this->irq = irq; }
    void StartTimer(uint32_t period, TimerFunction *f);
 

@@ -51,7 +51,10 @@ private:
    void  HandleTick250Hz(void);
 
 private:
-	static bool	IsVectorRAMAddress(uint16_t address);
+   static uint8_t ReadVectorRAM(AbstractBus *bus, uint16_t address);
+   static void WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value);
+
+private:
    static void Tick6KHz(AbstractBus *bus);
    static void Tick250Hz(AbstractBus *bus);
 
