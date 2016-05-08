@@ -19,8 +19,8 @@ public:
    AbstractBus(void);
    virtual ~AbstractBus(void);
 
-   virtual uint8_t ReadByte(uint16_t address);
-   virtual void    WriteByte(uint16_t address, uint8_t value);
+   uint8_t ReadByte(uint16_t address);
+   void    WriteByte(uint16_t address, uint8_t value);
 
    bool IsPaused(void) { return isPaused; }
    uint64_t GetTotalClockCycles(void);
