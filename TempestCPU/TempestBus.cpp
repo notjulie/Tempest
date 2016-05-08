@@ -55,10 +55,6 @@ uint8_t TempestBus::ReadByte(uint16_t address)
 	if (address >= POKEY2_BASE && address <= POKEY2_END)
 		return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
 
-	// color RAM
-	if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
-		return vectorData.ReadColorRAM((unsigned)(address - COLOR_RAM_BASE));
-
 	// miscellaneous other cases
    switch (address)
    {
@@ -126,13 +122,6 @@ void TempestBus::GetVectorData(VectorData &vectorData)
 
 void TempestBus::WriteByte(uint16_t address, uint8_t value)
 {
-   // color RAM
-   if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
-   {
-      vectorData.WriteColorRAM((unsigned)(address - COLOR_RAM_BASE), value);
-      return;
-   }
-
    // POKEY 1
    if (address >= POKEY1_BASE && address <= POKEY1_END)
    {
@@ -299,9 +288,11 @@ void TempestBus::ConfigureAddressSpace(void)
    for (unsigned i = 0; i < MAIN_RAM_SIZE; ++i)
       ConfigureAddressAsRAM((uint16_t)(MAIN_RAM_BASE + i));
 
-   // set up vector RAM
+   // set up vector RAM and color RAM
    for (uint16_t offset = 0; offset < VECTOR_RAM_SIZE; ++offset)
       ConfigureAddress((uint16_t)(VECTOR_RAM_BASE + offset), 0, ReadVectorRAM, WriteVectorRAM);
+   for (uint16_t offset = 0; offset < COLOR_RAM_SIZE; ++offset)
+      ConfigureAddress((uint16_t)(COLOR_RAM_BASE + offset), 0, ReadColorRAM, WriteColorRAM);
 
    // this is a main RAM address that gets set on startup that seems to be a
    // POKEY copy-protection thing that scrozzles things and causes
@@ -315,16 +306,28 @@ void TempestBus::ConfigureAddressSpace(void)
 }
 
 
+uint8_t TempestBus::ReadColorRAM(AbstractBus *bus, uint16_t address)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   return tempestBus->vectorData.ReadColorRAM((unsigned)(address - COLOR_RAM_BASE));
+}
+
 uint8_t TempestBus::ReadVectorRAM(AbstractBus *bus, uint16_t address)
 {
    TempestBus *tempestBus = static_cast<TempestBus *>(bus);
    return tempestBus->vectorData.GetAt((uint16_t)(address - VECTOR_RAM_BASE));
 }
 
+void TempestBus::WriteColorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   tempestBus->vectorData.WriteColorRAM((uint16_t)(address - COLOR_RAM_BASE), value);
+}
+
 void TempestBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
 {
    TempestBus *tempestBus = static_cast<TempestBus *>(bus);
-   
+
    // If it has been a while (as measured in clock cycles) since the last write to
    // vector RAM we can conclude that it is stable and take a snapshot of it so that
    // the display doesn't catch it in the middle of updating; 800 clock ticks appears
