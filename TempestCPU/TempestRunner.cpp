@@ -23,7 +23,8 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	for (int i = 0; i < 64 * 1024; ++i)
 		addressFlags[i] = 0;
    resetRequested = false;
-   pointsPerBonusLife = 20000;
+   pointsPerBonusLife = 10000;
+   playerScores[0] = playerScores[1] = 0;
 
    // register commands
    environment->RegisterCommand(
@@ -37,7 +38,8 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
       );
 
    // register hooks
-   RegisterHook(0xCA6C, [this]() { AddToScore(); });
+   RegisterHook(0xCA6C, [this]() { return AddToScore(); });
+   RegisterHook(0xCA62, [this]() { SetPlayerScore(0, 0); SetPlayerScore(1, 0); cpu6502.RTS();  return 30; });
 }
 
 TempestRunner::~TempestRunner(void)
@@ -51,7 +53,7 @@ TempestRunner::~TempestRunner(void)
 }
 
 
-void TempestRunner::RegisterHook(uint16_t address, std::function<void()> hook)
+void TempestRunner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)
 {
    hooks[address] = hook;
    addressFlags[address] |= HOOK;
@@ -126,7 +128,7 @@ void TempestRunner::RunnerThread(void)
          // execute a hook if we have one at this address
          if (flags & HOOK)
          {
-            hooks[pc]();
+            tempestBus.IncrementClockCycleCount(hooks[pc]());
 
             // if the program counter has changed we should skip to the top of the loop
             // in case it brought us to a break point
@@ -135,7 +137,7 @@ void TempestRunner::RunnerThread(void)
          }
 
 			// execute the next instruction
-         int clockCyclesThisInstruction = cpu6502.SingleStep();
+         uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
          tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
 			uint16_t newPC = cpu6502.GetPC();
          if (newPC < 0x9000)
@@ -173,7 +175,7 @@ void TempestRunner::SetBreakpoint(uint16_t address, bool set)
       addressFlags[address] &= ~BREAKPOINT;
 }
 
-void TempestRunner::AddToScore(void)
+uint32_t TempestRunner::AddToScore(void)
 {
    // this does nothing if we're not in the right mode... for now I just know
    // that the high bit of address 0005 should be set, but probably I can learn
@@ -181,11 +183,10 @@ void TempestRunner::AddToScore(void)
    if ((tempestBus.ReadByte(0x0005) & 0x80) == 0)
    {
       cpu6502.RTS();
-      return;
+      return 10;
    }
 
    // get the value we are adding from either [29][2A][2B] or a lookup table based on X
-
    int value = 0;
    switch (cpu6502.GetX())
    {
@@ -205,30 +206,11 @@ void TempestRunner::AddToScore(void)
       break;
    }
 
-   // get the score we're adding it to... either [40][41][42] for
-   // player 1 or [43][44][45] for player 2
+   // get the score we're adding it to and add
    uint8_t playerIndex = tempestBus.ReadByte(0x003D);
-   uint8_t playerScoreOffset = (uint8_t)(3 * playerIndex);
-   int score =
-      CPU6502::FromBCD(tempestBus.ReadByte((uint16_t)(0x40 + playerScoreOffset))) +
-      100 * CPU6502::FromBCD(tempestBus.ReadByte((uint16_t)(0x41 + playerScoreOffset))) +
-      10000 * CPU6502::FromBCD(tempestBus.ReadByte((uint16_t)(0x42 + playerScoreOffset)))
-      ;
-
-   // add and store
-   int newScore = score + value;
-   tempestBus.WriteByte(
-      (uint16_t)(0x40 + playerScoreOffset),
-      CPU6502::ToBCD((uint8_t)(newScore % 100))
-      );
-   tempestBus.WriteByte(
-      (uint16_t)(0x41 + playerScoreOffset),
-      CPU6502::ToBCD((uint8_t)((newScore / 100) % 100))
-      );
-   tempestBus.WriteByte(
-      (uint16_t)(0x42 + playerScoreOffset),
-      CPU6502::ToBCD((uint8_t)(newScore / 10000))
-      );
+   uint32_t score = playerScores[playerIndex];
+   uint32_t newScore = score + value;
+   SetPlayerScore(playerIndex, newScore);
 
    // add a life if necessary
    uint8_t lives = tempestBus.ReadByte((uint16_t)(0x0048 + playerIndex));
@@ -243,10 +225,37 @@ void TempestRunner::AddToScore(void)
 
          // jump to the routine that starts the fanfare
          cpu6502.JMP(0xCCB9);
-         return;
+         return 100;
       }
    }
 
    // exit the subroutine... we just did all it's work for it
    cpu6502.RTS();
+
+   // return the approximate number of clock cycles we think the old routine would have
+   // taken... this doesn't have to be at all exact, it just helps try to keep things
+   // running the way they always have
+   return 100;
+}
+
+void TempestRunner::SetPlayerScore(uint8_t playerIndex, uint32_t newScore)
+{
+   // update our copy of the score
+   playerScores[playerIndex] = newScore;
+
+   // store the updated score to Tempest RAM so that Tempest can
+   // write it to the screen
+   uint8_t playerScoreOffset = (uint8_t)(3 * playerIndex);
+   tempestBus.WriteByte(
+      (uint16_t)(0x40 + playerScoreOffset),
+      CPU6502::ToBCD((uint8_t)(newScore % 100))
+      );
+   tempestBus.WriteByte(
+      (uint16_t)(0x41 + playerScoreOffset),
+      CPU6502::ToBCD((uint8_t)((newScore / 100) % 100))
+      );
+   tempestBus.WriteByte(
+      (uint16_t)(0x42 + playerScoreOffset),
+      CPU6502::ToBCD((uint8_t)(newScore / 10000))
+      );
 }
