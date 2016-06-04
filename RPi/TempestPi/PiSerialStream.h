@@ -15,6 +15,11 @@ public:
    virtual int  Read(void);
    virtual void Write(uint8_t b);
 
+   const char *GetReadStatus(void) const { return readStatus; }
+   const char *GetWriteStatus(void) const { return writeStatus; }
+   uint64_t GetReadCount(void) const { return readCount; }
+   uint64_t GetWriteCount(void) const { return writeCount; }
+
 private:
    void ReadThread(void);
    void WriteThread(void);
@@ -31,6 +36,8 @@ private:
    std::condition_variable writeBufferEvent;
    bool writeThreadFailed;
    std::string writeThreadError;
+   uint64_t writeCount;
+   const char *writeStatus;
 
    std::thread *readThread;
    uint8_t readBuffer[20000];
@@ -38,6 +45,8 @@ private:
    int readBufferOut;
    bool readThreadFailed;
    std::string readThreadError;
+   uint64_t readCount;
+   const char *readStatus;
 };
 
 #endif

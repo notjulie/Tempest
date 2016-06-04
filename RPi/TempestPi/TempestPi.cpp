@@ -70,8 +70,21 @@ void TempestPi::Run(void)
 {
    try
    {
-       // create our peripherals
-       serialStream = new PiSerialStream();
+      // create our peripherals
+      serialStream = new PiSerialStream();
+      environment.RegisterCommand(
+         "?serReadSts",
+         [this](const CommandLine &command) {
+            return std::string(serialStream->GetReadStatus()) + ": " + std::to_string(serialStream->GetReadCount());
+            }
+         );
+      environment.RegisterCommand(
+         "?serWriteSts",
+         [this](const CommandLine &command) {
+            return std::string(serialStream->GetWriteStatus()) + ": " + std::to_string(serialStream->GetWriteCount());
+            }
+         );
+
        soundIO = new TempestIOStreamProxy(serialStream);
 
        // create the runner object that drives the fake 6502
