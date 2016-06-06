@@ -90,20 +90,21 @@ Win32ComPortStream::~Win32ComPortStream(void)
    CloseHandle(writeBufferEvent);
 }
 
-void Win32ComPortStream::Write(uint8_t b)
+bool Win32ComPortStream::Write(uint8_t b)
 {
    // figure out what our index will be after appending the byte
    int newBufferIn = writeBufferIn + 1;
    if (newBufferIn >= sizeof(writeBuffer))
       newBufferIn = 0;
    if (newBufferIn == writeBufferOut)
-      throw TempestException("Win32ComPortStream::Write: buffer full");
+      return false;
 
    writeBuffer[writeBufferIn] = b;
    writeBufferIn = newBufferIn;
 
    // set the event
    SetEvent(writeBufferEvent);
+   return true;
 }
 
 int Win32ComPortStream::Peek(void)

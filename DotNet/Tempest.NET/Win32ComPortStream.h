@@ -13,7 +13,7 @@ public:
 
    virtual int  Peek(void);
    virtual int  Read(void);
-   virtual void Write(uint8_t b);
+   virtual bool Write(uint8_t b);
 
 private:
    static long ReadThreadEntry(Win32ComPortStream *pThis) { pThis->ReadThread(); return 0; }

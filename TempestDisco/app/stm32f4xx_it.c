@@ -5,6 +5,7 @@
 #include "usbd_core.h"
 #include "usbd_cdc_core.h"
 
+#include "VirtualComPort.h"
 #include "SystemError.h"
 
 extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);

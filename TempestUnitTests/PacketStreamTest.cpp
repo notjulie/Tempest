@@ -41,7 +41,7 @@ namespace TempestUnitTests
          PacketStream inStream(stream.GetRightSide());
          std::vector<uint8_t> inPacket;
          inPacket.resize(length);
-         int bytesRead = inStream.ReadPacket(&inPacket[0], inPacket.size());
+         int bytesRead = inStream.ReadPacket(&inPacket[0], (unsigned)inPacket.size());
 
          Assert::AreEqual(length, bytesRead, L"Received packet size correct");
 

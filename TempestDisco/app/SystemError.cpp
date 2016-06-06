@@ -108,11 +108,6 @@ static void CPUSpin(int milliseconds)
 			continue;
 }
 
-void SimpleMemoryStream::ReportBufferOverflow(void)
-{
-	ReportSystemError(SYSTEM_ERROR_STREAMOVERFLOW);
-}
-
 void operator delete  ( void* ptr )
 {
 	ReportSystemError(SYSTEM_ERROR_DELETE_CALLED);

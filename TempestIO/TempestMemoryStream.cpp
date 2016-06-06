@@ -8,17 +8,18 @@ SimpleMemoryStream::SimpleMemoryStream(void)
 	bufferOut = 0;
 }
 
-void SimpleMemoryStream::Write(uint8_t b)
+bool SimpleMemoryStream::Write(uint8_t b)
 {
 	// figure out what our index will be after appending the byte
 	int newBufferIn = bufferIn + 1;
 	if (newBufferIn >= (int)sizeof(buffer))
 		newBufferIn = 0;
 	if (newBufferIn == bufferOut)
-		ReportBufferOverflow();
+		return false;
 
 	buffer[bufferIn] = b;
 	bufferIn = newBufferIn;
+	return true;
 }
 
 int SimpleMemoryStream::Peek(void)
