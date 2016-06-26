@@ -41,15 +41,7 @@ AbstractTempestStream &USBStream = *memoryStream.GetLeftSide();
 // our global VirtualComPort instance
 VirtualComPort VCP;
 
-static bool newDataReceived = false;
 
-
-/* Private function prototypes -----------------------------------------------*/
-static uint16_t VCP_Init(void);
-static uint16_t VCP_DeInit(void);
-static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len);
-static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len);
-static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len);
 
 
 extern "C" {
@@ -65,7 +57,13 @@ extern "C" {
 	extern uint32_t APP_Rx_ptr_out;
 
 
-	CDC_IF_Prop_TypeDef VCP_fops = {VCP_Init, VCP_DeInit, VCP_Ctrl, VCP_DataTx, VCP_DataRx };
+	CDC_IF_Prop_TypeDef VCP_fops = {
+			VirtualComPort::VCP_Init,
+			VirtualComPort::VCP_DeInit,
+			VirtualComPort::VCP_Ctrl,
+			VirtualComPort::VCP_DataTx,
+			VirtualComPort::VCP_DataRx
+	};
 
 	extern USB_OTG_CORE_HANDLE USB_OTG_dev;
 	extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
@@ -76,6 +74,7 @@ extern "C" {
 VirtualComPort::VirtualComPort(void)
 {
 	breakReceived = false;
+	newDataReceived = false;
 }
 
 
@@ -169,7 +168,7 @@ uint16_t VirtualComPort::Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
  * @param  None
  * @retval Result of the operation (USBD_OK in all cases)
  */
-static uint16_t VCP_Init(void)
+uint16_t VirtualComPort::VCP_Init(void)
 {
    return USBD_OK;
 }
@@ -180,7 +179,7 @@ static uint16_t VCP_Init(void)
  * @param  None
  * @retval Result of the operation (USBD_OK in all cases)
  */
-static uint16_t VCP_DeInit(void)
+uint16_t VirtualComPort::VCP_DeInit(void)
 {
    return USBD_OK;
 }
@@ -196,7 +195,7 @@ static uint16_t VCP_DeInit(void)
  * @param  Len: Number of data to be sent (in bytes)
  * @retval Result of the opeartion (USBD_OK in all cases)
  */
-static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
+uint16_t VirtualComPort::VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 {
 	return VCP.Ctrl(Cmd, Buf, Len);
 }
@@ -212,7 +211,7 @@ static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
  * @param  Len: Number of data to be sent (in bytes)
  * @retval Result of the opeartion: USBD_OK if all operations are OK else VCP_FAIL
  */
-static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
+uint16_t VirtualComPort::VCP_DataTx(uint8_t* Buf, uint32_t Len)
 {
 	return USBD_OK;
 }
@@ -235,7 +234,12 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
  * @retval Result of the operation: USBD_OK if all operations are OK else VCP_FAIL
  */
 
-static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
+uint16_t VirtualComPort::VCP_DataRx(uint8_t* Buf, uint32_t Len)
+{
+	return VCP.DataRx(Buf, Len);
+}
+
+uint16_t VirtualComPort::DataRx(uint8_t* Buf, uint32_t Len)
 {
 	// note that we got some data
 	if (Len > 0)
@@ -250,7 +254,7 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 }
 
 
-bool GetUSBReceiveHeartbeat()
+bool VirtualComPort::GetUSBReceiveHeartbeat(void)
 {
 	static bool flashOn = false;
 	static uint32_t lastTick = 0;

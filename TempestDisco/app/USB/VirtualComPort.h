@@ -50,6 +50,7 @@
 	public:
 		VirtualComPort(void);
 
+		bool GetUSBReceiveHeartbeat(void);
 		bool WasBreakReceived(void) const { return breakReceived; }
 		void ClearBreak(void) { breakReceived = false; }
 
@@ -59,13 +60,23 @@
 		// the low level ops
 		uint16_t Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len);
 
+	public:
+		static uint16_t VCP_Init(void);
+		static uint16_t VCP_DeInit(void);
+		static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len);
+		static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len);
+		static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len);
+
+	private:
+		uint16_t DataRx(uint8_t* Buf, uint32_t Len);
+
 	private:
 		bool breakReceived;
+		bool newDataReceived;
 	};
 
 	extern VirtualComPort VCP;
 
-	bool GetUSBReceiveHeartbeat();
 #endif
 
 #endif /* __USBD_CDC_VCP_H */

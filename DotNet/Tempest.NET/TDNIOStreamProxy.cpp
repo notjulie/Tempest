@@ -2,7 +2,6 @@
 #include "Stdafx.h"
 
 #include "TempestIO/TempestIOStreamProxy.h"
-#include "TempestIO/TempestMemoryStream.h"
 
 #include "TDNIOStreamProxy.h"
 

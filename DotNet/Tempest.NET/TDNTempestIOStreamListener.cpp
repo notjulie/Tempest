@@ -3,7 +3,6 @@
 #include "Stdafx.h"
 
 #include "TempestIO/TempestIOStreamListener.h"
-#include "TempestIO/TempestMemoryStream.h"
 
 #include "TDNTempestIOStreamListener.h"
 
