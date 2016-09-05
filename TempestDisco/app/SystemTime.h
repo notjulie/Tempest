@@ -4,6 +4,7 @@
 
 void InitializeSystemTime(void);
 
+uint32_t GetAPB1PeripheralClockSpeed(void);
 uint32_t GetAPB1TimerClockSpeed(void);
 uint32_t GetMillisecondCount(void);
 

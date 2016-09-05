@@ -14,6 +14,7 @@
 #include "AudioLEDs.h"
 #include "ControlPanel.h"
 #include "DiscoWaveStreamer.h"
+#include "Serial.h"
 #include "SystemError.h"
 #include "SystemTime.h"
 #include "VirtualComPort.h"
@@ -75,6 +76,9 @@ extern "C" {
 		// control panel
 		InitializeControlPanel();
 
+		// serial
+		InitializeSerial();
+
 		// initialize the watchdog just before we enter the main loop
 		InitializeWatchdog();
 
@@ -100,6 +104,9 @@ extern "C" {
 
 			// control panel
 			ServiceControlPanel();
+
+			// serial
+			ServiceSerial();
 
 			// kick the dog
 	    	ResetIndependentWatchdogCounter();

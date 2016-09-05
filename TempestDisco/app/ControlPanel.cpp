@@ -17,7 +17,7 @@ static ButtonState zapButton;
 static ButtonState onePlayerButton;
 static ButtonState twoPlayerButton;
 
-static void ServiceEncoder(void);
+static void ServiceEncoder(bool input1, bool input2);
 static void ServiceButton(ButtonState *button, bool state);
 
 void InitializeControlPanel(void)
@@ -53,59 +53,59 @@ void InitializeControlPanel(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	// set up ADC1 to read PB0 in continuous mode
+	// enable ADC1 and ADC2
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
-	ADC1->CR1 = 0; // no surprises here
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);
+
+	// set the clock prescale to 8... we want this slow so we don't
+	// kill the CPU with interrupts
+	ADC->CCR = 3 << 16;
+
+	// set up ADC1 to read PB0 in continuous mode
+	ADC1->CR1 = (1<<5); // bit 5 --> interrupt on end-of-conversion
 	ADC1->CR2 =
 			(1 << 11) | // left align
 			(1 << 1);   //continuous
 	ADC1->SQR1 = 0; // sample only one channel
 	ADC1->SQR2 = 0;
 	ADC1->SQR3 = 8; // sample only channel 8, PB0
+	ADC1->SMPR2 = 7; // 480 ADC cycles per conversion
 	ADC1->CR2 |= 1; // enable ADC
 	ADC1->CR2 |= (1<<30); // start
 
 	// set up ADC2 to read PB1 in continuous mode
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);
-	ADC2->CR1 = 0; // no surprises here
+	ADC2->CR1 = (1<<5); // bit 5 --> interrupt on end-of-conversion
 	ADC2->CR2 =
 			(1 << 11) | // left align
 			(1 << 1);   //continuous
 	ADC2->SQR1 = 0; // sample only one channel
 	ADC2->SQR2 = 0;
 	ADC2->SQR3 = 9; // sample only channel 9, PB1
+	ADC2->SMPR2 = 7; // 480 ADC cycles per conversion
 	ADC2->CR2 |= 1; // enable ADC
 	ADC2->CR2 |= (1<<30); // start
-}
 
+	// enable ADC interrupt handler
+	NVIC_InitTypeDef   NVIC_InitStructure;
+   NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   NVIC_Init(&NVIC_InitStructure);
+}
 
 void ServiceControlPanel(void)
 {
-	ServiceEncoder();
 	ServiceButton(&onePlayerButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) == Bit_RESET);
 	ServiceButton(&twoPlayerButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == Bit_RESET);
 	ServiceButton(&fireButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1) == Bit_RESET);
 	ServiceButton(&zapButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2) == Bit_RESET);
 }
 
-void ServiceEncoder(void)
+void ServiceEncoder(bool input1, bool input2)
 {
 	static uint8_t encoderBits = 0;
 	static uint32_t rawEncoder = 0;
-
-	// get a snapshot of the ADCs so we're not dealing with a moving target
-	uint16_t adc1 = ADC1->DR;
-	uint16_t adc2 = ADC2->DR;
-
-	// Each of the encoder inputs goes through a 1/2 voltage divider, and
-	// the empirical data is this: one input maxes at about 40000 ADC counts,
-	// the other at 30000.  The minimum for each is about 1000 counts.  Now this
-	// was back when I used an actual 5V supply instead of USB which is slightly
-	// lower.  In any case, it's fair to say anything above 10000 counts is high.
-	static const uint16_t onLevel = 10000;
-
-	bool input1 = adc1 > onLevel;
-	bool input2 = adc2 > onLevel;
 
 	// pop the two bits int a byte
 	uint8_t newEncoderBits = 0;
@@ -230,3 +230,37 @@ void SetButtonLED(ButtonFlag button, bool value)
 	}
 }
 
+extern "C" {
+void ADC_IRQHandler(void)
+{
+	// read the ADCs... this clears the interrupt
+	uint16_t adc1 = ADC1->DR;
+	uint16_t adc2 = ADC2->DR;
+
+	// this interrupt happens too often for us to process it every time...
+	// this is a cheap clock divider
+	static int cycleCount = 0;
+	if (--cycleCount > 0)
+		return;
+	cycleCount = 10;
+
+	// Each of the encoder inputs goes through a 1/2 voltage divider, and
+	// the empirical data is this: one input maxes at about 40000 ADC counts,
+	// the other at 30000.  The minimum for each is about 1000 counts.  Now this
+	// was back when I used an actual 5V supply instead of USB which is slightly
+	// lower.  In any case, it's fair to say anything above 10000 counts is high.
+	static const uint16_t onLevel = 10000;
+
+	bool input1 = adc1 > onLevel;
+	bool input2 = adc2 > onLevel;
+
+	static bool previousInput1 = false;
+	static bool previousInput2 = false;
+	if (input1==previousInput1 && input2==previousInput2)
+		return;
+
+	ServiceEncoder(input1, input2);
+	previousInput1 = input1;
+	previousInput2 = input2;
+}
+};
