@@ -29,7 +29,8 @@ static uint32_t lastUSBInputTime;
 static void ServiceConnected(void);
 static void ServiceUnconnected(void);
 
-TempestIOStreamListener USBListener(&USBStream, &IO);
+static AbstractTempestStream *tempestStream = NULL;
+static TempestIOStreamListener *tempestListener = NULL;
 
 extern "C" {
 
@@ -79,6 +80,12 @@ extern "C" {
 		// serial
 		InitializeSerial();
 
+		// our listener that handles data transmission between us and Tempest
+		//tempestStream = &USBStream;
+		tempestStream = &SerialStream;
+		TempestIOStreamListener listener(tempestStream, &IO);
+		tempestListener = &listener;
+
 		// initialize the watchdog just before we enter the main loop
 		InitializeWatchdog();
 
@@ -121,7 +128,7 @@ static void ServiceConnected(void)
 {
 	// check for disconnect
 	uint32_t now = GetMillisecondCount();
-	if (USBStream.Peek() < 0)
+	if (tempestStream->Peek() < 0)
 	{
 		uint32_t idleTime = now - lastUSBInputTime;
 		if (idleTime > 100)
@@ -138,9 +145,9 @@ static void ServiceConnected(void)
 		lastUSBInputTime = now;
 	}
 
-	// this takes data that has been received from the USB port
-	// and interprets it, passing it to the audio or video subsystems
- 	USBListener.Service();
+	// this takes data that has been received from Tempest
+	// and interprets it, passing it to the audio subsystem or control panel
+	tempestListener->Service();
 
  	// service the USB transmitter
  	VCP.Service();
@@ -150,6 +157,7 @@ static void ServiceUnconnected(void)
 {
 	uint32_t now = GetMillisecondCount();
 
+	// kick the USB connection... it seems to help keep it alive
 	static uint32_t lastQ;
 	if (now - lastQ > 10000)
 	{
@@ -159,7 +167,7 @@ static void ServiceUnconnected(void)
 	}
 
 	// see if we have a connection
-	if (USBStream.Peek() >= 0)
+	if (tempestStream->Peek() >= 0)
 	{
 		lastUSBInputTime = GetMillisecondCount();
 		appState = CONNECTED;

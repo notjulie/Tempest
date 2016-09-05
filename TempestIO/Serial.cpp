@@ -2,9 +2,16 @@
 #include <stm32f4xx.h>
 #include "TempestDisco.h"
 
+#include "SystemError.h"
 #include "SystemTime.h"
+#include "TempestIO/TempestMemoryStream.h"
 
 #include "Serial.h"
+
+
+// our global memory stream between the serial port and the app
+static TempestMemoryStream memoryStream;
+AbstractTempestStream &SerialStream = *memoryStream.GetLeftSide();
 
 void InitializeSerial(void)
 {
@@ -31,12 +38,36 @@ void InitializeSerial(void)
 	USART2->BRR = (uint16_t)clockDivider;
 
 	// enable
-	USART2->CR1 = 0x200C;
+	USART2->CR1 = 0x202C;
+
+	// enable USART2 interrupt handler
+	NVIC_InitTypeDef   NVIC_InitStructure;
+   NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   NVIC_Init(&NVIC_InitStructure);
 }
 
 
 void ServiceSerial(void)
 {
-	USART2->DR = 'x';
+	// send the next byte if we can... future version can be interrupt driven
+	// if necessary, but we don't send that much data and aren't that urgent
+	if (USART2->SR & 0x80)
+	{
+		int b = memoryStream.GetRightSide()->Read();
+		if (b >= 0)
+			USART2->DR = (uint8_t)b;
+	}
 }
+
+extern "C" {
+void USART2_IRQHandler(void)
+{
+	// handle receive interrupt
+	if (USART2->SR & 0x20)
+		memoryStream.GetRightSide()->Write(USART2->DR);
+}
+};
 
