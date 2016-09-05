@@ -41,17 +41,26 @@ public:
    void SetDemoMode(void) { demoMode = true; }
    void SetTempestIO(AbstractTempestSoundIO *tempestSoundIOs);
 
-public:
-	// AbstractBus overrides
-	virtual uint8_t ReadByte(uint16_t address);
-   virtual void    WriteByte(uint16_t address, uint8_t value);
-
 private:
    void  ConfigureAddressSpace(void);
    void  HandleTick250Hz(void);
+   uint8_t ReadIOByte(uint16_t address);
+   void    WriteIOByte(uint16_t address, uint8_t value);
 
 private:
-	static bool	IsVectorRAMAddress(uint16_t address);
+   static uint8_t ReadColorRAM(AbstractBus *bus, uint16_t address);
+   static uint8_t ReadEEPROM(AbstractBus *bus, uint16_t address);
+   static uint8_t ReadIO(AbstractBus *bus, uint16_t address);
+   static uint8_t ReadPokey(AbstractBus *bus, uint16_t address);
+   static uint8_t ReadVectorRAM(AbstractBus *bus, uint16_t address);
+   static void WriteColorRAM(AbstractBus *bus, uint16_t address, uint8_t value);
+   static void WriteEEPROM(AbstractBus *bus, uint16_t address, uint8_t value);
+   static void WriteIO(AbstractBus *bus, uint16_t address, uint8_t value);
+   static void WriteMathBoxValue(AbstractBus *bus, uint16_t address, uint8_t value);
+   static void WritePokey(AbstractBus *bus, uint16_t address, uint8_t value);
+   static void WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value);
+
+private:
    static void Tick6KHz(AbstractBus *bus);
    static void Tick250Hz(AbstractBus *bus);
 

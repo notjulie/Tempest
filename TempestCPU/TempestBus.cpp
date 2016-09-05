@@ -45,63 +45,9 @@ TempestBus::~TempestBus(void)
 }
 
 
-uint8_t TempestBus::ReadByte(uint16_t address)
+uint8_t TempestBus::ReadIOByte(uint16_t address)
 {
-   // see if it's a ROM address
-	if (address >= 0x9000)
-	{
-		switch (address & 0xF800)
-		{
-		case 0x9000:
-			return ROM_136002_113[address & 0x7FF];
-		case 0x9800:
-			return ROM_136002_114[address & 0x7FF];
-		case 0xA000:
-			return ROM_136002_115[address & 0x7FF];
-		case 0xA800:
-			return ROM_136002_116[address & 0x7FF];
-		case 0xB000:
-			return ROM_136002_117[address & 0x7FF];
-		case 0xB800:
-			return ROM_136002_118[address & 0x7FF];
-		case 0xC000:
-		case 0xE000:
-			return ROM_136002_119[address & 0x7FF];
-		case 0xC800:
-		case 0xE800:
-			return ROM_136002_120[address & 0x7FF];
-		case 0xD000:
-		case 0xF000:
-			return ROM_136002_121[address & 0x7FF];
-		case 0xD800:
-		case 0xF800:
-			return ROM_136002_122[address & 0x7FF];
-		}
-	}
-
-   // vector RAM
-	if (IsVectorRAMAddress(address))
-		return vectorData.GetAt((uint16_t)(address - VECTOR_RAM_BASE));
-
-   // vector ROM
-	if (address >= VECTOR_ROM_BASE && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111))
-		return ROM_136002_111[address - VECTOR_ROM_BASE];
-	if (address >= VECTOR_ROM_BASE + sizeof(ROM_136002_111) && address < VECTOR_ROM_BASE + sizeof(ROM_136002_111) + sizeof(ROM_136002_112))
-		return ROM_136002_112[address - VECTOR_ROM_BASE - sizeof(ROM_136002_111)];
-
-   // POKEY 1
-   if (address >= POKEY1_BASE && address <= POKEY1_END)
-      return pokey1.ReadByte((uint16_t)(address - POKEY1_BASE));
-
-   // POKEY 2
-	if (address >= POKEY2_BASE && address <= POKEY2_END)
-		return pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
-
-	// color RAM
-	if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
-		return vectorData.ReadColorRAM((unsigned)(address - COLOR_RAM_BASE));
-
-	// miscellaneous other cases
+	// miscellaneous IO bytes
    switch (address)
    {
 		case 0x0C00:
@@ -148,7 +94,11 @@ uint8_t TempestBus::ReadByte(uint16_t address)
          return mathBox.ReadHigh();
 
       default:
-         return AbstractBus::ReadByte(address);
+      {
+         char str[200];
+         sprintf(str, "ReadIOByte; invalid address: %04X", address);
+         throw TempestException(str);
+      }
    }
 }
 
@@ -166,51 +116,8 @@ void TempestBus::GetVectorData(VectorData &vectorData)
 }
 
 
-void TempestBus::WriteByte(uint16_t address, uint8_t value)
+void TempestBus::WriteIOByte(uint16_t address, uint8_t value)
 {
-   // vector RAM
-   if (IsVectorRAMAddress(address))
-   {
-      // If it has been a while (as measured in clock cycles) since the last write to
-      // vector RAM we can conclude that it is stable and take a snapshot of it so that
-      // the display doesn't catch it in the middle of updating; 800 clock ticks appears
-      // to be a trustworthy number.  In the near future I expect to locate a particular
-      // place in the 6502 code that I can use instead as a trigger.
-      if (GetTotalClockCycles() - lastVectorRAMWrite > 800)
-      {
-         std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
-
-         vectorDataSnapshot = vectorData;
-         lastVectorRAMWrite = GetTotalClockCycles();
-         if (vectorGoRequested)
-            vectorRAMReady = true;
-      }
-
-		vectorData.WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
-      return;
-   }
-
-   // color RAM
-   if (address >= COLOR_RAM_BASE && address < COLOR_RAM_BASE + COLOR_RAM_SIZE)
-   {
-      vectorData.WriteColorRAM((unsigned)(address - COLOR_RAM_BASE), value);
-      return;
-   }
-
-   // POKEY 1
-   if (address >= POKEY1_BASE && address <= POKEY1_END)
-   {
-      pokey1.WriteByte((uint16_t)(address - POKEY1_BASE), value, GetTotalClockCycles());
-      return;
-   }
-
-   // POKEY 2
-   if (address >= POKEY2_BASE && address <= POKEY2_END)
-   {
-      pokey2.WriteByte((uint16_t)(address - POKEY2_BASE), value, GetTotalClockCycles());
-      return;
-   }
-
    // EEPROM
    if (address >= EEPROM_WRITE_BASE && address <= EEPROM_WRITE_END)
    {
@@ -257,7 +164,11 @@ void TempestBus::WriteByte(uint16_t address, uint8_t value)
          break;
 
       default:
-         AbstractBus::WriteByte(address, value);
+      {
+         char str[200];
+         sprintf(str, "WriteIOByte; invalid address: %04X", address);
+         throw TempestException(str);
+      }
    }
 }
 
@@ -267,12 +178,6 @@ void TempestBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
    tempestSoundIO = _tempestSoundIO;
    pokey1.SetTempestIO(tempestSoundIO);
 	pokey2.SetTempestIO(tempestSoundIO);
-}
-
-
-bool TempestBus::IsVectorRAMAddress(uint16_t address)
-{
-	return address >= VECTOR_RAM_BASE && address<VECTOR_RAM_BASE + VECTOR_RAM_SIZE;
 }
 
 
@@ -329,9 +234,84 @@ void TempestBus::HandleTick250Hz(void)
 
 void TempestBus::ConfigureAddressSpace(void)
 {
+   // burn all of our ROMs
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0x9000 + offset), ROM_136002_113[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0x9800 + offset), ROM_136002_114[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xA000 + offset), ROM_136002_115[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xA800 + offset), ROM_136002_116[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xB000 + offset), ROM_136002_117[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xB800 + offset), ROM_136002_118[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xC000 + offset), ROM_136002_119[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xC800 + offset), ROM_136002_120[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xD000 + offset), ROM_136002_121[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xD800 + offset), ROM_136002_122[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xE000 + offset), ROM_136002_119[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xE800 + offset), ROM_136002_120[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xF000 + offset), ROM_136002_121[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xF800 + offset), ROM_136002_122[offset]);
+
+   // the vector ROMs, too
+   for (uint16_t offset = 0; offset < sizeof(ROM_136002_111); ++offset)
+      ConfigureAddressAsROM((uint16_t)(VECTOR_ROM_BASE + offset), ROM_136002_111[offset]);
+   for (uint16_t offset = 0; offset < sizeof(ROM_136002_112); ++offset)
+      ConfigureAddressAsROM((uint16_t)(VECTOR_ROM_BASE + sizeof(ROM_136002_111) + offset), ROM_136002_112[offset]);
+
    // configure main RAM as RAM
    for (unsigned i = 0; i < MAIN_RAM_SIZE; ++i)
       ConfigureAddressAsRAM((uint16_t)(MAIN_RAM_BASE + i));
+
+   // set up vector RAM and color RAM
+   for (uint16_t offset = 0; offset < VECTOR_RAM_SIZE; ++offset)
+      ConfigureAddress((uint16_t)(VECTOR_RAM_BASE + offset), 0, ReadVectorRAM, WriteVectorRAM);
+   for (uint16_t offset = 0; offset < COLOR_RAM_SIZE; ++offset)
+      ConfigureAddress((uint16_t)(COLOR_RAM_BASE + offset), 0, ReadColorRAM, WriteColorRAM);
+
+   // the Pokeys
+   for (uint16_t address = POKEY1_BASE; address <= POKEY1_END; ++address)
+      ConfigureAddress(address, 0, ReadPokey, WritePokey);
+   for (uint16_t address = POKEY2_BASE; address <= POKEY2_END; ++address)
+      ConfigureAddress(address, 0, ReadPokey, WritePokey);
+
+   // EEPROM
+   for (uint16_t address = EEPROM_WRITE_BASE; address <= EEPROM_WRITE_END; ++address)
+      ConfigureAddress(address, 0, ReadAddressInvalid, WriteEEPROM);
+   ConfigureAddress(0x6050, 0, ReadEEPROM, WriteAddressInvalid);
+
+   // Mathbox
+   for (uint16_t address = MATHBOX_WRITE_BASE; address <= MATHBOX_WRITE_END; ++address)
+      ConfigureAddress(address, 0, ReadAddressInvalid, WriteMathBoxValue);
+
+   // and our miscellaneous IO
+   static const uint16_t ioAddresses[] = {
+		0x0C00,
+      0x0D00,
+      0x0E00,
+      0x4000,
+      0x4800,
+      0x5000,
+      0x5800,
+      0x6040,
+      0x6050,
+      0x6060,
+      0x6070,
+      0x60E0
+   };
+   for (int i = 0; i < sizeof(ioAddresses) / sizeof(ioAddresses[0]); ++i)
+      ConfigureAddress(ioAddresses[i], 0, ReadIO, WriteIO);
 
    // this is a main RAM address that gets set on startup that seems to be a
    // POKEY copy-protection thing that scrozzles things and causes
@@ -342,4 +322,95 @@ void TempestBus::ConfigureAddressSpace(void)
    // if I set this to a fixed value I can start on level 80 without the other features
    // of demo mode enabled
    ConfigureAddress(MAX_START_LEVEL_ADDRESS, 80, ReadAddressNormal, WriteAddressNoOp);
+}
+
+
+uint8_t TempestBus::ReadColorRAM(AbstractBus *bus, uint16_t address)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   return tempestBus->vectorData.ReadColorRAM((unsigned)(address - COLOR_RAM_BASE));
+}
+
+uint8_t TempestBus::ReadEEPROM(AbstractBus *bus, uint16_t)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   return tempestBus->eeprom.ReadByte();
+}
+
+uint8_t TempestBus::ReadIO(AbstractBus *bus, uint16_t address)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   return tempestBus->ReadIOByte(address);
+}
+
+uint8_t TempestBus::ReadPokey(AbstractBus *bus, uint16_t address)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+
+   if (address >= POKEY1_BASE && address <= POKEY1_END)
+      return tempestBus->pokey1.ReadByte((uint16_t)(address - POKEY1_BASE));
+   else
+      return tempestBus->pokey2.ReadByte((uint16_t)(address - POKEY2_BASE));
+}
+
+uint8_t TempestBus::ReadVectorRAM(AbstractBus *bus, uint16_t address)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   return tempestBus->vectorData.GetAt((uint16_t)(address - VECTOR_RAM_BASE));
+}
+
+void TempestBus::WriteColorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   tempestBus->vectorData.WriteColorRAM((uint16_t)(address - COLOR_RAM_BASE), value);
+}
+
+void TempestBus::WriteEEPROM(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   tempestBus->eeprom.WriteByte((uint16_t)(address - EEPROM_WRITE_BASE), value);
+}
+
+void TempestBus::WriteIO(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   tempestBus->WriteIOByte(address, value);
+}
+
+void TempestBus::WriteMathBoxValue(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   tempestBus->mathBox.Write((uint8_t)(address - MATHBOX_WRITE_BASE), value);
+}
+
+void TempestBus::WritePokey(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+
+   if (address >= POKEY1_BASE && address <= POKEY1_END)
+      tempestBus->pokey1.WriteByte((uint16_t)(address - POKEY1_BASE), value, tempestBus->GetTotalClockCycles());
+   else
+      tempestBus->pokey2.WriteByte((uint16_t)(address - POKEY2_BASE), value, tempestBus->GetTotalClockCycles());
+}
+
+void TempestBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+
+   // If it has been a while (as measured in clock cycles) since the last write to
+   // vector RAM we can conclude that it is stable and take a snapshot of it so that
+   // the display doesn't catch it in the middle of updating; 800 clock ticks appears
+   // to be a trustworthy number.  In the near future I expect to locate a particular
+   // place in the 6502 code that I can use instead as a trigger.
+   if (tempestBus->GetTotalClockCycles() - tempestBus->lastVectorRAMWrite > 800)
+   {
+      std::lock_guard<std::mutex> lock(*tempestBus->vectorDataSnapshotMutex);
+
+      tempestBus->vectorDataSnapshot = tempestBus->vectorData;
+      tempestBus->lastVectorRAMWrite = tempestBus->GetTotalClockCycles();
+      if (tempestBus->vectorGoRequested)
+         tempestBus->vectorRAMReady = true;
+   }
+
+   tempestBus->vectorData.WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
 }
