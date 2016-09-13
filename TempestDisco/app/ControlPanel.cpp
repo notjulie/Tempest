@@ -230,37 +230,112 @@ void SetButtonLED(ButtonFlag button, bool value)
 	}
 }
 
+class EncoderInput
+{
+public:
+	bool AddSample(uint16_t sampleValue) {
+		const int HYSTERESIS = 5000;
+
+		// if we are currently high...
+		if (value) {
+			// a value higher than the anchor point is a new anchor point
+			if (sampleValue > anchorPoint)
+			{
+				anchorPoint = sampleValue;
+				return false;
+			}
+
+			// a value lower than the anchor point by our margin is a change in output
+			if (sampleValue < anchorPoint - HYSTERESIS)
+			{
+				anchorPoint = sampleValue;
+				value = false;
+				return true;
+			}
+
+			// else nothing
+			return false;
+		}
+
+		// if we are currently low...
+		if (!value) {
+			// a value lower than the anchor point is a new anchor point
+			if (sampleValue < anchorPoint)
+			{
+				anchorPoint = sampleValue;
+				return false;
+			}
+
+			// a value higher than the anchor point by our margin is a change in output
+			if (sampleValue > anchorPoint + HYSTERESIS)
+			{
+				anchorPoint = sampleValue;
+				value = true;
+				return true;
+			}
+
+			// else nothing
+			return false;
+		}
+
+		return false;
+	}
+
+	bool GetValue(void) const {
+		return value;
+	}
+
+private:
+	bool value;
+	int anchorPoint;
+};
+
+static EncoderInput input1;
+static EncoderInput input2;
+
 extern "C" {
 void ADC_IRQHandler(void)
 {
+#if 0
+	const int AVERAGING_COUNT = 10;
+	static uint32_t adc1Sum = 0;
+	static uint32_t adc2Sum = 0;
+
 	// read the ADCs... this clears the interrupt
-	uint16_t adc1 = ADC1->DR;
-	uint16_t adc2 = ADC2->DR;
+	adc1Sum += (uint16_t)ADC1->DR;
+	adc2Sum += (uint16_t)ADC2->DR;
 
 	// this interrupt happens too often for us to process it every time...
 	// this is a cheap clock divider
 	static int cycleCount = 0;
-	if (--cycleCount > 0)
+	if (++cycleCount < AVERAGING_COUNT)
+		return;
+
+	// average and clear our counts
+	uint16_t adc1 = (uint16_t)(adc1Sum / AVERAGING_COUNT);
+	uint16_t adc2 = (uint16_t)(adc2Sum / AVERAGING_COUNT);
+	adc1Sum = 0;
+	adc2Sum = 0;
+	cycleCount = 0;
+#else
+	static int cycleCount = 0;
+
+	// read the ADCs... this clears the interrupt
+	uint16_t adc1 = ADC1->DR;
+	uint16_t adc2 = ADC2->DR;
+	if (--cycleCount >= 0)
 		return;
 	cycleCount = 10;
 
-	// Each of the encoder inputs goes through a 1/2 voltage divider, and
-	// the empirical data is this: one input maxes at about 40000 ADC counts,
-	// the other at 30000.  The minimum for each is about 1000 counts.  Now this
-	// was back when I used an actual 5V supply instead of USB which is slightly
-	// lower.  In any case, it's fair to say anything above 10000 counts is high.
-	static const uint16_t onLevel = 10000;
+#endif
 
-	bool input1 = adc1 > onLevel;
-	bool input2 = adc2 > onLevel;
+	// add the new samples
+	bool changed = false;
+	changed |= input1.AddSample(adc1);
+	changed |= input2.AddSample(adc2);
 
-	static bool previousInput1 = false;
-	static bool previousInput2 = false;
-	if (input1==previousInput1 && input2==previousInput2)
-		return;
-
-	ServiceEncoder(input1, input2);
-	previousInput1 = input1;
-	previousInput2 = input2;
+	// update the value
+	if (changed)
+		ServiceEncoder(input1.GetValue(), input2.GetValue());
 }
 };
