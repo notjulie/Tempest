@@ -1,20 +1,8 @@
 #include "stm32f4xx_it.h"
 #include "stm32f4xx_conf.h"
 
-#include "usb_core.h"
-#include "usbd_core.h"
-#include "usbd_cdc_core.h"
-
-#include "VirtualComPort.h"
 #include "SystemError.h"
 
-extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
-extern USB_OTG_CORE_HANDLE USB_OTG_dev;
-
-#ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED
-extern uint32_t USBD_OTG_EP1IN_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
-extern uint32_t USBD_OTG_EP1OUT_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
-#endif
 
 /**
   * @brief   This function handles NMI exception.
@@ -141,7 +129,6 @@ void OTG_HS_IRQHandler(void)
 void OTG_FS_IRQHandler(void)
 #endif
 {
-	VirtualComPortISR();
 }
 
 #ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED

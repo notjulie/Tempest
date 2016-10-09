@@ -1,8 +1,6 @@
 
 #include "TempestDisco.h"
 
-#include "USB/VirtualComPort.h"
-
 #include "AudioDriver.h"
 #include "ControlPanel.h"
 #include "DiscoWaveStreamer.h"

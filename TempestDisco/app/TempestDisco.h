@@ -11,7 +11,6 @@
 #endif
 
 #include <stm32f4_discovery_audio_codec.h>
-#include <usbd_core.h>
 
 #ifdef __cplusplus
 	};

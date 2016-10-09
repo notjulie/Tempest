@@ -1,9 +1,6 @@
 
 #include "TempestDisco.h"
 
-#include "usbd_usr.h"
-#include "usbd_desc.h"
-
 #include "Audio/AudioDriver.h"
 #include "Audio/TempestDiscoAudioIO.h"
 #include "TempestIO/AbstractTempestStream.h"
@@ -17,7 +14,6 @@
 #include "Serial.h"
 #include "SystemError.h"
 #include "SystemTime.h"
-#include "VirtualComPort.h"
 #include "WatchDog.h"
 
 #include "TempestDiscoAudio.h"
@@ -34,10 +30,6 @@ static TempestIOStreamListener *tempestListener = NULL;
 
 extern "C" {
 
-	// Private variables
-	__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
-
-
 	//Configure pins and clocks
 	void hw_init()
 	{
@@ -47,14 +39,6 @@ extern "C" {
 	   // (Some of the USB is also on that port, and usb modules turn it on later...
 	   //  but anyway, UART started working correctly when I turned clock on first)
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-
-
-	   // ------------- USB -------------- //
-		USBD_Init(&USB_OTG_dev,
-				 USB_OTG_FS_CORE_ID,
-				 &USR_desc,
-				 &USBD_CDC_cb,
-				 &USR_cb);
 	}
 
 
@@ -148,24 +132,10 @@ static void ServiceConnected(void)
 	// this takes data that has been received from Tempest
 	// and interprets it, passing it to the audio subsystem or control panel
 	tempestListener->Service();
-
- 	// service the USB transmitter
- 	VCP.Service();
 }
 
 static void ServiceUnconnected(void)
 {
-	uint32_t now = GetMillisecondCount();
-
-	// kick the USB connection... it seems to help keep it alive
-	static uint32_t lastQ;
-	if (now - lastQ > 10000)
-	{
-		USBStream.Write('q');
-		VCP.Service();
-		lastQ = now;
-	}
-
 	// see if we have a connection
 	if (tempestStream->Peek() >= 0)
 	{
