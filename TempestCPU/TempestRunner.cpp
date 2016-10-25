@@ -256,6 +256,6 @@ void TempestRunner::SetPlayerScore(uint8_t playerIndex, uint32_t newScore)
       );
    tempestBus.WriteByte(
       (uint16_t)(0x42 + playerScoreOffset),
-      CPU6502::ToBCD((uint8_t)(newScore / 10000))
+      CPU6502::ToBCD((uint8_t)((newScore / 10000) % 100))
       );
 }
