@@ -28,10 +28,17 @@ PiSerialStream::PiSerialStream(void)
    // this is the Disco's USB name
    fileStream = open("/dev/ttyACM0", O_RDWR | O_NOCTTY);
 
+   // this is the FTDI's USB name
    if (fileStream == -1)
    {
-      // this is the FTDI's USB name
       fileStream = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY);
+   }
+
+   // else we use the built-in serial port, which will probably become
+   // the permanent solution
+   if (fileStream == -1)
+   {
+      fileStream = open("/dev/ttyAMA0", O_RDWR | O_NOCTTY);
    }
 
    if (fileStream == -1)
@@ -109,17 +116,17 @@ int PiSerialStream::Read(void)
    return result;
 }
 
-void PiSerialStream::Write(uint8_t b)
+bool PiSerialStream::Write(uint8_t b)
 {
    if (writeThreadFailed)
-      throw TempestException(writeThreadError);
+      return false;
 
    // figure out what our index will be after appending the byte
    int newBufferIn = writeBufferIn + 1;
    if (newBufferIn >= (int)sizeof(writeBuffer))
       newBufferIn = 0;
    if (newBufferIn == writeBufferOut)
-      throw TempestException("Serial write buffer full");
+      return false;
 
    // append
    writeBuffer[writeBufferIn] = b;
@@ -127,6 +134,7 @@ void PiSerialStream::Write(uint8_t b)
 
    // set the event
    writeBufferEvent.notify_all();
+   return true;
 }
 
 

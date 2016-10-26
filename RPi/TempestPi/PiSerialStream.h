@@ -13,7 +13,7 @@ public:
 
    virtual int  Peek(void);
    virtual int  Read(void);
-   virtual void Write(uint8_t b);
+   virtual bool Write(uint8_t b);
 
    const char *GetReadStatus(void) const { return readStatus; }
    const char *GetWriteStatus(void) const { return writeStatus; }
