@@ -137,8 +137,18 @@ void TempestRunner::RunnerThread(void)
          }
 
 			// execute the next instruction
-         uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
-         tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
+         if (tempestBus.IsPaused())
+         {
+            tempestBus.ClearWatchdog();
+            tempestBus.IncrementClockCycleCount(10);
+         }
+         else
+         {
+            uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
+            tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
+         }
+
+         // check the current PC address... this should actually be handled by the bus someday
 			uint16_t newPC = cpu6502.GetPC();
          if (newPC < 0x9000)
 			{

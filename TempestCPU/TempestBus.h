@@ -37,7 +37,9 @@ public:
 	TempestBus(AbstractTempestEnvironment *_environment);
 	virtual ~TempestBus(void);
 
+   void ClearWatchdog(void);
    void GetVectorData(VectorData &vectorData);
+   bool IsPaused(void) { return isPaused; }
    void SetDemoMode(void) { demoMode = true; }
    void SetTempestIO(AbstractTempestSoundIO *tempestSoundIOs);
 
@@ -92,6 +94,7 @@ private:
 	bool lastPlayer2ButtonState;
    bool vectorGoRequested;
    bool vectorRAMReady;
+   bool isPaused = false;
 };
 
 #ifdef _WIN32

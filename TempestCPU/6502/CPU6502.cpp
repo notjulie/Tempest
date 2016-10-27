@@ -59,11 +59,6 @@ void CPU6502::Run(void)
 
 uint8_t CPU6502::SingleStep(void)
 {
-   // if we are paused we just pretend that we did something and it took some time
-   // without changing the processor state
-   if (bus->IsPaused())
-      return 10;
-
    // check for IRQ
    if (!P.I && bus->IsIRQ())
       IRQ();

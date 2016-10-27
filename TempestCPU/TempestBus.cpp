@@ -45,6 +45,13 @@ TempestBus::~TempestBus(void)
 }
 
 
+void TempestBus::ClearWatchdog(void)
+{
+   SetIRQ(false);
+   lastWatchdogTime = GetTotalClockCycles();
+}
+
+
 uint8_t TempestBus::ReadIOByte(uint16_t address)
 {
 	// miscellaneous IO bytes
@@ -145,8 +152,7 @@ void TempestBus::WriteIOByte(uint16_t address, uint8_t value)
 
       case 0x5000:
          // watchdog timer clear, and this is also what clears the IRQ
-         SetIRQ(false);
-         lastWatchdogTime = GetTotalClockCycles();
+         ClearWatchdog();
          break;
 
       case 0x5800:
@@ -216,8 +222,8 @@ void TempestBus::HandleTick250Hz(void)
          // if this is a double tap we toggle the paused state
          if (now - lastPlayer2ButtonDownTime < 500000)
          {
-            SetIsPaused(!IsPaused());
-            if (IsPaused())
+            isPaused = !isPaused;
+            if (isPaused)
                tempestSoundIO->AllSoundOff();
          }
          lastPlayer2ButtonDownTime = now;
