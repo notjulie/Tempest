@@ -57,12 +57,12 @@ void InitializeControlPanel(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);
 
-	// set the clock prescale to 8... we want this slow so we don't
-	// kill the CPU with interrupts
+	// set the clock prescale to 8... we can't possibly read it at its maximum speed
+	// anyway
 	ADC->CCR = 3 << 16;
 
 	// set up ADC1 to read PB0 in continuous mode
-	ADC1->CR1 = (1<<5); // bit 5 --> interrupt on end-of-conversion
+	ADC1->CR1 = 0;
 	ADC1->CR2 =
 			(1 << 11) | // left align
 			(1 << 1);   //continuous
@@ -74,7 +74,7 @@ void InitializeControlPanel(void)
 	ADC1->CR2 |= (1<<30); // start
 
 	// set up ADC2 to read PB1 in continuous mode
-	ADC2->CR1 = (1<<5); // bit 5 --> interrupt on end-of-conversion
+	ADC2->CR1 = 0;
 	ADC2->CR2 =
 			(1 << 11) | // left align
 			(1 << 1);   //continuous
@@ -85,14 +85,30 @@ void InitializeControlPanel(void)
 	ADC2->CR2 |= 1; // enable ADC
 	ADC2->CR2 |= (1<<30); // start
 
-	// enable ADC interrupt handler
+	// enable the peripheral clock for TIM2
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+
+	// calculate our timer counts
+	int ENCODER_SAMPLE_FREQUENCY = 4000;
+	int timerCounts = GetAPB1TimerClockSpeed() / ENCODER_SAMPLE_FREQUENCY;
+	int prescale = 1 + (timerCounts >> 16);
+	timerCounts /= prescale;
+
+	// enable TIM2 interrupts
 	NVIC_InitTypeDef   NVIC_InitStructure;
-   NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
    NVIC_Init(&NVIC_InitStructure);
+
+	// setup TIM2
+	TIM2->PSC = prescale - 1;
+	TIM2->ARR = timerCounts - 1;
+	TIM2->DIER = 1;
+	TIM2->CR1 = 1;
 }
+
 
 void ServiceControlPanel(void)
 {
@@ -294,40 +310,14 @@ static EncoderInput input1;
 static EncoderInput input2;
 
 extern "C" {
-void ADC_IRQHandler(void)
+void TIM2_IRQHandler(void)
 {
-#if 0
-	const int AVERAGING_COUNT = 10;
-	static uint32_t adc1Sum = 0;
-	static uint32_t adc2Sum = 0;
+	// clear the interrupt
+	TIM2->SR = 0;
 
-	// read the ADCs... this clears the interrupt
-	adc1Sum += (uint16_t)ADC1->DR;
-	adc2Sum += (uint16_t)ADC2->DR;
-
-	// this interrupt happens too often for us to process it every time...
-	// this is a cheap clock divider
-	static int cycleCount = 0;
-	if (++cycleCount < AVERAGING_COUNT)
-		return;
-
-	// average and clear our counts
-	uint16_t adc1 = (uint16_t)(adc1Sum / AVERAGING_COUNT);
-	uint16_t adc2 = (uint16_t)(adc2Sum / AVERAGING_COUNT);
-	adc1Sum = 0;
-	adc2Sum = 0;
-	cycleCount = 0;
-#else
-	static int cycleCount = 0;
-
-	// read the ADCs... this clears the interrupt
+	// read the ADCs...
 	uint16_t adc1 = ADC1->DR;
 	uint16_t adc2 = ADC2->DR;
-	if (--cycleCount >= 0)
-		return;
-	cycleCount = 10;
-
-#endif
 
 	// add the new samples
 	bool changed = false;
@@ -338,4 +328,5 @@ void ADC_IRQHandler(void)
 	if (changed)
 		ServiceEncoder(input1.GetValue(), input2.GetValue());
 }
+
 };
