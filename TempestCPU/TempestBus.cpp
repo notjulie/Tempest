@@ -316,7 +316,7 @@ void TempestBus::ConfigureAddressSpace(void)
       0x6070,
       0x60E0
    };
-   for (int i = 0; i < sizeof(ioAddresses) / sizeof(ioAddresses[0]); ++i)
+   for (unsigned i = 0; i < sizeof(ioAddresses) / sizeof(ioAddresses[0]); ++i)
       ConfigureAddress(ioAddresses[i], 0, ReadIO, WriteIO);
 
    // this is a main RAM address that gets set on startup that seems to be a
