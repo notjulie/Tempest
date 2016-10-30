@@ -250,7 +250,7 @@ class EncoderInput
 {
 public:
 	bool AddSample(uint16_t sampleValue) {
-		const int HYSTERESIS = 5000;
+		const int HYSTERESIS = 2000;
 
 		// if we are currently high...
 		if (value) {
@@ -316,13 +316,19 @@ void TIM2_IRQHandler(void)
 	TIM2->SR = 0;
 
 	// read the ADCs...
-	uint16_t adc1 = ADC1->DR;
-	uint16_t adc2 = ADC2->DR;
+	int adc1 = ADC1->DR;
+	int adc2 = ADC2->DR;
+
+	// lowpass
+	static int adc1Filter = 0;
+	static int adc2Filter = 0;
+	adc1Filter = (9*adc1Filter + adc1) / 10;
+	adc2Filter = (9*adc2Filter + adc2) / 10;
 
 	// add the new samples
 	bool changed = false;
-	changed |= input1.AddSample(adc1);
-	changed |= input2.AddSample(adc2);
+	changed |= input1.AddSample(adc1Filter);
+	changed |= input2.AddSample(adc2Filter);
 
 	// update the value
 	if (changed)
