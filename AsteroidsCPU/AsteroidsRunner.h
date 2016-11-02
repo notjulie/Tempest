@@ -3,7 +3,7 @@
 #define ASTEROIDSRUNNER_H
 
 #include "TempestCPU/6502/CPU6502.h"
-#include "TempestCPU/TempestBus.h"
+#include "AsteroidsBus.h"
 
 class AbstractTempestEnvironment;
 
@@ -80,7 +80,7 @@ private:
 	Action   requestedAction;
    int pointsPerBonusLife;
 
-	TempestBus	tempestBus;
+	AsteroidsBus	tempestBus;
 	CPU6502		cpu6502;
 
 	std::string processorStatus;
