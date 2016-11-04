@@ -4,6 +4,7 @@
 #include <msclr\lock.h>
 
 #include "AsteroidsCPU/AsteroidsRunner.h"
+#include "AsteroidsCPU/AsteroidsVectorInterpreter.h"
 
 #include "TempestCPU/6502/CPU6502.h"
 #include "TempestCPU/6502/CPU6502Exception.h"
@@ -58,17 +59,15 @@ namespace TempestDotNET {
    VectorEnumerator ^Asteroids::GetVectorEnumerator(void)
    {
       // get the latest vector data
-      VectorData  vectorData;
-      asteroidsRunner->GetVectorData(vectorData);
+      AsteroidsVectorInterpreter vectorInterpreter;
+      asteroidsRunner->GetVectorData(vectorInterpreter);
 
       // interpret it
-      SimpleVectorDataInterpreter vectorInterpretor;
-      vectorInterpretor.SetVectorData(vectorData);
-      vectorInterpretor.Interpret();
+      vectorInterpreter.Interpret();
 
       // return the result
       std::vector<SimpleVector> vectors;
-      vectorInterpretor.GetAllVectors(vectors);
+      vectorInterpreter.GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);
    }
    

@@ -9,8 +9,8 @@
 
 AsteroidsRunner::AsteroidsRunner(AbstractTempestEnvironment *_environment)
 	:
-		tempestBus(_environment),
-		cpu6502(&tempestBus)
+		asteroidsBus(_environment),
+		cpu6502(&asteroidsBus)
 {
 	// save parameters
 	environment = _environment;
@@ -115,7 +115,7 @@ void AsteroidsRunner::RunnerThread(void)
          // execute a hook if we have one at this address
          if (flags & HOOK)
          {
-            tempestBus.IncrementClockCycleCount(hooks[pc]());
+            asteroidsBus.IncrementClockCycleCount(hooks[pc]());
 
             // if the program counter has changed we should skip to the top of the loop
             // in case it brought us to a break point
@@ -125,7 +125,7 @@ void AsteroidsRunner::RunnerThread(void)
 
 			// execute the next instruction
          uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
-         tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
+         asteroidsBus.IncrementClockCycleCount(clockCyclesThisInstruction);
 		}
 
 		processorStatus = "Exited normally";

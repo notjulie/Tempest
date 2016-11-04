@@ -6,6 +6,7 @@
 #include "AsteroidsBus.h"
 
 class AbstractTempestEnvironment;
+class AsteroidsVectorInterpreter;
 
 namespace std {
    class thread;
@@ -62,9 +63,9 @@ public:
 	uint8_t  GetStackPointer(void) { return cpu6502.GetS(); }
 
 	// simple dispatches to the TempestBus object
-   uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
-   void     GetVectorData(VectorData &vectorData) { tempestBus.GetVectorData(vectorData); }
-   void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
+   uint64_t GetTotalClockCycles(void) { return asteroidsBus.GetTotalClockCycles(); }
+   void     GetVectorData(AsteroidsVectorInterpreter &vectorData) { asteroidsBus.GetVectorData(vectorData); }
+   void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { asteroidsBus.SetTempestIO(tempestSoundIO); }
 
 private:
    void  RegisterHook(uint16_t address, std::function<uint32_t()> hook);
@@ -79,7 +80,7 @@ private:
 	Action   requestedAction;
    int pointsPerBonusLife;
 
-	AsteroidsBus	tempestBus;
+	AsteroidsBus	asteroidsBus;
 	CPU6502		cpu6502;
 
 	std::string processorStatus;
