@@ -7,7 +7,7 @@
 #include "TempestCPU/AbstractTempestEnvironment.h"
 #include "TempestCPU/TempestException.h"
 //#include "TempestMemoryMap.h"
-//#include "TempestROMS.h"
+#include "AsteroidsROMs.h"
 
 #include "AsteroidsBus.h"
 
@@ -218,6 +218,18 @@ void AsteroidsBus::HandleTick250Hz(void)
 
 void AsteroidsBus::ConfigureAddressSpace(void)
 {
+   // burn all of our ROMs
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0x5000 + offset), ROM035127_01[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0x7800 + offset), ROM035143_01[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0x7000 + offset), ROM035144_01[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0x6800 + offset), ROM035145_01[offset]);
+   for (uint16_t offset = 0; offset < 0x800; ++offset)
+      ConfigureAddressAsROM((uint16_t)(0xF800 + offset), ROM035143_01[offset]);
+
 #if 0
    // burn all of our ROMs
    for (uint16_t offset = 0; offset < 0x800; ++offset)
