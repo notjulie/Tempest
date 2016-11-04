@@ -131,7 +131,14 @@ void AsteroidsBus::ConfigureAddressSpace(void)
       ConfigureAddressAsRAM(address);
 
    // configure memory mapped I/O
+   ConfigureAddressAsROM(0x2002, 0x00); // vector HALT
+   ConfigureAddressAsROM(0x2006, 0x00); // slam switch
    ConfigureAddressAsROM(0x2007, 0x00); // force the self-test switch off
+   ConfigureAddressAsROM(0x2400, 0x00); // left coin switch
+   ConfigureAddressAsROM(0x2401, 0x00); // center coin switch
+   ConfigureAddressAsROM(0x2402, 0x00); // right coin switch
+   ConfigureAddressAsROM(0x2403, 0x00); // one player start
+   ConfigureAddressAsROM(0x2404, 0x00); // two player start
    ConfigureAddressAsROM(0x2800, 0x00); // sw 8&7, 0 = free play
    ConfigureAddressAsROM(0x2801, 0x00); // sw 6&5, coin options
 
@@ -139,7 +146,9 @@ void AsteroidsBus::ConfigureAddressSpace(void)
    // followed by checking the carry... tolerate and ignore
    ConfigureAddress(0x2802, 0x00, ReadAddressNormal, WriteAddressNoOp); // sw 4&3, 0 = 4 ships
    ConfigureAddressAsROM(0x2803, 0x02); // sw 2&1, 2 = french
+   ConfigureAddressAsRAM(0x3000); // vector GO
    ConfigureAddress(0x3200, 0, ReadAddressInvalid, Write3200);
+   ConfigureAddressAsRAM(0x3400); // watchdog clear
    ConfigureAddress(0x3600, 0, ReadAddressInvalid, WriteExplosionOutput);
    ConfigureAddress(0x3A00, 0, ReadAddressInvalid, WriteThumpOutput);
    ConfigureAddress(0x3C00, 0, ReadAddressInvalid, WriteSaucerSoundEnable);
