@@ -16,7 +16,7 @@ CPU6502::CPU6502(AbstractBus *_bus)
    bus = _bus;
 }
 
-void CPU6502::IRQ(void)
+void CPU6502::EnterISR(uint16_t interruptVectorAddress)
 {
 	// push the current PC
 	Push((uint8_t)(PC >> 8));
@@ -29,7 +29,7 @@ void CPU6502::IRQ(void)
 	P.I = true;
 
 	// jump to the ISR
-	PC = GetU16At(IRQ_VECTOR_ADDRESS);
+   PC = GetU16At(interruptVectorAddress);
 }
 
 void CPU6502::Reset(void)
@@ -59,9 +59,20 @@ void CPU6502::Run(void)
 
 uint8_t CPU6502::SingleStep(void)
 {
-   // check for IRQ
-   if (!P.I && bus->IsIRQ())
-      IRQ();
+   // check for interrupts
+   if (!inNMI)
+   {
+      if (bus->IsNMI())
+      {
+         bus->ClearNMI();
+         inNMI = true;
+         EnterISR(NMI_VECTOR_ADDRESS);
+      }
+      else if (!P.I && bus->IsIRQ())
+      {
+         EnterISR(IRQ_VECTOR_ADDRESS);
+      }
+   }
 
    // load the instruction
 	uint16_t instructionAddress = PC;
@@ -393,7 +404,7 @@ void CPU6502::BPL(void)
 void CPU6502::BRK(void)
 {
    PC++;
-   IRQ();
+   EnterISR(IRQ_VECTOR_ADDRESS);
 }
 
 void CPU6502::BVC(void)
@@ -522,6 +533,7 @@ void CPU6502::RTI(void)
 {
 	P.FromByte(Pull());
 	PC = (uint16_t)(Pull() + 256 * Pull());
+   inNMI = false;
 }
 
 void CPU6502::RTS(void)

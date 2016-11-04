@@ -43,7 +43,7 @@ public:
    static uint8_t ToBCD(uint8_t value);
 
 private:
-   void		IRQ(void);
+   void		EnterISR(uint16_t interruptVectorAddress);
    void     Compare(uint8_t a, uint8_t b);
    uint8_t  DoASL(uint8_t value);
    uint8_t  DoLSR(uint8_t value);
@@ -106,6 +106,8 @@ private:
    uint8_t  Y;
    ProcessorStatusWord  P;
    uint16_t PC;
+
+   bool inNMI = false;
 };
 
 #ifdef _WIN32

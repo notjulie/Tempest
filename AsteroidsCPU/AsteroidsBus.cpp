@@ -21,7 +21,7 @@ AsteroidsBus::AsteroidsBus(AbstractTempestEnvironment *_environment)
    vectorDataSnapshotMutex = new std::mutex();
 
    // install our timers
-   //StartTimer(250, &Tick6KHz);
+   StartTimer(4000, &SetNMI);
    //StartTimer(6000, &Tick250Hz);
 
    // configure address space

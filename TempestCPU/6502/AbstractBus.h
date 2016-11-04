@@ -25,6 +25,9 @@ public:
    uint64_t GetTotalClockCycles(void);
    void IncrementClockCycleCount(uint32_t clockCycles);
    bool IsIRQ(void) { return irq; }
+   bool IsNMI(void) { return nmi; }
+   void SetNMI(void) { this->nmi = true; }
+   void ClearNMI(void) { nmi = false; }
 
 protected:
    typedef uint8_t ReadFunction(AbstractBus *bus, uint16_t address);
@@ -67,6 +70,7 @@ private:
 
 private:
    bool irq = false;
+   bool nmi = false;
    uint64_t totalClockCycles = 0;
    uint64_t nextTimerTime = (uint64_t)(int64_t)-1;
    std::vector<BusTimer> timers;
