@@ -64,7 +64,6 @@ public:
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
    void     GetVectorData(VectorData &vectorData) { tempestBus.GetVectorData(vectorData); }
-   void     SetDemoMode(void);
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
 
 private:

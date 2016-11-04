@@ -17,24 +17,12 @@ AsteroidsBus::AsteroidsBus(AbstractTempestEnvironment *_environment)
    // copy parameters
    environment = _environment;
 
-   // clear
-   selfTest = false;
-   clock3KHzIsHigh = false;
-   slam = false;
-   tempestSoundIO = NULL;
-   lastPlayer2ButtonState = false;
-   lastPlayer2ButtonDownTime = 0;
-   lastWatchdogTime = 0;
-   lastVectorRAMWrite = 0;
-   vectorGoRequested = false;
-   vectorRAMReady = false;
-
    // allocate
    vectorDataSnapshotMutex = new std::mutex();
 
    // install our timers
-   StartTimer(250, &Tick6KHz);
-   StartTimer(6000, &Tick250Hz);
+   //StartTimer(250, &Tick6KHz);
+   //StartTimer(6000, &Tick250Hz);
 
    // configure address space
    ConfigureAddressSpace();
@@ -46,116 +34,16 @@ AsteroidsBus::~AsteroidsBus(void)
 }
 
 
-void AsteroidsBus::ClearWatchdog(void)
-{
-   //TODO... implement
-   SetIRQ(false);
-   lastWatchdogTime = GetTotalClockCycles();
-}
-
-
-uint8_t AsteroidsBus::ReadIOByte(uint16_t address)
-{
-   //TODO
-
-   // miscellaneous IO bytes
-   switch (address)
-   {
-   case 0x0C00:
-   {
-      uint8_t result = 0;
-      if (clock3KHzIsHigh)
-         result |= 0x80;
-      // the Tempest app works just fine if it always thinks the vector
-      // state machine is halted
-      result |= 0x40;
-      if (!selfTest)
-         result |= 0x10;
-      if (!slam)
-         result |= 0x08;
-      return result;
-   }
-
-   case 0x0D00:
-      // DIP switch N13
-      if (demoMode)
-         return 0x42;
-
-      // our default is low two bits==2 --> free play
-      return 0x02;
-
-   case 0x0E00:
-      // DIP switch L12
-      return 0;
-
-   case 0x4000:
-      //TODO register with the coin inputs
-      return 0;
-
-   default:
-   {
-      char str[200];
-      sprintf(str, "ReadIOByte; invalid address: %04X", address);
-      throw TempestException(str);
-   }
-   }
-}
-
-
 void AsteroidsBus::GetVectorData(VectorData &vectorData)
 {
-   std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+/*   std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
 
    // if we don't have a valid snapshot yet just set the first instruction to be
    // a HALT instruction
    if (!vectorRAMReady)
       vectorData.WriteVectorRAM(1, 0x20);
    else
-      vectorData = vectorDataSnapshot;
-}
-
-
-void AsteroidsBus::WriteIOByte(uint16_t address, uint8_t value)
-{
-   //TODO
-   // miscellaneous other cases
-   switch (address)
-   {
-   case 0x4000:
-      // video invert register
-      break;
-
-   case 0x4800:
-      // vector state machine go
-      vectorGoRequested = true;
-      break;
-
-   case 0x5000:
-      // watchdog timer clear, and this is also what clears the IRQ
-      ClearWatchdog();
-      break;
-
-   case 0x5800:
-      // vector state machine reset... not needed
-      break;
-
-   case 0x6040:
-      // doc says mathbox status, readonly, but the code writes to it
-      break;
-
-   case 0x60E0:
-      // register for flashing the start buttons
-      tempestSoundIO->SetButtonLED(ONE_PLAYER_BUTTON, (value & 1) != 0);
-      tempestSoundIO->SetButtonLED(TWO_PLAYER_BUTTON, (value & 2) != 0);
-      break;
-
-   default:
-   {
-      char str[200];
-      sprintf(str, "WriteIOByte; invalid address: %04X", address);
-      throw TempestException(str);
-   }
-   }
+      vectorData = vectorDataSnapshot;*/
 }
 
 
@@ -165,7 +53,7 @@ void AsteroidsBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
 }
 
 
-void AsteroidsBus::Tick6KHz(AbstractBus *bus)
+/*void AsteroidsBus::Tick6KHz(AbstractBus *bus)
 {
    AsteroidsBus *pThis = static_cast<AsteroidsBus *>(bus);
 
@@ -213,7 +101,7 @@ void AsteroidsBus::HandleTick250Hz(void)
 
    // generate an IRQ
    SetIRQ(true);
-}
+}*/
 
 
 void AsteroidsBus::ConfigureAddressSpace(void)
@@ -229,6 +117,14 @@ void AsteroidsBus::ConfigureAddressSpace(void)
       ConfigureAddressAsROM((uint16_t)(0x6800 + offset), ROM035145_01[offset]);
    for (uint16_t offset = 0; offset < 0x800; ++offset)
       ConfigureAddressAsROM((uint16_t)(0xF800 + offset), ROM035143_01[offset]);
+
+   // configure zero page RAM and the stack
+   for (uint16_t address=0x0000; address<0x0200; ++address)
+      ConfigureAddressAsRAM(address);
+
+   // configure our banked pages
+   for (uint16_t address=0x0200; address<0x0400; ++address)
+      ConfigureAddress(address, 0, ReadBankedRAM, WriteBankedRAM);
 
 #if 0
    // burn all of our ROMs
@@ -323,25 +219,31 @@ void AsteroidsBus::ConfigureAddressSpace(void)
 }
 
 
-uint8_t AsteroidsBus::ReadIO(AbstractBus *bus, uint16_t address)
-{
-   AsteroidsBus *tempestBus = static_cast<AsteroidsBus *>(bus);
-   return tempestBus->ReadIOByte(address);
-}
-
 uint8_t AsteroidsBus::ReadVectorRAM(AbstractBus *bus, uint16_t address)
 {
    AsteroidsBus *tempestBus = static_cast<AsteroidsBus *>(bus);
    return tempestBus->vectorData.GetAt((uint16_t)(address - VECTOR_RAM_BASE));
 }
 
-void AsteroidsBus::WriteIO(AbstractBus *bus, uint16_t address, uint8_t value)
+uint8_t AsteroidsBus::ReadBankedRAM(AbstractBus *bus, uint16_t address)
 {
-   AsteroidsBus *tempestBus = static_cast<AsteroidsBus *>(bus);
-   tempestBus->WriteIOByte(address, value);
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   address &= 0x1FF;
+   if (asteroidsBus->ramSel)
+      address ^= 0x100;
+   return asteroidsBus->bankedRAM[address];
 }
 
-void AsteroidsBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
+void AsteroidsBus::WriteBankedRAM(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   address &= 0x1FF;
+   if (asteroidsBus->ramSel)
+      address ^= 0x100;
+   asteroidsBus->bankedRAM[address] = value;
+}
+
+/*void AsteroidsBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
 {
    AsteroidsBus *tempestBus = static_cast<AsteroidsBus *>(bus);
 
@@ -361,5 +263,5 @@ void AsteroidsBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t va
    }
 
    tempestBus->vectorData.WriteVectorRAM((uint16_t)(address - VECTOR_RAM_BASE), value);
-}
+}*/
 

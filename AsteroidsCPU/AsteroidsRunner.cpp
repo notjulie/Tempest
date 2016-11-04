@@ -55,15 +55,6 @@ void AsteroidsRunner::RegisterHook(uint16_t address, std::function<uint32_t()> h
    addressFlags[address] |= HOOK;
 }
 
-void AsteroidsRunner::SetDemoMode(void)
-{
-   // tell the bus to set the proper DIP switches
-   tempestBus.SetDemoMode();
-
-   // force a reset
-   resetRequested = true;
-}
-
 void AsteroidsRunner::Start(void)
 {
 	// create the thread is all
@@ -133,16 +124,8 @@ void AsteroidsRunner::RunnerThread(void)
          }
 
 			// execute the next instruction
-         if (tempestBus.IsPaused())
-         {
-            tempestBus.ClearWatchdog();
-            tempestBus.IncrementClockCycleCount(10);
-         }
-         else
-         {
-            uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
-            tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
-         }
+         uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
+         tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
 		}
 
 		processorStatus = "Exited normally";
