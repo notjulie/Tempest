@@ -50,6 +50,7 @@ private:
    uint8_t  DoROL(uint8_t value);
    uint8_t  DoROR(uint8_t value);
    uint16_t GetAbsoluteAddress(void);
+   uint16_t GetIndirectXAddress(void);
    uint16_t GetIndirectYAddress(void);
    uint16_t GetResetVector(void) const;
    uint16_t GetU16At(uint16_t address) const;

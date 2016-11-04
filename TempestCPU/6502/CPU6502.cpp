@@ -153,6 +153,7 @@ uint8_t CPU6502::SingleStep(void)
       case 0x9A: S = X; SetNZ(S); return 2; //TXS
 		case 0x9D: STA((uint16_t)(GetAbsoluteAddress() + X)); return 5;
       case 0xA0: LDY(PC++); return 2;
+      case 0xA1: LDA(GetIndirectXAddress()); return 6;
       case 0xA2: LDX(PC++); return 2;
       case 0xA4: LDY(bus->ReadByte(PC++)); return 3;
       case 0xA5: LDA(bus->ReadByte(PC++)); return 3;
@@ -270,10 +271,16 @@ uint16_t CPU6502::GetAbsoluteAddress(void)
    return result;
 }
 
+uint16_t CPU6502::GetIndirectXAddress(void)
+{
+   uint8_t zp = (uint8_t)(bus->ReadByte(PC++) + X);
+   return (uint16_t)(bus->ReadByte(zp) + 256 * bus->ReadByte((uint16_t)(zp + 1)));
+}
+
 uint16_t CPU6502::GetIndirectYAddress(void)
 {
    uint16_t zp = bus->ReadByte(PC++);
-	return (uint16_t)(bus->ReadByte(zp) + 256 * bus->ReadByte((uint16_t)(zp + 1)) + Y);
+   return (uint16_t)(bus->ReadByte(zp) + 256 * bus->ReadByte((uint16_t)(zp + 1)) + Y);
 }
 
 uint8_t CPU6502::Pull(void)
