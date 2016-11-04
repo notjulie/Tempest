@@ -126,6 +126,29 @@ void AsteroidsBus::ConfigureAddressSpace(void)
    for (uint16_t address=0x0200; address<0x0400; ++address)
       ConfigureAddress(address, 0, ReadBankedRAM, WriteBankedRAM);
 
+   // configure vector RAM
+   for (uint16_t address = 0x4000; address<0x4800; ++address)
+      ConfigureAddressAsRAM(address);
+
+   // configure memory mapped I/O
+   ConfigureAddressAsROM(0x2007, 0x00); // force the self-test switch off
+   ConfigureAddressAsROM(0x2800, 0x00); // sw 8&7, 0 = free play
+   ConfigureAddressAsROM(0x2801, 0x00); // sw 6&5, coin options
+
+   // it actually writes to 2802, but that's just because it does a rotate
+   // followed by checking the carry... tolerate and ignore
+   ConfigureAddress(0x2802, 0x00, ReadAddressNormal, WriteAddressNoOp); // sw 4&3, 0 = 4 ships
+   ConfigureAddressAsROM(0x2803, 0x02); // sw 2&1, 2 = french
+   ConfigureAddress(0x3200, 0, ReadAddressInvalid, Write3200);
+   ConfigureAddress(0x3600, 0, ReadAddressInvalid, WriteExplosionOutput);
+   ConfigureAddress(0x3A00, 0, ReadAddressInvalid, WriteThumpOutput);
+   ConfigureAddress(0x3C00, 0, ReadAddressInvalid, WriteSaucerSoundEnable);
+   ConfigureAddress(0x3C01, 0, ReadAddressInvalid, WriteSaucerFireSound);
+   ConfigureAddress(0x3C02, 0, ReadAddressInvalid, WriteSaucerSoundSelect);
+   ConfigureAddress(0x3C03, 0, ReadAddressInvalid, WriteThrustSoundEnable);
+   ConfigureAddress(0x3C04, 0, ReadAddressInvalid, WriteShipFireSound);
+   ConfigureAddress(0x3C05, 0, ReadAddressInvalid, WriteLifeSound);
+
 #if 0
    // burn all of our ROMs
    for (uint16_t offset = 0; offset < 0x800; ++offset)
@@ -241,6 +264,14 @@ void AsteroidsBus::WriteBankedRAM(AbstractBus *bus, uint16_t address, uint8_t va
    if (asteroidsBus->ramSel)
       address ^= 0x100;
    asteroidsBus->bankedRAM[address] = value;
+}
+
+void AsteroidsBus::Write3200(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   asteroidsBus->tempestSoundIO->SetButtonLED(ONE_PLAYER_BUTTON, (value & 2) != 0);
+   asteroidsBus->tempestSoundIO->SetButtonLED(TWO_PLAYER_BUTTON, (value & 1) != 0);
+   asteroidsBus->ramSel = (value & 4) != 0;
 }
 
 /*void AsteroidsBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
