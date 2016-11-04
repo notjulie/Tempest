@@ -22,7 +22,6 @@ AsteroidsBus::AsteroidsBus(AbstractTempestEnvironment *_environment)
 
    // install our timers
    StartTimer(4000, &SetNMI);
-   //StartTimer(6000, &Tick250Hz);
 
    // configure address space
    ConfigureAddressSpace();
@@ -52,6 +51,16 @@ void AsteroidsBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
    tempestSoundIO = _tempestSoundIO;
 }
 
+
+void AsteroidsBus::SetNMI(AbstractBus *bus)
+{
+   // generate the NMI
+   bus->SetNMI();
+
+   // this happens every 4ms so it's a good place to synch up with real time
+   AsteroidsBus *pThis = static_cast<AsteroidsBus *>(bus);
+   pThis->environment->SynchronizeClock(pThis->GetTotalClockCycles() / 1500);
+}
 
 /*void AsteroidsBus::Tick6KHz(AbstractBus *bus)
 {
