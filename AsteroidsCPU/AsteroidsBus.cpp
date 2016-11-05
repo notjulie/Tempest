@@ -18,6 +18,9 @@ AsteroidsBus::AsteroidsBus(AbstractTempestEnvironment *_environment)
    // copy parameters
    environment = _environment;
 
+   // clear
+   memset(this->vectorRAM, 0, sizeof(this->vectorRAM));
+
    // allocate
    vectorDataSnapshotMutex = new std::mutex();
 
