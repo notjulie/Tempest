@@ -6,6 +6,7 @@
 
 #include "AsteroidsVectorInterpreter.h"
 
+static int ShortVectorLength(int code);
 
 void AsteroidsVectorInterpreter::SetVectorRAM(const void *vectorRAM)
 {
@@ -52,19 +53,30 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
       return false;
 
    uint8_t opByte = GetAt(1);
-   switch (opByte >> 4)
+   uint8_t opCode = opByte >> 4;
+   switch (opCode)
    {
    case 0x8:
    case 0x9:
    {
       // LDRAW
-      int dx = (GetAt(2) + 256 * GetAt(3)) & 0x0FFF;
-      if (dx & 0x800)
-         dx = -0x800 + (dx & ~0x800);
-      int dy = (GetAt(0) + 256 * GetAt(1)) & 0x0FFF;
-      if (dy & 0x800)
-         dy = -0x800 + (dy & ~0x800);
+      int rawX = (GetAt(2) + 256 * GetAt(3)) & 0x0FFF;
+      int rawY = (GetAt(0) + 256 * GetAt(1)) & 0x0FFF;
+
+      int dx = (GetAt(2) + 256 * GetAt(3)) & 0x07FF;
+      if (dx & 0x400)
+         dx = -(dx & ~0x400);
+      int dy = (GetAt(0) + 256 * GetAt(1)) & 0x07FF;
+      if (dy & 0x400)
+         dy = -(dy & ~0x400);
+
+      int scale = 3;
+      if (opCode == 9)
+         scale = GetAt(3) >> 4;
+      dx = dx * (scale + 1) / 8;
+      dy = dy * (scale + 1) / 8;
       Draw(dx, dy);
+
       PC += 4;
       return true;
    }
@@ -72,12 +84,16 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
    case 0xA:
       // go to absolute XY position
       {
-         x = (GetAt(2) + 256 * GetAt(3)) & 0x0FFF;
-         if (x & 0x0800)
-            x = -0x0800 + (x & ~0x0800);
-         y = (GetAt(0) + 256 * GetAt(1)) & 0x0FFF;
-         if (y & 0x0800)
-            y = -0x0800 + (y & ~0x0800);
+         int newX = (GetAt(2) + 256 * GetAt(3)) & 0x07FF;
+         if (newX & 0x400)
+            newX = -(newX & ~0x400);
+         int newY = (GetAt(0) + 256 * GetAt(1)) & 0x07FF;
+         if (newY & 0x400)
+            newY = -(newY & ~0x400);
+
+         x = (float)newX;
+         y = (float)newY;
+
          PC += 4;
          return true;
       }
@@ -109,18 +125,24 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
       return PC != 0;
 
    case 0xF:
+      // short vector draw
       {
-         int dx = GetAt(0) & 0x07;
-         if ((GetAt(0) & 0x08) != 0)
-            dx = -8 + dx;
-         int dy = GetAt(1) & 0x07;
-         if ((GetAt(1) & 0x08) != 0)
-            dy = -8 + dy;
-         Draw(dx, dy);
-         PC += 2;
-         return true;
-      }
+         int raw1 = GetAt(1);
+         int raw0 = GetAt(0);
 
+         int dx = (GetAt(0) & 0x0F);
+         if (dx & 0x8)
+            dx = -(dx & ~0x8);
+         int dy = (GetAt(1) & 0x0F);
+         if (dy & 0x8)
+            dy = -(dy & ~0x8);
+
+         int intensity = GetAt(0) >> 4;
+         if (intensity != 0)
+            Draw(dx, dy);
+         PC += 2;
+      }
+      return true;
 
    case 0x0:
    case 0x1:
@@ -144,8 +166,8 @@ uint8_t AsteroidsVectorInterpreter::GetAt(uint16_t pcOffset)
    uint16_t address = PC + pcOffset;
    if (address>=0 && address < 0x800)
       return vectorRAM[address];
-   else if (address>=0x1000 && address<0x2000)
-      return ROM035127_02[address - 0x1000];
+   else if (address>=0x800 && address<0x1800)
+      return ROM035127_02[address - 0x800];
    else
       throw TempestException("AsteroidsVectorInterpreter bad address");
 }
@@ -153,15 +175,28 @@ uint8_t AsteroidsVectorInterpreter::GetAt(uint16_t pcOffset)
 
 void AsteroidsVectorInterpreter::Draw(int dx, int dy)
 {
-   int scale = 50;
+   int scale = 64;
    SimpleVector vector;
-   vector.startX = scale*x;
-   vector.startY = scale*y;
+   vector.startX = (int16_t)(-32768 + scale*x);
+   vector.startY = (int16_t)(-32768 + scale*y);
    x += dx;
    y += dy;
-   vector.endX = scale*x;
-   vector.endY = scale*y;
+   vector.endX = (int16_t)(-32768 + scale*x);
+   vector.endY = (int16_t)(-32768 + scale*y);
    vector.color = 1;
    vectors.push_back(vector);
 }
 
+static int ShortVectorLength(int code)
+{
+   int result = 0;
+   if (code & 8)
+      result += 2;
+   if (code & 4)
+      result += 4;
+   if (code & 2)
+      result += 8;
+   if (code & 1)
+      result = -16 + result;
+   return result;
+}

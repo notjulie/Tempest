@@ -137,9 +137,10 @@ void AsteroidsBus::ConfigureAddressSpace(void)
       ConfigureAddress(address, 0, ReadVectorRAM, WriteVectorRAM);
 
    // configure memory mapped I/O
+   ConfigureAddress(0x2001, 0, Read3KHzClock, WriteAddressInvalid);
    ConfigureAddressAsROM(0x2002, 0x00); // vector HALT
    ConfigureAddressAsROM(0x2006, 0x00); // slam switch
-   ConfigureAddressAsROM(0x2007, 0x00); // force the self-test switch off
+   ConfigureAddressAsROM(0x2007, 0x80); // force the self-test switch off
    ConfigureAddressAsROM(0x2400, 0x00); // left coin switch
    ConfigureAddressAsROM(0x2401, 0x00); // center coin switch
    ConfigureAddressAsROM(0x2402, 0x00); // right coin switch
@@ -165,6 +166,15 @@ void AsteroidsBus::ConfigureAddressSpace(void)
    ConfigureAddress(0x3C05, 0, ReadAddressInvalid, WriteLifeSound);
 }
 
+
+uint8_t AsteroidsBus::Read3KHzClock(AbstractBus *bus, uint16_t address)
+{
+   uint64_t clockHalfCycleCount = bus->GetTotalClockCycles() / 250;
+   if (clockHalfCycleCount & 1)
+      return 0x80;
+   else
+      return 0;
+}
 
 uint8_t AsteroidsBus::ReadVectorRAM(AbstractBus *bus, uint16_t address)
 {

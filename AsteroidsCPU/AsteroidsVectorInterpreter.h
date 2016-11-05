@@ -23,9 +23,10 @@ private:
    uint16_t PC = 0;
    int stackIndex = 0;
    bool isHalt = false;
-   int x, y;
+   float x, y;
    uint16_t stack[100];
    std::vector<SimpleVector> vectors;
+   int scale = 0;
 };
 
 #endif
