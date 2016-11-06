@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="Disassembly.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="Disassembly.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

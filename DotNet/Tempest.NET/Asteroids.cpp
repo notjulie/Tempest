@@ -58,16 +58,20 @@ namespace TempestDotNET {
 
    VectorEnumerator ^Asteroids::GetVectorEnumerator(void)
    {
-      // get the latest vector data
-      AsteroidsVectorInterpreter vectorInterpreter;
-      asteroidsRunner->GetVectorData(vectorInterpreter);
+      std::vector<SimpleVector> vectors;
 
-      // interpret it
-      vectorInterpreter.Interpret();
+      if (asteroidsRunner->HaveVectorData())
+      {
+         // get the latest vector data
+         AsteroidsVectorInterpreter vectorInterpreter;
+         asteroidsRunner->GetVectorData(vectorInterpreter);
+
+         // interpret it
+         vectorInterpreter.Interpret();
+         vectorInterpreter.GetAllVectors(vectors);
+      }
 
       // return the result
-      std::vector<SimpleVector> vectors;
-      vectorInterpreter.GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);
    }
    

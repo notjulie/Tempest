@@ -62,7 +62,8 @@ public:
 	uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
 	uint8_t  GetStackPointer(void) { return cpu6502.GetS(); }
 
-	// simple dispatches to the TempestBus object
+	// simple dispatches to the AsteroidsBus object
+   bool     HaveVectorData(void) { return asteroidsBus.IsVectorGo(); }
    uint64_t GetTotalClockCycles(void) { return asteroidsBus.GetTotalClockCycles(); }
    void     GetVectorData(AsteroidsVectorInterpreter &vectorData) { asteroidsBus.GetVectorData(vectorData); }
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { asteroidsBus.SetTempestIO(tempestSoundIO); }

@@ -166,8 +166,8 @@ uint8_t AsteroidsVectorInterpreter::GetAt(uint16_t pcOffset)
    uint16_t address = PC + pcOffset;
    if (address>=0 && address < 0x800)
       return vectorRAM[address];
-   else if (address>=0x800 && address<0x1800)
-      return ROM035127_02[address - 0x800];
+   else if (address>=0x1000 && address<0x2000)
+      return ROM035127_02[address - 0x1000];
    else
       throw TempestException("AsteroidsVectorInterpreter bad address");
 }

@@ -51,63 +51,15 @@ void AsteroidsBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
 
 void AsteroidsBus::SetNMI(AbstractBus *bus)
 {
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+
    // generate the NMI
-   bus->SetNMI();
+   if (!asteroidsBus->selfTest)
+      bus->SetNMI();
 
    // this happens every 4ms so it's a good place to synch up with real time
-   AsteroidsBus *pThis = static_cast<AsteroidsBus *>(bus);
-   pThis->environment->SynchronizeClock(pThis->GetTotalClockCycles() / 1500);
+   asteroidsBus->environment->SynchronizeClock(bus->GetTotalClockCycles() / 1500);
 }
-
-/*void AsteroidsBus::Tick6KHz(AbstractBus *bus)
-{
-   AsteroidsBus *pThis = static_cast<AsteroidsBus *>(bus);
-
-   // toggle the 3 KHz clock
-   pThis->clock3KHzIsHigh = !pThis->clock3KHzIsHigh;
-
-   // give the sound output its heartbeat
-   pThis->tempestSoundIO->SetTime(pThis->GetTotalClockCycles());
-}
-
-void AsteroidsBus::Tick250Hz(AbstractBus *bus)
-{
-   AsteroidsBus *pThis = static_cast<AsteroidsBus *>(bus);
-   pThis->HandleTick250Hz();
-}
-
-void AsteroidsBus::HandleTick250Hz(void)
-{
-   uint64_t now = GetTotalClockCycles();
-
-   // check the watchdog
-   if (now - lastWatchdogTime > 1500000)
-      throw TempestException("Watchdog timer timeout");
-
-   // check for double tap on player two button
-   bool player2ButtonDown = (tempestSoundIO->GetButtons() & TWO_PLAYER_BUTTON) != 0;
-   if (player2ButtonDown != lastPlayer2ButtonState)
-   {
-      lastPlayer2ButtonState = player2ButtonDown;
-      if (player2ButtonDown)
-      {
-         // if this is a double tap we toggle the paused state
-         if (now - lastPlayer2ButtonDownTime < 500000)
-         {
-            isPaused = !isPaused;
-            if (isPaused)
-               tempestSoundIO->AllSoundOff();
-         }
-         lastPlayer2ButtonDownTime = now;
-      }
-   }
-
-   // synchronize the CPU with the realtime clock
-   environment->SynchronizeClock(now / 1500);
-
-   // generate an IRQ
-   SetIRQ(true);
-}*/
 
 
 void AsteroidsBus::ConfigureAddressSpace(void)
@@ -137,23 +89,29 @@ void AsteroidsBus::ConfigureAddressSpace(void)
       ConfigureAddress(address, 0, ReadVectorRAM, WriteVectorRAM);
 
    // configure memory mapped I/O
+   // Note that some of these are actually read-only but tolerate writes
+   // as a no-op, because the software queries them with shift instructions
+   // followed by checking the carry... tolerate and ignore
    ConfigureAddress(0x2001, 0, Read3KHzClock, WriteAddressInvalid);
    ConfigureAddressAsROM(0x2002, 0x00); // vector HALT
-   ConfigureAddressAsROM(0x2006, 0x00); // slam switch
-   ConfigureAddressAsROM(0x2007, 0x80); // force the self-test switch off
-   ConfigureAddressAsROM(0x2400, 0x00); // left coin switch
-   ConfigureAddressAsROM(0x2401, 0x00); // center coin switch
-   ConfigureAddressAsROM(0x2402, 0x00); // right coin switch
-   ConfigureAddressAsROM(0x2403, 0x00); // one player start
-   ConfigureAddressAsROM(0x2404, 0x00); // two player start
+   ConfigureAddress(0x2003, 0x00, ReadHyperspaceButton, WriteAddressNoOp); // hyperspace button
+   ConfigureAddress(0x2004, 0x00, ReadFireButton, WriteAddressNoOp); // fire button
+   ConfigureAddress(0x2005, 0x00, ReadAddressNormal, WriteAddressNoOp); // diagnostic step switch switch
+   ConfigureAddress(0x2006, 0x00, ReadAddressNormal, WriteAddressNoOp); // slam switch
+   ConfigureAddress(0x2007, 0, ReadSelfTestSwitch, WriteAddressNoOp); // self-test switch
+   ConfigureAddress(0x2400, 0x00, ReadAddressNormal, WriteAddressNoOp); // left coin switch
+   ConfigureAddress(0x2401, 0x00, ReadAddressNormal, WriteAddressNoOp); // center coin switch
+   ConfigureAddress(0x2402, 0x00, ReadAddressNormal, WriteAddressNoOp); // right coin switch
+   ConfigureAddress(0x2403, 0x00, ReadOnePlayerButton, WriteAddressNoOp); // one player start
+   ConfigureAddress(0x2404, 0x00, ReadTwoPlayerButton, WriteAddressNoOp); // two player start
+   ConfigureAddress(0x2405, 0x00, ReadThrustButton, WriteAddressNoOp); // thrust
+   ConfigureAddress(0x2406, 0x00, ReadRotateRightButton, WriteAddressNoOp); // rotate right button
+   ConfigureAddress(0x2407, 0x00, ReadRotateLeftButton, WriteAddressNoOp); // rotate left button
    ConfigureAddressAsROM(0x2800, 0x00); // sw 8&7, 0 = free play
    ConfigureAddressAsROM(0x2801, 0x00); // sw 6&5, coin options
-
-   // it actually writes to 2802, but that's just because it does a rotate
-   // followed by checking the carry... tolerate and ignore
    ConfigureAddress(0x2802, 0x00, ReadAddressNormal, WriteAddressNoOp); // sw 4&3, 0 = 4 ships
    ConfigureAddressAsROM(0x2803, 0x02); // sw 2&1, 2 = french
-   ConfigureAddressAsRAM(0x3000); // vector GO
+   ConfigureAddress(0x3000, 0, ReadAddressInvalid, WriteVectorGO); // vector GO
    ConfigureAddress(0x3200, 0, ReadAddressInvalid, Write3200);
    ConfigureAddressAsRAM(0x3400); // watchdog clear
    ConfigureAddress(0x3600, 0, ReadAddressInvalid, WriteExplosionOutput);
@@ -174,6 +132,12 @@ uint8_t AsteroidsBus::Read3KHzClock(AbstractBus *bus, uint16_t address)
       return 0x80;
    else
       return 0;
+}
+
+uint8_t AsteroidsBus::ReadSelfTestSwitch(AbstractBus *bus, uint16_t address)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   return asteroidsBus->selfTest ? 0x80 : 0;
 }
 
 uint8_t AsteroidsBus::ReadVectorRAM(AbstractBus *bus, uint16_t address)
@@ -214,3 +178,9 @@ void AsteroidsBus::Write3200(AbstractBus *bus, uint16_t address, uint8_t value)
    asteroidsBus->ramSel = (value & 4) != 0;
 }
 
+
+void AsteroidsBus::WriteVectorGO(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   asteroidsBus->vectorGo = true;
+}
