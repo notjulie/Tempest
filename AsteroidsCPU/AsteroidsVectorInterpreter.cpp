@@ -31,6 +31,8 @@ void AsteroidsVectorInterpreter::GetAllVectors(std::vector<SimpleVector> &vector
    vectors = this->vectors;
 }
 
+static int lastJSR;
+
 bool AsteroidsVectorInterpreter::SingleStep(void)
 {
    // process reset if we have one
@@ -40,6 +42,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
       stackIndex = 0;
       isHalt = true;
       resetRequested = false;
+      scale = 3;
    }
 
    // process go if we have one
@@ -107,6 +110,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
       // JSR
       stack[stackIndex++] = (uint16_t)(PC + 2);
       PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x0FFF));
+      lastJSR = PC;
       return PC != 0;
 
    case 0xD:
@@ -133,11 +137,29 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
          int dx = (GetAt(0) & 0x07);
          if (dx & 0x4)
             dx = -(dx & ~0x4);
+         else
+            dx += 0;
          int dy = (GetAt(1) & 0x07);
          if (dy & 0x4)
             dy = -(dy & ~0x4);
+         else
+            dy += 0;
 
-         Draw(dx * 10, dy * 10, GetAt(0) >> 4);
+         if (dx == dy)
+            dx = dy;
+
+         int scale = 1;
+         if (raw1 & 0x08)
+            scale *= 2;
+         if (raw0 & 0x08)
+            scale *= 4;
+
+         int scaleMultiplier = 4;
+         uint8_t intensity = GetAt(0) >> 4;
+         bool curiousBit = (raw0 & 0x80) != 0;
+
+
+         Draw(dx * scaleMultiplier * (scale), dy * scaleMultiplier * (scale), intensity);
          PC += 2;
       }
       return true;
@@ -151,6 +173,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
    case 0x6:
    case 0x7:
       // I think these are scale commands, but I'm not sure
+      scale = opCode;
       PC += 2;
       return true;
 
