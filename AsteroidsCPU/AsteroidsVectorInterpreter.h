@@ -12,7 +12,7 @@ public:
    void GetAllVectors(std::vector<SimpleVector> &vectors);
 
 private:
-   void Draw(int dx, int dy);
+   void Draw(int dx, int dy, uint8_t intensity);
    bool SingleStep(void);
    uint8_t GetAt(uint16_t offsetFromPC);
 

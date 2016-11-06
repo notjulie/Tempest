@@ -75,7 +75,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
          scale = GetAt(3) >> 4;
       dx = dx * (scale + 1) / 8;
       dy = dy * (scale + 1) / 8;
-      Draw(dx, dy);
+      Draw(dx, dy, 7);
 
       PC += 4;
       return true;
@@ -130,16 +130,14 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
          int raw1 = GetAt(1);
          int raw0 = GetAt(0);
 
-         int dx = (GetAt(0) & 0x0F);
-         if (dx & 0x8)
-            dx = -(dx & ~0x8);
-         int dy = (GetAt(1) & 0x0F);
-         if (dy & 0x8)
-            dy = -(dy & ~0x8);
+         int dx = (GetAt(0) & 0x07);
+         if (dx & 0x4)
+            dx = -(dx & ~0x4);
+         int dy = (GetAt(1) & 0x07);
+         if (dy & 0x4)
+            dy = -(dy & ~0x4);
 
-         int intensity = GetAt(0) >> 4;
-         if (intensity != 0)
-            Draw(dx, dy);
+         Draw(dx * 10, dy * 10, GetAt(0) >> 4);
          PC += 2;
       }
       return true;
@@ -173,7 +171,7 @@ uint8_t AsteroidsVectorInterpreter::GetAt(uint16_t pcOffset)
 }
 
 
-void AsteroidsVectorInterpreter::Draw(int dx, int dy)
+void AsteroidsVectorInterpreter::Draw(int dx, int dy, uint8_t intensity)
 {
    int scale = 64;
    SimpleVector vector;
@@ -184,7 +182,9 @@ void AsteroidsVectorInterpreter::Draw(int dx, int dy)
    vector.endX = (int16_t)(-32768 + scale*x);
    vector.endY = (int16_t)(-32768 + scale*y);
    vector.color = 1;
-   vectors.push_back(vector);
+
+   if (intensity != 0)
+      vectors.push_back(vector);
 }
 
 static int ShortVectorLength(int code)
