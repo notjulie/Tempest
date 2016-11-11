@@ -9,7 +9,8 @@ class LS174
 public:
    LS174(void);
 
-   LogicOutput GetOutput(int n) { return outputs[n-1]; }
+   LogicInput &GetInput(int n) { return inputs[n - 1]; }
+   LogicOutput &GetOutput(int n) { return outputs[n - 1]; }
 
 private:
    LogicSignal clock;

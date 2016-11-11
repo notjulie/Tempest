@@ -4,10 +4,12 @@
 
 #include "TempestIO/Vector/SimpleVector.h"
 
+#include "ANDGate.h"
 #include "LS174.h"
 #include "LS74.h"
 #include "NANDGate.h"
 #include "VSMClock.h"
+#include "VSMROM.h"
 
 
 class AsteroidsVSM {
@@ -34,13 +36,20 @@ private:
    NANDGate nandA8_1;
    NANDGate nandH5;
    Inverter inverterL6;
+   LS174 vsmROMLatch;
+   VSMROM vsmROM;
 
    // logic, not wired yet
+   LogicSignal halt;
+   ANDGate andT0T3;
+   ANDGate andT1T3;
+   ANDGate andT2T3;
+   ANDGate andGoHalt;
+
+   // things that may require some thought
    LogicSignal xCarry;
    LogicSignal yCarry;
-   LS174 vsmROMLatch;
 
-   bool isHalt = true;
    uint16_t dvy = 0;
    bool timer0 = false;
    bool timer1 = false;

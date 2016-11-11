@@ -39,6 +39,23 @@ AsteroidsVSM::AsteroidsVSM(void)
 
    // inverter at L6
    inverterL6.SetSource(vsmROMLatch.GetOutput(4));
+
+   // vsmROMLatch
+   vsmROMLatch.GetInput(2).SetSource(vsmROM.GetOutput(2));
+   vsmROMLatch.GetInput(3).SetSource(vsmROM.GetOutput(4));
+   vsmROMLatch.GetInput(4).SetSource(vsmROM.GetOutput(3));
+   vsmROMLatch.GetInput(5).SetSource(vsmROM.GetOutput(1));
+   vsmROMLatch.GetInput(6).SetSource(vsmROM.GetOutput(halt));
+
+   // vsmROM
+   vsmROM.GetInput(0).SetSource(vsmROMLatch.GetOutput(5));
+   vsmROM.GetInput(1).SetSource(vsmROMLatch.GetOutput(2));
+   vsmROM.GetInput(2).SetSource(vsmROMLatch.GetOutput(4));
+   vsmROM.GetInput(3).SetSource(vsmROMLatch.GetOutput(3));
+   vsmROM.GetInput(4).SetSource(andT0T3);
+   vsmROM.GetInput(5).SetSource(andT1T3);
+   vsmROM.GetInput(6).SetSource(andT2T3);
+   vsmROM.GetInput(7).SetSource(andGoHalt);
 }
 
 void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
@@ -54,14 +71,13 @@ void AsteroidsVSM::SetVectorRAM(const void *vectorRAM)
 void AsteroidsVSM::Interpret(void)
 {
    // clear
-   isHalt = false;
    dvy = 0;
    timer0 = false;
    timer1 = false;
    timer2 = false;
    timer3 = false;
 
-   while (!isHalt)
+   while (!halt)
    {
       clock.Tick();
    }

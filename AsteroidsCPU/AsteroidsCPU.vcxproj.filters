@@ -58,6 +58,12 @@
     <ClInclude Include="LS174.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VSMROM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ANDGate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -91,6 +97,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LS174.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VSMROM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

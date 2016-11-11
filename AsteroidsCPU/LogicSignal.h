@@ -10,6 +10,10 @@
 class LogicOutput 
 {
 public:
+   LogicOutput(void) {}
+   LogicOutput(const LogicOutput &) = delete;
+   LogicOutput &operator=(const LogicOutput &) = delete;
+
    bool Get(void) const { return value; }
    void OnValueChanged(const std::function<void(bool)> &callback) { changeCallbacks.push_back(callback); }
    void OnFallingEdge(const std::function<void()> &callback) { fallingEdgeCallbacks.push_back(callback); }
@@ -36,6 +40,10 @@ private:
 class LogicInput
 {
 public:
+   LogicInput(void) {}
+   LogicInput(const LogicInput &) = delete;
+   LogicInput &operator=(const LogicInput &) = delete;
+
    void SetSource(LogicOutput &source);
    virtual void Set(bool value) = 0;
 };
@@ -49,6 +57,10 @@ public:
 class LogicSignal : public LogicInput, public LogicOutput
 {
 public:
+   LogicSignal(void) {}
+   LogicSignal(const LogicSignal &) = delete;
+   LogicSignal &operator=(const LogicSignal &) = delete;
+
    void Set(bool value);
 };
 
