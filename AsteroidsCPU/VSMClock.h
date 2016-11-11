@@ -9,6 +9,7 @@ public:
    void Tick(void);
 
    LogicOutput &VGCK(void) { return clock1_5MHz; }
+   LogicOutput &C6MHz(void) { return clock6MHz; }
 
 private:
    uint8_t counter = 0;

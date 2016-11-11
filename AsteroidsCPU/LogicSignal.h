@@ -17,7 +17,7 @@ public:
    operator bool() const { return value; }
 
 protected:
-   virtual void Set(bool value);
+   virtual void SetOutputValue(bool value);
 
 private:
    bool value = false;

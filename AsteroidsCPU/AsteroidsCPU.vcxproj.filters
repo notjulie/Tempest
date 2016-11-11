@@ -52,6 +52,9 @@
     <ClInclude Include="NANDGate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Inverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

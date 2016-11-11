@@ -21,12 +21,17 @@ private:
    uint8_t vectorRAM[0x800];
    std::vector<SimpleVector> vectors;
 
+   // constants
    LogicSignal _VMEM;
    LogicSignal VCC;
 
+   // logic, already wired
    VSMClock clock;
    LS74 a7_1;
    LS74 a7_2;
+
+   // logic, not wired yet
+   LS74 d8_1;
    NANDGate nand1;
 
    bool isHalt = true;

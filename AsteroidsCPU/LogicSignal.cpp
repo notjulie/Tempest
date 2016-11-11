@@ -7,7 +7,7 @@
 // ===================== LogicOutput =======================
 // =========================================================
 
-void LogicOutput::Set(bool value)
+void LogicOutput::SetOutputValue(bool value)
 {
    // never mind no-ops
    if (value == this->value)
@@ -44,8 +44,6 @@ void LogicInput::SetSource(LogicOutput &source)
 
 void LogicSignal::Set(bool value)
 {
-   // we have two base classes that declare this, but one is abstract, so
-   // just call the one that isn't
-   LogicOutput::Set(value);
+   LogicOutput::SetOutputValue(value);
 }
 

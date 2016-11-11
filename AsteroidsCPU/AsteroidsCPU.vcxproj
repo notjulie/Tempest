@@ -135,6 +135,7 @@
     <ClInclude Include="AsteroidsRunner.h" />
     <ClInclude Include="AsteroidsVectorInterpreter.h" />
     <ClInclude Include="AsteroidsVSM.h" />
+    <ClInclude Include="Inverter.h" />
     <ClInclude Include="LogicSignal.h" />
     <ClInclude Include="LS74.h" />
     <ClInclude Include="NANDGate.h" />

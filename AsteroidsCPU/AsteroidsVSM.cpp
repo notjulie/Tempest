@@ -11,11 +11,17 @@ AsteroidsVSM::AsteroidsVSM(void)
 
    // wire all our components together
 
-   // D flip flop at A7
+   // D flip flop #1 at A7
    a7_1.D().SetSource(_VMEM);
    a7_1.Clock().SetSource(clock.VGCK());
    a7_1._CLR().SetSource(VCC);
    a7_1._PRE().SetSource(nand1);
+
+   // D flip flop #2 at A7
+   a7_2.D().SetSource(clock.VGCK());
+   a7_1.Clock().SetSource(clock.C6MHz());
+   a7_1._CLR().SetSource(VCC);
+   a7_1._PRE().SetSource(d8_1._Q());
 }
 
 void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
