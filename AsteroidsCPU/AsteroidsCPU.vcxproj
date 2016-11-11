@@ -134,20 +134,29 @@
     <ClInclude Include="AsteroidsROMs.h" />
     <ClInclude Include="AsteroidsRunner.h" />
     <ClInclude Include="AsteroidsVectorInterpreter.h" />
+    <ClInclude Include="AsteroidsVSM.h" />
+    <ClInclude Include="LogicSignal.h" />
+    <ClInclude Include="LS74.h" />
+    <ClInclude Include="NANDGate.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="VSMClock.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsteroidsBus.cpp" />
     <ClCompile Include="AsteroidsROMs.cpp" />
     <ClCompile Include="AsteroidsRunner.cpp" />
     <ClCompile Include="AsteroidsVectorInterpreter.cpp" />
+    <ClCompile Include="AsteroidsVSM.cpp" />
+    <ClCompile Include="LogicSignal.cpp" />
+    <ClCompile Include="LS74.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="VSMClock.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

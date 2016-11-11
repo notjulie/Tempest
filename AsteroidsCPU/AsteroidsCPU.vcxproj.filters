@@ -37,6 +37,21 @@
     <ClInclude Include="AsteroidsVectorInterpreter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AsteroidsVSM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicSignal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VSMClock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LS74.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NANDGate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -52,6 +67,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AsteroidsVectorInterpreter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AsteroidsVSM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VSMClock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicSignal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LS74.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,7 +6,7 @@
 #include "AsteroidsBus.h"
 
 class AbstractTempestEnvironment;
-class AsteroidsVectorInterpreter;
+class AsteroidsVSM;
 
 namespace std {
    class thread;
@@ -65,7 +65,7 @@ public:
 	// simple dispatches to the AsteroidsBus object
    bool     HaveVectorData(void) { return asteroidsBus.IsVectorGo(); }
    uint64_t GetTotalClockCycles(void) { return asteroidsBus.GetTotalClockCycles(); }
-   void     GetVectorData(AsteroidsVectorInterpreter &vectorData) { asteroidsBus.GetVectorData(vectorData); }
+   void     GetVectorData(AsteroidsVSM &vectorData) { asteroidsBus.GetVectorData(vectorData); }
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { asteroidsBus.SetTempestIO(tempestSoundIO); }
 
 private:
