@@ -4,6 +4,7 @@
 
 #include "TempestIO/Vector/SimpleVector.h"
 
+#include "LS174.h"
 #include "LS74.h"
 #include "NANDGate.h"
 #include "VSMClock.h"
@@ -29,10 +30,15 @@ private:
    VSMClock clock;
    LS74 a7_1;
    LS74 a7_2;
+   LS74 d8_1;
+   NANDGate nandA8_1;
+   NANDGate nandH5;
+   Inverter inverterL6;
 
    // logic, not wired yet
-   LS74 d8_1;
-   NANDGate nand1;
+   LogicSignal xCarry;
+   LogicSignal yCarry;
+   LS174 vsmROMLatch;
 
    bool isHalt = true;
    uint16_t dvy = 0;

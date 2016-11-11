@@ -137,6 +137,7 @@
     <ClInclude Include="AsteroidsVSM.h" />
     <ClInclude Include="Inverter.h" />
     <ClInclude Include="LogicSignal.h" />
+    <ClInclude Include="LS174.h" />
     <ClInclude Include="LS74.h" />
     <ClInclude Include="NANDGate.h" />
     <ClInclude Include="stdafx.h" />
@@ -150,7 +151,9 @@
     <ClCompile Include="AsteroidsVectorInterpreter.cpp" />
     <ClCompile Include="AsteroidsVSM.cpp" />
     <ClCompile Include="LogicSignal.cpp" />
+    <ClCompile Include="LS174.cpp" />
     <ClCompile Include="LS74.cpp" />
+    <ClCompile Include="NANDGate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -55,6 +55,9 @@
     <ClInclude Include="Inverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LS174.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -82,6 +85,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LS74.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NANDGate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LS174.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

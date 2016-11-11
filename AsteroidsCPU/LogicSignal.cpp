@@ -18,8 +18,15 @@ void LogicOutput::SetOutputValue(bool value)
    for (auto callback : changeCallbacks)
       callback(value);
    if (value)
+   {
       for (auto callback : risingEdgeCallbacks)
          callback();
+   }
+   else
+   {
+      for (auto callback : fallingEdgeCallbacks)
+         callback();
+   }
 }
 
 

@@ -12,6 +12,7 @@ class LogicOutput
 public:
    bool Get(void) const { return value; }
    void OnValueChanged(const std::function<void(bool)> &callback) { changeCallbacks.push_back(callback); }
+   void OnFallingEdge(const std::function<void()> &callback) { fallingEdgeCallbacks.push_back(callback); }
    void OnRisingEdge(const std::function<void()> &callback) { risingEdgeCallbacks.push_back(callback); }
 
    operator bool() const { return value; }
@@ -22,6 +23,7 @@ protected:
 private:
    bool value = false;
    std::vector<std::function<void(bool)>> changeCallbacks;
+   std::vector<std::function<void()>> fallingEdgeCallbacks;
    std::vector<std::function<void()>> risingEdgeCallbacks;
 };
 
