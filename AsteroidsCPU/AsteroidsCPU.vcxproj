@@ -140,6 +140,7 @@
     <ClInclude Include="LogicSignal.h" />
     <ClInclude Include="LS109.h" />
     <ClInclude Include="LS174.h" />
+    <ClInclude Include="LS42.h" />
     <ClInclude Include="LS74.h" />
     <ClInclude Include="NANDGate.h" />
     <ClInclude Include="ORGate.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="LogicSignal.cpp" />
     <ClCompile Include="LS109.cpp" />
     <ClCompile Include="LS174.cpp" />
+    <ClCompile Include="LS42.cpp" />
     <ClCompile Include="LS74.cpp" />
     <ClCompile Include="NANDGate.cpp" />
     <ClCompile Include="stdafx.cpp">

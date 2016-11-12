@@ -128,6 +128,19 @@ AsteroidsVSM::AsteroidsVSM(void)
    scale2.SetSource(dataLatch3.GetOutput(7));
    scale3.SetSource(dataLatch3.GetOutput(8));
 
+   // vsmDecoder
+   vsmDecoder.A().SetSource(vsmROMLatch.GetOutput(5));
+   vsmDecoder.B().SetSource(vsmROMLatch.GetOutput(2));
+   vsmDecoder.C().SetSource(vsmROMLatch.GetOutput(4));
+   vsmDecoder.D().SetSource(decoderHighBitSource);
+   _dmaPush.SetSource(vsmDecoder.GetOutput(0));
+   _dmaLoad.SetSource(vsmDecoder.GetOutput(1));
+   _goStrobe.SetSource(vsmDecoder.GetOutput(2));
+   _haltStrobe.SetSource(vsmDecoder.GetOutput(3));
+   _latch0.SetSource(vsmDecoder.GetOutput(4));
+   _latch1.SetSource(vsmDecoder.GetOutput(5));
+   _latch2.SetSource(vsmDecoder.GetOutput(6));
+   _latch3.SetSource(vsmDecoder.GetOutput(7));
 }
 
 void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
