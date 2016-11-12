@@ -46,6 +46,8 @@ AsteroidsVSM::AsteroidsVSM(void)
    vsmROMLatch.GetInput(4).SetSource(vsmROM.GetOutput(3));
    vsmROMLatch.GetInput(5).SetSource(vsmROM.GetOutput(1));
    vsmROMLatch.GetInput(6).SetSource(vsmROM.GetOutput(halt));
+   vsmROMLatch.Clock().SetSource(vsmROMLatchClockSource);
+   vsmROMLatch._Clear().SetSource(_reset);
 
    // vsmROM
    vsmROM.GetInput(0).SetSource(vsmROMLatch.GetOutput(5));
@@ -81,6 +83,51 @@ AsteroidsVSM::AsteroidsVSM(void)
    // andGoHalt
    andGoHalt.AddSource(_go);
    andGoHalt.AddSource(_halt);
+
+   // dataLatch0
+   for (int i = 0; i < 8; ++i)
+      dataLatch0.GetInput(1 + i).SetSource(ddma[i]);
+   dataLatch0.Clock().SetSource(_latch0);
+   dataLatch0._Clear().SetSource(latch0ResetSource);
+   for (int i = 0; i < 8; ++i)
+      dvy[i].SetSource(dataLatch0.GetOutput(1+i));
+
+   // dataLatch1
+   for (int i = 0; i < 8; ++i)
+      dataLatch1.GetInput(1+i).SetSource(ddma[i]);
+   dataLatch1.Clock().SetSource(_latch1);
+   dataLatch1._Clear().SetSource(latch1ResetSource);
+   dvy[8].SetSource(dataLatch1.GetOutput(1));
+   dvy[9].SetSource(dataLatch1.GetOutput(2));
+   dvy[10].SetSource(dataLatch1.GetOutput(3));
+   dvy[11].SetSource(dataLatch1.GetOutput(4));
+   timer0.SetSource(dataLatch1.GetOutput(5));
+   timer1.SetSource(dataLatch1.GetOutput(6));
+   timer2.SetSource(dataLatch1.GetOutput(7));
+   timer3.SetSource(dataLatch1.GetOutput(8));
+
+   // dataLatch2
+   for (int i = 0; i < 8; ++i)
+      dataLatch2.GetInput(1 + i).SetSource(ddma[i]);
+   dataLatch2.Clock().SetSource(_latch2);
+   dataLatch2._Clear().SetSource(_alphaNum);
+   for (int i = 0; i < 8; ++i)
+      dvx[i].SetSource(dataLatch2.GetOutput(1 + i));
+
+   // dataLatch3
+   for (int i = 0; i < 8; ++i)
+      dataLatch3.GetInput(1 + i).SetSource(ddma[i]);
+   dataLatch3.Clock().SetSource(latch3ClockSource);
+   dataLatch3._Clear().SetSource(VCC);
+   dvx[8].SetSource(dataLatch3.GetOutput(1));
+   dvx[9].SetSource(dataLatch3.GetOutput(2));
+   dvx[10].SetSource(dataLatch3.GetOutput(3));
+   dvx[11].SetSource(dataLatch3.GetOutput(4));
+   scale0.SetSource(dataLatch3.GetOutput(5));
+   scale1.SetSource(dataLatch3.GetOutput(6));
+   scale2.SetSource(dataLatch3.GetOutput(7));
+   scale3.SetSource(dataLatch3.GetOutput(8));
+
 }
 
 void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
@@ -95,9 +142,6 @@ void AsteroidsVSM::SetVectorRAM(const void *vectorRAM)
 
 void AsteroidsVSM::Interpret(void)
 {
-   // clear
-   dvy = 0;
-
    // reset
    _reset.Set(false);
    for (int i = 0; i < 10; ++i)

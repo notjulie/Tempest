@@ -9,6 +9,7 @@
 #include "LS174.h"
 #include "LS74.h"
 #include "NANDGate.h"
+#include "ORGate.h"
 #include "VSMClock.h"
 #include "VSMROM.h"
 
@@ -47,25 +48,42 @@ private:
    ANDGate andT1T3;
    ANDGate andT2T3;
    ANDGate andGoHalt;
+   LS174 dataLatch0;
+   LS174 dataLatch1;
+   LS174 dataLatch2;
+   LS174 dataLatch3;
 
    // traces
    LogicSignal halt;
    LogicSignal _halt;
-
-   // logic, not wired yet
+   LogicSignal scale0;
+   LogicSignal scale1;
+   LogicSignal scale2;
+   LogicSignal scale3;
    LogicSignal timer0;
    LogicSignal timer1;
    LogicSignal timer2;
    LogicSignal timer3;
+   LogicSignal dvx[12];
+   LogicSignal dvy[12];
+
+   // logic, not wired yet
    LogicSignal _haltStrobe;
    LogicSignal _dmaCut;
    LogicSignal _go;
+   ORGate vsmROMLatchClockSource;
+   LogicSignal ddma[8];
+   LogicSignal _latch0;
+   LogicSignal _latch1;
+   LogicSignal _latch2;
+   LogicSignal _alphaNum;
+   ANDGate latch1ResetSource;
+   ANDGate latch0ResetSource;
+   ANDGate latch3ClockSource;
 
    // things that may require some thought
    LogicSignal xCarry;
    LogicSignal yCarry;
-
-   uint16_t dvy = 0;
 };
 
 
