@@ -5,6 +5,7 @@
 #include "TempestIO/Vector/SimpleVector.h"
 
 #include "ANDGate.h"
+#include "LS109.h"
 #include "LS174.h"
 #include "LS74.h"
 #include "NANDGate.h"
@@ -24,9 +25,11 @@ private:
    uint8_t vectorRAM[0x800];
    std::vector<SimpleVector> vectors;
 
-   // constants
+   // manually controlled signals
    LogicSignal _VMEM;
    LogicSignal VCC;
+   LogicSignal _reset;
+   LogicSignal _dmaGo;
 
    // logic, already wired
    VSMClock clock;
@@ -38,23 +41,31 @@ private:
    Inverter inverterL6;
    LS174 vsmROMLatch;
    VSMROM vsmROM;
-
-   // logic, not wired yet
-   LogicSignal halt;
+   LS109 haltLatch;
+   ANDGate andDMAGO;
    ANDGate andT0T3;
    ANDGate andT1T3;
    ANDGate andT2T3;
    ANDGate andGoHalt;
+
+   // traces
+   LogicSignal halt;
+   LogicSignal _halt;
+
+   // logic, not wired yet
+   LogicSignal timer0;
+   LogicSignal timer1;
+   LogicSignal timer2;
+   LogicSignal timer3;
+   LogicSignal _haltStrobe;
+   LogicSignal _dmaCut;
+   LogicSignal _go;
 
    // things that may require some thought
    LogicSignal xCarry;
    LogicSignal yCarry;
 
    uint16_t dvy = 0;
-   bool timer0 = false;
-   bool timer1 = false;
-   bool timer2 = false;
-   bool timer3 = false;
 };
 
 

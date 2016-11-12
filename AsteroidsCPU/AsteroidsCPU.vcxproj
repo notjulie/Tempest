@@ -138,6 +138,7 @@
     <ClInclude Include="AsteroidsVSM.h" />
     <ClInclude Include="Inverter.h" />
     <ClInclude Include="LogicSignal.h" />
+    <ClInclude Include="LS109.h" />
     <ClInclude Include="LS174.h" />
     <ClInclude Include="LS74.h" />
     <ClInclude Include="NANDGate.h" />
@@ -147,12 +148,14 @@
     <ClInclude Include="VSMROM.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ANDGate.cpp" />
     <ClCompile Include="AsteroidsBus.cpp" />
     <ClCompile Include="AsteroidsROMs.cpp" />
     <ClCompile Include="AsteroidsRunner.cpp" />
     <ClCompile Include="AsteroidsVectorInterpreter.cpp" />
     <ClCompile Include="AsteroidsVSM.cpp" />
     <ClCompile Include="LogicSignal.cpp" />
+    <ClCompile Include="LS109.cpp" />
     <ClCompile Include="LS174.cpp" />
     <ClCompile Include="LS74.cpp" />
     <ClCompile Include="NANDGate.cpp" />

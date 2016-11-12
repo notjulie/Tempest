@@ -56,6 +56,31 @@ AsteroidsVSM::AsteroidsVSM(void)
    vsmROM.GetInput(5).SetSource(andT1T3);
    vsmROM.GetInput(6).SetSource(andT2T3);
    vsmROM.GetInput(7).SetSource(andGoHalt);
+
+   // haltLatch
+   haltLatch.J().SetSource(timer0);
+   haltLatch.K().SetSource(timer0);
+   haltLatch.Clock().SetSource(_haltStrobe);
+   haltLatch._PRE().SetSource(_reset);
+   haltLatch._CLR().SetSource(andDMAGO);
+   halt.SetSource(haltLatch.Q());
+   _halt.SetSource(haltLatch._Q());
+
+   // andDMAGO
+   andDMAGO.AddSource(_dmaGo);
+   andDMAGO.AddSource(_dmaCut);
+
+   // timer AND gates
+   andT0T3.AddSource(timer0);
+   andT0T3.AddSource(timer3);
+   andT1T3.AddSource(timer1);
+   andT1T3.AddSource(timer3);
+   andT2T3.AddSource(timer2);
+   andT2T3.AddSource(timer3);
+
+   // andGoHalt
+   andGoHalt.AddSource(_go);
+   andGoHalt.AddSource(_halt);
 }
 
 void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
@@ -72,10 +97,15 @@ void AsteroidsVSM::Interpret(void)
 {
    // clear
    dvy = 0;
-   timer0 = false;
-   timer1 = false;
-   timer2 = false;
-   timer3 = false;
+
+   // reset
+   _reset.Set(false);
+   for (int i = 0; i < 10; ++i)
+      clock.Tick();
+   _reset.Set(true);
+
+   // assert the GO line
+   _dmaGo.Set(false);
 
    while (!halt)
    {

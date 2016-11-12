@@ -64,6 +64,9 @@
     <ClInclude Include="ANDGate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LS109.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -100,6 +103,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VSMROM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LS109.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ANDGate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
