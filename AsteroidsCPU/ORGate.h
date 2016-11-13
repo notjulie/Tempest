@@ -6,7 +6,14 @@
 
 class ORGate : public LogicOutput
 {
+public:
+   void AddSource(LogicOutput &source);
 
+private:
+   void UpdateValue(void);
+
+private:
+   std::vector<LogicOutput *> sources;
 };
 
 #endif

@@ -135,6 +135,7 @@
     <ClInclude Include="AsteroidsROMs.h" />
     <ClInclude Include="AsteroidsRunner.h" />
     <ClInclude Include="AsteroidsVectorInterpreter.h" />
+    <ClInclude Include="AsteroidsVectorMemory.h" />
     <ClInclude Include="AsteroidsVSM.h" />
     <ClInclude Include="Inverter.h" />
     <ClInclude Include="LogicSignal.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="AsteroidsROMs.cpp" />
     <ClCompile Include="AsteroidsRunner.cpp" />
     <ClCompile Include="AsteroidsVectorInterpreter.cpp" />
+    <ClCompile Include="AsteroidsVectorMemory.cpp" />
     <ClCompile Include="AsteroidsVSM.cpp" />
     <ClCompile Include="LogicSignal.cpp" />
     <ClCompile Include="LS109.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="LS42.cpp" />
     <ClCompile Include="LS74.cpp" />
     <ClCompile Include="NANDGate.cpp" />
+    <ClCompile Include="ORGate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -5,6 +5,7 @@
 #include "TempestIO/Vector/SimpleVector.h"
 
 #include "ANDGate.h"
+#include "AsteroidsVectorMemory.h"
 #include "LS109.h"
 #include "LS174.h"
 #include "LS42.h"
@@ -24,7 +25,6 @@ public:
    void SetVectorRAM(const void *vectorRAM);
 
 private:
-   uint8_t vectorRAM[0x800];
    std::vector<SimpleVector> vectors;
 
    // manually controlled signals
@@ -54,6 +54,16 @@ private:
    LS174 dataLatch2;
    LS174 dataLatch3;
    LS42 vsmDecoder;
+   LS109 goSource;
+   LogicSignal _go;
+   Inverter goStrobe;
+   ORGate vsmROMLatchClockSource;
+   NANDGate alphanumSource;
+   ANDGate latch1ResetSource;
+   ANDGate latch0ResetSource;
+   ANDGate latch3ClockSource;
+   ORGate latch3ClockEnable;
+   ANDGate decoderHighBitSource;
 
    // traces
    LogicSignal halt;
@@ -76,21 +86,17 @@ private:
    LogicSignal _dmaLoad;
    LogicSignal _goStrobe;
    LogicSignal _haltStrobe;
-
-   // logic, not wired yet
-   LogicSignal _dmaCut;
-   LogicSignal _go;
-   ORGate vsmROMLatchClockSource;
    LogicSignal ddma[8];
    LogicSignal _alphaNum;
-   ANDGate latch1ResetSource;
-   ANDGate latch0ResetSource;
-   ANDGate latch3ClockSource;
-   ANDGate decoderHighBitSource;
+
+   // logic, not wired yet
+   AsteroidsVectorMemory vectorMemory;
 
    // things that may require some thought
    LogicSignal xCarry;
    LogicSignal yCarry;
+   LogicSignal _dmaCut;
+   LogicSignal _stop;
 };
 
 

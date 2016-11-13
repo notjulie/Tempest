@@ -141,6 +141,53 @@ AsteroidsVSM::AsteroidsVSM(void)
    _latch1.SetSource(vsmDecoder.GetOutput(5));
    _latch2.SetSource(vsmDecoder.GetOutput(6));
    _latch3.SetSource(vsmDecoder.GetOutput(7));
+
+   // goSource
+   goSource.J().SetSource(goStrobe);
+   goSource.K().SetSource(_stop);
+   goSource.Clock().SetSource(clock.C6MHz());
+   goSource._PRE().SetSource(VCC);
+   goSource._CLR().SetSource(_halt);
+   _go.SetSource(goSource._Q());
+
+   // goStrobe
+   goStrobe.SetSource(_goStrobe);
+
+   //vsmROMLatchClockSource
+   vsmROMLatchClockSource.AddSource(clock.C6MHz());
+   vsmROMLatchClockSource.AddSource(a7_1._Q());
+
+   // ddma
+   for (int i = 0; i < 8; ++i)
+      ddma[0].SetSource(vectorMemory.GetOutput(i));
+
+   // alphanum
+   alphanumSource.AddSource(timer0);
+   alphanumSource.AddSource(timer1);
+   alphanumSource.AddSource(timer2);
+   alphanumSource.AddSource(timer3);
+   _alphaNum.SetSource(alphanumSource);
+
+   // latch1ResetSource
+   latch1ResetSource.AddSource(_reset);
+   latch1ResetSource.AddSource(_dmaGo);
+
+   // latch0ResetSource
+   latch0ResetSource.AddSource(_alphaNum);
+   latch0ResetSource.AddSource(latch1ResetSource);
+
+   // latch3ClockSource
+   latch3ClockSource.AddSource(_latch3);
+   latch3ClockSource.AddSource(latch3ClockEnable);
+
+   // latch3ClockEnable
+   latch3ClockEnable.AddSource(_latch0);
+   latch3ClockEnable.AddSource(_alphaNum);
+
+   // decoderHighBitSource
+   decoderHighBitSource.AddSource(vsmROMLatch.GetOutput(3));
+   decoderHighBitSource.AddSource(a7_1.Q());
+   decoderHighBitSource.AddSource(a7_2.Q());
 }
 
 void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
@@ -150,7 +197,7 @@ void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
 
 void AsteroidsVSM::SetVectorRAM(const void *vectorRAM)
 {
-   memcpy(this->vectorRAM, vectorRAM, 0x800);
+   vectorMemory.SetVectorRAM(vectorRAM);
 }
 
 void AsteroidsVSM::Interpret(void)
