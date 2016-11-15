@@ -64,6 +64,7 @@ private:
    ANDGate latch3ClockSource;
    ORGate latch3ClockEnable;
    ANDGate decoderHighBitSource;
+   AsteroidsVectorMemory vectorMemory;
 
    // traces
    LogicSignal halt;
@@ -88,9 +89,6 @@ private:
    LogicSignal _haltStrobe;
    LogicSignal ddma[8];
    LogicSignal _alphaNum;
-
-   // logic, not wired yet
-   AsteroidsVectorMemory vectorMemory;
 
    // things that may require some thought
    LogicSignal xCarry;
