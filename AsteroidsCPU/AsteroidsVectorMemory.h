@@ -10,7 +10,7 @@ public:
    AsteroidsVectorMemory(void);
 
    LogicOutput &GetOutput(int i) { return outputs[i]; }
-   void SetVectorRAM(const void *vectorRAM);
+   void SetVectorRAM(const void *vectorRAM, int size);
 
 private:
    void SetPC(uint16_t newPC);

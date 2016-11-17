@@ -22,7 +22,7 @@ public:
 
    void Interpret(void);
    void GetAllVectors(std::vector<SimpleVector> &vectors);
-   void SetVectorRAM(const void *vectorRAM);
+   void SetVectorRAM(const void *vectorRAM, int size);
 
 private:
    std::vector<SimpleVector> vectors;

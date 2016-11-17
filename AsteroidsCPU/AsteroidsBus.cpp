@@ -39,7 +39,7 @@ AsteroidsBus::~AsteroidsBus(void)
 
 void AsteroidsBus::GetVectorData(AsteroidsVSM &vectorData)
 {
-   vectorData.SetVectorRAM(vectorRAM);
+   vectorData.SetVectorRAM(vectorRAM, sizeof(vectorRAM));
 }
 
 

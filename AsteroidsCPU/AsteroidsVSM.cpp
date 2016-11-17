@@ -195,9 +195,9 @@ void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
    vectors = this->vectors;
 }
 
-void AsteroidsVSM::SetVectorRAM(const void *vectorRAM)
+void AsteroidsVSM::SetVectorRAM(const void *vectorRAM, int size)
 {
-   vectorMemory.SetVectorRAM(vectorRAM);
+   vectorMemory.SetVectorRAM(vectorRAM, size);
 }
 
 void AsteroidsVSM::Interpret(void)

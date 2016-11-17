@@ -43,9 +43,11 @@ AsteroidsVectorMemory::AsteroidsVectorMemory(void)
       });
 }
 
-void AsteroidsVectorMemory::SetVectorRAM(const void *vectorRAM)
+void AsteroidsVectorMemory::SetVectorRAM(const void *vectorRAM, int size)
 {
-   memcpy(this->vectorRAM, vectorRAM, 0x800);
+   if (size<0 || size>sizeof(this->vectorRAM))
+      throw TempestException("AsteroidsVectorMemory::SetVectorRAM: invalid size");
+   memcpy(this->vectorRAM, vectorRAM, size);
 }
 
 
