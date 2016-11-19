@@ -10,7 +10,13 @@ namespace AsteroidsUnitTest
 	TEST_CLASS(AsteroidsVSMTest)
 	{
 	public:
-		
+      TEST_METHOD(TestReset)
+      {
+         AsteroidsVSM vsm;
+         vsm.Reset();
+         Assert::IsTrue(vsm.IsHalted());
+      }
+
 		TEST_METHOD(TestHalt)
 		{
          static const uint8_t vectorRAM[] = {

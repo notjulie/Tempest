@@ -207,15 +207,7 @@ void AsteroidsVSM::SetVectorRAM(const void *vectorRAM, int size)
 void AsteroidsVSM::Interpret(void)
 {
    // reset
-   _reset.Set(false);
-   board.PropogateSignals();
-   for (int i = 0; i < 10; ++i)
-   {
-      clock.Tick();
-      board.PropogateSignals();
-   }
-   _reset.Set(true);
-   board.PropogateSignals();
+   Reset();
 
    // assert the GO line
    _dmaGo.Set(false);
@@ -227,3 +219,30 @@ void AsteroidsVSM::Interpret(void)
       board.PropogateSignals();
    }
 }
+
+void AsteroidsVSM::Reset(void)
+{
+   // these currently aren't set by anything so set them here
+   _dmaCut.Set(true);
+   _stop.Set(true);
+
+   // we shouldn't be getting DMAGO during reset
+   _dmaGo.Set(true);
+   board.PropogateSignals();
+
+   // pull the reset line
+   _reset.Set(false);
+   board.PropogateSignals();
+
+   // run the clock a little
+   for (int i = 0; i < 10; ++i)
+   {
+      clock.Tick();
+      board.PropogateSignals();
+   }
+
+   // unpull the reset line
+   _reset.Set(true);
+   board.PropogateSignals();
+}
+

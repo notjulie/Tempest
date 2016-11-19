@@ -25,6 +25,10 @@ public:
    void GetAllVectors(std::vector<SimpleVector> &vectors);
    void SetVectorRAM(const void *vectorRAM, int size);
 
+   // low level public methods
+   void Reset(void);
+   bool IsHalted(void) const { return halt.Get(); }
+
 private:
    std::vector<SimpleVector> vectors;
    LogicBoard board;

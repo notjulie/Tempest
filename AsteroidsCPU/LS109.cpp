@@ -5,7 +5,13 @@
 
 LS109::LS109(void)
 {
+   // add our hooks
    clock.OnRisingEdge([this](){
+      // never mind if we are in preset or clear
+      if (!_pre || !_clr)
+         return;
+
+      // update according to J & K inputs
       if (!j && !k)
          q.Set(false);
       else if (j && !k)
@@ -24,4 +30,8 @@ LS109::LS109(void)
       q.Set(!_pre);
       _q.Set(!q);
    });
+
+   // set our initial state
+   _pre.Set(true);
+   _clr.Set(true);
 }
