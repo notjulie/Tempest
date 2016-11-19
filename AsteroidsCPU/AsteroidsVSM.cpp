@@ -82,6 +82,7 @@ AsteroidsVSM::AsteroidsVSM(void)
    andT2T3.AddSource(timer3);
 
    // andGoHalt
+   andGoHalt.SetName("andGoHalt");
    andGoHalt.AddSource(_go);
    andGoHalt.AddSource(_halt);
 

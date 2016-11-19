@@ -24,8 +24,13 @@ static const uint8_t romData[] = {
 
 VSMROM::VSMROM(void)
 {
+   // set up our notifications so we can update our output when the address
+   // changes
    for (int i = 0; i < 8; ++i)
-      inputs[0].OnValueChanged([this](bool newValue){ UpdateValue(); });
+      inputs[i].OnValueChanged([this](bool newValue){ UpdateValue(); });
+
+   // set our initial state
+   UpdateValue();
 }
 
 void VSMROM::UpdateValue(void)
