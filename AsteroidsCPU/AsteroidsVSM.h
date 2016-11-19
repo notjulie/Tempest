@@ -26,6 +26,7 @@ public:
    void SetVectorRAM(const void *vectorRAM, int size);
 
    // low level public methods
+   void Go(void);
    void Reset(void);
    bool IsHalted(void) const { return halt.Get(); }
 

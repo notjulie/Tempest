@@ -210,14 +210,21 @@ void AsteroidsVSM::Interpret(void)
    Reset();
 
    // assert the GO line
-   _dmaGo.Set(false);
-   board.PropogateSignals();
+   Go();
 
+   // loop until halted
    while (!halt)
    {
       clock.Tick();
       board.PropogateSignals();
    }
+}
+
+void AsteroidsVSM::Go(void)
+{
+   // assert _dmaGo and propogate changes... that's all we should need
+   _dmaGo.Set(false);
+   board.PropogateSignals();
 }
 
 void AsteroidsVSM::Reset(void)
