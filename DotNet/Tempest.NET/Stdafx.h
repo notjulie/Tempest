@@ -13,5 +13,6 @@
 // standard C++
 #include <functional>
 #include <map>
+#include <queue>
 #include <vector>
 

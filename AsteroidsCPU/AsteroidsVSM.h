@@ -6,6 +6,7 @@
 
 #include "ANDGate.h"
 #include "AsteroidsVectorMemory.h"
+#include "LogicBoard.h"
 #include "LS109.h"
 #include "LS174.h"
 #include "LS42.h"
@@ -26,6 +27,7 @@ public:
 
 private:
    std::vector<SimpleVector> vectors;
+   LogicBoard board;
 
    // manually controlled signals
    LogicSignal _VMEM;

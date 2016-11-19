@@ -12,4 +12,6 @@
 
 // additional headers
 #include <functional>
+#include <map>
+#include <queue>
 #include <vector>

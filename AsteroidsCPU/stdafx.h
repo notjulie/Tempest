@@ -30,6 +30,7 @@
 #include <iomanip>
 #include <map>
 #include <mutex>
+#include <queue>
 #include <sstream>
 #include <string>
 #include <thread>

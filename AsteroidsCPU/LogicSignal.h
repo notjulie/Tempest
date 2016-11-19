@@ -44,7 +44,6 @@ public:
    LogicInput(const LogicInput &) = delete;
    LogicInput &operator=(const LogicInput &) = delete;
 
-   void SetSource(LogicOutput &source);
    virtual void Set(bool value) = 0;
 };
 

@@ -9,6 +9,7 @@ LS74::LS74(void)
       // latch the input on rising edge
       if (_pre && _clr)
          q.Set(d);
+      _q.Set(!q);
    });
 
    _clr.OnValueChanged([this](bool newValue){
@@ -17,9 +18,6 @@ LS74::LS74(void)
    _pre.OnValueChanged([this](bool newValue){
       HandleLoadAndClear();
    });
-
-   // connect our non-inverted output to the inverted output
-   _q.SetSource(q);
 }
 
 void LS74::HandleLoadAndClear(void)
@@ -28,4 +26,5 @@ void LS74::HandleLoadAndClear(void)
       q.Set(true);
    else if (!_clr)
       q.Set(false);
+   _q.Set(!q);
 }

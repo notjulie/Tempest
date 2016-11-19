@@ -26,7 +26,7 @@ private:
    LogicSignal _clr;
    LogicSignal _pre;
    LogicSignal q;
-   Inverter _q;
+   LogicSignal _q;
 };
 
 #endif

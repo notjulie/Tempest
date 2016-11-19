@@ -31,21 +31,6 @@ void LogicOutput::SetOutputValue(bool value)
 
 
 // =========================================================
-// ===================== LogicInput ========================
-// =========================================================
-
-void LogicInput::SetSource(LogicOutput &source)
-{
-   // register for notifications
-   source.OnValueChanged([this](bool newValue){ Set(newValue); });
-
-   // and set the initial value
-   Set(source.Get());
-}
-
-
-
-// =========================================================
 // ==================== LogicSignal ========================
 // =========================================================
 

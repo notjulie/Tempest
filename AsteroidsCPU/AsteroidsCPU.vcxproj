@@ -138,6 +138,7 @@
     <ClInclude Include="AsteroidsVectorMemory.h" />
     <ClInclude Include="AsteroidsVSM.h" />
     <ClInclude Include="Inverter.h" />
+    <ClInclude Include="LogicBoard.h" />
     <ClInclude Include="LogicSignal.h" />
     <ClInclude Include="LS109.h" />
     <ClInclude Include="LS174.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="AsteroidsVectorInterpreter.cpp" />
     <ClCompile Include="AsteroidsVectorMemory.cpp" />
     <ClCompile Include="AsteroidsVSM.cpp" />
+    <ClCompile Include="LogicBoard.cpp" />
     <ClCompile Include="LogicSignal.cpp" />
     <ClCompile Include="LS109.cpp" />
     <ClCompile Include="LS174.cpp" />

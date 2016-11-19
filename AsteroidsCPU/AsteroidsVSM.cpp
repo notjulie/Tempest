@@ -12,22 +12,22 @@ AsteroidsVSM::AsteroidsVSM(void)
    // wire all our components together
 
    // D flip flop #1 at A7
-   a7_1.D().SetSource(_VMEM);
-   a7_1.Clock().SetSource(clock.VGCK());
-   a7_1._CLR().SetSource(VCC);
-   a7_1._PRE().SetSource(nandA8_1);
+   board.Connect(_VMEM, a7_1.D());
+   board.Connect(clock.VGCK(), a7_1.Clock());
+   board.Connect(VCC, a7_1._CLR());
+   board.Connect(nandA8_1, a7_1._PRE());
 
    // D flip flop #2 at A7
-   a7_2.D().SetSource(clock.VGCK());
-   a7_2.Clock().SetSource(clock.C6MHz());
-   a7_2._CLR().SetSource(VCC);
-   a7_2._PRE().SetSource(d8_1._Q());
+   board.Connect(clock.VGCK(), a7_2.D());
+   board.Connect(clock.C6MHz(), a7_2.Clock());
+   board.Connect(VCC, a7_2._CLR());
+   board.Connect(d8_1._Q(), a7_2._PRE());
 
    // D flip flop #1 at D8
-   d8_1.D().SetSource(nandH5);
-   d8_1.Clock().SetSource(clock.VGCK());
-   d8_1._CLR().SetSource(VCC);
-   d8_1._PRE().SetSource(VCC);
+   board.Connect(nandH5, d8_1.D());
+   board.Connect(clock.VGCK(), d8_1.Clock());
+   board.Connect(VCC, d8_1._CLR());
+   board.Connect(VCC, d8_1._PRE());
 
    // NAND gate at A8
    nandA8_1.AddSource(a7_2.Q());
@@ -38,35 +38,35 @@ AsteroidsVSM::AsteroidsVSM(void)
    nandH5.AddSource(yCarry);
 
    // inverter at L6
-   inverterL6.SetSource(vsmROMLatch.GetOutput(4));
+   board.Connect(vsmROMLatch.GetOutput(4), inverterL6);
 
    // vsmROMLatch
-   vsmROMLatch.GetInput(2).SetSource(vsmROM.GetOutput(2));
-   vsmROMLatch.GetInput(3).SetSource(vsmROM.GetOutput(4));
-   vsmROMLatch.GetInput(4).SetSource(vsmROM.GetOutput(3));
-   vsmROMLatch.GetInput(5).SetSource(vsmROM.GetOutput(1));
-   vsmROMLatch.GetInput(6).SetSource(vsmROM.GetOutput(halt));
-   vsmROMLatch.Clock().SetSource(vsmROMLatchClockSource);
-   vsmROMLatch._Clear().SetSource(_reset);
+   board.Connect(vsmROM.GetOutput(2), vsmROMLatch.GetInput(2));
+   board.Connect(vsmROM.GetOutput(4), vsmROMLatch.GetInput(3));
+   board.Connect(vsmROM.GetOutput(3), vsmROMLatch.GetInput(4));
+   board.Connect(vsmROM.GetOutput(1), vsmROMLatch.GetInput(5));
+   board.Connect(vsmROM.GetOutput(halt), vsmROMLatch.GetInput(6));
+   board.Connect(vsmROMLatchClockSource, vsmROMLatch.Clock());
+   board.Connect(_reset, vsmROMLatch._Clear());
 
    // vsmROM
-   vsmROM.GetInput(0).SetSource(vsmROMLatch.GetOutput(5));
-   vsmROM.GetInput(1).SetSource(vsmROMLatch.GetOutput(2));
-   vsmROM.GetInput(2).SetSource(vsmROMLatch.GetOutput(4));
-   vsmROM.GetInput(3).SetSource(vsmROMLatch.GetOutput(3));
-   vsmROM.GetInput(4).SetSource(andT0T3);
-   vsmROM.GetInput(5).SetSource(andT1T3);
-   vsmROM.GetInput(6).SetSource(andT2T3);
-   vsmROM.GetInput(7).SetSource(andGoHalt);
+   board.Connect(vsmROMLatch.GetOutput(5), vsmROM.GetInput(0));
+   board.Connect(vsmROMLatch.GetOutput(2), vsmROM.GetInput(1));
+   board.Connect(vsmROMLatch.GetOutput(4), vsmROM.GetInput(2));
+   board.Connect(vsmROMLatch.GetOutput(3), vsmROM.GetInput(3));
+   board.Connect(andT0T3, vsmROM.GetInput(4));
+   board.Connect(andT1T3, vsmROM.GetInput(5));
+   board.Connect(andT2T3, vsmROM.GetInput(6));
+   board.Connect(andGoHalt, vsmROM.GetInput(7));
 
    // haltLatch
-   haltLatch.J().SetSource(timer0);
-   haltLatch.K().SetSource(timer0);
-   haltLatch.Clock().SetSource(_haltStrobe);
-   haltLatch._PRE().SetSource(_reset);
-   haltLatch._CLR().SetSource(andDMAGO);
-   halt.SetSource(haltLatch.Q());
-   _halt.SetSource(haltLatch._Q());
+   board.Connect(timer0, haltLatch.J());
+   board.Connect(timer0, haltLatch.K());
+   board.Connect(_haltStrobe, haltLatch.Clock());
+   board.Connect(_reset, haltLatch._PRE());
+   board.Connect(andDMAGO, haltLatch._CLR());
+   board.Connect(haltLatch.Q(), halt);
+   board.Connect(haltLatch._Q(), _halt);
 
    // andDMAGO
    andDMAGO.AddSource(_dmaGo);
@@ -86,72 +86,72 @@ AsteroidsVSM::AsteroidsVSM(void)
 
    // dataLatch0
    for (int i = 0; i < 8; ++i)
-      dataLatch0.GetInput(1 + i).SetSource(ddma[i]);
-   dataLatch0.Clock().SetSource(_latch0);
-   dataLatch0._Clear().SetSource(latch0ResetSource);
+      board.Connect(ddma[i], dataLatch0.GetInput(1 + i));
+   board.Connect(_latch0, dataLatch0.Clock());
+   board.Connect(latch0ResetSource, dataLatch0._Clear());
    for (int i = 0; i < 8; ++i)
-      dvy[i].SetSource(dataLatch0.GetOutput(1+i));
+      board.Connect(dataLatch0.GetOutput(1 + i), dvy[i]);
 
    // dataLatch1
    for (int i = 0; i < 8; ++i)
-      dataLatch1.GetInput(1+i).SetSource(ddma[i]);
-   dataLatch1.Clock().SetSource(_latch1);
-   dataLatch1._Clear().SetSource(latch1ResetSource);
-   dvy[8].SetSource(dataLatch1.GetOutput(1));
-   dvy[9].SetSource(dataLatch1.GetOutput(2));
-   dvy[10].SetSource(dataLatch1.GetOutput(3));
-   dvy[11].SetSource(dataLatch1.GetOutput(4));
-   timer0.SetSource(dataLatch1.GetOutput(5));
-   timer1.SetSource(dataLatch1.GetOutput(6));
-   timer2.SetSource(dataLatch1.GetOutput(7));
-   timer3.SetSource(dataLatch1.GetOutput(8));
+      board.Connect(ddma[i], dataLatch1.GetInput(1 + i));
+   board.Connect(_latch1, dataLatch1.Clock());
+   board.Connect(latch1ResetSource, dataLatch1._Clear());
+   board.Connect(dataLatch1.GetOutput(1), dvy[8]);
+   board.Connect(dataLatch1.GetOutput(2), dvy[9]);
+   board.Connect(dataLatch1.GetOutput(3), dvy[10]);
+   board.Connect(dataLatch1.GetOutput(4), dvy[11]);
+   board.Connect(dataLatch1.GetOutput(5), timer0);
+   board.Connect(dataLatch1.GetOutput(6), timer1);
+   board.Connect(dataLatch1.GetOutput(7), timer2);
+   board.Connect(dataLatch1.GetOutput(8), timer3);
 
    // dataLatch2
    for (int i = 0; i < 8; ++i)
-      dataLatch2.GetInput(1 + i).SetSource(ddma[i]);
-   dataLatch2.Clock().SetSource(_latch2);
-   dataLatch2._Clear().SetSource(_alphaNum);
+      board.Connect(ddma[i], dataLatch2.GetInput(1 + i));
+   board.Connect(_latch2, dataLatch2.Clock());
+   board.Connect(_alphaNum, dataLatch2._Clear());
    for (int i = 0; i < 8; ++i)
-      dvx[i].SetSource(dataLatch2.GetOutput(1 + i));
+      board.Connect(dataLatch2.GetOutput(1 + i), dvx[i]);
 
    // dataLatch3
    for (int i = 0; i < 8; ++i)
-      dataLatch3.GetInput(1 + i).SetSource(ddma[i]);
-   dataLatch3.Clock().SetSource(latch3ClockSource);
-   dataLatch3._Clear().SetSource(VCC);
-   dvx[8].SetSource(dataLatch3.GetOutput(1));
-   dvx[9].SetSource(dataLatch3.GetOutput(2));
-   dvx[10].SetSource(dataLatch3.GetOutput(3));
-   dvx[11].SetSource(dataLatch3.GetOutput(4));
-   scale0.SetSource(dataLatch3.GetOutput(5));
-   scale1.SetSource(dataLatch3.GetOutput(6));
-   scale2.SetSource(dataLatch3.GetOutput(7));
-   scale3.SetSource(dataLatch3.GetOutput(8));
+      board.Connect(ddma[i], dataLatch3.GetInput(1 + i));
+   board.Connect(latch3ClockSource, dataLatch3.Clock());
+   board.Connect(VCC, dataLatch3._Clear());
+   board.Connect(dataLatch3.GetOutput(1), dvx[8]);
+   board.Connect(dataLatch3.GetOutput(2), dvx[9]);
+   board.Connect(dataLatch3.GetOutput(3), dvx[10]);
+   board.Connect(dataLatch3.GetOutput(4), dvx[11]);
+   board.Connect(dataLatch3.GetOutput(5), scale0);
+   board.Connect(dataLatch3.GetOutput(6), scale1);
+   board.Connect(dataLatch3.GetOutput(7), scale2);
+   board.Connect(dataLatch3.GetOutput(8), scale3);
 
    // vsmDecoder
-   vsmDecoder.A().SetSource(vsmROMLatch.GetOutput(5));
-   vsmDecoder.B().SetSource(vsmROMLatch.GetOutput(2));
-   vsmDecoder.C().SetSource(vsmROMLatch.GetOutput(4));
-   vsmDecoder.D().SetSource(decoderHighBitSource);
-   _dmaPush.SetSource(vsmDecoder.GetOutput(0));
-   _dmaLoad.SetSource(vsmDecoder.GetOutput(1));
-   _goStrobe.SetSource(vsmDecoder.GetOutput(2));
-   _haltStrobe.SetSource(vsmDecoder.GetOutput(3));
-   _latch0.SetSource(vsmDecoder.GetOutput(4));
-   _latch1.SetSource(vsmDecoder.GetOutput(5));
-   _latch2.SetSource(vsmDecoder.GetOutput(6));
-   _latch3.SetSource(vsmDecoder.GetOutput(7));
+   board.Connect(vsmROMLatch.GetOutput(5), vsmDecoder.A());
+   board.Connect(vsmROMLatch.GetOutput(2), vsmDecoder.B());
+   board.Connect(vsmROMLatch.GetOutput(4), vsmDecoder.C());
+   board.Connect(decoderHighBitSource, vsmDecoder.D());
+   board.Connect(vsmDecoder.GetOutput(0), _dmaPush);
+   board.Connect(vsmDecoder.GetOutput(1), _dmaLoad);
+   board.Connect(vsmDecoder.GetOutput(2), _goStrobe);
+   board.Connect(vsmDecoder.GetOutput(3), _haltStrobe);
+   board.Connect(vsmDecoder.GetOutput(4), _latch0);
+   board.Connect(vsmDecoder.GetOutput(5), _latch1);
+   board.Connect(vsmDecoder.GetOutput(6), _latch2);
+   board.Connect(vsmDecoder.GetOutput(7), _latch3);
 
    // goSource
-   goSource.J().SetSource(goStrobe);
-   goSource.K().SetSource(_stop);
-   goSource.Clock().SetSource(clock.C6MHz());
-   goSource._PRE().SetSource(VCC);
-   goSource._CLR().SetSource(_halt);
-   _go.SetSource(goSource._Q());
+   board.Connect(goStrobe, goSource.J());
+   board.Connect(_stop, goSource.K());
+   board.Connect(clock.C6MHz(), goSource.Clock());
+   board.Connect(VCC, goSource._PRE());
+   board.Connect(_halt, goSource._CLR());
+   board.Connect(goSource._Q(), _go);
 
    // goStrobe
-   goStrobe.SetSource(_goStrobe);
+   board.Connect(_goStrobe, goStrobe);
 
    //vsmROMLatchClockSource
    vsmROMLatchClockSource.AddSource(clock.C6MHz());
@@ -159,14 +159,14 @@ AsteroidsVSM::AsteroidsVSM(void)
 
    // ddma
    for (int i = 0; i < 8; ++i)
-      ddma[0].SetSource(vectorMemory.GetOutput(i));
+      board.Connect(vectorMemory.GetOutput(i), ddma[0]);
 
    // alphanum
    alphanumSource.AddSource(timer0);
    alphanumSource.AddSource(timer1);
    alphanumSource.AddSource(timer2);
    alphanumSource.AddSource(timer3);
-   _alphaNum.SetSource(alphanumSource);
+   board.Connect(alphanumSource, _alphaNum);
 
    // latch1ResetSource
    latch1ResetSource.AddSource(_reset);
@@ -188,6 +188,10 @@ AsteroidsVSM::AsteroidsVSM(void)
    decoderHighBitSource.AddSource(vsmROMLatch.GetOutput(3));
    decoderHighBitSource.AddSource(a7_1.Q());
    decoderHighBitSource.AddSource(a7_2.Q());
+
+   // propogate any activity that might have happened when we were connecting
+   // parts together
+   board.PropogateSignals();
 }
 
 void AsteroidsVSM::GetAllVectors(std::vector<SimpleVector> &vectors)
@@ -204,15 +208,22 @@ void AsteroidsVSM::Interpret(void)
 {
    // reset
    _reset.Set(false);
+   board.PropogateSignals();
    for (int i = 0; i < 10; ++i)
+   {
       clock.Tick();
+      board.PropogateSignals();
+   }
    _reset.Set(true);
+   board.PropogateSignals();
 
    // assert the GO line
    _dmaGo.Set(false);
+   board.PropogateSignals();
 
    while (!halt)
    {
       clock.Tick();
+      board.PropogateSignals();
    }
 }
