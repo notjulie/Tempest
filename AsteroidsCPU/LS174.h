@@ -14,7 +14,12 @@ public:
    LogicInput &GetInput(int n) { return inputs[n - 1]; }
    LogicOutput &GetOutput(int n) { return outputs[n - 1]; }
 
+   const std::string &GetName(void) const { return name; }
+   void SetName(const std::string s) { name = s; }
+
 private:
+   std::string name;
+
    LogicSignal clock;
    LogicSignal _clear;
    LogicSignal inputs[8];

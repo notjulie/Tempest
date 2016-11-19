@@ -41,6 +41,7 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(vsmROMLatch.GetOutput(4), inverterL6);
 
    // vsmROMLatch
+   vsmROMLatch.SetName("vsmROMLatch");
    board.Connect(vsmROM.GetOutput(2), vsmROMLatch.GetInput(2));
    board.Connect(vsmROM.GetOutput(4), vsmROMLatch.GetInput(3));
    board.Connect(vsmROM.GetOutput(3), vsmROMLatch.GetInput(4));
@@ -154,6 +155,7 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(_goStrobe, goStrobe);
 
    //vsmROMLatchClockSource
+   vsmROMLatchClockSource.SetName("vsmROMLatchClockSource");
    vsmROMLatchClockSource.AddSource(clock.C6MHz());
    vsmROMLatchClockSource.AddSource(a7_1._Q());
 

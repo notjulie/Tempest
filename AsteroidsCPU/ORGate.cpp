@@ -15,7 +15,7 @@ void ORGate::AddSource(LogicOutput &source)
 
 void ORGate::UpdateValue(void)
 {
-   bool orResult = true;
+   bool orResult = false;
    for (auto source : sources)
    {
       if (*source)
@@ -25,6 +25,8 @@ void ORGate::UpdateValue(void)
       }
    }
 
+   if (name == "vsmROMLatchClockSource")
+      int i = 1;
    SetOutputValue(orResult);
 }
 
