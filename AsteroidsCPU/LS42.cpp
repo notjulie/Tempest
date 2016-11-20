@@ -35,6 +35,6 @@ void LS42::UpdateValue(void)
    if (selectedOutput > 9)
       selectedOutput = 9;
    for (int i = 0; i < 10; ++i)
-      outputs[i].Set(i == selectedOutput);
+      outputs[i].Set(i != selectedOutput);
 }
 

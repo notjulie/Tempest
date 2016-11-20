@@ -70,7 +70,7 @@ private:
    ANDGate latch0ResetSource;
    ANDGate latch3ClockSource;
    ORGate latch3ClockEnable;
-   ANDGate decoderHighBitSource;
+   NANDGate decoderHighBitSource;
    AsteroidsVectorMemory vectorMemory;
 
    // traces
