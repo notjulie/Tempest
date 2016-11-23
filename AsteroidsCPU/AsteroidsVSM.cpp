@@ -17,11 +17,12 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(VCC, a7_1._CLR());
    board.Connect(nandA8_1, a7_1._PRE());
 
-   // D flip flop #2 at A7
-   board.Connect(clock.VGCK(), a7_2.D());
-   board.Connect(clock.C6MHz(), a7_2.Clock());
-   board.Connect(VCC, a7_2._CLR());
-   board.Connect(d8_1._Q(), a7_2._PRE());
+   // vgClockDelay D flip flop; this just generates a delayed version of the VGCK
+   // signal
+   board.Connect(clock.VGCK(), vgClockDelay.D());
+   board.Connect(clock.C6MHz(), vgClockDelay.Clock());
+   board.Connect(VCC, vgClockDelay._CLR());
+   board.Connect(VCC, vgClockDelay._PRE());
 
    // D flip flop #1 at D8
    board.Connect(nandH5, d8_1.D());
@@ -30,7 +31,7 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(VCC, d8_1._PRE());
 
    // NAND gate at A8
-   nandA8_1.AddSource(a7_2.Q());
+   nandA8_1.AddSource(vgClockDelay.Q());
    nandA8_1.AddSource(inverterL6);
 
    // NAND gate at H5
@@ -164,6 +165,18 @@ AsteroidsVSM::AsteroidsVSM(void)
    for (int i = 0; i < 8; ++i)
       board.Connect(vectorMemory.GetOutput(i), ddma[0]);
 
+   // vectorMemory
+   board.Connect(pcCounterClock, vectorMemory.CounterClock());
+   board.Connect(_dmaLoad, vectorMemory._CounterLoad());
+   board.Connect(_timer0, vectorMemory._StackRead());
+
+   // _timer0
+   board.Connect(timer0, _timer0);
+
+   // pcCounterClock
+   pcCounterClock.AddSource(_latch1);
+   pcCounterClock.AddSource(_latch3);
+
    // alphanum
    alphanumSource.AddSource(timer0);
    alphanumSource.AddSource(timer1);
@@ -190,7 +203,7 @@ AsteroidsVSM::AsteroidsVSM(void)
    // decoderHighBitSource
    decoderHighBitSource.AddSource(vsmROMLatch.GetOutput(3));
    decoderHighBitSource.AddSource(a7_1.Q());
-   decoderHighBitSource.AddSource(a7_2.Q());
+   decoderHighBitSource.AddSource(vgClockDelay.Q());
 
    // propogate any activity that might have happened when we were connecting
    // parts together

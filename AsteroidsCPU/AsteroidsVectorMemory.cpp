@@ -53,6 +53,9 @@ void AsteroidsVectorMemory::SetVectorRAM(const void *vectorRAM, int size)
 
 void AsteroidsVectorMemory::SetPC(uint16_t newPC)
 {
+   if (newPC > 0x1000)
+      throw TempestException("AsteroidsVectorMemory::SetPC: invalid PC value");
+
    if (newPC == pc)
       return;
    pc = newPC;

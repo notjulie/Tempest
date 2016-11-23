@@ -10,6 +10,9 @@ public:
    AsteroidsVectorMemory(void);
 
    LogicOutput &GetOutput(int i) { return outputs[i]; }
+   LogicInput &CounterClock(void) { return counterClock; }
+   LogicInput &_CounterLoad(void) { return _counterLoad; }
+   LogicInput &_StackRead(void) { return _stackRead; }
    void SetVectorRAM(const void *vectorRAM, int size);
 
 private:

@@ -43,7 +43,7 @@ private:
    // logic, already wired
    VSMClock clock;
    LS74 a7_1;
-   LS74 a7_2;
+   LS74 vgClockDelay;
    LS74 d8_1;
    NANDGate nandA8_1;
    NANDGate nandH5;
@@ -72,6 +72,8 @@ private:
    ORGate latch3ClockEnable;
    NANDGate decoderHighBitSource;
    AsteroidsVectorMemory vectorMemory;
+   ANDGate pcCounterClock;
+   Inverter _timer0;
 
    // traces
    LogicSignal halt;
