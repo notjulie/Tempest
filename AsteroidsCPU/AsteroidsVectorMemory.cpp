@@ -16,7 +16,7 @@ AsteroidsVectorMemory::AsteroidsVectorMemory(void)
    // implement our logic
    counterClock.OnRisingEdge([this](){
       if (_counterLoad)
-         SetPC(pc + 1);
+         SetCounterValue(counterValue + 1);
    });
    _counterLoad.OnFallingEdge([this](){
       UpdatePC();
@@ -41,6 +41,9 @@ AsteroidsVectorMemory::AsteroidsVectorMemory(void)
       loadAddressInputs[i].OnValueChanged([this](bool newValue){
          UpdatePC();
       });
+   addressLowBit.OnValueChanged([this](bool newValue){
+      UpdateOutputs();
+   });
 }
 
 void AsteroidsVectorMemory::SetVectorRAM(const void *vectorRAM, int size)
@@ -51,14 +54,11 @@ void AsteroidsVectorMemory::SetVectorRAM(const void *vectorRAM, int size)
 }
 
 
-void AsteroidsVectorMemory::SetPC(uint16_t newPC)
+void AsteroidsVectorMemory::SetCounterValue(uint16_t newValue)
 {
-   if (newPC > 0x1000)
-      throw TempestException("AsteroidsVectorMemory::SetPC: invalid PC value");
-
-   if (newPC == pc)
+   if (newValue == counterValue)
       return;
-   pc = newPC;
+   counterValue = newValue;
    UpdateOutputs();
 }
 
@@ -69,7 +69,7 @@ void AsteroidsVectorMemory::UpdatePC(void)
    {
       if (!_stackRead)
       {
-         SetPC(stack[stackPointer]);
+         SetCounterValue(stack[stackPointer]);
       }
       else
       {
@@ -77,7 +77,7 @@ void AsteroidsVectorMemory::UpdatePC(void)
          for (int i = 0; i < 12; ++i)
             if (loadAddressInputs[i])
                newPC |= 1 << i;
-         SetPC(newPC);
+         SetCounterValue(newPC);
       }
    }
 }
@@ -85,12 +85,16 @@ void AsteroidsVectorMemory::UpdatePC(void)
 
 void AsteroidsVectorMemory::UpdateTopOfStack(void)
 {
-   stack[stackPointer] = pc;
+   stack[stackPointer] = counterValue;
 }
 
 
 void AsteroidsVectorMemory::UpdateOutputs(void)
 {
+   uint16_t pc = counterValue * 2;
+   if (addressLowBit)
+      ++pc;
+
    uint8_t data;
    if (pc >= 0 && pc < 0x800)
       data = vectorRAM[pc];
@@ -98,5 +102,8 @@ void AsteroidsVectorMemory::UpdateOutputs(void)
       data = ROM035127_02[pc - 0x1000];
    else
       throw TempestException("AsteroidsVectorMemory bad address");
+
+   for (int i = 0; i < 8; ++i)
+      outputs[i].Set((data & (1<<i)) != 0);
 }
 

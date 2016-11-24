@@ -98,6 +98,7 @@ private:
    LogicSignal _haltStrobe;
    LogicSignal ddma[8];
    LogicSignal _alphaNum;
+   LogicSignal adma0;
 
    // things that may require some thought
    LogicSignal xCarry;

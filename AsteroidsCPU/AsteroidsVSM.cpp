@@ -75,10 +75,13 @@ AsteroidsVSM::AsteroidsVSM(void)
    andDMAGO.AddSource(_dmaCut);
 
    // timer AND gates
+   andT0T3.SetName("andT0T3");
    andT0T3.AddSource(timer0);
    andT0T3.AddSource(timer3);
+   andT1T3.SetName("andT1T3");
    andT1T3.AddSource(timer1);
    andT1T3.AddSource(timer3);
+   andT2T3.SetName("andT2T3");
    andT2T3.AddSource(timer2);
    andT2T3.AddSource(timer3);
 
@@ -96,6 +99,7 @@ AsteroidsVSM::AsteroidsVSM(void)
       board.Connect(dataLatch0.GetOutput(1 + i), dvy[i]);
 
    // dataLatch1
+   dataLatch1.SetName("dataLatch1");
    for (int i = 0; i < 8; ++i)
       board.Connect(ddma[i], dataLatch1.GetInput(1 + i));
    board.Connect(_latch1, dataLatch1.Clock());
@@ -163,7 +167,7 @@ AsteroidsVSM::AsteroidsVSM(void)
 
    // ddma
    for (int i = 0; i < 8; ++i)
-      board.Connect(vectorMemory.GetOutput(i), ddma[0]);
+      board.Connect(vectorMemory.GetOutput(i), ddma[i]);
 
    // vectorMemory
    board.Connect(pcCounterClock, vectorMemory.CounterClock());
@@ -205,6 +209,16 @@ AsteroidsVSM::AsteroidsVSM(void)
    decoderHighBitSource.AddSource(a7_1.Q());
    decoderHighBitSource.AddSource(vgClockDelay.Q());
 
+   // adma0
+   board.Connect(vsmROMLatch.GetOutput(5), adma0);
+   board.Connect(adma0, vectorMemory.AddressLowBit());
+
+   // name our signals
+   timer0.SetName("timer0");
+   timer1.SetName("timer1");
+   timer2.SetName("timer2");
+   timer3.SetName("timer3");
+
    // propogate any activity that might have happened when we were connecting
    // parts together
    board.PropogateSignals();
@@ -238,8 +252,12 @@ void AsteroidsVSM::Interpret(void)
 
 void AsteroidsVSM::Go(void)
 {
-   // assert _dmaGo and propogate changes... that's all we should need
+   // assert _dmaGo and propogate changes
    _dmaGo.Set(false);
+   board.PropogateSignals();
+
+   // de-assert _dmaGo and propogate changes
+   _dmaGo.Set(true);
    board.PropogateSignals();
 }
 

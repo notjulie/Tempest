@@ -13,16 +13,17 @@ public:
    LogicInput &CounterClock(void) { return counterClock; }
    LogicInput &_CounterLoad(void) { return _counterLoad; }
    LogicInput &_StackRead(void) { return _stackRead; }
+   LogicInput &AddressLowBit(void) { return addressLowBit; }
    void SetVectorRAM(const void *vectorRAM, int size);
 
 private:
-   void SetPC(uint16_t newPC);
+   void SetCounterValue(uint16_t newPC);
    void UpdatePC(void);
    void UpdateTopOfStack(void);
    void UpdateOutputs(void);
 
 private:
-   uint16_t pc = 0;
+   uint16_t counterValue = 0;
    uint8_t vectorRAM[0x800];
    int stackPointer = 0;
    uint16_t stack[4];
@@ -36,6 +37,7 @@ private:
    LogicSignal _enableLoadAddress;
    LogicSignal outputs[8];
    LogicSignal loadAddressInputs[12];
+   LogicSignal addressLowBit;
 };
 
 

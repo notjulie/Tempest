@@ -14,6 +14,9 @@ public:
    LogicOutput(const LogicOutput &) = delete;
    LogicOutput &operator=(const LogicOutput &) = delete;
 
+   const std::string &GetName(void) const { return name; }
+   void SetName(const std::string name) { this->name = name; }
+
    bool Get(void) const { return value; }
    void OnValueChanged(const std::function<void(bool)> &callback) { changeCallbacks.push_back(callback); }
    void OnFallingEdge(const std::function<void()> &callback) { fallingEdgeCallbacks.push_back(callback); }
@@ -25,6 +28,7 @@ protected:
    virtual void SetOutputValue(bool value);
 
 private:
+   std::string name;
    bool value = false;
    std::vector<std::function<void(bool)>> changeCallbacks;
    std::vector<std::function<void()>> fallingEdgeCallbacks;
