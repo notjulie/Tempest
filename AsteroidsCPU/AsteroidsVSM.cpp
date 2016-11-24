@@ -62,6 +62,7 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(andGoHalt, vsmROM.GetInput(7));
 
    // haltLatch
+   haltLatch.SetName("haltLatch");
    board.Connect(timer0, haltLatch.J());
    board.Connect(timer0, haltLatch.K());
    board.Connect(_haltStrobe, haltLatch.Clock());
@@ -214,6 +215,7 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(adma0, vectorMemory.AddressLowBit());
 
    // name our signals
+   _haltStrobe.SetName("_haltStrobe");
    timer0.SetName("timer0");
    timer1.SetName("timer1");
    timer2.SetName("timer2");

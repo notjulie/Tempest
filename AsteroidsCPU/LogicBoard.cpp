@@ -1,5 +1,8 @@
 
 #include "stdafx.h"
+
+#include "TempestCPU/TempestException.h"
+
 #include "LogicBoard.h"
 
 
@@ -21,6 +24,10 @@ void LogicBoard::Connect(LogicOutput &output, LogicInput &input)
       update.target = inputPointer;
       update.newValue = newValue;
       updates.push(update);
+
+      // check for infinite loops
+      if (updates.size() > 10000)
+         throw TempestException("LogicBoard: infinite update loop");
    });
 
    // set the initial value
