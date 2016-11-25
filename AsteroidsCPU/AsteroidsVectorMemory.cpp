@@ -18,9 +18,6 @@ AsteroidsVectorMemory::AsteroidsVectorMemory(void)
       if (_counterLoad)
          SetCounterValue(counterValue + 1);
    });
-   _counterLoad.OnFallingEdge([this](){
-      UpdatePC();
-   });
    _stackWrite.OnFallingEdge([this](){
       UpdateTopOfStack();
    });
@@ -32,6 +29,7 @@ AsteroidsVectorMemory::AsteroidsVectorMemory(void)
          --stackPointer;
       else
          ++stackPointer;
+      stackPointer &= 3;
       UpdatePC();
    });
    _enableLoadAddress.OnFallingEdge([this](){
@@ -42,6 +40,18 @@ AsteroidsVectorMemory::AsteroidsVectorMemory(void)
          UpdatePC();
       });
    addressLowBit.OnValueChanged([this](bool newValue){
+      UpdateOutputs();
+   });
+
+   // the outputs are actually supposed to change continually while the
+   // load line is low, but for our purposes just capturing the value on edges
+   // is enough
+   _counterLoad.OnFallingEdge([this](){
+      LoadPC();
+      UpdateOutputs();
+   });
+   _counterLoad.OnRisingEdge([this](){
+      LoadPC();
       UpdateOutputs();
    });
 }
@@ -75,19 +85,22 @@ uint16_t AsteroidsVectorMemory::GetPCByteAddress(void) const
 void AsteroidsVectorMemory::UpdatePC(void)
 {
    if (!_counterLoad)
+      LoadPC();
+}
+
+void AsteroidsVectorMemory::LoadPC(void)
+{
+   if (!_stackRead)
    {
-      if (!_stackRead)
-      {
-         SetCounterValue(stack[stackPointer]);
-      }
-      else
-      {
-         uint16_t newPC = 0;
-         for (int i = 0; i < 12; ++i)
-            if (loadAddressInputs[i])
-               newPC |= 1 << i;
-         SetCounterValue(newPC);
-      }
+      SetCounterValue(stack[stackPointer]);
+   }
+   else
+   {
+      uint16_t newPC = 0;
+      for (int i = 0; i < 12; ++i)
+         if (loadAddressInputs[i])
+            newPC |= 1 << i;
+      SetCounterValue(newPC);
    }
 }
 

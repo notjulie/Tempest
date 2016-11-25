@@ -75,6 +75,11 @@ private:
    AsteroidsVectorMemory vectorMemory;
    ANDGate pcCounterClock;
    Inverter _timer0;
+   ANDGate stackClockSource;
+   ORGate dmaPop;
+   LS74 dmaPopSource;
+   Inverter dmaPush;
+   NANDGate stackWriteSource;
 
    // traces
    LogicSignal halt;

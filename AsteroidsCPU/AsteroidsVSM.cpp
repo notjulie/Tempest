@@ -176,6 +176,23 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(_timer0, vectorMemory._StackRead());
    for (int i = 0; i < 12; ++i)
       board.Connect(dvy[i], vectorMemory.GetLoadAddressInput(i));
+   board.Connect(stackClockSource, vectorMemory.StackClock());
+   board.Connect(stackWriteSource, vectorMemory._StackWrite());
+   board.Connect(timer0, vectorMemory.StackUpDown());
+
+   // stackClockSource
+   stackClockSource.AddSource(_dmaPush);
+   stackClockSource.AddSource(dmaPop);
+
+   // dmaPop
+   dmaPop.AddSource(_dmaLoad);
+   dmaPop.AddSource(dmaPopSource._Q());
+
+   // dmaPopSource
+   board.Connect(_dmaLoad, dmaPopSource.D());
+   board.Connect(timer0, dmaPopSource._CLR());
+   board.Connect(clock.C3MHz(), dmaPopSource.Clock());
+   board.Connect(VCC, dmaPopSource._PRE());
 
    // _timer0
    board.Connect(timer0, _timer0);
@@ -216,6 +233,13 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(vsmROMLatch.GetOutput(5), adma0);
    board.Connect(adma0, vectorMemory.AddressLowBit());
 
+   // dmaPush
+   board.Connect(_dmaPush, dmaPush);
+
+   // stackWriteSource
+   stackWriteSource.AddSource(dmaPush);
+   stackWriteSource.AddSource(clock.C3MHz());
+
    // name our signals
    _haltStrobe.SetName("_haltStrobe");
    timer0.SetName("timer0");
@@ -253,16 +277,26 @@ void AsteroidsVSM::Interpret(void)
       board.PropogateSignals();
 
       bool clock6MHz = clock.C6MHz();
+      bool clock3MHz = clock.C3MHz();
       bool clockVG = clock.VGCK();
       bool clockVGDelay = vgClockDelay.Q();
 
       uint16_t pc = vectorMemory.GetPCByteAddress();
-      uint8_t vsmROMAddress = vsmROM.GetAddress();
+      //uint8_t vsmROMAddress = vsmROM.GetAddress();
       uint8_t decoderInput = vsmDecoder.GetInput();
-      uint8_t latch0 = dataLatch0.GetValue();
-      uint8_t latch1 = dataLatch1.GetValue();
-      uint8_t latch2 = dataLatch2.GetValue();
-      uint8_t latch3 = dataLatch3.GetValue();
+      //uint8_t latch0 = dataLatch0.GetValue();
+      //uint8_t latch1 = dataLatch1.GetValue();
+      //uint8_t latch2 = dataLatch2.GetValue();
+      //uint8_t latch3 = dataLatch3.GetValue();
+      bool stackClock = stackClockSource;
+
+      bool dmaLoadValue = _dmaLoad;
+      bool timer0Value = timer0;
+      bool _dmaPopLatch = dmaPopSource._Q();
+
+      board.Connect(timer0, dmaPopSource._CLR());
+      board.Connect(clock.C3MHz(), dmaPopSource.Clock());
+
       int i = 0;
    }
 }

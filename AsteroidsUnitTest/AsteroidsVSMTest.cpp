@@ -64,7 +64,28 @@ namespace AsteroidsUnitTest
          AsteroidsVSM vsm;
          vsm.SetVectorRAM(vectorRAM, sizeof(vectorRAM));
          vsm.Interpret();
-         Assert::IsTrue(vsm.GetPCWordAddress() == jumpAddress+1);
+         Assert::IsTrue(vsm.GetPCWordAddress() == jumpAddress + 1);
+      }
+
+
+      TEST_METHOD(TestJSR)
+      {
+         // jump to an RTS, only to return to a halt instruction, verify that
+         // the PC is what we expect
+         uint8_t vectorRAM[2000];
+         uint16_t jumpAddress = 500; // word address, not byte address
+
+         vectorRAM[0] = (uint8_t)jumpAddress;
+         vectorRAM[1] = 0xC0 + (jumpAddress >> 8);
+         vectorRAM[2] = 0;
+         vectorRAM[3] = 0xB0;
+         vectorRAM[jumpAddress * 2] = 0;
+         vectorRAM[jumpAddress * 2 + 1] = 0xD0;
+
+         AsteroidsVSM vsm;
+         vsm.SetVectorRAM(vectorRAM, sizeof(vectorRAM));
+         vsm.Interpret();
+         Assert::IsTrue(vsm.GetPCWordAddress() == 2);
       }
    };
 }

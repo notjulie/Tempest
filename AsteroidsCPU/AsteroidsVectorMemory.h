@@ -15,6 +15,9 @@ public:
    LogicInput &_CounterLoad(void) { return _counterLoad; }
    LogicInput &_StackRead(void) { return _stackRead; }
    LogicInput &AddressLowBit(void) { return addressLowBit; }
+   LogicInput &StackClock(void) { return stackPointerClock; }
+   LogicInput &_StackWrite(void) { return _stackWrite; }
+   LogicInput &StackUpDown(void) { return _stackPointerIncrement; }
    void SetVectorRAM(const void *vectorRAM, int size);
 
    uint16_t GetPCWordAddress(void) const { return counterValue; }
@@ -25,6 +28,7 @@ private:
    void UpdatePC(void);
    void UpdateTopOfStack(void);
    void UpdateOutputs(void);
+   void LoadPC(void);
 
 private:
    uint16_t counterValue = 0;

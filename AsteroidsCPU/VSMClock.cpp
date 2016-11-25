@@ -12,6 +12,8 @@ void VSMClock::Tick(void)
    // which means we update the 6MHz clock first
    clock6MHz.Set((counter & 1) != 0);
 
+   clock3MHz.Set((counter & 2) != 0);
+
    // and update the 1.5MHz clock
    clock1_5MHz.Set((counter & 4) != 0);
 }
