@@ -276,6 +276,7 @@ void AsteroidsVSM::Interpret(void)
       clock.Tick();
       board.PropogateSignals();
 
+#if 0
       bool clock6MHz = clock.C6MHz();
       bool clock3MHz = clock.C3MHz();
       bool clockVG = clock.VGCK();
@@ -296,7 +297,7 @@ void AsteroidsVSM::Interpret(void)
 
       board.Connect(timer0, dmaPopSource._CLR());
       board.Connect(clock.C3MHz(), dmaPopSource.Clock());
-
+#endif
       int i = 0;
    }
 }
