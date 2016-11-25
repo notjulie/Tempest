@@ -22,6 +22,16 @@ LS42::LS42(void)
 
 void LS42::UpdateValue(void)
 {
+   uint8_t selectedOutput = GetInput();
+   if (selectedOutput > 9)
+      selectedOutput = 9;
+   for (int i = 0; i < 10; ++i)
+      outputs[i].Set(i != selectedOutput);
+}
+
+
+uint8_t LS42::GetInput(void) const
+{
    uint8_t selectedOutput = 0;
    if (a)
       selectedOutput += 1;
@@ -31,10 +41,5 @@ void LS42::UpdateValue(void)
       selectedOutput += 4;
    if (d)
       selectedOutput += 8;
-
-   if (selectedOutput > 9)
-      selectedOutput = 9;
-   for (int i = 0; i < 10; ++i)
-      outputs[i].Set(i != selectedOutput);
+   return selectedOutput;
 }
-

@@ -29,6 +29,7 @@ public:
    void Go(void);
    void Reset(void);
    bool IsHalted(void) const { return halt.Get(); }
+   uint16_t GetPCWordAddress(void) const { return vectorMemory.GetPCWordAddress(); }
 
 private:
    std::vector<SimpleVector> vectors;

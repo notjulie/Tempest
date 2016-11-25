@@ -15,6 +15,8 @@ public:
    LogicInput &D(void) { return d; }
    LogicOutput &GetOutput(int n) { return outputs[n]; }
 
+   uint8_t GetInput(void) const;
+
 private:
    void UpdateValue(void);
 

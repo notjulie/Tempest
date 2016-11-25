@@ -35,7 +35,17 @@ VSMROM::VSMROM(void)
 
 void VSMROM::UpdateValue(void)
 {
-   int address = 0;
+   uint8_t output = romData[GetAddress()];
+   outputs[0].Set((output & 1) != 0);
+   outputs[1].Set((output & 2) != 0);
+   outputs[2].Set((output & 4) != 0);
+   outputs[3].Set((output & 8) != 0);
+}
+
+
+uint8_t VSMROM::GetAddress(void) const
+{
+   uint8_t address = 0;
    if (inputs[0])
       address |= 0x01;
    if (inputs[1])
@@ -52,12 +62,5 @@ void VSMROM::UpdateValue(void)
       address |= 0x40;
    if (inputs[7])
       address |= 0x80;
-
-   uint8_t output = romData[address];
-   outputs[0].Set((output & 1) != 0);
-   outputs[1].Set((output & 2) != 0);
-   outputs[2].Set((output & 4) != 0);
-   outputs[3].Set((output & 8) != 0);
+   return address;
 }
-
-

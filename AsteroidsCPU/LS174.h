@@ -14,6 +14,7 @@ public:
    LogicInput &GetInput(int n) { return inputs[n - 1]; }
    LogicOutput &GetOutput(int n) { return outputs[n - 1]; }
 
+   uint8_t GetValue(void) const;
    const std::string &GetName(void) const { return name; }
    void SetName(const std::string s) { name = s; }
 

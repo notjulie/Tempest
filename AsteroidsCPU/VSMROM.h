@@ -12,6 +12,8 @@ public:
    LogicInput &GetInput(int n) { return inputs[n]; }
    LogicOutput &GetOutput(int n) { return outputs[n - 1]; }
 
+   uint8_t GetAddress(void) const;
+
 private:
    void UpdateValue(void);
 

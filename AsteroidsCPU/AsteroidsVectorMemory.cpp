@@ -58,8 +58,17 @@ void AsteroidsVectorMemory::SetCounterValue(uint16_t newValue)
 {
    if (newValue == counterValue)
       return;
-   counterValue = newValue;
+   counterValue = newValue & 0xFFF;
    UpdateOutputs();
+}
+
+
+uint16_t AsteroidsVectorMemory::GetPCByteAddress(void) const
+{
+   uint16_t pc = counterValue * 2;
+   if (addressLowBit)
+      ++pc;
+   return pc;
 }
 
 
@@ -73,7 +82,7 @@ void AsteroidsVectorMemory::UpdatePC(void)
       }
       else
       {
-         uint8_t newPC = 0;
+         uint16_t newPC = 0;
          for (int i = 0; i < 12; ++i)
             if (loadAddressInputs[i])
                newPC |= 1 << i;

@@ -163,7 +163,7 @@ AsteroidsVSM::AsteroidsVSM(void)
 
    //vsmROMLatchClockSource
    vsmROMLatchClockSource.SetName("vsmROMLatchClockSource");
-   vsmROMLatchClockSource.AddSource(clock.C6MHz());
+   vsmROMLatchClockSource.AddSource(clock.VGCK());
    vsmROMLatchClockSource.AddSource(a7_1._Q());
 
    // ddma
@@ -174,13 +174,15 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(pcCounterClock, vectorMemory.CounterClock());
    board.Connect(_dmaLoad, vectorMemory._CounterLoad());
    board.Connect(_timer0, vectorMemory._StackRead());
+   for (int i = 0; i < 12; ++i)
+      board.Connect(dvy[i], vectorMemory.GetLoadAddressInput(i));
 
    // _timer0
    board.Connect(timer0, _timer0);
 
    // pcCounterClock
-   pcCounterClock.AddSource(_latch1);
-   pcCounterClock.AddSource(_latch3);
+   pcCounterClock.AddSource(_latch0);
+   pcCounterClock.AddSource(_latch2);
 
    // alphanum
    alphanumSource.AddSource(timer0);
@@ -249,6 +251,19 @@ void AsteroidsVSM::Interpret(void)
    {
       clock.Tick();
       board.PropogateSignals();
+
+      bool clock6MHz = clock.C6MHz();
+      bool clockVG = clock.VGCK();
+      bool clockVGDelay = vgClockDelay.Q();
+
+      uint16_t pc = vectorMemory.GetPCByteAddress();
+      uint8_t vsmROMAddress = vsmROM.GetAddress();
+      uint8_t decoderInput = vsmDecoder.GetInput();
+      uint8_t latch0 = dataLatch0.GetValue();
+      uint8_t latch1 = dataLatch1.GetValue();
+      uint8_t latch2 = dataLatch2.GetValue();
+      uint8_t latch3 = dataLatch3.GetValue();
+      int i = 0;
    }
 }
 
