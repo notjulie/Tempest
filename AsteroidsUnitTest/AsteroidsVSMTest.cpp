@@ -127,5 +127,20 @@ namespace AsteroidsUnitTest
          vsm.Interpret();
          Assert::IsTrue(vsm.GetPCWordAddress() == 2);
       }
+
+      TEST_METHOD(TestGoToXY)
+      {
+         static const uint8_t vectorRAM[] = {
+            0x23, 0xA1, 0x56, 0x04, // go command
+            0x00, 0xB0  // halt command
+         };
+         AsteroidsVSM vsm;
+         vsm.SetVectorRAM(vectorRAM, sizeof(vectorRAM));
+         vsm.Interpret();
+         Assert::IsTrue(vsm.GetPCWordAddress() == 3);
+         Assert::IsTrue(vsm.GetX() == 0x456);
+         Assert::IsTrue(vsm.GetY() == 0x123);
+      }
+
    };
 }

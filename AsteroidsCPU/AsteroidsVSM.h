@@ -30,10 +30,19 @@ public:
    void Reset(void);
    bool IsHalted(void) const { return halt.Get(); }
    uint16_t GetPCWordAddress(void) const { return vectorMemory.GetPCWordAddress(); }
+   uint16_t GetX(void) const { return x; }
+   uint16_t GetY(void) const { return y; }
+
+private:
+   void ProcessVectorCommand(void) {}
 
 private:
    std::vector<SimpleVector> vectors;
    LogicBoard board;
+   bool lastGoStrobe = true;
+   bool previousLoadStrobe = true;
+   uint16_t x = 0;
+   uint16_t y = 0;
 
    // manually controlled signals
    LogicSignal _VMEM;
@@ -62,9 +71,6 @@ private:
    LS174 dataLatch2;
    LS174 dataLatch3;
    LS42 vsmDecoder;
-   LS109 goSource;
-   LogicSignal _go;
-   Inverter goStrobe;
    ORGate vsmROMLatchClockSource;
    NANDGate alphanumSource;
    ANDGate latch1ResetSource;
@@ -110,7 +116,6 @@ private:
    LogicSignal xCarry;
    LogicSignal yCarry;
    LogicSignal _dmaCut;
-   LogicSignal _stop;
 };
 
 

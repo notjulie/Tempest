@@ -1,5 +1,8 @@
 
 #include "stdafx.h"
+
+#include "TempestCPU/TempestException.h"
+
 #include "AsteroidsVSM.h"
 
 
@@ -88,7 +91,6 @@ AsteroidsVSM::AsteroidsVSM(void)
 
    // andGoHalt
    andGoHalt.SetName("andGoHalt");
-   andGoHalt.AddSource(_go);
    andGoHalt.AddSource(_halt);
 
    // dataLatch0
@@ -149,17 +151,6 @@ AsteroidsVSM::AsteroidsVSM(void)
    board.Connect(vsmDecoder.GetOutput(5), _latch1);
    board.Connect(vsmDecoder.GetOutput(6), _latch2);
    board.Connect(vsmDecoder.GetOutput(7), _latch3);
-
-   // goSource
-   board.Connect(goStrobe, goSource.J());
-   board.Connect(_stop, goSource.K());
-   board.Connect(clock.C6MHz(), goSource.Clock());
-   board.Connect(VCC, goSource._PRE());
-   board.Connect(_halt, goSource._CLR());
-   board.Connect(goSource._Q(), _go);
-
-   // goStrobe
-   board.Connect(_goStrobe, goStrobe);
 
    //vsmROMLatchClockSource
    vsmROMLatchClockSource.SetName("vsmROMLatchClockSource");
@@ -276,6 +267,26 @@ void AsteroidsVSM::Interpret(void)
       clock.Tick();
       board.PropogateSignals();
 
+      // on the falling edge of loadStrobe we load new XY positions
+      bool _loadStrobe = timer0 || _haltStrobe;
+      if (!_loadStrobe && previousLoadStrobe)
+      {
+         x = 0;
+         for (int i = 0; i < 12; ++i)
+            if (dvx[i])
+               x |= 1 << i;
+         y = 0;
+         for (int i = 0; i < 12; ++i)
+            if (dvy[i])
+               y |= 1 << i;
+      }
+      previousLoadStrobe = _loadStrobe;
+
+      // on the falling edge of goStrobe we process vector commands
+      if (!_goStrobe && lastGoStrobe)
+         ProcessVectorCommand();
+      lastGoStrobe = _goStrobe;
+
 #if 0
       bool clock6MHz = clock.C6MHz();
       bool clock3MHz = clock.C3MHz();
@@ -317,7 +328,6 @@ void AsteroidsVSM::Reset(void)
 {
    // these currently aren't set by anything so set them here
    _dmaCut.Set(true);
-   _stop.Set(true);
 
    // we shouldn't be getting DMAGO during reset
    _dmaGo.Set(true);
