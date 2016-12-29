@@ -34,7 +34,9 @@ public:
    uint16_t GetY(void) const { return y; }
 
 private:
-   void ProcessVectorCommand(void) {}
+   uint16_t GetDVX(void);
+   uint16_t GetDVY(void);
+   void ProcessVectorCommand(void);
 
 private:
    std::vector<SimpleVector> vectors;

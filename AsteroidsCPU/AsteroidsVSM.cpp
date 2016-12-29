@@ -271,14 +271,8 @@ void AsteroidsVSM::Interpret(void)
       bool _loadStrobe = timer0 || _haltStrobe;
       if (!_loadStrobe && previousLoadStrobe)
       {
-         x = 0;
-         for (int i = 0; i < 12; ++i)
-            if (dvx[i])
-               x |= 1 << i;
-         y = 0;
-         for (int i = 0; i < 12; ++i)
-            if (dvy[i])
-               y |= 1 << i;
+         x = GetDVX();
+         y = GetDVY();
       }
       previousLoadStrobe = _loadStrobe;
 
@@ -311,6 +305,39 @@ void AsteroidsVSM::Interpret(void)
 #endif
       int i = 0;
    }
+}
+
+uint16_t AsteroidsVSM::GetDVX(void)
+{
+   uint16_t x = 0;
+   for (int i = 0; i < 12; ++i)
+      if (dvx[i])
+         x |= 1 << i;
+   return x;
+}
+
+uint16_t AsteroidsVSM::GetDVY(void)
+{
+   uint16_t y = 0;
+   for (int i = 0; i < 12; ++i)
+      if (dvy[i])
+         y |= 1 << i;
+   return y;
+}
+
+void AsteroidsVSM::ProcessVectorCommand(void)
+{
+   uint16_t dx = GetDVX();
+   uint16_t dy = GetDVY();
+   uint8_t scale = 0;
+   if (scale0)
+      scale |= 1;
+   if (scale1)
+      scale |= 2;
+   if (scale2)
+      scale |= 4;
+   if (scale3)
+      scale |= 8;
 }
 
 void AsteroidsVSM::Go(void)
