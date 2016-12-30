@@ -89,7 +89,7 @@ void InitializeControlPanel(void)
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 
 	// calculate our timer counts
-	int ENCODER_SAMPLE_FREQUENCY = 4000;
+	int ENCODER_SAMPLE_FREQUENCY = 20000;
 	int timerCounts = GetAPB1TimerClockSpeed() / ENCODER_SAMPLE_FREQUENCY;
 	int prescale = 1 + (timerCounts >> 16);
 	timerCounts /= prescale;
@@ -249,61 +249,75 @@ void SetButtonLED(ButtonFlag button, bool value)
 class EncoderInput
 {
 public:
+	EncoderInput(void) {
+		CONSECUTIVE_SAMPLES_FOR_CHANGE = 5;
+		value = false;
+		anchorPoint = 0;
+		changesAccumulated = 0;
+		lastSample = 0;
+	}
+
 	bool AddSample(uint16_t sampleValue) {
 		const int HYSTERESIS = 2000;
 
+		// save it
+		lastSample = sampleValue;
+
 		// if we are currently high...
 		if (value) {
+			// a value lower than the anchor point by our margin is a potential
+			// change in output
+			if (sampleValue < anchorPoint - HYSTERESIS)
+				return ++changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE;
+
+			// clear our counter of consecutive changes
+			changesAccumulated = 0;
+
 			// a value higher than the anchor point is a new anchor point
 			if (sampleValue > anchorPoint)
-			{
 				anchorPoint = sampleValue;
-				return false;
-			}
-
-			// a value lower than the anchor point by our margin is a change in output
-			if (sampleValue < anchorPoint - HYSTERESIS)
-			{
-				anchorPoint = sampleValue;
-				value = false;
-				return true;
-			}
-
-			// else nothing
-			return false;
 		}
 
 		// if we are currently low...
 		if (!value) {
+			// a value higher than the anchor point by our margin is a potential
+			// change in output
+			if (sampleValue > anchorPoint + HYSTERESIS)
+				return ++changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE;
+
+			// clear our counter of consecutive changes
+			changesAccumulated = 0;
+
 			// a value lower than the anchor point is a new anchor point
 			if (sampleValue < anchorPoint)
-			{
 				anchorPoint = sampleValue;
-				return false;
-			}
-
-			// a value higher than the anchor point by our margin is a change in output
-			if (sampleValue > anchorPoint + HYSTERESIS)
-			{
-				anchorPoint = sampleValue;
-				value = true;
-				return true;
-			}
-
-			// else nothing
-			return false;
 		}
 
 		return false;
 	}
 
-	bool GetValue(void) const {
-		return value;
+	void AcceptChange(void) {
+		if (changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
+		{
+			value = !value;
+			changesAccumulated = 0;
+			anchorPoint = lastSample;
+		}
+	}
+
+	bool GetProposedValue(void) {
+		if (changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
+			return !value;
+		else
+			return value;
 	}
 
 private:
+	int CONSECUTIVE_SAMPLES_FOR_CHANGE;
 	bool value;
 	int anchorPoint;
+	int changesAccumulated;
+	uint16_t lastSample;
 };
 
 static EncoderInput input1;
@@ -319,20 +333,24 @@ void TIM2_IRQHandler(void)
 	int adc1 = ADC1->DR;
 	int adc2 = ADC2->DR;
 
-	// lowpass
-	static int adc1Filter = 0;
-	static int adc2Filter = 0;
-	adc1Filter = (9*adc1Filter + adc1) / 10;
-	adc2Filter = (9*adc2Filter + adc2) / 10;
-
 	// add the new samples
-	bool changed = false;
-	changed |= input1.AddSample(adc1Filter);
-	changed |= input2.AddSample(adc2Filter);
+	bool input1Changing = input1.AddSample(adc1);
+	bool input2Changing = input2.AddSample(adc2);
 
-	// update the value
-	if (changed)
-		ServiceEncoder(input1.GetValue(), input2.GetValue());
+	// if neither is changing we do nothing
+	if (!input1Changing && !input2Changing)
+		return;
+
+	// if both want to change, it must be noise, because that's not how
+	// an encoder works and we can't make sense of it; in such a case
+	// wait for one of them to change its mind
+	if (input1Changing && input2Changing)
+		return;
+
+	// else update the encoder value and accept the change
+	ServiceEncoder(input1.GetProposedValue(), input2.GetProposedValue());
+	input1.AcceptChange();
+	input2.AcceptChange();
 }
 
 };
