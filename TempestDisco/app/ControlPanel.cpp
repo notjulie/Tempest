@@ -250,15 +250,16 @@ class EncoderInput
 {
 public:
 	EncoderInput(void) {
-		CONSECUTIVE_SAMPLES_FOR_CHANGE = 5;
+		CONSECUTIVE_SAMPLES_FOR_CHANGE = 15;
 		value = false;
 		anchorPoint = 0;
 		changesAccumulated = 0;
+		anchorPointChangesAccumulated = 0;
 		lastSample = 0;
 	}
 
 	bool AddSample(uint16_t sampleValue) {
-		const int HYSTERESIS = 2000;
+		const int HYSTERESIS = 5000;
 
 		// save it
 		lastSample = sampleValue;
@@ -268,14 +269,9 @@ public:
 			// a value lower than the anchor point by our margin is a potential
 			// change in output
 			if (sampleValue < anchorPoint - HYSTERESIS)
-				return ++changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE;
-
-			// clear our counter of consecutive changes
-			changesAccumulated = 0;
-
-			// a value higher than the anchor point is a new anchor point
-			if (sampleValue > anchorPoint)
-				anchorPoint = sampleValue;
+				++changesAccumulated;
+			else
+				changesAccumulated = 0;
 		}
 
 		// if we are currently low...
@@ -283,16 +279,31 @@ public:
 			// a value higher than the anchor point by our margin is a potential
 			// change in output
 			if (sampleValue > anchorPoint + HYSTERESIS)
-				return ++changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE;
-
-			// clear our counter of consecutive changes
-			changesAccumulated = 0;
-
-			// a value lower than the anchor point is a new anchor point
-			if (sampleValue < anchorPoint)
-				anchorPoint = sampleValue;
+				++changesAccumulated;
+			else
+				changesAccumulated = 0;
 		}
 
+		// if we have accumulated enough consecutive samples that suggest a change
+		// in our output, change our output
+		if (changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
+			return true;
+
+		// update our anchor point if necessary
+		if (value && sampleValue > anchorPoint)
+			++anchorPointChangesAccumulated;
+		else if (!value && sampleValue < anchorPoint)
+			++anchorPointChangesAccumulated;
+		else
+			anchorPointChangesAccumulated = 0;
+
+		if (anchorPointChangesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
+		{
+			anchorPoint = sampleValue;
+			anchorPointChangesAccumulated = 0;
+		}
+
+		// we aren't changing
 		return false;
 	}
 
@@ -302,6 +313,7 @@ public:
 			value = !value;
 			changesAccumulated = 0;
 			anchorPoint = lastSample;
+			anchorPointChangesAccumulated = 0;
 		}
 	}
 
@@ -317,6 +329,7 @@ private:
 	bool value;
 	int anchorPoint;
 	int changesAccumulated;
+	int anchorPointChangesAccumulated;
 	uint16_t lastSample;
 };
 
