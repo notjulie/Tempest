@@ -7,11 +7,6 @@
 
 VectorDataInterpreter::VectorDataInterpreter(void)
 {
-	isHalt = true;
-	resetRequested = true;
-	goRequested = false;
-	PC = 0;
-   stackIndex = 0;
    for (int i = 0; i < 16 * 1024; ++i)
       hookFlags[i] = false;
 }
@@ -20,145 +15,103 @@ VectorDataInterpreter::~VectorDataInterpreter(void)
 {
 }
 
-void VectorDataInterpreter::Reset(void)
+void VectorDataInterpreter::InterpretAt(uint16_t pc)
 {
-	isHalt = true;
-	resetRequested = true;
-}
-
-void VectorDataInterpreter::Interpret(void)
-{
-   resetRequested = true;
-   goRequested = true;
-   
-   for (;;)
+   while (!isHalt)
 	{
-		if (!SingleStep())
-			break;
+      pc = SingleStep(pc);
+      if (pc == 0)
+         break;
 	}
 }
 
 
-bool VectorDataInterpreter::SingleStep(void)
+uint16_t VectorDataInterpreter::SingleStep(uint16_t pc)
 {
-	// process reset if we have one
-	if (resetRequested)
-	{
-		PC = 0;
-      stackIndex = 0;
-		isHalt = true;
-		resetRequested = false;
-	}
-
-	// process go if we have one
-	if (goRequested)
-	{
-		isHalt = false;
-		goRequested = false;
-	}
-
 	if (isHalt)
-		return false;
+		return 0;
 
    // see if there's a hook
-   if (hookFlags[PC])
+   /*if (hookFlags[pc])
    {
-      hooks[PC]();
+      hooks[pc]();
       return !isHalt;
-   }
+   }*/
 
-	uint8_t opByte = GetAt(1);
+	uint8_t opByte = vectorData.GetAt(pc + 1);
 	switch (opByte >> 4)
 	{
 	case  0: // 0000
 	case  1: // 0001
 	{
 		// LDRAW
-		int x = (GetAt(2) + 256 * GetAt(3)) & 0x1FFF;
+      int x = (vectorData.GetAt(pc + 2) + 256 * vectorData.GetAt(pc + 3)) & 0x1FFF;
 		if (x & 0x1000)
 			x = -0x1000 + (x & ~0x1000);
-		int y = (GetAt(0) + 256 * GetAt(1)) & 0x1FFF;
+      int y = (vectorData.GetAt(pc) + 256 * vectorData.GetAt(pc + 1)) & 0x1FFF;
 		if (y & 0x1000)
 			y = -0x1000 + (y & ~0x1000);
-		LDraw(x, y, GetAt(3) >> 5);
-		PC += 4;
-		return true;
+      LDraw(x, y, vectorData.GetAt(pc + 3) >> 5);
+		return pc + 4;
 	}
 
 	case  2: // 0010
 	case  3: // 0011
 		// HALT
 		isHalt = true;
-		return false;
+		return 0;
 
 	case  4: // 0100         
 	case  5: // 0101
 		// SDRAW
 		{
-			int x = GetAt(0) & 0x0F;
-			if ((GetAt(0) & 0x10) != 0)
+         int x = vectorData.GetAt(pc) & 0x0F;
+         if ((vectorData.GetAt(pc) & 0x10) != 0)
 				x = -16 + x;
-			int y = GetAt(1) & 0x0F;
-			if ((GetAt(1) & 0x10) != 0)
+         int y = vectorData.GetAt(pc + 1) & 0x0F;
+         if ((vectorData.GetAt(pc + 1) & 0x10) != 0)
 				y = -16 + y;
-			SDraw(x,	y,	GetAt(0) >> 5);
-			PC += 2;
-			return true;
+         SDraw(x, y, vectorData.GetAt(pc) >> 5);
+			return pc + 2;
 		}
 
 	case  6: // 0110
 		//STAT
-		Stat(GetAt(0) & 0xF, GetAt(0) >> 4);
-		PC += 2;
-		return true;
+      Stat(vectorData.GetAt(pc) & 0xF, vectorData.GetAt(pc) >> 4);
+		return pc + 2;
 
 	case  7: // 0111
 		// SCALE
-		Scale(GetAt(1) & 7, GetAt(0));
-		PC += 2;
-		return true;
+      Scale(vectorData.GetAt(pc + 1) & 7, vectorData.GetAt(pc));
+		return pc + 2;
 
 	case  8: // 1000
 	case  9: // 1001
 		// CENTER
 		Center();
-		PC += 2;
-		return true;
+		return pc + 2;
 
 	case 10: // 1010
 	case 11: // 1011
 		// JSR
-      stack[stackIndex++] = (uint16_t)(PC + 2);
-		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
-		return true;
+      InterpretAt((uint16_t)(2 * ((vectorData.GetAt(pc) + 256 * vectorData.GetAt(pc + 1)) & 0x1FFF)));
+		return isHalt ? 0 : pc + 2;
 
 	case 12: // 1100
 	case 13: // 1101
 		// RTS
-		if (stackIndex == 0)
-			return false;
-		PC = stack[--stackIndex];
-		return true;
+		return 0;
 
 	case 14: // 1110
 	case 15: // 1111
 		// JUMP
-		PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x1FFF));
-
-		// a jump to address zero basically means we are done and starting over,
-		// but not halted
-		return PC != 0;
+      return (uint16_t)(2 * ((vectorData.GetAt(pc) + 256 * vectorData.GetAt(pc + 1)) & 0x1FFF));
 
 	default:
 		throw TempestException("VectorDataInterpreter bad op code");
 	}
 }
 
-
-uint8_t VectorDataInterpreter::GetAt(uint16_t pcOffset)
-{
-	return vectorData.GetAt((uint16_t)(PC + pcOffset));
-}
 
 
 void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<void()> hook)
