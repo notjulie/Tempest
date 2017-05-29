@@ -51,13 +51,15 @@ void TempestPiIO::PushFrameToScreen(void)
    VectorData vectorData;
    tempestRunner->GetVectorData(vectorData);
 
+   SimpleVectorGenerator vectorGenerator;
+
    SimpleVectorDataInterpreter vectorInterpretor;
    vectorInterpretor.SetVectorData(vectorData);
-   vectorInterpretor.Interpret();
+   vectorInterpretor.Interpret(&vectorGenerator);
 
    // dump them to the screen
    std::vector<SimpleVector> vectors;
-   vectorInterpretor.GetAllVectors(vectors);
+   vectorGenerator.GetAllVectors(vectors);
    screen.DisplayVectors(vectors);
 }
 
