@@ -16,6 +16,8 @@ namespace std {
    #pragma warning(disable : 4820)	// padding in structures
 #endif
 
+struct SimpleVector;
+
 class TempestRunner
 {
 private:
@@ -61,9 +63,11 @@ public:
 
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
-   void     GetVectorData(VectorData &vectorData) { tempestBus.GetVectorData(vectorData); }
    void     SetDemoMode(void);
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
+
+   // function for getting display vector data
+   void GetAllVectors(std::vector<SimpleVector> &vectors);
 
 private:
    void  RegisterHook(uint16_t address, std::function<uint32_t()> hook);

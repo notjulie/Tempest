@@ -5,19 +5,17 @@
 #include "SimpleVector.h"
 #include "VectorDataInterpreter.h"
 
-class SimpleVectorDataInterpreter : public VectorDataInterpreter
-{
-public:
-	SimpleVectorDataInterpreter(void);
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
 
-
-private:
-   void Char(char c);
-};
 
 class SimpleVectorGenerator : public VectorGenerator
 {
 public:
+   virtual ~SimpleVectorGenerator(void) {}
+
    void GetAllVectors(std::vector<SimpleVector> &vectors) { vectors = this->vectors; }
 
    virtual void Center(void);
@@ -38,5 +36,9 @@ private:
    int color = 0;
    std::vector<SimpleVector> vectors;
 };
+
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif

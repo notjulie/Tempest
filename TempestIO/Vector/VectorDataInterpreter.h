@@ -5,6 +5,11 @@
 
 #include "VectorData.h"
 
+#ifdef _WIN32
+   #pragma warning(push)
+   #pragma warning(disable : 4820)	// padding in structures
+#endif
+
 class VectorGenerator
 {
 public:
@@ -28,6 +33,9 @@ public:
    uint8_t ReadColorRAM(uint16_t address) { return vectorData.ReadColorRAM(address); }
    void RegisterHook(uint16_t address, std::function<uint16_t(uint16_t)> hook);
 
+   // primitives callable by hooks
+   void Char(char c);
+
 protected:
    void InterpretAt(uint16_t pc);
    uint16_t SingleStep(uint16_t pc);
@@ -40,5 +48,9 @@ protected:
    std::map<uint16_t, std::function<uint16_t(uint16_t)> > hooks;
 };
 
+
+#ifdef _WIN32
+   #pragma warning(pop)
+#endif
 
 #endif

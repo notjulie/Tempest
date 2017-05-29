@@ -142,3 +142,25 @@ void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<uint16_
    hooks[address] = hook;
 }
 
+
+void VectorDataInterpreter::Char(char c)
+{
+   // letters
+   if (c >= 'A' && c <= 'Z')
+   {
+      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11fa + 2 * (c - 'A')));
+      return;
+   }
+
+   // numbers
+   if (c >= '0' && c <= '9')
+   {
+      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11e4 + 2 * (c - '0')));
+      return;
+   }
+
+   // space for everything else
+   InterpretAt(0x1168);
+}
+
+

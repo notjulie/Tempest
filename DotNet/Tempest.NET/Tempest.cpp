@@ -56,21 +56,8 @@ namespace TempestDotNET {
 
    VectorEnumerator ^Tempest::GetVectorEnumerator(void)
    {
-      // get the latest vector data
-      VectorData  vectorData;
-      tempestRunner->GetVectorData(vectorData);
-
-      // make a vector generator
-      SimpleVectorGenerator vectorGenerator;
-
-      // interpret it
-      SimpleVectorDataInterpreter vectorInterpretor;
-      vectorInterpretor.SetVectorData(vectorData);
-      vectorInterpretor.Interpret(&vectorGenerator);
-
-      // return the result
       std::vector<SimpleVector> vectors;
-      vectorGenerator.GetAllVectors(vectors);
+      tempestRunner->GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);
    }
    
