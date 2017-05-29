@@ -6,14 +6,8 @@
 
 SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(void)
 {
-	x = y = 0;
-	nextIndex = 0;
-	color = 0;
-	binaryScale = 1;
-	linearScale = 0;
-
    // add a hook that skips over the player one score display
-   RegisterHook(0x2f6c,
+   /*RegisterHook(0x2f6c,
       [this](uint16_t pc) { 
       Char('0');
       Char('1');
@@ -23,7 +17,7 @@ SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(void)
       Char(' ');
       return pc + 12;
       }
-      );
+      );*/
 }
 
 void SimpleVectorDataInterpreter::Char(char c)
@@ -47,21 +41,12 @@ void SimpleVectorDataInterpreter::Char(char c)
 }
 
 
-bool SimpleVectorDataInterpreter::GetNextVector(SimpleVector &_vector)
-{
-	if (nextIndex >= (int)vectors.size())
-		return false;
-
-	_vector = vectors[(unsigned)(nextIndex++)];
-	return true;
-}
-
-void SimpleVectorDataInterpreter::Center(void)
+void SimpleVectorGenerator::Center(void)
 {
 	x = y = 0;
 }
 
-void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
+void SimpleVectorGenerator::LDraw(int _x, int _y, int _intensity)
 {
 	// calculate the XY displacement
 	float actualDX = (float)(_x << (14 - binaryScale));
@@ -103,25 +88,25 @@ void SimpleVectorDataInterpreter::LDraw(int _x, int _y, int _intensity)
 	vectors.push_back(vector);
 }
 
-void SimpleVectorDataInterpreter::SDraw(int x, int y, int intensity)
+void SimpleVectorGenerator::SDraw(int x, int y, int intensity)
 {
    // LDraw's units are double SDraw's
 	LDraw(x * 2, y * 2, intensity);
 }
 
 
-void SimpleVectorDataInterpreter::Stat(int color, int)
+void SimpleVectorGenerator::Stat(int colorIndex, int intensity, int color)
 {
-	this->color = ReadColorRAM((uint8_t)color);
+	this->color = color;
 }
 
-void SimpleVectorDataInterpreter::Scale(int binaryScale, int linearScale)
+void SimpleVectorGenerator::Scale(int binaryScale, int linearScale)
 {
 	this->binaryScale = binaryScale;
 	this->linearScale = linearScale;
 }
 
-bool SimpleVectorDataInterpreter::ClipEndPoint(int &startX, int &startY, int &endX, int &endY)
+bool SimpleVectorGenerator::ClipEndPoint(int &startX, int &startY, int &endX, int &endY)
 {
 	if (endX < -32768)
 	{

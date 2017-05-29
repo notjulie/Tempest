@@ -15,6 +15,18 @@ VectorDataInterpreter::~VectorDataInterpreter(void)
 {
 }
 
+void VectorDataInterpreter::Interpret(VectorGenerator *generator)
+{
+   // point at the generator
+   this->vectorGenerator = generator;
+
+   // start us out unhalted
+   isHalt = false;  
+   
+   // interpret starting at address zero
+   InterpretAt(0); 
+}
+
 void VectorDataInterpreter::InterpretAt(uint16_t pc)
 {
    while (!isHalt)
@@ -52,7 +64,7 @@ uint16_t VectorDataInterpreter::SingleStep(uint16_t pc)
       int y = (vectorData.GetAt(pc) + 256 * vectorData.GetAt(pc + 1)) & 0x1FFF;
 		if (y & 0x1000)
 			y = -0x1000 + (y & ~0x1000);
-      LDraw(x, y, vectorData.GetAt(pc + 3) >> 5);
+      vectorGenerator->LDraw(x, y, vectorData.GetAt(pc + 3) >> 5);
 		return pc + 4;
 	}
 
@@ -72,24 +84,28 @@ uint16_t VectorDataInterpreter::SingleStep(uint16_t pc)
          int y = vectorData.GetAt(pc + 1) & 0x0F;
          if ((vectorData.GetAt(pc + 1) & 0x10) != 0)
 				y = -16 + y;
-         SDraw(x, y, vectorData.GetAt(pc) >> 5);
+         vectorGenerator->SDraw(x, y, vectorData.GetAt(pc) >> 5);
 			return pc + 2;
 		}
 
 	case  6: // 0110
 		//STAT
-      Stat(vectorData.GetAt(pc) & 0xF, vectorData.GetAt(pc) >> 4);
+      vectorGenerator->Stat(
+         vectorData.GetAt(pc) & 0xF,
+         vectorData.GetAt(pc) >> 4,
+         ReadColorRAM(vectorData.GetAt(pc) & 0xF)
+         );
 		return pc + 2;
 
 	case  7: // 0111
 		// SCALE
-      Scale(vectorData.GetAt(pc + 1) & 7, vectorData.GetAt(pc));
+      vectorGenerator->Scale(vectorData.GetAt(pc + 1) & 7, vectorData.GetAt(pc));
 		return pc + 2;
 
 	case  8: // 1000
 	case  9: // 1001
 		// CENTER
-		Center();
+      vectorGenerator->Center();
 		return pc + 2;
 
 	case 10: // 1010
@@ -124,25 +140,5 @@ void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<uint16_
 
    hookFlags[address] = true;
    hooks[address] = hook;
-}
-
-void VectorDataInterpreter::Center(void)
-{
-}
-
-void VectorDataInterpreter::LDraw(int, int, int)
-{
-}
-
-void VectorDataInterpreter::Scale(int, int)
-{
-}
-
-void VectorDataInterpreter::SDraw(int, int, int)
-{
-}
-
-void VectorDataInterpreter::Stat(int, int)
-{
 }
 

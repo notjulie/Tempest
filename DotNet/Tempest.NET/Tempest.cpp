@@ -60,14 +60,17 @@ namespace TempestDotNET {
       VectorData  vectorData;
       tempestRunner->GetVectorData(vectorData);
 
+      // make a vector generator
+      SimpleVectorGenerator vectorGenerator;
+
       // interpret it
       SimpleVectorDataInterpreter vectorInterpretor;
       vectorInterpretor.SetVectorData(vectorData);
-      vectorInterpretor.Interpret();
+      vectorInterpretor.Interpret(&vectorGenerator);
 
       // return the result
       std::vector<SimpleVector> vectors;
-      vectorInterpretor.GetAllVectors(vectors);
+      vectorGenerator.GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);
    }
    
