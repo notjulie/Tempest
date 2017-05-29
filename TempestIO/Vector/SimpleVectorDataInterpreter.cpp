@@ -13,11 +13,37 @@ SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(void)
 	linearScale = 0;
 
    // add a hook that skips over the player one score display
-   /*RegisterHook(0x2f74 - VECTOR_RAM_BASE,
-      [this]() { 
-         Jump(GetPC() + 12);
+   RegisterHook(0x2f6c,
+      [this](uint16_t pc) { 
+      Char('0');
+      Char('1');
+      Char('2');
+      Char('3');
+      Char('4');
+      Char(' ');
+      return pc + 12;
       }
-      );*/
+      );
+}
+
+void SimpleVectorDataInterpreter::Char(char c)
+{
+   // letters
+   if (c >= 'A' && c <= 'Z')
+   {
+      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11fa + 2 * (c - 'A')));
+      return;
+   }
+
+   // numbers
+   if (c >= '0' && c <= '9')
+   {
+      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11e4 + 2 * (c - '0')));
+      return;
+   }
+
+   // space for everything else
+   InterpretAt(0x1168);
 }
 
 

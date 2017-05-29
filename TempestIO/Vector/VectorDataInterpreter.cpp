@@ -19,6 +19,14 @@ void VectorDataInterpreter::InterpretAt(uint16_t pc)
 {
    while (!isHalt)
 	{
+      // see if there's a hook
+      if (hookFlags[pc])
+      {
+         pc = hooks[pc](pc);
+         continue;
+      }
+
+      // else just single step it
       pc = SingleStep(pc);
       if (pc == 0)
          break;
@@ -30,13 +38,6 @@ uint16_t VectorDataInterpreter::SingleStep(uint16_t pc)
 {
 	if (isHalt)
 		return 0;
-
-   // see if there's a hook
-   /*if (hookFlags[pc])
-   {
-      hooks[pc]();
-      return !isHalt;
-   }*/
 
 	uint8_t opByte = vectorData.GetAt(pc + 1);
 	switch (opByte >> 4)
@@ -114,8 +115,13 @@ uint16_t VectorDataInterpreter::SingleStep(uint16_t pc)
 
 
 
-void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<void()> hook)
+void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<uint16_t(uint16_t)> hook)
 {
+   // Just to save on confusion I allow the caller to specicfy the address as either
+   // a bus address or as a relative offset in the vector memory space.  Just strip off
+   // the bits we don't need.
+   address &= 0x1FFF;
+
    hookFlags[address] = true;
    hooks[address] = hook;
 }

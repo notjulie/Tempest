@@ -17,7 +17,7 @@ public:
 	void WriteVectorRAM(uint16_t address, uint8_t value) { vectorData.WriteVectorRAM(address, value); }
    void WriteColorRAM(uint16_t address, uint8_t value) { vectorData.WriteColorRAM(address, value); }
    uint8_t ReadColorRAM(uint16_t address) { return vectorData.ReadColorRAM(address); }
-   void RegisterHook(uint16_t address, std::function<void()> hook);
+   void RegisterHook(uint16_t address, std::function<uint16_t(uint16_t)> hook);
 
 protected:
 	virtual void Center(void);
@@ -26,15 +26,15 @@ protected:
 	virtual void SDraw(int x, int y, int intensity);
 	virtual void Stat(int color, int intensity);
 
-private:
+protected:
    void InterpretAt(uint16_t pc);
    uint16_t SingleStep(uint16_t pc);
 
-private:
+protected:
 	VectorData vectorData;
 	bool isHalt = false;
    bool hookFlags[16 * 1024];
-   std::map<uint16_t, std::function<void()> > hooks;
+   std::map<uint16_t, std::function<uint16_t(uint16_t)> > hooks;
 };
 
 

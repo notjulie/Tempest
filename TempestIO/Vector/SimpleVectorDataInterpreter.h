@@ -23,6 +23,7 @@ protected:
 	virtual void Stat(int color, int intensity);
 
 private:
+   void Char(char c);
 	bool ClipEndPoint(int &startX, int &startY, int &endX, int &endY);
 
 private:
