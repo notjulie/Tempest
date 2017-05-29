@@ -47,19 +47,11 @@ void TempestPiIO::Run(TempestRunner *tempestRunner)
 
 void TempestPiIO::PushFrameToScreen(void)
 {
-   // get the vector data
-   VectorData vectorData;
-   tempestRunner->GetVectorData(vectorData);
-
-   SimpleVectorGenerator vectorGenerator;
-
-   SimpleVectorDataInterpreter vectorInterpretor;
-   vectorInterpretor.SetVectorData(vectorData);
-   vectorInterpretor.Interpret(&vectorGenerator);
+   // get the vectors
+   std::vector<SimpleVector> vectors;
+   tempestRunner->GetAllVectors(vectors);
 
    // dump them to the screen
-   std::vector<SimpleVector> vectors;
-   vectorGenerator.GetAllVectors(vectors);
    screen.DisplayVectors(vectors);
 }
 
