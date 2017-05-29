@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 #include "6502/CPU6502Exception.h"
+#include "../TempestIO/Vector/SimpleVectorDataInterpreter.h"
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 
@@ -183,6 +184,45 @@ void TempestRunner::SetBreakpoint(uint16_t address, bool set)
       addressFlags[address] |= BREAKPOINT;
    else
       addressFlags[address] &= ~BREAKPOINT;
+}
+
+void TempestRunner::GetAllVectors(std::vector<SimpleVector> &vectors)
+{
+   // NOTE: this typically does not get called on the 6502 thread, so
+   // be careful what you do here... everything we call should be safe
+
+#if 0
+   SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(void)
+   {
+      // add a hook that skips over the player one score display
+      /*RegisterHook(0x2f6c,
+      [this](uint16_t pc) {
+      Char('0');
+      Char('1');
+      Char('2');
+      Char('3');
+      Char('4');
+      Char(' ');
+      return pc + 12;
+      }
+      );*/
+   }
+#endif
+
+   // get the latest vector data
+   VectorData  vectorData;
+   tempestBus.GetVectorData(vectorData);
+
+   // make a vector generator
+   SimpleVectorGenerator vectorGenerator;
+
+   // interpret it
+   VectorDataInterpreter vectorInterpretor;
+   vectorInterpretor.SetVectorData(vectorData);
+   vectorInterpretor.Interpret(&vectorGenerator);
+
+   // return the result
+   vectorGenerator.GetAllVectors(vectors);
 }
 
 uint32_t TempestRunner::AddToScore(void)
