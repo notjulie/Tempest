@@ -24,11 +24,11 @@
 
 1457840542 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 
-1464557193 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1496084100 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	"6502/CPU6502.h"
 	"TempestBus.h"
 
-1464557193 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
+1496026604 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
@@ -41,7 +41,7 @@
 	"TempestMemoryMap.h"
 	"TempestPokey.h"
 
-1477527917 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
+1496026604 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
 
 1454201685 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
 	"Am2901.h"
@@ -90,7 +90,7 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
 
-1473107324 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
+1477528013 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
 	"stdafx.h"
 	"../TempestIO/AbstractTempestIO.h"
 	"AbstractTempestEnvironment.h"
@@ -135,7 +135,7 @@
 	"stdafx.h"
 	"EEPROM.h"
 
-1477527917 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
+1496026604 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.cpp
 	"stdafx.h"
 	"AbstractBus.h"
 	"CPU6502Exception.h"
@@ -153,20 +153,20 @@
 1459128950 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
 	"PiScreen.h"
 
-1453085980 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
+1496084100 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
 	"SimpleVector.h"
 	"VectorDataInterpreter.h"
 
-1453085980 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVector.h
+1496084100 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVector.h
 	"TempestColor.h"
 
-1459127156 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
+1496084100 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
 	"VectorData.h"
 
 1452742677 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
 	"../../TempestCPU/TempestMemoryMap.h"
 
-1459128940 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
+1496074820 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
 	"stdafx.h"
 	"../../TempestCPU/TempestRunner.h"
 	"../../TempestIO/Vector/SimpleVectorDataInterpreter.h"
