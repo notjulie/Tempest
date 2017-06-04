@@ -11,7 +11,7 @@
 
 #include "MathBoxAFX.h"
 
-#include "../TempestROMS.h"
+#include "TempestROMS.h"
 
 #include "MathBox.h"
 

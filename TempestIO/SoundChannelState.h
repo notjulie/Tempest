@@ -12,7 +12,7 @@ public:
    uint8_t GetVolume(void) const { return volume; }
    uint8_t GetVolumeAndWaveform(void) const;
    uint8_t GetWaveform(void) const { return waveform; }
-   void SetFrequency(uint8_t frequency) { this->frequency = frequency; }
+   void SetFrequency(uint8_t _frequency) { this->frequency = _frequency; }
    void SetVolumeAndWaveform(uint8_t volumeAndWaveform);
 
    bool operator==(const SoundChannelState &state) const;

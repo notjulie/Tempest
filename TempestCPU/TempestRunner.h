@@ -4,7 +4,7 @@
 
 #include "6502/CPU6502.h"
 #include "TempestBus.h"
-#include "../TempestIO/Vector/VectorDataInterpreter.h"
+#include "TempestIO/Vector/VectorDataInterpreter.h"
 
 class AbstractTempestEnvironment;
 

@@ -8,7 +8,7 @@
 #ifndef TEMPESTBUS_H
 #define	TEMPESTBUS_H
 
-#include "../TempestIO/Vector/VectorData.h"
+#include "TempestIO/Vector/VectorData.h"
 
 #include "6502/AbstractBus.h"
 #include "MathBox/MathBox.h"

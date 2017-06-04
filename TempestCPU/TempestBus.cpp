@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 
-#include "../TempestIO/AbstractTempestIO.h"
+#include "TempestIO/AbstractTempestIO.h"
 
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
@@ -110,16 +110,16 @@ uint8_t TempestBus::ReadIOByte(uint16_t address)
 }
 
 
-void TempestBus::GetVectorData(VectorData &vectorData)
+void TempestBus::GetVectorData(VectorData &_vectorData)
 {
    std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
 
    // if we don't have a valid snapshot yet just set the first instruction to be
    // a HALT instruction
    if (!vectorRAMReady)
-      vectorData.WriteVectorRAM(1, 0x20);
+      _vectorData.WriteVectorRAM(1, 0x20);
    else
-      vectorData = vectorDataSnapshot;
+      _vectorData = vectorDataSnapshot;
 }
 
 

@@ -16,9 +16,15 @@
    #pragma warning(push)
    #pragma warning(disable : 4265)	// no virtual destructor
    #pragma warning(disable : 4350)	// non-const reference thing
+   #pragma warning(disable : 4365)	// conversion loses sign
+   #pragma warning(disable : 4623)	// default constructor implicitly deleted
    #pragma warning(disable : 4625)	// can't generate copy constructor
    #pragma warning(disable : 4626)	// can't generate assignment operator
+   #pragma warning(disable : 4774)	// sprintf format not string literal
    #pragma warning(disable : 4820)	// padding in structures
+   #pragma warning(disable : 4987)	// nonstandard extension
+   #pragma warning(disable : 5026)	// move constructor deleted
+   #pragma warning(disable : 5027)	// assignment constructor deleted
 #endif
 
 // old school C

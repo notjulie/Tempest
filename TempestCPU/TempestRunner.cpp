@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 #include "6502/CPU6502Exception.h"
-#include "../TempestIO/Vector/SimpleVectorDataInterpreter.h"
+#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 

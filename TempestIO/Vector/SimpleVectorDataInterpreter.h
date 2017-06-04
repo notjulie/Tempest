@@ -16,7 +16,7 @@ class SimpleVectorGenerator : public VectorGenerator
 public:
    virtual ~SimpleVectorGenerator(void) {}
 
-   void GetAllVectors(std::vector<SimpleVector> &vectors) { vectors = this->vectors; }
+   void GetAllVectors(std::vector<SimpleVector> &_vectors) { _vectors = this->vectors; }
 
    virtual void Center(void);
    virtual void LDraw(int x, int y, int intensity);

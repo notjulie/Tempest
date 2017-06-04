@@ -3,7 +3,7 @@
 #define WIN32TEMPESTENVIRONMENT_H
 
 #include "Win32.h"
-#include "../AbstractTempestEnvironment.h"
+#include "TempestCPU/AbstractTempestEnvironment.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures

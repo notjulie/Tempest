@@ -13,10 +13,8 @@ const uint16_t ROM_ECHO_SOURCE = 0xC000;
 const uint16_t MAIN_RAM_BASE = 0x0;
 const uint16_t MAIN_RAM_SIZE = 0x800;
 const uint16_t COLOR_RAM_BASE = 0x0800;
-const uint16_t COLOR_RAM_SIZE = 0x0010;
 const uint16_t VECTOR_RAM_BASE = 0x2000;
 const uint16_t VECTOR_ROM_BASE = 0x3000;
-const uint16_t VECTOR_RAM_SIZE = 0x1000;
 const uint16_t VECTOR_ROM_SIZE = 0x1000;
 
 // peripheral addresses

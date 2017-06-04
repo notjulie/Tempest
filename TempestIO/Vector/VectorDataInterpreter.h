@@ -27,7 +27,7 @@ public:
 	virtual ~VectorDataInterpreter(void);
 
    void Interpret(VectorGenerator *generator);
-   void SetVectorData(const VectorData &vectorData) { this->vectorData = vectorData; }
+   void SetVectorData(const VectorData &_vectorData) { this->vectorData = _vectorData; }
 	void WriteVectorRAM(uint16_t address, uint8_t value) { vectorData.WriteVectorRAM(address, value); }
    void WriteColorRAM(uint16_t address, uint8_t value) { vectorData.WriteColorRAM(address, value); }
    uint8_t ReadColorRAM(uint16_t address) { return vectorData.ReadColorRAM(address); }
