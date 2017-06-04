@@ -38,18 +38,9 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
          }
       );
 
-   // register 6502 hooks
-   RegisterHook(0xCA6C, [this]() { return AddToScore(); });
-   RegisterHook(0xCA62, [this]() { SetPlayerScore(0, 0); SetPlayerScore(1, 0); cpu6502.RTS();  return 30; });
-
-   // register vector interpreter hooks
-   // add a hook that displays the player one score
-   vectorInterpreter.RegisterHook(DISPLAY_PLAYER1_SCORE_ADDRESS,
-      [this](uint16_t pc) {
-      vectorInterpreter.Printf("%6d", playerScores[0] * 1000);
-      return (uint16_t)(pc + 12);
-   }
-   );
+   // register hooks
+   Register6502Hooks();
+   RegisterVectorHooks();
 }
 
 TempestRunner::~TempestRunner(void)
@@ -62,6 +53,49 @@ TempestRunner::~TempestRunner(void)
 	}
 }
 
+
+void TempestRunner::RegisterVectorHooks(void)
+{
+   // add a hook that displays the player one score
+   vectorInterpreter.RegisterHook(DISPLAY_PLAYER1_SCORE_ADDRESS,
+      [this](uint16_t pc) {
+      vectorInterpreter.Printf("%6d", playerScores[0]);
+      return (uint16_t)(pc + 12);
+   }
+   );
+
+   // add a hook that displays the player two score
+   vectorInterpreter.RegisterHook(DISPLAY_PLAYER2_SCORE_ADDRESS,
+      [this](uint16_t pc) {
+      vectorInterpreter.Printf("%6d", playerScores[1]);
+      return (uint16_t)(pc + 12);
+   }
+   );
+
+   // add a hook that displays the player the high score
+   /*vectorInterpreter.RegisterHook(DISPLAY_HIGH_SCORE_ADDRESS,
+      [this](uint16_t pc) {
+      vectorInterpreter.Printf("%6d", 10042);
+      return (uint16_t)(pc + 12);
+   }
+   );*/
+}
+
+void TempestRunner::Register6502Hooks(void)
+{
+   // add in our handler for when the game adds points to the player's score
+   RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
+      return AddToScore(); 
+   });
+
+   // add in our handler for when the game clears player scores
+   RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this]() {
+      SetPlayerScore(0, 0);
+      SetPlayerScore(1, 0);
+      cpu6502.RTS();
+      return 30;
+   });
+}
 
 void TempestRunner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)
 {

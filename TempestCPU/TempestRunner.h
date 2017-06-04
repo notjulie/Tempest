@@ -72,7 +72,9 @@ public:
 
 private:
    void  RegisterHook(uint16_t address, std::function<uint32_t()> hook);
-	void	RunnerThread(void);
+   void  Register6502Hooks(void);
+   void  RegisterVectorHooks(void);
+   void	RunnerThread(void);
 
 private:
    // game modifications and hooks
