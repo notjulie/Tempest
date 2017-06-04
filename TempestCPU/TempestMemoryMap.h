@@ -35,4 +35,7 @@ const uint16_t PLAYER2_LEVEL_ADDRESS = 0x0047;
 const uint16_t COPY_PROTECTION_FLAG_ADDRESS = 0x011F;
 const uint16_t MAX_START_LEVEL_ADDRESS = 0x0126;
 
+// vector memory addresses
+const uint16_t DISPLAY_PLAYER1_SCORE_ADDRESS = 0x2f6c;
+
 #endif

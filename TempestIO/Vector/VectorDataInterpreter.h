@@ -35,6 +35,7 @@ public:
 
    // primitives callable by hooks
    void Char(char c);
+   void Printf(const char *format, ...);
 
 protected:
    void InterpretAt(uint16_t pc);

@@ -38,9 +38,18 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
          }
       );
 
-   // register hooks
+   // register 6502 hooks
    RegisterHook(0xCA6C, [this]() { return AddToScore(); });
    RegisterHook(0xCA62, [this]() { SetPlayerScore(0, 0); SetPlayerScore(1, 0); cpu6502.RTS();  return 30; });
+
+   // register vector interpreter hooks
+   // add a hook that displays the player one score
+   vectorInterpreter.RegisterHook(DISPLAY_PLAYER1_SCORE_ADDRESS,
+      [this](uint16_t pc) {
+      vectorInterpreter.Printf("%6d", playerScores[0] * 1000);
+      return (uint16_t)(pc + 12);
+   }
+   );
 }
 
 TempestRunner::~TempestRunner(void)
@@ -191,24 +200,6 @@ void TempestRunner::GetAllVectors(std::vector<SimpleVector> &vectors)
    // NOTE: this typically does not get called on the 6502 thread, so
    // be careful what you do here... everything we call should be safe
 
-#if 0
-   SimpleVectorDataInterpreter::SimpleVectorDataInterpreter(void)
-   {
-      // add a hook that skips over the player one score display
-      /*RegisterHook(0x2f6c,
-      [this](uint16_t pc) {
-      Char('0');
-      Char('1');
-      Char('2');
-      Char('3');
-      Char('4');
-      Char(' ');
-      return pc + 12;
-      }
-      );*/
-   }
-#endif
-
    // get the latest vector data
    VectorData  vectorData;
    tempestBus.GetVectorData(vectorData);
@@ -217,9 +208,8 @@ void TempestRunner::GetAllVectors(std::vector<SimpleVector> &vectors)
    SimpleVectorGenerator vectorGenerator;
 
    // interpret it
-   VectorDataInterpreter vectorInterpretor;
-   vectorInterpretor.SetVectorData(vectorData);
-   vectorInterpretor.Interpret(&vectorGenerator);
+   vectorInterpreter.SetVectorData(vectorData);
+   vectorInterpreter.Interpret(&vectorGenerator);
 
    // return the result
    vectorGenerator.GetAllVectors(vectors);

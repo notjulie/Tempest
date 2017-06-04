@@ -4,6 +4,7 @@
 
 #include "6502/CPU6502.h"
 #include "TempestBus.h"
+#include "../TempestIO/Vector/VectorDataInterpreter.h"
 
 class AbstractTempestEnvironment;
 
@@ -94,6 +95,7 @@ private:
 
 	TempestBus	tempestBus;
 	CPU6502		cpu6502;
+   VectorDataInterpreter vectorInterpreter;
 
 	std::string processorStatus;
 	std::thread *theThread;

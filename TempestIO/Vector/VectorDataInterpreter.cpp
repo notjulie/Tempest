@@ -1,5 +1,7 @@
 
 #include "stdafx.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 #include "../../TempestCPU/TempestException.h"
 
@@ -155,7 +157,7 @@ void VectorDataInterpreter::Char(char c)
    // numbers
    if (c >= '0' && c <= '9')
    {
-      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11e4 + 2 * (c - '0')));
+      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11e6 + 2 * (c - '0')));
       return;
    }
 
@@ -164,3 +166,17 @@ void VectorDataInterpreter::Char(char c)
 }
 
 
+void VectorDataInterpreter::Printf(const char *format, ...)
+{
+   char buffer[256];
+   va_list args;
+   va_start(args, format);
+   vsnprintf(buffer, sizeof(buffer), format, args);
+
+   for (int i = 0; i < sizeof(buffer); ++i)
+   {
+      if (buffer[i] == 0)
+         break;
+      Char(buffer[i]);
+   }
+}
