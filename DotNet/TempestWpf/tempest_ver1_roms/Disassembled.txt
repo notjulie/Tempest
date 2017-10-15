@@ -4048,6 +4048,11 @@ AE5C A9:28      LDA:imm    #28
 AE5E 85:2C      STA:zp     Zp RAM 002C
 AE60 A2:15      LDX:imm    #15
 AE62 86:37      STX:zp     Zp RAM 0037
+
+;
+;   this is the loop that pushes the high score info into
+;   vector RAM
+;
 AE64 20:0D AB   JSR:abs    $AB0D
 AE67 A9:00      LDA:imm    #00
 AE69 85:73      STA:zp     Zp RAM 0073
@@ -4080,6 +4085,9 @@ AE9F 20:F8 AE   JSR:abs    $AEF8
 AEA2 A2:00      LDX:imm    #00
 AEA4 A9:08      LDA:imm    #08
 AEA6 20:75 DF   JSR:abs    $DF75
+;
+;  this is where we output the score; X is 3 * (10 - the index of the score)
+;
 AEA9 A6:37      LDX:zp     Zp RAM 0037
 AEAB BD:06 07   LDA:abs,x  $0706,X
 AEAE 85:56      STA:zp     Zp RAM 0056
@@ -4090,11 +4098,15 @@ AEB8 85:58      STA:zp     Zp RAM 0058
 AEBA A9:56      LDA:imm    #56
 AEBC A0:03      LDY:imm    #03
 AEBE 20:B1 DF   JSR:abs    $DFB1
+;
+; move on to the next line in the high score table
+;
 AEC1 C6:37      DEC:zp     Zp RAM 0037
 AEC3 C6:37      DEC:zp     Zp RAM 0037
 AEC5 C6:37      DEC:zp     Zp RAM 0037
 AEC7 10:9B      BPL:rel    Branch->$AE64
 AEC9 60:        RTS:imp    Ret from Sub
+
 AECA AD:56 01   LDA:abs    $0156
 AECD F0:14      BEQ:rel    Branch->$AEE3
 AECF 85:58      STA:zp     Zp RAM 0058

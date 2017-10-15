@@ -90,8 +90,9 @@
     <File name="TempestIO/SoundIOPacket.cpp" path="../TempestIO/SoundIOPacket.cpp" type="1"/>
     <File name="ControlPanel.cpp" path="app/ControlPanel.cpp" type="1"/>
     <File name="Discovery" path="" type="2"/>
-    <File name="SystemTime.cpp" path="app/SystemTime.cpp" type="1"/>
     <File name="TempestIO/AbstractTempestIO.h" path="../TempestIO/AbstractTempestIO.h" type="1"/>
+    <File name="SystemTime.cpp" path="app/SystemTime.cpp" type="1"/>
+    <File name="Encoder.cpp" path="app/Encoder.cpp" type="1"/>
     <File name="Audio/DiscoWaveStreamer.cpp" path="app/Audio/DiscoWaveStreamer.cpp" type="1"/>
     <File name="TempestDisco.cpp" path="app/TempestDisco.cpp" type="1"/>
     <File name="system_stm32f4xx.c" path="app/system_stm32f4xx.c" type="1"/>
@@ -108,6 +109,7 @@
     <File name="TempestIO/Noise.cpp" path="../TempestIO/Noise.cpp" type="1"/>
     <File name="Audio/stm32f4_discovery_audio_codec.h" path="app/Audio/stm32f4_discovery_audio_codec.h" type="1"/>
     <File name="Discovery/LED.cpp" path="app/Discovery/LED.cpp" type="1"/>
+    <File name="Encoder.h" path="app/Encoder.h" type="1"/>
     <File name="SystemError.cpp" path="app/SystemError.cpp" type="1"/>
     <File name="Audio/TempestDiscoAudioIO.cpp" path="app/Audio/TempestDiscoAudioIO.cpp" type="1"/>
     <File name="Serial.h" path="../TempestIO/Serial.h" type="1"/>

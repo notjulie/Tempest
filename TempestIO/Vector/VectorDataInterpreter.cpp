@@ -147,22 +147,21 @@ void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<uint16_
 
 void VectorDataInterpreter::Char(char c)
 {
+   InterpretAt(GetCharSubroutineAddress(c));
+}
+
+uint16_t VectorDataInterpreter::GetCharSubroutineAddress(char c)
+{
    // letters
    if (c >= 'A' && c <= 'Z')
-   {
-      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11fa + 2 * (c - 'A')));
-      return;
-   }
+      return 0x1000 + 2 * vectorData.GetAt(0x11fa + 2 * (c - 'A'));
 
    // numbers
    if (c >= '0' && c <= '9')
-   {
-      InterpretAt(0x1000 + 2 * vectorData.GetAt(0x11e6 + 2 * (c - '0')));
-      return;
-   }
+      return 0x1000 + 2 * vectorData.GetAt(0x11e6 + 2 * (c - '0'));
 
    // space for everything else
-   InterpretAt(0x1168);
+   return 0x1168;
 }
 
 

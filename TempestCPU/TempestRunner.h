@@ -19,6 +19,8 @@ namespace std {
 
 struct SimpleVector;
 
+const int HIGH_SCORE_COUNT = 100;
+
 class TempestRunner
 {
 private:
@@ -80,6 +82,8 @@ private:
    // game modifications and hooks
    uint32_t  AddToScore(void);
    void      SetPlayerScore(uint8_t playerIndex, uint32_t score);
+   void      Printf(const char *format, ...);
+   void      Char(char c);
 
 private:
 	// forbidden
@@ -104,6 +108,7 @@ private:
 	uint8_t	addressFlags[64 * 1024];
    std::map<uint16_t, std::function<uint32_t()> > hooks;
    uint32_t playerScores[2];
+   uint32_t highScores[HIGH_SCORE_COUNT];
 };
 
 #ifdef _WIN32

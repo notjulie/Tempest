@@ -17,6 +17,8 @@
    #pragma warning(disable : 4265)	// no virtual destructor
    #pragma warning(disable : 4350)	// non-const reference thing
    #pragma warning(disable : 4365)	// conversion loses sign
+   #pragma warning(disable : 4616)	// invalid pragma warnings
+   #pragma warning(disable : 4619)	// invalid pragma warnings
    #pragma warning(disable : 4623)	// default constructor implicitly deleted
    #pragma warning(disable : 4625)	// can't generate copy constructor
    #pragma warning(disable : 4626)	// can't generate assignment operator

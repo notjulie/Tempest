@@ -1,6 +1,7 @@
 
 #include "TempestDisco.h"
 
+#include "Encoder.h"
 #include "SystemTime.h"
 
 #include "ControlPanel.h"
@@ -11,14 +12,14 @@ struct ButtonState {
 	uint32_t onTime;
 };
 
-static uint32_t encoder = 0;
 static ButtonState fireButton;
 static ButtonState zapButton;
 static ButtonState onePlayerButton;
 static ButtonState twoPlayerButton;
+static Encoder encoder;
 
-static void ServiceEncoder(bool input1, bool input2);
 static void ServiceButton(ButtonState *button, bool state);
+
 
 void InitializeControlPanel(void)
 {
@@ -118,55 +119,6 @@ void ServiceControlPanel(void)
 	ServiceButton(&zapButton, GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2) == Bit_RESET);
 }
 
-void ServiceEncoder(bool input1, bool input2)
-{
-	static uint8_t encoderBits = 0;
-	static uint32_t rawEncoder = 0;
-
-	// pop the two bits int a byte
-	uint8_t newEncoderBits = 0;
-	if (input1)
-		newEncoderBits += 2;
-	if (input2)
-		newEncoderBits += 1;
-
-	if (newEncoderBits != encoderBits)
-	{
-		// the encoder goes 0-1-3-2 or 2-3-1-0 depending on the direction;
-		// combine the previous value and the current value and switch
-		// on the combination
-		uint8_t transition = (encoderBits<<4) + newEncoderBits;
-
-		switch (transition)
-		{
-		case 0x01:
-		case 0x13:
-		case 0x32:
-		case 0x20:
-			--rawEncoder;
-			break;
-
-		case 0x23:
-		case 0x31:
-		case 0x10:
-		case 0x02:
-			++rawEncoder;
-			break;
-
-		default:
-			break;
-		}
-
-		// to debounce, I only update the encoder value if the raw value
-		// is different by two or more
-		int32_t encoderDifference = (int32_t)(encoder - rawEncoder);
-		if (encoderDifference>=2 || encoderDifference<=-2)
-			encoder = rawEncoder;
-
-		// save the current state
-		encoderBits = newEncoderBits;
-	}
-}
 
 static void ServiceButton(ButtonState *button, bool state)
 {
@@ -218,7 +170,7 @@ bool GetButton(ButtonFlag button)
 
 uint16_t GetEncoder(void)
 {
-	return encoder;
+	return encoder.GetValue();
 }
 
 
@@ -246,97 +198,9 @@ void SetButtonLED(ButtonFlag button, bool value)
 	}
 }
 
-class EncoderInput
-{
-public:
-	EncoderInput(void) {
-		CONSECUTIVE_SAMPLES_FOR_CHANGE = 15;
-		value = false;
-		anchorPoint = 0;
-		changesAccumulated = 0;
-		anchorPointChangesAccumulated = 0;
-		lastSample = 0;
-	}
-
-	bool AddSample(uint16_t sampleValue) {
-		const int HYSTERESIS = 5000;
-
-		// save it
-		lastSample = sampleValue;
-
-		// if we are currently high...
-		if (value) {
-			// a value lower than the anchor point by our margin is a potential
-			// change in output
-			if (sampleValue < anchorPoint - HYSTERESIS)
-				++changesAccumulated;
-			else
-				changesAccumulated = 0;
-		}
-
-		// if we are currently low...
-		if (!value) {
-			// a value higher than the anchor point by our margin is a potential
-			// change in output
-			if (sampleValue > anchorPoint + HYSTERESIS)
-				++changesAccumulated;
-			else
-				changesAccumulated = 0;
-		}
-
-		// if we have accumulated enough consecutive samples that suggest a change
-		// in our output, change our output
-		if (changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
-			return true;
-
-		// update our anchor point if necessary
-		if (value && sampleValue > anchorPoint)
-			++anchorPointChangesAccumulated;
-		else if (!value && sampleValue < anchorPoint)
-			++anchorPointChangesAccumulated;
-		else
-			anchorPointChangesAccumulated = 0;
-
-		if (anchorPointChangesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
-		{
-			anchorPoint = sampleValue;
-			anchorPointChangesAccumulated = 0;
-		}
-
-		// we aren't changing
-		return false;
-	}
-
-	void AcceptChange(void) {
-		if (changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
-		{
-			value = !value;
-			changesAccumulated = 0;
-			anchorPoint = lastSample;
-			anchorPointChangesAccumulated = 0;
-		}
-	}
-
-	bool GetProposedValue(void) {
-		if (changesAccumulated >= CONSECUTIVE_SAMPLES_FOR_CHANGE)
-			return !value;
-		else
-			return value;
-	}
-
-private:
-	int CONSECUTIVE_SAMPLES_FOR_CHANGE;
-	bool value;
-	int anchorPoint;
-	int changesAccumulated;
-	int anchorPointChangesAccumulated;
-	uint16_t lastSample;
-};
-
-static EncoderInput input1;
-static EncoderInput input2;
 
 extern "C" {
+
 void TIM2_IRQHandler(void)
 {
 	// clear the interrupt
@@ -346,24 +210,8 @@ void TIM2_IRQHandler(void)
 	int adc1 = ADC1->DR;
 	int adc2 = ADC2->DR;
 
-	// add the new samples
-	bool input1Changing = input1.AddSample(adc1);
-	bool input2Changing = input2.AddSample(adc2);
-
-	// if neither is changing we do nothing
-	if (!input1Changing && !input2Changing)
-		return;
-
-	// if both want to change, it must be noise, because that's not how
-	// an encoder works and we can't make sense of it; in such a case
-	// wait for one of them to change its mind
-	if (input1Changing && input2Changing)
-		return;
-
-	// else update the encoder value and accept the change
-	ServiceEncoder(input1.GetProposedValue(), input2.GetProposedValue());
-	input1.AcceptChange();
-	input2.AcceptChange();
+	// process
+	encoder.AddSample(adc1, adc2);
 }
 
 };

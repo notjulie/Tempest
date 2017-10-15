@@ -1,5 +1,6 @@
 
 #include "stdafx.h"
+#include <stdarg.h>
 
 #include "6502/CPU6502Exception.h"
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
@@ -26,6 +27,8 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
    resetRequested = false;
    pointsPerBonusLife = 10000;
    playerScores[0] = playerScores[1] = 0;
+   for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
+      highScores[i] = 10101;
 
    // register commands
    environment->RegisterCommand(
@@ -72,7 +75,7 @@ void TempestRunner::RegisterVectorHooks(void)
    }
    );
 
-   // add a hook that displays the player the high score
+   // add a hook that displays the high score
    /*vectorInterpreter.RegisterHook(DISPLAY_HIGH_SCORE_ADDRESS,
       [this](uint16_t pc) {
       vectorInterpreter.Printf("%6d", 10042);
@@ -95,6 +98,52 @@ void TempestRunner::Register6502Hooks(void)
       cpu6502.RTS();
       return 30;
    });
+
+   // this is the routine that outputs the score part of a line in the high
+   // score table
+   RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this]() {
+      // x tells us which score we're displaying
+      uint8_t x = cpu6502.GetX();
+      int highScoreIndex = 7 - x / 3;
+      Printf("%7d", highScores[highScoreIndex]);
+      cpu6502.JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
+      return 100;
+   });
+}
+
+void TempestRunner::Printf(const char *format, ...)
+{
+   char buffer[256];
+   va_list args;
+   va_start(args, format);
+   vsnprintf(buffer, sizeof(buffer), format, args);
+
+   for (int i = 0; i < sizeof(buffer); ++i)
+   {
+      if (buffer[i] == 0)
+         break;
+      Char(buffer[i]);
+   }
+}
+
+void TempestRunner::Char(char c)
+{
+   // This is valid only in a particular context where the game is writing out text using
+   // a particular subroutine.  In that context, the address in vector RAM to which we
+   // write is stored at 0x0074.
+   uint16_t targetAddress = (uint16_t)(tempestBus.ReadByte(0x0074) + 256 * tempestBus.ReadByte(0x0075));
+
+   // We want a JSR instruction to the address of the routine for that character, which looks
+   // like this
+   uint16_t jsrInstruction = (uint16_t)(0xA000 + (vectorInterpreter.GetCharSubroutineAddress(c)/2));
+
+   // store the instruction
+   tempestBus.WriteByte(targetAddress++, (uint8_t)jsrInstruction);
+   tempestBus.WriteByte(targetAddress++, (uint8_t)(jsrInstruction>>8));
+
+   // update the target address
+   tempestBus.WriteByte(0x0074, (uint8_t)targetAddress);
+   tempestBus.WriteByte(0x0075, (uint8_t)(targetAddress >> 8));
 }
 
 void TempestRunner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)

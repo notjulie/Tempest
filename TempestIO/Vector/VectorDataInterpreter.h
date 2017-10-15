@@ -35,6 +35,7 @@ public:
 
    // primitives callable by hooks
    void Char(char c);
+   uint16_t GetCharSubroutineAddress(char c);
    void Printf(const char *format, ...);
 
 protected:
