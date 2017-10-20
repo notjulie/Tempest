@@ -3769,6 +3769,9 @@ AC39 09:03      ORA:imm    #03
 AC3B 8D:C9 01   STA:abs    $01C9
 AC3E 60:        RTS:imp    Ret from Sub
 ;
+;	Here is where it checks at the end of the game to see if
+;	either player made the high score list
+;
 AC3F A5:05      LDA:zp     Zp RAM 0005
 AC41 29:BF      AND:imm    #BF
 AC43 85:05      STA:zp     Zp RAM 0005
@@ -3862,12 +3865,19 @@ ACFD 9D:00 06   STA:abs,x  $0600,X
 AD00 CA:        DEX:imp    X=X-1
 AD01 30:03      BMI:rel    Branch->$AD06
 AD03 4C:5E AC   JMP:abs    $AC5E
+;
+;	This adjusts the ranking in case both player one and
+;   player 2 made the list
+;
 AD06 AD:01 06   LDA:abs    $0601
 AD09 CD:00 06   CMP:abs    $0600
 AD0C 90:07      BCC:rel    Branch->$AD15
 AD0E C9:63      CMP:imm    #63
 AD10 B0:03      BCS:rel    Branch->$AD15
 AD12 EE:01 06   INC:abs    $0601
+;
+;
+;
 AD15 A5:3D      LDA:zp     Zp RAM 003D
 AD17 49:01      EOR:imm    #01
 AD19 0A:        ASL:accum  
@@ -3883,6 +3893,9 @@ AD2B 85:3D      STA:zp     Zp RAM 003D
 AD2D C6:3D      DEC:zp     Zp RAM 003D
 AD2F 4E:03 06   LSR:abs    $0603
 AD32 4E:03 06   LSR:abs    $0603
+;
+;	Check current player's rank to see if they should enter their initials
+;
 AD35 A6:3D      LDX:zp     Zp RAM 003D
 AD37 BD:00 06   LDA:abs,x  $0600,X
 AD3A F0:2C      BEQ:rel    Branch->$AD68

@@ -28,12 +28,21 @@ const uint16_t MATHBOX_WRITE_BASE = 0x6080;
 const uint16_t MATHBOX_WRITE_END = 0x609F;
 
 // program variable addresses
+const uint16_t GAME_MODE = 0x0000;
+const uint16_t CURRENT_PLAYER = 0x003D;
+const uint16_t PLAYER_COUNT = 0x003E;
 const uint16_t PLAYER1_LEVEL_ADDRESS = 0x0046;
 const uint16_t PLAYER2_LEVEL_ADDRESS = 0x0047;
 const uint16_t COPY_PROTECTION_FLAG_ADDRESS = 0x011F;
 const uint16_t MAX_START_LEVEL_ADDRESS = 0x0126;
+const uint16_t PLAYER1_RANK = 0x0600;
+const uint16_t PLAYER2_RANK = 0x0601;
+const uint16_t HIGH_SCORE_INITIALS = 0x061D;
 
 // program addresses
+const uint16_t CHECK_HIGH_SCORE_ROUTINE = 0xAC3F;
+const uint16_t CHECK_NEXT_PLAYER_HIGH_SCORE = 0xAD22;
+const uint16_t HIGH_SCORE_ENTRY = 0xAD35;
 const uint16_t CLEAR_PLAYER_SCORE_ROUTINE = 0xCA62;
 const uint16_t INCREASE_PLAYER_SCORE_ROUTINE = 0xCA6C;
 const uint16_t OUTPUT_HIGH_SCORE_ROUTINE = 0xAEBE;
@@ -43,5 +52,8 @@ const uint16_t OUTPUT_HIGH_SCORE_ROUTINE_EXIT = 0xAEC1;
 const uint16_t DISPLAY_PLAYER1_SCORE_ADDRESS = 0x2F6C;
 const uint16_t DISPLAY_PLAYER2_SCORE_ADDRESS = 0x2FBE;
 const uint16_t DISPLAY_HIGH_SCORE_ADDRESS = 0x2F94;
+
+// game modes
+const uint8_t GAME_MODE_SHOW_HIGH_SCORES = 0x14;
 
 #endif

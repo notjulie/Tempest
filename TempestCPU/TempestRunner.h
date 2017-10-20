@@ -19,7 +19,7 @@ namespace std {
 
 struct SimpleVector;
 
-const int HIGH_SCORE_COUNT = 100;
+const uint8_t HIGH_SCORE_COUNT = 100;
 
 class TempestRunner
 {
@@ -81,14 +81,16 @@ private:
 private:
    // game modifications and hooks
    uint32_t  AddToScore(void);
+   uint8_t   InsertHighScore(uint32_t score);
    void      SetPlayerScore(uint8_t playerIndex, uint32_t score);
+   uint32_t  SortHighScores(void);
    void      Printf(const char *format, ...);
    void      Char(char c);
 
 private:
 	// forbidden
-	TempestRunner(const TempestRunner &tr);
-	TempestRunner &operator=(const TempestRunner &tr);
+	TempestRunner(const TempestRunner &tr) = delete;
+	TempestRunner &operator=(const TempestRunner &tr) = delete;
 
 private:
 	AbstractTempestEnvironment *environment;

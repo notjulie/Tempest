@@ -76,12 +76,12 @@ void TempestRunner::RegisterVectorHooks(void)
    );
 
    // add a hook that displays the high score
-   /*vectorInterpreter.RegisterHook(DISPLAY_HIGH_SCORE_ADDRESS,
+   vectorInterpreter.RegisterHook(DISPLAY_HIGH_SCORE_ADDRESS,
       [this](uint16_t pc) {
-      vectorInterpreter.Printf("%6d", 10042);
+      vectorInterpreter.Printf("%6d", highScores[0]);
       return (uint16_t)(pc + 12);
    }
-   );*/
+   );
 }
 
 void TempestRunner::Register6502Hooks(void)
@@ -109,7 +109,114 @@ void TempestRunner::Register6502Hooks(void)
       cpu6502.JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
       return 100;
    });
+
+   // this gets called when it's time to sort the high score table and see
+   // if player 1 or player 2 belong in it
+   RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this]() {
+      return SortHighScores();
+   });
+
+   // this gets called after a player has entered his high score
+   RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this]() {
+      if (tempestBus.ReadByte(CURRENT_PLAYER) == 0)
+      {
+         // set current player
+         tempestBus.WriteByte(CURRENT_PLAYER, 1);
+
+         // and skip to the high score entry check
+         cpu6502.JMP(HIGH_SCORE_ENTRY);
+      }
+      else
+      {
+         // set the game mode to the high score screen
+         tempestBus.WriteByte(GAME_MODE, GAME_MODE_SHOW_HIGH_SCORES);
+
+         // skip out of here
+         cpu6502.RTS();
+      }
+
+      return (uint32_t)10;
+   });
 }
+
+
+uint32_t TempestRunner::SortHighScores(void)
+{
+   // figure out how many scores we're dealing with
+   int numberOfPlayers = 1 + tempestBus.ReadByte(PLAYER_COUNT);
+
+   // to the 6502 app, a rank of zero means no score
+   uint8_t player1Rank = 0;
+   uint8_t player2Rank = 0;
+
+   // figure out the rank of player 1
+   player1Rank = InsertHighScore(playerScores[0]);
+
+   // and the rank of player 2, if we have a player 2
+   if (numberOfPlayers > 1)
+   {
+      player2Rank = InsertHighScore(playerScores[1]);
+
+      // and of course if player 2 beat player 1 that moves player 1
+      // down in the rankings
+      if (player2Rank <= player1Rank)
+         ++player1Rank;
+   }
+
+   // store the ranks
+   tempestBus.WriteByte(PLAYER1_RANK, player1Rank);
+   tempestBus.WriteByte(PLAYER2_RANK, player2Rank);
+
+   // set current player
+   tempestBus.WriteByte(CURRENT_PLAYER, 0);
+
+   // and skip the 6502 implementation
+   cpu6502.JMP(HIGH_SCORE_ENTRY);
+
+   // fake some clock cycles
+   return 200;
+}
+
+uint8_t TempestRunner::InsertHighScore(uint32_t score)
+{
+   for (uint8_t i = 0; i < HIGH_SCORE_COUNT; ++i)
+   {
+      if (score > highScores[i])
+      {
+         // we find were it's supposed to be, so move everything else down
+         for (int j = HIGH_SCORE_COUNT - 1; j > i; --j)
+            highScores[j] = highScores[j - 1];
+
+         // insert the new score
+         highScores[i] = score;
+
+         // and do the same with the initials... we let the 6502 manage those
+         // so move some RAM around
+         if (i < 8)
+         {
+            for (int j = 7; j > i; --j)
+            {
+               for (int n = 0; n < 3; ++n)
+               {
+                  uint16_t address = (uint16_t)(HIGH_SCORE_INITIALS - 3 * j - n);
+                  tempestBus.WriteByte(address, tempestBus.ReadByte((uint16_t)(address + 3)));
+               }
+            }
+            for (int n = 0; n < 3; ++n)
+            {
+               uint16_t address = (uint16_t)(HIGH_SCORE_INITIALS - 3 * i - n);
+               tempestBus.WriteByte(address, 0);
+            }
+         }
+
+         // and the caller expects a 1-based rank instead of a zero-based index
+         return ++i;
+      }
+   }
+
+   return HIGH_SCORE_COUNT;
+}
+
 
 void TempestRunner::Printf(const char *format, ...)
 {
