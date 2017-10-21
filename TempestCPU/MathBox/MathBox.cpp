@@ -7,11 +7,13 @@
 // File summary:
 //    Emulation of the MathBox; this emulates all the logic external
 //    to the 4 Am2901 chips... those are emulated in class Am2901.
+//    This is literally a hardware emulator... it simulates the step
+//    by step operation of the signals in the math box circuit.
 // ====================================================================
 
 #include "MathBoxAFX.h"
 
-#include "TempestROMS.h"
+#include "TempestCPU/TempestROMS.h"
 
 #include "MathBox.h"
 

@@ -1,3 +1,13 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Emulation of the Vector State Machine; this reads the vector RAM
+//    and converts it to a set of vectors, aka lines.
+// ====================================================================
 
 #include "stdafx.h"
 #include <stdarg.h>
@@ -23,10 +33,10 @@ void VectorDataInterpreter::Interpret(VectorGenerator *generator)
    this->vectorGenerator = generator;
 
    // start us out unhalted
-   isHalt = false;  
-   
+   isHalt = false;
+
    // interpret starting at address zero
-   InterpretAt(0); 
+   InterpretAt(0);
 }
 
 void VectorDataInterpreter::InterpretAt(uint16_t pc)
@@ -76,7 +86,7 @@ uint16_t VectorDataInterpreter::SingleStep(uint16_t pc)
 		isHalt = true;
 		return 0;
 
-	case  4: // 0100         
+	case  4: // 0100
 	case  5: // 0101
 		// SDRAW
 		{
@@ -165,6 +175,11 @@ uint16_t VectorDataInterpreter::GetCharSubroutineAddress(char c)
 }
 
 
+/// <summary>
+/// Implementation of printf that outputs characters to the current
+/// XY position.  It is of course subject to the limitations of the
+/// Tempest vector ROM's character set
+/// </summary>
 void VectorDataInterpreter::Printf(const char *format, ...)
 {
    char buffer[256];
@@ -172,7 +187,7 @@ void VectorDataInterpreter::Printf(const char *format, ...)
    va_start(args, format);
    vsnprintf(buffer, sizeof(buffer), format, args);
 
-   for (int i = 0; i < sizeof(buffer); ++i)
+   for (unsigned i = 0; i < sizeof(buffer); ++i)
    {
       if (buffer[i] == 0)
          break;
