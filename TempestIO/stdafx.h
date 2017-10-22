@@ -12,3 +12,5 @@
 #include <map>
 #include <string>
 #include <vector>
+
+#include "SQLite/sqlite3.h"

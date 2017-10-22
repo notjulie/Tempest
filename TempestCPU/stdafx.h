@@ -43,6 +43,9 @@
 #include <thread>
 #include <vector>
 
+// sqlite
+#include "SQLite/sqlite3.h"
+
 // restore warning state
 #ifdef _WIN32
    #pragma warning(pop)

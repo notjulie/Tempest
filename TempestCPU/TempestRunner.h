@@ -4,6 +4,7 @@
 
 #include "6502/CPU6502.h"
 #include "TempestBus.h"
+#include "TempestIO/TempestDB.h"
 #include "TempestIO/Vector/VectorDataInterpreter.h"
 
 class AbstractTempestEnvironment;
@@ -101,6 +102,7 @@ private:
 	Action   requestedAction;
    int pointsPerBonusLife;
 
+   TempestDB   db;
 	TempestBus	tempestBus;
 	CPU6502		cpu6502;
    VectorDataInterpreter vectorInterpreter;

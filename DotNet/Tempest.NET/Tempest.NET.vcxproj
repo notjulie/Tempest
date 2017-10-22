@@ -196,6 +196,9 @@
     <ProjectReference Include="..\..\AsteroidsCPU\AsteroidsCPU.vcxproj">
       <Project>{d547c13f-5819-49da-8ee6-e64881b219c4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\SQLite\SQLite.vcxproj">
+      <Project>{4be652f2-98de-4e02-8bb2-0893c8e01913}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\TempestCPU\TempestCPU.vcxproj">
       <Project>{a95eb6bb-84a8-4474-913f-d01d9fb77d24}</Project>
     </ProjectReference>

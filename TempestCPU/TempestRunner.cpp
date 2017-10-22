@@ -268,9 +268,13 @@ void TempestRunner::SetDemoMode(void)
    resetRequested = true;
 }
 
+
 void TempestRunner::Start(void)
 {
-	// create the thread is all
+   // open the database
+   db.Open(environment->GetDatabasePathName());
+   
+   // create the thread is all
 	theThread = new std::thread(
       [this]() { RunnerThread(); }
       );

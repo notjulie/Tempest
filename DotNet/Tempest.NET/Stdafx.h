@@ -16,3 +16,5 @@
 #include <queue>
 #include <vector>
 
+// SQLite
+#include "SQLite/sqlite3.h"

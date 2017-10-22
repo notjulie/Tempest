@@ -30,6 +30,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AsteroidsCPU", "AsteroidsCP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AsteroidsUnitTest", "AsteroidsUnitTest\AsteroidsUnitTest.vcxproj", "{3D35E715-A399-41A4-B93A-DA5D52DC0D9E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite", "SQLite\SQLite.vcxproj", "{4BE652F2-98DE-4E02-8BB2-0893C8E01913}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -251,6 +253,25 @@ Global
 		{3D35E715-A399-41A4-B93A-DA5D52DC0D9E}.Release|x64.ActiveCfg = Release|Win32
 		{3D35E715-A399-41A4-B93A-DA5D52DC0D9E}.Release|x86.ActiveCfg = Release|Win32
 		{3D35E715-A399-41A4-B93A-DA5D52DC0D9E}.Release|x86.Build.0 = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|ARM.ActiveCfg = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|Win32.Build.0 = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|x64.ActiveCfg = Debug|x64
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|x64.Build.0 = Debug|x64
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|x86.ActiveCfg = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Debug|x86.Build.0 = Debug|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|Any CPU.ActiveCfg = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|ARM.ActiveCfg = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|Win32.ActiveCfg = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|Win32.Build.0 = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|x64.ActiveCfg = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|x86.ActiveCfg = Release|Win32
+		{4BE652F2-98DE-4E02-8BB2-0893C8E01913}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -101,6 +101,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,6 +149,7 @@
     <ClInclude Include="SoundGenerator.h" />
     <ClInclude Include="SoundIOPacket.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TempestDB.h" />
     <ClInclude Include="TempestIOStreamListener.h" />
     <ClInclude Include="TempestIOStreamProxy.h" />
     <ClInclude Include="TempestMemoryStream.h" />
@@ -172,6 +174,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TempestDB.cpp" />
     <ClCompile Include="TempestIOStreamListener.cpp" />
     <ClCompile Include="TempestIOStreamProxy.cpp" />
     <ClCompile Include="TempestMemoryStream.cpp" />

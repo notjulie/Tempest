@@ -53,3 +53,19 @@ void Win32TempestEnvironment::SynchronizeClock(uint64_t busMSCount)
 		Sleep(14);
 }
 
+std::string Win32TempestEnvironment::GetDatabasePathName(void)
+{
+   // get this EXE's file name
+   char exeFileName[1000] = "";
+   GetModuleFileNameA(NULL, exeFileName, sizeof(exeFileName));
+
+   // strip off the file name
+   size_t len = strlen(exeFileName);
+   while (len > 0 && exeFileName[len - 1] != '\\')
+      exeFileName[--len] = 0;
+
+   // return the result
+   std::string result = exeFileName;
+   result += "Tempest.DB";
+   return result;
+}
