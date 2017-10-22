@@ -1,3 +1,15 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the top level aggregator of the Tempest main board.  It
+//    steps the processor and coordinates access to things such as the
+//    vector data so that someone outside of this module can display
+//    the vectors.
+// ====================================================================
 
 #include "stdafx.h"
 #include <stdarg.h>
@@ -88,7 +100,7 @@ void TempestRunner::Register6502Hooks(void)
 {
    // add in our handler for when the game adds points to the player's score
    RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
-      return AddToScore(); 
+      return AddToScore();
    });
 
    // add in our handler for when the game clears player scores
@@ -218,6 +230,12 @@ uint8_t TempestRunner::InsertHighScore(uint32_t score)
 }
 
 
+/// <summary>
+/// This is only useful if called from a point in the program where the
+/// 6502 program is writing characters to a location pointed to by a
+/// zero-page vector.  In such case, it writes characters per the rules
+/// of printf, limited of course to the Tempest character set.
+/// </summary>
 void TempestRunner::Printf(const char *format, ...)
 {
    char buffer[256];
@@ -225,7 +243,7 @@ void TempestRunner::Printf(const char *format, ...)
    va_start(args, format);
    vsnprintf(buffer, sizeof(buffer), format, args);
 
-   for (int i = 0; i < sizeof(buffer); ++i)
+   for (unsigned i = 0; i < sizeof(buffer); ++i)
    {
       if (buffer[i] == 0)
          break;

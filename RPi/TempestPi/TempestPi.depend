@@ -24,24 +24,25 @@
 
 1457840542 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 
-1496084100 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1508610471 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	"6502/CPU6502.h"
 	"TempestBus.h"
+	"TempestIO/Vector/VectorDataInterpreter.h"
 
 1496026604 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
 
-1477527917 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
-	"../TempestIO/Vector/VectorData.h"
+1508610470 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
+	"TempestIO/Vector/VectorData.h"
 	"6502/AbstractBus.h"
 	"MathBox/MathBox.h"
 	"EEPROM.h"
 	"TempestMemoryMap.h"
 	"TempestPokey.h"
 
-1496026604 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
+1508610470 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
 
 1454201685 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
 	"Am2901.h"
@@ -56,10 +57,10 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/EEPROM.h
 
-1454207196 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
+1508610470 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
 
-1451701342 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
-	"../TempestIO/AbstractTempestIO.h"
+1508610470 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
+	"TempestIO/AbstractTempestIO.h"
 	"Pokey.h"
 
 1455395090 /home/pi/Documents/Tempest/TempestCPU/Pokey.h
@@ -74,7 +75,7 @@
 	"TempestException.h"
 	"TempestRunner.h"
 
-1459127156 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
+1508610471 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
 	<stdint.h>
 	<stdio.h>
 	<stdlib.h>
@@ -90,9 +91,9 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
 
-1477528013 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
+1508610470 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
 	"stdafx.h"
-	"../TempestIO/AbstractTempestIO.h"
+	"TempestIO/AbstractTempestIO.h"
 	"AbstractTempestEnvironment.h"
 	"TempestException.h"
 	"TempestMemoryMap.h"
@@ -121,9 +122,9 @@
 1439424979 source:/home/pi/Documents/Tempest/TempestCPU/TempestROMS.cpp
 	"stdafx.h"
 
-1455395090 source:/home/pi/Documents/Tempest/TempestCPU/Pokey.cpp
+1508610470 source:/home/pi/Documents/Tempest/TempestCPU/Pokey.cpp
 	"stdafx.h"
-	"../TempestIO/AbstractTempestIO.h"
+	"TempestIO/AbstractTempestIO.h"
 	"TempestException.h"
 	"Pokey.h"
 
@@ -153,20 +154,19 @@
 1459128950 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.h
 	"PiScreen.h"
 
-1496084100 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
+1508610471 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.h
 	"SimpleVector.h"
 	"VectorDataInterpreter.h"
 
 1496084100 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVector.h
 	"TempestColor.h"
 
-1496084100 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
+1508610471 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
 	"VectorData.h"
 
-1452742677 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
-	"../../TempestCPU/TempestMemoryMap.h"
+1508610471 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
 
-1496074820 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
+1496084314 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiIO.cpp
 	"stdafx.h"
 	"../../TempestCPU/TempestRunner.h"
 	"../../TempestIO/Vector/SimpleVectorDataInterpreter.h"
@@ -183,7 +183,7 @@
 	"../../TempestCPU/TempestException.h"
 	"VectorDataInterpreter.h"
 
-1459127156 source:/home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.cpp
+1496084100 source:/home/pi/Documents/Tempest/TempestIO/Vector/SimpleVectorDataInterpreter.cpp
 	"stdafx.h"
 	<stdint.h>
 	"SimpleVectorDataInterpreter.h"
@@ -620,7 +620,7 @@
 1455395478 /home/pi/Documents/Tempest/TempestIO/SoundChannel.h
 	"SoundChannelState.h"
 
-1455395469 /home/pi/Documents/Tempest/TempestIO/SoundChannelState.h
+1508610471 /home/pi/Documents/Tempest/TempestIO/SoundChannelState.h
 
 1455395576 source:/home/pi/Documents/Tempest/TempestIO/SoundChannelState.cpp
 	"stdafx.h"
