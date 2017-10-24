@@ -3,7 +3,6 @@
 #define TEMPESTRUNNER_H
 
 #include <string>
-#include <thread>
 
 #include "6502/CPU6502.h"
 #include "TempestBus.h"
@@ -106,8 +105,11 @@ private:
 	CPU6502		cpu6502;
    VectorDataInterpreter vectorInterpreter;
 
-	std::string processorStatus;
-	std::thread *theThread;
+   // this is actually a pointer to a std::thread, but the .NET CLR doesn't allow including
+   // <thread> in any file it compiles, so we leave the detail private to the CPP file
+   void *theThread = nullptr;
+   
+   std::string processorStatus;
 	uint8_t	addressFlags[64 * 1024];
    std::map<uint16_t, std::function<uint32_t()> > hooks;
    uint32_t playerScores[2];

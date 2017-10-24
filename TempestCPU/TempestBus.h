@@ -8,8 +8,6 @@
 #ifndef TEMPESTBUS_H
 #define	TEMPESTBUS_H
 
-#include <mutex>
-
 #include "VectorData.h"
 
 #include "6502/AbstractBus.h"
@@ -72,9 +70,13 @@ private:
 private:
    AbstractTempestEnvironment *environment;
 
+   // this is actually a pointer to std::mutex, but .NET gets upset if we
+   // include <mutex> and it does include this file, so we cast it to a void and
+   // leave the implementation detail to the CPP file
+   void *vectorDataSnapshotMutex = nullptr;
+
    VectorData vectorData;
    VectorData vectorDataSnapshot;
-   std::mutex *vectorDataSnapshotMutex;
    TempestPokey1 pokey1;
    TempestPokey2 pokey2;
    EEPROM eeprom;

@@ -41,7 +41,8 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
 
 TempestBus::~TempestBus(void)
 {
-   delete vectorDataSnapshotMutex, vectorDataSnapshotMutex = NULL;
+   delete (std::mutex *)vectorDataSnapshotMutex;
+   vectorDataSnapshotMutex = nullptr;
 }
 
 
@@ -112,7 +113,7 @@ uint8_t TempestBus::ReadIOByte(uint16_t address)
 
 void TempestBus::GetVectorData(VectorData &_vectorData)
 {
-   std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+   std::lock_guard<std::mutex> lock(*(std::mutex *)vectorDataSnapshotMutex);
 
    // if we don't have a valid snapshot yet just set the first instruction to be
    // a HALT instruction
@@ -410,7 +411,7 @@ void TempestBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t valu
    // place in the 6502 code that I can use instead as a trigger.
    if (tempestBus->GetTotalClockCycles() - tempestBus->lastVectorRAMWrite > 800)
    {
-      std::lock_guard<std::mutex> lock(*tempestBus->vectorDataSnapshotMutex);
+      std::lock_guard<std::mutex> lock(*(std::mutex *)tempestBus->vectorDataSnapshotMutex);
 
       tempestBus->vectorDataSnapshot = tempestBus->vectorData;
       tempestBus->lastVectorRAMWrite = tempestBus->GetTotalClockCycles();

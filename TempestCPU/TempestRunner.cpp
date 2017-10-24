@@ -33,7 +33,6 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	state = Unstarted;
 	requestedAction = NoAction;
 	terminateRequested = false;
-	theThread = NULL;
 	for (int i = 0; i < 64 * 1024; ++i)
 		addressFlags[i] = 0;
    resetRequested = false;
@@ -60,12 +59,12 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 
 TempestRunner::~TempestRunner(void)
 {
-	if (theThread != NULL)
+	if (theThread != nullptr)
 	{
 		terminateRequested = true;
-		theThread->join();
-        delete theThread;
-        theThread = NULL;
+		((std::thread *)theThread)->join();
+      delete (std::thread *)theThread;
+      theThread = nullptr;
 	}
 }
 
