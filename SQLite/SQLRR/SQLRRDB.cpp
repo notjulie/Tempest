@@ -25,6 +25,6 @@ void SQLRRDB::OpenOrCreate(const std::string &path)
 {
    int result = sqlite3_open(path.c_str(), &db);
    if (result != SQLITE_OK)
-      throw SQLRRException(result, std::string("SQLRRDB::OpenOrCreate: ") + path);
+      throw SQLRRException(db, result, std::string("SQLRRDB::OpenOrCreate: ") + path);
 }
 

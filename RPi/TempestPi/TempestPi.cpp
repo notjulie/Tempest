@@ -113,6 +113,10 @@ void TempestPi::Run(void)
    {
       printf("%s\n", s);
    }
+   catch (...)
+   {
+      printf("Unknown exception caught in TempestPi::Run\n");
+   }
 }
 
 void TempestPi::MonitorThread(void)

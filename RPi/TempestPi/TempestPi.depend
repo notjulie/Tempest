@@ -22,27 +22,34 @@
 	<vector>
 	<VG/openvg.h>
 
-1457840542 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
+1508852690 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
+	<stdint.h>
+	<functional>
+	<map>
 
-1508610471 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1508852690 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+	<string>
 	"6502/CPU6502.h"
 	"TempestBus.h"
-	"TempestIO/Vector/VectorDataInterpreter.h"
+	"TempestDB.h"
+	"VectorDataInterpreter.h"
 
 1496026604 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
+1508852690 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
+	<stdint.h>
 
-1508610470 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
-	"TempestIO/Vector/VectorData.h"
+1508852690 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
+	"VectorData.h"
 	"6502/AbstractBus.h"
 	"MathBox/MathBox.h"
 	"EEPROM.h"
 	"TempestMemoryMap.h"
 	"TempestPokey.h"
 
-1508610470 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
+1508852690 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
+	<vector>
 
 1454201685 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
 	"Am2901.h"
@@ -59,8 +66,8 @@
 
 1508610470 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
 
-1508610470 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
-	"TempestIO/AbstractTempestIO.h"
+1508852690 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
+	"AbstractTempestIO.h"
 	"Pokey.h"
 
 1455395090 /home/pi/Documents/Tempest/TempestCPU/Pokey.h
@@ -68,14 +75,16 @@
 1459127156 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
 	"SoundChannel.h"
 
-1477527917 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
+1508862777 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
 	"stdafx.h"
+	<stdarg.h>
 	"6502/CPU6502Exception.h"
+	"SimpleVectorDataInterpreter.h"
 	"AbstractTempestEnvironment.h"
 	"TempestException.h"
 	"TempestRunner.h"
 
-1508610471 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
+1508852690 /home/pi/Documents/Tempest/TempestCPU/stdafx.h
 	<stdint.h>
 	<stdio.h>
 	<stdlib.h>
@@ -86,14 +95,15 @@
 	<string>
 	<thread>
 	<vector>
+	"sqlite3.h"
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Exception.h
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
+1508863187 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
 
-1508610470 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
+1508852690 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
 	"stdafx.h"
-	"TempestIO/AbstractTempestIO.h"
+	"AbstractTempestIO.h"
 	"AbstractTempestEnvironment.h"
 	"TempestException.h"
 	"TempestMemoryMap.h"
@@ -102,9 +112,9 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestROMS.h
 
-1454201685 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.cpp
+1508852690 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.cpp
 	"MathBoxAFX.h"
-	"../TempestROMS.h"
+	"TempestROMS.h"
 	"MathBox.h"
 
 1451701410 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBoxAFX.h
@@ -122,9 +132,9 @@
 1439424979 source:/home/pi/Documents/Tempest/TempestCPU/TempestROMS.cpp
 	"stdafx.h"
 
-1508610470 source:/home/pi/Documents/Tempest/TempestCPU/Pokey.cpp
+1508852690 source:/home/pi/Documents/Tempest/TempestCPU/Pokey.cpp
 	"stdafx.h"
-	"TempestIO/AbstractTempestIO.h"
+	"AbstractTempestIO.h"
 	"TempestException.h"
 	"Pokey.h"
 
@@ -161,7 +171,9 @@
 1496084100 /home/pi/Documents/Tempest/TempestIO/Vector/SimpleVector.h
 	"TempestColor.h"
 
-1508610471 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
+1508852690 /home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.h
+	<functional>
+	<map>
 	"VectorData.h"
 
 1508610471 /home/pi/Documents/Tempest/TempestIO/Vector/VectorData.h
@@ -178,8 +190,10 @@
 	"../../TempestCPU/TempestROMS.h"
 	"VectorData.h"
 
-1459127156 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.cpp
+1508611310 source:/home/pi/Documents/Tempest/TempestIO/Vector/VectorDataInterpreter.cpp
 	"stdafx.h"
+	<stdarg.h>
+	<stdio.h>
 	"../../TempestCPU/TempestException.h"
 	"VectorDataInterpreter.h"
 
@@ -541,11 +555,11 @@
 1438879518 /home/pi/Documents/RPiLib/opt/vc/include/VG/vgu.h
 	"openvg.h"
 
-1457499527 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.h
+1508852986 /home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.h
 	<time.h>
 	"TempestCPU/AbstractTempestEnvironment.h"
 
-1461512616 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.cpp
+1508871303 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPiEnvironment.cpp
 	"stdafx.h"
 	"TempestCPU/TempestException.h"
 	"TempestPiEnvironment.h"
@@ -566,13 +580,14 @@
 	"AbstractTempestStream.h"
 	"TempestIOStreamProxy.h"
 
-1459127156 /home/pi/Documents/Tempest/TempestIO/stdafx.h
+1508852690 /home/pi/Documents/Tempest/TempestIO/stdafx.h
 	<stdint.h>
 	<string.h>
 	<functional>
 	<map>
 	<string>
 	<vector>
+	"sqlite3.h"
 
 1454880751 /home/pi/Documents/Tempest/TempestIO/TempestStreamProtocol.h
 
@@ -583,7 +598,7 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1464554539 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1508862912 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
 	"TempestCPU/TempestException.h"
@@ -648,4 +663,87 @@
 	"stdafx.h"
 	"CommandLine.h"
 	"AbstractTempestEnvironment.h"
+
+1508852690 /home/pi/Documents/Tempest/TempestIO/TempestDB.h
+	"SQLRRDB.h"
+
+1508852689 /home/pi/Documents/Tempest/SQLite/SQLRR/SQLRRDB.h
+	"sqlite3.h"
+
+1508852690 /home/pi/Documents/Tempest/SQLite/sqlite3.h
+	<stdarg.h>
+
+1508862872 source:/home/pi/Documents/Tempest/SQLite/SQLRR/SQLRRDB.cpp
+	"SQLiteCommonHeader.h"
+	"SQLRRException.h"
+	"SQLRRDB.h"
+
+1508852689 /home/pi/Documents/Tempest/SQLite/SQLiteCommonHeader.h
+	"sqlite3.h"
+	<string>
+
+1508871059 /home/pi/Documents/Tempest/SQLite/SQLRR/SQLRRException.h
+	"TempestException.h"
+
+1508852690 source:/home/pi/Documents/Tempest/SQLite/sqlite3.c
+	"config.h"
+	<vxWorks.h>
+	<pthread.h>
+	"mingw.h"
+	"_mingw.h"
+	<stdarg.h>
+	<stdint.h>
+	<inttypes.h>
+	<intrin.h>
+	<cmnintrin.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<stddef.h>
+	<TargetConditionals.h>
+	<ctype.h>
+	<time.h>
+	<sys/sysctl.h>
+	<malloc/malloc.h>
+	<libkern/OSAtomic.h>
+	<malloc.h>
+	<pthread.h>
+	"windows.h"
+	<sys/cygwin.h>
+	<errno.h>
+	<process.h>
+	<math.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<unistd.h>
+	<sys/time.h>
+	<errno.h>
+	<sys/mman.h>
+	<sys/ioctl.h>
+	<sys/file.h>
+	<sys/param.h>
+	<semaphore.h>
+	<limits.h>
+	<sys/mount.h>
+	<utime.h>
+	<sys/dcmd_blk.h>
+	<sys/statvfs.h>
+	<dlfcn.h>
+	"sqlite_tcl.h"
+	"tcl.h"
+	"sqlite3rtree.h"
+	<unicode/utypes.h>
+	<unicode/uregex.h>
+	<unicode/ustring.h>
+	<unicode/ucol.h>
+	<unicode/ubrk.h>
+	<unicode/utf16.h>
+	<ctype.h>
+	<math.h>
+
+1508862860 source:/home/pi/Documents/Tempest/TempestIO/TempestDB.cpp
+	"stdafx.h"
+	"TempestDB.h"
 

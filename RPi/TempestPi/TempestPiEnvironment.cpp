@@ -56,3 +56,8 @@ void TempestPiEnvironment::SynchronizeClock(uint64_t busMSCount)
       realTimeMS = busMSCount;
 }
 
+std::string TempestPiEnvironment::GetDatabasePathName(void)
+{
+   return "./TempestDB";
+}
+

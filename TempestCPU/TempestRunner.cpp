@@ -291,9 +291,9 @@ void TempestRunner::Start(void)
 {
    // open the database
    db.Open(environment->GetDatabasePathName());
-   
+
    // create the thread is all
-	theThread = new std::thread(
+   theThread = new std::thread(
       [this]() { RunnerThread(); }
       );
 }

@@ -19,8 +19,14 @@
 					<Add directory="../../../RPiLib/opt/vc/include" />
 					<Add directory="../../../RPiLib/opt/vc/include/interface/vcos/pthreads" />
 					<Add directory="../../../RPiLib/opt/vc/include/interface/vmcs_host/linux" />
+					<Add directory="../../TempestIO" />
+					<Add directory="../../TempestIO/Vector" />
+					<Add directory="../../SQLite" />
+					<Add directory="../../SQLite/SQLRR" />
+					<Add directory="../../TempestCPU" />
 				</Compiler>
 				<Linker>
+					<Add option="-ldl" />
 					<Add library="pthread" />
 					<Add library="libbcm_host" />
 					<Add library="libEGL" />
@@ -40,9 +46,15 @@
 					<Add directory="../../../RPiLib/opt/vc/include" />
 					<Add directory="../../../RPiLib/opt/vc/include/interface/vcos/pthreads" />
 					<Add directory="../../../RPiLib/opt/vc/include/interface/vmcs_host/linux" />
+					<Add directory="../../TempestIO/Vector" />
+					<Add directory="../../TempestIO" />
+					<Add directory="../../SQLite/SQLRR" />
+					<Add directory="../../SQLite" />
+					<Add directory="../../TempestCPU" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-ldl" />
 					<Add library="pthread" />
 					<Add library="libbcm_host" />
 					<Add library="libEGL" />
@@ -72,6 +84,11 @@
 		<Unit filename="TempestSocketListener.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="stdafx.h" />
+		<Unit filename="../../SQLite/SQLRR/SQLRRDB.cpp" />
+		<Unit filename="../../SQLite/sqlite3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../SQLite/sqlite3.h" />
 		<Unit filename="../../TempestCPU/6502/AbstractBus.cpp" />
 		<Unit filename="../../TempestCPU/6502/AbstractBus.h" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
@@ -99,6 +116,7 @@
 		<Unit filename="../../TempestIO/SoundChannelState.cpp" />
 		<Unit filename="../../TempestIO/SoundChannelState.h" />
 		<Unit filename="../../TempestIO/SoundIOPacket.cpp" />
+		<Unit filename="../../TempestIO/TempestDB.cpp" />
 		<Unit filename="../../TempestIO/TempestIOStreamProxy.cpp" />
 		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />

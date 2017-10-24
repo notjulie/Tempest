@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   TempestException.h
  * Author: Randy
  *
@@ -14,7 +14,7 @@ public:
    TempestException(const std::string &_message);
    virtual ~TempestException(void);
    virtual const char* what(void) const;
-   
+
 private:
    std::string message;
 };
