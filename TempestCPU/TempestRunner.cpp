@@ -13,6 +13,7 @@
 
 #include "stdafx.h"
 #include <stdarg.h>
+#include <chrono>
 
 #include "6502/CPU6502Exception.h"
 #include "SimpleVectorDataInterpreter.h"
@@ -55,6 +56,9 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
    // register hooks
    Register6502Hooks();
    RegisterVectorHooks();
+
+   // register timers
+   tempestBus.StartTimer(1500, [this]() {Synchronize(); });
 }
 
 TempestRunner::~TempestRunner(void)
@@ -151,6 +155,21 @@ void TempestRunner::Register6502Hooks(void)
    });
 }
 
+
+void TempestRunner::Synchronize(void)
+{
+   // we get called every millisecond according to the number of clock cycles
+   // executed by the 6502... our job is to align that with real time by pausing
+   // to let realtime catch up
+   auto now = std::chrono::high_resolution_clock::now();
+   auto elapsed = now - referenceTime;
+   referenceTime = now;
+
+   cpuAheadTime += std::chrono::microseconds(1000);
+   cpuAheadTime -= std::chrono::duration_cast<std::chrono::microseconds>(elapsed);
+   if (cpuAheadTime.count() > 0)
+      std::this_thread::sleep_for(cpuAheadTime);
+}
 
 uint32_t TempestRunner::SortHighScores(void)
 {
@@ -309,8 +328,9 @@ void TempestRunner::RunnerThread(void)
 		// reset the CPU and the realtime clock
 		cpu6502.Reset();
 
-		// synchronize our clock with the real world
-		environment->Reset();
+      // reset our clock
+      cpuAheadTime = std::chrono::microseconds(0);
+      referenceTime = std::chrono::high_resolution_clock::now();
 
 		// run
 		while (!terminateRequested)
@@ -343,7 +363,8 @@ void TempestRunner::RunnerThread(void)
 						state = Running;
 						break;
 					}
-					environment->Sleep(50);
+
+               std::this_thread::sleep_for(std::chrono::milliseconds(50));
 				}
 			}
 

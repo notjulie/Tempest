@@ -41,9 +41,10 @@ public:
 
 private:
    void  ConfigureAddressSpace(void);
-   void  HandleTick250Hz(void);
+   void  Tick250Hz(void);
    uint8_t ReadIOByte(uint16_t address);
    void    WriteIOByte(uint16_t address, uint8_t value);
+   void Tick6KHz(void);
 
 private:
    static uint8_t ReadColorRAM(AbstractBus *bus, uint16_t address);
@@ -59,13 +60,9 @@ private:
    static void WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value);
 
 private:
-   static void Tick6KHz(AbstractBus *bus);
-   static void Tick250Hz(AbstractBus *bus);
-
-private:
 	// forbidden items
-	TempestBus(const TempestBus &bus);
-	TempestBus &operator=(const TempestBus &bus);
+	TempestBus(const TempestBus &bus) = delete;
+	TempestBus &operator=(const TempestBus &bus) = delete;
 
 private:
    AbstractTempestEnvironment *environment;

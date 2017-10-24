@@ -23,7 +23,7 @@ void AbstractBus::IncrementClockCycleCount(uint32_t clockCycles)
       {
          if (totalClockCycles >= timers[i].nextIteration)
          {
-            timers[i].timerFunction(this);
+            timers[i].timerFunction();
             timers[i].nextIteration += timers[i].period;
          }
       }
@@ -47,7 +47,7 @@ void AbstractBus::WriteByte(uint16_t address, uint8_t value)
    return memory[address].writer(this, address, value);
 }
 
-void AbstractBus::StartTimer(uint32_t period, TimerFunction *f)
+void AbstractBus::StartTimer(uint32_t period, const std::function<void()> &f)
 {
    BusTimer timer;
    timer.period = period;

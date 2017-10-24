@@ -2,6 +2,7 @@
 #ifndef TEMPESTRUNNER_H
 #define TEMPESTRUNNER_H
 
+#include <chrono>
 #include <string>
 
 #include "6502/CPU6502.h"
@@ -76,6 +77,7 @@ private:
    void  Register6502Hooks(void);
    void  RegisterVectorHooks(void);
    void	RunnerThread(void);
+   void Synchronize(void);
 
 private:
    // game modifications and hooks
@@ -94,7 +96,10 @@ private:
 private:
 	AbstractTempestEnvironment *environment;
 
-	bool     terminateRequested;
+   std::chrono::high_resolution_clock::time_point referenceTime;
+   std::chrono::microseconds cpuAheadTime;
+   
+   bool     terminateRequested;
 	bool     resetRequested;
 	State    state;
 	Action   requestedAction;

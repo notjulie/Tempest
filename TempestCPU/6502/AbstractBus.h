@@ -30,10 +30,10 @@ public:
    bool IsNMI(void) { return nmi; }
    void SetNMI(void) { this->nmi = true; }
    void ClearNMI(void) { nmi = false; }
+   void StartTimer(uint32_t period, const std::function<void()> &function);
 
 protected:
    typedef uint8_t ReadFunction(AbstractBus *bus, uint16_t address);
-   typedef void TimerFunction(AbstractBus *bus);
    typedef void WriteFunction(AbstractBus *bus, uint16_t address, uint8_t value);
 
 protected:
@@ -41,7 +41,6 @@ protected:
    void ConfigureAddressAsRAM(uint16_t address);
    void ConfigureAddressAsROM(uint16_t address, uint8_t value);
    void SetIRQ(bool _irq) { this->irq = _irq; }
-   void StartTimer(uint32_t period, TimerFunction *f);
 
 protected:
    static uint8_t ReadAddressInvalid(AbstractBus *bus, uint16_t address);
@@ -57,7 +56,7 @@ private:
    struct BusTimer {
       uint64_t nextIteration;
       uint32_t period;
-      TimerFunction *timerFunction;
+      std::function<void()> timerFunction;
    };
    struct MemoryAttributes {
       MemoryAttributes(void) {

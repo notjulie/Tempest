@@ -25,7 +25,7 @@ AsteroidsBus::AsteroidsBus(AbstractTempestEnvironment *_environment)
    vectorDataSnapshotMutex = new std::mutex();
 
    // install our timers
-   StartTimer(4000, &SetNMI);
+   StartTimer(4000, [this]() { SetNMI(); });
 
    // configure address space
    ConfigureAddressSpace();
@@ -49,16 +49,11 @@ void AsteroidsBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
 }
 
 
-void AsteroidsBus::SetNMI(AbstractBus *bus)
+void AsteroidsBus::SetNMITimer(void)
 {
-   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
-
    // generate the NMI
-   if (!asteroidsBus->selfTest)
-      bus->SetNMI();
-
-   // this happens every 4ms so it's a good place to synch up with real time
-   asteroidsBus->environment->SynchronizeClock(bus->GetTotalClockCycles() / 1500);
+   if (!selfTest)
+      SetNMI();
 }
 
 

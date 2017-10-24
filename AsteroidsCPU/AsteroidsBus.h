@@ -35,6 +35,7 @@ public:
 private:
    void  ConfigureAddressSpace(void);
    void  HandleTick250Hz(void);
+   void SetNMITimer(void);
 
 private:
    static uint8_t ReadBankedRAM(AbstractBus *bus, uint16_t address);
@@ -60,9 +61,6 @@ private:
    static void WriteShipFireSound(AbstractBus *bus, uint16_t address, uint8_t value) {}
    static void WriteLifeSound(AbstractBus *bus, uint16_t address, uint8_t value) {}
    static void WriteVectorGO(AbstractBus *bus, uint16_t address, uint8_t value);
-
-private:
-   static void SetNMI(AbstractBus *bus);
 
 private:
    AbstractTempestEnvironment *environment;

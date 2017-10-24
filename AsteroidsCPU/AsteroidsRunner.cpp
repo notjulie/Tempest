@@ -74,8 +74,9 @@ void AsteroidsRunner::RunnerThread(void)
 		// reset the CPU and the realtime clock
 		cpu6502.Reset();
 
-		// synchronize our clock with the real world
-		environment->Reset();
+		// reset our clock
+      cpuAheadTime = std::chrono::microseconds(0);
+      referenceTime = std::chrono::high_resolution_clock::now();
 
 		// run
 		while (!terminateRequested)
@@ -108,8 +109,9 @@ void AsteroidsRunner::RunnerThread(void)
 						state = Running;
 						break;
 					}
-					environment->Sleep(50);
-				}
+
+               std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            }
 			}
 
          // execute a hook if we have one at this address

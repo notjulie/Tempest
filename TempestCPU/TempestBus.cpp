@@ -32,8 +32,8 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
    vectorDataSnapshotMutex = new std::mutex();
 
    // install our timers
-   StartTimer(250, &Tick6KHz);
-   StartTimer(6000, &Tick250Hz);
+   StartTimer(250, [this]() { Tick6KHz(); });
+   StartTimer(6000, [this]() { Tick250Hz(); });
 
    // configure address space
    ConfigureAddressSpace();
@@ -188,24 +188,16 @@ void TempestBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
 }
 
 
-void TempestBus::Tick6KHz(AbstractBus *bus)
+void TempestBus::Tick6KHz(void)
 {
-   TempestBus *pThis = static_cast<TempestBus *>(bus);
-
    // toggle the 3 KHz clock
-   pThis->clock3KHzIsHigh = !pThis->clock3KHzIsHigh;
+   clock3KHzIsHigh = !clock3KHzIsHigh;
 
    // give the sound output its heartbeat
-   pThis->tempestSoundIO->SetTime(pThis->GetTotalClockCycles());
+   tempestSoundIO->SetTime(GetTotalClockCycles());
 }
 
-void TempestBus::Tick250Hz(AbstractBus *bus)
-{
-   TempestBus *pThis = static_cast<TempestBus *>(bus);
-   pThis->HandleTick250Hz();
-}
-
-void TempestBus::HandleTick250Hz(void)
+void TempestBus::Tick250Hz(void)
 {
    uint64_t now = GetTotalClockCycles();
 
@@ -230,9 +222,6 @@ void TempestBus::HandleTick250Hz(void)
          lastPlayer2ButtonDownTime = now;
       }
    }
-
-   // synchronize the CPU with the realtime clock
-   environment->SynchronizeClock(now / 1500);
 
    // generate an IRQ
    SetIRQ(true);

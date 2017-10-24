@@ -2,6 +2,7 @@
 #ifndef ASTEROIDSRUNNER_H
 #define ASTEROIDSRUNNER_H
 
+#include <chrono>
 #include "TempestCPU/6502/CPU6502.h"
 #include "AsteroidsBus.h"
 
@@ -75,7 +76,10 @@ private:
 private:
 	AbstractTempestEnvironment *environment;
 
-	bool     terminateRequested;
+   std::chrono::high_resolution_clock::time_point referenceTime;
+   std::chrono::microseconds cpuAheadTime;
+   
+   bool     terminateRequested;
 	bool     resetRequested;
 	State    state;
 	Action   requestedAction;
