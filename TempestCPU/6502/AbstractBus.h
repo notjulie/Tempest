@@ -13,6 +13,8 @@
 #pragma warning(disable : 4820)	// padding in structures
 #endif
 
+#include <vector>
+
 class AbstractBus
 {
 public:

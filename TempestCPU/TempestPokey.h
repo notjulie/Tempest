@@ -2,7 +2,7 @@
 #ifndef TEMPESTPOKEY_H
 #define TEMPESTPOKEY_H
 
-#include "TempestIO/AbstractTempestIO.h"
+#include "AbstractTempestIO.h"
 #include "Pokey.h"
 
 #ifdef _WIN32

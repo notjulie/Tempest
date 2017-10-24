@@ -2,7 +2,7 @@
 #ifndef TEMPESTDB_H
 #define TEMPESTDB_H
 
-#include "SQLite/SQLRR/SQLRRDB.h"
+#include "SQLRRDB.h"
 
 class TempestDB {
 public:

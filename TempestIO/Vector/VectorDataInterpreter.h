@@ -2,7 +2,8 @@
 #ifndef VECTORDATAINTERPRETER_H
 #define VECTORDATAINTERPRETER_H
 
-
+#include <functional>
+#include <map>
 #include "VectorData.h"
 
 #ifdef _WIN32

@@ -2,6 +2,10 @@
 #ifndef ABSTRACTTEMPESTENVIRONMENT_H
 #define ABSTRACTTEMPESTENVIRONMENT_H
 
+#include <stdint.h>
+#include <functional>
+#include <map>
+
 class CommandLine;
 
 class AbstractTempestEnvironment

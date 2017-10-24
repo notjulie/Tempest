@@ -15,7 +15,7 @@
 #include <stdarg.h>
 
 #include "6502/CPU6502Exception.h"
-#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
+#include "SimpleVectorDataInterpreter.h"
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 
@@ -64,7 +64,8 @@ TempestRunner::~TempestRunner(void)
 	{
 		terminateRequested = true;
 		theThread->join();
-		delete theThread, theThread = NULL;
+        delete theThread;
+        theThread = NULL;
 	}
 }
 

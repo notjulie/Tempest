@@ -44,7 +44,7 @@
 #include <vector>
 
 // sqlite
-#include "SQLite/sqlite3.h"
+#include "sqlite3.h"
 
 // restore warning state
 #ifdef _WIN32

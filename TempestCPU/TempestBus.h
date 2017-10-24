@@ -8,7 +8,9 @@
 #ifndef TEMPESTBUS_H
 #define	TEMPESTBUS_H
 
-#include "TempestIO/Vector/VectorData.h"
+#include <mutex>
+
+#include "VectorData.h"
 
 #include "6502/AbstractBus.h"
 #include "MathBox/MathBox.h"
@@ -20,10 +22,6 @@
 
 // forward declarations
 class AbstractTempestEnvironment;
-namespace std {
-   // CLR code can't include <mutex>
-   class mutex;
-};
 
 
 #ifdef _WIN32

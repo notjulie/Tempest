@@ -1,0 +1,734 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39B51F9DAB1700FFAB2B /* AppDelegate.m */; };
+		021E39B91F9DAB1700FFAB2B /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39B81F9DAB1700FFAB2B /* Renderer.m */; };
+		021E39BC1F9DAB1700FFAB2B /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39BB1F9DAB1700FFAB2B /* GameViewController.m */; };
+		021E39BE1F9DAB1700FFAB2B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 021E39BD1F9DAB1700FFAB2B /* Shaders.metal */; };
+		021E39C21F9DAB1700FFAB2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C01F9DAB1700FFAB2B /* Main.storyboard */; };
+		021E39C41F9DAB1700FFAB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C31F9DAB1700FFAB2B /* Assets.xcassets */; };
+		021E39C71F9DAB1700FFAB2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */; };
+		021E39CA1F9DAB1700FFAB2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39C91F9DAB1700FFAB2B /* main.m */; };
+		021E39D41F9DAB1700FFAB2B /* iTempestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39D31F9DAB1700FFAB2B /* iTempestTests.m */; };
+		021E39DF1F9DAB1700FFAB2B /* iTempestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */; };
+		024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */; };
+		024D0E181F9E61BE00DA5FFE /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E171F9E61BE00DA5FFE /* Test.cpp */; };
+		024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */; };
+		024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */; };
+		024D0E231F9EAAFD00DA5FFE /* CPU6502.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */; };
+		024D0E251F9EAB5100DA5FFE /* SimpleVectorDataInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E241F9EAB5000DA5FFE /* SimpleVectorDataInterpreter.cpp */; };
+		024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E261F9EAB7200DA5FFE /* VectorData.cpp */; };
+		024D0E2A1F9EABA200DA5FFE /* SQLRRDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E291F9EABA200DA5FFE /* SQLRRDB.cpp */; };
+		024D0E2C1F9EABD900DA5FFE /* TempestBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E2B1F9EABD900DA5FFE /* TempestBus.cpp */; };
+		024D0E2E1F9EAC2300DA5FFE /* AbstractBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E2D1F9EAC2200DA5FFE /* AbstractBus.cpp */; };
+		024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E2F1F9EAC3600DA5FFE /* CPU6502Exception.cpp */; };
+		024D0E321F9EAC4900DA5FFE /* ProcessorStatusWord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E311F9EAC4900DA5FFE /* ProcessorStatusWord.cpp */; };
+		024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E331F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp */; };
+		024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E351F9EB70900DA5FFE /* Pokey.cpp */; };
+		024D0E381F9EB76C00DA5FFE /* EEPROM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E371F9EB76C00DA5FFE /* EEPROM.cpp */; };
+		024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E3A1F9EB7A800DA5FFE /* MathBox.cpp */; };
+		024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E3C1F9EB7FE00DA5FFE /* TempestDB.cpp */; };
+		024D0E3F1F9EB85A00DA5FFE /* TempestROMS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E3E1F9EB85A00DA5FFE /* TempestROMS.cpp */; };
+		024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E401F9EB8CC00DA5FFE /* Am2901.cpp */; };
+		024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */; };
+		024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E441F9EB98F00DA5FFE /* TempestException.cpp */; };
+		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		021E39D01F9DAB1700FFAB2B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 021E39A91F9DAB1700FFAB2B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 021E39B01F9DAB1700FFAB2B;
+			remoteInfo = iTempest;
+		};
+		021E39DB1F9DAB1700FFAB2B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 021E39A91F9DAB1700FFAB2B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 021E39B01F9DAB1700FFAB2B;
+			remoteInfo = iTempest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		021E39B11F9DAB1700FFAB2B /* iTempest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTempest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		021E39B41F9DAB1700FFAB2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		021E39B51F9DAB1700FFAB2B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		021E39B71F9DAB1700FFAB2B /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		021E39B81F9DAB1700FFAB2B /* Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
+		021E39BA1F9DAB1700FFAB2B /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		021E39BB1F9DAB1700FFAB2B /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		021E39BD1F9DAB1700FFAB2B /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		021E39BF1F9DAB1700FFAB2B /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		021E39C11F9DAB1700FFAB2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		021E39C31F9DAB1700FFAB2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		021E39C61F9DAB1700FFAB2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		021E39C81F9DAB1700FFAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		021E39C91F9DAB1700FFAB2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		021E39CF1F9DAB1700FFAB2B /* iTempestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTempestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		021E39D31F9DAB1700FFAB2B /* iTempestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iTempestTests.m; sourceTree = "<group>"; };
+		021E39D51F9DAB1700FFAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTempestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iTempestUITests.m; sourceTree = "<group>"; };
+		021E39E01F9DAB1700FFAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../SQLite/sqlite3.h; sourceTree = "<group>"; };
+		024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../SQLite/sqlite3.c; sourceTree = "<group>"; };
+		024D0E171F9E61BE00DA5FFE /* Test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Test.cpp; sourceTree = "<group>"; };
+		024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestRunner.cpp; path = ../../TempestCPU/TempestRunner.cpp; sourceTree = "<group>"; };
+		024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorDataInterpreter.cpp; path = ../../TempestIO/Vector/VectorDataInterpreter.cpp; sourceTree = "<group>"; };
+		024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502.cpp; path = ../../TempestCPU/6502/CPU6502.cpp; sourceTree = "<group>"; };
+		024D0E241F9EAB5000DA5FFE /* SimpleVectorDataInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleVectorDataInterpreter.cpp; path = ../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp; sourceTree = "<group>"; };
+		024D0E261F9EAB7200DA5FFE /* VectorData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorData.cpp; path = ../../TempestIO/Vector/VectorData.cpp; sourceTree = "<group>"; };
+		024D0E291F9EABA200DA5FFE /* SQLRRDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRDB.cpp; path = ../../SQLite/SQLRR/SQLRRDB.cpp; sourceTree = "<group>"; };
+		024D0E2B1F9EABD900DA5FFE /* TempestBus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestBus.cpp; path = ../../TempestCPU/TempestBus.cpp; sourceTree = "<group>"; };
+		024D0E2D1F9EAC2200DA5FFE /* AbstractBus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractBus.cpp; path = ../../TempestCPU/6502/AbstractBus.cpp; sourceTree = "<group>"; };
+		024D0E2F1F9EAC3600DA5FFE /* CPU6502Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Exception.cpp; path = ../../TempestCPU/6502/CPU6502Exception.cpp; sourceTree = "<group>"; };
+		024D0E311F9EAC4900DA5FFE /* ProcessorStatusWord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorStatusWord.cpp; path = ../../TempestCPU/6502/ProcessorStatusWord.cpp; sourceTree = "<group>"; };
+		024D0E331F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractTempestEnvironment.cpp; path = ../../TempestCPU/AbstractTempestEnvironment.cpp; sourceTree = "<group>"; };
+		024D0E351F9EB70900DA5FFE /* Pokey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pokey.cpp; path = ../../TempestCPU/Pokey.cpp; sourceTree = "<group>"; };
+		024D0E371F9EB76C00DA5FFE /* EEPROM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EEPROM.cpp; path = ../../TempestCPU/EEPROM.cpp; sourceTree = "<group>"; };
+		024D0E3A1F9EB7A800DA5FFE /* MathBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathBox.cpp; path = ../../TempestCPU/MathBox/MathBox.cpp; sourceTree = "<group>"; };
+		024D0E3C1F9EB7FE00DA5FFE /* TempestDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestDB.cpp; path = ../../TempestIO/TempestDB.cpp; sourceTree = "<group>"; };
+		024D0E3E1F9EB85A00DA5FFE /* TempestROMS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestROMS.cpp; path = ../../TempestCPU/TempestROMS.cpp; sourceTree = "<group>"; };
+		024D0E401F9EB8CC00DA5FFE /* Am2901.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Am2901.cpp; path = ../../TempestCPU/MathBox/Am2901.cpp; sourceTree = "<group>"; };
+		024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Am2901Tables.cpp; path = ../../TempestCPU/MathBox/Am2901Tables.cpp; sourceTree = "<group>"; };
+		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
+		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		021E39AE1F9DAB1700FFAB2B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		021E39CC1F9DAB1700FFAB2B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		021E39D71F9DAB1700FFAB2B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		021E39A81F9DAB1700FFAB2B = {
+			isa = PBXGroup;
+			children = (
+				021E39B31F9DAB1700FFAB2B /* iTempest */,
+				021E39D21F9DAB1700FFAB2B /* iTempestTests */,
+				021E39DD1F9DAB1700FFAB2B /* iTempestUITests */,
+				021E39B21F9DAB1700FFAB2B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		021E39B21F9DAB1700FFAB2B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				021E39B11F9DAB1700FFAB2B /* iTempest.app */,
+				021E39CF1F9DAB1700FFAB2B /* iTempestTests.xctest */,
+				021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		021E39B31F9DAB1700FFAB2B /* iTempest */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
+				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
+				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
+				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
+				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
+				021E39B71F9DAB1700FFAB2B /* Renderer.h */,
+				021E39B81F9DAB1700FFAB2B /* Renderer.m */,
+				021E39BA1F9DAB1700FFAB2B /* GameViewController.h */,
+				021E39BB1F9DAB1700FFAB2B /* GameViewController.m */,
+				021E39BD1F9DAB1700FFAB2B /* Shaders.metal */,
+				021E39BF1F9DAB1700FFAB2B /* ShaderTypes.h */,
+				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
+				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
+				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
+				021E39C81F9DAB1700FFAB2B /* Info.plist */,
+				021E39C91F9DAB1700FFAB2B /* main.m */,
+				024D0E171F9E61BE00DA5FFE /* Test.cpp */,
+			);
+			path = iTempest;
+			sourceTree = "<group>";
+		};
+		021E39D21F9DAB1700FFAB2B /* iTempestTests */ = {
+			isa = PBXGroup;
+			children = (
+				021E39D31F9DAB1700FFAB2B /* iTempestTests.m */,
+				021E39D51F9DAB1700FFAB2B /* Info.plist */,
+			);
+			path = iTempestTests;
+			sourceTree = "<group>";
+		};
+		021E39DD1F9DAB1700FFAB2B /* iTempestUITests */ = {
+			isa = PBXGroup;
+			children = (
+				021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */,
+				021E39E01F9DAB1700FFAB2B /* Info.plist */,
+			);
+			path = iTempestUITests;
+			sourceTree = "<group>";
+		};
+		024D0DCD1F9DB51C00DA5FFE /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E281F9EAB8A00DA5FFE /* SQLRR */,
+				024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */,
+				024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */,
+			);
+			name = SQLite;
+			sourceTree = "<group>";
+		};
+		024D0E1A1F9EA8B600DA5FFE /* TempestCPU */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E441F9EB98F00DA5FFE /* TempestException.cpp */,
+				024D0E3E1F9EB85A00DA5FFE /* TempestROMS.cpp */,
+				024D0E391F9EB78F00DA5FFE /* MathBox */,
+				024D0E371F9EB76C00DA5FFE /* EEPROM.cpp */,
+				024D0E331F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp */,
+				024D0E2B1F9EABD900DA5FFE /* TempestBus.cpp */,
+				024D0E211F9EAADC00DA5FFE /* CPU6502 */,
+				024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */,
+			);
+			name = TempestCPU;
+			sourceTree = "<group>";
+		};
+		024D0E1D1F9EAA7700DA5FFE /* TempestIO */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */,
+				024D0E3C1F9EB7FE00DA5FFE /* TempestDB.cpp */,
+				024D0E351F9EB70900DA5FFE /* Pokey.cpp */,
+				024D0E1E1F9EAA9C00DA5FFE /* Vector */,
+			);
+			name = TempestIO;
+			sourceTree = "<group>";
+		};
+		024D0E1E1F9EAA9C00DA5FFE /* Vector */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E261F9EAB7200DA5FFE /* VectorData.cpp */,
+				024D0E241F9EAB5000DA5FFE /* SimpleVectorDataInterpreter.cpp */,
+				024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */,
+			);
+			name = Vector;
+			sourceTree = "<group>";
+		};
+		024D0E211F9EAADC00DA5FFE /* CPU6502 */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E311F9EAC4900DA5FFE /* ProcessorStatusWord.cpp */,
+				024D0E2F1F9EAC3600DA5FFE /* CPU6502Exception.cpp */,
+				024D0E2D1F9EAC2200DA5FFE /* AbstractBus.cpp */,
+				024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */,
+			);
+			name = CPU6502;
+			sourceTree = "<group>";
+		};
+		024D0E281F9EAB8A00DA5FFE /* SQLRR */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E291F9EABA200DA5FFE /* SQLRRDB.cpp */,
+			);
+			name = SQLRR;
+			sourceTree = "<group>";
+		};
+		024D0E391F9EB78F00DA5FFE /* MathBox */ = {
+			isa = PBXGroup;
+			children = (
+				024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */,
+				024D0E401F9EB8CC00DA5FFE /* Am2901.cpp */,
+				024D0E3A1F9EB7A800DA5FFE /* MathBox.cpp */,
+			);
+			name = MathBox;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		021E39B01F9DAB1700FFAB2B /* iTempest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 021E39E31F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempest" */;
+			buildPhases = (
+				021E39AD1F9DAB1700FFAB2B /* Sources */,
+				021E39AE1F9DAB1700FFAB2B /* Frameworks */,
+				021E39AF1F9DAB1700FFAB2B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iTempest;
+			productName = iTempest;
+			productReference = 021E39B11F9DAB1700FFAB2B /* iTempest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		021E39CE1F9DAB1700FFAB2B /* iTempestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 021E39E61F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestTests" */;
+			buildPhases = (
+				021E39CB1F9DAB1700FFAB2B /* Sources */,
+				021E39CC1F9DAB1700FFAB2B /* Frameworks */,
+				021E39CD1F9DAB1700FFAB2B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				021E39D11F9DAB1700FFAB2B /* PBXTargetDependency */,
+			);
+			name = iTempestTests;
+			productName = iTempestTests;
+			productReference = 021E39CF1F9DAB1700FFAB2B /* iTempestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		021E39D91F9DAB1700FFAB2B /* iTempestUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 021E39E91F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestUITests" */;
+			buildPhases = (
+				021E39D61F9DAB1700FFAB2B /* Sources */,
+				021E39D71F9DAB1700FFAB2B /* Frameworks */,
+				021E39D81F9DAB1700FFAB2B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				021E39DC1F9DAB1700FFAB2B /* PBXTargetDependency */,
+			);
+			name = iTempestUITests;
+			productName = iTempestUITests;
+			productReference = 021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		021E39A91F9DAB1700FFAB2B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Randy Rasmussen";
+				TargetAttributes = {
+					021E39B01F9DAB1700FFAB2B = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+					021E39CE1F9DAB1700FFAB2B = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 021E39B01F9DAB1700FFAB2B;
+					};
+					021E39D91F9DAB1700FFAB2B = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 021E39B01F9DAB1700FFAB2B;
+					};
+				};
+			};
+			buildConfigurationList = 021E39AC1F9DAB1700FFAB2B /* Build configuration list for PBXProject "iTempest" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 021E39A81F9DAB1700FFAB2B;
+			productRefGroup = 021E39B21F9DAB1700FFAB2B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				021E39B01F9DAB1700FFAB2B /* iTempest */,
+				021E39CE1F9DAB1700FFAB2B /* iTempestTests */,
+				021E39D91F9DAB1700FFAB2B /* iTempestUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		021E39AF1F9DAB1700FFAB2B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				021E39C71F9DAB1700FFAB2B /* LaunchScreen.storyboard in Resources */,
+				021E39C41F9DAB1700FFAB2B /* Assets.xcassets in Resources */,
+				021E39C21F9DAB1700FFAB2B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		021E39CD1F9DAB1700FFAB2B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		021E39D81F9DAB1700FFAB2B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		021E39AD1F9DAB1700FFAB2B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				024D0E3F1F9EB85A00DA5FFE /* TempestROMS.cpp in Sources */,
+				024D0E2A1F9EABA200DA5FFE /* SQLRRDB.cpp in Sources */,
+				024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */,
+				024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */,
+				024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */,
+				024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */,
+				021E39CA1F9DAB1700FFAB2B /* main.m in Sources */,
+				024D0E2E1F9EAC2300DA5FFE /* AbstractBus.cpp in Sources */,
+				024D0E251F9EAB5100DA5FFE /* SimpleVectorDataInterpreter.cpp in Sources */,
+				024D0E231F9EAAFD00DA5FFE /* CPU6502.cpp in Sources */,
+				024D0E381F9EB76C00DA5FFE /* EEPROM.cpp in Sources */,
+				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
+				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
+				021E39BE1F9DAB1700FFAB2B /* Shaders.metal in Sources */,
+				024D0E181F9E61BE00DA5FFE /* Test.cpp in Sources */,
+				021E39B91F9DAB1700FFAB2B /* Renderer.m in Sources */,
+				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
+				024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */,
+				021E39BC1F9DAB1700FFAB2B /* GameViewController.m in Sources */,
+				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,
+				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
+				024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */,
+				024D0E2C1F9EABD900DA5FFE /* TempestBus.cpp in Sources */,
+				024D0E321F9EAC4900DA5FFE /* ProcessorStatusWord.cpp in Sources */,
+				024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */,
+				024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */,
+				024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		021E39CB1F9DAB1700FFAB2B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				021E39D41F9DAB1700FFAB2B /* iTempestTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		021E39D61F9DAB1700FFAB2B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				021E39DF1F9DAB1700FFAB2B /* iTempestUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		021E39D11F9DAB1700FFAB2B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 021E39B01F9DAB1700FFAB2B /* iTempest */;
+			targetProxy = 021E39D01F9DAB1700FFAB2B /* PBXContainerItemProxy */;
+		};
+		021E39DC1F9DAB1700FFAB2B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 021E39B01F9DAB1700FFAB2B /* iTempest */;
+			targetProxy = 021E39DB1F9DAB1700FFAB2B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		021E39C01F9DAB1700FFAB2B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				021E39C11F9DAB1700FFAB2B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				021E39C61F9DAB1700FFAB2B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		021E39E11F9DAB1700FFAB2B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		021E39E21F9DAB1700FFAB2B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		021E39E41F9DAB1700FFAB2B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V7V238DKP4;
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../TempestCPU/",
+					"$(SRCROOT)/../TempestIO/Vector/",
+					"$(SRCROOT)/../TempestIO/",
+					"$(SRCROOT)/../SQLite/SQLRR/",
+					"$(SRCROOT)/../SQLite/",
+				);
+				INFOPLIST_FILE = iTempest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
+			};
+			name = Debug;
+		};
+		021E39E51F9DAB1700FFAB2B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V7V238DKP4;
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../TempestCPU/",
+					"$(SRCROOT)/../TempestIO/Vector/",
+					"$(SRCROOT)/../TempestIO/",
+					"$(SRCROOT)/../SQLite/SQLRR/",
+					"$(SRCROOT)/../SQLite/",
+				);
+				INFOPLIST_FILE = iTempest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+		021E39E71F9DAB1700FFAB2B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iTempestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTempest.app/iTempest";
+			};
+			name = Debug;
+		};
+		021E39E81F9DAB1700FFAB2B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iTempestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTempest.app/iTempest";
+			};
+			name = Release;
+		};
+		021E39EA1F9DAB1700FFAB2B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iTempestUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iTempest;
+			};
+			name = Debug;
+		};
+		021E39EB1F9DAB1700FFAB2B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iTempestUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iTempest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		021E39AC1F9DAB1700FFAB2B /* Build configuration list for PBXProject "iTempest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				021E39E11F9DAB1700FFAB2B /* Debug */,
+				021E39E21F9DAB1700FFAB2B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		021E39E31F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				021E39E41F9DAB1700FFAB2B /* Debug */,
+				021E39E51F9DAB1700FFAB2B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		021E39E61F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				021E39E71F9DAB1700FFAB2B /* Debug */,
+				021E39E81F9DAB1700FFAB2B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		021E39E91F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				021E39EA1F9DAB1700FFAB2B /* Debug */,
+				021E39EB1F9DAB1700FFAB2B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 021E39A91F9DAB1700FFAB2B /* Project object */;
+}

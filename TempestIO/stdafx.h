@@ -13,4 +13,4 @@
 #include <string>
 #include <vector>
 
-#include "SQLite/sqlite3.h"
+#include "sqlite3.h"

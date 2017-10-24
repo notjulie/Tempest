@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 
-#include "TempestIO/AbstractTempestIO.h"
+#include "AbstractTempestIO.h"
 
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"

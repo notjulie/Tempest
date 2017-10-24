@@ -13,7 +13,7 @@
 
 #include "MathBoxAFX.h"
 
-#include "TempestCPU/TempestROMS.h"
+#include "TempestROMS.h"
 
 #include "MathBox.h"
 

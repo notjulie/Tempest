@@ -8,6 +8,8 @@
 #ifndef PROCESSORSTATUSWORD_H
 #define	PROCESSORSTATUSWORD_H
 
+#include <stdint.h>
+
 class ProcessorStatusWord
 {
 public:

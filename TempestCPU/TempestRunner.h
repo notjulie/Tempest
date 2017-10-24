@@ -2,16 +2,15 @@
 #ifndef TEMPESTRUNNER_H
 #define TEMPESTRUNNER_H
 
+#include <string>
+#include <thread>
+
 #include "6502/CPU6502.h"
 #include "TempestBus.h"
-#include "TempestIO/TempestDB.h"
-#include "TempestIO/Vector/VectorDataInterpreter.h"
+#include "TempestDB.h"
+#include "VectorDataInterpreter.h"
 
 class AbstractTempestEnvironment;
-
-namespace std {
-   class thread;
-};
 
 #ifdef _WIN32
    #pragma warning(push)
