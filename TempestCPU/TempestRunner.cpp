@@ -31,13 +31,8 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	environment = _environment;
 
 	// clear
-	state = Unstarted;
-	requestedAction = NoAction;
-	terminateRequested = false;
 	for (int i = 0; i < 64 * 1024; ++i)
 		addressFlags[i] = 0;
-   resetRequested = false;
-   pointsPerBonusLife = 10000;
    playerScores[0] = playerScores[1] = 0;
    for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
       highScores[i] = 10101;
@@ -58,7 +53,7 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
    RegisterVectorHooks();
 
    // register timers
-   tempestBus.StartTimer(1500, [this]() {Synchronize(); });
+   tempestBus.StartTimer(1500, [this]() { SynchronizeCPUWithRealTime(); });
 }
 
 TempestRunner::~TempestRunner(void)
@@ -156,20 +151,37 @@ void TempestRunner::Register6502Hooks(void)
 }
 
 
-void TempestRunner::Synchronize(void)
+/// <summary>
+/// Synchronizes the CPU with realtime such that the CPU executes instructions
+/// at a rate of 1.5MHz, the same as the actual Tempest 6502 CPU.  It does this
+/// by doing a thread sleep whenever time measured by CPU cycles gets ahead of
+/// system time.
+/// </summary>
+void TempestRunner::SynchronizeCPUWithRealTime(void)
 {
    // we get called every millisecond according to the number of clock cycles
    // executed by the 6502... our job is to align that with real time by pausing
    // to let realtime catch up
-   auto now = std::chrono::high_resolution_clock::now();
-   auto elapsed = now - referenceTime;
-   referenceTime = now;
+   cpuTime += std::chrono::microseconds(1000);
 
-   cpuAheadTime += std::chrono::microseconds(1000);
-   cpuAheadTime -= std::chrono::duration_cast<std::chrono::microseconds>(elapsed);
+   // figure out how far ahead of realtime the CPU time is
+   auto now = std::chrono::high_resolution_clock::now();
+   auto cpuAheadTime = std::chrono::duration_cast<std::chrono::microseconds>(cpuTime - now);
+
+   // if we're more than a second off of realtime just forget about it and try to synch
+   // up with the current reality
+   if (cpuAheadTime.count() < -1000000 || cpuAheadTime.count() > 1000000)
+   {
+      cpuTime = now;
+      return;
+   }
+
+   // if the CPU is ahead of realtime (which it usually should be) then
+   // sleep to let time catch up
    if (cpuAheadTime.count() > 0)
       std::this_thread::sleep_for(cpuAheadTime);
 }
+
 
 uint32_t TempestRunner::SortHighScores(void)
 {
@@ -327,10 +339,7 @@ void TempestRunner::RunnerThread(void)
 
 		// reset the CPU and the realtime clock
 		cpu6502.Reset();
-
-      // reset our clock
-      cpuAheadTime = std::chrono::microseconds(0);
-      referenceTime = std::chrono::high_resolution_clock::now();
+      cpuTime = std::chrono::high_resolution_clock::now();
 
 		// run
 		while (!terminateRequested)

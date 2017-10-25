@@ -77,7 +77,7 @@ private:
    void  Register6502Hooks(void);
    void  RegisterVectorHooks(void);
    void	RunnerThread(void);
-   void Synchronize(void);
+   void  SynchronizeCPUWithRealTime(void);
 
 private:
    // game modifications and hooks
@@ -96,14 +96,13 @@ private:
 private:
 	AbstractTempestEnvironment *environment;
 
-   std::chrono::high_resolution_clock::time_point referenceTime;
-   std::chrono::microseconds cpuAheadTime;
-   
-   bool     terminateRequested;
-	bool     resetRequested;
-	State    state;
-	Action   requestedAction;
-   int pointsPerBonusLife;
+   std::chrono::high_resolution_clock::time_point cpuTime;
+
+   bool     terminateRequested = false;
+	bool     resetRequested = false;
+	State    state = Unstarted;
+	Action   requestedAction = NoAction;
+   int pointsPerBonusLife = 10000;
 
    TempestDB   db;
 	TempestBus	tempestBus;
@@ -113,7 +112,7 @@ private:
    // this is actually a pointer to a std::thread, but the .NET CLR doesn't allow including
    // <thread> in any file it compiles, so we leave the detail private to the CPP file
    void *theThread = nullptr;
-   
+
    std::string processorStatus;
 	uint8_t	addressFlags[64 * 1024];
    std::map<uint16_t, std::function<uint32_t()> > hooks;
