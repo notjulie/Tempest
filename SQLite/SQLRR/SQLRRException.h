@@ -17,7 +17,7 @@ private:
       std::string result("SQLite exception");
 
       char s[100];
-      sprintf_s(s, sizeof(s), ", Error #%d", error);
+      snprintf(s, sizeof(s), ", Error #%d", error);
       result += s;
 
       // add the error code
@@ -38,7 +38,7 @@ private:
       int extendedError = sqlite3_extended_errcode(db);
 
       char s[100];
-      sprintf_s(s, sizeof(s), "0x%04X", extendedError);
+      snprintf(s, sizeof(s), "0x%04X", extendedError);
       return s;
    }
 };

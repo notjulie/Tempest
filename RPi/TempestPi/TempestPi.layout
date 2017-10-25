@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="PiScreen.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="1211" topLine="48" />
 	</File>
@@ -10,17 +10,17 @@
 	<File name="PiSerialStream.h" open="0" top="0" tabpos="4">
 		<Cursor position="376" topLine="23" />
 	</File>
-	<File name="TempestPi.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="2987" topLine="101" />
+	<File name="TempestPi.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="300" topLine="12" />
 	</File>
-	<File name="TempestPi.h" open="0" top="0" tabpos="3">
-		<Cursor position="553" topLine="0" />
+	<File name="TempestPi.h" open="1" top="1" tabpos="9">
+		<Cursor position="553" topLine="24" />
 	</File>
-	<File name="TempestPiEnvironment.cpp" open="1" top="0" tabpos="8">
-		<Cursor position="1476" topLine="45" />
+	<File name="TempestPiEnvironment.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="155" topLine="0" />
 	</File>
-	<File name="TempestPiEnvironment.h" open="0" top="0" tabpos="0">
-		<Cursor position="396" topLine="0" />
+	<File name="TempestPiEnvironment.h" open="1" top="0" tabpos="7">
+		<Cursor position="64" topLine="0" />
 	</File>
 	<File name="TempestPiIO.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="1363" topLine="41" />
@@ -32,18 +32,18 @@
 		<Cursor position="396" topLine="0" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="332" topLine="23" />
+		<Cursor position="332" topLine="20" />
 	</File>
 	<File name="stdafx.h" open="0" top="0" tabpos="4">
 		<Cursor position="100" topLine="0" />
 	</File>
-	<File name="../../SQLite/SQLRR/SQLRRDB.cpp" open="1" top="1" tabpos="2">
+	<File name="../../SQLite/SQLRR/SQLRRDB.cpp" open="1" top="0" tabpos="2">
 		<Cursor position="440" topLine="12" />
 	</File>
 	<File name="../../SQLite/sqlite3.c" open="0" top="0" tabpos="0">
 		<Cursor position="1413449" topLine="36533" />
 	</File>
-	<File name="../../SQLite/sqlite3.h" open="1" top="0" tabpos="6">
+	<File name="../../SQLite/sqlite3.h" open="1" top="0" tabpos="4">
 		<Cursor position="20559" topLine="455" />
 	</File>
 	<File name="../../TempestCPU/6502/AbstractBus.cpp" open="0" top="0" tabpos="0">
@@ -55,7 +55,7 @@
 	<File name="../../TempestCPU/6502/CPU6502.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="355" topLine="0" />
 	</File>
-	<File name="../../TempestCPU/AbstractTempestEnvironment.cpp" open="1" top="0" tabpos="7">
+	<File name="../../TempestCPU/AbstractTempestEnvironment.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="39" topLine="2" />
 	</File>
 	<File name="../../TempestCPU/AbstractTempestEnvironment.h" open="0" top="0" tabpos="0">
@@ -82,7 +82,7 @@
 	<File name="../../TempestCPU/TempestBus.h" open="0" top="0" tabpos="0">
 		<Cursor position="133" topLine="1" />
 	</File>
-	<File name="../../TempestCPU/TempestException.cpp" open="1" top="0" tabpos="5">
+	<File name="../../TempestCPU/TempestException.cpp" open="1" top="0" tabpos="3">
 		<Cursor position="141" topLine="0" />
 	</File>
 	<File name="../../TempestCPU/TempestMemoryMap.h" open="0" top="0" tabpos="0">
