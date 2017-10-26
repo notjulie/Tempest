@@ -6,6 +6,7 @@
 #include <string>
 
 #include "6502/CPU6502.h"
+#include "6502/CPU6502Runner.h"
 #include "TempestBus.h"
 #include "TempestDB.h"
 #include "VectorDataInterpreter.h"
@@ -21,49 +22,14 @@ struct SimpleVector;
 
 const uint8_t HIGH_SCORE_COUNT = 100;
 
-class TempestRunner
+class TempestRunner : public CPU6502Runner
 {
-private:
-	enum State {
-		Unstarted,
-		Running,
-		StepState,
-		Stopped,
-		Terminated
-	};
-
-	enum Action {
-		NoAction,
-		ResumeAction,
-		StepAction
-	};
-
-   enum AddressFlags {
-      BREAKPOINT = 1,
-      HOOK = 2
-   };
-
 public:
 	TempestRunner(AbstractTempestEnvironment *environment);
 	virtual ~TempestRunner(void);
 
-	void	Start(void);
-
-	// simple accessors
-	std::string GetProcessorStatus(void) { return processorStatus; }
-	bool        IsStopped(void) { return state == Stopped && requestedAction==NoAction; }
-	bool		   IsTerminated(void) { return state == Terminated; }
-   void        SetBreakpoint(uint16_t address, bool set);
-	void			Step(void) { requestedAction = StepAction; }
-	void			Resume(void) { requestedAction = ResumeAction; }
-
-	// simple dispatches to the CPU6502 object
-	uint8_t  GetAccumulator(void) { return cpu6502.GetA(); }
-	uint16_t GetProgramCounter(void) { return cpu6502.GetPC(); }
-	uint8_t  GetXRegister(void) { return cpu6502.GetX(); }
-	uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
-	uint8_t  GetStackPointer(void) { return cpu6502.GetS(); }
-
+   virtual void	Start(void);
+   
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
    void     SetDemoMode(void);
@@ -73,11 +39,8 @@ public:
    void GetAllVectors(std::vector<SimpleVector> &vectors);
 
 private:
-   void  RegisterHook(uint16_t address, std::function<uint32_t()> hook);
    void  Register6502Hooks(void);
    void  RegisterVectorHooks(void);
-   void	RunnerThread(void);
-   void  SynchronizeCPUWithRealTime(void);
 
 private:
    // game modifications and hooks
@@ -96,26 +59,12 @@ private:
 private:
 	AbstractTempestEnvironment *environment;
 
-   std::chrono::high_resolution_clock::time_point cpuTime;
-
-   bool     terminateRequested = false;
-	bool     resetRequested = false;
-	State    state = Unstarted;
-	Action   requestedAction = NoAction;
    int pointsPerBonusLife = 10000;
 
    TempestDB   db;
 	TempestBus	tempestBus;
-	CPU6502		cpu6502;
    VectorDataInterpreter vectorInterpreter;
 
-   // this is actually a pointer to a std::thread, but the .NET CLR doesn't allow including
-   // <thread> in any file it compiles, so we leave the detail private to the CPP file
-   void *theThread = nullptr;
-
-   std::string processorStatus;
-	uint8_t	addressFlags[64 * 1024];
-   std::map<uint16_t, std::function<uint32_t()> > hooks;
    uint32_t playerScores[2];
    uint32_t highScores[HIGH_SCORE_COUNT];
 };

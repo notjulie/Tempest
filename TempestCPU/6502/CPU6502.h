@@ -20,13 +20,14 @@ class AbstractBus;
 class CPU6502
 {
 public:
-   CPU6502(AbstractBus *_bus);
+   CPU6502(AbstractBus *_bus = nullptr);
 
 	void     Reset(void);
    void     Run(void);
    uint8_t  SingleStep(void);
 
 	// simple accessors
+   void     SetBus(AbstractBus *_bus) { bus = _bus; }
 	uint8_t  GetA(void) const { return A; }
 	uint16_t GetPC(void) const { return PC; }
 	uint8_t  GetX(void) const { return X; }
@@ -99,7 +100,7 @@ private:
    void  STY(uint16_t address);
 
 private:
-   AbstractBus *bus;
+   AbstractBus *bus = nullptr;
 
    uint8_t  A;
    uint8_t  S;

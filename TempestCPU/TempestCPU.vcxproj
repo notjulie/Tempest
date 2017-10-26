@@ -22,6 +22,7 @@
     <ClCompile Include="6502\AbstractBus.cpp" />
     <ClCompile Include="6502\CPU6502.cpp" />
     <ClCompile Include="6502\CPU6502Exception.cpp" />
+    <ClCompile Include="6502\CPU6502Runner.cpp" />
     <ClCompile Include="6502\ProcessorStatusWord.cpp" />
     <ClCompile Include="AbstractTempestEnvironment.cpp" />
     <ClCompile Include="EEPROM.cpp" />
@@ -72,6 +73,7 @@
     <ClInclude Include="6502\AbstractBus.h" />
     <ClInclude Include="6502\CPU6502.h" />
     <ClInclude Include="6502\CPU6502Exception.h" />
+    <ClInclude Include="6502\CPU6502Runner.h" />
     <ClInclude Include="6502\ProcessorStatusWord.h" />
     <ClInclude Include="AbstractTempestEnvironment.h" />
     <ClInclude Include="EEPROM.h" />

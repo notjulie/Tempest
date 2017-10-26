@@ -24,18 +24,18 @@
 
 TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	:
-		tempestBus(_environment),
-		cpu6502(&tempestBus)
+		tempestBus(_environment)
 {
 	// save parameters
 	environment = _environment;
 
 	// clear
-	for (int i = 0; i < 64 * 1024; ++i)
-		addressFlags[i] = 0;
    playerScores[0] = playerScores[1] = 0;
    for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
       highScores[i] = 10101;
+
+   // initialize the child class
+   SetBus(&tempestBus);
 
    // register commands
    environment->RegisterCommand(
@@ -43,7 +43,7 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
       [this](const CommandLine &) {
             std::ostringstream s;
             s << std::setfill('0') << std::hex << std::uppercase;
-            s << "PC: " << std::setw(4) << cpu6502.GetPC();
+            s << "PC: " << std::setw(4) << Get6502()->GetPC();
             return s.str();
          }
       );
@@ -51,20 +51,10 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
    // register hooks
    Register6502Hooks();
    RegisterVectorHooks();
-
-   // register timers
-   tempestBus.StartTimer(1500, [this]() { SynchronizeCPUWithRealTime(); });
 }
 
 TempestRunner::~TempestRunner(void)
 {
-	if (theThread != nullptr)
-	{
-		terminateRequested = true;
-		((std::thread *)theThread)->join();
-      delete (std::thread *)theThread;
-      theThread = nullptr;
-	}
 }
 
 
@@ -106,7 +96,7 @@ void TempestRunner::Register6502Hooks(void)
    RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this]() {
       SetPlayerScore(0, 0);
       SetPlayerScore(1, 0);
-      cpu6502.RTS();
+      Get6502()->RTS();
       return 30;
    });
 
@@ -114,10 +104,10 @@ void TempestRunner::Register6502Hooks(void)
    // score table
    RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this]() {
       // x tells us which score we're displaying
-      uint8_t x = cpu6502.GetX();
+      uint8_t x = Get6502()->GetX();
       int highScoreIndex = 7 - x / 3;
       Printf("%7d", highScores[highScoreIndex]);
-      cpu6502.JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
+      Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
       return 100;
    });
 
@@ -135,7 +125,7 @@ void TempestRunner::Register6502Hooks(void)
          tempestBus.WriteByte(CURRENT_PLAYER, 1);
 
          // and skip to the high score entry check
-         cpu6502.JMP(HIGH_SCORE_ENTRY);
+         Get6502()->JMP(HIGH_SCORE_ENTRY);
       }
       else
       {
@@ -143,43 +133,11 @@ void TempestRunner::Register6502Hooks(void)
          tempestBus.WriteByte(GAME_MODE, GAME_MODE_SHOW_HIGH_SCORES);
 
          // skip out of here
-         cpu6502.RTS();
+         Get6502()->RTS();
       }
 
       return (uint32_t)10;
    });
-}
-
-
-/// <summary>
-/// Synchronizes the CPU with realtime such that the CPU executes instructions
-/// at a rate of 1.5MHz, the same as the actual Tempest 6502 CPU.  It does this
-/// by doing a thread sleep whenever time measured by CPU cycles gets ahead of
-/// system time.
-/// </summary>
-void TempestRunner::SynchronizeCPUWithRealTime(void)
-{
-   // we get called every millisecond according to the number of clock cycles
-   // executed by the 6502... our job is to align that with real time by pausing
-   // to let realtime catch up
-   cpuTime += std::chrono::microseconds(1000);
-
-   // figure out how far ahead of realtime the CPU time is
-   auto now = std::chrono::high_resolution_clock::now();
-   auto cpuAheadTime = std::chrono::duration_cast<std::chrono::microseconds>(cpuTime - now);
-
-   // if we're more than a second off of realtime just forget about it and try to synch
-   // up with the current reality
-   if (cpuAheadTime.count() < -1000000 || cpuAheadTime.count() > 1000000)
-   {
-      cpuTime = now;
-      return;
-   }
-
-   // if the CPU is ahead of realtime (which it usually should be) then
-   // sleep to let time catch up
-   if (cpuAheadTime.count() > 0)
-      std::this_thread::sleep_for(cpuAheadTime);
 }
 
 
@@ -214,7 +172,7 @@ uint32_t TempestRunner::SortHighScores(void)
    tempestBus.WriteByte(CURRENT_PLAYER, 0);
 
    // and skip the 6502 implementation
-   cpu6502.JMP(HIGH_SCORE_ENTRY);
+   Get6502()->JMP(HIGH_SCORE_ENTRY);
 
    // fake some clock cycles
    return 200;
@@ -302,19 +260,13 @@ void TempestRunner::Char(char c)
    tempestBus.WriteByte(0x0075, (uint8_t)(targetAddress >> 8));
 }
 
-void TempestRunner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)
-{
-   hooks[address] = hook;
-   addressFlags[address] |= HOOK;
-}
-
 void TempestRunner::SetDemoMode(void)
 {
    // tell the bus to set the proper DIP switches
    tempestBus.SetDemoMode();
 
    // force a reset
-   resetRequested = true;
+   Reset();
 }
 
 
@@ -323,118 +275,8 @@ void TempestRunner::Start(void)
    // open the database
    db.Open(environment->GetDatabasePathName());
 
-   // create the thread is all
-   theThread = new std::thread(
-      [this]() { RunnerThread(); }
-      );
-}
-
-
-void TempestRunner::RunnerThread(void)
-{
-	try
-	{
-		// set our state
-		state = Running;
-
-		// reset the CPU and the realtime clock
-		cpu6502.Reset();
-      cpuTime = std::chrono::high_resolution_clock::now();
-
-		// run
-		while (!terminateRequested)
-		{
-		   // reset if so requested
-		   if (resetRequested)
-		   {
-		      cpu6502.Reset();
-		      resetRequested = false;
-		   }
-
-			uint16_t pc = cpu6502.GetPC();
-         uint8_t flags = addressFlags[pc];
-
-			// pause if we hit a breakpoint
-			if ((flags&BREAKPOINT) || state == StepState)
-			{
-				state = Stopped;
-				requestedAction = NoAction;
-
-				while (!terminateRequested)
-				{
-					if (requestedAction == StepAction)
-					{
-						state = StepState;
-						break;
-					}
-					else if (requestedAction == ResumeAction)
-					{
-						state = Running;
-						break;
-					}
-
-               std::this_thread::sleep_for(std::chrono::milliseconds(50));
-				}
-			}
-
-         // execute a hook if we have one at this address
-         if (flags & HOOK)
-         {
-            tempestBus.IncrementClockCycleCount(hooks[pc]());
-
-            // if the program counter has changed we should skip to the top of the loop
-            // in case it brought us to a break point
-            if (cpu6502.GetPC() != pc)
-               continue;
-         }
-
-			// execute the next instruction
-         if (tempestBus.IsPaused())
-         {
-            tempestBus.ClearWatchdog();
-            tempestBus.IncrementClockCycleCount(10);
-         }
-         else
-         {
-            uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
-            tempestBus.IncrementClockCycleCount(clockCyclesThisInstruction);
-         }
-
-         // check the current PC address... this should actually be handled by the bus someday
-			uint16_t newPC = cpu6502.GetPC();
-         if (newPC < 0x9000)
-			{
-			   char s[100];
-			   sprintf(s, "Bad address %X jumped to from %X", newPC, pc);
-			   throw TempestException(s);
-			}
-		}
-
-		processorStatus = "Exited normally";
-	}
-	catch (CPU6502Exception &_x6502)
-	{
-		processorStatus = _x6502.what();
-	}
-	catch (TempestException &_xTempest)
-	{
-		// for now this goes as the processor status, too
-		processorStatus = _xTempest.what();
-	}
-	catch (...)
-	{
-	   processorStatus = "Tempest runner unknown exception";
-	}
-
-	state = Terminated;
-}
-
-void TempestRunner::SetBreakpoint(uint16_t address, bool set)
-{
-   if (set)
-      addressFlags[address] |= BREAKPOINT;
-   else
-      addressFlags[address] &= ~BREAKPOINT;
+   // call the base class
+   CPU6502Runner::Start();
 }
 
 void TempestRunner::GetAllVectors(std::vector<SimpleVector> &vectors)
@@ -464,13 +306,13 @@ uint32_t TempestRunner::AddToScore(void)
    // more about this
    if ((tempestBus.ReadByte(0x0005) & 0x80) == 0)
    {
-      cpu6502.RTS();
+      Get6502()->RTS();
       return 10;
    }
 
    // get the value we are adding from either [29][2A][2B] or a lookup table based on X
    int value = 0;
-   switch (cpu6502.GetX())
+   switch (Get6502()->GetX())
    {
    case 0: value = 0; break;
    case 1: value = 150; break;
@@ -506,13 +348,13 @@ uint32_t TempestRunner::AddToScore(void)
          tempestBus.WriteByte(0x0124, 0x20);
 
          // jump to the routine that starts the fanfare
-         cpu6502.JMP(0xCCB9);
+         Get6502()->JMP(0xCCB9);
          return 100;
       }
    }
 
    // exit the subroutine... we just did all it's work for it
-   cpu6502.RTS();
+   Get6502()->RTS();
 
    // return the approximate number of clock cycles we think the old routine would have
    // taken... this doesn't have to be at all exact, it just helps try to keep things

@@ -32,6 +32,8 @@ public:
    void ClearNMI(void) { nmi = false; }
    void StartTimer(uint32_t period, const std::function<void()> &function);
 
+   virtual bool IsPaused(void) { return false; }
+
 protected:
    typedef uint8_t ReadFunction(AbstractBus *bus, uint16_t address);
    typedef void WriteFunction(AbstractBus *bus, uint16_t address, uint8_t value);

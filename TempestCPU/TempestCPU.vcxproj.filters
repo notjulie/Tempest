@@ -90,6 +90,9 @@
     <ClCompile Include="AbstractTempestEnvironment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="6502\CPU6502Runner.cpp">
+      <Filter>6502\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EEPROM.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="TempestROMS.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="6502\CPU6502Runner.h">
+      <Filter>6502\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
