@@ -30,6 +30,9 @@
     <ClCompile Include="SQLiteCommonHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SQLRR\SQLRRException.cpp">
+      <Filter>SQLRR</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sqlite3.h">
