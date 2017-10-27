@@ -26,35 +26,57 @@ TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
 	:
 		tempestBus(_environment)
 {
-	// save parameters
-	environment = _environment;
+   try
+   {
+      // save parameters
+      environment = _environment;
 
-	// clear
-   playerScores[0] = playerScores[1] = 0;
-   for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
-      highScores[i] = 10101;
+      // clear
+      playerScores[0] = playerScores[1] = 0;
+      for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
+         highScores[i] = 10101;
 
-   // initialize the child class
-   SetBus(&tempestBus);
+      // create objects
+      cpuRunner = CPU6502Runner::Create(&tempestBus);
 
-   // register commands
-   environment->RegisterCommand(
-      "?pc",
-      [this](const CommandLine &) {
-            std::ostringstream s;
-            s << std::setfill('0') << std::hex << std::uppercase;
-            s << "PC: " << std::setw(4) << Get6502()->GetPC();
-            return s.str();
-         }
+      // register commands
+      environment->RegisterCommand(
+         "?pc",
+         [this](const CommandLine &) {
+         std::ostringstream s;
+         s << std::setfill('0') << std::hex << std::uppercase;
+         s << "PC: " << std::setw(4) << cpuRunner->Get6502()->GetPC();
+         return s.str();
+      }
       );
 
-   // register hooks
-   Register6502Hooks();
-   RegisterVectorHooks();
+      // register hooks
+      Register6502Hooks();
+      RegisterVectorHooks();
+   }
+   catch (...)
+   {
+      delete cpuRunner;
+      cpuRunner = nullptr;
+      throw;
+   }
 }
 
 TempestRunner::~TempestRunner(void)
 {
+   // stop the runner thread first
+   delete cpuRunner;
+   cpuRunner = nullptr;
+}
+
+
+void TempestRunner::Start(void)
+{
+   // open the database
+   db.Open(environment->GetDatabasePathName());
+
+   // start running the CPU
+   cpuRunner->Start();
 }
 
 
@@ -88,44 +110,44 @@ void TempestRunner::RegisterVectorHooks(void)
 void TempestRunner::Register6502Hooks(void)
 {
    // add in our handler for when the game adds points to the player's score
-   RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
+   cpuRunner->RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
       return AddToScore();
    });
 
    // add in our handler for when the game clears player scores
-   RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this]() {
+   cpuRunner->RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this]() {
       SetPlayerScore(0, 0);
       SetPlayerScore(1, 0);
-      Get6502()->RTS();
+      cpuRunner->Get6502()->RTS();
       return 30;
    });
 
    // this is the routine that outputs the score part of a line in the high
    // score table
-   RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this]() {
+   cpuRunner->RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this]() {
       // x tells us which score we're displaying
-      uint8_t x = Get6502()->GetX();
+      uint8_t x = cpuRunner->Get6502()->GetX();
       int highScoreIndex = 7 - x / 3;
       Printf("%7d", highScores[highScoreIndex]);
-      Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
+      cpuRunner->Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
       return 100;
    });
 
    // this gets called when it's time to sort the high score table and see
    // if player 1 or player 2 belong in it
-   RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this]() {
+   cpuRunner->RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this]() {
       return SortHighScores();
    });
 
    // this gets called after a player has entered his high score
-   RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this]() {
+   cpuRunner->RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this]() {
       if (tempestBus.ReadByte(CURRENT_PLAYER) == 0)
       {
          // set current player
          tempestBus.WriteByte(CURRENT_PLAYER, 1);
 
          // and skip to the high score entry check
-         Get6502()->JMP(HIGH_SCORE_ENTRY);
+         cpuRunner->Get6502()->JMP(HIGH_SCORE_ENTRY);
       }
       else
       {
@@ -133,7 +155,7 @@ void TempestRunner::Register6502Hooks(void)
          tempestBus.WriteByte(GAME_MODE, GAME_MODE_SHOW_HIGH_SCORES);
 
          // skip out of here
-         Get6502()->RTS();
+         cpuRunner->Get6502()->RTS();
       }
 
       return (uint32_t)10;
@@ -172,7 +194,7 @@ uint32_t TempestRunner::SortHighScores(void)
    tempestBus.WriteByte(CURRENT_PLAYER, 0);
 
    // and skip the 6502 implementation
-   Get6502()->JMP(HIGH_SCORE_ENTRY);
+   cpuRunner->Get6502()->JMP(HIGH_SCORE_ENTRY);
 
    // fake some clock cycles
    return 200;
@@ -266,18 +288,9 @@ void TempestRunner::SetDemoMode(void)
    tempestBus.SetDemoMode();
 
    // force a reset
-   Reset();
+   cpuRunner->Reset();
 }
 
-
-void TempestRunner::Start(void)
-{
-   // open the database
-   db.Open(environment->GetDatabasePathName());
-
-   // call the base class
-   CPU6502Runner::Start();
-}
 
 void TempestRunner::GetAllVectors(std::vector<SimpleVector> &vectors)
 {
@@ -306,13 +319,13 @@ uint32_t TempestRunner::AddToScore(void)
    // more about this
    if ((tempestBus.ReadByte(0x0005) & 0x80) == 0)
    {
-      Get6502()->RTS();
+      cpuRunner->Get6502()->RTS();
       return 10;
    }
 
    // get the value we are adding from either [29][2A][2B] or a lookup table based on X
    int value = 0;
-   switch (Get6502()->GetX())
+   switch (cpuRunner->Get6502()->GetX())
    {
    case 0: value = 0; break;
    case 1: value = 150; break;
@@ -348,13 +361,13 @@ uint32_t TempestRunner::AddToScore(void)
          tempestBus.WriteByte(0x0124, 0x20);
 
          // jump to the routine that starts the fanfare
-         Get6502()->JMP(0xCCB9);
+         cpuRunner->Get6502()->JMP(0xCCB9);
          return 100;
       }
    }
 
    // exit the subroutine... we just did all it's work for it
-   Get6502()->RTS();
+   cpuRunner->Get6502()->RTS();
 
    // return the approximate number of clock cycles we think the old routine would have
    // taken... this doesn't have to be at all exact, it just helps try to keep things
