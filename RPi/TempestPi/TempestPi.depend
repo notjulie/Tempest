@@ -27,15 +27,16 @@
 	<functional>
 	<map>
 
-1508936012 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1509152937 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	<chrono>
 	<string>
 	"6502/CPU6502.h"
+	"6502/CPU6502Runner.h"
 	"TempestBus.h"
 	"TempestDB.h"
 	"VectorDataInterpreter.h"
 
-1496026604 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
+1509152937 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
 1508852690 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
@@ -49,7 +50,7 @@
 	"TempestMemoryMap.h"
 	"TempestPokey.h"
 
-1508886271 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
+1509152937 /home/pi/Documents/Tempest/TempestCPU/6502/AbstractBus.h
 	<vector>
 
 1454201685 /home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.h
@@ -76,7 +77,7 @@
 1459127156 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
 	"SoundChannel.h"
 
-1508886271 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
+1509152937 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
 	"stdafx.h"
 	<stdarg.h>
 	<chrono>
@@ -679,11 +680,12 @@
 	"SQLRRException.h"
 	"SQLRRDB.h"
 
-1508852689 /home/pi/Documents/Tempest/SQLite/SQLiteCommonHeader.h
+1509152937 /home/pi/Documents/Tempest/SQLite/SQLiteCommonHeader.h
 	"sqlite3.h"
+	<sstream>
 	<string>
 
-1508891510 /home/pi/Documents/Tempest/SQLite/SQLRR/SQLRRException.h
+1509152937 /home/pi/Documents/Tempest/SQLite/SQLRR/SQLRRException.h
 	"TempestException.h"
 
 1508852690 source:/home/pi/Documents/Tempest/SQLite/sqlite3.c
@@ -747,4 +749,11 @@
 1508862860 source:/home/pi/Documents/Tempest/TempestIO/TempestDB.cpp
 	"stdafx.h"
 	"TempestDB.h"
+
+1509152937 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Runner.h
+	"CPU6502.h"
+
+1509152937 source:/home/pi/Documents/Tempest/SQLite/SQLRR/SQLRRException.cpp
+	"SQLiteCommonHeader.h"
+	"SQLRRException.h"
 

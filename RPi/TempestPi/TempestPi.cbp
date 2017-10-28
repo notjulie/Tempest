@@ -85,6 +85,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="stdafx.h" />
 		<Unit filename="../../SQLite/SQLRR/SQLRRDB.cpp" />
+		<Unit filename="../../SQLite/SQLRR/SQLRRException.cpp" />
 		<Unit filename="../../SQLite/sqlite3.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -93,6 +94,7 @@
 		<Unit filename="../../TempestCPU/6502/AbstractBus.h" />
 		<Unit filename="../../TempestCPU/6502/CPU6502.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502Exception.cpp" />
+		<Unit filename="../../TempestCPU/6502/CPU6502Runner.cpp" />
 		<Unit filename="../../TempestCPU/6502/ProcessorStatusWord.cpp" />
 		<Unit filename="../../TempestCPU/AbstractTempestEnvironment.cpp" />
 		<Unit filename="../../TempestCPU/AbstractTempestEnvironment.h" />

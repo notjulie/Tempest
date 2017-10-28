@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="PiScreen.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="1211" topLine="48" />
 	</File>
@@ -10,16 +10,16 @@
 	<File name="PiSerialStream.h" open="0" top="0" tabpos="4">
 		<Cursor position="376" topLine="23" />
 	</File>
-	<File name="TempestPi.cpp" open="1" top="0" tabpos="8">
+	<File name="TempestPi.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="300" topLine="12" />
 	</File>
-	<File name="TempestPi.h" open="1" top="1" tabpos="9">
-		<Cursor position="553" topLine="24" />
+	<File name="TempestPi.h" open="0" top="0" tabpos="9">
+		<Cursor position="553" topLine="23" />
 	</File>
-	<File name="TempestPiEnvironment.cpp" open="1" top="0" tabpos="6">
+	<File name="TempestPiEnvironment.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="155" topLine="0" />
 	</File>
-	<File name="TempestPiEnvironment.h" open="1" top="0" tabpos="7">
+	<File name="TempestPiEnvironment.h" open="0" top="0" tabpos="7">
 		<Cursor position="64" topLine="0" />
 	</File>
 	<File name="TempestPiIO.cpp" open="0" top="0" tabpos="8">
@@ -46,8 +46,8 @@
 	<File name="../../SQLite/sqlite3.h" open="1" top="0" tabpos="4">
 		<Cursor position="20559" topLine="455" />
 	</File>
-	<File name="../../TempestCPU/6502/AbstractBus.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="129" topLine="0" />
+	<File name="../../TempestCPU/6502/AbstractBus.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="910" topLine="40" />
 	</File>
 	<File name="../../TempestCPU/6502/AbstractBus.h" open="0" top="0" tabpos="0">
 		<Cursor position="663" topLine="22" />
@@ -76,8 +76,8 @@
 	<File name="../../TempestCPU/Pokey.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="527" topLine="31" />
 	</File>
-	<File name="../../TempestCPU/TempestBus.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="7878" topLine="296" />
+	<File name="../../TempestCPU/TempestBus.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="703" topLine="25" />
 	</File>
 	<File name="../../TempestCPU/TempestBus.h" open="0" top="0" tabpos="0">
 		<Cursor position="133" topLine="1" />
@@ -88,11 +88,11 @@
 	<File name="../../TempestCPU/TempestMemoryMap.h" open="0" top="0" tabpos="0">
 		<Cursor position="1074" topLine="13" />
 	</File>
-	<File name="../../TempestCPU/TempestRunner.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="8533" topLine="290" />
+	<File name="../../TempestCPU/TempestRunner.cpp" open="1" top="1" tabpos="6">
+		<Cursor position="4452" topLine="153" />
 	</File>
-	<File name="../../TempestCPU/TempestRunner.h" open="0" top="0" tabpos="0">
-		<Cursor position="1700" topLine="61" />
+	<File name="../../TempestCPU/TempestRunner.h" open="1" top="0" tabpos="7">
+		<Cursor position="1322" topLine="32" />
 	</File>
 	<File name="../../TempestCPU/stdafx.h" open="0" top="0" tabpos="5">
 		<Cursor position="1023" topLine="17" />
