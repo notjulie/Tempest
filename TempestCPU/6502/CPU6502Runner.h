@@ -72,8 +72,8 @@ private:
    // <thread> in any file it compiles, so we leave the detail private to the CPP file
    void *theThread = nullptr;
 
-   CPU6502		cpu6502;
    AbstractBus *bus = nullptr;
+   CPU6502		cpu6502;
 };
 
 #ifdef _WIN32

@@ -27,7 +27,7 @@
 	<functional>
 	<map>
 
-1509152937 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
+1509153760 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	<chrono>
 	<string>
 	"6502/CPU6502.h"
@@ -36,7 +36,7 @@
 	"TempestDB.h"
 	"VectorDataInterpreter.h"
 
-1509152937 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
+1509153760 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502.h
 	"ProcessorStatusWord.h"
 
 1508852690 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
@@ -77,7 +77,7 @@
 1459127156 /home/pi/Documents/Tempest/TempestIO/AbstractTempestIO.h
 	"SoundChannel.h"
 
-1509152937 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
+1509153760 source:/home/pi/Documents/Tempest/TempestCPU/TempestRunner.cpp
 	"stdafx.h"
 	<stdarg.h>
 	<chrono>
@@ -582,14 +582,13 @@
 	"AbstractTempestStream.h"
 	"TempestIOStreamProxy.h"
 
-1508852690 /home/pi/Documents/Tempest/TempestIO/stdafx.h
+1509153760 /home/pi/Documents/Tempest/TempestIO/stdafx.h
 	<stdint.h>
 	<string.h>
 	<functional>
 	<map>
 	<string>
 	<vector>
-	"sqlite3.h"
 
 1454880751 /home/pi/Documents/Tempest/TempestIO/TempestStreamProtocol.h
 
@@ -600,7 +599,7 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1508862912 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1509153955 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
 	"TempestCPU/TempestException.h"
@@ -750,10 +749,17 @@
 	"stdafx.h"
 	"TempestDB.h"
 
-1509152937 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Runner.h
+1509154129 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Runner.h
 	"CPU6502.h"
 
 1509152937 source:/home/pi/Documents/Tempest/SQLite/SQLRR/SQLRRException.cpp
 	"SQLiteCommonHeader.h"
 	"SQLRRException.h"
+
+1509153760 source:/home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Runner.cpp
+	"stdafx.h"
+	"AbstractBus.h"
+	"CPU6502Exception.h"
+	"TempestException.h"
+	"CPU6502Runner.h"
 

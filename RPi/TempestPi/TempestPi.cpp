@@ -138,11 +138,10 @@ void TempestPi::MonitorThread(void)
 
          sprintf(s, "Program terminated at address %X", tempestRunner->GetProgramCounter());
          Log(s);
-         sprintf(s, "A=%X, X=%X, Y=%X, S=%X",
+         sprintf(s, "A=%X, X=%X, Y=%X",
                  tempestRunner->GetAccumulator(),
                  tempestRunner->GetXRegister(),
-                 tempestRunner->GetYRegister(),
-                 tempestRunner->GetStackPointer()
+                 tempestRunner->GetYRegister()
                  );
          Log(s);
 
