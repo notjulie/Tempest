@@ -5,7 +5,7 @@
 // signals cross on the low side and where they cross on the high side.
 // We need a nominal threshold to distinguish what we consider low and
 // high, and then average the crossings on either side.
-static const uint16_t NOMINAL_THRESHOLD = 20000;
+static const uint16_t NOMINAL_THRESHOLD = 25000;
 
 Encoder::Encoder(void)
 {
@@ -44,16 +44,14 @@ void Encoder::AddSample(int input1, int input2)
 		return;
 
 	// We determine our actual threshold as the midpoint between the
-	// average of high crossings and low crossings; in order to do this
-	// objectively we determine which side we're on based on a nominal
-	// constant.  If we based the threshold calculation on the calculated
-	// threshold we could end up with a positive feedback loop and the
-	// threshold could be completely mangled.
-	if (inputSum > NOMINAL_THRESHOLD)
+	// average of high crossings and low crossings.  We determine the
+	// difference between high and low by our threshold, but we also
+	// use an objective constant to prevent runaway.
+	if (inputSum > NOMINAL_THRESHOLD && inputSum > threshold)
 	{
 		highCrossingLevel = (99*highCrossingLevel + inputSum + 50) / 100;
 	}
-	else
+	else if (inputSum < NOMINAL_THRESHOLD && inputSum < threshold)
 	{
 		lowCrossingLevel = (99*lowCrossingLevel + inputSum + 50) / 100;
 	}
