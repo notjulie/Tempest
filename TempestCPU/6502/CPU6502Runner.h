@@ -12,15 +12,16 @@
 class CPU6502Runner
 {
 public:
-   CPU6502Runner(void);
-   virtual ~CPU6502Runner(void);
+   // no public constructors allowed, use the static instantiator
+   static CPU6502Runner *Create(AbstractBus *bus);
+   ~CPU6502Runner(void);
 
-   void           SetBus(AbstractBus *bus);
-   virtual void	Start(void);
-   void           RegisterHook(uint16_t address, std::function<uint32_t()> hook);
-   void           SetBreakpoint(uint16_t address, bool set);
+   void     RegisterHook(uint16_t address, std::function<uint32_t()> hook);
+   void     Start(void);
+   void     SetBreakpoint(uint16_t address, bool set);
 
    // simple accessors
+   CPU6502     *Get6502(void) { return &cpu6502; }
    std::string GetProcessorStatus(void) { return processorStatus; }
    bool        IsStopped(void) { return state == Stopped && requestedAction == NoAction; }
    bool		   IsTerminated(void) { return state == Terminated; }
@@ -28,15 +29,10 @@ public:
    void			Resume(void) { requestedAction = ResumeAction; }
    void        Reset(void) { resetRequested = true; }
 
-   // simple dispatches to the CPU6502 object
-   uint8_t  GetAccumulator(void) { return cpu6502.GetA(); }
-   uint16_t GetProgramCounter(void) { return cpu6502.GetPC(); }
-   uint8_t  GetXRegister(void) { return cpu6502.GetX(); }
-   uint8_t  GetYRegister(void) { return cpu6502.GetY(); }
-   uint8_t  GetStackPointer(void) { return cpu6502.GetS(); }
-
-protected:
-   CPU6502 *Get6502(void) { return &cpu6502; }
+private:
+   // this can only be instantiated by the static method; since this is
+   // a thread class inheriting it is just too dangerous
+   CPU6502Runner(AbstractBus *bus);
 
 private:
    void	RunnerThread(void);

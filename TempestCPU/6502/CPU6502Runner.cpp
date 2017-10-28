@@ -8,7 +8,10 @@
 #include "CPU6502Runner.h"
 
 
-CPU6502Runner::CPU6502Runner(void)
+CPU6502Runner::CPU6502Runner(AbstractBus *_bus)
+   :
+      bus(_bus),
+      cpu6502(_bus)
 {
    // clear
    for (int i = 0; i < 64 * 1024; ++i)
@@ -27,12 +30,10 @@ CPU6502Runner::~CPU6502Runner(void)
 }
 
 
-void CPU6502Runner::SetBus(AbstractBus *_bus)
+CPU6502Runner *CPU6502Runner::Create(AbstractBus *bus)
 {
-   bus = _bus;
-   cpu6502.SetBus(_bus); 
+   return new CPU6502Runner(bus);
 }
-
 
 void CPU6502Runner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)
 {

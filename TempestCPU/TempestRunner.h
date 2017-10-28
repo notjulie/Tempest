@@ -22,13 +22,13 @@ struct SimpleVector;
 
 const uint8_t HIGH_SCORE_COUNT = 100;
 
-class TempestRunner : public CPU6502Runner
+class TempestRunner
 {
 public:
 	TempestRunner(AbstractTempestEnvironment *environment);
 	virtual ~TempestRunner(void);
 
-   virtual void	Start(void);
+   void	Start(void);
    
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
@@ -37,6 +37,18 @@ public:
 
    // function for getting display vector data
    void GetAllVectors(std::vector<SimpleVector> &vectors);
+
+   // simple dispatches to the runner
+   uint8_t  GetAccumulator(void) { return cpuRunner->Get6502()->GetA(); }
+   int      GetProgramCounter(void) { return cpuRunner->Get6502()->GetPC(); }
+   uint8_t  GetXRegister(void) { return cpuRunner->Get6502()->GetX(); }
+   uint8_t  GetYRegister(void) { return cpuRunner->Get6502()->GetY(); }
+   void     Step(void) { cpuRunner->Step(); }
+   void     Resume(void) { cpuRunner->Resume(); }
+   bool     IsStopped(void) const { return cpuRunner->IsStopped(); }
+   void     SetBreakpoint(uint16_t address, bool set) { cpuRunner->SetBreakpoint(address, set); }
+   bool     IsTerminated(void) const { return cpuRunner->IsTerminated(); }
+   std::string GetProcessorStatus() const { return cpuRunner->GetProcessorStatus(); }
 
 private:
    void  Register6502Hooks(void);
@@ -58,6 +70,7 @@ private:
 
 private:
 	AbstractTempestEnvironment *environment;
+   CPU6502Runner *cpuRunner = nullptr;
 
    int pointsPerBonusLife = 10000;
 

@@ -15,11 +15,11 @@ class AsteroidsVSM;
    #pragma warning(disable : 4820)	// padding in structures
 #endif
 
-class AsteroidsRunner : public CPU6502Runner
+class AsteroidsRunner
 {
 public:
    AsteroidsRunner(AbstractTempestEnvironment *environment);
-   virtual ~AsteroidsRunner(void);
+   ~AsteroidsRunner(void);
    AsteroidsRunner(const AsteroidsRunner &tr) = delete;
    AsteroidsRunner &operator=(const AsteroidsRunner &tr) = delete;
 
@@ -29,7 +29,21 @@ public:
    void     GetVectorData(AsteroidsVSM &vectorData) { asteroidsBus.GetVectorData(vectorData); }
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { asteroidsBus.SetTempestIO(tempestSoundIO); }
 
+   // simple dispatches to the runner
+   uint8_t  GetAccumulator(void) { return cpuRunner->Get6502()->GetA(); }
+   int      GetProgramCounter(void) { return cpuRunner->Get6502()->GetPC(); }
+   uint8_t  GetXRegister(void) { return cpuRunner->Get6502()->GetX(); }
+   uint8_t  GetYRegister(void) { return cpuRunner->Get6502()->GetY(); }
+   void     Step(void) { cpuRunner->Step(); }
+   void     Resume(void) { cpuRunner->Resume(); }
+   bool     IsStopped(void) const { return cpuRunner->IsStopped(); }
+   void     SetBreakpoint(uint16_t address, bool set) { cpuRunner->SetBreakpoint(address, set); }
+   void     Start(void) { cpuRunner->Start(); }
+   bool     IsTerminated(void) const { return cpuRunner->IsTerminated(); }
+   std::string GetProcessorStatus() const { return cpuRunner->GetProcessorStatus(); }
+
 private:
+   CPU6502Runner *cpuRunner = nullptr;
 	AbstractTempestEnvironment *environment;
 	AsteroidsBus	asteroidsBus;
 };
