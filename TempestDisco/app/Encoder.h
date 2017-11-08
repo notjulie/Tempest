@@ -1,3 +1,12 @@
+// ===============================================================
+// Encoder.h
+//
+//   Tempest encoder wheel class header
+//     Author: Randy Rasmussen
+//     Copyright: None
+//     Warranty: None
+//
+// ===============================================================
 
 #ifndef ENCODER_H
 #define ENCODER_H
@@ -9,15 +18,14 @@ class Encoder
 public:
 	Encoder(void);
 
-	void AddSample(int input1, int input2);
+	void AddSample(int a, int b);
 	uint16_t GetValue(void) const { return currentValue; }
 
 private:
-	bool isInitialized;
-	bool wasInput1Higher;
-	bool wasHigh;
-	int lowCrossingLevel;
-	int highCrossingLevel;
+	int aThreshold;
+	int bThreshold;
+	int phase;
+	int phaseAccumulator;
 	uint16_t currentValue;
 };
 
