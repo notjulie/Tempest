@@ -197,3 +197,11 @@ ModelManifest.xml
 *.opendb
 *.cogui
 *.comarker
+.DS_Store
+iTempest/iTempest.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+*.xcuserstate
+iTempest/iTempest.xcodeproj/project.xcworkspace/xcuserdata/randyrasmussen.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcuserstate
+*.xcsettings
+*.xcscheme
+*.xcuserstate

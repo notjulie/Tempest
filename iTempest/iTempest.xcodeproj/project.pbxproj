@@ -18,7 +18,6 @@
 		021E39D41F9DAB1700FFAB2B /* iTempestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39D31F9DAB1700FFAB2B /* iTempestTests.m */; };
 		021E39DF1F9DAB1700FFAB2B /* iTempestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */; };
 		024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */; };
-		024D0E181F9E61BE00DA5FFE /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E171F9E61BE00DA5FFE /* Test.cpp */; };
 		024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */; };
 		024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */; };
 		024D0E231F9EAAFD00DA5FFE /* CPU6502.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */; };
@@ -39,6 +38,11 @@
 		024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */; };
 		024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E441F9EB98F00DA5FFE /* TempestException.cpp */; };
 		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
+		027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B31FB88BD400A810B8 /* iTempest.cpp */; };
+		027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B61FB88F8700A810B8 /* cTempest.cpp */; };
+		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
+		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
+		02F307191FA6B4FC0062CE9F /* TempestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F307181FA6B4FC0062CE9F /* TempestView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +85,6 @@
 		021E39E01F9DAB1700FFAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../SQLite/sqlite3.h; sourceTree = "<group>"; };
 		024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../SQLite/sqlite3.c; sourceTree = "<group>"; };
-		024D0E171F9E61BE00DA5FFE /* Test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Test.cpp; sourceTree = "<group>"; };
 		024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestRunner.cpp; path = ../../TempestCPU/TempestRunner.cpp; sourceTree = "<group>"; };
 		024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorDataInterpreter.cpp; path = ../../TempestIO/Vector/VectorDataInterpreter.cpp; sourceTree = "<group>"; };
 		024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502.cpp; path = ../../TempestCPU/6502/CPU6502.cpp; sourceTree = "<group>"; };
@@ -102,6 +105,14 @@
 		024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Am2901Tables.cpp; path = ../../TempestCPU/MathBox/Am2901Tables.cpp; sourceTree = "<group>"; };
 		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
+		027030B31FB88BD400A810B8 /* iTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = iTempest.cpp; sourceTree = "<group>"; };
+		027030B41FB88BD400A810B8 /* iTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempest.h; sourceTree = "<group>"; };
+		027030B61FB88F8700A810B8 /* cTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cTempest.cpp; sourceTree = "<group>"; };
+		027030B71FB88F8700A810B8 /* cTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cTempest.h; sourceTree = "<group>"; };
+		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
+		02F307101FA4198F0062CE9F /* SQLRRException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRException.cpp; path = ../../SQLite/SQLRR/SQLRRException.cpp; sourceTree = "<group>"; };
+		02F307181FA6B4FC0062CE9F /* TempestView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TempestView.m; sourceTree = "<group>"; };
+		02F3071A1FA6B5340062CE9F /* TempestView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempestView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +179,12 @@
 				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
 				021E39C81F9DAB1700FFAB2B /* Info.plist */,
 				021E39C91F9DAB1700FFAB2B /* main.m */,
-				024D0E171F9E61BE00DA5FFE /* Test.cpp */,
+				02F307181FA6B4FC0062CE9F /* TempestView.m */,
+				02F3071A1FA6B5340062CE9F /* TempestView.h */,
+				027030B31FB88BD400A810B8 /* iTempest.cpp */,
+				027030B41FB88BD400A810B8 /* iTempest.h */,
+				027030B61FB88F8700A810B8 /* cTempest.cpp */,
+				027030B71FB88F8700A810B8 /* cTempest.h */,
 			);
 			path = iTempest;
 			sourceTree = "<group>";
@@ -210,7 +226,7 @@
 				024D0E371F9EB76C00DA5FFE /* EEPROM.cpp */,
 				024D0E331F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp */,
 				024D0E2B1F9EABD900DA5FFE /* TempestBus.cpp */,
-				024D0E211F9EAADC00DA5FFE /* CPU6502 */,
+				024D0E211F9EAADC00DA5FFE /* 6502 */,
 				024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */,
 			);
 			name = TempestCPU;
@@ -237,20 +253,22 @@
 			name = Vector;
 			sourceTree = "<group>";
 		};
-		024D0E211F9EAADC00DA5FFE /* CPU6502 */ = {
+		024D0E211F9EAADC00DA5FFE /* 6502 */ = {
 			isa = PBXGroup;
 			children = (
+				02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */,
 				024D0E311F9EAC4900DA5FFE /* ProcessorStatusWord.cpp */,
 				024D0E2F1F9EAC3600DA5FFE /* CPU6502Exception.cpp */,
 				024D0E2D1F9EAC2200DA5FFE /* AbstractBus.cpp */,
 				024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */,
 			);
-			name = CPU6502;
+			name = 6502;
 			sourceTree = "<group>";
 		};
 		024D0E281F9EAB8A00DA5FFE /* SQLRR */ = {
 			isa = PBXGroup;
 			children = (
+				02F307101FA4198F0062CE9F /* SQLRRException.cpp */,
 				024D0E291F9EABA200DA5FFE /* SQLRRDB.cpp */,
 			);
 			name = SQLRR;
@@ -402,6 +420,8 @@
 				024D0E3F1F9EB85A00DA5FFE /* TempestROMS.cpp in Sources */,
 				024D0E2A1F9EABA200DA5FFE /* SQLRRDB.cpp in Sources */,
 				024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */,
+				027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */,
+				02F307191FA6B4FC0062CE9F /* TempestView.m in Sources */,
 				024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */,
 				024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */,
 				024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */,
@@ -413,10 +433,11 @@
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
 				021E39BE1F9DAB1700FFAB2B /* Shaders.metal in Sources */,
-				024D0E181F9E61BE00DA5FFE /* Test.cpp in Sources */,
 				021E39B91F9DAB1700FFAB2B /* Renderer.m in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
+				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
 				024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */,
+				02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */,
 				021E39BC1F9DAB1700FFAB2B /* GameViewController.m in Sources */,
 				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
@@ -424,6 +445,7 @@
 				024D0E2C1F9EABD900DA5FFE /* TempestBus.cpp in Sources */,
 				024D0E321F9EAC4900DA5FFE /* ProcessorStatusWord.cpp in Sources */,
 				024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */,
+				027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */,
 				024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */,
 				024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */,
 			);
