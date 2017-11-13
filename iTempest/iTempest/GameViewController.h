@@ -15,6 +15,4 @@
 // Our iOS view controller
 @interface GameViewController : UIViewController
 @property cTempest *tempest;
-@property NSMutableArray *lines;
-@property NSMutableArray *paths;
 @end

@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface TempestView : UIView
+@property NSMutableArray *lines;
+@property NSMutableArray *paths;
+@property bool initialized;
+
+-(void) showVectors:(cVectors) vectors;
 
 @end
 
