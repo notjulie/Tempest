@@ -11,8 +11,10 @@
 #import <MetalKit/MetalKit.h>
 #import "Renderer.h"
 #import "cTempest.h"
+#import "TempestView.h"
 
 // Our iOS view controller
 @interface GameViewController : UIViewController
 @property cTempest *tempest;
+@property TempestView *tempestView;
 @end

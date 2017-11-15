@@ -40,6 +40,10 @@
 		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
 		027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B31FB88BD400A810B8 /* iTempest.cpp */; };
 		027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B61FB88F8700A810B8 /* cTempest.cpp */; };
+		0285F3381FBA715F0004B34F /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0285F3371FBA715F0004B34F /* MainView.m */; };
+		0285F33C1FBBCE2A0004B34F /* SwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F33B1FBBCE2A0004B34F /* SwiftViewController.swift */; };
+		0285F33E1FBBDEC30004B34F /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F33D1FBBDEC30004B34F /* MyViewController.swift */; };
+		0285F3401FBBE57F0004B34F /* BleemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F33F1FBBE57F0004B34F /* BleemViewController.swift */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
 		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
 		02F307191FA6B4FC0062CE9F /* TempestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F307181FA6B4FC0062CE9F /* TempestView.m */; };
@@ -109,6 +113,12 @@
 		027030B41FB88BD400A810B8 /* iTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempest.h; sourceTree = "<group>"; };
 		027030B61FB88F8700A810B8 /* cTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cTempest.cpp; sourceTree = "<group>"; };
 		027030B71FB88F8700A810B8 /* cTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cTempest.h; sourceTree = "<group>"; };
+		0285F3371FBA715F0004B34F /* MainView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
+		0285F3391FBA71790004B34F /* MainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
+		0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTempest-Bridging-Header.h"; sourceTree = "<group>"; };
+		0285F33B1FBBCE2A0004B34F /* SwiftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftViewController.swift; sourceTree = "<group>"; };
+		0285F33D1FBBDEC30004B34F /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		0285F33F1FBBE57F0004B34F /* BleemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleemViewController.swift; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
 		02F307101FA4198F0062CE9F /* SQLRRException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRException.cpp; path = ../../SQLite/SQLRR/SQLRRException.cpp; sourceTree = "<group>"; };
 		02F307181FA6B4FC0062CE9F /* TempestView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TempestView.m; sourceTree = "<group>"; };
@@ -172,9 +182,11 @@
 				021E39B81F9DAB1700FFAB2B /* Renderer.m */,
 				021E39BA1F9DAB1700FFAB2B /* GameViewController.h */,
 				021E39BB1F9DAB1700FFAB2B /* GameViewController.m */,
+				0285F33D1FBBDEC30004B34F /* MyViewController.swift */,
 				021E39BD1F9DAB1700FFAB2B /* Shaders.metal */,
 				021E39BF1F9DAB1700FFAB2B /* ShaderTypes.h */,
 				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
+				0285F33F1FBBE57F0004B34F /* BleemViewController.swift */,
 				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
 				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
 				021E39C81F9DAB1700FFAB2B /* Info.plist */,
@@ -185,6 +197,10 @@
 				027030B41FB88BD400A810B8 /* iTempest.h */,
 				027030B61FB88F8700A810B8 /* cTempest.cpp */,
 				027030B71FB88F8700A810B8 /* cTempest.h */,
+				0285F3371FBA715F0004B34F /* MainView.m */,
+				0285F3391FBA71790004B34F /* MainView.h */,
+				0285F33B1FBBCE2A0004B34F /* SwiftViewController.swift */,
+				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
 			);
 			path = iTempest;
 			sourceTree = "<group>";
@@ -351,6 +367,7 @@
 				TargetAttributes = {
 					021E39B01F9DAB1700FFAB2B = {
 						CreatedOnToolsVersion = 9.0.1;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					021E39CE1F9DAB1700FFAB2B = {
@@ -422,6 +439,7 @@
 				024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */,
 				027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */,
 				02F307191FA6B4FC0062CE9F /* TempestView.m in Sources */,
+				0285F3381FBA715F0004B34F /* MainView.m in Sources */,
 				024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */,
 				024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */,
 				024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */,
@@ -440,6 +458,8 @@
 				02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */,
 				021E39BC1F9DAB1700FFAB2B /* GameViewController.m in Sources */,
 				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,
+				0285F33E1FBBDEC30004B34F /* MyViewController.swift in Sources */,
+				0285F33C1FBBCE2A0004B34F /* SwiftViewController.swift in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
 				024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */,
 				024D0E2C1F9EABD900DA5FFE /* TempestBus.cpp in Sources */,
@@ -448,6 +468,7 @@
 				027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */,
 				024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */,
 				024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */,
+				0285F3401FBBE57F0004B34F /* BleemViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +632,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7V238DKP4;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -625,6 +647,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTempest/iTempest-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -637,6 +662,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7V238DKP4;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -651,6 +677,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTempest/iTempest-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -660,6 +688,7 @@
 		021E39E71F9DAB1700FFAB2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iTempestTests/Info.plist;
@@ -674,6 +703,7 @@
 		021E39E81F9DAB1700FFAB2B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iTempestTests/Info.plist;
@@ -688,6 +718,7 @@
 		021E39EA1F9DAB1700FFAB2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iTempestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -701,6 +732,7 @@
 		021E39EB1F9DAB1700FFAB2B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iTempestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
