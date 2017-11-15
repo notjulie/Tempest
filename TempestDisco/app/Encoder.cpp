@@ -74,7 +74,6 @@ void Encoder::AddSample(int a, int b)
 		// check to see if the signals have crossed
 		if (b > a + SIGNAL_CROSSING_MARGIN)
 		{
-			aThreshold = a + HYSTERESIS;
 			bThreshold = b + HYSTERESIS;
 			--phaseAccumulator;
 			phase = 0x00B;
@@ -84,6 +83,7 @@ void Encoder::AddSample(int a, int b)
 		// check to see if a has changed from low to high
 		if (a > aThreshold)
 		{
+			bThreshold = b + HYSTERESIS;
 			++phaseAccumulator;
 			phase = 0x10A;
 		}
@@ -94,7 +94,6 @@ void Encoder::AddSample(int a, int b)
 		if (a > b + SIGNAL_CROSSING_MARGIN)
 		{
 			aThreshold = a + HYSTERESIS;
-			bThreshold = b + HYSTERESIS;
 			++phaseAccumulator;
 			phase = 0x00A;
 			break;
@@ -103,6 +102,7 @@ void Encoder::AddSample(int a, int b)
 		// check to see if b has changed from low to high
 		if (b > bThreshold)
 		{
+			aThreshold = a + HYSTERESIS;
 			--phaseAccumulator;
 			phase = 0x01B;
 		}
@@ -139,7 +139,6 @@ void Encoder::AddSample(int a, int b)
 		if (b > a + SIGNAL_CROSSING_MARGIN)
 		{
 			aThreshold = a - HYSTERESIS;
-			bThreshold = b - HYSTERESIS;
 			++phaseAccumulator;
 			phase = 0x11B;
 			break;
@@ -148,6 +147,7 @@ void Encoder::AddSample(int a, int b)
 		// check to see if b has changed from high to low
 		if (b < bThreshold)
 		{
+			aThreshold = a - HYSTERESIS;
 			--phaseAccumulator;
 			phase = 0x10A;
 		}
@@ -157,7 +157,6 @@ void Encoder::AddSample(int a, int b)
 		// check to see if the signals have crossed
 		if (a > b + SIGNAL_CROSSING_MARGIN)
 		{
-			aThreshold = a - HYSTERESIS;
 			bThreshold = b - HYSTERESIS;
 			--phaseAccumulator;
 			phase = 0x11A;
@@ -167,6 +166,7 @@ void Encoder::AddSample(int a, int b)
 		// check to see if a has changed from high to low
 		if (a < aThreshold)
 		{
+			bThreshold = b - HYSTERESIS;
 			++phaseAccumulator;
 			phase = 0x01B;
 		}
