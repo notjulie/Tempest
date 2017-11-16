@@ -1,5 +1,5 @@
 //
-//  MyViewController.swift
+//  MainViewController.swift
 //  iTempest
 //
 //  Created by Randy Rasmussen on 11/14/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyViewController: UIViewController {
+class MainViewController: UIViewController {
     var tempestView : TempestView = TempestView();
     var tempest : cTempest = cTempestCreate();
 
@@ -40,12 +40,17 @@ class MyViewController: UIViewController {
         let vectors : cVectors = cTempestGetVectors(tempest);
         
         // tell the view to draw them
-        tempestView.showVectors(vectors);
+        tempestView.showVectors(vectors:vectors);
         
         // free up our vectors array
         cVectorsDispose(vectors);
     }
 
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+    }
+    
     /*
     // MARK: - Navigation
 
