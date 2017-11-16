@@ -11,6 +11,7 @@ import UIKit
 class MainViewController: UIViewController {
     var tempestView : TempestView = TempestView();
     var tempest : cTempest = cTempestCreate();
+    var p1Button : UIButton = UIButton(type: UIButtonType.roundedRect);
 
     override func viewDidLoad() {
         // call the super
@@ -19,10 +20,16 @@ class MainViewController: UIViewController {
         // set our background
         self.view.layer.backgroundColor = UIColor.brown.cgColor;
         
-        // initialize the TempestView
-        self.tempestView.frame = CGRect(x:0,y:0,width:200,height:200);
-        self.tempestView.backgroundColor = UIColor.red;
+        // initialize our subviews
+        p1Button.layer.cornerRadius = 40;
+        p1Button.backgroundColor = UIColor.red;
+        
+        // add our subviews
         self.view.addSubview(tempestView);
+        self.view.addSubview(p1Button);
+
+        // position our views
+        positionViews(to: self.view.bounds.size);
         
         // set up our function that gets called on screen updates
         let displayLink : CADisplayLink = CADisplayLink(target: self,selector:#selector(update));
@@ -33,6 +40,31 @@ class MainViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func positionViews(to size: CGSize) {
+        // start by figuring out if we are portrait or landscape
+        if (size.width > size.height) {
+            // tempest
+            self.tempestView.frame = CGRect(x:0,y:0,width:size.height,height:size.height);
+            
+            // p1button
+            p1Button.frame = CGRect(
+                x: tempestView.frame.maxX + 10,
+                y: 10,
+                width: 80,
+                height: 80);
+        } else {
+            // tempest
+            self.tempestView.frame = CGRect(x:0,y:0,width:size.width, height:size.width);
+
+            // p1button
+            p1Button.frame = CGRect(
+                x: 10,
+                y: tempestView.frame.maxY + 10,
+                width: 80,
+                height: 80);
+        }
     }
     
     func update()  {
@@ -48,7 +80,7 @@ class MainViewController: UIViewController {
 
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
+        positionViews(to: size);
     }
     
     /*

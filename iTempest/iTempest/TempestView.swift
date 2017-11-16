@@ -32,6 +32,8 @@ class TempestView : UIView {
             initialized = true;
         }
         
+        self.backgroundColor = UIColor.black;
+        
         var startX : Int16 = 0;
         var endX : Int16 = 0;
         var startY : Int16 = 0;
