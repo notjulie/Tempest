@@ -20,6 +20,7 @@ extern "C" {
     cTempest cTempestCreate(void);
     void cTempestDispose(cTempest _tempest);
     cVectors cTempestGetVectors(cTempest _tempest);
+    void cTempestSetPlayer1ButtonState(cTempest tempest, int state);
 
     int cVectorsGetNext(
                  cVectors _vectors,

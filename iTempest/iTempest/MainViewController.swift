@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     var tempestView : TempestView = TempestView();
     var tempest : cTempest = cTempestCreate();
     var p1Button : UIButton = UIButton(type: UIButtonType.roundedRect);
+    var player1DownCounter : Int = 0;
 
     override func viewDidLoad() {
         // call the super
@@ -23,7 +24,8 @@ class MainViewController: UIViewController {
         // initialize our subviews
         p1Button.layer.cornerRadius = 40;
         p1Button.backgroundColor = UIColor.red;
-        
+        p1Button.addTarget(self, action: #selector(p1Down), for: UIControlEvents.touchDown);
+
         // add our subviews
         self.view.addSubview(tempestView);
         self.view.addSubview(p1Button);
@@ -40,6 +42,14 @@ class MainViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func p1Down() {
+        // tell Tempest that the button is down
+        cTempestSetPlayer1ButtonState(tempest, 1);
+        
+        // hold it down for a second our so
+        player1DownCounter = 60;
     }
     
     private func positionViews(to size: CGSize) {
@@ -76,6 +86,14 @@ class MainViewController: UIViewController {
         
         // free up our vectors array
         cVectorsDispose(vectors);
+        
+        // update the player button state
+        if (player1DownCounter > 0) {
+            player1DownCounter -= 1;
+            if (player1DownCounter == 0) {
+                cTempestSetPlayer1ButtonState(tempest, 0);
+            }
+        }
     }
 
 

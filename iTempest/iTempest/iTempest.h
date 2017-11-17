@@ -23,11 +23,21 @@ public:
 class iTempestSoundIO : public AbstractTempestSoundIO
 {
 public:
+    void SetPlayer1ButtonState(bool state) {
+        if (state)
+            buttons |= ONE_PLAYER_BUTTON;
+        else
+            buttons &= ~ONE_PLAYER_BUTTON;
+    }
+
     virtual void SetSoundChannelState(int channel, SoundChannelState state) {};
     virtual void SetTime(uint64_t clockCycles) {};
-    virtual uint8_t GetButtons(void) { return 0; };
+    virtual uint8_t GetButtons(void) { return buttons; };
     virtual uint8_t GetEncoder(void) {return 0;};
     virtual void SetButtonLED(ButtonFlag button, bool value) {};
+    
+private:
+    uint8_t buttons = 0;
 };
 
 class iTempestVectors
@@ -56,6 +66,7 @@ public:
     iTempest(void);
     
     iTempestVectors *GetVectors(void);
+    void SetPlayer1ButtonState(bool state) { soundIO.SetPlayer1ButtonState(state); }
     
 private:
     iOSTempestEnvironment environment;

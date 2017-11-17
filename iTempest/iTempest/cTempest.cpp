@@ -26,6 +26,12 @@ extern "C" {
         return ((iTempest *)_tempest)->GetVectors();
     }
     
+    void cTempestSetPlayer1ButtonState(cTempest tempest, int state)
+    {
+        return ((iTempest *)tempest)->SetPlayer1ButtonState(state);
+    }
+
+    
     void cVectorsDispose(cVectors _vectors)
     {
         delete (iTempestVectors *)_vectors;
