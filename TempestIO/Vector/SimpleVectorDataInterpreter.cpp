@@ -75,7 +75,7 @@ bool SimpleVectorGenerator::ClipEndPoint(int &startX, int &startY, int &endX, in
 	{
 		if (startX < -32768)
 			return false;
-      endY = startY + (int64_t)(endY - startY) * (-32768 - startX) / (endX - startX);
+        endY = (int)(startY + (int64_t)(endY - startY) * (-32768 - startX) / (endX - startX));
 		endX = -32768;
 	}
 
@@ -83,7 +83,7 @@ bool SimpleVectorGenerator::ClipEndPoint(int &startX, int &startY, int &endX, in
 	{
 		if (startY < -32768)
 			return false;
-      endX = startX + (int64_t)(endX - startX) * (-32768 - startY) / (endY - startY);
+        endX = (int)(startX + (int64_t)(endX - startX) * (-32768 - startY) / (endY - startY));
 		endY = -32768;
 	}
 
@@ -91,7 +91,7 @@ bool SimpleVectorGenerator::ClipEndPoint(int &startX, int &startY, int &endX, in
 	{
 		if (startX > 32767)
 			return false;
-      endY = startY + (int64_t)(endY - startY) * (32767 - startX) / (endX - startX);
+        endY = (int)(startY + (int64_t)(endY - startY) * (32767 - startX) / (endX - startX));
 		endX = 32767;
 	}
 
@@ -99,7 +99,7 @@ bool SimpleVectorGenerator::ClipEndPoint(int &startX, int &startY, int &endX, in
 	{
 		if (startY > 32767)
 			return false;
-      endX = startX + (int64_t)(endX - startX) * (32767 - startY) / (endY - startY);
+        endX = (int)(startX + (int64_t)(endX - startX) * (32767 - startY) / (endY - startY));
 		endY = 32767;
 	}
 
