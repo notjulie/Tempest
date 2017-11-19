@@ -183,7 +183,10 @@
     <ClCompile Include="VectorEnumerator.cpp" />
     <ClCompile Include="Win32ComPortStream.cpp" />
     <ClCompile Include="Win32WaveBuffer.cpp" />
-    <ClCompile Include="Win32WaveStreamer.cpp" />
+    <ClCompile Include="Win32WaveStreamer.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="WinTempestIO.cpp" />
   </ItemGroup>
   <ItemGroup>

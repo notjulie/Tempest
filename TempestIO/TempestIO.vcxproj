@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractTempestStream.h" />
     <ClInclude Include="AbstractTempestIO.h" />
+    <ClInclude Include="Cpp11WaveStreamer.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="PacketStream.h" />
     <ClInclude Include="SoundChannel.h" />
@@ -153,15 +154,16 @@
     <ClInclude Include="TempestIOStreamListener.h" />
     <ClInclude Include="TempestIOStreamProxy.h" />
     <ClInclude Include="TempestMemoryStream.h" />
-    <ClInclude Include="TempestStreamProtocol.h" />
     <ClInclude Include="Vector\SimpleVector.h" />
     <ClInclude Include="Vector\SimpleVectorDataInterpreter.h" />
     <ClInclude Include="Vector\TempestColor.h" />
     <ClInclude Include="Vector\VectorData.h" />
     <ClInclude Include="Vector\VectorDataInterpreter.h" />
+    <ClInclude Include="WaveSoundDriver.h" />
     <ClInclude Include="WaveStreamer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cpp11WaveStreamer.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="PacketStream.cpp" />
     <ClCompile Include="SoundChannel.cpp" />
