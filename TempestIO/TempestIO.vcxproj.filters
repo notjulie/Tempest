@@ -57,9 +57,6 @@
     <ClInclude Include="TempestMemoryStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TempestStreamProtocol.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TempestIOStreamListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -79,6 +76,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TempestDB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cpp11WaveStreamer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveSoundDriver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -126,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TempestDB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cpp11WaveStreamer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

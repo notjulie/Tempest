@@ -2,10 +2,11 @@
 #ifndef WIN32WAVESTREAMER_H
 #define WIN32WAVESTREAMER_H
 
-#include "TempestIO/WaveStreamer.h"
-
+#include "WaveSoundDriver.h"
 #include "Win32WaveBuffer.h"
 
+class Cpp11WaveStreamer;
+class WaveSoundSource;
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -13,7 +14,7 @@
 #define WAVE_STREAM_BUFFER_SAMPLE_COUNT 2000
 
 
-class Win32WaveStreamer : public WaveStreamer
+class Win32WaveStreamer : public WaveSoundDriver
 {
 public:
 	Win32WaveStreamer(void);
@@ -21,26 +22,29 @@ public:
 
 	std::string GetErrorString(void) const;
 
+   void SetChannelState(int channel, SoundChannelState state);
+   void Delay(int clockCycles);
+
 protected:
-   virtual void  QueueEvent(const WaveStreamEvent &event);
+   virtual void FillNextBuffer(WaveSoundSource *streamer);
 
 private:
-	void	CallbackThread(void);
+   static void CALLBACK BufferCallback(
+      HWAVEOUT  hwo,
+      UINT      uMsg,
+      DWORD_PTR dwInstance,
+      DWORD_PTR dwParam1,
+      DWORD_PTR dwParam2
+      );
 
 private:
-	static LONG __stdcall CallbackThreadEntry(LPVOID pThis) { ((Win32WaveStreamer *)pThis)->CallbackThread(); return 0; }
-
-private:
-	HANDLE callbackThread;
-	DWORD callbackThreadID;
+   Cpp11WaveStreamer *waveStreamer = nullptr;
 	HWAVEOUT waveOut;
-	HANDLE queueEvent;
 
 	bool terminating;
 	bool errorReported;
 	std::string errorString;
 
-   int16_t waveStreamBuffer[WAVE_STREAM_BUFFER_SAMPLE_COUNT * 2];
    Win32WaveBuffer buffer1;
 	Win32WaveBuffer buffer2;
 };
