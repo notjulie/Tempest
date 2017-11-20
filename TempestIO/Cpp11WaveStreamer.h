@@ -4,6 +4,7 @@
 
 #include <condition_variable>
 #include <thread>
+#include <vector>
 #include "WaveStreamer.h"
 
 class WaveSoundDriver;

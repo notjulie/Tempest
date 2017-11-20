@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MainViewController: UIViewController {
     var tempestView : TempestView = TempestView();
@@ -17,6 +18,12 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         // call the super
         super.viewDidLoad();
+        
+/*        do {
+            try AVAudioSession.sharedInstance().setPreferredIOBufferDuration(0.1);
+        } catch let error as NSError {
+            
+        }*/
         
         // set our background
         self.view.layer.backgroundColor = UIColor.brown.cgColor;

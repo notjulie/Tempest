@@ -36,6 +36,10 @@
 		024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */; };
 		024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E441F9EB98F00DA5FFE /* TempestException.cpp */; };
 		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
+		026A1B651FC1E05B00EEFF34 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */; };
+		026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 026A1B661FC1ED0D00EEFF34 /* iosException.cpp */; };
+		026A1B6B1FC2483A00EEFF34 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */; };
+		026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */; };
 		027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B31FB88BD400A810B8 /* iTempest.cpp */; };
 		027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B61FB88F8700A810B8 /* cTempest.cpp */; };
 		0285F33E1FBBDEC30004B34F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F33D1FBBDEC30004B34F /* MainViewController.swift */; };
@@ -44,6 +48,7 @@
 		029AA09D1FBFBBBB00762BC8 /* SoundGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA09C1FBFBBBB00762BC8 /* SoundGenerator.cpp */; };
 		029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */; };
 		029AA0A11FBFBC2800762BC8 /* Noise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A01FBFBC2800762BC8 /* Noise.cpp */; };
+		029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
 		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
 /* End PBXBuildFile section */
@@ -105,6 +110,11 @@
 		024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Am2901Tables.cpp; path = ../../TempestCPU/MathBox/Am2901Tables.cpp; sourceTree = "<group>"; };
 		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
+		026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
+		026A1B661FC1ED0D00EEFF34 /* iosException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = iosException.cpp; sourceTree = "<group>"; };
+		026A1B691FC1ED3000EEFF34 /* iosException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iosException.h; sourceTree = "<group>"; };
+		026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = ../../../../../System/Library/Frameworks/AVFoundation.framework; sourceTree = "<group>"; };
+		026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iTempestSoundIO.cpp; sourceTree = "<group>"; };
 		027030B31FB88BD400A810B8 /* iTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = iTempest.cpp; sourceTree = "<group>"; };
 		027030B41FB88BD400A810B8 /* iTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempest.h; sourceTree = "<group>"; };
 		027030B61FB88F8700A810B8 /* cTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cTempest.cpp; sourceTree = "<group>"; };
@@ -116,6 +126,8 @@
 		029AA09C1FBFBBBB00762BC8 /* SoundGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundGenerator.cpp; path = ../../TempestIO/SoundGenerator.cpp; sourceTree = "<group>"; };
 		029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannel.cpp; path = ../../TempestIO/SoundChannel.cpp; sourceTree = "<group>"; };
 		029AA0A01FBFBC2800762BC8 /* Noise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Noise.cpp; path = ../../TempestIO/Noise.cpp; sourceTree = "<group>"; };
+		029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempestSoundIO.h; sourceTree = "<group>"; };
+		029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cpp11WaveStreamer.cpp; path = ../../TempestIO/Cpp11WaveStreamer.cpp; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
 		02F307101FA4198F0062CE9F /* SQLRRException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRException.cpp; path = ../../SQLite/SQLRR/SQLRRException.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,6 +137,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				026A1B6B1FC2483A00EEFF34 /* AVFoundation.framework in Frameworks */,
+				026A1B651FC1E05B00EEFF34 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +162,8 @@
 		021E39A81F9DAB1700FFAB2B = {
 			isa = PBXGroup;
 			children = (
+				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
+				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
 				021E39B31F9DAB1700FFAB2B /* iTempest */,
 				021E39D21F9DAB1700FFAB2B /* iTempestTests */,
 				021E39DD1F9DAB1700FFAB2B /* iTempestUITests */,
@@ -168,6 +184,7 @@
 		021E39B31F9DAB1700FFAB2B /* iTempest */ = {
 			isa = PBXGroup;
 			children = (
+				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
 				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
 				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
 				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
@@ -188,6 +205,9 @@
 				027030B71FB88F8700A810B8 /* cTempest.h */,
 				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
 				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
+				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
+				026A1B661FC1ED0D00EEFF34 /* iosException.cpp */,
+				026A1B691FC1ED3000EEFF34 /* iosException.h */,
 			);
 			path = iTempest;
 			sourceTree = "<group>";
@@ -238,6 +258,7 @@
 		024D0E1D1F9EAA7700DA5FFE /* TempestIO */ = {
 			isa = PBXGroup;
 			children = (
+				029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */,
 				029AA0A01FBFBC2800762BC8 /* Noise.cpp */,
 				029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */,
 				029AA09C1FBFBBBB00762BC8 /* SoundGenerator.cpp */,
@@ -430,6 +451,7 @@
 				024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */,
 				027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */,
 				024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */,
+				029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */,
 				024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */,
 				024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */,
 				021E39CA1F9DAB1700FFAB2B /* main.m in Sources */,
@@ -444,6 +466,7 @@
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
 				021E39B91F9DAB1700FFAB2B /* Renderer.m in Sources */,
+				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
 				029AA09D1FBFBBBB00762BC8 /* SoundGenerator.cpp in Sources */,
@@ -451,6 +474,7 @@
 				02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */,
 				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,
 				0285F33E1FBBDEC30004B34F /* MainViewController.swift in Sources */,
+				026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
 				024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */,
 				024D0E2C1F9EABD900DA5FFE /* TempestBus.cpp in Sources */,

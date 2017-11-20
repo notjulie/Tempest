@@ -15,7 +15,12 @@ extern "C" {
     {
         return new iTempest();
     }
-
+    
+    cTempest cTempestNull(void)
+    {
+        return 0;
+    }
+    
     void cTempestDispose(cTempest _tempest)
     {
         delete (iTempest *)_tempest;

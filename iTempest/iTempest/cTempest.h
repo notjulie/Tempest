@@ -18,6 +18,7 @@ extern "C" {
     typedef void *cVectors;
 
     cTempest cTempestCreate(void);
+    cTempest cTempestNull(void);
     void cTempestDispose(cTempest _tempest);
     cVectors cTempestGetVectors(cTempest _tempest);
     void cTempestSetPlayer1ButtonState(cTempest tempest, int state);

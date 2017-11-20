@@ -8,6 +8,8 @@
 #ifndef TEMPESTEXCEPTION_H
 #define	TEMPESTEXCEPTION_H
 
+#include <string>
+
 class TempestException
 {
 public:
