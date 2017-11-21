@@ -10,10 +10,14 @@ import UIKit
 import AVFoundation
 
 class MainViewController: UIViewController {
-    var tempestView : TempestView = TempestView();
-    var tempest : cTempest = cTempestCreate();
-    var p1Button : UIButton = UIButton(type: UIButtonType.roundedRect);
-    var player1DownCounter : Int = 0;
+    private var tempestView : TempestView = TempestView();
+    private var tempest : cTempest = cTempestCreate();
+    private var p1Button : UIButton = UIButton(type: UIButtonType.roundedRect);
+    private var fireButton : UIButton = UIButton(type: UIButtonType.roundedRect);
+    private var zapButton : UIButton = UIButton(type: UIButtonType.roundedRect);
+    private var player1DownCounter : Int = 0;
+    private var fireDownCounter : Int = 0;
+    private var zapDownCounter : Int = 0;
 
     override func viewDidLoad() {
         // call the super
@@ -32,10 +36,18 @@ class MainViewController: UIViewController {
         p1Button.layer.cornerRadius = 40;
         p1Button.backgroundColor = UIColor.red;
         p1Button.addTarget(self, action: #selector(p1Down), for: UIControlEvents.touchDown);
+        fireButton.layer.cornerRadius = 40;
+        fireButton.backgroundColor = UIColor.blue;
+        fireButton.addTarget(self, action: #selector(fireDown), for: UIControlEvents.touchDown);
+        zapButton.layer.cornerRadius = 40;
+        zapButton.backgroundColor = UIColor.green;
+        zapButton.addTarget(self, action: #selector(zapDown), for: UIControlEvents.touchDown);
 
         // add our subviews
         self.view.addSubview(tempestView);
         self.view.addSubview(p1Button);
+        self.view.addSubview(fireButton);
+        self.view.addSubview(zapButton);
 
         // position our views
         positionViews(to: self.view.bounds.size);
@@ -59,6 +71,22 @@ class MainViewController: UIViewController {
         player1DownCounter = 60;
     }
     
+    func fireDown() {
+        // tell Tempest that the button is down
+        cTempestSetFireButtonState(tempest, 1);
+        
+        // hold it down for a second our so
+        fireDownCounter = 10;
+    }
+    
+    func zapDown() {
+        // tell Tempest that the button is down
+        cTempestSetZapButtonState(tempest, 1);
+        
+        // hold it down for a second our so
+        zapDownCounter = 10;
+    }
+    
     private func positionViews(to size: CGSize) {
         // start by figuring out if we are portrait or landscape
         if (size.width > size.height) {
@@ -71,6 +99,20 @@ class MainViewController: UIViewController {
                 y: 10,
                 width: 80,
                 height: 80);
+
+            // firebutton
+            fireButton.frame = CGRect(
+                x: tempestView.frame.maxX + 10,
+                y: size.height - 90,
+                width: 80,
+                height: 80);
+
+            // zapbutton
+            zapButton.frame = CGRect(
+                x: size.width - 90,
+                y: size.height - 90,
+                width: 80,
+                height: 80);
         } else {
             // tempest
             self.tempestView.frame = CGRect(x:0,y:0,width:size.width, height:size.width);
@@ -79,6 +121,20 @@ class MainViewController: UIViewController {
             p1Button.frame = CGRect(
                 x: 10,
                 y: tempestView.frame.maxY + 10,
+                width: 80,
+                height: 80);
+
+            // firebutton
+            fireButton.frame = CGRect(
+                x: 10,
+                y: size.height - 90,
+                width: 80,
+                height: 80);
+
+            // p1button
+            zapButton.frame = CGRect(
+                x: size.width - 90,
+                y: size.height - 90,
                 width: 80,
                 height: 80);
         }
@@ -99,6 +155,22 @@ class MainViewController: UIViewController {
             player1DownCounter -= 1;
             if (player1DownCounter == 0) {
                 cTempestSetPlayer1ButtonState(tempest, 0);
+            }
+        }
+        
+        // update the fire button state
+        if (fireDownCounter > 0) {
+            fireDownCounter -= 1;
+            if (fireDownCounter == 0) {
+                cTempestSetFireButtonState(tempest, 0);
+            }
+        }
+        
+        // update the zap button state
+        if (zapDownCounter > 0) {
+            zapDownCounter -= 1;
+            if (zapDownCounter == 0) {
+                cTempestSetZapButtonState(tempest, 0);
             }
         }
     }

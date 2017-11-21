@@ -35,8 +35,18 @@ extern "C" {
     {
         return ((iTempest *)tempest)->SetPlayer1ButtonState(state);
     }
-
     
+    void cTempestSetFireButtonState(cTempest tempest, int state)
+    {
+        return ((iTempest *)tempest)->SetFireButtonState(state);
+    }
+    
+    void cTempestSetZapButtonState(cTempest tempest, int state)
+    {
+        return ((iTempest *)tempest)->SetZapButtonState(state);
+    }
+    
+
     void cVectorsDispose(cVectors _vectors)
     {
         delete (iTempestVectors *)_vectors;

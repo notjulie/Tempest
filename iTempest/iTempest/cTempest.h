@@ -22,6 +22,8 @@ extern "C" {
     void cTempestDispose(cTempest _tempest);
     cVectors cTempestGetVectors(cTempest _tempest);
     void cTempestSetPlayer1ButtonState(cTempest tempest, int state);
+    void cTempestSetFireButtonState(cTempest tempest, int state);
+    void cTempestSetZapButtonState(cTempest tempest, int state);
 
     int cVectorsGetNext(
                  cVectors _vectors,

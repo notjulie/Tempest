@@ -22,7 +22,9 @@ public:
     iTempestSoundIO(void);
     
     void SetPlayer1ButtonState(bool state);
-    
+    void SetFireButtonState(bool state);
+    void SetZapButtonState(bool state);
+
     virtual void SetSoundChannelState(int channel, SoundChannelState state);
     virtual void SetTime(uint64_t clockCycles);
     virtual uint8_t GetButtons(void) { return buttons; };

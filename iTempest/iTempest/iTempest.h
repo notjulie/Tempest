@@ -49,7 +49,9 @@ public:
     
     iTempestVectors *GetVectors(void);
     void SetPlayer1ButtonState(bool state) { soundIO.SetPlayer1ButtonState(state); }
-    
+    void SetFireButtonState(bool state) { soundIO.SetFireButtonState(state); }
+    void SetZapButtonState(bool state) { soundIO.SetZapButtonState(state); }
+
 private:
     iOSTempestEnvironment environment;
     iTempestSoundIO soundIO;

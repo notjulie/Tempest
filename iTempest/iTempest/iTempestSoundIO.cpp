@@ -58,6 +58,22 @@ void iTempestSoundIO::SetPlayer1ButtonState(bool state)
         buttons &= ~ONE_PLAYER_BUTTON;
 }
 
+void iTempestSoundIO::SetFireButtonState(bool state)
+{
+    if (state)
+        buttons |= FIRE_BUTTON;
+    else
+        buttons &= ~FIRE_BUTTON;
+}
+
+void iTempestSoundIO::SetZapButtonState(bool state)
+{
+    if (state)
+        buttons |= ZAPPER_BUTTON;
+    else
+        buttons &= ~ZAPPER_BUTTON;
+}
+
 void iTempestSoundIO::SetSoundChannelState(int channel, SoundChannelState state)
 {
     waveStreamer.SetChannelState(channel, state);
