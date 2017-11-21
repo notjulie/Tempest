@@ -58,6 +58,18 @@ void iTempestSoundIO::SetPlayer1ButtonState(bool state)
         buttons &= ~ONE_PLAYER_BUTTON;
 }
 
+void iTempestSoundIO::SetSoundChannelState(int channel, SoundChannelState state)
+{
+    waveStreamer.SetChannelState(channel, state);
+}
+
+void iTempestSoundIO::SetTime(uint64_t clockCycles)
+{
+    int elapsed = (int)(clockCycles - currentCPUTime);
+    waveStreamer.Delay(elapsed);
+    currentCPUTime = clockCycles;
+}
+
 
 void iTempestSoundIO::AudioOutputCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer)
 {
@@ -80,7 +92,17 @@ void iTempestSoundIO::FillNextBuffer(WaveSoundSource *streamer)
         bufferQueue.erase(bufferQueue.begin());
     }
 
+    // tempest generates mono, and we generate stereo so just fill half way
+    int16_t *data = (int16_t *)buffer->mAudioData;
+    int sampleCount = buffer->mAudioDataBytesCapacity/4;
+    streamer->FillBuffer(data, sampleCount);
+    
+    // and turn them into stereo
+    for (int i=sampleCount-1; i>=0; --i)
+        data[i * 2 + 1] = data[i*2] = data[i];
+
     // enqueue it
+    buffer->mAudioDataByteSize = sampleCount * 4;
     EnqueueBuffer(buffer);
 }
 
@@ -98,17 +120,7 @@ void iTempestSoundIO::EnqueueBuffer(AudioQueueBufferRef buffer)
             &buffer);
     }
     
-    // square wave for now
-    int16_t *data = (int16_t *)buffer->mAudioData;
-    for (int i=0; i<buffer->mAudioDataBytesCapacity/2; ++i)
-    {
-        if (i & 32)
-            data[i] = 0x8000;
-        else
-            data[i] = 0x7FFF;
-    }
     buffer->mAudioDataByteSize = buffer->mAudioDataBytesCapacity;
-    
     status = AudioQueueEnqueueBuffer(
                    audioQueue,
                    buffer,

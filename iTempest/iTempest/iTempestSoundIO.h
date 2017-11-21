@@ -23,8 +23,8 @@ public:
     
     void SetPlayer1ButtonState(bool state);
     
-    virtual void SetSoundChannelState(int channel, SoundChannelState state) {};
-    virtual void SetTime(uint64_t clockCycles) {};
+    virtual void SetSoundChannelState(int channel, SoundChannelState state);
+    virtual void SetTime(uint64_t clockCycles);
     virtual uint8_t GetButtons(void) { return buttons; };
     virtual uint8_t GetEncoder(void) {return 0;};
     virtual void SetButtonLED(ButtonFlag button, bool value) {};
@@ -42,6 +42,7 @@ private:
     AudioQueueRef audioQueue;
     std::mutex mutex;
     std::vector<AudioQueueBufferRef> bufferQueue;
+    uint64_t currentCPUTime = 0;
 };
 
 
