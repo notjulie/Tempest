@@ -21,15 +21,16 @@ class iTempestSoundIO : public AbstractTempestSoundIO, private WaveSoundDriver
 public:
     iTempestSoundIO(void);
     
+    void MoveSpinner(int offset);
     void SetPlayer1ButtonState(bool state);
     void SetFireButtonState(bool state);
     void SetZapButtonState(bool state);
 
     virtual void SetSoundChannelState(int channel, SoundChannelState state);
     virtual void SetTime(uint64_t clockCycles);
-    virtual uint8_t GetButtons(void) { return buttons; };
-    virtual uint8_t GetEncoder(void) {return 0;};
-    virtual void SetButtonLED(ButtonFlag button, bool value) {};
+    virtual uint8_t GetButtons(void) { return buttons; }
+    virtual uint8_t GetEncoder(void);
+    virtual void SetButtonLED(ButtonFlag button, bool value) {}
     
 private:
     virtual void FillNextBuffer(WaveSoundSource *streamer);
@@ -40,9 +41,12 @@ private:
     
 private:
     uint8_t buttons = 0;
+    std::mutex encoderMutex;
+    uint8_t encoder = 0;
+    int encoderChange = 0;
     Cpp11WaveStreamer waveStreamer;
     AudioQueueRef audioQueue;
-    std::mutex mutex;
+    std::mutex bufferQueueMutex;
     std::vector<AudioQueueBufferRef> bufferQueue;
     uint64_t currentCPUTime = 0;
 };

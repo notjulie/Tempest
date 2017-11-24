@@ -49,6 +49,7 @@
 		029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */; };
 		029AA0A11FBFBC2800762BC8 /* Noise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A01FBFBC2800762BC8 /* Noise.cpp */; };
 		029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */; };
+		02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
 		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
 /* End PBXBuildFile section */
@@ -128,6 +129,7 @@
 		029AA0A01FBFBC2800762BC8 /* Noise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Noise.cpp; path = ../../TempestIO/Noise.cpp; sourceTree = "<group>"; };
 		029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempestSoundIO.h; sourceTree = "<group>"; };
 		029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cpp11WaveStreamer.cpp; path = ../../TempestIO/Cpp11WaveStreamer.cpp; sourceTree = "<group>"; };
+		02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
 		02F307101FA4198F0062CE9F /* SQLRRException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRException.cpp; path = ../../SQLite/SQLRR/SQLRRException.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +186,7 @@
 		021E39B31F9DAB1700FFAB2B /* iTempest */ = {
 			isa = PBXGroup;
 			children = (
+				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
 				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
 				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
 				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
@@ -474,6 +477,7 @@
 				02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */,
 				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,
 				0285F33E1FBBDEC30004B34F /* MainViewController.swift in Sources */,
+				02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */,
 				026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
 				024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */,

@@ -9,41 +9,57 @@
 #include "iTempest.h"
 #include "cTempest.h"
 
+static std::mutex mutex;
+static cTempest nextHandle = 1;
+static std::map<cTempest, std::unique_ptr<iTempest> > tempestMap;
+
+static iTempest *GetTempest(cTempest handle);
+
 extern "C" {
 
     cTempest cTempestCreate(void)
     {
-        return new iTempest();
-    }
-    
-    cTempest cTempestNull(void)
-    {
-        return 0;
+        std::lock_guard<std::mutex> lock(mutex);
+        cTempest result = nextHandle++;
+        tempestMap[result] = std::unique_ptr<iTempest>(new iTempest());
+        return result;
     }
     
     void cTempestDispose(cTempest _tempest)
     {
-        delete (iTempest *)_tempest;
+        std::lock_guard<std::mutex> lock(mutex);
+        tempestMap.erase(_tempest);
     }
 
+    static iTempest *GetTempest(cTempest handle)
+    {
+        std::lock_guard<std::mutex> lock(mutex);
+        return tempestMap[handle].get();
+    }
+    
     cVectors cTempestGetVectors(cTempest _tempest)
     {
-        return ((iTempest *)_tempest)->GetVectors();
+        return GetTempest(_tempest)->GetVectors();
     }
     
     void cTempestSetPlayer1ButtonState(cTempest tempest, int state)
     {
-        return ((iTempest *)tempest)->SetPlayer1ButtonState(state);
+        return GetTempest(tempest)->SetPlayer1ButtonState(state);
     }
     
     void cTempestSetFireButtonState(cTempest tempest, int state)
     {
-        return ((iTempest *)tempest)->SetFireButtonState(state);
+        return GetTempest(tempest)->SetFireButtonState(state);
+    }
+    
+    void cTempestMoveSpinner(cTempest _tempest, int offset)
+    {
+        return GetTempest(_tempest)->MoveSpinner(offset);
     }
     
     void cTempestSetZapButtonState(cTempest tempest, int state)
     {
-        return ((iTempest *)tempest)->SetZapButtonState(state);
+        return GetTempest(tempest)->SetZapButtonState(state);
     }
     
 

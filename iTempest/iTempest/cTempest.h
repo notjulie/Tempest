@@ -14,13 +14,14 @@ extern "C" {
 #endif
 
 
-    typedef void *cTempest;
+    typedef int cTempest;
     typedef void *cVectors;
 
     cTempest cTempestCreate(void);
     cTempest cTempestNull(void);
     void cTempestDispose(cTempest _tempest);
     cVectors cTempestGetVectors(cTempest _tempest);
+    void cTempestMoveSpinner(cTempest _tempest, int offset);
     void cTempestSetPlayer1ButtonState(cTempest tempest, int state);
     void cTempestSetFireButtonState(cTempest tempest, int state);
     void cTempestSetZapButtonState(cTempest tempest, int state);

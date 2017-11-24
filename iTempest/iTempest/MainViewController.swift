@@ -13,8 +13,8 @@ class MainViewController: UIViewController {
     private var tempestView : TempestView = TempestView();
     private var tempest : cTempest = cTempestCreate();
     private var p1Button : UIButton = UIButton(type: UIButtonType.roundedRect);
-    private var fireButton : UIButton = UIButton(type: UIButtonType.roundedRect);
     private var zapButton : UIButton = UIButton(type: UIButtonType.roundedRect);
+    private var spinner : SpinnerView = SpinnerView();
     private var player1DownCounter : Int = 0;
     private var fireDownCounter : Int = 0;
     private var zapDownCounter : Int = 0;
@@ -36,9 +36,7 @@ class MainViewController: UIViewController {
         p1Button.layer.cornerRadius = 40;
         p1Button.backgroundColor = UIColor.red;
         p1Button.addTarget(self, action: #selector(p1Down), for: UIControlEvents.touchDown);
-        fireButton.layer.cornerRadius = 40;
-        fireButton.backgroundColor = UIColor.blue;
-        fireButton.addTarget(self, action: #selector(fireDown), for: UIControlEvents.touchDown);
+        spinner.setTempest(tempest:tempest);
         zapButton.layer.cornerRadius = 40;
         zapButton.backgroundColor = UIColor.green;
         zapButton.addTarget(self, action: #selector(zapDown), for: UIControlEvents.touchDown);
@@ -46,7 +44,7 @@ class MainViewController: UIViewController {
         // add our subviews
         self.view.addSubview(tempestView);
         self.view.addSubview(p1Button);
-        self.view.addSubview(fireButton);
+        self.view.addSubview(spinner);
         self.view.addSubview(zapButton);
 
         // position our views
@@ -62,7 +60,7 @@ class MainViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func p1Down() {
         // tell Tempest that the button is down
         cTempestSetPlayer1ButtonState(tempest, 1);
@@ -100,17 +98,17 @@ class MainViewController: UIViewController {
                 width: 80,
                 height: 80);
 
-            // firebutton
-            fireButton.frame = CGRect(
-                x: tempestView.frame.maxX + 10,
-                y: size.height - 90,
-                width: 80,
+            // spinner
+            spinner.frame = CGRect(
+                x: tempestView.frame.maxX,
+                y: size.height - 80,
+                width: size.width - tempestView.frame.maxX,
                 height: 80);
 
             // zapbutton
             zapButton.frame = CGRect(
-                x: size.width - 90,
-                y: size.height - 90,
+                x: tempestView.frame.maxX + 110,
+                y: 10,
                 width: 80,
                 height: 80);
         } else {
@@ -124,17 +122,17 @@ class MainViewController: UIViewController {
                 width: 80,
                 height: 80);
 
-            // firebutton
-            fireButton.frame = CGRect(
-                x: 10,
-                y: size.height - 90,
-                width: 80,
+            // spinner
+            spinner.frame = CGRect(
+                x: 0,
+                y: size.height - 80,
+                width: size.width,
                 height: 80);
 
-            // p1button
+            // zapbutton
             zapButton.frame = CGRect(
-                x: size.width - 90,
-                y: size.height - 90,
+                x: 110,
+                y: tempestView.frame.maxY + 10,
                 width: 80,
                 height: 80);
         }

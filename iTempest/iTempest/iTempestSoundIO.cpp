@@ -74,6 +74,31 @@ void iTempestSoundIO::SetZapButtonState(bool state)
         buttons &= ~ZAPPER_BUTTON;
 }
 
+uint8_t iTempestSoundIO::GetEncoder(void)
+{
+    // as a convenience to our caller we never change the value by more than
+    // one in each call
+    std::lock_guard<std::mutex> lock(encoderMutex);
+    if (encoderChange > 0)
+    {
+        ++encoder;
+        --encoderChange;
+    }
+    else if (encoderChange < 0)
+    {
+        --encoder;
+        ++encoderChange;
+    }
+    
+    return encoder;
+}
+
+void iTempestSoundIO::MoveSpinner(int offset)
+{
+    std::lock_guard<std::mutex> lock(encoderMutex);
+    encoderChange += offset;
+}
+
 void iTempestSoundIO::SetSoundChannelState(int channel, SoundChannelState state)
 {
     waveStreamer.SetChannelState(channel, state);
@@ -91,7 +116,7 @@ void iTempestSoundIO::AudioOutputCallback(void *inUserData, AudioQueueRef inAQ, 
 {
     iTempestSoundIO *pThis = (iTempestSoundIO *)inUserData;
     
-    std::lock_guard<std::mutex> lock(pThis->mutex);
+    std::lock_guard<std::mutex> lock(pThis->bufferQueueMutex);
     pThis->bufferQueue.push_back(inBuffer);
 }
 
@@ -101,7 +126,7 @@ void iTempestSoundIO::FillNextBuffer(WaveSoundSource *streamer)
     // pull a buffer out of the queue
     AudioQueueBufferRef buffer = nullptr;
     {
-        std::lock_guard<std::mutex> lock(mutex);
+        std::lock_guard<std::mutex> lock(bufferQueueMutex);
         if (bufferQueue.size() == 0)
             return;
         buffer = bufferQueue[0];
