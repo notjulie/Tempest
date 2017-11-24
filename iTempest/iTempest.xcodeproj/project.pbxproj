@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39B51F9DAB1700FFAB2B /* AppDelegate.m */; };
-		021E39B91F9DAB1700FFAB2B /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39B81F9DAB1700FFAB2B /* Renderer.m */; };
 		021E39C21F9DAB1700FFAB2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C01F9DAB1700FFAB2B /* Main.storyboard */; };
 		021E39C41F9DAB1700FFAB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C31F9DAB1700FFAB2B /* Assets.xcassets */; };
 		021E39C71F9DAB1700FFAB2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */; };
@@ -75,9 +74,6 @@
 		021E39B11F9DAB1700FFAB2B /* iTempest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTempest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		021E39B41F9DAB1700FFAB2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		021E39B51F9DAB1700FFAB2B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		021E39B71F9DAB1700FFAB2B /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
-		021E39B81F9DAB1700FFAB2B /* Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
-		021E39BF1F9DAB1700FFAB2B /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		021E39C11F9DAB1700FFAB2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		021E39C31F9DAB1700FFAB2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		021E39C61F9DAB1700FFAB2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -193,10 +189,7 @@
 				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
 				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
 				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
-				021E39B71F9DAB1700FFAB2B /* Renderer.h */,
-				021E39B81F9DAB1700FFAB2B /* Renderer.m */,
 				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
-				021E39BF1F9DAB1700FFAB2B /* ShaderTypes.h */,
 				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
 				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
 				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
@@ -468,7 +461,6 @@
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
-				021E39B91F9DAB1700FFAB2B /* Renderer.m in Sources */,
 				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
