@@ -11,6 +11,7 @@
 #include "iTempestSoundIO.h"
 
 const int BUFFER_SIZE = 2048;
+const int MAX_ENCODER_CHANGE = 4;
 
 iTempestSoundIO::iTempestSoundIO(void)
     :
@@ -81,13 +82,29 @@ uint8_t iTempestSoundIO::GetEncoder(void)
     std::lock_guard<std::mutex> lock(encoderMutex);
     if (encoderChange > 0)
     {
-        ++encoder;
-        --encoderChange;
+        if (encoderChange > MAX_ENCODER_CHANGE)
+        {
+            encoder += MAX_ENCODER_CHANGE;
+            encoderChange -= MAX_ENCODER_CHANGE;
+        }
+        else
+        {
+            ++encoder;
+            --encoderChange;
+        }
     }
     else if (encoderChange < 0)
     {
-        --encoder;
-        ++encoderChange;
+        if (encoderChange < -MAX_ENCODER_CHANGE)
+        {
+            encoder -= MAX_ENCODER_CHANGE;
+            encoderChange += MAX_ENCODER_CHANGE;
+        }
+        else
+        {
+            --encoder;
+            ++encoderChange;
+        }
     }
     
     return encoder;
