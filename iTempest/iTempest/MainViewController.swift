@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     private var tempestView : TempestView = TempestView();
     private var tempest : cTempest = cTempestCreate();
     private var p1Button : UIButton = UIButton(type: UIButtonType.roundedRect);
+    private var fireButton : UIButton = UIButton(type: UIButtonType.roundedRect);
     private var zapButton : UIButton = UIButton(type: UIButtonType.roundedRect);
     private var spinner : SpinnerView = SpinnerView();
     private var player1DownCounter : Int = 0;
@@ -37,6 +38,9 @@ class MainViewController: UIViewController {
         p1Button.backgroundColor = UIColor.red;
         p1Button.addTarget(self, action: #selector(p1Down), for: UIControlEvents.touchDown);
         spinner.setTempest(tempest:tempest);
+        fireButton.layer.cornerRadius = 40;
+        fireButton.backgroundColor = UIColor.blue;
+        fireButton.addTarget(self, action: #selector(fireDown), for: UIControlEvents.touchDown);
         zapButton.layer.cornerRadius = 40;
         zapButton.backgroundColor = UIColor.green;
         zapButton.addTarget(self, action: #selector(zapDown), for: UIControlEvents.touchDown);
@@ -45,6 +49,7 @@ class MainViewController: UIViewController {
         self.view.addSubview(tempestView);
         self.view.addSubview(p1Button);
         self.view.addSubview(spinner);
+        self.view.addSubview(fireButton);
         self.view.addSubview(zapButton);
 
         // position our views
@@ -111,6 +116,13 @@ class MainViewController: UIViewController {
                 y: 10,
                 width: 80,
                 height: 80);
+
+            // firebutton
+            fireButton.frame = CGRect(
+                x: tempestView.frame.maxX + 200,
+                y: 10,
+                width: 80,
+                height: 80);
         } else {
             // tempest
             self.tempestView.frame = CGRect(x:0,y:0,width:size.width, height:size.width);
@@ -132,6 +144,13 @@ class MainViewController: UIViewController {
             // zapbutton
             zapButton.frame = CGRect(
                 x: 110,
+                y: tempestView.frame.maxY + 10,
+                width: 80,
+                height: 80);
+
+            // firebutton
+            fireButton.frame = CGRect(
+                x: 200,
                 y: tempestView.frame.maxY + 10,
                 width: 80,
                 height: 80);
