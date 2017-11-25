@@ -42,9 +42,7 @@ private:
     
 private:
     uint8_t buttons = 0;
-    std::mutex encoderMutex;
     uint8_t encoder = 0;
-    int encoderChange = 0;
     Cpp11WaveStreamer *waveStreamer = nullptr;
     AudioQueueRef audioQueue;
     std::mutex bufferQueueMutex;

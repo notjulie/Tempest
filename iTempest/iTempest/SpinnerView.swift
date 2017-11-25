@@ -31,10 +31,22 @@ class SpinnerView : UIView
     private var speed : CGFloat = 0;
     private var coastDistance : CGFloat = 0;
     
+    // the number of encoder ticks to move per pixel
     private let ticksPerPixel : CGFloat = 1.0;
-    private let maxCoastSpeed : CGFloat = 400;
-    private let minCoastSpeed : CGFloat = 100;
-    private let coastDeceleration : CGFloat = 100;
+
+    // Maximum encoder ticks per second while coasting... if this gets too high
+    // we'll end up with encoder wrap-around
+    private let maxCoastSpeed : CGFloat = 1000;
+    
+    // time (in seconds) of the speed lowpass; this is just in place to make sure that
+    // one sample alone doesn't define our coast speed, such as if the touchscreen
+    // says the user slowed down when in fact he just eased off the screen
+    private let speedLowpassTime = 0.2;
+    
+    private let minCoastSpeed : CGFloat = 0;
+    private let coastDeceleration : CGFloat = 200;
+    
+    private let speedLog = NSMutableArray();
 
     func setTempest(tempest:cTempest) {
         if (!initialized) {
@@ -104,6 +116,8 @@ class SpinnerView : UIView
             lastX = startX;
             lastTouchTime = CGFloat(touches.first!.timestamp);
             encoderChange = 0;
+            speed = 0;
+            speedLog.removeAllObjects();
             touchState = TouchState.Dragging;
         }
         else
@@ -122,19 +136,7 @@ class SpinnerView : UIView
         // only single touches
         if (touches.count == 1)
         {
-            let xNow = touches.first!.location(in: self).x;
-            let totalChange = (Int32)(ticksPerPixel * (xNow - startX));
-            cTempestMoveSpinner(
-                tempest,
-                totalChange - encoderChange
-            );
-            
-            let x : CGFloat = touches.first!.location(in: self).x;
-            let time : CGFloat = CGFloat(touches.first!.timestamp);
-            speed = (x - lastX) / CGFloat(time - lastTouchTime);
-            lastX = touches.first!.location(in: self).x;
-            lastTouchTime = CGFloat(touches.first!.timestamp);
-            encoderChange = totalChange;
+            processMove(touch:touches.first!);
         }
         else
         {
@@ -143,11 +145,13 @@ class SpinnerView : UIView
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let x : CGFloat = touches.first!.location(in: self).x;
-        let time : CGFloat = CGFloat(touches.first!.timestamp);
-        if (time != lastTouchTime)
+        if (touches.count == 1)
         {
-            speed = ticksPerPixel * (x - lastX) / (time - lastTouchTime);
+            // first handle it as a regular move event
+            processMove(touch:touches.first!);
+
+            // and continue to coast at our current speed
+            touchState = TouchState.Coasting;
             if (speed > maxCoastSpeed)
             {
                 speed = maxCoastSpeed;
@@ -156,13 +160,38 @@ class SpinnerView : UIView
             {
                 speed = -maxCoastSpeed;
             }
+            coastDistance = 0;
         }
-        
-        touchState = TouchState.Coasting;
-        coastDistance = 0;
+        else
+        {
+            touchState = TouchState.NoTouch;
+        }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchState = TouchState.NoTouch;
+    }
+    
+    private func processMove(touch:UITouch) {
+        // move the spinner
+        let xNow = touch.location(in: self).x;
+        let totalChange = (Int32)(ticksPerPixel * (xNow - startX));
+        cTempestMoveSpinner(
+            tempest,
+            totalChange - encoderChange
+        );
+        
+        // calculate the speed of this single movement
+        let x : CGFloat = touch.location(in: self).x;
+        let time : CGFloat = CGFloat(touch.timestamp) - lastTouchTime;
+        let speedThisTime = (x - lastX) / time;
+        
+        // and decay that into the speed
+        speed += (speedThisTime - speed) * (1 - exp(-time / 0.1));
+        speedLog.add(speed);
+        
+        lastX = touch.location(in: self).x;
+        lastTouchTime = CGFloat(touch.timestamp);
+        encoderChange = totalChange;
     }
 }

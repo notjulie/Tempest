@@ -11,7 +11,6 @@
 #include "iTempestSoundIO.h"
 
 const int BUFFER_SIZE = 2048;
-const int MAX_ENCODER_CHANGE = 4;
 
 iTempestSoundIO::iTempestSoundIO(void)
 {
@@ -54,16 +53,6 @@ iTempestSoundIO::iTempestSoundIO(void)
     // start our wave streamer that calls us periodically with new sound
     // to shove into the buffers
     waveStreamer = new Cpp11WaveStreamer(BUFFER_SIZE * 2, this);
-
-    // stop the queue
-    AudioQueueStop(audioQueue, true);
-    
-    // dispose the buffers
-    for (int i=0; i<bufferList.size(); ++i)
-        AudioQueueFreeBuffer(audioQueue, bufferList[i]);
-    
-    // dispose the audio queue
-    AudioQueueDispose(audioQueue, true);
 }
 
 iTempestSoundIO::~iTempestSoundIO(void)
@@ -76,7 +65,15 @@ iTempestSoundIO::~iTempestSoundIO(void)
         waveStreamer = nullptr;
     }
     
+    // stop the queue
+    AudioQueueStop(audioQueue, true);
     
+    // dispose the buffers
+    for (int i=0; i<bufferList.size(); ++i)
+        AudioQueueFreeBuffer(audioQueue, bufferList[i]);
+    
+    // dispose the audio queue
+    AudioQueueDispose(audioQueue, true);
 }
 
 void iTempestSoundIO::SetPlayer1ButtonState(bool state)
@@ -105,43 +102,12 @@ void iTempestSoundIO::SetZapButtonState(bool state)
 
 uint8_t iTempestSoundIO::GetEncoder(void)
 {
-    // as a convenience to our caller we never change the value by more than
-    // one in each call
-    std::lock_guard<std::mutex> lock(encoderMutex);
-    if (encoderChange > 0)
-    {
-        if (encoderChange > MAX_ENCODER_CHANGE)
-        {
-            encoder += MAX_ENCODER_CHANGE;
-            encoderChange -= MAX_ENCODER_CHANGE;
-        }
-        else
-        {
-            ++encoder;
-            --encoderChange;
-        }
-    }
-    else if (encoderChange < 0)
-    {
-        if (encoderChange < -MAX_ENCODER_CHANGE)
-        {
-            encoder -= MAX_ENCODER_CHANGE;
-            encoderChange += MAX_ENCODER_CHANGE;
-        }
-        else
-        {
-            --encoder;
-            ++encoderChange;
-        }
-    }
-    
     return encoder;
 }
 
 void iTempestSoundIO::MoveSpinner(int offset)
 {
-    std::lock_guard<std::mutex> lock(encoderMutex);
-    encoderChange += offset;
+    encoder += offset;
 }
 
 void iTempestSoundIO::SetSoundChannelState(int channel, SoundChannelState state)
