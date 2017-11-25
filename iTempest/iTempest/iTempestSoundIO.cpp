@@ -14,11 +14,10 @@ const int BUFFER_SIZE = 2048;
 const int MAX_ENCODER_CHANGE = 4;
 
 iTempestSoundIO::iTempestSoundIO(void)
-    :
-        waveStreamer(BUFFER_SIZE * 2, this)
 {
     //[AVAudioSession.sharedInstance setPreferredIOBufferDuration:NSInterval(0.01) error:nullptr];
-    
+
+    // initialize our audio queue
     AudioStreamBasicDescription info;
     info.mBitsPerChannel = 16;
     info.mBytesPerFrame = 4;
@@ -44,12 +43,41 @@ iTempestSoundIO::iTempestSoundIO(void)
             );
     if (result != noErr)
         throw iosException("AudioQueueNewOutput", result);
-    EnqueueBuffer(nullptr);
-    EnqueueBuffer(nullptr);
     
+    // enqueue our buffers
+    EnqueueBuffer(nullptr);
+    EnqueueBuffer(nullptr);
+
+    // start the audio queue
     AudioQueueStart(audioQueue, nullptr);
+
+    // start our wave streamer that calls us periodically with new sound
+    // to shove into the buffers
+    waveStreamer = new Cpp11WaveStreamer(BUFFER_SIZE * 2, this);
+
+    // stop the queue
+    AudioQueueStop(audioQueue, true);
+    
+    // dispose the buffers
+    for (int i=0; i<bufferList.size(); ++i)
+        AudioQueueFreeBuffer(audioQueue, bufferList[i]);
+    
+    // dispose the audio queue
+    AudioQueueDispose(audioQueue, true);
 }
 
+iTempestSoundIO::~iTempestSoundIO(void)
+{
+    // stop our wave streamer so that it won't call us while we are
+    // disposing things
+    if (waveStreamer != nullptr)
+    {
+        delete waveStreamer;
+        waveStreamer = nullptr;
+    }
+    
+    
+}
 
 void iTempestSoundIO::SetPlayer1ButtonState(bool state)
 {
@@ -118,13 +146,13 @@ void iTempestSoundIO::MoveSpinner(int offset)
 
 void iTempestSoundIO::SetSoundChannelState(int channel, SoundChannelState state)
 {
-    waveStreamer.SetChannelState(channel, state);
+    waveStreamer->SetChannelState(channel, state);
 }
 
 void iTempestSoundIO::SetTime(uint64_t clockCycles)
 {
     int elapsed = (int)(clockCycles - currentCPUTime);
-    waveStreamer.Delay(elapsed);
+    waveStreamer->Delay(elapsed);
     currentCPUTime = clockCycles;
 }
 
@@ -176,6 +204,8 @@ void iTempestSoundIO::EnqueueBuffer(AudioQueueBufferRef buffer)
             audioQueue,
             1000 * 16,
             &buffer);
+        if (status == noErr)
+            bufferList.push_back(buffer);
     }
     
     buffer->mAudioDataByteSize = buffer->mAudioDataBytesCapacity;
