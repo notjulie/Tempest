@@ -24,6 +24,7 @@ public:
 
     void MoveSpinner(int offset);
     void SetPlayer1ButtonState(bool state);
+    void SetPlayer2ButtonState(bool state);
     void SetFireButtonState(bool state);
     void SetZapButtonState(bool state);
 

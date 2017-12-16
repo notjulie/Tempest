@@ -17,14 +17,19 @@ extern "C" {
     typedef int cTempest;
     typedef void *cVectors;
 
+    typedef enum {
+        FIRE,
+        PLAYER1,
+        PLAYER2,
+        ZAP
+    } cTempestButton;
+    
     cTempest cTempestCreate(void);
     cTempest cTempestNull(void);
     void cTempestDispose(cTempest _tempest);
     cVectors cTempestGetVectors(cTempest _tempest);
     void cTempestMoveSpinner(cTempest _tempest, int offset);
-    void cTempestSetPlayer1ButtonState(cTempest tempest, int state);
-    void cTempestSetFireButtonState(cTempest tempest, int state);
-    void cTempestSetZapButtonState(cTempest tempest, int state);
+    void cTempestSetButtonState(cTempest tempest, cTempestButton button, int state);
 
     int cVectorsGetNext(
                  cVectors _vectors,

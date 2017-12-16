@@ -84,6 +84,14 @@ void iTempestSoundIO::SetPlayer1ButtonState(bool state)
         buttons &= ~ONE_PLAYER_BUTTON;
 }
 
+void iTempestSoundIO::SetPlayer2ButtonState(bool state)
+{
+    if (state)
+        buttons |= TWO_PLAYER_BUTTON;
+    else
+        buttons &= ~TWO_PLAYER_BUTTON;
+}
+
 void iTempestSoundIO::SetFireButtonState(bool state)
 {
     if (state)

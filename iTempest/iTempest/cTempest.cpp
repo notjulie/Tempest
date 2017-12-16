@@ -42,26 +42,29 @@ extern "C" {
         return GetTempest(_tempest)->GetVectors();
     }
     
-    void cTempestSetPlayer1ButtonState(cTempest tempest, int state)
+    void cTempestSetButtonState(cTempest tempest, cTempestButton button, int state)
     {
-        return GetTempest(tempest)->SetPlayer1ButtonState(state);
-    }
-    
-    void cTempestSetFireButtonState(cTempest tempest, int state)
-    {
-        return GetTempest(tempest)->SetFireButtonState(state);
+        switch (button)
+        {
+            case FIRE:
+                GetTempest(tempest)->SetFireButtonState(state);
+                break;
+            case PLAYER1:
+                GetTempest(tempest)->SetPlayer1ButtonState(state);
+                break;
+            case PLAYER2:
+                GetTempest(tempest)->SetPlayer2ButtonState(state);
+                break;
+            case ZAP:
+                GetTempest(tempest)->SetZapButtonState(state);
+                break;
+        }
     }
     
     void cTempestMoveSpinner(cTempest _tempest, int offset)
     {
         return GetTempest(_tempest)->MoveSpinner(offset);
     }
-    
-    void cTempestSetZapButtonState(cTempest tempest, int state)
-    {
-        return GetTempest(tempest)->SetZapButtonState(state);
-    }
-    
 
     void cVectorsDispose(cVectors _vectors)
     {

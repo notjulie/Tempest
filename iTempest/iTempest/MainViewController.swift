@@ -12,13 +12,10 @@ import AVFoundation
 class MainViewController: UIViewController {
     private var tempestView : TempestView = TempestView();
     private var tempest : cTempest = cTempestCreate();
-    private var p1Button : UIButton = UIButton(type: UIButtonType.roundedRect);
-    private var fireButton : UIButton = UIButton(type: UIButtonType.roundedRect);
-    private var zapButton : UIButton = UIButton(type: UIButtonType.roundedRect);
+    private var p1Button : ButtonView?;
+    private var fireButton : ButtonView?;
+    private var zapButton : ButtonView?;
     private var spinner : SpinnerView = SpinnerView();
-    private var player1DownCounter : Int = 0;
-    private var fireDownCounter : Int = 0;
-    private var zapDownCounter : Int = 0;
 
     override func viewDidLoad() {
         // call the super
@@ -34,23 +31,17 @@ class MainViewController: UIViewController {
         self.view.layer.backgroundColor = UIColor.brown.cgColor;
         
         // initialize our subviews
-        p1Button.layer.cornerRadius = 40;
-        p1Button.backgroundColor = UIColor.red;
-        p1Button.addTarget(self, action: #selector(p1Down), for: UIControlEvents.touchDown);
         spinner.setTempest(tempest:tempest);
-        fireButton.layer.cornerRadius = 40;
-        fireButton.backgroundColor = UIColor.blue;
-        fireButton.addTarget(self, action: #selector(fireDown), for: UIControlEvents.touchDown);
-        zapButton.layer.cornerRadius = 40;
-        zapButton.backgroundColor = UIColor.green;
-        zapButton.addTarget(self, action: #selector(zapDown), for: UIControlEvents.touchDown);
+        fireButton = ButtonView(tempest:tempest, _whichButton:FIRE, color:UIColor.blue);
+        p1Button = ButtonView(tempest:tempest, _whichButton:PLAYER1, color:UIColor.red);
+        zapButton = ButtonView(tempest:tempest, _whichButton:ZAP, color:UIColor.green);
 
         // add our subviews
         self.view.addSubview(tempestView);
-        self.view.addSubview(p1Button);
+        self.view.addSubview(p1Button!);
         self.view.addSubview(spinner);
-        self.view.addSubview(fireButton);
-        self.view.addSubview(zapButton);
+        self.view.addSubview(fireButton!);
+        self.view.addSubview(zapButton!);
 
         // position our views
         positionViews(to: self.view.bounds.size);
@@ -66,30 +57,6 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func p1Down() {
-        // tell Tempest that the button is down
-        cTempestSetPlayer1ButtonState(tempest, 1);
-        
-        // hold it down for a second our so
-        player1DownCounter = 60;
-    }
-    
-    func fireDown() {
-        // tell Tempest that the button is down
-        cTempestSetFireButtonState(tempest, 1);
-        
-        // hold it down for a second our so
-        fireDownCounter = 10;
-    }
-    
-    func zapDown() {
-        // tell Tempest that the button is down
-        cTempestSetZapButtonState(tempest, 1);
-        
-        // hold it down for a second our so
-        zapDownCounter = 10;
-    }
-    
     private func positionViews(to size: CGSize) {
         // start by figuring out if we are portrait or landscape
         if (size.width > size.height) {
@@ -97,7 +64,7 @@ class MainViewController: UIViewController {
             self.tempestView.frame = CGRect(x:0,y:0,width:size.height,height:size.height);
             
             // p1button
-            p1Button.frame = CGRect(
+            p1Button!.frame = CGRect(
                 x: tempestView.frame.maxX + 10,
                 y: 10,
                 width: 80,
@@ -111,14 +78,14 @@ class MainViewController: UIViewController {
                 height: 80);
 
             // zapbutton
-            zapButton.frame = CGRect(
+            zapButton!.frame = CGRect(
                 x: tempestView.frame.maxX + 110,
                 y: 10,
                 width: 80,
                 height: 80);
 
             // firebutton
-            fireButton.frame = CGRect(
+            fireButton!.frame = CGRect(
                 x: tempestView.frame.maxX + 200,
                 y: 10,
                 width: 80,
@@ -128,7 +95,7 @@ class MainViewController: UIViewController {
             self.tempestView.frame = CGRect(x:0,y:0,width:size.width, height:size.width);
 
             // p1button
-            p1Button.frame = CGRect(
+            p1Button!.frame = CGRect(
                 x: 10,
                 y: tempestView.frame.maxY + 10,
                 width: 80,
@@ -142,14 +109,14 @@ class MainViewController: UIViewController {
                 height: 80);
 
             // zapbutton
-            zapButton.frame = CGRect(
+            zapButton!.frame = CGRect(
                 x: 110,
                 y: tempestView.frame.maxY + 10,
                 width: 80,
                 height: 80);
 
             // firebutton
-            fireButton.frame = CGRect(
+            fireButton!.frame = CGRect(
                 x: 200,
                 y: tempestView.frame.maxY + 10,
                 width: 80,
@@ -166,30 +133,6 @@ class MainViewController: UIViewController {
         
         // free up our vectors array
         cVectorsDispose(vectors);
-        
-        // update the player button state
-        if (player1DownCounter > 0) {
-            player1DownCounter -= 1;
-            if (player1DownCounter == 0) {
-                cTempestSetPlayer1ButtonState(tempest, 0);
-            }
-        }
-        
-        // update the fire button state
-        if (fireDownCounter > 0) {
-            fireDownCounter -= 1;
-            if (fireDownCounter == 0) {
-                cTempestSetFireButtonState(tempest, 0);
-            }
-        }
-        
-        // update the zap button state
-        if (zapDownCounter > 0) {
-            zapDownCounter -= 1;
-            if (zapDownCounter == 0) {
-                cTempestSetZapButtonState(tempest, 0);
-            }
-        }
     }
 
 
