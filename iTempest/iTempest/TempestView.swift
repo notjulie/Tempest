@@ -71,11 +71,25 @@ class TempestView : UIView {
                 path.addLine(to: CGPoint(x:size * (0.5 + CGFloat(endX)/scale), y:size * (0.5 - CGFloat(endY)/scale)));
             }
             
+            // we get flicker if we change the color of a CAShapeLayer while it's displaying, so
+            // if the color changes we replace it with a different layer... that seems to take care of
+            // it
             let layer : CAShapeLayer = lines.object(at:i) as! CAShapeLayer;
-            layer.path = path.cgPath;
-            layer.opacity = 1;
-            layer.strokeColor = UIColor.init(red:CGFloat(r)/255.0, green:CGFloat(g)/255.0 ,blue:CGFloat(b)/255.0, alpha:1).cgColor;
-            
+            let newColor = UIColor.init(red:CGFloat(r)/255.0, green:CGFloat(g)/255.0 ,blue:CGFloat(b)/255.0, alpha:1).cgColor;
+            if (layer.strokeColor?.hashValue != newColor.hashValue)
+            {
+                let newLayer : CAShapeLayer = CAShapeLayer();
+                newLayer.path = path.cgPath;
+                newLayer.strokeColor = newColor;
+                self.layer.replaceSublayer(layer, with: newLayer);
+                lines.replaceObject(at: i, with: newLayer);
+            }
+            else
+            {
+                layer.path = path.cgPath;
+            }
+            layer.isHidden = false;
+
             i = i + 1;
         }
         
@@ -83,7 +97,7 @@ class TempestView : UIView {
         while (i < lines.count)
         {
             let layer : CAShapeLayer = lines.object(at:i) as! CAShapeLayer;
-            layer.opacity = 0;
+            layer.isHidden = true;
             i = i + 1;
         }
     }
