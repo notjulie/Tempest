@@ -60,6 +60,11 @@ class SpinnerView : UIView
                 userInfo: nil,
                 repeats: true);
             
+            // add our SpinnerLayer to show the spinner
+            let spinnerLayer = SpinnerLayer();
+            spinnerLayer.initialize();
+            self.layer.addSublayer(spinnerLayer);
+            
             initialized = true;
         }
         self.tempest = tempest;
