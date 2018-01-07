@@ -15,7 +15,15 @@ vertex float4 basic_vertex(
     return float4(vertex_array[vid], 1.0);
 }
 
-fragment half4 basic_fragment() {
-    return half4(1.0);              
+//fragment half4 basic_fragment() {
+//    return half4(1.0);
+//}
+
+fragment half4 basic_fragment(float4 pointCoord  [[position]])
+{
+//    if (length(pointCoord - float2(0.5)) > 0.5) {
+//        discard_fragment();
+//    }
+    return half4(pointCoord.x / 100);
 }
 
