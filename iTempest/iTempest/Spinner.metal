@@ -7,17 +7,29 @@
 //
 
 #include <metal_stdlib>
+#include "Spinner.h"
 using namespace metal;
 
-vertex float4 basic_vertex(
-        const device packed_float3* vertex_array [[ buffer(0) ]],
-        unsigned int vid [[ vertex_id ]]) {
-    return float4(vertex_array[vid], 1.0);
-}
+typedef struct
+{
+    // Positions in pixel space
+    // (e.g. a value of 100 indicates 100 pixels from the center)
+    vector_float2 position;
+    
+    // Floating-point RGBA colors
+    vector_float4 color;
+} AAPLVertex;
 
-//fragment half4 basic_fragment() {
-//    return half4(1.0);
-//}
+vertex float4 basic_vertex(
+        const device SpinnerVertex* vertex_array [[ buffer(0) ]],
+        unsigned int vid [[ vertex_id ]])
+{
+    if (vertex_array[vid].corner == 0)
+        return float4(0.0, 1.0, 0.0, 1.0);
+    if (vertex_array[vid].corner == 1)
+        return float4(-1.0, -1.0, 0, 1.0);
+    return float4(1.0, -1.0, 0, 1.0);
+}
 
 fragment half4 basic_fragment(float4 pointCoord  [[position]])
 {

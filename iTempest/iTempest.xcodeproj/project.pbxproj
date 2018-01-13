@@ -110,6 +110,7 @@
 		024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Am2901Tables.cpp; path = ../../TempestCPU/MathBox/Am2901Tables.cpp; sourceTree = "<group>"; };
 		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
+		0262C923200A54FC00E5A429 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
 		026417B01FE5C114005D913E /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
 		026A1B661FC1ED0D00EEFF34 /* iosException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = iosException.cpp; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 				021E39C91F9DAB1700FFAB2B /* main.m */,
 				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
 				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
+				0262C923200A54FC00E5A429 /* Spinner.h */,
 				02825C8620026F130032BE41 /* Spinner.metal */,
 				02825C88200273710032BE41 /* SpinnerLayer.swift */,
 				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,

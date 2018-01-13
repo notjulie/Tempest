@@ -18,10 +18,10 @@ class SpinnerLayer : CAMetalLayer
     private var timer: CADisplayLink! = nil;
     
     // stuff specific to the example
-    private let vertexData:[Float] = [
+    /*private let vertexData:[Float] = [
         0.0, 1.0, 0.0,
         -1.0, -1.0, 0.0,
-        1.0, -1.0, 0.0];
+        1.0, -1.0, 0.0];*/
     private var vertexBuffer: MTLBuffer! = nil;
 
     func initialize() {
@@ -47,6 +47,11 @@ class SpinnerLayer : CAMetalLayer
         self.frame = CGRect(x:0, y:0, width:100, height:100);
         
         // stuff specific to the example
+        var vertexData : [SpinnerVertex] = [
+            SpinnerVertex(position:0, corner:0),
+            SpinnerVertex(position:0, corner:1),
+            SpinnerVertex(position:0, corner:2)
+        ];
         let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]);
         vertexBuffer = device!.makeBuffer(bytes: vertexData, length: dataSize, options: []);
         
