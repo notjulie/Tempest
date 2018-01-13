@@ -21,14 +21,16 @@ typedef struct
 } AAPLVertex;
 
 vertex float4 basic_vertex(
-        const device SpinnerVertex* vertex_array [[ buffer(0) ]],
-        unsigned int vid [[ vertex_id ]])
+      const device SpinnerVertex* vertex_array [[ buffer(SPINNER_VERTICES_BUFFER) ]],
+      const device SpinnerRenderParameters *vertexRenderParameters [[ buffer(SPINNER_RENDER_PARAMETERS_BUFFER) ]],
+      unsigned int vid [[ vertex_id ]])
 {
-    if (vertex_array[vid].corner == 0)
-        return float4(0.0, 1.0, 0.0, 1.0);
-    if (vertex_array[vid].corner == 1)
-        return float4(-1.0, -1.0, 0, 1.0);
-    return float4(1.0, -1.0, 0, 1.0);
+   float width = vertexRenderParameters->rotation / 360;
+   if (vertex_array[vid].corner == 0)
+      return float4(0.0, 1.0, 0.0, 1.0);
+   if (vertex_array[vid].corner == 1)
+      return float4(-width, -1.0, 0, 1.0);
+   return float4(width, -1.0, 0, 1.0);
 }
 
 fragment half4 basic_fragment(float4 pointCoord  [[position]])
