@@ -1,3 +1,14 @@
+// ====================================================================
+// 6502 emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the instruction processor of the 6502... it interacts
+//    with an AbstractBus object, which supplies everything that the
+//    6502 connects to.
+// ====================================================================
 
 #include "stdafx.h"
 #include "AbstractBus.h"
@@ -5,10 +16,6 @@
 
 #include "CPU6502.h"
 
-static const uint16_t NMI_VECTOR_ADDRESS = 0xFFFA;
-static const uint16_t RESET_VECTOR_ADDRESS = 0xFFFC;
-static const uint16_t IRQ_VECTOR_ADDRESS = 0xFFFE;
-static const uint16_t BRK_VECTOR_ADDRESS = 0xFFFE;
 
 CPU6502::CPU6502(AbstractBus *_bus)
 {
