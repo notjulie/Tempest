@@ -8,16 +8,96 @@
 //
 // ===============================================================
 
-
+#include <math.h>
 #include "Encoder.h"
 
 
-Encoder::Encoder(void)
+// =============================================================
+// =============================================================
+// =============================================================
+//              class EncoderInput
+// =============================================================
+// =============================================================
+// =============================================================
+
+/// <summary>
+/// Initializes a new instance of class EncoderInput
+/// </summary>
+EncoderInput::EncoderInput(int sampleFrequency)
+{
+	// initialize
+	isHigh = false;
+	lowPassCapacitor = 0;
+	highPassCapacitor = 0;
+
+	// calculate our sample period
+	double secondsPerCycle = 1.0 / sampleFrequency;
+
+	// calculate the constant we use in our lowpass filter... we just want the fractional
+	// change in the capacitor voltage over the course of one sample period
+	double lowPassTimeConstantMS = 0.33; // 3.3K times 0.1uF is what the schematic says
+	double dropPerCycle = 1.0 - exp(-secondsPerCycle / (lowPassTimeConstantMS / 1000));
+	lowPassConstant = (int)(1000 * dropPerCycle);
+
+	// similarly calculate the constant we use in our highpass filter
+	double highPassTimeConstantMS = 10.0; // 10K times 1uF is what the schematic
+	dropPerCycle = 1.0 - exp(-secondsPerCycle / (highPassTimeConstantMS / 1000));
+	highPassConstant = (int)(1000 * dropPerCycle);
+}
+
+/// <summary>
+/// Processes a sample
+/// </summary>
+void EncoderInput::AddSample(int value)
+{
+	// ==== THEORY OF OPERATION ====
+	// This is actually a simulation of the original Tempest circuit, which
+	// feeds the analog inputs into a Schmitt-triggered inverter.  But it also
+	// does the following:
+	//    - biases the circuit so the Schmitt-trigger's threshold is effecively
+	//      zero (plus or minus the hysteresis)
+	//    - lowpasses the input, presumably to reduce noise
+	//    - highpasses the input, to remove DC
+	//
+	// Following all of that it is a simple matter of transitioning to high if
+	// the filtered output is greater than the hysteresis, and transitioning low
+	// if it is less than the negative of the hysteresis.
+
+	// do the lowpass
+	lowPassCapacitor += lowPassConstant * (value - lowPassCapacitor) / 1000;
+
+	// do the highpass
+	highPassCapacitor += highPassConstant * (lowPassCapacitor - highPassCapacitor) / 1000;
+
+	// get the highpass output
+	double highpassOutput = lowPassCapacitor - highPassCapacitor;
+
+	// adjust our value accordingly
+	int hysteresis = 3000;
+	if (highpassOutput < -hysteresis)
+		isHigh = false;
+	else if (highpassOutput > hysteresis)
+		isHigh = true;
+}
+
+
+
+
+// =============================================================
+// =============================================================
+// =============================================================
+//              class Encoder
+// =============================================================
+// =============================================================
+// =============================================================
+
+Encoder::Encoder(int sampleFrequency)
+	:
+		input1(sampleFrequency),
+		input2(sampleFrequency)
 {
 	phaseAccumulator = 0;
 	currentValue = 0;
-	phase = 0x00A;
-	aThreshold = bThreshold = 0;
 }
 
 
@@ -31,159 +111,56 @@ Encoder::Encoder(void)
 // ==================================================================
 void Encoder::AddSample(int a, int b)
 {
-	// define the margin between a and b for which they are considered
-	// within a noise/hysteresis margin of being equal
-	const int SIGNAL_CROSSING_MARGIN = 1000;
+	// get the previous values of our inputs
+	uint8_t transition = 0;
+	if (input1.IsHigh())
+		transition |= 0x10;
+	if (input2.IsHigh())
+		transition |= 0x20;
 
-	// define our individual signal hysteresis
-	const int HYSTERESIS = 2000;
+	// update the inputs
+	input1.AddSample(a);
+	input2.AddSample(b);
 
-	// Theory of operation: this is a regular old encoder, with two signals
-	// out of phase by 90 degrees so that the changes in phase tell us
-	// which direction the knob is spinning.  The challenges here are:
-	//
-	//   - The inputs are analog, and there is no clear threshold between
-	//     high and low.  Moreover, the two channels are often of different
-	//     magnitudes, and the magnitude can tend to drift.
-	//
-	//	  - Noise... the signals are pretty noisy, and so it's very easy
-	//     to get deceived into thinking the spinner is moving when it isn't
-	//
-	// Normally one thinks of such an encoder in 4 phases, low-low, low-high,
-	// high-low, high-high.  That's pretty good, but I have seen cases where it
-	// jumps a phase, especially when control panel vibrations are present.
-	// As a result I added two more phases, by noting the crossing point of
-	// the two inputs.  Those phases are:
-	//
-	//  0x00A:  a low, b low, a greater than b
-	//  0x00B:  a low, b low, b greater than a
-	//  0x01B:  a low, b high, (b greater than a, implied)
-	//  0x10A:  a high, b low, (a greater than b, implied)
-	//  0x11A:  a high, b high, a greater than b
-	//  0x11B:  a high, b high, b greater than a
-	//
-	// The addition of the extra two phases makes it nearly impossible for a noisy
-	// signal to traverse the circle... in general it will stop or reverse its
-	// direction.
+	// get the current values
+	if (input1.IsHigh())
+		transition |= 0x01;
+	if (input2.IsHigh())
+		transition |= 0x02;
 
-
-	// branch according to phase
-	switch (phase)
+	// our transition byte is set up for handy readability, such that
+	// 0x12 means that our inputs were 0x1 beforehand and 0x2 after
+	switch (transition)
 	{
-	case 0x00A:	// both signals low, a greater than b
-		// check to see if the signals have crossed
-		if (b > a + SIGNAL_CROSSING_MARGIN)
-		{
-			bThreshold = b + HYSTERESIS;
-			--phaseAccumulator;
-			phase = 0x00B;
-			break;
-		}
-
-		// check to see if a has changed from low to high
-		if (a > aThreshold)
-		{
-			bThreshold = b + HYSTERESIS;
-			++phaseAccumulator;
-			phase = 0x10A;
-		}
+	case 0x01:
+	case 0x13:
+	case 0x32:
+	case 0x20:
+		// these are all the positive moving transitions
+		++phaseAccumulator;
 		break;
 
-	case 0x00B:	// both signals low, b greater than a
-		// check to see if the signals have crossed
-		if (a > b + SIGNAL_CROSSING_MARGIN)
-		{
-			aThreshold = a + HYSTERESIS;
-			++phaseAccumulator;
-			phase = 0x00A;
-			break;
-		}
-
-		// check to see if b has changed from low to high
-		if (b > bThreshold)
-		{
-			aThreshold = a + HYSTERESIS;
-			--phaseAccumulator;
-			phase = 0x01B;
-		}
+	case 0x02:
+	case 0x23:
+	case 0x31:
+	case 0x10:
+		// these are all the negative moving transitions
+		--phaseAccumulator;
 		break;
-
-	case 0x01B:	// a low, b high
-		if (a > aThreshold)
-		{
-			--phaseAccumulator;
-			phase = 0x11B;
-		}
-		else if (b < bThreshold)
-		{
-			++phaseAccumulator;
-			phase = 0x00B;
-		}
-		break;
-
-	case 0x10A: // a high, b low
-		if (a < aThreshold)
-		{
-			--phaseAccumulator;
-			phase = 0x00A;
-		}
-		else if (b > bThreshold)
-		{
-			++phaseAccumulator;
-			phase = 0x11A;
-		}
-		break;
-
-	case 0x11A:	// both signals high, a greater than b
-		// check to see if the signals have crossed
-		if (b > a + SIGNAL_CROSSING_MARGIN)
-		{
-			aThreshold = a - HYSTERESIS;
-			++phaseAccumulator;
-			phase = 0x11B;
-			break;
-		}
-
-		// check to see if b has changed from high to low
-		if (b < bThreshold)
-		{
-			aThreshold = a - HYSTERESIS;
-			--phaseAccumulator;
-			phase = 0x10A;
-		}
-		break;
-
-	case 0x11B:	// both signals high, b greater than a
-		// check to see if the signals have crossed
-		if (a > b + SIGNAL_CROSSING_MARGIN)
-		{
-			bThreshold = b - HYSTERESIS;
-			--phaseAccumulator;
-			phase = 0x11A;
-			break;
-		}
-
-		// check to see if a has changed from high to low
-		if (a < aThreshold)
-		{
-			bThreshold = b - HYSTERESIS;
-			++phaseAccumulator;
-			phase = 0x01B;
-		}
 		break;
 	}
 
 	// Update our output... we change our output on every half cycle, thus
-	// every time we accumulate three phase changes in the same direction.
-	// This is our debouncing, too.
-	if (phaseAccumulator >= 3)
+	// every time we accumulate two phase changes in the same direction.
+	// This is also further debouncing beyond just the hysteresis, too.
+	if (phaseAccumulator >= 2)
 	{
-		phaseAccumulator -= 3;
+		phaseAccumulator -= 2;
 		++currentValue;
 	}
-	else if (phaseAccumulator <= -3)
+	else if (phaseAccumulator <= -2)
 	{
-		phaseAccumulator += 3;
+		phaseAccumulator += 2;
 		--currentValue;
 	}
 }

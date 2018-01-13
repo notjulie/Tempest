@@ -1,8 +1,0 @@
-
-
-Fix screen width so that bowling alley (etc.) is not clipped
-
-Averaging of vectors to deal with jitter
-
-Onscreen menu for selecting options
-

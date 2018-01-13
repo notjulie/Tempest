@@ -17,11 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempestWpfSerial", "DotNet\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempestWpfDisco", "DotNet\TempestWpfDisco\TempestWpfDisco.csproj", "{4C9488DA-B876-4820-AEB8-68CE02AE7885}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{921F3DF6-C5F5-4A57-9F0E-C755CCB5F174}"
-	ProjectSection(SolutionItems) = preProject
-		ToDo.txt = ToDo.txt
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TempestUnitTests", "TempestUnitTests\TempestUnitTests.vcxproj", "{56C3B21C-5DF0-4002-AAE2-536F69594619}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsteroidsWpf", "DotNet\AsteroidsWpf\AsteroidsWpf.csproj", "{3179EE11-3673-4026-854A-A5D04D6893E0}"
@@ -31,6 +26,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AsteroidsUnitTest", "AsteroidsUnitTest\AsteroidsUnitTest.vcxproj", "{3D35E715-A399-41A4-B93A-DA5D52DC0D9E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite", "SQLite\SQLite.vcxproj", "{4BE652F2-98DE-4E02-8BB2-0893C8E01913}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{A9E91A84-5D34-4C07-9AD6-52ACC626744F}"
+	ProjectSection(SolutionItems) = preProject
+		Documents\STM32F4-Datasheet-DM00037051.pdf = Documents\STM32F4-Datasheet-DM00037051.pdf
+		Documents\STM32F4-Disco-Datasheet-en.DM00039084.pdf = Documents\STM32F4-Disco-Datasheet-en.DM00039084.pdf
+		Documents\STM32F4-Disco-Schematic-MB997.pdf = Documents\STM32F4-Disco-Schematic-MB997.pdf
+		Documents\STM32F4-Ref-DM00031020.pdf = Documents\STM32F4-Ref-DM00031020.pdf
+		Documents\Tempest Schematics.pdf = Documents\Tempest Schematics.pdf
+		Documents\TempestOperationManual.pdf = Documents\TempestOperationManual.pdf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

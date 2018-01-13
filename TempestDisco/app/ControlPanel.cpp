@@ -6,6 +6,8 @@
 
 #include "ControlPanel.h"
 
+static const int ENCODER_SAMPLE_FREQUENCY = 20000;
+
 struct ButtonState {
 	ButtonState(void) { on = false; }
 	bool  on;
@@ -16,7 +18,7 @@ static ButtonState fireButton;
 static ButtonState zapButton;
 static ButtonState onePlayerButton;
 static ButtonState twoPlayerButton;
-static Encoder encoder;
+static Encoder encoder(ENCODER_SAMPLE_FREQUENCY);
 
 static void ServiceButton(ButtonState *button, bool state);
 
@@ -90,7 +92,6 @@ void InitializeControlPanel(void)
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 
 	// calculate our timer counts
-	int ENCODER_SAMPLE_FREQUENCY = 20000;
 	int timerCounts = GetAPB1TimerClockSpeed() / ENCODER_SAMPLE_FREQUENCY;
 	int prescale = 1 + (timerCounts >> 16);
 	timerCounts /= prescale;
