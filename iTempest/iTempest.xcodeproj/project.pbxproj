@@ -35,6 +35,8 @@
 		024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */; };
 		024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E441F9EB98F00DA5FFE /* TempestException.cpp */; };
 		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
+		0262C925200AE04900E5A429 /* TempestLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262C924200AE04900E5A429 /* TempestLayer.swift */; };
+		0262C928200AED3000E5A429 /* TempestLayer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0262C927200AED3000E5A429 /* TempestLayer.metal */; };
 		026417B11FE5C114005D913E /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026417B01FE5C114005D913E /* ButtonView.swift */; };
 		026A1B651FC1E05B00EEFF34 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */; };
 		026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 026A1B661FC1ED0D00EEFF34 /* iosException.cpp */; };
@@ -111,6 +113,9 @@
 		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
 		0262C923200A54FC00E5A429 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
+		0262C924200AE04900E5A429 /* TempestLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempestLayer.swift; sourceTree = "<group>"; };
+		0262C926200AE2CD00E5A429 /* TempestLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempestLayer.h; sourceTree = "<group>"; };
+		0262C927200AED3000E5A429 /* TempestLayer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TempestLayer.metal; sourceTree = "<group>"; };
 		026417B01FE5C114005D913E /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
 		026A1B661FC1ED0D00EEFF34 /* iosException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = iosException.cpp; sourceTree = "<group>"; };
@@ -215,6 +220,9 @@
 				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
 				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
 				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
+				0262C924200AE04900E5A429 /* TempestLayer.swift */,
+				0262C927200AED3000E5A429 /* TempestLayer.metal */,
+				0262C926200AE2CD00E5A429 /* TempestLayer.h */,
 			);
 			path = iTempest;
 			sourceTree = "<group>";
@@ -460,6 +468,7 @@
 				024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */,
 				029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */,
 				024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */,
+				0262C925200AE04900E5A429 /* TempestLayer.swift in Sources */,
 				024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */,
 				021E39CA1F9DAB1700FFAB2B /* main.m in Sources */,
 				029AA09B1FBFBB2C00762BC8 /* WaveStreamer.cpp in Sources */,
@@ -476,6 +485,7 @@
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
 				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
+				0262C928200AED3000E5A429 /* TempestLayer.metal in Sources */,
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
 				029AA09D1FBFBBBB00762BC8 /* SoundGenerator.cpp in Sources */,
 				024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */,
