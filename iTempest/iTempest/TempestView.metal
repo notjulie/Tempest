@@ -7,7 +7,7 @@
 //
 
 #include <metal_stdlib>
-#include "TempestLayer.h"
+#include "TempestView.h"
 using namespace metal;
 
 // these are defined in the source coordinate system, which is a 65536x65536 square
