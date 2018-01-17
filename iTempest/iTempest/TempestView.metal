@@ -14,17 +14,19 @@ using namespace metal;
 #define DOT_SIZE 200.0
 #define LINE_WIDTH 200.0
 
-vertex float4 tempestVertex(
-                           device TempestVector* vectorArray [[ buffer(0) ]],
-                           unsigned int vid [[ vertex_id ]])
+struct VertexResult
 {
-   // we have 6 vertices per vector = two triangles
-   TempestVector v = vectorArray[vid / 6];
-   
+   float4 position [[position]];
+   half4 color;
+};
+
+
+float4 calculateVertexPosition(TempestVector v, int vertexIndex)
+{
    // if the start and end points are the same this is a dot
    if (v.startX==v.endX && v.startY==v.endY)
    {
-      switch (vid % 6)
+      switch (vertexIndex % 6)
       {
          case 0:
             return float4((v.startX - DOT_SIZE/2) / 32768.0, (v.startY) / 32768.0, 0, 1.0);
@@ -44,8 +46,8 @@ vertex float4 tempestVertex(
    float lineLength = length(float2(v.endX - v.startX, v.endY - v.startY));
    float normalizedDX = LINE_WIDTH * (v.endX - v.startX) / lineLength / 2;
    float normalizedDY = LINE_WIDTH * (v.endY - v.startY) / lineLength / 2;
-
-   switch (vid % 6)
+   
+   switch (vertexIndex % 6)
    {
       case 0:
          return float4((v.startX - normalizedDY) / 32768.0, (v.startY + normalizedDX) / 32768.0, 0, 1.0);
@@ -61,11 +63,21 @@ vertex float4 tempestVertex(
    }
 }
 
-fragment half4 tempestFragment(float2 pointCoord  [[point_coord]])
+vertex VertexResult tempestVertex(
+                           device TempestVector* vectorArray [[ buffer(0) ]],
+                           unsigned int vid [[ vertex_id ]])
 {
-   //if (length(pointCoord - float2(0.5)) > 0.5) {
-   //    discard_fragment();
-   //}
-   return half4(1.0, 1.0, 1.0, 1.0 - 4.0*length(pointCoord - float2(0.5)));
+   // we have 6 vertices per vector = two triangles
+   TempestVector v = vectorArray[vid / 6];
+
+   VertexResult result;
+   result.position = calculateVertexPosition(v, vid % 6);
+   result.color = half4(v.r / 255.0, v.g/255.0, v.b/255.0, 1.0);
+   return result;
+}
+
+fragment half4 tempestFragment(VertexResult vertexInfo [[stage_in]])
+{
+   return vertexInfo.color;
 }
 
