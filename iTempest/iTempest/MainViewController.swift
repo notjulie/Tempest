@@ -11,46 +11,49 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     private var tempestView : TempestView = TempestView();
-    private var tempest : cTempest = cTempestCreate();
+    private var tempest : cTempest = 0;
     private var p1Button : ButtonView?;
     private var fireButton : ButtonView?;
     private var zapButton : ButtonView?;
     private var spinner : SpinnerView = SpinnerView();
 
-    override func viewDidLoad() {
-        // call the super
-        super.viewDidLoad();
-        
-/*        do {
-            try AVAudioSession.sharedInstance().setPreferredIOBufferDuration(0.1);
-        } catch let error as NSError {
-            
-        }*/
-        
-        // set our background
-        self.view.layer.backgroundColor = UIColor.brown.cgColor;
-        
-        // initialize our subviews
-        spinner.setTempest(tempest:tempest);
-        fireButton = ButtonView(tempest:tempest, _whichButton:FIRE, color:UIColor.blue);
-        p1Button = ButtonView(tempest:tempest, _whichButton:PLAYER1, color:UIColor.red);
-        zapButton = ButtonView(tempest:tempest, _whichButton:ZAP, color:UIColor.green);
+   override func viewDidLoad() {
+      // call the super
+      super.viewDidLoad();
+      
+      // initialize the audio session before instantiating Tempest
+      do {
+         try AVAudioSession.sharedInstance().setPreferredIOBufferDuration(0.01);
+      } catch {
+      }
 
-        // add our subviews
-        self.view.addSubview(tempestView);
-        self.view.addSubview(p1Button!);
-        self.view.addSubview(spinner);
-        self.view.addSubview(fireButton!);
-        self.view.addSubview(zapButton!);
-
-        // position our views
-        positionViews(to: self.view.bounds.size);
+      // create Tempest
+      tempest = cTempestCreate()
+      
+      // set our background
+      self.view.layer.backgroundColor = UIColor.brown.cgColor;
         
-        // set up our function that gets called on screen updates
-        let displayLink : CADisplayLink = CADisplayLink(target: self,selector:#selector(update));
-        displayLink.preferredFramesPerSecond = 60;
-        displayLink.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode);
-    }
+      // initialize our subviews
+      spinner.setTempest(tempest:tempest);
+      fireButton = ButtonView(tempest:tempest, _whichButton:FIRE, color:UIColor.blue);
+      p1Button = ButtonView(tempest:tempest, _whichButton:PLAYER1, color:UIColor.red);
+      zapButton = ButtonView(tempest:tempest, _whichButton:ZAP, color:UIColor.green);
+
+      // add our subviews
+      self.view.addSubview(tempestView);
+      self.view.addSubview(p1Button!);
+      self.view.addSubview(spinner);
+      self.view.addSubview(fireButton!);
+      self.view.addSubview(zapButton!);
+
+      // position our views
+      positionViews(to: self.view.bounds.size);
+        
+      // set up our function that gets called on screen updates
+      let displayLink : CADisplayLink = CADisplayLink(target: self,selector:#selector(update));
+      displayLink.preferredFramesPerSecond = 60;
+      displayLink.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode);
+   }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
