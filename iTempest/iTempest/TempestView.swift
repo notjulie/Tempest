@@ -16,12 +16,16 @@ class TempestView : MTKView {
    private var renderPipelineState: MTLRenderPipelineState?
    private var depthStencilState: MTLDepthStencilState?
    private var vectorData : [TempestVector] = [];
+   private var tempest : cTempest = 0;
 
-   private func initialize() {
+   func initialize(tempest : cTempest) {
       if (initialized)
       {
          return;
       }
+      
+      // save parameters
+      self.tempest = tempest
       
       // Device
       device = MTLCreateSystemDefaultDevice()
@@ -60,7 +64,28 @@ class TempestView : MTKView {
    }
 
    override func draw(_ dirtyRect: CGRect) {
-      initialize()
+      // ask Tempest for a list of lines to draw
+      let vectors : cVectors = cTempestGetVectors(tempest);
+
+      // pop the vectors into an array
+      var startX : Int16 = 0;
+      var endX : Int16 = 0;
+      var startY : Int16 = 0;
+      var endY : Int16 = 0;
+      var r : UInt8 = 0;
+      var g : UInt8 = 0;
+      var b : UInt8 = 0;
+      vectorData = [];
+      while (0 != cVectorsGetNext(vectors, &startX, &startY, &endX, &endY, &r, &g, &b))
+      {
+         vectorData += [
+            TempestVector(startX: startX, startY: startY, endX:endX, endY:endY, r:r, g:g, b:b)
+         ];
+      }
+
+      // free up our vectors object
+      cVectorsDispose(vectors);
+
       let commandBuffer = commandQueue!.makeCommandBuffer()
       let renderPassDescriptor = currentRenderPassDescriptor!
       let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
@@ -85,28 +110,5 @@ class TempestView : MTKView {
       commandBuffer.present(drawable)
       commandBuffer.commit()
    }
-   
-   public func showVectors(vectors:cVectors)
-   {
-      initialize()
-
-      // create our vertex array
-      var startX : Int16 = 0;
-      var endX : Int16 = 0;
-      var startY : Int16 = 0;
-      var endY : Int16 = 0;
-      var r : UInt8 = 0;
-      var g : UInt8 = 0;
-      var b : UInt8 = 0;
-
-      // pop the vectors into an array
-      vectorData = [];
-      while (0 != cVectorsGetNext(vectors, &startX, &startY, &endX, &endY, &r, &g, &b))
-      {
-         vectorData += [
-            TempestVector(startX: startX, startY: startY, endX:endX, endY:endY, r:r, g:g, b:b)
-         ];
-      }
-    }
 }
 

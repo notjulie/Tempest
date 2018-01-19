@@ -29,6 +29,7 @@ class MainViewController: UIViewController {
 
       // create Tempest
       tempest = cTempestCreate()
+      tempestView.initialize(tempest: tempest)
       
       // set our background
       self.view.layer.backgroundColor = UIColor.brown.cgColor;
@@ -48,11 +49,6 @@ class MainViewController: UIViewController {
 
       // position our views
       positionViews(to: self.view.bounds.size);
-        
-      // set up our function that gets called on screen updates
-      let displayLink : CADisplayLink = CADisplayLink(target: self,selector:#selector(update));
-      displayLink.preferredFramesPerSecond = 60;
-      displayLink.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode);
    }
 
     override func didReceiveMemoryWarning() {
@@ -127,18 +123,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    func update()  {
-        // ask Tempest for a list of lines to draw
-        let vectors : cVectors = cTempestGetVectors(tempest);
-        
-        // tell the view to draw them
-        tempestView.showVectors(vectors:vectors);
-        
-        // free up our vectors array
-        cVectorsDispose(vectors);
-    }
-
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         positionViews(to: size);
     }
