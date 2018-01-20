@@ -29,7 +29,8 @@ class SpinnerView : MTKView
    private var vertexBuffer: MTLBuffer! = nil;
    private var renderParametersBuffer: MTLBuffer! = nil;
    private var rotation : Float = 0;
-   
+   private var vertexData : [SpinnerVertex] = []
+
    // swiping related
    private var touchState : TouchState = TouchState.NoTouch;
    private var encoderChange: Int32 = 0;
@@ -92,8 +93,8 @@ class SpinnerView : MTKView
       
       // Render pipeline
       let library = device!.newDefaultLibrary()!
-      let vertexFunction = library.makeFunction(name: "basic_vertex")
-      let fragmentFunction = library.makeFunction(name: "basic_fragment")
+      let vertexFunction = library.makeFunction(name: "spinnerVertex")
+      let fragmentFunction = library.makeFunction(name: "spinnerFragment")
       let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
       renderPipelineDescriptor.vertexFunction = vertexFunction
       renderPipelineDescriptor.fragmentFunction = fragmentFunction
@@ -113,11 +114,15 @@ class SpinnerView : MTKView
       depthStencilState = device!.makeDepthStencilState(descriptor: depthSencilDescriptor)
       
       // create our vertex data... this never changes, we just update the rotation
-      var vertexData : [SpinnerVertex] = [
-         SpinnerVertex(position:0, corner:0),
-         SpinnerVertex(position:0, corner:1),
-         SpinnerVertex(position:0, corner:2)
-      ];
+      let bumpCount = 30
+      var i : Int = 0;
+      while (i<bumpCount)
+      {
+         var position : Float = Float(i);
+         position = position / Float(bumpCount - 1)
+         vertexData += [SpinnerVertex(position: position)]
+         i = i + 1
+      }
       let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]);
       vertexBuffer = device!.makeBuffer(bytes: vertexData, length: dataSize, options: []);
    }
@@ -133,11 +138,6 @@ class SpinnerView : MTKView
       renderEncoder.setRenderPipelineState(renderPipelineState!)
       
       // set our render parameters
-      rotation += 6;
-      if (rotation >= 360)
-      {
-         rotation -= 360;
-      }
       let renderParameters : SpinnerRenderParameters =
          SpinnerRenderParameters(rotation: self.rotation);
       let dataSize = MemoryLayout.size(ofValue: renderParameters);
@@ -145,7 +145,7 @@ class SpinnerView : MTKView
       
       renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, at: Int(SPINNER_VERTICES_BUFFER));
       renderEncoder.setVertexBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
-      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6*vertexData.count, instanceCount: 1)
       
       renderEncoder.endEncoding()
       let drawable = currentDrawable!
@@ -154,47 +154,47 @@ class SpinnerView : MTKView
    }
 
    func swipeTimer() {
-        if (touchState != TouchState.Coasting)
-        {
-            return;
-        }
+      if (touchState != TouchState.Coasting)
+      {
+         return;
+      }
         
-        // apply some static friction, otherwise the spinner creeps forever
-        if (speed <= minCoastSpeed && speed >= -minCoastSpeed)
-        {
-            touchState = TouchState.NoTouch;
-            return;
-        }
+      // apply some static friction, otherwise the spinner creeps forever
+      if (speed <= minCoastSpeed && speed >= -minCoastSpeed)
+      {
+         touchState = TouchState.NoTouch;
+         return;
+      }
         
-        // add to the distance that we coasted
-        coastDistance += 0.01 * speed;
-        while (coastDistance >= 1) {
-            coastDistance -= 1;
-            cTempestMoveSpinner(tempest, 1);
-        }
-        while (coastDistance <= -1) {
-            coastDistance += 1;
-            cTempestMoveSpinner(tempest, -1);
-        }
+      // add to the distance that we coasted
+      coastDistance += 0.01 * speed;
+      while (coastDistance >= 1) {
+         coastDistance -= 1;
+         moveSpinner(ticks:1);
+      }
+      while (coastDistance <= -1) {
+         coastDistance += 1;
+         moveSpinner(ticks: -1);
+      }
 
-        // friction
-        if (speed > 0)
-        {
-            speed -= 0.01 * coastDeceleration;
-            if (speed < 0)
-            {
-                speed = 0;
-            }
-        }
-        else
-        {
-            speed += 0.01 * coastDeceleration;
-            if (speed > 0)
-            {
-                speed = 0;
-            }
-        }
-    }
+      // friction
+      if (speed > 0)
+      {
+         speed -= 0.01 * coastDeceleration;
+         if (speed < 0)
+         {
+            speed = 0;
+         }
+      }
+      else
+      {
+         speed += 0.01 * coastDeceleration;
+         if (speed > 0)
+         {
+            speed = 0;
+         }
+      }
+   }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // only single touches
@@ -260,26 +260,34 @@ class SpinnerView : MTKView
         touchState = TouchState.NoTouch;
     }
     
-    private func processMove(touch:UITouch) {
-        // move the spinner
-        let xNow = touch.location(in: self).x;
-        let totalChange = (Int32)(ticksPerPixel * (xNow - startX));
-        cTempestMoveSpinner(
-            tempest,
-            totalChange - encoderChange
-        );
+   private func processMove(touch:UITouch) {
+      // move the spinner
+      let xNow = touch.location(in: self).x;
+      let totalChange = (Int32)(ticksPerPixel * (xNow - startX));
+      moveSpinner(ticks: Int(totalChange - encoderChange))
+      
+      // calculate the speed of this single movement
+      let x : CGFloat = touch.location(in: self).x;
+      let time : CGFloat = CGFloat(touch.timestamp) - lastTouchTime;
+      let speedThisTime = (x - lastX) / time;
         
-        // calculate the speed of this single movement
-        let x : CGFloat = touch.location(in: self).x;
-        let time : CGFloat = CGFloat(touch.timestamp) - lastTouchTime;
-        let speedThisTime = (x - lastX) / time;
+      // and decay that into the speed
+      speed += (speedThisTime - speed) * (1 - exp(-time / 0.1));
+      speedLog.add(speed);
         
-        // and decay that into the speed
-        speed += (speedThisTime - speed) * (1 - exp(-time / 0.1));
-        speedLog.add(speed);
-        
-        lastX = touch.location(in: self).x;
-        lastTouchTime = CGFloat(touch.timestamp);
-        encoderChange = totalChange;
-    }
+      lastX = touch.location(in: self).x;
+      lastTouchTime = CGFloat(touch.timestamp);
+      encoderChange = totalChange;
+   }
+   
+   private func moveSpinner(ticks: Int) {
+      // tell Tempest
+      cTempestMoveSpinner(
+         tempest,
+         Int32(ticks)
+      );
+      
+      // rotate the visible spinner
+      rotation = rotation + 1.0 * Float(ticks)
+   }
 }

@@ -16,8 +16,7 @@
 
 struct SpinnerVertex
 {
-    int position;
-    int corner;
+    float position;
 };
 
 struct SpinnerRenderParameters
