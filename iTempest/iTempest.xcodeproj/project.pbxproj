@@ -88,6 +88,15 @@
 		021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTempestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iTempestUITests.m; sourceTree = "<group>"; };
 		021E39E01F9DAB1700FFAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02350218204C970A0081C43D /* SoundChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannel.h; path = ../../TempestIO/SoundChannel.h; sourceTree = "<group>"; };
+		02350219204C970A0081C43D /* Noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Noise.h; path = ../../TempestIO/Noise.h; sourceTree = "<group>"; };
+		0235021A204C970A0081C43D /* Cpp11WaveStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cpp11WaveStreamer.h; path = ../../TempestIO/Cpp11WaveStreamer.h; sourceTree = "<group>"; };
+		0235021B204C970A0081C43D /* Serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serial.h; path = ../../TempestIO/Serial.h; sourceTree = "<group>"; };
+		0235021C204C970A0081C43D /* AbstractTempestIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractTempestIO.h; path = ../../TempestIO/AbstractTempestIO.h; sourceTree = "<group>"; };
+		0235021D204C970A0081C43D /* WaveStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveStreamer.h; path = ../../TempestIO/WaveStreamer.h; sourceTree = "<group>"; };
+		0235021E204C970A0081C43D /* SoundGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundGenerator.h; path = ../../TempestIO/SoundGenerator.h; sourceTree = "<group>"; };
+		0235021F204C970A0081C43D /* TempestDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempestDB.h; path = ../../TempestIO/TempestDB.h; sourceTree = "<group>"; };
+		02350220204C970B0081C43D /* SoundChannelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannelState.h; path = ../../TempestIO/SoundChannelState.h; sourceTree = "<group>"; };
 		024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../SQLite/sqlite3.h; sourceTree = "<group>"; };
 		024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../SQLite/sqlite3.c; sourceTree = "<group>"; };
 		024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestRunner.cpp; path = ../../TempestCPU/TempestRunner.cpp; sourceTree = "<group>"; };
@@ -267,15 +276,24 @@
 		024D0E1D1F9EAA7700DA5FFE /* TempestIO */ = {
 			isa = PBXGroup;
 			children = (
+				0235021C204C970A0081C43D /* AbstractTempestIO.h */,
 				029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */,
+				0235021A204C970A0081C43D /* Cpp11WaveStreamer.h */,
 				029AA0A01FBFBC2800762BC8 /* Noise.cpp */,
-				029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */,
-				029AA09C1FBFBBBB00762BC8 /* SoundGenerator.cpp */,
-				029AA09A1FBFBB2C00762BC8 /* WaveStreamer.cpp */,
-				024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */,
-				024D0E3C1F9EB7FE00DA5FFE /* TempestDB.cpp */,
+				02350219204C970A0081C43D /* Noise.h */,
 				024D0E351F9EB70900DA5FFE /* Pokey.cpp */,
+				0235021B204C970A0081C43D /* Serial.h */,
+				029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */,
+				02350218204C970A0081C43D /* SoundChannel.h */,
+				024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */,
+				02350220204C970B0081C43D /* SoundChannelState.h */,
+				029AA09C1FBFBBBB00762BC8 /* SoundGenerator.cpp */,
+				0235021E204C970A0081C43D /* SoundGenerator.h */,
+				024D0E3C1F9EB7FE00DA5FFE /* TempestDB.cpp */,
+				0235021F204C970A0081C43D /* TempestDB.h */,
 				024D0E1E1F9EAA9C00DA5FFE /* Vector */,
+				029AA09A1FBFBB2C00762BC8 /* WaveStreamer.cpp */,
+				0235021D204C970A0081C43D /* WaveStreamer.h */,
 			);
 			name = TempestIO;
 			sourceTree = "<group>";
