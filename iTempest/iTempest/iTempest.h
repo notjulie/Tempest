@@ -9,11 +9,14 @@
 #ifndef iTempest_h
 #define iTempest_h
 
+// generic Tempest includes
 #include "AbstractTempestEnvironment.h"
 #include "SimpleVector.h"
 #include "TempestRunner.h"
 
+// iTempest includes
 #include "iTempestSoundIO.h"
+#include "TempestVector.h"
 
 
 class iOSTempestEnvironment : public AbstractTempestEnvironment
@@ -22,32 +25,12 @@ public:
     virtual std::string GetDatabasePathName(void) { return ":memory:"; }
 };
 
-class iTempestVectors
-{
-public:
-    bool GetNext(
-        int16_t *startX,
-        int16_t *startY,
-        int16_t *endX,
-        int16_t *endY,
-        uint8_t *r,
-        uint8_t *g,
-        uint8_t *b
-    );
-
-public:
-    std::vector<SimpleVector>   vectors;
-    
-private:
-    int index = -1;
-};
-
 class iTempest
 {
 public:
     iTempest(void);
     
-    iTempestVectors *GetVectors(void);
+    int GetVectors(TempestVector *buffer, int bufferSize);
     void MoveSpinner(int offset) { soundIO.MoveSpinner(offset); }
     void SetPlayer1ButtonState(bool state) { soundIO.SetPlayer1ButtonState(state); }
     void SetPlayer2ButtonState(bool state) { soundIO.SetPlayer2ButtonState(state); }

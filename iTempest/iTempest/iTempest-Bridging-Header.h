@@ -10,5 +10,5 @@
 
 // Metal types
 #import "Spinner.h"
-#import "TempestView.h"
+#import "TempestVector.h"
 

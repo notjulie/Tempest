@@ -111,7 +111,7 @@
 		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
 		0262C923200A54FC00E5A429 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
-		0262C926200AE2CD00E5A429 /* TempestView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempestView.h; sourceTree = "<group>"; };
+		0262C926200AE2CD00E5A429 /* TempestVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempestVector.h; sourceTree = "<group>"; };
 		0262C927200AED3000E5A429 /* TempestView.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TempestView.metal; sourceTree = "<group>"; };
 		026417B01FE5C114005D913E /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
@@ -168,8 +168,8 @@
 		021E39A81F9DAB1700FFAB2B = {
 			isa = PBXGroup;
 			children = (
-				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
 				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
+				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
 				021E39B31F9DAB1700FFAB2B /* iTempest */,
 				021E39D21F9DAB1700FFAB2B /* iTempestTests */,
 				021E39DD1F9DAB1700FFAB2B /* iTempestUITests */,
@@ -214,9 +214,9 @@
 				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
 				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
 				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
-				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
+				0262C926200AE2CD00E5A429 /* TempestVector.h */,
 				0262C927200AED3000E5A429 /* TempestView.metal */,
-				0262C926200AE2CD00E5A429 /* TempestView.h */,
+				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
 			);
 			path = iTempest;
 			sourceTree = "<group>";

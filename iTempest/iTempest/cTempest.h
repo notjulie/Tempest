@@ -9,41 +9,29 @@
 #ifndef cTempest_h
 #define cTempest_h
 
+#include "TempestVector.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+   
+   typedef int cTempest;
 
-    typedef int cTempest;
-    typedef void *cVectors;
-
-    typedef enum {
+   typedef enum {
         FIRE,
         PLAYER1,
         PLAYER2,
         ZAP
-    } cTempestButton;
+   } cTempestButton;
     
-    cTempest cTempestCreate(void);
-    cTempest cTempestNull(void);
-    void cTempestDispose(cTempest _tempest);
-    cVectors cTempestGetVectors(cTempest _tempest);
-    void cTempestMoveSpinner(cTempest _tempest, int offset);
-    void cTempestSetButtonState(cTempest tempest, cTempestButton button, int state);
-
-    int cVectorsGetNext(
-                 cVectors _vectors,
-                 int16_t *startX,
-                 int16_t *startY,
-                 int16_t *endX,
-                 int16_t *endY,
-                 uint8_t *r,
-                 uint8_t *g,
-                 uint8_t *b
-                 );
-    void cVectorsDispose(cVectors _vectors);
-
-    
+   cTempest cTempestCreate(void);
+   cTempest cTempestNull(void);
+   void cTempestDispose(cTempest _tempest);
+   int cTempestGetVectors(cTempest tempest, TempestVector *buffer, int bufferSize);
+   void cTempestMoveSpinner(cTempest _tempest, int offset);
+   void cTempestSetButtonState(cTempest tempest, cTempestButton button, int state);
+   
 #ifdef __cplusplus
 };
 #endif
