@@ -10,12 +10,12 @@ import UIKit
 import AVFoundation
 
 class MainViewController: UIViewController {
-    private var tempestView : TempestView?
-    private var tempest : cTempest = 0
-    private var p1Button : ButtonView?
-    private var fireButton : ButtonView?
-    private var zapButton : ButtonView?
-    private var spinner : SpinnerView = SpinnerView()
+   private var tempestView : TempestView?
+   private var tempest : cTempest = 0
+   private var p1Button : ButtonView?
+   private var fireButton : ButtonView?
+   private var zapButton : ButtonView?
+   private var spinner : SpinnerView?
 
    override func viewDidLoad() {
       // call the super
@@ -29,13 +29,15 @@ class MainViewController: UIViewController {
 
       // create Tempest
       tempest = cTempestCreate()
+      
+      // create TempestView
       tempestView = TempestView(tempest:tempest)
       
       // set our background
       self.view.layer.backgroundColor = UIColor.brown.cgColor;
         
-      // initialize our subviews
-      spinner.setTempest(tempest:tempest);
+      // initialize our other subviews
+      spinner = SpinnerView(tempest: tempest, spinner:tempestView!.spinnerRenderer!)
       fireButton = ButtonView(tempest:tempest, _whichButton:FIRE, color:UIColor.blue);
       p1Button = ButtonView(tempest:tempest, _whichButton:PLAYER1, color:UIColor.red);
       zapButton = ButtonView(tempest:tempest, _whichButton:ZAP, color:UIColor.green);
@@ -43,7 +45,7 @@ class MainViewController: UIViewController {
       // add our subviews
       self.view.addSubview(tempestView!);
       self.view.addSubview(p1Button!);
-      self.view.addSubview(spinner);
+      self.view.addSubview(spinner!);
       self.view.addSubview(fireButton!);
       self.view.addSubview(zapButton!);
 
@@ -70,7 +72,7 @@ class MainViewController: UIViewController {
                 height: 80);
 
             // spinner
-            spinner.frame = CGRect(
+            spinner!.frame = CGRect(
                 x: tempestView!.frame.maxX,
                 y: size.height - 80,
                 width: size.width - tempestView!.frame.maxX,
@@ -101,7 +103,7 @@ class MainViewController: UIViewController {
                 height: 80);
 
             // spinner
-            spinner.frame = CGRect(
+            spinner!.frame = CGRect(
                 x: 0,
                 y: size.height - 80,
                 width: size.width,

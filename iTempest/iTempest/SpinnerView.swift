@@ -8,23 +8,18 @@
 
 import Foundation
 import UIKit
-import MetalKit
 
-class SpinnerView : MTKView
+class SpinnerView : UIView
 {
+   // local types
    private enum TouchState {
       case NoTouch
       case Dragging
       case Coasting
    };
    
-   // tempest
-   private var initialized : Bool = false;
+   // construction parameters
    private var tempest : cTempest = 0;
-
-   // metal related properties
-   private var commandQueue: MTLCommandQueue?
-   private var depthStencilState: MTLDepthStencilState?
 
    // swiping related
    private var touchState : TouchState = TouchState.NoTouch;
@@ -55,70 +50,30 @@ class SpinnerView : MTKView
    
    private var spinnerRenderer : SpinnerRenderer?
 
-   
-   func setTempest(tempest:cTempest) {
-      if (!initialized) {
-         backgroundColor = UIColor.blue;
-         isUserInteractionEnabled = true;
-            
-         timer = Timer.scheduledTimer(
-                timeInterval: 0.01,
-                target: self,
-                selector: #selector(swipeTimer),
-                userInfo: nil,
-                repeats: true);
-         
-         initializeMetal()
-         
-         spinnerRenderer = SpinnerRenderer(view:self)
-         
-         initialized = true;
-      }
-      self.tempest = tempest;
-   }
-   
-   
-   private func initializeMetal() {
-      // Device
-      device = MTLCreateSystemDefaultDevice()
+   init(tempest:cTempest, spinner:SpinnerRenderer) {
+      // call the super
+      super.init(frame: CGRect())
+
+      // save parameters
+      self.tempest = tempest
+      self.spinnerRenderer = spinner
       
-      // View
-      clearColor = MTLClearColorMake(0.0, 0.0, 0.0, 1)
-      colorPixelFormat = .bgra8Unorm
-      depthStencilPixelFormat = .depth32Float
+      // initialize
+      backgroundColor = UIColor.blue;
+      isUserInteractionEnabled = true;
       
-      // Command queue
-      commandQueue = device!.makeCommandQueue()
-      
-      // Depth stencil
-      let depthSencilDescriptor = MTLDepthStencilDescriptor()
-      depthSencilDescriptor.depthCompareFunction = .less
-      depthSencilDescriptor.isDepthWriteEnabled = true
-      depthStencilState = device!.makeDepthStencilState(descriptor: depthSencilDescriptor)      
+      timer = Timer.scheduledTimer(
+         timeInterval: 0.01,
+         target: self,
+         selector: #selector(swipeTimer),
+         userInfo: nil,
+         repeats: true);
    }
 
-   override func draw(_ dirtyRect: CGRect) {
-      // create our parallel render encoder
-      let commandBuffer = commandQueue!.makeCommandBuffer()
-      let renderPassDescriptor = currentRenderPassDescriptor!
-      let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
-
-      // create our render encoder for the spinner
-      let renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
-      renderEncoder.setFrontFacing(.counterClockwise)
-      renderEncoder.setDepthStencilState(depthStencilState)
-      
-      // add the spinner's render commands
-      spinnerRenderer!.render(renderEncoder: renderEncoder)
-      renderEncoder.endEncoding()
-
-      // wrap things up and install the result
-      parallelRenderEncoder.endEncoding()
-      let drawable = currentDrawable!
-      commandBuffer.present(drawable)
-      commandBuffer.commit()
+   required init?(coder: NSCoder) {
+      super.init(coder:coder)
    }
-
+   
    func swipeTimer() {
       if (touchState != TouchState.Coasting)
       {

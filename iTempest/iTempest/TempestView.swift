@@ -15,6 +15,7 @@ class TempestView : MTKView {
    private var depthStencilState: MTLDepthStencilState?
    private var tempest : cTempest = 0
    private var tempestRenderer : TempestViewRenderer?
+   public var spinnerRenderer : SpinnerRenderer?
 
    init(tempest : cTempest) {
       // call the super
@@ -37,8 +38,9 @@ class TempestView : MTKView {
       depthSencilDescriptor.isDepthWriteEnabled = true
       depthStencilState = device!.makeDepthStencilState(descriptor: depthSencilDescriptor)
       
-      // now that we're initialized we can create the renderer
+      // now that we're initialized we can create the renderers
       tempestRenderer = TempestViewRenderer(view: self, tempest: tempest)
+      spinnerRenderer = SpinnerRenderer(view:self)
    }
 
    required init(coder: NSCoder) {
@@ -52,14 +54,19 @@ class TempestView : MTKView {
       let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
       
       // create our render encoder for tempest and render it
-      let renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
+      var renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
       renderEncoder.setFrontFacing(.counterClockwise)
       renderEncoder.setDepthStencilState(depthStencilState)
-      
-      // render tempest
       tempestRenderer!.render(renderEncoder: renderEncoder)
       renderEncoder.endEncoding()
-
+      
+      // create our render encoder for the spinner and render it
+      renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
+      renderEncoder.setFrontFacing(.counterClockwise)
+      renderEncoder.setDepthStencilState(depthStencilState)
+      spinnerRenderer!.render(renderEncoder: renderEncoder)
+      renderEncoder.endEncoding()
+      
       // end encoding on our parallel renderer
       parallelRenderEncoder.endEncoding()
       
