@@ -43,6 +43,8 @@
 		026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */; };
 		027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B31FB88BD400A810B8 /* iTempest.cpp */; };
 		027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B61FB88F8700A810B8 /* cTempest.cpp */; };
+		0278563C2054503000593A8E /* TempestViewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278563B2054503000593A8E /* TempestViewRenderer.swift */; };
+		0278563E2054588400593A8E /* SpinnerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278563D2054588400593A8E /* SpinnerRenderer.swift */; };
 		02825C8720026F130032BE41 /* Spinner.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02825C8620026F130032BE41 /* Spinner.metal */; };
 		0285F33E1FBBDEC30004B34F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F33D1FBBDEC30004B34F /* MainViewController.swift */; };
 		029AA0991FBCFFAB00762BC8 /* TempestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0981FBCFFAB00762BC8 /* TempestView.swift */; };
@@ -132,6 +134,8 @@
 		027030B41FB88BD400A810B8 /* iTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempest.h; sourceTree = "<group>"; };
 		027030B61FB88F8700A810B8 /* cTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cTempest.cpp; sourceTree = "<group>"; };
 		027030B71FB88F8700A810B8 /* cTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cTempest.h; sourceTree = "<group>"; };
+		0278563B2054503000593A8E /* TempestViewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempestViewRenderer.swift; sourceTree = "<group>"; };
+		0278563D2054588400593A8E /* SpinnerRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerRenderer.swift; sourceTree = "<group>"; };
 		02825C8620026F130032BE41 /* Spinner.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Spinner.metal; sourceTree = "<group>"; };
 		0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTempest-Bridging-Header.h"; sourceTree = "<group>"; };
 		0285F33D1FBBDEC30004B34F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +230,8 @@
 				0262C926200AE2CD00E5A429 /* TempestVector.h */,
 				0262C927200AED3000E5A429 /* TempestView.metal */,
 				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
+				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
+				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
 			);
 			path = iTempest;
 			sourceTree = "<group>";
@@ -473,6 +479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0278563C2054503000593A8E /* TempestViewRenderer.swift in Sources */,
 				024D0E3F1F9EB85A00DA5FFE /* TempestROMS.cpp in Sources */,
 				024D0E2A1F9EABA200DA5FFE /* SQLRRDB.cpp in Sources */,
 				024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */,
@@ -490,6 +497,7 @@
 				029AA0A11FBFBC2800762BC8 /* Noise.cpp in Sources */,
 				024D0E231F9EAAFD00DA5FFE /* CPU6502.cpp in Sources */,
 				024D0E381F9EB76C00DA5FFE /* EEPROM.cpp in Sources */,
+				0278563E2054588400593A8E /* SpinnerRenderer.swift in Sources */,
 				026417B11FE5C114005D913E /* ButtonView.swift in Sources */,
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,

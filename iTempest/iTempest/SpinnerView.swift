@@ -24,12 +24,7 @@ class SpinnerView : MTKView
 
    // metal related properties
    private var commandQueue: MTLCommandQueue?
-   private var renderPipelineState: MTLRenderPipelineState?
    private var depthStencilState: MTLDepthStencilState?
-   private var vertexBuffer: MTLBuffer! = nil;
-   private var renderParametersBuffer: MTLBuffer! = nil;
-   private var rotation : Float = 0;
-   private var vertexData : [SpinnerVertex] = []
 
    // swiping related
    private var touchState : TouchState = TouchState.NoTouch;
@@ -57,6 +52,8 @@ class SpinnerView : MTKView
    private let coastDeceleration : CGFloat = 200;
    
    private let speedLog = NSMutableArray();
+   
+   private var spinnerRenderer : SpinnerRenderer?
 
    
    func setTempest(tempest:cTempest) {
@@ -72,6 +69,8 @@ class SpinnerView : MTKView
                 repeats: true);
          
          initializeMetal()
+         
+         spinnerRenderer = SpinnerRenderer(view:self)
          
          initialized = true;
       }
@@ -91,63 +90,30 @@ class SpinnerView : MTKView
       // Command queue
       commandQueue = device!.makeCommandQueue()
       
-      // Render pipeline
-      let library = device!.newDefaultLibrary()!
-      let vertexFunction = library.makeFunction(name: "spinnerVertex")
-      let fragmentFunction = library.makeFunction(name: "spinnerFragment")
-      let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-      renderPipelineDescriptor.vertexFunction = vertexFunction
-      renderPipelineDescriptor.fragmentFunction = fragmentFunction
-      renderPipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-      renderPipelineDescriptor.depthAttachmentPixelFormat = depthStencilPixelFormat
-      do {
-         renderPipelineState = try device!.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
-      } catch {
-         Swift.print("Unable to compile render pipeline state")
-         return
-      }
-      
       // Depth stencil
       let depthSencilDescriptor = MTLDepthStencilDescriptor()
       depthSencilDescriptor.depthCompareFunction = .less
       depthSencilDescriptor.isDepthWriteEnabled = true
-      depthStencilState = device!.makeDepthStencilState(descriptor: depthSencilDescriptor)
-      
-      // create our vertex data... this never changes, we just update the rotation
-      let bumpCount = 30
-      var i : Int = 0;
-      while (i<bumpCount)
-      {
-         var position : Float = Float(i);
-         position = position / Float(bumpCount - 1)
-         vertexData += [SpinnerVertex(position: position)]
-         i = i + 1
-      }
-      let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]);
-      vertexBuffer = device!.makeBuffer(bytes: vertexData, length: dataSize, options: []);
+      depthStencilState = device!.makeDepthStencilState(descriptor: depthSencilDescriptor)      
    }
 
    override func draw(_ dirtyRect: CGRect) {
-      
+      // create our parallel render encoder
       let commandBuffer = commandQueue!.makeCommandBuffer()
       let renderPassDescriptor = currentRenderPassDescriptor!
-      let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-      
+      let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
+
+      // create our render encoder for the spinner
+      let renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
       renderEncoder.setFrontFacing(.counterClockwise)
       renderEncoder.setDepthStencilState(depthStencilState)
-      renderEncoder.setRenderPipelineState(renderPipelineState!)
       
-      // set our render parameters
-      let renderParameters : SpinnerRenderParameters =
-         SpinnerRenderParameters(rotation: self.rotation);
-      let dataSize = MemoryLayout.size(ofValue: renderParameters);
-      renderParametersBuffer = device!.makeBuffer(bytes: [renderParameters], length: dataSize, options: []);
-      
-      renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, at: Int(SPINNER_VERTICES_BUFFER));
-      renderEncoder.setVertexBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
-      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6*vertexData.count, instanceCount: 1)
-      
+      // add the spinner's render commands
+      spinnerRenderer!.render(renderEncoder: renderEncoder)
       renderEncoder.endEncoding()
+
+      // wrap things up and install the result
+      parallelRenderEncoder.endEncoding()
       let drawable = currentDrawable!
       commandBuffer.present(drawable)
       commandBuffer.commit()
@@ -288,6 +254,6 @@ class SpinnerView : MTKView
       );
       
       // rotate the visible spinner
-      rotation = rotation + 1.0 * Float(ticks)
+      spinnerRenderer!.rotation = spinnerRenderer!.rotation + 1.0 * Float(ticks)
    }
 }

@@ -10,12 +10,12 @@ import UIKit
 import AVFoundation
 
 class MainViewController: UIViewController {
-    private var tempestView : TempestView = TempestView();
-    private var tempest : cTempest = 0;
-    private var p1Button : ButtonView?;
-    private var fireButton : ButtonView?;
-    private var zapButton : ButtonView?;
-    private var spinner : SpinnerView = SpinnerView();
+    private var tempestView : TempestView?
+    private var tempest : cTempest = 0
+    private var p1Button : ButtonView?
+    private var fireButton : ButtonView?
+    private var zapButton : ButtonView?
+    private var spinner : SpinnerView = SpinnerView()
 
    override func viewDidLoad() {
       // call the super
@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
 
       // create Tempest
       tempest = cTempestCreate()
-      tempestView.initialize(tempest: tempest)
+      tempestView = TempestView(tempest:tempest)
       
       // set our background
       self.view.layer.backgroundColor = UIColor.brown.cgColor;
@@ -41,7 +41,7 @@ class MainViewController: UIViewController {
       zapButton = ButtonView(tempest:tempest, _whichButton:ZAP, color:UIColor.green);
 
       // add our subviews
-      self.view.addSubview(tempestView);
+      self.view.addSubview(tempestView!);
       self.view.addSubview(p1Button!);
       self.view.addSubview(spinner);
       self.view.addSubview(fireButton!);
@@ -60,43 +60,43 @@ class MainViewController: UIViewController {
         // start by figuring out if we are portrait or landscape
         if (size.width > size.height) {
             // tempest
-            self.tempestView.frame = CGRect(x:0,y:0,width:size.height,height:size.height);
+            self.tempestView!.frame = CGRect(x:0,y:0,width:size.height,height:size.height);
             
             // p1button
             p1Button!.frame = CGRect(
-                x: tempestView.frame.maxX + 10,
+                x: tempestView!.frame.maxX + 10,
                 y: 10,
                 width: 80,
                 height: 80);
 
             // spinner
             spinner.frame = CGRect(
-                x: tempestView.frame.maxX,
+                x: tempestView!.frame.maxX,
                 y: size.height - 80,
-                width: size.width - tempestView.frame.maxX,
+                width: size.width - tempestView!.frame.maxX,
                 height: 80);
 
             // zapbutton
             zapButton!.frame = CGRect(
-                x: tempestView.frame.maxX + 110,
+                x: tempestView!.frame.maxX + 110,
                 y: 10,
                 width: 80,
                 height: 80);
 
             // firebutton
             fireButton!.frame = CGRect(
-                x: tempestView.frame.maxX + 200,
+                x: tempestView!.frame.maxX + 200,
                 y: 10,
                 width: 80,
                 height: 80);
         } else {
             // tempest
-            self.tempestView.frame = CGRect(x:0,y:0,width:size.width, height:size.width);
+            self.tempestView!.frame = CGRect(x:0,y:0,width:size.width, height:size.width);
 
             // p1button
             p1Button!.frame = CGRect(
                 x: 10,
-                y: tempestView.frame.maxY + 10,
+                y: tempestView!.frame.maxY + 10,
                 width: 80,
                 height: 80);
 
@@ -110,14 +110,14 @@ class MainViewController: UIViewController {
             // zapbutton
             zapButton!.frame = CGRect(
                 x: 110,
-                y: tempestView.frame.maxY + 10,
+                y: tempestView!.frame.maxY + 10,
                 width: 80,
                 height: 80);
 
             // firebutton
             fireButton!.frame = CGRect(
                 x: 200,
-                y: tempestView.frame.maxY + 10,
+                y: tempestView!.frame.maxY + 10,
                 width: 80,
                 height: 80);
         }
