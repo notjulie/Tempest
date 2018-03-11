@@ -53,6 +53,13 @@ class TempestView : MTKView {
       let renderPassDescriptor = currentRenderPassDescriptor!
       let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
       
+      // set the frame of the Tempest graphic
+      var width = self.frame.width
+      if (width > self.frame.height) {
+         width = self.frame.height
+      }
+      tempestRenderer!.frame = CGRect(x:0.0, y:0.0, width:width, height:width)
+      
       // create our render encoder for tempest and render it
       var renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
       renderEncoder.setFrontFacing(.counterClockwise)
@@ -74,6 +81,5 @@ class TempestView : MTKView {
       commandBuffer.present(drawable)
       commandBuffer.commit()
    }
-   
 }
 

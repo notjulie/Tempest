@@ -9,14 +9,17 @@
 import Foundation
 import MetalKit
 
-class SpinnerRenderer {
+class SpinnerRenderer : MetalRenderer {
    public var rotation : Float = 0;
 
    private var renderPipelineState: MTLRenderPipelineState?
    private var vertexBuffer: MTLBuffer! = nil;
    private var vertexData : [SpinnerVertex] = []
 
-   init(view:MTKView) {
+   override init(view:MTKView) {
+      // call the super
+      super.init(view: view)
+      
       // Render pipeline
       let library = view.device!.newDefaultLibrary()!
       let vertexFunction = library.makeFunction(name: "spinnerVertex")

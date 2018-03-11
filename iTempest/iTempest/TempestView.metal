@@ -64,7 +64,8 @@ float4 calculateVertexPosition(TempestVector v, int vertexIndex)
 }
 
 vertex VertexResult tempestVertex(
-                           device TempestVector* vectorArray [[ buffer(0) ]],
+                           device TempestVector* vectorArray [[ buffer(TEMPEST_VERTICES_BUFFER) ]],
+                           device TempestRenderParameters* renderParameters [[ buffer(TEMPEST_RENDER_PARAMETERS_BUFFER) ]],
                            unsigned int vid [[ vertex_id ]])
 {
    // we have 6 vertices per vector = two triangles
@@ -72,6 +73,8 @@ vertex VertexResult tempestVertex(
 
    VertexResult result;
    result.position = calculateVertexPosition(v, vid % 6);
+   result.position[0] = renderParameters->centerX + result.position[0] * renderParameters->xScale;
+   result.position[1] = renderParameters->centerY + result.position[1] * renderParameters->yScale;
    result.color = half4(v.r / 255.0, v.g/255.0, v.b/255.0, 1.0);
    return result;
 }

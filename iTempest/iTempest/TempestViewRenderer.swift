@@ -9,7 +9,7 @@
 import Foundation
 import MetalKit
 
-class TempestViewRenderer {
+class TempestViewRenderer : MetalRenderer {   
    private let tempest : cTempest
    private var vectors : Array<TempestVector> = Array<TempestVector>()
    private var renderPipelineState: MTLRenderPipelineState?
@@ -17,6 +17,9 @@ class TempestViewRenderer {
    init(view:MTKView, tempest:cTempest) {
       // save parameters
       self.tempest = tempest
+
+      // call the super
+      super.init(view: view)
       
       // set the size of our vector array to some handy maximum
       var i = 0
@@ -48,20 +51,30 @@ class TempestViewRenderer {
       vectors.withUnsafeMutableBufferPointer { vectorBuffer in
          vectorCount = Int(cTempestGetVectors(tempest, vectorBuffer.baseAddress, Int32(vectorCount)))
       }
-      
-      // draw them
-      if (vectorCount > 0)
-      {
-         // install our metal functions
-         renderEncoder.setRenderPipelineState(renderPipelineState!)
-         
-         // create vector list on the GPU
-         let dataSize = vectorCount * MemoryLayout.size(ofValue: vectors[0]);
-         let vertexBuffer = renderEncoder.device.makeBuffer(bytes: vectors, length: dataSize, options: []);
-         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, at: Int(0));
-         
-         // we have six vertices per vector = two triangles
-         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vectorCount * 6, instanceCount: 1)
+      if (vectorCount <= 0) {
+         return;
       }
+      
+      // install our metal functions
+      renderEncoder.setRenderPipelineState(renderPipelineState!)
+      
+      // create vector list on the GPU
+      let dataSize = vectorCount * MemoryLayout.size(ofValue: vectors[0]);
+      let vertexBuffer = renderEncoder.device.makeBuffer(bytes: vectors, length: dataSize, options: []);
+      renderEncoder.setVertexBuffer(vertexBuffer, offset: Int(0), at: Int(TEMPEST_VERTICES_BUFFER));
+      
+      // set our render parameters
+      let renderParameters : TempestRenderParameters =
+         TempestRenderParameters(
+            centerX: Float(-1 + 2 * self.frame.midX / view.frame.width),
+            centerY: Float(1 - 2 * self.frame.midY / view.frame.height),
+            xScale: Float(self.frame.width / view.frame.width),
+            yScale: Float(self.frame.height / view.frame.height)
+      );
+      let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(bytes: [renderParameters], length: MemoryLayout.size(ofValue: renderParameters), options: []);
+      renderEncoder.setVertexBuffer(renderParametersBuffer, offset: Int(0), at: Int(TEMPEST_RENDER_PARAMETERS_BUFFER));
+
+      // we have six vertices per vector = two triangles
+      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vectorCount * 6, instanceCount: 1)
    }
 }

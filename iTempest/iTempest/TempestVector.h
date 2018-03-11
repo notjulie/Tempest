@@ -16,6 +16,9 @@
    extern "C" {
 #endif
 
+#define TEMPEST_VERTICES_BUFFER 0
+#define TEMPEST_RENDER_PARAMETERS_BUFFER 1
+
 //
 // A structure that defines a screen vector in the way that our Metal
 // functions expect it to be presented.  Everyone else should cooperate
@@ -32,6 +35,12 @@ typedef struct _TempestVector
    unsigned char  b;
 } TempestVector;
 
+typedef struct _TempestRenderParameters
+{
+   float centerX, centerY;
+   float xScale, yScale;
+} TempestRenderParameters;
+      
 #ifdef __cplusplus
    };
 #endif

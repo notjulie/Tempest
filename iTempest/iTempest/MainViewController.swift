@@ -58,72 +58,69 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func positionViews(to size: CGSize) {
-        // start by figuring out if we are portrait or landscape
-        if (size.width > size.height) {
-            // tempest
-            self.tempestView!.frame = CGRect(x:0,y:0,width:size.height,height:size.height);
-            
-            // p1button
-            p1Button!.frame = CGRect(
-                x: tempestView!.frame.maxX + 10,
-                y: 10,
-                width: 80,
-                height: 80);
+   private func positionViews(to size: CGSize) {
+      // tempest view gets the full frame
+      self.tempestView!.frame = CGRect(x:0,y:0,width:size.width,height:size.height);
 
-            // spinner
-            spinner!.frame = CGRect(
-                x: tempestView!.frame.maxX,
-                y: size.height - 80,
-                width: size.width - tempestView!.frame.maxX,
-                height: 80);
+      // start by figuring out if we are portrait or landscape
+      if (size.width > size.height) {
+         // p1button
+         p1Button!.frame = CGRect(
+             x: tempestView!.frame.maxX + 10,
+             y: 10,
+             width: 80,
+             height: 80);
 
-            // zapbutton
-            zapButton!.frame = CGRect(
-                x: tempestView!.frame.maxX + 110,
-                y: 10,
-                width: 80,
-                height: 80);
+         // spinner
+         spinner!.frame = CGRect(
+             x: tempestView!.frame.maxX,
+             y: size.height - 80,
+             width: size.width - tempestView!.frame.maxX,
+             height: 80);
 
-            // firebutton
-            fireButton!.frame = CGRect(
-                x: tempestView!.frame.maxX + 200,
-                y: 10,
-                width: 80,
-                height: 80);
-        } else {
-            // tempest
-            self.tempestView!.frame = CGRect(x:0,y:0,width:size.width, height:size.width);
+         // zapbutton
+         zapButton!.frame = CGRect(
+             x: tempestView!.frame.maxX + 110,
+             y: 10,
+             width: 80,
+             height: 80);
 
-            // p1button
-            p1Button!.frame = CGRect(
-                x: 10,
-                y: tempestView!.frame.maxY + 10,
-                width: 80,
-                height: 80);
+         // firebutton
+         fireButton!.frame = CGRect(
+             x: tempestView!.frame.maxX + 200,
+             y: 10,
+             width: 80,
+             height: 80);
+      } else {
+         // p1button
+         p1Button!.frame = CGRect(
+             x: 10,
+             y: tempestView!.frame.maxY + 10,
+             width: 80,
+             height: 80);
 
-            // spinner
-            spinner!.frame = CGRect(
-                x: 0,
-                y: size.height - 80,
-                width: size.width,
-                height: 80);
+         // spinner
+         spinner!.frame = CGRect(
+             x: 0,
+             y: size.height - 80,
+             width: size.width,
+             height: 80);
 
-            // zapbutton
-            zapButton!.frame = CGRect(
-                x: 110,
-                y: tempestView!.frame.maxY + 10,
-                width: 80,
-                height: 80);
+         // zapbutton
+         zapButton!.frame = CGRect(
+             x: 110,
+             y: tempestView!.frame.maxY + 10,
+             width: 80,
+             height: 80);
 
-            // firebutton
-            fireButton!.frame = CGRect(
-                x: 200,
-                y: tempestView!.frame.maxY + 10,
-                width: 80,
-                height: 80);
-        }
-    }
+         // firebutton
+         fireButton!.frame = CGRect(
+             x: 200,
+             y: tempestView!.frame.maxY + 10,
+             width: 80,
+             height: 80);
+      }
+   }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         positionViews(to: size);
