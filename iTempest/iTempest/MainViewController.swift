@@ -15,7 +15,6 @@ class MainViewController: UIViewController {
    private var p1Button : ButtonView?
    private var fireButton : ButtonView?
    private var zapButton : ButtonView?
-   private var spinner : SpinnerView?
 
    override func viewDidLoad() {
       // call the super
@@ -37,7 +36,6 @@ class MainViewController: UIViewController {
       self.view.layer.backgroundColor = UIColor.brown.cgColor;
         
       // initialize our other subviews
-      spinner = SpinnerView(tempest: tempest, spinner:tempestView!.spinnerRenderer!)
       fireButton = ButtonView(tempest:tempest, _whichButton:FIRE, color:UIColor.blue);
       p1Button = ButtonView(tempest:tempest, _whichButton:PLAYER1, color:UIColor.red);
       zapButton = ButtonView(tempest:tempest, _whichButton:ZAP, color:UIColor.green);
@@ -45,7 +43,6 @@ class MainViewController: UIViewController {
       // add our subviews
       self.view.addSubview(tempestView!);
       self.view.addSubview(p1Button!);
-      self.view.addSubview(spinner!);
       self.view.addSubview(fireButton!);
       self.view.addSubview(zapButton!);
 
@@ -71,13 +68,6 @@ class MainViewController: UIViewController {
              width: 80,
              height: 80);
 
-         // spinner
-         spinner!.frame = CGRect(
-             x: tempestView!.frame.maxX,
-             y: size.height - 80,
-             width: size.width - tempestView!.frame.maxX,
-             height: 80);
-
          // zapbutton
          zapButton!.frame = CGRect(
              x: tempestView!.frame.maxX + 110,
@@ -97,13 +87,6 @@ class MainViewController: UIViewController {
              x: 10,
              y: tempestView!.frame.maxY + 10,
              width: 80,
-             height: 80);
-
-         // spinner
-         spinner!.frame = CGRect(
-             x: 0,
-             y: size.height - 80,
-             width: size.width,
              height: 80);
 
          // zapbutton

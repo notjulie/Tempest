@@ -15,7 +15,8 @@ class TempestView : MTKView {
    private var depthStencilState: MTLDepthStencilState?
    private var tempest : cTempest = 0
    private var tempestRenderer : TempestViewRenderer?
-   public var spinnerRenderer : SpinnerRenderer?
+   private var spinner : SpinnerView?
+   private var spinnerRenderer : SpinnerRenderer?
 
    init(tempest : cTempest) {
       // call the super
@@ -41,6 +42,10 @@ class TempestView : MTKView {
       // now that we're initialized we can create the renderers
       tempestRenderer = TempestViewRenderer(view: self, tempest: tempest)
       spinnerRenderer = SpinnerRenderer(view:self)
+
+      // add our child views
+      spinner = SpinnerView(tempest: tempest, spinner:spinnerRenderer!)
+      self.addSubview(spinner!)
    }
 
    required init(coder: NSCoder) {
@@ -105,6 +110,10 @@ class TempestView : MTKView {
             width: self.frame.width,
             height: 80);
       }
+      
+      // and the actual spinner view is the same size... this is just an invisible control
+      // that handles the touch input
+      spinner!.frame = spinnerRenderer!.frame
    }
 }
 
