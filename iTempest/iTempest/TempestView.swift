@@ -53,13 +53,6 @@ class TempestView : MTKView {
       let renderPassDescriptor = currentRenderPassDescriptor!
       let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
       
-      // set the frame of the Tempest graphic
-      var width = self.frame.width
-      if (width > self.frame.height) {
-         width = self.frame.height
-      }
-      tempestRenderer!.frame = CGRect(x:0.0, y:0.0, width:width, height:width)
-      
       // create our render encoder for tempest and render it
       var renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
       renderEncoder.setFrontFacing(.counterClockwise)
@@ -80,6 +73,38 @@ class TempestView : MTKView {
       let drawable = currentDrawable!
       commandBuffer.present(drawable)
       commandBuffer.commit()
+   }
+   
+   override func layoutSubviews() {
+      // call the super
+      super.layoutSubviews()
+      
+      // although they are not technically subviews, this is a great place to
+      // figure out where the metal images should go
+
+      // set the frame of the Tempest graphic
+      var width = self.frame.width
+      if (width > self.frame.height) {
+         width = self.frame.height
+      }
+      tempestRenderer!.frame = CGRect(x:0.0, y:0.0, width:width, height:width)
+
+      // figuring out if we are portrait or landscape
+      if (self.frame.width > self.frame.height) {
+         // spinner
+         spinnerRenderer!.frame = CGRect(
+            x: tempestRenderer!.frame.maxX,
+            y: self.frame.height - 80,
+            width: self.frame.width - tempestRenderer!.frame.maxX,
+            height: 80);
+      } else {
+         // spinner
+         spinnerRenderer!.frame = CGRect(
+            x: 0,
+            y: self.frame.height - 80,
+            width: self.frame.width,
+            height: 80);
+      }
    }
 }
 

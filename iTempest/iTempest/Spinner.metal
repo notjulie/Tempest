@@ -41,23 +41,32 @@ vertex float4 spinnerVertex(
    float x = SPINNER_RADIUS * angleSin;
 
    // we get called 6 times for each vector so that we can return the vertices of two triangles
+   float4 result;
    switch (vid % 6)
    {
       case 0:
-         return float4(x - 0.01, y - SPINNER_HEIGHT/2, 0, 1.0);
+         result = float4(x - 0.01, y - SPINNER_HEIGHT/2, 0, 1.0);
+         break;
 
       case 1:
       case 3:
-         return float4(x + 0.01, y - SPINNER_HEIGHT/2, 0, 1.0);
+         result = float4(x + 0.01, y - SPINNER_HEIGHT/2, 0, 1.0);
+         break;
 
       case 2:
       case 4:
-         return float4(x - 0.01, y + SPINNER_HEIGHT, 0, 1.0);
+         result = float4(x - 0.01, y + SPINNER_HEIGHT, 0, 1.0);
+         break;
 
       case 5:
       default:
-         return float4(x + 0.01, y + SPINNER_HEIGHT, 0, 1.0);
+         result = float4(x + 0.01, y + SPINNER_HEIGHT, 0, 1.0);
+         break;
    }
+   
+   result[0] = vertexRenderParameters->centerX + result[0] * vertexRenderParameters->xScale;
+   result[1] = vertexRenderParameters->centerY + result[1] * vertexRenderParameters->yScale;
+   return result;
 }
 
 fragment half4 spinnerFragment(float4 pointCoord  [[position]])

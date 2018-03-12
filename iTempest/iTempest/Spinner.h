@@ -22,6 +22,8 @@ struct SpinnerVertex
 struct SpinnerRenderParameters
 {
    float rotation;
+   float centerX, centerY;
+   float xScale, yScale;
 };
 
 #endif /* Spinner_h */

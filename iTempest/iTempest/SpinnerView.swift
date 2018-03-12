@@ -59,7 +59,6 @@ class SpinnerView : UIView
       self.spinnerRenderer = spinner
       
       // initialize
-      backgroundColor = UIColor.blue;
       isUserInteractionEnabled = true;
       
       timer = Timer.scheduledTimer(

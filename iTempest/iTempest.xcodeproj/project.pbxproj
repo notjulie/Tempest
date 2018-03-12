@@ -223,8 +223,10 @@
 				021E39C91F9DAB1700FFAB2B /* main.m */,
 				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
 				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
+				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
 				0262C923200A54FC00E5A429 /* Spinner.h */,
 				02825C8620026F130032BE41 /* Spinner.metal */,
+				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
 				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
 				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
 				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
@@ -233,8 +235,6 @@
 				0262C927200AED3000E5A429 /* TempestView.metal */,
 				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
 				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
-				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
-				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
 			);
 			path = iTempest;
 			sourceTree = "<group>";
