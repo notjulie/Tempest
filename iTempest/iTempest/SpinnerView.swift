@@ -17,9 +17,11 @@ class SpinnerView : UIView
       case Dragging
       case Coasting
    };
+   typealias SpinnerCallback = (Int) -> Void
    
    // construction parameters
    private var tempest : cTempest = 0;
+   private var spinnerMovedCallback : SpinnerCallback? = nil
 
    // swiping related
    private var touchState : TouchState = TouchState.NoTouch;
@@ -48,15 +50,13 @@ class SpinnerView : UIView
    
    private let speedLog = NSMutableArray();
    
-   private var spinnerRenderer : SpinnerRenderer?
-
-   init(tempest:cTempest, spinner:SpinnerRenderer) {
+   init(tempest:cTempest, callback:@escaping SpinnerCallback) {
       // call the super
       super.init(frame: CGRect())
 
       // save parameters
       self.tempest = tempest
-      self.spinnerRenderer = spinner
+      self.spinnerMovedCallback = callback
       
       // initialize
       isUserInteractionEnabled = true;
@@ -208,6 +208,6 @@ class SpinnerView : UIView
       );
       
       // rotate the visible spinner
-      spinnerRenderer!.rotation = spinnerRenderer!.rotation + 1.0 * Float(ticks)
+      spinnerMovedCallback?(ticks)
    }
 }

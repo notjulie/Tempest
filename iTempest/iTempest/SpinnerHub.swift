@@ -1,19 +1,17 @@
 //
-//  SpinnerRenderer.swift
+//  SpinnerHub.swift
 //  iTempest
 //
-//  Created by Randy Rasmussen on 3/10/18.
+//  Created by Randy Rasmussen on 3/13/18.
 //  Copyright © 2018 Randy Rasmussen. All rights reserved.
 //
 
 import Foundation
 import MetalKit
 
-class SpinnerRenderer : MetalRenderer {
+class SpinnerHub : MetalRenderer {
    private var rotation : Float = 0;
    private var renderPipelineState: MTLRenderPipelineState?
-   private var vertexBuffer: MTLBuffer! = nil;
-   private var vertexData : [SpinnerVertex] = []
 
    override init(view:MTKView) {
       // call the super
@@ -21,8 +19,8 @@ class SpinnerRenderer : MetalRenderer {
       
       // Render pipeline
       let library = view.device!.newDefaultLibrary()!
-      let vertexFunction = library.makeFunction(name: "spinnerVertex")
-      let fragmentFunction = library.makeFunction(name: "spinnerFragment")
+      let vertexFunction = library.makeFunction(name: "spinnerHubVertex")
+      let fragmentFunction = library.makeFunction(name: "spinnerHubFragment")
       let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
       renderPipelineDescriptor.vertexFunction = vertexFunction
       renderPipelineDescriptor.fragmentFunction = fragmentFunction
@@ -34,31 +32,9 @@ class SpinnerRenderer : MetalRenderer {
          Swift.print("Unable to compile render pipeline state")
          return
       }
-      
-      // create our vertex data... this never changes, we just update the rotation
-      let bumpCount = 30
-      var i : Int = 0;
-      while (i<bumpCount)
-      {
-         var position : Float = Float(i);
-         position = position / Float(bumpCount - 1)
-         vertexData += [SpinnerVertex(position: position)]
-         i = i + 1
-      }
-      let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]);
-      vertexBuffer = view.device!.makeBuffer(bytes: vertexData, length: dataSize, options: []);
    }
 
-   public func rotate(rotationAngle:Float) {
-      rotation = rotation + rotationAngle
-      while (rotation < 0) {
-         rotation = rotation + Float(VISIBLE_DEGREES)
-      }
-      while (rotation > Float(VISIBLE_DEGREES)) {
-         rotation = rotation - Float(VISIBLE_DEGREES)
-      }
-   }
-   
+
    func render(renderEncoder : MTLRenderCommandEncoder) {
       // install our metal functions
       renderEncoder.setRenderPipelineState(renderPipelineState!)
@@ -71,14 +47,26 @@ class SpinnerRenderer : MetalRenderer {
             centerY: Float(1 - 2 * self.frame.midY / view.frame.height),
             xScale: Float(self.frame.width / view.frame.width),
             yScale: Float(self.frame.height / view.frame.height)
-     )
+      )
+      
       let dataSize = MemoryLayout.size(ofValue: renderParameters);
       let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(bytes: [renderParameters], length: dataSize, options: []);
       
       // encode our render commands
-      renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, at: Int(SPINNER_VERTICES_BUFFER));
       renderEncoder.setVertexBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
-      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6*vertexData.count, instanceCount: 1)
+      renderEncoder.setFragmentBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
+      renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
    }
    
+
+   public func rotate(rotationAngle:Float) {
+      rotation = rotation + rotationAngle
+      while (rotation < 0) {
+         rotation = rotation + Float(360)
+      }
+      while (rotation > Float(360)) {
+         rotation = rotation - Float(360)
+      }
+   }
 }
+

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021DC6282058975C001551FD /* SpinnerHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021DC6272058975C001551FD /* SpinnerHub.swift */; };
+		021DC62A20589975001551FD /* SpinnerHub.metal in Sources */ = {isa = PBXBuildFile; fileRef = 021DC62920589975001551FD /* SpinnerHub.metal */; };
 		021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39B51F9DAB1700FFAB2B /* AppDelegate.m */; };
 		021E39C21F9DAB1700FFAB2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C01F9DAB1700FFAB2B /* Main.storyboard */; };
 		021E39C41F9DAB1700FFAB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 021E39C31F9DAB1700FFAB2B /* Assets.xcassets */; };
@@ -77,6 +79,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		021DC6272058975C001551FD /* SpinnerHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerHub.swift; sourceTree = "<group>"; };
+		021DC62920589975001551FD /* SpinnerHub.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SpinnerHub.metal; sourceTree = "<group>"; };
 		021E39B11F9DAB1700FFAB2B /* iTempest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTempest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		021E39B41F9DAB1700FFAB2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		021E39B51F9DAB1700FFAB2B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -226,6 +230,8 @@
 				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
 				0262C923200A54FC00E5A429 /* Spinner.h */,
 				02825C8620026F130032BE41 /* Spinner.metal */,
+				021DC62920589975001551FD /* SpinnerHub.metal */,
+				021DC6272058975C001551FD /* SpinnerHub.swift */,
 				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
 				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
 				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
@@ -518,7 +524,9 @@
 				02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */,
 				026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
+				021DC62A20589975001551FD /* SpinnerHub.metal in Sources */,
 				024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */,
+				021DC6282058975C001551FD /* SpinnerHub.swift in Sources */,
 				024D0E2C1F9EABD900DA5FFE /* TempestBus.cpp in Sources */,
 				024D0E321F9EAC4900DA5FFE /* ProcessorStatusWord.cpp in Sources */,
 				024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */,

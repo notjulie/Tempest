@@ -14,6 +14,10 @@
 #define SPINNER_VERTICES_BUFFER 0
 #define SPINNER_RENDER_PARAMETERS_BUFFER 1
 
+#define VISIBLE_DEGREES 150.0
+#define SPINNER_RADIUS 0.6
+#define SPINNER_HEIGHT 0.6
+
 struct SpinnerVertex
 {
     float position;

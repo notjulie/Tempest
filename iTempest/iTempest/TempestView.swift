@@ -17,6 +17,7 @@ class TempestView : MTKView {
    private var tempestRenderer : TempestViewRenderer?
    private var spinner : SpinnerView?
    private var spinnerRenderer : SpinnerRenderer?
+   private var spinnerHub : SpinnerHub?
 
    init(tempest : cTempest) {
       // call the super
@@ -42,9 +43,10 @@ class TempestView : MTKView {
       // now that we're initialized we can create the renderers
       tempestRenderer = TempestViewRenderer(view: self, tempest: tempest)
       spinnerRenderer = SpinnerRenderer(view:self)
+      spinnerHub = SpinnerHub(view:self)
 
       // add our child views
-      spinner = SpinnerView(tempest: tempest, spinner:spinnerRenderer!)
+      spinner = SpinnerView(tempest: tempest, callback:onSpinnerMoved)
       self.addSubview(spinner!)
    }
 
@@ -70,6 +72,13 @@ class TempestView : MTKView {
       renderEncoder.setFrontFacing(.counterClockwise)
       renderEncoder.setDepthStencilState(depthStencilState)
       spinnerRenderer!.render(renderEncoder: renderEncoder)
+      renderEncoder.endEncoding()
+      
+      // and the hub
+      renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
+      renderEncoder.setFrontFacing(.counterClockwise)
+      renderEncoder.setDepthStencilState(depthStencilState)
+      spinnerHub!.render(renderEncoder: renderEncoder)
       renderEncoder.endEncoding()
       
       // end encoding on our parallel renderer
@@ -114,6 +123,16 @@ class TempestView : MTKView {
       // and the actual spinner view is the same size... this is just an invisible control
       // that handles the touch input
       spinner!.frame = spinnerRenderer!.frame
+      spinnerHub!.frame = spinnerRenderer!.frame
+   }
+   
+   private func onSpinnerMoved(ticks : Int) {
+      // convert our encoder tick count to a rotation angle using our magic constant
+      let rotation = 1.0 * Float(ticks)
+      
+      // rotate our graphics
+      spinnerRenderer!.rotate(rotationAngle:rotation)
+      spinnerHub!.rotate(rotationAngle:rotation)
    }
 }
 

@@ -11,9 +11,6 @@
 #include "Spinner.h"
 using namespace metal;
 
-#define VISIBLE_DEGREES 60.0
-#define SPINNER_RADIUS 1.0
-#define SPINNER_HEIGHT 0.3
 
 vertex float4 spinnerVertex(
       const device SpinnerVertex* vertex_array [[ buffer(SPINNER_VERTICES_BUFFER) ]],
@@ -55,12 +52,12 @@ vertex float4 spinnerVertex(
 
       case 2:
       case 4:
-         result = float4(x - 0.01, y + SPINNER_HEIGHT, 0, 1.0);
+         result = float4(x - 0.01, y + SPINNER_HEIGHT/2, 0, 1.0);
          break;
 
       case 5:
       default:
-         result = float4(x + 0.01, y + SPINNER_HEIGHT, 0, 1.0);
+         result = float4(x + 0.01, y + SPINNER_HEIGHT/2, 0, 1.0);
          break;
    }
    
