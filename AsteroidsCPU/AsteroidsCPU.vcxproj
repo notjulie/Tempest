@@ -130,51 +130,24 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ANDGate.h" />
     <ClInclude Include="AsteroidsBus.h" />
     <ClInclude Include="AsteroidsROMs.h" />
     <ClInclude Include="AsteroidsRunner.h" />
     <ClInclude Include="AsteroidsVectorInterpreter.h" />
-    <ClInclude Include="AsteroidsVectorMemory.h" />
-    <ClInclude Include="AsteroidsVSM.h" />
-    <ClInclude Include="Inverter.h" />
-    <ClInclude Include="LogicBoard.h" />
-    <ClInclude Include="LogicSignal.h" />
-    <ClInclude Include="LS109.h" />
-    <ClInclude Include="LS174.h" />
-    <ClInclude Include="LS42.h" />
-    <ClInclude Include="LS74.h" />
-    <ClInclude Include="NANDGate.h" />
-    <ClInclude Include="ORGate.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="VSMClock.h" />
-    <ClInclude Include="VSMROM.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ANDGate.cpp" />
     <ClCompile Include="AsteroidsBus.cpp" />
     <ClCompile Include="AsteroidsROMs.cpp" />
     <ClCompile Include="AsteroidsRunner.cpp" />
     <ClCompile Include="AsteroidsVectorInterpreter.cpp" />
-    <ClCompile Include="AsteroidsVectorMemory.cpp" />
-    <ClCompile Include="AsteroidsVSM.cpp" />
-    <ClCompile Include="LogicBoard.cpp" />
-    <ClCompile Include="LogicSignal.cpp" />
-    <ClCompile Include="LS109.cpp" />
-    <ClCompile Include="LS174.cpp" />
-    <ClCompile Include="LS42.cpp" />
-    <ClCompile Include="LS74.cpp" />
-    <ClCompile Include="NANDGate.cpp" />
-    <ClCompile Include="ORGate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="VSMClock.cpp" />
-    <ClCompile Include="VSMROM.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
