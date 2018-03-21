@@ -26,7 +26,7 @@ public:
 	// simple dispatches to the AsteroidsBus object
    bool     HaveVectorData(void) { return asteroidsBus.IsVectorGo(); }
    uint64_t GetTotalClockCycles(void) { return asteroidsBus.GetTotalClockCycles(); }
-   void     GetVectorData(AsteroidsVSM &vectorData) { asteroidsBus.GetVectorData(vectorData); }
+   void     GetVectorData(AsteroidsVectorInterpreter &vectorData) { asteroidsBus.GetVectorData(vectorData); }
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { asteroidsBus.SetTempestIO(tempestSoundIO); }
 
    // simple dispatches to the runner

@@ -127,15 +127,6 @@ void CPU6502Runner::RunnerThread(void)
             uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
             bus->IncrementClockCycleCount(clockCyclesThisInstruction);
          }
-
-         // check the current PC address... this should actually be handled by the bus someday
-         uint16_t newPC = cpu6502.GetPC();
-         if (newPC < 0x9000)
-         {
-            char s[100];
-            sprintf(s, "Bad address %X jumped to from %X", newPC, pc);
-            throw TempestException(s);
-         }
       }
 
       processorStatus = "Exited normally";

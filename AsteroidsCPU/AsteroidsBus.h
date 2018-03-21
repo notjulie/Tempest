@@ -8,7 +8,7 @@
 // forward declarations
 class AbstractTempestEnvironment;
 class AbstractTempestSoundIO;
-class AsteroidsVSM;
+class AsteroidsVectorInterpreter;
 namespace std {
    // CLR code can't include <mutex>
    class mutex;
@@ -28,7 +28,7 @@ public:
    AsteroidsBus(const AsteroidsBus &bus) = delete;
    AsteroidsBus &operator=(const AsteroidsBus &bus) = delete;
 
-   void GetVectorData(AsteroidsVSM &vectorInterpreter);
+   void GetVectorData(AsteroidsVectorInterpreter &vectorInterpreter);
    bool IsVectorGo(void) const { return vectorGo; }
    void SetTempestIO(AbstractTempestSoundIO *tempestSoundIOs);
 

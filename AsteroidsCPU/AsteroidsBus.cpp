@@ -8,7 +8,7 @@
 #include "TempestCPU/TempestException.h"
 
 #include "AsteroidsROMs.h"
-#include "AsteroidsVSM.h"
+#include "AsteroidsVectorInterpreter.h"
 
 #include "AsteroidsBus.h"
 
@@ -37,9 +37,9 @@ AsteroidsBus::~AsteroidsBus(void)
 }
 
 
-void AsteroidsBus::GetVectorData(AsteroidsVSM &vectorData)
+void AsteroidsBus::GetVectorData(AsteroidsVectorInterpreter &vectorData)
 {
-   vectorData.SetVectorRAM(vectorRAM, sizeof(vectorRAM));
+   vectorData.SetVectorRAM(vectorRAM);
 }
 
 

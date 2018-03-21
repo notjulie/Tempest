@@ -4,7 +4,7 @@
 #include <msclr\lock.h>
 
 #include "AsteroidsCPU/AsteroidsRunner.h"
-#include "AsteroidsCPU/AsteroidsVSM.h"
+#include "AsteroidsCPU/AsteroidsVectorInterpreter.h"
 
 #include "TempestCPU/6502/CPU6502.h"
 #include "TempestCPU/6502/CPU6502Exception.h"
@@ -63,7 +63,7 @@ namespace TempestDotNET {
       if (asteroidsRunner->HaveVectorData())
       {
          // get the latest vector data
-         AsteroidsVSM vectorInterpreter;
+         AsteroidsVectorInterpreter vectorInterpreter;
          asteroidsRunner->GetVectorData(vectorInterpreter);
 
          // interpret it

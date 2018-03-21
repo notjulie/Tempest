@@ -9986,24 +9986,35 @@ D773 10:02      BPL:rel    Branch->$D777 ; If so, set the appropriate bit.
 D775 09:01      ORA:imm    #01
 D777 8D:00 40   STA:abs    $4000         ; Implement coin counter / video
 					 ; inversion (XY flip) register.
+
+
+;
+; routine to set/flash the player 1/player 2 LEDs
+;
 D77A A6:3E      LDX:zp     Zp RAM 003E
 D77C E8:        INX:imp    X=X+1
 D77D A4:05      LDY:zp     Zp RAM 0005
-D77F D0:10      BNE:rel    Branch->$D791
-D781 A2:00      LDX:imm    #00		 ; Haven't gone through this
-D783 A4:07      LDY:zp     Zp RAM 0007	 ; extensively, but it appears to
-D785 C0:40      CPY:imm    #40		 ; be a handler for the LEDs.
-D787 90:08      BCC:rel    Branch->$D791
-D789 A6:06      LDX:zp     Zp RAM 0006	 ; Are there two or + game credits
-D78B E0:02      CPX:imm    #02		 ; pending?
-D78D 90:02      BCC:rel    Branch->$D791
+D77F D0:10      BNE:rel    Branch->$D791 ;  branch if not in attract mode
+D781 A2:00      LDX:imm    #00		 
+D783 A4:07      LDY:zp     Zp RAM 0007
+D785 C0:40      CPY:imm    #40		 
+D787 90:08      BCC:rel    Branch->$D791 ;  branch if our flash duty cycle is off
+D789 A6:06      LDX:zp     Zp RAM 0006	 
+D78B E0:02      CPX:imm    #02		 
+D78D 90:02      BCC:rel    Branch->$D791 ;  branch if fewer than two credits
 D78F A2:03      LDX:imm    #03
-D791 BD:DD D7   LDA:abs,x  $D7DD,X
-D794 45:A1      EOR:zp     Zp RAM 00A1
+; x contains a value in the range 0..3 to indicate which LEDs to show:
+;    0: neither
+;    1: player 1
+;    2: player 2
+;    3: both
+D791 BD:DD D7   LDA:abs,x  $D7DD,X  ; get the output mask
+D794 45:A1      EOR:zp     Zp RAM 00A1 ; merge it into our shadow register...
 D796 29:03      AND:imm    #03
 D798 45:A1      EOR:zp     Zp RAM 00A1
 D79A 85:A1      STA:zp     Zp RAM 00A1
-D79C 8D:E0 60   STA:abs    $60E0	 ; Set the LED state.
+D79C 8D:E0 60   STA:abs    $60E0	 ; output the shadow register
+
 D79F 20:24 CF   JSR:abs    $CF24
 D7A2 20:0A CD   JSR:abs    $CD0A
 D7A5 E6:53      INC:zp     Zp RAM 0053   ; Update the 0-9 timer
@@ -10041,8 +10052,15 @@ D7DC 40:        RTI:imp    Ret from Int	 ; proper math mode.
 ;
 ; End of interrupt handler code.
 ;
-D7DD FF:        DATA			 ; Table referenced by $D791.
-D7DE FD:FE FC   DATA			 ; Something about LED blinking.
+
+
+; Table referenced by $D791.
+D7DD FF:        DATA			 
+D7DE FD:	    DATA
+D7DE FE:        DATA
+D7DE FC:        DATA
+
+
 D7E1 A9:00      LDA:imm    #00
 D7E3 85:05      STA:zp     Zp RAM 0005
 D7E5 A9:02      LDA:imm    #02
