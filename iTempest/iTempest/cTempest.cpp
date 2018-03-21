@@ -37,10 +37,10 @@ extern "C" {
         return tempestMap[handle].get();
     }
     
-    cVectors cTempestGetVectors(cTempest _tempest)
-    {
-        return GetTempest(_tempest)->GetVectors();
-    }
+   int cTempestGetVectors(cTempest tempest, TempestVector *buffer, int bufferSize)
+   {
+      return GetTempest(tempest)->GetVectors(buffer, bufferSize);
+   }
     
     void cTempestSetButtonState(cTempest tempest, cTempestButton button, int state)
     {
@@ -65,31 +65,6 @@ extern "C" {
     {
         return GetTempest(_tempest)->MoveSpinner(offset);
     }
-
-    void cVectorsDispose(cVectors _vectors)
-    {
-        delete (iTempestVectors *)_vectors;
-    }
-    
-    int cVectorsGetNext(
-                        cVectors _vectors,
-                        int16_t *startX,
-                        int16_t *startY,
-                        int16_t *endX,
-                        int16_t *endY,
-                        uint8_t *r,
-                        uint8_t *g,
-                        uint8_t *b
-                        )
-    {
-        iTempestVectors *vectors = (iTempestVectors *)_vectors;
-        bool result = vectors->GetNext(
-                startX, startY,
-                endX, endY,
-                r, g, b);
-        return result ? 1 : 0;
-    }
-
     
 };
 

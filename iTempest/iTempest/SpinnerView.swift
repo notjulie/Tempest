@@ -11,102 +11,110 @@ import UIKit
 
 class SpinnerView : UIView
 {
-    private enum TouchState {
-        case NoTouch
-        case Dragging
-        case Coasting
-    };
-    
-    private var touchState : TouchState = TouchState.NoTouch;
-    
-    private var tempest : cTempest = 0;
-    private var initialized : Bool = false;
-    private var encoderChange: Int32 = 0;
+   // local types
+   private enum TouchState {
+      case NoTouch
+      case Dragging
+      case Coasting
+   };
+   typealias SpinnerCallback = (Int) -> Void
+   
+   // construction parameters
+   private var tempest : cTempest = 0;
+   private var spinnerMovedCallback : SpinnerCallback? = nil
 
-    private var timer : Timer? = nil;
+   // swiping related
+   private var touchState : TouchState = TouchState.NoTouch;
+   private var encoderChange: Int32 = 0;
+   private var timer : Timer? = nil;
+   private var startX : CGFloat = 0;
+   private var lastX : CGFloat = 0;
+   private var lastTouchTime : CGFloat = 0;
+   private var speed : CGFloat = 0;
+   private var coastDistance : CGFloat = 0;
     
-    private var startX : CGFloat = 0;
-    private var lastX : CGFloat = 0;
-    private var lastTouchTime : CGFloat = 0;
-    private var speed : CGFloat = 0;
-    private var coastDistance : CGFloat = 0;
-    
-    // the number of encoder ticks to move per pixel
-    private let ticksPerPixel : CGFloat = 1.0;
+   // the number of encoder ticks to move per pixel
+   private let ticksPerPixel : CGFloat = 1.0;
 
-    // Maximum encoder ticks per second while coasting... if this gets too high
-    // we'll end up with encoder wrap-around
-    private let maxCoastSpeed : CGFloat = 1000;
+   // Maximum encoder ticks per second while coasting... if this gets too high
+   // we'll end up with encoder wrap-around
+   private let maxCoastSpeed : CGFloat = 1000;
     
-    // time (in seconds) of the speed lowpass; this is just in place to make sure that
-    // one sample alone doesn't define our coast speed, such as if the touchscreen
-    // says the user slowed down when in fact he just eased off the screen
-    private let speedLowpassTime = 0.2;
+   // time (in seconds) of the speed lowpass; this is just in place to make sure that
+   // one sample alone doesn't define our coast speed, such as if the touchscreen
+   // says the user slowed down when in fact he just eased off the screen
+   private let speedLowpassTime = 0.2;
     
-    private let minCoastSpeed : CGFloat = 0;
-    private let coastDeceleration : CGFloat = 200;
-    
-    private let speedLog = NSMutableArray();
+   private let minCoastSpeed : CGFloat = 0;
+   private let coastDeceleration : CGFloat = 200;
+   
+   private let speedLog = NSMutableArray();
+   
+   init(tempest:cTempest, callback:@escaping SpinnerCallback) {
+      // call the super
+      super.init(frame: CGRect())
 
-    func setTempest(tempest:cTempest) {
-        if (!initialized) {
-            backgroundColor = UIColor.blue;
-            isUserInteractionEnabled = true;
-            
-            timer = Timer.scheduledTimer(
-                timeInterval: 0.01,
-                target: self,
-                selector: #selector(swipeTimer),
-                userInfo: nil,
-                repeats: true);
-            
-            initialized = true;
-        }
-        self.tempest = tempest;
-    }
+      // save parameters
+      self.tempest = tempest
+      self.spinnerMovedCallback = callback
+      
+      // initialize
+      isUserInteractionEnabled = true;
+      
+      timer = Timer.scheduledTimer(
+         timeInterval: 0.01,
+         target: self,
+         selector: #selector(swipeTimer),
+         userInfo: nil,
+         repeats: true);
+   }
 
-    func swipeTimer() {
-        if (touchState != TouchState.Coasting)
-        {
-            return;
-        }
+   required init?(coder: NSCoder) {
+      super.init(coder:coder)
+   }
+   
+   func swipeTimer() {
+      if (touchState != TouchState.Coasting)
+      {
+         return;
+      }
         
-        // apply some static friction, otherwise the spinner creeps forever
-        if (speed <= minCoastSpeed && speed >= -minCoastSpeed)
-        {
-            touchState = TouchState.NoTouch;
-            return;
-        }
+      // apply some static friction, otherwise the spinner creeps forever
+      if (speed <= minCoastSpeed && speed >= -minCoastSpeed)
+      {
+         touchState = TouchState.NoTouch;
+         return;
+      }
         
-        // add to the distance that we coasted
-        coastDistance += 0.01 * speed;
-        while (coastDistance >= 1) {
-            coastDistance -= 1;
-            cTempestMoveSpinner(tempest, 1);
-        }
-        while (coastDistance <= -1) {
-            coastDistance += 1;
-            cTempestMoveSpinner(tempest, -1);
-        }
+      // add to the distance that we coasted
+      coastDistance += 0.01 * speed;
+      while (coastDistance >= 1) {
+         coastDistance -= 1;
+         moveSpinner(ticks:1);
+      }
+      while (coastDistance <= -1) {
+         coastDistance += 1;
+         moveSpinner(ticks: -1);
+      }
 
-        // friction
-        if (speed > 0)
-        {
-            speed -= 0.01 * coastDeceleration;
-            if (speed < 0)
-            {
-                speed = 0;
-            }
-        }
-        else
-        {
-            speed += 0.01 * coastDeceleration;
-            if (speed > 0)
-            {
-                speed = 0;
-            }
-        }
-    }
+      // friction
+      if (speed > 0)
+      {
+         speed -= 0.01 * coastDeceleration;
+         if (speed < 0)
+         {
+            speed = 0;
+         }
+      }
+      else
+      {
+         speed += 0.01 * coastDeceleration;
+         if (speed > 0)
+         {
+            speed = 0;
+         }
+      }
+   }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // only single touches
@@ -172,26 +180,34 @@ class SpinnerView : UIView
         touchState = TouchState.NoTouch;
     }
     
-    private func processMove(touch:UITouch) {
-        // move the spinner
-        let xNow = touch.location(in: self).x;
-        let totalChange = (Int32)(ticksPerPixel * (xNow - startX));
-        cTempestMoveSpinner(
-            tempest,
-            totalChange - encoderChange
-        );
+   private func processMove(touch:UITouch) {
+      // move the spinner
+      let xNow = touch.location(in: self).x;
+      let totalChange = (Int32)(ticksPerPixel * (xNow - startX));
+      moveSpinner(ticks: Int(totalChange - encoderChange))
+      
+      // calculate the speed of this single movement
+      let x : CGFloat = touch.location(in: self).x;
+      let time : CGFloat = CGFloat(touch.timestamp) - lastTouchTime;
+      let speedThisTime = (x - lastX) / time;
         
-        // calculate the speed of this single movement
-        let x : CGFloat = touch.location(in: self).x;
-        let time : CGFloat = CGFloat(touch.timestamp) - lastTouchTime;
-        let speedThisTime = (x - lastX) / time;
+      // and decay that into the speed
+      speed += (speedThisTime - speed) * (1 - exp(-time / 0.1));
+      speedLog.add(speed);
         
-        // and decay that into the speed
-        speed += (speedThisTime - speed) * (1 - exp(-time / 0.1));
-        speedLog.add(speed);
-        
-        lastX = touch.location(in: self).x;
-        lastTouchTime = CGFloat(touch.timestamp);
-        encoderChange = totalChange;
-    }
+      lastX = touch.location(in: self).x;
+      lastTouchTime = CGFloat(touch.timestamp);
+      encoderChange = totalChange;
+   }
+   
+   private func moveSpinner(ticks: Int) {
+      // tell Tempest
+      cTempestMoveSpinner(
+         tempest,
+         Int32(ticks)
+      );
+      
+      // rotate the visible spinner
+      spinnerMovedCallback?(ticks)
+   }
 }

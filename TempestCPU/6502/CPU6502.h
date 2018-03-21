@@ -1,14 +1,25 @@
-/*
- * File:   CPU6502.h
- * Author: Randy
- *
- * Created on April 25, 2015, 1:51 PM
- */
+// ====================================================================
+// 6502 emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the instruction processor of the 6502... it interacts
+//    with an AbstractBus object, which supplies everything that the
+//    6502 connects to.
+// ====================================================================
 
 #ifndef CPU6502_H
 #define	CPU6502_H
 
 #include "ProcessorStatusWord.h"
+
+// === hardcoded processor memory locations
+const uint16_t NMI_VECTOR_ADDRESS = 0xFFFA;
+const uint16_t RESET_VECTOR_ADDRESS = 0xFFFC;
+const uint16_t IRQ_VECTOR_ADDRESS = 0xFFFE;
+const uint16_t BRK_VECTOR_ADDRESS = 0xFFFE;
 
 class AbstractBus;
 
@@ -22,7 +33,7 @@ class CPU6502
 public:
    CPU6502(AbstractBus *_bus);
 
-	void     Reset(void);
+   void     Reset(void);
    void     Run(void);
    uint8_t  SingleStep(void);
 

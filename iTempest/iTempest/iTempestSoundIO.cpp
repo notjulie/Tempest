@@ -14,8 +14,6 @@ const int BUFFER_SIZE = 2048;
 
 iTempestSoundIO::iTempestSoundIO(void)
 {
-    //[AVAudioSession.sharedInstance setPreferredIOBufferDuration:NSInterval(0.01) error:nullptr];
-
     // initialize our audio queue
     AudioStreamBasicDescription info;
     info.mBitsPerChannel = 16;
@@ -176,7 +174,7 @@ void iTempestSoundIO::EnqueueBuffer(AudioQueueBufferRef buffer)
     {
         status = AudioQueueAllocateBuffer(
             audioQueue,
-            1000 * 16,
+            2000,
             &buffer);
         if (status == noErr)
             bufferList.push_back(buffer);
@@ -189,5 +187,7 @@ void iTempestSoundIO::EnqueueBuffer(AudioQueueBufferRef buffer)
                    0,
                    0
                    );
+   if (status != noErr)
+      buffer->mAudioDataByteSize = buffer->mAudioDataBytesCapacity;
 }
 
