@@ -9,6 +9,7 @@
 #import "cTempest.h"
 
 // Metal types
+#import "RectangleShader.h"
 #import "Spinner.h"
 #import "TempestVector.h"
 

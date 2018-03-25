@@ -55,6 +55,8 @@
 		029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */; };
 		029AA0A11FBFBC2800762BC8 /* Noise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A01FBFBC2800762BC8 /* Noise.cpp */; };
 		029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */; };
+		02BDBCD320681DA800C4464C /* RectangleShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDBCD220681DA800C4464C /* RectangleShader.swift */; };
+		02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02BDBCD420681E2F00C4464C /* RectangleShader.metal */; };
 		02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */; };
 		02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C7C4E62055AECF00248E3E /* MetalRenderer.swift */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
@@ -151,6 +153,9 @@
 		029AA0A01FBFBC2800762BC8 /* Noise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Noise.cpp; path = ../../TempestIO/Noise.cpp; sourceTree = "<group>"; };
 		029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempestSoundIO.h; sourceTree = "<group>"; };
 		029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cpp11WaveStreamer.cpp; path = ../../TempestIO/Cpp11WaveStreamer.cpp; sourceTree = "<group>"; };
+		02BDBCD02068138900C4464C /* RectangleShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RectangleShader.h; sourceTree = "<group>"; };
+		02BDBCD220681DA800C4464C /* RectangleShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleShader.swift; sourceTree = "<group>"; };
+		02BDBCD420681E2F00C4464C /* RectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RectangleShader.metal; sourceTree = "<group>"; };
 		02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		02C7C4E62055AECF00248E3E /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
@@ -187,10 +192,13 @@
 		021E39A81F9DAB1700FFAB2B = {
 			isa = PBXGroup;
 			children = (
+				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
+				02BDBCD220681DA800C4464C /* RectangleShader.swift */,
 				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
 				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
 				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
 				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
+				02BDBCD02068138900C4464C /* RectangleShader.h */,
 				0262C923200A54FC00E5A429 /* Spinner.h */,
 				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
 				021E39C91F9DAB1700FFAB2B /* main.m */,
@@ -519,6 +527,7 @@
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
 				0262C928200AED3000E5A429 /* TempestView.metal in Sources */,
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
+				02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */,
 				029AA09D1FBFBBBB00762BC8 /* SoundGenerator.cpp in Sources */,
 				024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */,
 				02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */,
@@ -527,6 +536,7 @@
 				02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */,
 				026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
+				02BDBCD320681DA800C4464C /* RectangleShader.swift in Sources */,
 				021DC62A20589975001551FD /* SpinnerHub.metal in Sources */,
 				024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */,
 				021DC6282058975C001551FD /* SpinnerHub.swift in Sources */,

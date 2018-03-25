@@ -8,68 +8,15 @@
 
 #include <metal_math>
 #include <metal_stdlib>
+#include "RectangleShader.h"
 #include "Spinner.h"
 using namespace metal;
 
-struct VertexResult
-{
-   float4 position [[position]];
-   float2 xy;
-   float rotation;
-};
 
-vertex VertexResult spinnerHubVertex(
-                            const device SpinnerRenderParameters *vertexRenderParameters [[ buffer(SPINNER_RENDER_PARAMETERS_BUFFER) ]],
-                            unsigned int vid [[ vertex_id ]])
-{
-   VertexResult result;
-   result.rotation = vertexRenderParameters->rotation;
-   
-   switch (vid)
-   {
-      case 0:
-         result.position = float4(
-                       vertexRenderParameters->centerX - vertexRenderParameters->xScale,
-                       vertexRenderParameters->centerY - vertexRenderParameters->yScale,
-                       0, 1.0
-                       );
-         result.xy = float2(-1.0, -1.0);
-         break;
-         
-      case 1:
-         result.position =  float4(
-                       vertexRenderParameters->centerX - vertexRenderParameters->xScale,
-                       vertexRenderParameters->centerY + vertexRenderParameters->yScale,
-                       0, 1.0
-                       );
-         result.xy = float2(-1.0, +1.0);
-         break;
-         
-      case 2:
-         result.position =  float4(
-                       vertexRenderParameters->centerX + vertexRenderParameters->xScale,
-                       vertexRenderParameters->centerY - vertexRenderParameters->yScale,
-                       0, 1.0
-                       );
-         result.xy = float2(+1.0, -1.0);
-         break;
-         
-      case 3:
-      default:
-         result.position =  float4(
-                       vertexRenderParameters->centerX + vertexRenderParameters->xScale,
-                       vertexRenderParameters->centerY + vertexRenderParameters->yScale,
-                       0, 1.0
-                       );
-         result.xy = float2(+1.0, +1.0);
-         break;
-         
-   }
-   
-   return result;
-}
-
-fragment half4 spinnerHubFragment(VertexResult vertexInfo [[stage_in]])
+fragment half4 spinnerHubFragment(
+                      RectangleShaderStageIn vertexInfo [[stage_in]],
+                      const device SpinnerRenderParameters *vertexRenderParameters [[ buffer(SPINNER_RENDER_PARAMETERS_BUFFER) ]]
+                      )
 {
    float x = vertexInfo.xy[0];
    float y = vertexInfo.xy[1];
@@ -98,7 +45,7 @@ fragment half4 spinnerHubFragment(VertexResult vertexInfo [[stage_in]])
    if (y <= circleY - SPINNER_HEIGHT/2)
    {
       // calculate the angle of the point
-      float angle = metal::fast::atan2(y + SPINNER_HEIGHT/2, x) * 180 / M_PI_F + vertexInfo.rotation;
+      float angle = metal::fast::atan2(y + SPINNER_HEIGHT/2, x) * 180 / M_PI_F + vertexRenderParameters->rotation;
       while (angle < 0) { angle += 180; }
       while (angle > 180) { angle -= 180; }
 

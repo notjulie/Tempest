@@ -9,36 +9,16 @@
 import Foundation
 import MetalKit
 
-class SpinnerHub : MetalRenderer {
+class SpinnerHub : RectangleShader {
    private var rotation : Float = 0;
-   private var renderPipelineState: MTLRenderPipelineState?
 
-   override init(view:MTKView) {
+   init(view:MTKView) {
       // call the super
-      super.init(view: view)
-      
-      // Render pipeline
-      let library = view.device!.newDefaultLibrary()!
-      let vertexFunction = library.makeFunction(name: "spinnerHubVertex")
-      let fragmentFunction = library.makeFunction(name: "spinnerHubFragment")
-      let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-      renderPipelineDescriptor.vertexFunction = vertexFunction
-      renderPipelineDescriptor.fragmentFunction = fragmentFunction
-      renderPipelineDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat
-      renderPipelineDescriptor.depthAttachmentPixelFormat = view.depthStencilPixelFormat
-      do {
-         renderPipelineState = try view.device!.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
-      } catch {
-         Swift.print("Unable to compile render pipeline state")
-         return
-      }
+      super.init(view: view, shaderName:"spinnerHubFragment")
    }
 
 
-   func render(renderEncoder : MTLRenderCommandEncoder) {
-      // install our metal functions
-      renderEncoder.setRenderPipelineState(renderPipelineState!)
-      
+   override func render(renderEncoder : MTLRenderCommandEncoder) {
       // set our render parameters
       let renderParameters : SpinnerRenderParameters =
          SpinnerRenderParameters(
@@ -49,13 +29,17 @@ class SpinnerHub : MetalRenderer {
             yScale: Float(self.frame.height / view.frame.height)
       )
       
-      let dataSize = MemoryLayout.size(ofValue: renderParameters);
-      let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(bytes: [renderParameters], length: dataSize, options: []);
+      // turn them into metal buffers
+      let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
+         bytes: [renderParameters],
+         length: MemoryLayout.size(ofValue: renderParameters),
+         options: [])
+
+      // give them to the fragment function
+      renderEncoder.setFragmentBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER))
       
-      // encode our render commands
-      renderEncoder.setVertexBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
-      renderEncoder.setFragmentBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
-      renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
+      // let the base class handle it from here
+      super.render(renderEncoder: renderEncoder)
    }
    
 
