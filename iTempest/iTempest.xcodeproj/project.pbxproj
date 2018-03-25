@@ -189,10 +189,33 @@
 			children = (
 				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
 				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
-				021E39B31F9DAB1700FFAB2B /* iTempest */,
+				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
+				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
+				0262C923200A54FC00E5A429 /* Spinner.h */,
+				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
+				021E39C91F9DAB1700FFAB2B /* main.m */,
+				02825C8620026F130032BE41 /* Spinner.metal */,
+				021DC62920589975001551FD /* SpinnerHub.metal */,
+				0262C927200AED3000E5A429 /* TempestView.metal */,
+				021E39C81F9DAB1700FFAB2B /* Info.plist */,
+				026417B01FE5C114005D913E /* ButtonView.swift */,
+				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
+				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
+				021DC6272058975C001551FD /* SpinnerHub.swift */,
+				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
+				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
+				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
+				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
+				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
+				02AC81C92067FC130091E7D0 /* cTempest */,
 				021E39D21F9DAB1700FFAB2B /* iTempestTests */,
 				021E39DD1F9DAB1700FFAB2B /* iTempestUITests */,
+				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
+				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
 				021E39B21F9DAB1700FFAB2B /* Products */,
+				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
+				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
+				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,45 +227,6 @@
 				021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		021E39B31F9DAB1700FFAB2B /* iTempest */ = {
-			isa = PBXGroup;
-			children = (
-				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
-				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
-				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
-				026417B01FE5C114005D913E /* ButtonView.swift */,
-				027030B61FB88F8700A810B8 /* cTempest.cpp */,
-				027030B71FB88F8700A810B8 /* cTempest.h */,
-				021E39C81F9DAB1700FFAB2B /* Info.plist */,
-				026A1B661FC1ED0D00EEFF34 /* iosException.cpp */,
-				026A1B691FC1ED3000EEFF34 /* iosException.h */,
-				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
-				027030B31FB88BD400A810B8 /* iTempest.cpp */,
-				027030B41FB88BD400A810B8 /* iTempest.h */,
-				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
-				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
-				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
-				021E39C91F9DAB1700FFAB2B /* main.m */,
-				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
-				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
-				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
-				0262C923200A54FC00E5A429 /* Spinner.h */,
-				02825C8620026F130032BE41 /* Spinner.metal */,
-				021DC62920589975001551FD /* SpinnerHub.metal */,
-				021DC6272058975C001551FD /* SpinnerHub.swift */,
-				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
-				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
-				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
-				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
-				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
-				0262C926200AE2CD00E5A429 /* TempestVector.h */,
-				0262C927200AED3000E5A429 /* TempestView.metal */,
-				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
-				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
-			);
-			path = iTempest;
 			sourceTree = "<group>";
 		};
 		021E39D21F9DAB1700FFAB2B /* iTempestTests */ = {
@@ -271,6 +255,7 @@
 				024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */,
 			);
 			name = SQLite;
+			path = iTempest;
 			sourceTree = "<group>";
 		};
 		024D0E1A1F9EA8B600DA5FFE /* TempestCPU */ = {
@@ -286,6 +271,7 @@
 				024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */,
 			);
 			name = TempestCPU;
+			path = iTempest;
 			sourceTree = "<group>";
 		};
 		024D0E1D1F9EAA7700DA5FFE /* TempestIO */ = {
@@ -311,6 +297,7 @@
 				0235021D204C970A0081C43D /* WaveStreamer.h */,
 			);
 			name = TempestIO;
+			path = iTempest;
 			sourceTree = "<group>";
 		};
 		024D0E1E1F9EAA9C00DA5FFE /* Vector */ = {
@@ -352,6 +339,22 @@
 				024D0E3A1F9EB7A800DA5FFE /* MathBox.cpp */,
 			);
 			name = MathBox;
+			sourceTree = "<group>";
+		};
+		02AC81C92067FC130091E7D0 /* cTempest */ = {
+			isa = PBXGroup;
+			children = (
+				0262C926200AE2CD00E5A429 /* TempestVector.h */,
+				027030B61FB88F8700A810B8 /* cTempest.cpp */,
+				027030B71FB88F8700A810B8 /* cTempest.h */,
+				026A1B661FC1ED0D00EEFF34 /* iosException.cpp */,
+				026A1B691FC1ED3000EEFF34 /* iosException.h */,
+				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
+				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
+				027030B31FB88BD400A810B8 /* iTempest.cpp */,
+				027030B41FB88BD400A810B8 /* iTempest.h */,
+			);
+			path = cTempest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -708,11 +711,11 @@
 					"$(SRCROOT)/../SQLite/SQLRR/",
 					"$(SRCROOT)/../SQLite/",
 				);
-				INFOPLIST_FILE = iTempest/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "iTempest/iTempest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
@@ -738,11 +741,11 @@
 					"$(SRCROOT)/../SQLite/SQLRR/",
 					"$(SRCROOT)/../SQLite/",
 				);
-				INFOPLIST_FILE = iTempest/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "iTempest/iTempest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
