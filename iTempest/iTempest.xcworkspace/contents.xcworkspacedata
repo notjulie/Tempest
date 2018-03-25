@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:iTempest/iTempest.xcodeproj">
+      location = "container:iTempest.xcodeproj">
    </FileRef>
 </Workspace>
