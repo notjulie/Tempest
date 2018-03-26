@@ -45,7 +45,7 @@ class TempestViewRenderer : MetalRenderer {
       }
    }
    
-   public func render(renderEncoder : MTLRenderCommandEncoder) {
+   public override func render(renderEncoder : MTLRenderCommandEncoder) {
       // ask Tempest for a list of lines to draw
       var vectorCount : Int = vectors.count
       vectors.withUnsafeMutableBufferPointer { vectorBuffer in

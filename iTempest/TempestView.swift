@@ -18,6 +18,7 @@ class TempestView : MTKView {
    private var spinner : SpinnerView?
    private var spinnerRenderer : SpinnerRenderer?
    private var spinnerHub : SpinnerHub?
+   private var player1 : PlayerButtonRenderer?
 
    init(tempest : cTempest) {
       // call the super
@@ -44,6 +45,7 @@ class TempestView : MTKView {
       tempestRenderer = TempestViewRenderer(view: self, tempest: tempest)
       spinnerRenderer = SpinnerRenderer(view:self)
       spinnerHub = SpinnerHub(view:self)
+      player1 = PlayerButtonRenderer(view:self)
 
       // add our child views
       spinner = SpinnerView(tempest: tempest, callback:onSpinnerMoved)
@@ -59,34 +61,28 @@ class TempestView : MTKView {
       let commandBuffer = commandQueue!.makeCommandBuffer()
       let renderPassDescriptor = currentRenderPassDescriptor!
       let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
-      
-      // create our render encoder for tempest and render it
-      var renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
-      renderEncoder.setFrontFacing(.counterClockwise)
-      renderEncoder.setDepthStencilState(depthStencilState)
-      tempestRenderer!.render(renderEncoder: renderEncoder)
-      renderEncoder.endEncoding()
-      
-      // create our render encoder for the spinner and render it
-      renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
-      renderEncoder.setFrontFacing(.counterClockwise)
-      renderEncoder.setDepthStencilState(depthStencilState)
-      spinnerRenderer!.render(renderEncoder: renderEncoder)
-      renderEncoder.endEncoding()
-      
-      // and the hub
-      renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
-      renderEncoder.setFrontFacing(.counterClockwise)
-      renderEncoder.setDepthStencilState(depthStencilState)
-      spinnerHub!.render(renderEncoder: renderEncoder)
-      renderEncoder.endEncoding()
-      
+
+      // render stuff
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:tempestRenderer!)
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:spinnerRenderer!)
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:spinnerHub!)
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:player1!)
+
       // end encoding on our parallel renderer
       parallelRenderEncoder.endEncoding()
       
       let drawable = currentDrawable!
       commandBuffer.present(drawable)
       commandBuffer.commit()
+   }
+
+   private func render(parallelRenderEncoder:MTLParallelRenderCommandEncoder, renderer:MetalRenderer) {
+      // create our render encoder for tempest and render it
+      let renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
+      renderEncoder.setFrontFacing(.counterClockwise)
+      renderEncoder.setDepthStencilState(depthStencilState)
+      renderer.render(renderEncoder: renderEncoder)
+      renderEncoder.endEncoding()
    }
    
    override func layoutSubviews() {
@@ -95,6 +91,8 @@ class TempestView : MTKView {
       
       // although they are not technically subviews, this is a great place to
       // figure out where the metal images should go
+      
+      player1!.frame = CGRect(x:0.0, y:0.0, width:50, height:50)
 
       // set the frame of the Tempest graphic
       var width = self.frame.width

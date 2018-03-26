@@ -59,7 +59,7 @@ class SpinnerRenderer : MetalRenderer {
       }
    }
    
-   func render(renderEncoder : MTLRenderCommandEncoder) {
+   override func render(renderEncoder : MTLRenderCommandEncoder) {
       // install our metal functions
       renderEncoder.setRenderPipelineState(renderPipelineState!)
       

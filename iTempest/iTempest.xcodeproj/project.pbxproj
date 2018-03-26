@@ -59,6 +59,8 @@
 		02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02BDBCD420681E2F00C4464C /* RectangleShader.metal */; };
 		02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */; };
 		02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C7C4E62055AECF00248E3E /* MetalRenderer.swift */; };
+		02E84C1120687EEC009E08BC /* PlayerButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */; };
+		02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
 		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
 /* End PBXBuildFile section */
@@ -158,6 +160,8 @@
 		02BDBCD420681E2F00C4464C /* RectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RectangleShader.metal; sourceTree = "<group>"; };
 		02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		02C7C4E62055AECF00248E3E /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
+		02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerButtonRenderer.swift; sourceTree = "<group>"; };
+		02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PlayerButtonRenderer.metal; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
 		02F307101FA4198F0062CE9F /* SQLRRException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRException.cpp; path = ../../SQLite/SQLRR/SQLRRException.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,6 +198,8 @@
 			children = (
 				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
 				02BDBCD220681DA800C4464C /* RectangleShader.swift */,
+				02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */,
+				02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */,
 				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
 				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
 				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
@@ -520,6 +526,7 @@
 				0278563E2054588400593A8E /* SpinnerRenderer.swift in Sources */,
 				02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */,
 				026417B11FE5C114005D913E /* ButtonView.swift in Sources */,
+				02E84C1120687EEC009E08BC /* PlayerButtonRenderer.swift in Sources */,
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
@@ -529,6 +536,7 @@
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
 				02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */,
 				029AA09D1FBFBBBB00762BC8 /* SoundGenerator.cpp in Sources */,
+				02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */,
 				024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */,
 				02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */,
 				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,

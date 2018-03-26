@@ -17,4 +17,10 @@ class MetalRenderer {
    init(view:MTKView) {
       self.view = view
    }
+   
+   /**
+    Abstract rendering function
+    */
+   func render(renderEncoder : MTLRenderCommandEncoder) {
+   }
 }
