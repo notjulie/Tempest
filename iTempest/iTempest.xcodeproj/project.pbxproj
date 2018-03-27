@@ -196,30 +196,18 @@
 		021E39A81F9DAB1700FFAB2B = {
 			isa = PBXGroup;
 			children = (
-				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
-				02BDBCD220681DA800C4464C /* RectangleShader.swift */,
-				02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */,
-				02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */,
+				0289A7722069C483001208FA /* Metal */,
 				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
 				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
 				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
 				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
-				02BDBCD02068138900C4464C /* RectangleShader.h */,
-				0262C923200A54FC00E5A429 /* Spinner.h */,
 				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
 				021E39C91F9DAB1700FFAB2B /* main.m */,
-				02825C8620026F130032BE41 /* Spinner.metal */,
-				021DC62920589975001551FD /* SpinnerHub.metal */,
-				0262C927200AED3000E5A429 /* TempestView.metal */,
 				021E39C81F9DAB1700FFAB2B /* Info.plist */,
 				026417B01FE5C114005D913E /* ButtonView.swift */,
 				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
-				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
-				021DC6272058975C001551FD /* SpinnerHub.swift */,
-				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
 				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
 				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
-				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
 				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
 				02AC81C92067FC130091E7D0 /* cTempest */,
 				021E39D21F9DAB1700FFAB2B /* iTempestTests */,
@@ -353,6 +341,26 @@
 				024D0E3A1F9EB7A800DA5FFE /* MathBox.cpp */,
 			);
 			name = MathBox;
+			sourceTree = "<group>";
+		};
+		0289A7722069C483001208FA /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
+				02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */,
+				02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */,
+				02BDBCD02068138900C4464C /* RectangleShader.h */,
+				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
+				02BDBCD220681DA800C4464C /* RectangleShader.swift */,
+				0262C923200A54FC00E5A429 /* Spinner.h */,
+				02825C8620026F130032BE41 /* Spinner.metal */,
+				021DC62920589975001551FD /* SpinnerHub.metal */,
+				021DC6272058975C001551FD /* SpinnerHub.swift */,
+				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
+				0262C927200AED3000E5A429 /* TempestView.metal */,
+				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
+			);
+			path = Metal;
 			sourceTree = "<group>";
 		};
 		02AC81C92067FC130091E7D0 /* cTempest */ = {
