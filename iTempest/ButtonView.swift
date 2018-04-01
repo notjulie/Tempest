@@ -8,38 +8,30 @@
 
 import Foundation
 import UIKit
+import MetalKit
 
-class ButtonView : UIView {
+class ButtonView : RectangleShaderButton {
     private var tempest : cTempest = 0;
     private var whichButton : cTempestButton = FIRE;
-    private var button : UIButton = UIButton(type: UIButtonType.roundedRect);
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(tempest:cTempest, _whichButton:cTempestButton, color:UIColor) {
-        // call the parent
-        super.init(frame:CGRect(x:0, y:0, width:80, height:80));
+   init(view:MTKView, shaderName:String, tempest:cTempest, whichButton:cTempestButton) {
+      // call the parent
+      super.init(view:view, shaderName:shaderName);
         
-        // save parameters
-        self.tempest = tempest;
-        whichButton = _whichButton;
+      // save parameters
+      self.tempest = tempest;
+      self.whichButton = whichButton;
 
-        // initialize
-        button.backgroundColor = color;
-        isUserInteractionEnabled = true;
-        button.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: 80,
-            height: 80);
-        button.layer.cornerRadius = 40;
-        button.addTarget(self, action: #selector(buttonDown), for: UIControlEvents.touchDown);
-        button.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpInside);
-        button.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpOutside);
-        self.addSubview(button);
-    }
+      // initialize
+      isUserInteractionEnabled = true;
+      self.addTarget(self, action: #selector(buttonDown), for: UIControlEvents.touchDown);
+      self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpInside);
+      self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpOutside);
+   }
     
     func buttonDown() {
         // tell Tempest that the button is down
