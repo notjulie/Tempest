@@ -15,7 +15,9 @@
 extern "C" {
 #endif
 
-   
+   // a nice simple abstraction for passing around a reference to a tempest
+   // object... this is basically just an integer handle that the C code maps
+   // to an actual tempest object
    typedef int cTempest;
 
    typedef enum {
@@ -31,6 +33,7 @@ extern "C" {
    int cTempestGetVectors(cTempest tempest, TempestVector *buffer, int bufferSize);
    void cTempestMoveSpinner(cTempest _tempest, int offset);
    void cTempestSetButtonState(cTempest tempest, cTempestButton button, int state);
+   int cTempestIsButtonLit(cTempest tempest, cTempestButton button);
    
 #ifdef __cplusplus
 };

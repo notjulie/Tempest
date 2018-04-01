@@ -61,7 +61,6 @@
 		02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */; };
 		02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C7C4E62055AECF00248E3E /* MetalRenderer.swift */; };
 		02E8168F207057C00030CE93 /* sqlite.c in Sources */ = {isa = PBXBuildFile; fileRef = 02E8168D207057C00030CE93 /* sqlite.c */; };
-		02E84C1120687EEC009E08BC /* PlayerButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */; };
 		02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
 		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
@@ -164,7 +163,6 @@
 		02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		02C7C4E62055AECF00248E3E /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
 		02E8168D207057C00030CE93 /* sqlite.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sqlite.c; path = ../../SQLite/sqlite.c; sourceTree = "<group>"; };
-		02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerButtonRenderer.swift; sourceTree = "<group>"; };
 		02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PlayerButtonRenderer.metal; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
 		02F307101FA4198F0062CE9F /* SQLRRException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRException.cpp; path = ../../SQLite/SQLRR/SQLRRException.cpp; sourceTree = "<group>"; };
@@ -353,7 +351,6 @@
 				025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */,
 				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
 				02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */,
-				02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */,
 				02BDBCD02068138900C4464C /* RectangleShader.h */,
 				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
 				02BDBCD220681DA800C4464C /* RectangleShader.swift */,
@@ -372,15 +369,15 @@
 		02AC81C92067FC130091E7D0 /* cTempest */ = {
 			isa = PBXGroup;
 			children = (
-				0262C926200AE2CD00E5A429 /* TempestVector.h */,
 				027030B61FB88F8700A810B8 /* cTempest.cpp */,
 				027030B71FB88F8700A810B8 /* cTempest.h */,
 				026A1B661FC1ED0D00EEFF34 /* iosException.cpp */,
 				026A1B691FC1ED3000EEFF34 /* iosException.h */,
-				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
-				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
 				027030B31FB88BD400A810B8 /* iTempest.cpp */,
 				027030B41FB88BD400A810B8 /* iTempest.h */,
+				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
+				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
+				0262C926200AE2CD00E5A429 /* TempestVector.h */,
 			);
 			path = cTempest;
 			sourceTree = "<group>";
@@ -540,7 +537,6 @@
 				0278563E2054588400593A8E /* SpinnerRenderer.swift in Sources */,
 				02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */,
 				026417B11FE5C114005D913E /* ButtonView.swift in Sources */,
-				02E84C1120687EEC009E08BC /* PlayerButtonRenderer.swift in Sources */,
 				025D84D420706E1000AF9C97 /* RectangleShaderButton.swift in Sources */,
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
