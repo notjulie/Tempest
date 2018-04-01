@@ -11,7 +11,8 @@ import MetalKit
 import UIKit
 
 class RectangleShaderButton : UIButton, AbstractMetalRenderer {
-   private let image : RectangleShader?;
+   // public read-only properties
+   public let image : RectangleShader?;
    
    init(view:MTKView, shaderName:String) {
       // initialize the image

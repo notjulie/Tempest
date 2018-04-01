@@ -83,5 +83,10 @@ extern "C" {
 
       return 0;
    }
+   
+   int cTempestIsInAttractMode(cTempest tempest)
+   {
+      return GetTempest(tempest)->IsInAttractMode() ? 1 : 0;
+   }
 };
 

@@ -34,6 +34,7 @@ public:
    void MoveSpinner(int offset) { soundIO.MoveSpinner(offset); }
    bool GetPlayer1LEDState(void) { return soundIO.GetPlayer1LEDState(); }
    bool GetPlayer2LEDState(void) { return soundIO.GetPlayer2LEDState(); }
+   bool IsInAttractMode(void) { return runner.IsInAttractMode(); }
    void SetPlayer1ButtonState(bool state) { soundIO.SetPlayer1ButtonState(state); }
    void SetPlayer2ButtonState(bool state) { soundIO.SetPlayer2ButtonState(state); }
    void SetFireButtonState(bool state) { soundIO.SetFireButtonState(state); }

@@ -38,6 +38,7 @@
 		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
 		025D84D420706E1000AF9C97 /* RectangleShaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */; };
 		025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */; };
+		025D84E320716CBE00AF9C97 /* PlayerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84E220716CBE00AF9C97 /* PlayerButtonView.swift */; };
 		0262C928200AED3000E5A429 /* TempestView.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0262C927200AED3000E5A429 /* TempestView.metal */; };
 		026417B11FE5C114005D913E /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026417B01FE5C114005D913E /* ButtonView.swift */; };
 		026A1B651FC1E05B00EEFF34 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */; };
@@ -132,6 +133,7 @@
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
 		025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleShaderButton.swift; sourceTree = "<group>"; };
 		025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractMetalRenderer.swift; sourceTree = "<group>"; };
+		025D84E220716CBE00AF9C97 /* PlayerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerButtonView.swift; sourceTree = "<group>"; };
 		0262C923200A54FC00E5A429 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
 		0262C926200AE2CD00E5A429 /* TempestVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempestVector.h; sourceTree = "<group>"; };
 		0262C927200AED3000E5A429 /* TempestView.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TempestView.metal; sourceTree = "<group>"; };
@@ -198,7 +200,6 @@
 		021E39A81F9DAB1700FFAB2B = {
 			isa = PBXGroup;
 			children = (
-				0289A7722069C483001208FA /* Metal */,
 				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
 				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
 				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
@@ -209,6 +210,7 @@
 				026417B01FE5C114005D913E /* ButtonView.swift */,
 				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
 				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
+				025D84E220716CBE00AF9C97 /* PlayerButtonView.swift */,
 				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
 				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
 				02AC81C92067FC130091E7D0 /* cTempest */,
@@ -216,6 +218,7 @@
 				021E39DD1F9DAB1700FFAB2B /* iTempestUITests */,
 				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
 				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
+				0289A7722069C483001208FA /* Metal */,
 				021E39B21F9DAB1700FFAB2B /* Products */,
 				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
 				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
@@ -522,6 +525,7 @@
 				024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */,
 				027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */,
 				024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */,
+				025D84E320716CBE00AF9C97 /* PlayerButtonView.swift in Sources */,
 				029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */,
 				024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */,
 				024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */,

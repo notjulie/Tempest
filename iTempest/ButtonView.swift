@@ -10,44 +10,43 @@ import Foundation
 import UIKit
 import MetalKit
 
+/**
+ * Button class that handles up/down events and passes them off to a given
+ * button on the Tempest control panel.
+ */
 class ButtonView : RectangleShaderButton {
-   private var tempest : cTempest = 0;
-   private var whichButton : cTempestButton = FIRE;
+   // public read-only properties
+   public let tempest : cTempest
+   public let whichButton : cTempestButton
 
    required init?(coder aDecoder: NSCoder) {
-     super.init(coder: aDecoder)
+      tempest = 0
+      whichButton  = FIRE
+      super.init(coder: aDecoder)
    }
 
    init(view:MTKView, shaderName:String, tempest:cTempest, whichButton:cTempestButton) {
-   // call the parent
-   super.init(view:view, shaderName:shaderName);
-     
-   // save parameters
-   self.tempest = tempest;
-   self.whichButton = whichButton;
-
-   // initialize
-   isUserInteractionEnabled = true;
-   self.addTarget(self, action: #selector(buttonDown), for: UIControlEvents.touchDown);
-   self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpInside);
-   self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpOutside);
+      // save parameters
+      self.tempest = tempest
+      self.whichButton = whichButton
+      
+      // call the parent
+      super.init(view:view, shaderName:shaderName);
+      // initialize
+      isUserInteractionEnabled = true
+      self.addTarget(self, action: #selector(buttonDown), for: UIControlEvents.touchDown)
+      self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpInside)
+      self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpOutside)
    }
 
    func buttonDown() {
      // tell Tempest that the button is down
-     cTempestSetButtonState(tempest, whichButton, 1);
+     cTempestSetButtonState(tempest, whichButton, 1)
    }
 
    func buttonUp() {
      // tell Tempest that the button is up
      cTempestSetButtonState(tempest, whichButton, 0);
    }
-   
-   override func render(renderEncoder : MTLRenderCommandEncoder) {
-      if (cTempestIsButtonLit(tempest, whichButton) != 0) {
-         super.render(renderEncoder:renderEncoder)
-      }
-   }
-
 }
 

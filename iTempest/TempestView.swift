@@ -18,8 +18,8 @@ class TempestView : MTKView {
    private var spinner : SpinnerView?
    private var spinnerRenderer : SpinnerRenderer?
    private var spinnerHub : SpinnerHub?
-   private var player1 : ButtonView?
-   private var player2 : ButtonView?
+   private var player1 : PlayerButtonView?
+   private var player2 : PlayerButtonView?
    private var fire : ButtonView?
    private var zap : ButtonView?
 
@@ -48,8 +48,8 @@ class TempestView : MTKView {
       tempestRenderer = TempestViewRenderer(view: self, tempest: tempest)
       spinnerRenderer = SpinnerRenderer(view:self)
       spinnerHub = SpinnerHub(view:self)
-      player1 = ButtonView(view:self, shaderName:"playerButtonShader", tempest:tempest, whichButton:PLAYER1)
-      player2 = ButtonView(view:self, shaderName:"playerButtonShader", tempest:tempest, whichButton:PLAYER2)
+      player1 = PlayerButtonView(view:self, tempest:tempest, whichButton:PLAYER1)
+      player2 = PlayerButtonView(view:self, tempest:tempest, whichButton:PLAYER2)
       fire = ButtonView(view:self, shaderName:"playerButtonShader", tempest:tempest, whichButton:FIRE)
       zap = ButtonView(view:self, shaderName:"playerButtonShader", tempest:tempest, whichButton:ZAP)
 

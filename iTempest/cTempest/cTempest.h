@@ -34,6 +34,7 @@ extern "C" {
    void cTempestMoveSpinner(cTempest _tempest, int offset);
    void cTempestSetButtonState(cTempest tempest, cTempestButton button, int state);
    int cTempestIsButtonLit(cTempest tempest, cTempestButton button);
+   int cTempestIsInAttractMode(cTempest tempest);
    
 #ifdef __cplusplus
 };
