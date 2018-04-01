@@ -36,6 +36,8 @@
 		024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */; };
 		024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E441F9EB98F00DA5FFE /* TempestException.cpp */; };
 		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
+		025D84D420706E1000AF9C97 /* RectangleShaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */; };
+		025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */; };
 		0262C928200AED3000E5A429 /* TempestView.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0262C927200AED3000E5A429 /* TempestView.metal */; };
 		026417B11FE5C114005D913E /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026417B01FE5C114005D913E /* ButtonView.swift */; };
 		026A1B651FC1E05B00EEFF34 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */; };
@@ -129,6 +131,8 @@
 		024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Am2901Tables.cpp; path = ../../TempestCPU/MathBox/Am2901Tables.cpp; sourceTree = "<group>"; };
 		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
+		025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleShaderButton.swift; sourceTree = "<group>"; };
+		025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractMetalRenderer.swift; sourceTree = "<group>"; };
 		0262C923200A54FC00E5A429 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
 		0262C926200AE2CD00E5A429 /* TempestVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempestVector.h; sourceTree = "<group>"; };
 		0262C927200AED3000E5A429 /* TempestView.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TempestView.metal; sourceTree = "<group>"; };
@@ -346,12 +350,14 @@
 		0289A7722069C483001208FA /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */,
 				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
 				02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */,
 				02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */,
 				02BDBCD02068138900C4464C /* RectangleShader.h */,
 				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
 				02BDBCD220681DA800C4464C /* RectangleShader.swift */,
+				025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */,
 				0262C923200A54FC00E5A429 /* Spinner.h */,
 				02825C8620026F130032BE41 /* Spinner.metal */,
 				021DC62920589975001551FD /* SpinnerHub.metal */,
@@ -535,9 +541,11 @@
 				02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */,
 				026417B11FE5C114005D913E /* ButtonView.swift in Sources */,
 				02E84C1120687EEC009E08BC /* PlayerButtonRenderer.swift in Sources */,
+				025D84D420706E1000AF9C97 /* RectangleShaderButton.swift in Sources */,
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
+				025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */,
 				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
 				0262C928200AED3000E5A429 /* TempestView.metal in Sources */,

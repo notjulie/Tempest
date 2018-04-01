@@ -18,7 +18,7 @@ class TempestView : MTKView {
    private var spinner : SpinnerView?
    private var spinnerRenderer : SpinnerRenderer?
    private var spinnerHub : SpinnerHub?
-   private var player1 : PlayerButtonRenderer?
+   private var player1 : RectangleShaderButton?
 
    init(tempest : cTempest) {
       // call the super
@@ -45,7 +45,7 @@ class TempestView : MTKView {
       tempestRenderer = TempestViewRenderer(view: self, tempest: tempest)
       spinnerRenderer = SpinnerRenderer(view:self)
       spinnerHub = SpinnerHub(view:self)
-      player1 = PlayerButtonRenderer(view:self)
+      player1 = RectangleShaderButton(view:self, shaderName:"playerButtonShader")
 
       // add our child views
       spinner = SpinnerView(tempest: tempest, callback:onSpinnerMoved)
@@ -76,7 +76,7 @@ class TempestView : MTKView {
       commandBuffer.commit()
    }
 
-   private func render(parallelRenderEncoder:MTLParallelRenderCommandEncoder, renderer:MetalRenderer) {
+   private func render(parallelRenderEncoder:MTLParallelRenderCommandEncoder, renderer:AbstractMetalRenderer) {
       // create our render encoder for tempest and render it
       let renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
       renderEncoder.setFrontFacing(.counterClockwise)

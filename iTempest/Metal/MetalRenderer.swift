@@ -9,7 +9,7 @@
 import Foundation
 import MetalKit
 
-class MetalRenderer {
+class MetalRenderer : AbstractMetalRenderer {
    public let view : MTKView
    
    public var frame : CGRect = CGRect()
