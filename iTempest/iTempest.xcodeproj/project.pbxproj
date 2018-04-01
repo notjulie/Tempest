@@ -16,7 +16,6 @@
 		021E39CA1F9DAB1700FFAB2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39C91F9DAB1700FFAB2B /* main.m */; };
 		021E39D41F9DAB1700FFAB2B /* iTempestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39D31F9DAB1700FFAB2B /* iTempestTests.m */; };
 		021E39DF1F9DAB1700FFAB2B /* iTempestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */; };
-		024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */; };
 		024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */; };
 		024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */; };
 		024D0E231F9EAAFD00DA5FFE /* CPU6502.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */; };
@@ -59,6 +58,7 @@
 		02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02BDBCD420681E2F00C4464C /* RectangleShader.metal */; };
 		02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */; };
 		02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C7C4E62055AECF00248E3E /* MetalRenderer.swift */; };
+		02E8168F207057C00030CE93 /* sqlite.c in Sources */ = {isa = PBXBuildFile; fileRef = 02E8168D207057C00030CE93 /* sqlite.c */; };
 		02E84C1120687EEC009E08BC /* PlayerButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */; };
 		02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
@@ -109,7 +109,6 @@
 		0235021F204C970A0081C43D /* TempestDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempestDB.h; path = ../../TempestIO/TempestDB.h; sourceTree = "<group>"; };
 		02350220204C970B0081C43D /* SoundChannelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannelState.h; path = ../../TempestIO/SoundChannelState.h; sourceTree = "<group>"; };
 		024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../SQLite/sqlite3.h; sourceTree = "<group>"; };
-		024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../SQLite/sqlite3.c; sourceTree = "<group>"; };
 		024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestRunner.cpp; path = ../../TempestCPU/TempestRunner.cpp; sourceTree = "<group>"; };
 		024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorDataInterpreter.cpp; path = ../../TempestIO/Vector/VectorDataInterpreter.cpp; sourceTree = "<group>"; };
 		024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502.cpp; path = ../../TempestCPU/6502/CPU6502.cpp; sourceTree = "<group>"; };
@@ -160,6 +159,7 @@
 		02BDBCD420681E2F00C4464C /* RectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RectangleShader.metal; sourceTree = "<group>"; };
 		02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		02C7C4E62055AECF00248E3E /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
+		02E8168D207057C00030CE93 /* sqlite.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sqlite.c; path = ../../SQLite/sqlite.c; sourceTree = "<group>"; };
 		02E84C1020687EEC009E08BC /* PlayerButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerButtonRenderer.swift; sourceTree = "<group>"; };
 		02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PlayerButtonRenderer.metal; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
@@ -253,8 +253,8 @@
 			isa = PBXGroup;
 			children = (
 				024D0E281F9EAB8A00DA5FFE /* SQLRR */,
-				024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */,
 				024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */,
+				02E8168D207057C00030CE93 /* sqlite.c */,
 			);
 			name = SQLite;
 			path = iTempest;
@@ -441,7 +441,7 @@
 		021E39A91F9DAB1700FFAB2B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Randy Rasmussen";
 				TargetAttributes = {
 					021E39B01F9DAB1700FFAB2B = {
@@ -542,6 +542,7 @@
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
 				0262C928200AED3000E5A429 /* TempestView.metal in Sources */,
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
+				02E8168F207057C00030CE93 /* sqlite.c in Sources */,
 				02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */,
 				029AA09D1FBFBBBB00762BC8 /* SoundGenerator.cpp in Sources */,
 				02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */,
@@ -561,7 +562,6 @@
 				024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */,
 				027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */,
 				024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */,
-				024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +630,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -637,6 +638,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -685,6 +687,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -692,6 +695,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
