@@ -50,8 +50,8 @@ class TempestView : MTKView {
       spinnerHub = SpinnerHub(view:self)
       player1 = PlayerButtonView(view:self, tempest:tempest, whichButton:PLAYER1)
       player2 = PlayerButtonView(view:self, tempest:tempest, whichButton:PLAYER2)
-      fire = ButtonView(view:self, shaderName:"playerButtonShader", tempest:tempest, whichButton:FIRE)
-      zap = ButtonView(view:self, shaderName:"playerButtonShader", tempest:tempest, whichButton:ZAP)
+      fire = PlayerButtonView(view:self, tempest:tempest, whichButton:FIRE)
+      zap = PlayerButtonView(view:self, tempest:tempest, whichButton:ZAP)
 
       // add our child views... our views are actually just transparent place holders for
       // receiving user inputs
@@ -77,13 +77,13 @@ class TempestView : MTKView {
       let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
 
       // render stuff
-      render(parallelRenderEncoder:parallelRenderEncoder,renderer:tempestRenderer!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:spinnerRenderer!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:spinnerHub!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:player1!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:player2!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:fire!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:zap!)
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:tempestRenderer!)
 
       // end encoding on our parallel renderer
       parallelRenderEncoder.endEncoding()
@@ -114,43 +114,46 @@ class TempestView : MTKView {
       if (width > self.frame.height) {
          width = self.frame.height
       }
-      tempestRenderer!.frame = CGRect(x:0.0, y:0.0, width:width, height:width)
+      let tempestFrame = CGRect(x:0.0, y:0.0, width:width, height:width)
+      tempestRenderer!.setFrame(frame:tempestFrame)
 
       // figuring out if we are portrait or landscape
+      var spinnerFrame : CGRect
       if (self.frame.width > self.frame.height) {
          // spinner
-         spinnerRenderer!.frame = CGRect(
-            x: tempestRenderer!.frame.maxX,
+         spinnerFrame = CGRect(
+            x: tempestFrame.maxX,
             y: self.frame.height - 80,
-            width: self.frame.width - tempestRenderer!.frame.maxX,
-            height: 80);
+            width: self.frame.width - tempestFrame.maxX,
+            height: 80)
       } else {
          // spinner
-         spinnerRenderer!.frame = CGRect(
+         spinnerFrame = CGRect(
             x: 0,
             y: self.frame.height - 80,
             width: self.frame.width,
-            height: 80);
+            height: 80)
       }
-      
+      spinnerRenderer!.setFrame(frame:spinnerFrame)
+      spinnerHub!.setFrame(frame:spinnerFrame)
+
       // for the moment just always put fire and zap over the spinner
       fire!.frame = CGRect(
-         x: spinnerRenderer!.frame.minX,
-         y: spinnerRenderer!.frame.minY-80,
+         x: spinnerFrame.minX,
+         y: spinnerFrame.minY-80,
          width:80,
          height:80
       )
       zap!.frame = CGRect(
-         x: spinnerRenderer!.frame.maxX-80,
-         y: spinnerRenderer!.frame.minY-80,
+         x: spinnerFrame.maxX-80,
+         y: spinnerFrame.minY-80,
          width:80,
          height:80
       )
 
       // and the actual spinner view is the same size... this is just an invisible control
       // that handles the touch input
-      spinner!.frame = spinnerRenderer!.frame
-      spinnerHub!.frame = spinnerRenderer!.frame
+      spinner!.frame = spinnerFrame
    }
    
    private func onSpinnerMoved(ticks : Int) {

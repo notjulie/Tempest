@@ -12,10 +12,21 @@ import MetalKit
 class MetalRenderer : AbstractMetalRenderer {
    public let view : MTKView
    
-   public var frame : CGRect = CGRect()
+   private var frame : CGRect = CGRect()
    
    init(view:MTKView) {
       self.view = view
+   }
+
+   public func getFrame() -> CGRect {
+      return frame
+   }
+   
+   /**
+    * Sets the frame for this object
+    */
+   public func setFrame(frame : CGRect) {
+      self.frame = frame
    }
    
    /**

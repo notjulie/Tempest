@@ -12,7 +12,7 @@ import UIKit
 
 class RectangleShaderButton : UIButton, AbstractMetalRenderer {
    // public read-only properties
-   public let image : RectangleShader?;
+   private let image : RectangleShader?;
    
    init(view:MTKView, shaderName:String) {
       // initialize the image
@@ -27,11 +27,23 @@ class RectangleShaderButton : UIButton, AbstractMetalRenderer {
       super.init(coder:aDecoder)
    }
    
+   /**
+    * Returns the frame into which the shader will render; a child class can override this
+    * if the rendered rectangle is to be smaller than the view
+    */
+   public func getRenderFrame() -> CGRect {
+      return self.frame
+   }
+   
    func render(renderEncoder : MTLRenderCommandEncoder) {
       // set the frame of the image
-      image?.frame = self.frame
+      image!.setFrame(frame:getRenderFrame())
       
       // and render
       image!.render(renderEncoder: renderEncoder)
+   }
+   
+   public func setFragmentBuffer(index:Int, buffer:MTLBuffer) {
+      image!.setFragmentBuffer(index: index, buffer: buffer)
    }
 }

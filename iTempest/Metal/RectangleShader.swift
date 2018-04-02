@@ -11,6 +11,7 @@ import MetalKit
 
 class RectangleShader : MetalRenderer {
    private var renderPipelineState: MTLRenderPipelineState?
+   private var fragmentBuffers: [Int:MTLBuffer] = [:]
 
    init(view:MTKView, shaderName:String) {
       // call the super
@@ -38,24 +39,33 @@ class RectangleShader : MetalRenderer {
       renderEncoder.setRenderPipelineState(renderPipelineState!)
       
       // set our render parameters
+      let frame = self.getFrame()
       let renderVertexParameters =
          RectangleShaderVertexParameters(
-            centerX: Float(-1 + 2 * self.frame.midX / view.frame.width),
-            centerY: Float(1 - 2 * self.frame.midY / view.frame.height),
-            xScale: Float(self.frame.width / view.frame.width),
-            yScale: Float(self.frame.height / view.frame.height)
+            centerX: Float(-1 + 2 * frame.midX / view.frame.width),
+            centerY: Float(1 - 2 * frame.midY / view.frame.height),
+            xScale: Float(frame.width / view.frame.width),
+            yScale: Float(frame.height / view.frame.height)
       )
       
-      // turn them into metal buffers
+      // turn them into a metal buffer
       let renderVertexParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
          bytes: [renderVertexParameters],
          length: MemoryLayout.size(ofValue: renderVertexParameters),
          options: [])
+      renderEncoder.setVertexBuffer(renderVertexParametersBuffer, offset: 0, at: Int(RECTANGLE_SHADER_VERTEX_PARAMETERS_BUFFER_INDEX));
+
+      // add the subclass's fragment buffers
+      for (index,buffer) in self.fragmentBuffers {
+         renderEncoder.setFragmentBuffer(buffer, offset: 0, at: index)
+      }
       
       // encode our render commands
-      renderEncoder.setVertexBuffer(renderVertexParametersBuffer, offset: 0, at: Int(RECTANGLE_SHADER_VERTEX_PARAMETERS_BUFFER_INDEX));
       renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
    }
-   
+
+   public func setFragmentBuffer(index:Int, buffer:MTLBuffer) {
+      fragmentBuffers[index] = buffer
+   }
 }
 

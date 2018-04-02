@@ -64,14 +64,15 @@ class SpinnerRenderer : MetalRenderer {
       renderEncoder.setRenderPipelineState(renderPipelineState!)
       
       // set our render parameters
+      let frame = getFrame()
       let renderParameters : SpinnerRenderParameters =
          SpinnerRenderParameters(
             rotation: self.rotation,
-            centerX: Float(-1 + 2 * self.frame.midX / view.frame.width),
-            centerY: Float(1 - 2 * self.frame.midY / view.frame.height),
-            xScale: Float(self.frame.width / view.frame.width),
-            yScale: Float(self.frame.height / view.frame.height)
-     )
+            centerX: Float(-1 + 2 * frame.midX / view.frame.width),
+            centerY: Float(1 - 2 * frame.midY / view.frame.height),
+            xScale: Float(frame.width / view.frame.width),
+            yScale: Float(frame.height / view.frame.height)
+            )
       let dataSize = MemoryLayout.size(ofValue: renderParameters);
       let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(bytes: [renderParameters], length: dataSize, options: []);
       

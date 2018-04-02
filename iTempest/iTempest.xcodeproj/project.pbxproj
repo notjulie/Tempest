@@ -164,6 +164,7 @@
 		02BDBCD420681E2F00C4464C /* RectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RectangleShader.metal; sourceTree = "<group>"; };
 		02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		02C7C4E62055AECF00248E3E /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
+		02D982BC2071BD870026844F /* PlayerButtonRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerButtonRenderer.h; sourceTree = "<group>"; };
 		02E8168D207057C00030CE93 /* sqlite.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sqlite.c; path = ../../SQLite/sqlite.c; sourceTree = "<group>"; };
 		02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PlayerButtonRenderer.metal; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
@@ -353,6 +354,7 @@
 			children = (
 				025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */,
 				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
+				02D982BC2071BD870026844F /* PlayerButtonRenderer.h */,
 				02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */,
 				02BDBCD02068138900C4464C /* RectangleShader.h */,
 				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
