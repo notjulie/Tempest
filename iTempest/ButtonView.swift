@@ -18,7 +18,7 @@ class ButtonView : RectangleShaderButton {
    // public read-only properties
    public let tempest : cTempest
    public let whichButton : cTempestButton
-   public var settings = PlayerButtonSettings(brightness: 1.0)
+   public var settings = PlayerButtonSettings(r: 0.1, g:0.4, b:1.0)
 
    required init?(coder aDecoder: NSCoder) {
       tempest = 0

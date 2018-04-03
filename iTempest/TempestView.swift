@@ -106,8 +106,8 @@ class TempestView : MTKView {
       // call the super
       super.layoutSubviews()
       
-      player1!.frame = CGRect(x:0.0, y:0.0, width:50, height:50)
-      player2!.frame = CGRect(x:self.frame.width-50, y:0.0, width:50, height:50)
+      player1!.frame = CGRect(x:15.0, y:15.0, width:50, height:50)
+      player2!.frame = CGRect(x:self.frame.width-65, y:15.0, width:50, height:50)
 
       // set the frame of the Tempest graphic
       var width = self.frame.width
@@ -139,13 +139,13 @@ class TempestView : MTKView {
 
       // for the moment just always put fire and zap over the spinner
       fire!.frame = CGRect(
-         x: spinnerFrame.minX,
+         x: spinnerFrame.minX + 10,
          y: spinnerFrame.minY-80,
          width:80,
          height:80
       )
       zap!.frame = CGRect(
-         x: spinnerFrame.maxX-80,
+         x: spinnerFrame.maxX-10-80,
          y: spinnerFrame.minY-80,
          width:80,
          height:80

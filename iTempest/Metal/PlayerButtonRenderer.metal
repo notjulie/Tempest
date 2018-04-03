@@ -32,12 +32,12 @@ fragment half4 playerButtonShader(
 
    // return points on the surface
    if (y > 0.2 - ellipseHeight) {
-      return half4(settings->brightness * 1.0, 0.0, 0.0, 1.0);
+      return half4(settings->r, settings->g, settings->b, 1.0);
    }
 
    // return points on the edge
    if (y > -0.2 - ellipseHeight) {
-      return half4(settings->brightness*1.0, settings->brightness*0.5, settings->brightness*0.5, 1.0);
+      return half4(settings->r * 0.5, settings->g*0.5, settings->b*0.5, 1.0);
    }
 
    // skip the rest

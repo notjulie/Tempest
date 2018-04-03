@@ -12,7 +12,7 @@
 #define PLAYER_BUTTON_SETTINGS_BUFFER_INDEX 0
 
 typedef struct {
-   float brightness;
+   float r, g, b;
 } PlayerButtonSettings;
 
 #endif /* PlayerButtonRenderer_h */

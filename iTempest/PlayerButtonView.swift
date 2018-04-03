@@ -52,7 +52,15 @@ class PlayerButtonView : ButtonView {
       }
       
       // update the brightness
-      settings.brightness = cTempestIsButtonLit(tempest, whichButton) != 0 ? 1.0 : 0.5
+      if (cTempestIsButtonLit(tempest, whichButton) != 0) {
+         settings.r = 0.7
+         settings.g = 0.0
+         settings.b = 0.2
+      } else {
+         settings.r = 0.3
+         settings.g = 0.0
+         settings.b = 0.15
+      }
       
       // call the parent
       super.render(renderEncoder: renderEncoder)
