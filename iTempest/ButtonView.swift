@@ -18,6 +18,7 @@ class ButtonView : RectangleShaderButton {
    // public read-only properties
    public let tempest : cTempest
    public let whichButton : cTempestButton
+   public var settings = PlayerButtonSettings(brightness: 1.0)
 
    required init?(coder aDecoder: NSCoder) {
       tempest = 0
@@ -25,18 +26,31 @@ class ButtonView : RectangleShaderButton {
       super.init(coder: aDecoder)
    }
 
-   init(view:MTKView, shaderName:String, tempest:cTempest, whichButton:cTempestButton) {
+   init(view:MTKView, tempest:cTempest, whichButton:cTempestButton) {
       // save parameters
       self.tempest = tempest
       self.whichButton = whichButton
-      
+
       // call the parent
-      super.init(view:view, shaderName:shaderName);
+      super.init(view:view, shaderName:"playerButtonShader");
+      
       // initialize
       isUserInteractionEnabled = true
       self.addTarget(self, action: #selector(buttonDown), for: UIControlEvents.touchDown)
       self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpInside)
       self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpOutside)
+   }
+
+   override func render(renderEncoder : MTLRenderCommandEncoder) {
+      // set our render parameters
+      let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
+         bytes: [settings],
+         length: MemoryLayout.size(ofValue: settings),
+         options: [])
+      super.setFragmentBuffer(index:Int(PLAYER_BUTTON_SETTINGS_BUFFER_INDEX), buffer:renderParametersBuffer)
+      
+      // let the base class render
+      super.render(renderEncoder: renderEncoder)
    }
 
    func buttonDown() {

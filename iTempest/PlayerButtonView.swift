@@ -19,9 +19,9 @@ class PlayerButtonView : ButtonView {
       super.init(coder: aDecoder)
    }
    
-   init(view:MTKView, tempest:cTempest, whichButton:cTempestButton) {
+   override init(view:MTKView, tempest:cTempest, whichButton:cTempestButton) {
       // call the parent
-      super.init(view:view, shaderName:"playerButtonShader", tempest:tempest, whichButton:whichButton);
+      super.init(view:view, tempest:tempest, whichButton:whichButton);
    }
    
    /**
@@ -51,18 +51,10 @@ class PlayerButtonView : ButtonView {
          }
       }
       
-      // set our render parameters
-      let renderParameters =
-         PlayerButtonSettings(
-            brightness:cTempestIsButtonLit(tempest, whichButton) != 0 ? 1.0 : 0.5
-      )
-      let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
-         bytes: [renderParameters],
-         length: MemoryLayout.size(ofValue: renderParameters),
-         options: [])
-      super.setFragmentBuffer(index:Int(PLAYER_BUTTON_SETTINGS_BUFFER_INDEX), buffer:renderParametersBuffer)
-
-      // let the base class render
+      // update the brightness
+      settings.brightness = cTempestIsButtonLit(tempest, whichButton) != 0 ? 1.0 : 0.5
+      
+      // call the parent
       super.render(renderEncoder: renderEncoder)
    }
 }

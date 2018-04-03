@@ -50,8 +50,8 @@ class TempestView : MTKView {
       spinnerHub = SpinnerHub(view:self)
       player1 = PlayerButtonView(view:self, tempest:tempest, whichButton:PLAYER1)
       player2 = PlayerButtonView(view:self, tempest:tempest, whichButton:PLAYER2)
-      fire = PlayerButtonView(view:self, tempest:tempest, whichButton:FIRE)
-      zap = PlayerButtonView(view:self, tempest:tempest, whichButton:ZAP)
+      fire = ButtonView(view:self, tempest:tempest, whichButton:FIRE)
+      zap = ButtonView(view:self, tempest:tempest, whichButton:ZAP)
 
       // add our child views... our views are actually just transparent place holders for
       // receiving user inputs
