@@ -37,6 +37,14 @@ class TempestViewRenderer : MetalRenderer {
       renderPipelineDescriptor.fragmentFunction = fragmentFunction
       renderPipelineDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat
       renderPipelineDescriptor.depthAttachmentPixelFormat = view.depthStencilPixelFormat
+      
+      // for now just always allow alpha blending
+      renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
+      renderPipelineDescriptor.colorAttachments[0].rgbBlendOperation = .add
+      renderPipelineDescriptor.colorAttachments[0].alphaBlendOperation = .add
+      renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
+      renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+
       do {
          renderPipelineState = try view.device!.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
       } catch {

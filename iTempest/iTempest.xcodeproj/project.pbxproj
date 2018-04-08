@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0215CABD207A493F00A30E7E /* SolidRectangleShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0215CABC207A493F00A30E7E /* SolidRectangleShader.swift */; };
+		0215CABF207A4A4600A30E7E /* SolidRectangleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0215CABE207A4A4600A30E7E /* SolidRectangleShader.metal */; };
 		021DC6282058975C001551FD /* SpinnerHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021DC6272058975C001551FD /* SpinnerHub.swift */; };
 		021DC62A20589975001551FD /* SpinnerHub.metal in Sources */ = {isa = PBXBuildFile; fileRef = 021DC62920589975001551FD /* SpinnerHub.metal */; };
 		021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39B51F9DAB1700FFAB2B /* AppDelegate.m */; };
@@ -85,6 +87,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0215CABC207A493F00A30E7E /* SolidRectangleShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidRectangleShader.swift; sourceTree = "<group>"; };
+		0215CABE207A4A4600A30E7E /* SolidRectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SolidRectangleShader.metal; sourceTree = "<group>"; };
+		0215CAC0207A4ADA00A30E7E /* SolidRectangleShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SolidRectangleShader.h; sourceTree = "<group>"; };
 		021DC6272058975C001551FD /* SpinnerHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerHub.swift; sourceTree = "<group>"; };
 		021DC62920589975001551FD /* SpinnerHub.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SpinnerHub.metal; sourceTree = "<group>"; };
 		021E39B11F9DAB1700FFAB2B /* iTempest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTempest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -367,6 +372,9 @@
 				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
 				0262C927200AED3000E5A429 /* TempestView.metal */,
 				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
+				0215CABC207A493F00A30E7E /* SolidRectangleShader.swift */,
+				0215CABE207A4A4600A30E7E /* SolidRectangleShader.metal */,
+				0215CAC0207A4ADA00A30E7E /* SolidRectangleShader.h */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -549,6 +557,8 @@
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
 				025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */,
 				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
+				0215CABD207A493F00A30E7E /* SolidRectangleShader.swift in Sources */,
+				0215CABF207A4A4600A30E7E /* SolidRectangleShader.metal in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
 				0262C928200AED3000E5A429 /* TempestView.metal in Sources */,
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,

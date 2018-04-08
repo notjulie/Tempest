@@ -22,6 +22,7 @@ class TempestView : MTKView {
    private var player2 : PlayerButtonView?
    private var fire : ButtonView?
    private var zap : ButtonView?
+   private var screen : SolidRectangleShader?
 
    init(tempest : cTempest) {
       // call the super
@@ -41,7 +42,7 @@ class TempestView : MTKView {
       // Depth stencil
       let depthSencilDescriptor = MTLDepthStencilDescriptor()
       depthSencilDescriptor.depthCompareFunction = .less
-      depthSencilDescriptor.isDepthWriteEnabled = true
+      depthSencilDescriptor.isDepthWriteEnabled = false
       depthStencilState = device!.makeDepthStencilState(descriptor: depthSencilDescriptor)
       
       // now that we're initialized we can create the renderers
@@ -52,6 +53,7 @@ class TempestView : MTKView {
       player2 = PlayerButtonView(view:self, tempest:tempest, whichButton:PLAYER2)
       fire = ButtonView(view:self, tempest:tempest, whichButton:FIRE)
       zap = ButtonView(view:self, tempest:tempest, whichButton:ZAP)
+      screen = SolidRectangleShader(view:self)
 
       // add our child views... our views are actually just transparent place holders for
       // receiving user inputs
@@ -76,14 +78,24 @@ class TempestView : MTKView {
       let renderPassDescriptor = currentRenderPassDescriptor!
       let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
 
+      // set the color of the screen according to whether or not the player buttons
+      // should be showing
+      if (cTempestIsInAttractMode(tempest) != 0) {
+         screen!.setColor(r:0, g:0, b:0, a:0.6)
+      } else {
+         screen!.setColor(r:0, g:0, b:0, a:0.0)
+      }
+      
       // render stuff
-      render(parallelRenderEncoder:parallelRenderEncoder,renderer:spinnerRenderer!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:spinnerHub!)
-      render(parallelRenderEncoder:parallelRenderEncoder,renderer:player1!)
-      render(parallelRenderEncoder:parallelRenderEncoder,renderer:player2!)
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:spinnerRenderer!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:fire!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:zap!)
       render(parallelRenderEncoder:parallelRenderEncoder,renderer:tempestRenderer!)
+
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:screen!)
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:player1!)
+      render(parallelRenderEncoder:parallelRenderEncoder,renderer:player2!)
 
       // end encoding on our parallel renderer
       parallelRenderEncoder.endEncoding()
@@ -150,6 +162,9 @@ class TempestView : MTKView {
          width:80,
          height:80
       )
+      
+      // our screen behind the player 1/ player 2 buttons is the full window
+      screen!.setFrame(frame:self.frame)
 
       // and the actual spinner view is the same size... this is just an invisible control
       // that handles the touch input

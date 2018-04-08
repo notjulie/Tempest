@@ -11,6 +11,13 @@
 using namespace metal;
 
 
+/// <summary>
+/// This is the vertex function used by RectangleShader objects... using the parameters
+/// in the RectangleShaderVertexParameters it will cause the fragment function to be
+/// called for every point in the specified rectangle.  The fragment function's stage in
+/// will be of type RectangleShaderStageIn, which will contain an XY pair describing the
+/// relative position of the point within the rectangle, with -1<x<1 and -1<y<1
+/// </summary>
 vertex RectangleShaderStageIn rectangleShaderVertex(
                                                const device RectangleShaderVertexParameters *vertexRenderParameters [[ buffer(RECTANGLE_SHADER_VERTEX_PARAMETERS_BUFFER_INDEX) ]],
                                                unsigned int vid [[ vertex_id ]])

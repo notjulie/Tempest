@@ -11,6 +11,7 @@
 // Metal types
 #import "PlayerButtonRenderer.h"
 #import "RectangleShader.h"
+#import "SolidRectangleShader.h"
 #import "Spinner.h"
 #import "TempestVector.h"
 
