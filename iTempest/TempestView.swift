@@ -81,7 +81,7 @@ class TempestView : MTKView {
       // set the color of the screen according to whether or not the player buttons
       // should be showing
       if (cTempestIsInAttractMode(tempest) != 0) {
-         screen!.setColor(r:0, g:0, b:0, a:0.6)
+         screen!.setColor(r:0.2, g:0.2, b:0.2, a:0.8)
       } else {
          screen!.setColor(r:0, g:0, b:0, a:0.0)
       }
@@ -118,9 +118,6 @@ class TempestView : MTKView {
       // call the super
       super.layoutSubviews()
       
-      player1!.frame = CGRect(x:15.0, y:15.0, width:50, height:50)
-      player2!.frame = CGRect(x:self.frame.width-65, y:15.0, width:50, height:50)
-
       // set the frame of the Tempest graphic
       var width = self.frame.width
       if (width > self.frame.height) {
@@ -129,6 +126,25 @@ class TempestView : MTKView {
       let tempestFrame = CGRect(x:0.0, y:0.0, width:width, height:width)
       tempestRenderer!.setFrame(frame:tempestFrame)
 
+      // player 1 and player 2 buttons are stacked vertically and centered over the game
+      let playerButtonSpacing = CGFloat(100.0)
+      let playerButtonWidth = CGFloat(50.0)
+      let playerButtonStackHeight = playerButtonWidth*2 + playerButtonSpacing
+      let playerButton1Y = tempestFrame.minY + (tempestFrame.height - playerButtonStackHeight) / 2
+      let playerButtonX = tempestFrame.minX + (tempestFrame.width - playerButtonWidth) / 2
+      player1!.frame = CGRect(
+         x:playerButtonX,
+         y:playerButton1Y,
+         width:playerButtonWidth,
+         height:playerButtonWidth
+      )
+      player2!.frame = CGRect(
+         x:playerButtonX,
+         y:playerButton1Y + playerButtonWidth + playerButtonSpacing,
+         width:playerButtonWidth,
+         height:playerButtonWidth
+      )
+      
       // figuring out if we are portrait or landscape
       var spinnerFrame : CGRect
       if (self.frame.width > self.frame.height) {
@@ -151,20 +167,20 @@ class TempestView : MTKView {
 
       // for the moment just always put fire and zap over the spinner
       fire!.frame = CGRect(
-         x: spinnerFrame.minX + 10,
+         x: spinnerFrame.minX + 20,
          y: spinnerFrame.minY-80,
          width:80,
          height:80
       )
       zap!.frame = CGRect(
-         x: spinnerFrame.maxX-10-80,
+         x: spinnerFrame.maxX-20-80,
          y: spinnerFrame.minY-80,
          width:80,
          height:80
       )
       
       // our screen behind the player 1/ player 2 buttons is the full window
-      screen!.setFrame(frame:self.frame)
+      screen!.setFrame(frame:self.bounds)
 
       // and the actual spinner view is the same size... this is just an invisible control
       // that handles the touch input
