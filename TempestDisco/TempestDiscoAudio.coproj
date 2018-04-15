@@ -105,7 +105,7 @@
     <File name="stm32f4xx_it.c" path="app/stm32f4xx_it.c" type="1"/>
     <File name="TempestIO/PacketStream.cpp" path="../TempestIO/PacketStream.cpp" type="1"/>
     <File name="STM" path="" type="2"/>
-    <File name="Serial.cpp" path="../TempestIO/Serial.cpp" type="1"/>
+    <File name="Serial.cpp" path="app/Serial.cpp" type="1"/>
     <File name="TempestIO/WaveStreamer.cpp" path="../TempestIO/WaveStreamer.cpp" type="1"/>
     <File name="Audio/stm32f4_discovery_audio_codec.h" path="app/Audio/stm32f4_discovery_audio_codec.h" type="1"/>
     <File name="TempestIO/Noise.cpp" path="../TempestIO/Noise.cpp" type="1"/>
@@ -113,7 +113,7 @@
     <File name="Encoder.h" path="app/Encoder.h" type="1"/>
     <File name="SystemError.cpp" path="app/SystemError.cpp" type="1"/>
     <File name="Audio/TempestDiscoAudioIO.cpp" path="app/Audio/TempestDiscoAudioIO.cpp" type="1"/>
-    <File name="Serial.h" path="../TempestIO/Serial.h" type="1"/>
+    <File name="Serial.h" path="app/Serial.h" type="1"/>
     <File name="TempestIO/TempestIOStreamListener.cpp" path="../TempestIO/TempestIOStreamListener.cpp" type="1"/>
     <File name="TempestDisco.h" path="app/TempestDisco.h" type="1"/>
     <File name="Audio/TempestDiscoAudioIO.h" path="app/Audio/TempestDiscoAudioIO.h" type="1"/>
