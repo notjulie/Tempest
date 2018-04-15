@@ -29,6 +29,7 @@ const uint16_t MATHBOX_WRITE_END = 0x609F;
 
 // program variable addresses
 const uint16_t GAME_MODE = 0x0000;
+const uint16_t GAME_INPUT_MODE = 0x0005;
 const uint16_t CURRENT_PLAYER = 0x003D;
 const uint16_t PLAYER_COUNT = 0x003E;
 const uint16_t PLAYER1_LEVEL_ADDRESS = 0x0046;
@@ -53,7 +54,12 @@ const uint16_t DISPLAY_PLAYER1_SCORE_ADDRESS = 0x2F6C;
 const uint16_t DISPLAY_PLAYER2_SCORE_ADDRESS = 0x2FBE;
 const uint16_t DISPLAY_HIGH_SCORE_ADDRESS = 0x2F94;
 
-// game modes
+// game modes (values of GAME_MODE)
 const uint8_t GAME_MODE_SHOW_HIGH_SCORES = 0x14;
+
+// game input modes (values of GAME_INPUT_MODE)
+const uint8_t GAME_INPUT_MODE_ATTRACT = 0x00;
+const uint8_t GAME_INPUT_MODE_GAME_PLAY = 0x00;
+const uint8_t GAME_INPUT_MODE_HIGH_SCORE_ENTRY = 0x00;
 
 #endif

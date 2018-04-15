@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0215CABD207A493F00A30E7E /* SolidRectangleShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0215CABC207A493F00A30E7E /* SolidRectangleShader.swift */; };
+		0215CABF207A4A4600A30E7E /* SolidRectangleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0215CABE207A4A4600A30E7E /* SolidRectangleShader.metal */; };
 		021DC6282058975C001551FD /* SpinnerHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021DC6272058975C001551FD /* SpinnerHub.swift */; };
 		021DC62A20589975001551FD /* SpinnerHub.metal in Sources */ = {isa = PBXBuildFile; fileRef = 021DC62920589975001551FD /* SpinnerHub.metal */; };
 		021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39B51F9DAB1700FFAB2B /* AppDelegate.m */; };
@@ -16,7 +18,6 @@
 		021E39CA1F9DAB1700FFAB2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39C91F9DAB1700FFAB2B /* main.m */; };
 		021E39D41F9DAB1700FFAB2B /* iTempestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39D31F9DAB1700FFAB2B /* iTempestTests.m */; };
 		021E39DF1F9DAB1700FFAB2B /* iTempestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */; };
-		024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */; };
 		024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */; };
 		024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */; };
 		024D0E231F9EAAFD00DA5FFE /* CPU6502.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */; };
@@ -37,6 +38,9 @@
 		024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */; };
 		024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E441F9EB98F00DA5FFE /* TempestException.cpp */; };
 		024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */; };
+		025D84D420706E1000AF9C97 /* RectangleShaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */; };
+		025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */; };
+		025D84E320716CBE00AF9C97 /* PlayerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D84E220716CBE00AF9C97 /* PlayerButtonView.swift */; };
 		0262C928200AED3000E5A429 /* TempestView.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0262C927200AED3000E5A429 /* TempestView.metal */; };
 		026417B11FE5C114005D913E /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026417B01FE5C114005D913E /* ButtonView.swift */; };
 		026A1B651FC1E05B00EEFF34 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */; };
@@ -55,8 +59,12 @@
 		029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */; };
 		029AA0A11FBFBC2800762BC8 /* Noise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A01FBFBC2800762BC8 /* Noise.cpp */; };
 		029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */; };
+		02BDBCD320681DA800C4464C /* RectangleShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDBCD220681DA800C4464C /* RectangleShader.swift */; };
+		02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02BDBCD420681E2F00C4464C /* RectangleShader.metal */; };
 		02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */; };
 		02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C7C4E62055AECF00248E3E /* MetalRenderer.swift */; };
+		02E8168F207057C00030CE93 /* sqlite.c in Sources */ = {isa = PBXBuildFile; fileRef = 02E8168D207057C00030CE93 /* sqlite.c */; };
+		02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
 		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
 /* End PBXBuildFile section */
@@ -79,6 +87,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0215CABC207A493F00A30E7E /* SolidRectangleShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidRectangleShader.swift; sourceTree = "<group>"; };
+		0215CABE207A4A4600A30E7E /* SolidRectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SolidRectangleShader.metal; sourceTree = "<group>"; };
+		0215CAC0207A4ADA00A30E7E /* SolidRectangleShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SolidRectangleShader.h; sourceTree = "<group>"; };
 		021DC6272058975C001551FD /* SpinnerHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerHub.swift; sourceTree = "<group>"; };
 		021DC62920589975001551FD /* SpinnerHub.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SpinnerHub.metal; sourceTree = "<group>"; };
 		021E39B11F9DAB1700FFAB2B /* iTempest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTempest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,7 +116,6 @@
 		0235021F204C970A0081C43D /* TempestDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempestDB.h; path = ../../TempestIO/TempestDB.h; sourceTree = "<group>"; };
 		02350220204C970B0081C43D /* SoundChannelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannelState.h; path = ../../TempestIO/SoundChannelState.h; sourceTree = "<group>"; };
 		024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../SQLite/sqlite3.h; sourceTree = "<group>"; };
-		024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../SQLite/sqlite3.c; sourceTree = "<group>"; };
 		024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestRunner.cpp; path = ../../TempestCPU/TempestRunner.cpp; sourceTree = "<group>"; };
 		024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorDataInterpreter.cpp; path = ../../TempestIO/Vector/VectorDataInterpreter.cpp; sourceTree = "<group>"; };
 		024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502.cpp; path = ../../TempestCPU/6502/CPU6502.cpp; sourceTree = "<group>"; };
@@ -126,6 +136,9 @@
 		024D0E421F9EB96200DA5FFE /* Am2901Tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Am2901Tables.cpp; path = ../../TempestCPU/MathBox/Am2901Tables.cpp; sourceTree = "<group>"; };
 		024D0E441F9EB98F00DA5FFE /* TempestException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestException.cpp; path = ../../TempestCPU/TempestException.cpp; sourceTree = "<group>"; };
 		024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannelState.cpp; path = ../../TempestIO/SoundChannelState.cpp; sourceTree = "<group>"; };
+		025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleShaderButton.swift; sourceTree = "<group>"; };
+		025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractMetalRenderer.swift; sourceTree = "<group>"; };
+		025D84E220716CBE00AF9C97 /* PlayerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerButtonView.swift; sourceTree = "<group>"; };
 		0262C923200A54FC00E5A429 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
 		0262C926200AE2CD00E5A429 /* TempestVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempestVector.h; sourceTree = "<group>"; };
 		0262C927200AED3000E5A429 /* TempestView.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TempestView.metal; sourceTree = "<group>"; };
@@ -151,8 +164,14 @@
 		029AA0A01FBFBC2800762BC8 /* Noise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Noise.cpp; path = ../../TempestIO/Noise.cpp; sourceTree = "<group>"; };
 		029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempestSoundIO.h; sourceTree = "<group>"; };
 		029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cpp11WaveStreamer.cpp; path = ../../TempestIO/Cpp11WaveStreamer.cpp; sourceTree = "<group>"; };
+		02BDBCD02068138900C4464C /* RectangleShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RectangleShader.h; sourceTree = "<group>"; };
+		02BDBCD220681DA800C4464C /* RectangleShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleShader.swift; sourceTree = "<group>"; };
+		02BDBCD420681E2F00C4464C /* RectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RectangleShader.metal; sourceTree = "<group>"; };
 		02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		02C7C4E62055AECF00248E3E /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
+		02D982BC2071BD870026844F /* PlayerButtonRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerButtonRenderer.h; sourceTree = "<group>"; };
+		02E8168D207057C00030CE93 /* sqlite.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sqlite.c; path = ../../SQLite/sqlite.c; sourceTree = "<group>"; };
+		02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PlayerButtonRenderer.metal; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
 		02F307101FA4198F0062CE9F /* SQLRRException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLRRException.cpp; path = ../../SQLite/SQLRR/SQLRRException.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,10 +208,27 @@
 			children = (
 				026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */,
 				026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */,
-				021E39B31F9DAB1700FFAB2B /* iTempest */,
+				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
+				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
+				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
+				021E39C91F9DAB1700FFAB2B /* main.m */,
+				021E39C81F9DAB1700FFAB2B /* Info.plist */,
+				026417B01FE5C114005D913E /* ButtonView.swift */,
+				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
+				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
+				025D84E220716CBE00AF9C97 /* PlayerButtonView.swift */,
+				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
+				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
+				02AC81C92067FC130091E7D0 /* cTempest */,
 				021E39D21F9DAB1700FFAB2B /* iTempestTests */,
 				021E39DD1F9DAB1700FFAB2B /* iTempestUITests */,
+				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
+				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
+				0289A7722069C483001208FA /* Metal */,
 				021E39B21F9DAB1700FFAB2B /* Products */,
+				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
+				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
+				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,45 +240,6 @@
 				021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		021E39B31F9DAB1700FFAB2B /* iTempest */ = {
-			isa = PBXGroup;
-			children = (
-				021E39B41F9DAB1700FFAB2B /* AppDelegate.h */,
-				021E39B51F9DAB1700FFAB2B /* AppDelegate.m */,
-				021E39C31F9DAB1700FFAB2B /* Assets.xcassets */,
-				026417B01FE5C114005D913E /* ButtonView.swift */,
-				027030B61FB88F8700A810B8 /* cTempest.cpp */,
-				027030B71FB88F8700A810B8 /* cTempest.h */,
-				021E39C81F9DAB1700FFAB2B /* Info.plist */,
-				026A1B661FC1ED0D00EEFF34 /* iosException.cpp */,
-				026A1B691FC1ED3000EEFF34 /* iosException.h */,
-				0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */,
-				027030B31FB88BD400A810B8 /* iTempest.cpp */,
-				027030B41FB88BD400A810B8 /* iTempest.h */,
-				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
-				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
-				021E39C51F9DAB1700FFAB2B /* LaunchScreen.storyboard */,
-				021E39C91F9DAB1700FFAB2B /* main.m */,
-				021E39C01F9DAB1700FFAB2B /* Main.storyboard */,
-				0285F33D1FBBDEC30004B34F /* MainViewController.swift */,
-				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
-				0262C923200A54FC00E5A429 /* Spinner.h */,
-				02825C8620026F130032BE41 /* Spinner.metal */,
-				021DC62920589975001551FD /* SpinnerHub.metal */,
-				021DC6272058975C001551FD /* SpinnerHub.swift */,
-				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
-				02BFFBDB1FC50E2B008DACA1 /* SpinnerView.swift */,
-				024D0DCD1F9DB51C00DA5FFE /* SQLite */,
-				024D0E1A1F9EA8B600DA5FFE /* TempestCPU */,
-				024D0E1D1F9EAA7700DA5FFE /* TempestIO */,
-				0262C926200AE2CD00E5A429 /* TempestVector.h */,
-				0262C927200AED3000E5A429 /* TempestView.metal */,
-				029AA0981FBCFFAB00762BC8 /* TempestView.swift */,
-				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
-			);
-			path = iTempest;
 			sourceTree = "<group>";
 		};
 		021E39D21F9DAB1700FFAB2B /* iTempestTests */ = {
@@ -267,10 +264,11 @@
 			isa = PBXGroup;
 			children = (
 				024D0E281F9EAB8A00DA5FFE /* SQLRR */,
-				024D0DCF1F9DB53E00DA5FFE /* sqlite3.c */,
 				024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */,
+				02E8168D207057C00030CE93 /* sqlite.c */,
 			);
 			name = SQLite;
+			path = iTempest;
 			sourceTree = "<group>";
 		};
 		024D0E1A1F9EA8B600DA5FFE /* TempestCPU */ = {
@@ -286,6 +284,7 @@
 				024D0E1B1F9EA92B00DA5FFE /* TempestRunner.cpp */,
 			);
 			name = TempestCPU;
+			path = iTempest;
 			sourceTree = "<group>";
 		};
 		024D0E1D1F9EAA7700DA5FFE /* TempestIO */ = {
@@ -311,6 +310,7 @@
 				0235021D204C970A0081C43D /* WaveStreamer.h */,
 			);
 			name = TempestIO;
+			path = iTempest;
 			sourceTree = "<group>";
 		};
 		024D0E1E1F9EAA9C00DA5FFE /* Vector */ = {
@@ -352,6 +352,47 @@
 				024D0E3A1F9EB7A800DA5FFE /* MathBox.cpp */,
 			);
 			name = MathBox;
+			sourceTree = "<group>";
+		};
+		0289A7722069C483001208FA /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				025D84D52071320400AF9C97 /* AbstractMetalRenderer.swift */,
+				02C7C4E62055AECF00248E3E /* MetalRenderer.swift */,
+				02D982BC2071BD870026844F /* PlayerButtonRenderer.h */,
+				02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */,
+				02BDBCD02068138900C4464C /* RectangleShader.h */,
+				02BDBCD420681E2F00C4464C /* RectangleShader.metal */,
+				02BDBCD220681DA800C4464C /* RectangleShader.swift */,
+				025D84D320706E1000AF9C97 /* RectangleShaderButton.swift */,
+				0262C923200A54FC00E5A429 /* Spinner.h */,
+				02825C8620026F130032BE41 /* Spinner.metal */,
+				021DC62920589975001551FD /* SpinnerHub.metal */,
+				021DC6272058975C001551FD /* SpinnerHub.swift */,
+				0278563D2054588400593A8E /* SpinnerRenderer.swift */,
+				0262C927200AED3000E5A429 /* TempestView.metal */,
+				0278563B2054503000593A8E /* TempestViewRenderer.swift */,
+				0215CABC207A493F00A30E7E /* SolidRectangleShader.swift */,
+				0215CABE207A4A4600A30E7E /* SolidRectangleShader.metal */,
+				0215CAC0207A4ADA00A30E7E /* SolidRectangleShader.h */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		02AC81C92067FC130091E7D0 /* cTempest */ = {
+			isa = PBXGroup;
+			children = (
+				027030B61FB88F8700A810B8 /* cTempest.cpp */,
+				027030B71FB88F8700A810B8 /* cTempest.h */,
+				026A1B661FC1ED0D00EEFF34 /* iosException.cpp */,
+				026A1B691FC1ED3000EEFF34 /* iosException.h */,
+				027030B31FB88BD400A810B8 /* iTempest.cpp */,
+				027030B41FB88BD400A810B8 /* iTempest.h */,
+				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
+				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
+				0262C926200AE2CD00E5A429 /* TempestVector.h */,
+			);
+			path = cTempest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,7 +457,7 @@
 		021E39A91F9DAB1700FFAB2B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Randy Rasmussen";
 				TargetAttributes = {
 					021E39B01F9DAB1700FFAB2B = {
@@ -494,6 +535,7 @@
 				024D0E271F9EAB7300DA5FFE /* VectorData.cpp in Sources */,
 				027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */,
 				024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */,
+				025D84E320716CBE00AF9C97 /* PlayerButtonView.swift in Sources */,
 				029AA0A61FC1269E00762BC8 /* Cpp11WaveStreamer.cpp in Sources */,
 				024D0E3B1F9EB7A800DA5FFE /* MathBox.cpp in Sources */,
 				024D0E411F9EB8CD00DA5FFE /* Am2901.cpp in Sources */,
@@ -509,14 +551,21 @@
 				0278563E2054588400593A8E /* SpinnerRenderer.swift in Sources */,
 				02C7C4E72055AECF00248E3E /* MetalRenderer.swift in Sources */,
 				026417B11FE5C114005D913E /* ButtonView.swift in Sources */,
+				025D84D420706E1000AF9C97 /* RectangleShaderButton.swift in Sources */,
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
 				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
+				025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */,
 				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
+				0215CABD207A493F00A30E7E /* SolidRectangleShader.swift in Sources */,
+				0215CABF207A4A4600A30E7E /* SolidRectangleShader.metal in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
 				0262C928200AED3000E5A429 /* TempestView.metal in Sources */,
 				02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */,
+				02E8168F207057C00030CE93 /* sqlite.c in Sources */,
+				02BDBCD520681E2F00C4464C /* RectangleShader.metal in Sources */,
 				029AA09D1FBFBBBB00762BC8 /* SoundGenerator.cpp in Sources */,
+				02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */,
 				024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */,
 				02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */,
 				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,
@@ -524,6 +573,7 @@
 				02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */,
 				026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
+				02BDBCD320681DA800C4464C /* RectangleShader.swift in Sources */,
 				021DC62A20589975001551FD /* SpinnerHub.metal in Sources */,
 				024D0E431F9EB96200DA5FFE /* Am2901Tables.cpp in Sources */,
 				021DC6282058975C001551FD /* SpinnerHub.swift in Sources */,
@@ -532,7 +582,6 @@
 				024D0E1C1F9EA92B00DA5FFE /* TempestRunner.cpp in Sources */,
 				027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */,
 				024D0E451F9EB98F00DA5FFE /* TempestException.cpp in Sources */,
-				024D0DD01F9DB53E00DA5FFE /* sqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +650,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -608,6 +658,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -656,6 +707,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -663,6 +715,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -708,11 +761,11 @@
 					"$(SRCROOT)/../SQLite/SQLRR/",
 					"$(SRCROOT)/../SQLite/",
 				);
-				INFOPLIST_FILE = iTempest/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "iTempest/iTempest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
@@ -738,11 +791,11 @@
 					"$(SRCROOT)/../SQLite/SQLRR/",
 					"$(SRCROOT)/../SQLite/",
 				);
-				INFOPLIST_FILE = iTempest/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "iTempest/iTempest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

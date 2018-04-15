@@ -32,6 +32,7 @@ public:
    
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
+   bool     IsInAttractMode(void) { return tempestBus.ReadByte(GAME_INPUT_MODE) == GAME_INPUT_MODE_ATTRACT; }
    void     SetDemoMode(void);
    void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
 

@@ -32,6 +32,10 @@ Cpp11WaveStreamer::~Cpp11WaveStreamer(void)
 {
    if (thread != nullptr)
    {
+      // signal termination
+      terminated = true;
+      
+      // wait for the thread to shut itself down
       thread->join();
       delete thread;
       thread = nullptr;
@@ -41,7 +45,7 @@ Cpp11WaveStreamer::~Cpp11WaveStreamer(void)
 
 void Cpp11WaveStreamer::ThreadEntry(void)
 {
-   for (;;)
+   while (!terminated)
    {
       // Formerly I did this with a condition_variable/mutex.  Since we get thousands of
       // queue entries per second, this gets to be expensive, and I found that even calling
@@ -58,11 +62,3 @@ void Cpp11WaveStreamer::ThreadEntry(void)
    }
 }
 
-/// <summary>
-/// Formerly set an event to let our thread know that there is incoming
-/// sound data to be processed... currently not needed; see comment above
-/// in the thread function.
-/// </summary>
-void Cpp11WaveStreamer::OnWaveStreamEventQueued(void)
-{
-}

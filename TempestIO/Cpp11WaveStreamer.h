@@ -24,14 +24,12 @@ public:
    Cpp11WaveStreamer(uint32_t bufferSampleCount, WaveSoundDriver *_target);
    virtual ~Cpp11WaveStreamer(void);
 
-protected:
-   virtual void  OnWaveStreamEventQueued(void);
-
 private:
    void ThreadEntry(void);
 
 private:
-   WaveSoundDriver *target;
+   bool terminated = false;
+   WaveSoundDriver *target = nullptr;
    std::vector<int16_t> buffer;
    std::thread *thread = nullptr;
 };
