@@ -59,6 +59,14 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
    uint8_t opCode = opByte >> 4;
    switch (opCode)
    {
+   case 0x0:
+   case 0x1:
+   case 0x2:
+   case 0x3:
+   case 0x4:
+   case 0x5:
+   case 0x6:
+   case 0x7:
    case 0x8:
    case 0x9:
    {
@@ -73,12 +81,9 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
       if (dy & 0x400)
          dy = -(dy & ~0x400);
 
-      int scale = 3;
-      if (opCode == 9)
-         scale = GetAt(3) >> 4;
-      dx = dx * (scale + 1) / 8;
-      dy = dy * (scale + 1) / 8;
-      //Draw(dx, dy, 7, 1);
+      int intensity = GetAt(3) >> 4;
+
+      Draw(dx, dy, intensity, 1<<(9 - opCode));
 
       PC += 4;
       return true;
@@ -147,36 +152,18 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
          else
             dy += 0;
 
-         if (dx == dy)
-            dx = dy;
-
-         int scale = 1;
+         int shift = 1;
          if (raw1 & 0x08)
-            scale *= 2;
+            shift += 1;
          if (raw0 & 0x08)
-            scale *= 4;
+            shift += 2;
 
-         int scaleMultiplier = 4;
          uint8_t intensity = GetAt(0) >> 4;
-         bool curiousBit = (raw0 & 0x80) != 0;
 
 
-         Draw(dx * scaleMultiplier * (scale), dy * scaleMultiplier * (scale), intensity, 1);
+         Draw(dx * (1 << shift), dy * (1 << shift), intensity, 1);
          PC += 2;
       }
-      return true;
-
-   case 0x0:
-   case 0x1:
-   case 0x2:
-   case 0x3:
-   case 0x4:
-   case 0x5:
-   case 0x6:
-   case 0x7:
-      // I think these are scale commands, but I'm not sure
-      //scale = opCode;
-      PC += 2;
       return true;
 
    default:
@@ -200,6 +187,10 @@ void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int s
 {
    float dx = (float)_dx;
    float dy = (float)_dy;
+
+   // apply the scale factor
+   dx /= scaleFactor;
+   dy /= scaleFactor;
 
    // apply the global scale
    if (globalScale >= 8)
