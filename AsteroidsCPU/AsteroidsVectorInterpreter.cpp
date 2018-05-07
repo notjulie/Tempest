@@ -213,14 +213,26 @@ void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int s
       dy *= 1 << globalScale;
    }
 
+   // calculate the line endpoints extended to 32 bit
    int scale = 64;
-   SimpleVector vector;
-   vector.startX = (int16_t)(-32768 + scale*x);
-   vector.startY = (int16_t)(-32768 + scale*y);
+   int startX = (int)(-32768 + scale * x);
+   int startY = (int)(-32768 + scale * y);
    x += dx;
    y += dy;
-   vector.endX = (int16_t)(-32768 + scale*x);
-   vector.endY = (int16_t)(-32768 + scale*y);
+   int endX = (int)(-32768 + scale * x);
+   int endY = (int)(-32768 + scale * y);
+
+   // we need to clip the line to the bounds of signed 16 bits
+   if (!ClipEndPoint(startX, startY, endX, endY))
+      return;
+   if (!ClipEndPoint(endX, endY, startX, startY))
+      return;
+
+   SimpleVector vector;
+   vector.startX = (int16_t)startX;
+   vector.startY = (int16_t)startY;
+   vector.endX = (int16_t)endX;
+   vector.endY = (int16_t)endY;
    vector.color = 1;
 
    if (intensity != 0)
@@ -240,3 +252,41 @@ static int ShortVectorLength(int code)
       result = -16 + result;
    return result;
 }
+
+bool AsteroidsVectorInterpreter::ClipEndPoint(int &startX, int &startY, int &endX, int &endY)
+{
+   if (endX < -32768)
+   {
+      if (startX < -32768)
+         return false;
+      endY = (int)(startY + (int64_t)(endY - startY) * (-32768 - startX) / (endX - startX));
+      endX = -32768;
+   }
+
+   if (endY < -32768)
+   {
+      if (startY < -32768)
+         return false;
+      endX = (int)(startX + (int64_t)(endX - startX) * (-32768 - startY) / (endY - startY));
+      endY = -32768;
+   }
+
+   if (endX > 32767)
+   {
+      if (startX > 32767)
+         return false;
+      endY = (int)(startY + (int64_t)(endY - startY) * (32767 - startX) / (endX - startX));
+      endX = 32767;
+   }
+
+   if (endY > 32767)
+   {
+      if (startY > 32767)
+         return false;
+      endX = (int)(startX + (int64_t)(endX - startX) * (32767 - startY) / (endY - startY));
+      endY = 32767;
+   }
+
+   return true;
+}
+

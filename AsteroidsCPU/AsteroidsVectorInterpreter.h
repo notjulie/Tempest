@@ -15,6 +15,7 @@ private:
    void Draw(int dx, int dy, uint8_t intensity, int scale);
    bool SingleStep(void);
    uint8_t GetAt(uint16_t offsetFromPC);
+   bool ClipEndPoint(int &startX, int &startY, int &endX, int &endY);
 
 private:
    uint8_t vectorRAM[0x800];
