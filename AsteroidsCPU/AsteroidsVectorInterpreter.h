@@ -12,7 +12,7 @@ public:
    void GetAllVectors(std::vector<SimpleVector> &vectors);
 
 private:
-   void Draw(int dx, int dy, uint8_t intensity);
+   void Draw(int dx, int dy, uint8_t intensity, int scale);
    bool SingleStep(void);
    uint8_t GetAt(uint16_t offsetFromPC);
 
@@ -26,7 +26,7 @@ private:
    float x, y;
    uint16_t stack[100];
    std::vector<SimpleVector> vectors;
-   int scale = 0;
+   int globalScale = 0;
 };
 
 #endif

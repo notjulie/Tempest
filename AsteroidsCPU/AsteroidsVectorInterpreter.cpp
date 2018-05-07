@@ -42,7 +42,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
       stackIndex = 0;
       isHalt = true;
       resetRequested = false;
-      scale = 3;
+      globalScale = 0;
    }
 
    // process go if we have one
@@ -78,7 +78,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
          scale = GetAt(3) >> 4;
       dx = dx * (scale + 1) / 8;
       dy = dy * (scale + 1) / 8;
-      Draw(dx, dy, 7);
+      //Draw(dx, dy, 7, 1);
 
       PC += 4;
       return true;
@@ -96,6 +96,8 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
 
          x = (float)newX;
          y = (float)newY;
+
+         globalScale = GetAt(3) >> 4;
 
          PC += 4;
          return true;
@@ -159,7 +161,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
          bool curiousBit = (raw0 & 0x80) != 0;
 
 
-         Draw(dx * scaleMultiplier * (scale), dy * scaleMultiplier * (scale), intensity);
+         Draw(dx * scaleMultiplier * (scale), dy * scaleMultiplier * (scale), intensity, 1);
          PC += 2;
       }
       return true;
@@ -173,7 +175,7 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
    case 0x6:
    case 0x7:
       // I think these are scale commands, but I'm not sure
-      scale = opCode;
+      //scale = opCode;
       PC += 2;
       return true;
 
@@ -194,8 +196,23 @@ uint8_t AsteroidsVectorInterpreter::GetAt(uint16_t pcOffset)
 }
 
 
-void AsteroidsVectorInterpreter::Draw(int dx, int dy, uint8_t intensity)
+void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int scaleFactor)
 {
+   float dx = (float)_dx;
+   float dy = (float)_dy;
+
+   // apply the global scale
+   if (globalScale >= 8)
+   {
+      dx /= 1 << (16 - globalScale);
+      dy /= 1 << (16 - globalScale);
+   }
+   else
+   {
+      dx *= 1 << globalScale;
+      dy *= 1 << globalScale;
+   }
+
    int scale = 64;
    SimpleVector vector;
    vector.startX = (int16_t)(-32768 + scale*x);
