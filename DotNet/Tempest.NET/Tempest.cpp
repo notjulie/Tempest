@@ -29,6 +29,7 @@ namespace TempestDotNET {
 
       // hook objects together
       tempestRunner->SetSoundOutput(soundOutput);
+      tempestRunner->SetControlPanel(soundIO->GetControlPanel());
    }
 
    Tempest::Tempest(TDNWin32TempestSoundIO ^soundIO)

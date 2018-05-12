@@ -17,7 +17,8 @@ namespace TempestDotNET {
 		~TDNIOStreamProxy(void);
 
 
-		AbstractTempestSoundOutput *GetIOObject(void) { return tempestIO; }
+      AbstractArcadeGameControlPanel *GetControlPanel(void) { return tempestIO; }
+      AbstractTempestSoundOutput *GetIOObject(void) { return tempestIO; }
 
 	private:
       ITDNStreamProvider ^managedStream;
