@@ -12,8 +12,9 @@ iTempest::iTempest(void)
     :
         runner(&environment)
 {
-    runner.SetTempestIO(&soundIO);
-    runner.Start();
+   runner.SetSoundOutput(&soundOutput);
+   runner.SetControlPanel(&controlPanel);
+   runner.Start();
 }
 
 int iTempest::GetVectors(TempestVector *buffer, int bufferSize)

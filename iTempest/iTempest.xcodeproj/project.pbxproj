@@ -46,7 +46,7 @@
 		026A1B651FC1E05B00EEFF34 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B641FC1E05B00EEFF34 /* AudioToolbox.framework */; };
 		026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 026A1B661FC1ED0D00EEFF34 /* iosException.cpp */; };
 		026A1B6B1FC2483A00EEFF34 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */; };
-		026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */; };
+		026A1B6D1FC24F9000EEFF34 /* iTempestSoundOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 026A1B6C1FC24F8F00EEFF34 /* iTempestSoundOutput.cpp */; };
 		027030B51FB88BD400A810B8 /* iTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B31FB88BD400A810B8 /* iTempest.cpp */; };
 		027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B61FB88F8700A810B8 /* cTempest.cpp */; };
 		0278563C2054503000593A8E /* TempestViewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278563B2054503000593A8E /* TempestViewRenderer.swift */; };
@@ -109,7 +109,6 @@
 		02350218204C970A0081C43D /* SoundChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannel.h; path = ../../TempestIO/SoundChannel.h; sourceTree = "<group>"; };
 		02350219204C970A0081C43D /* Noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Noise.h; path = ../../TempestIO/Noise.h; sourceTree = "<group>"; };
 		0235021A204C970A0081C43D /* Cpp11WaveStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cpp11WaveStreamer.h; path = ../../TempestIO/Cpp11WaveStreamer.h; sourceTree = "<group>"; };
-		0235021B204C970A0081C43D /* Serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serial.h; path = ../../TempestIO/Serial.h; sourceTree = "<group>"; };
 		0235021C204C970A0081C43D /* AbstractTempestIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractTempestIO.h; path = ../../TempestIO/AbstractTempestIO.h; sourceTree = "<group>"; };
 		0235021D204C970A0081C43D /* WaveStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveStreamer.h; path = ../../TempestIO/WaveStreamer.h; sourceTree = "<group>"; };
 		0235021E204C970A0081C43D /* SoundGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundGenerator.h; path = ../../TempestIO/SoundGenerator.h; sourceTree = "<group>"; };
@@ -147,7 +146,7 @@
 		026A1B661FC1ED0D00EEFF34 /* iosException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = iosException.cpp; sourceTree = "<group>"; };
 		026A1B691FC1ED3000EEFF34 /* iosException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iosException.h; sourceTree = "<group>"; };
 		026A1B6A1FC2483A00EEFF34 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = ../../../../../System/Library/Frameworks/AVFoundation.framework; sourceTree = "<group>"; };
-		026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iTempestSoundIO.cpp; sourceTree = "<group>"; };
+		026A1B6C1FC24F8F00EEFF34 /* iTempestSoundOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iTempestSoundOutput.cpp; sourceTree = "<group>"; };
 		027030B31FB88BD400A810B8 /* iTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = iTempest.cpp; sourceTree = "<group>"; };
 		027030B41FB88BD400A810B8 /* iTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempest.h; sourceTree = "<group>"; };
 		027030B61FB88F8700A810B8 /* cTempest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cTempest.cpp; sourceTree = "<group>"; };
@@ -162,7 +161,7 @@
 		029AA09C1FBFBBBB00762BC8 /* SoundGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundGenerator.cpp; path = ../../TempestIO/SoundGenerator.cpp; sourceTree = "<group>"; };
 		029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundChannel.cpp; path = ../../TempestIO/SoundChannel.cpp; sourceTree = "<group>"; };
 		029AA0A01FBFBC2800762BC8 /* Noise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Noise.cpp; path = ../../TempestIO/Noise.cpp; sourceTree = "<group>"; };
-		029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempestSoundIO.h; sourceTree = "<group>"; };
+		029AA0A21FC1237300762BC8 /* iTempestSoundOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTempestSoundOutput.h; sourceTree = "<group>"; };
 		029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cpp11WaveStreamer.cpp; path = ../../TempestIO/Cpp11WaveStreamer.cpp; sourceTree = "<group>"; };
 		02BDBCD02068138900C4464C /* RectangleShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RectangleShader.h; sourceTree = "<group>"; };
 		02BDBCD220681DA800C4464C /* RectangleShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleShader.swift; sourceTree = "<group>"; };
@@ -296,7 +295,6 @@
 				029AA0A01FBFBC2800762BC8 /* Noise.cpp */,
 				02350219204C970A0081C43D /* Noise.h */,
 				024D0E351F9EB70900DA5FFE /* Pokey.cpp */,
-				0235021B204C970A0081C43D /* Serial.h */,
 				029AA09E1FBFBBDF00762BC8 /* SoundChannel.cpp */,
 				02350218204C970A0081C43D /* SoundChannel.h */,
 				024D0E461F9EB9B700DA5FFE /* SoundChannelState.cpp */,
@@ -388,8 +386,8 @@
 				026A1B691FC1ED3000EEFF34 /* iosException.h */,
 				027030B31FB88BD400A810B8 /* iTempest.cpp */,
 				027030B41FB88BD400A810B8 /* iTempest.h */,
-				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundIO.cpp */,
-				029AA0A21FC1237300762BC8 /* iTempestSoundIO.h */,
+				026A1B6C1FC24F8F00EEFF34 /* iTempestSoundOutput.cpp */,
+				029AA0A21FC1237300762BC8 /* iTempestSoundOutput.h */,
 				0262C926200AE2CD00E5A429 /* TempestVector.h */,
 			);
 			path = cTempest;
@@ -571,7 +569,7 @@
 				024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */,
 				0285F33E1FBBDEC30004B34F /* MainViewController.swift in Sources */,
 				02BFFBDC1FC50E2B008DACA1 /* SpinnerView.swift in Sources */,
-				026A1B6D1FC24F9000EEFF34 /* iTempestSoundIO.cpp in Sources */,
+				026A1B6D1FC24F9000EEFF34 /* iTempestSoundOutput.cpp in Sources */,
 				021E39B61F9DAB1700FFAB2B /* AppDelegate.m in Sources */,
 				02BDBCD320681DA800C4464C /* RectangleShader.swift in Sources */,
 				021DC62A20589975001551FD /* SpinnerHub.metal in Sources */,

@@ -15,7 +15,7 @@
 #include "TempestRunner.h"
 
 // iTempest includes
-#include "iTempestSoundIO.h"
+#include "iTempestSoundOutput.h"
 #include "TempestVector.h"
 
 
@@ -31,19 +31,22 @@ public:
    iTempest(void);
 
    int GetVectors(TempestVector *buffer, int bufferSize);
-   void MoveSpinner(int offset) { soundIO.MoveSpinner(offset); }
-   bool GetPlayer1LEDState(void) { return soundIO.GetPlayer1LEDState(); }
-   bool GetPlayer2LEDState(void) { return soundIO.GetPlayer2LEDState(); }
    bool IsInAttractMode(void) { return runner.IsInAttractMode(); }
-   void SetPlayer1ButtonState(bool state) { soundIO.SetPlayer1ButtonState(state); }
-   void SetPlayer2ButtonState(bool state) { soundIO.SetPlayer2ButtonState(state); }
-   void SetFireButtonState(bool state) { soundIO.SetFireButtonState(state); }
-   void SetZapButtonState(bool state) { soundIO.SetZapButtonState(state); }
+
+   // dispatchers to the control panel
+   bool GetPlayer1LEDState(void) { return controlPanel.GetPlayer1LEDState(); }
+   bool GetPlayer2LEDState(void) { return controlPanel.GetPlayer2LEDState(); }
+   void MoveSpinner(int offset) { controlPanel.MoveSpinner(offset); }
+   void SetPlayer1ButtonState(bool state) { controlPanel.SetInputButtonState(ONE_PLAYER_BUTTON, state); }
+   void SetPlayer2ButtonState(bool state) { controlPanel.SetInputButtonState(TWO_PLAYER_BUTTON, state); }
+   void SetFireButtonState(bool state) { controlPanel.SetInputButtonState(FIRE_BUTTON, state); }
+   void SetZapButtonState(bool state) { controlPanel.SetInputButtonState(ZAPPER_BUTTON, state); }
 
 private:
-    iOSTempestEnvironment environment;
-    iTempestSoundIO soundIO;
-    TempestRunner runner;
+   iOSTempestEnvironment environment;
+   iTempestSoundOutput soundOutput;
+   TempestRunner runner;
+   SimpleArcadeGameControlPanel controlPanel;
 };
 
 #endif /* iTempest_hpp */
