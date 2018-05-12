@@ -4,6 +4,11 @@
 
 #include "SoundChannel.h"
 
+#ifdef _WIN32
+#pragma warning(push)
+#pragma warning(disable : 4820)	// padding in structures
+#endif
+
 /// <summary>
 /// Bit flag enumeration for button flags
 /// </summary>
@@ -45,7 +50,7 @@ public:
       if (state) buttons |= button;
       else buttons &= ~button;
    }
-   void MoveSpinner(int offset) { encoder += offset; }
+   void MoveSpinner(int offset) { encoder = (uint8_t)(encoder + offset); }
    
 private:
    uint8_t buttons = 0;
@@ -72,5 +77,9 @@ public:
    }
 };
 
+
+#ifdef _WIN32
+#pragma warning(pop)
+#endif
 
 #endif
