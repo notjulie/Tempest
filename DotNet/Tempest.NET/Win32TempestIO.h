@@ -7,7 +7,9 @@
 #include "Win32WaveStreamer.h"
 
 
-class Win32TempestSoundIO : public AbstractTempestSoundIO
+class Win32TempestSoundIO :
+   public AbstractTempestSoundOutput,
+   public AbstractArcadeGameControlPanel
 {
 public:
    Win32TempestSoundIO(void);

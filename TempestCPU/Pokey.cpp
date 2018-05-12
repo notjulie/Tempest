@@ -13,11 +13,6 @@ Pokey::Pokey(int _baseSoundChannel)
 {
 	// copy parameters
 	baseSoundChannel = _baseSoundChannel;
-
-	// clear
-	ALLPOT = 0;
-   SKCTLS = 0;
-	tempestIO = NULL;
 }
 
 Pokey::~Pokey(void)
@@ -53,7 +48,7 @@ uint8_t Pokey::ReadByte(uint16_t address)
 void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
 {
 	// sanity check
-	if (tempestIO == NULL)
+	if (soundOutput == NULL)
 		throw TempestException("Pokey::WriteByte: tempestIO is NULL");
 
 	switch (address)
@@ -64,9 +59,9 @@ void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
    case 0x06:
       {
          uint8_t channel = (uint8_t)(address / 2);
-         tempestIO->SetTime(busTime);
+         soundOutput->SetTime(busTime);
          soundChannelState[channel].SetFrequency(value);
-         tempestIO->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
+         soundOutput->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
       }
 		break;
 
@@ -76,9 +71,9 @@ void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
    case 0x07:
       {
          uint8_t channel = (uint8_t)(address / 2);
-         tempestIO->SetTime(busTime);
+         soundOutput->SetTime(busTime);
          soundChannelState[channel].SetVolumeAndWaveform(value);
-         tempestIO->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
+         soundOutput->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
       }
 		break;
 

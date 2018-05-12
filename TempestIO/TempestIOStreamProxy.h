@@ -8,7 +8,9 @@
 
 class AbstractTempestStream;
 
-class TempestIOStreamProxy : public AbstractTempestSoundIO
+class TempestIOStreamProxy :
+   public AbstractTempestSoundOutput,
+   public AbstractArcadeGameControlPanel 
 {
 public:
    TempestIOStreamProxy(AbstractTempestStream *stream);

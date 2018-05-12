@@ -27,7 +27,7 @@ public:
    bool     HaveVectorData(void) { return asteroidsBus.IsVectorGo(); }
    uint64_t GetTotalClockCycles(void) { return asteroidsBus.GetTotalClockCycles(); }
    void     GetVectorData(AsteroidsVectorInterpreter &vectorData) { asteroidsBus.GetVectorData(vectorData); }
-   void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { asteroidsBus.SetTempestIO(tempestSoundIO); }
+   void     SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { asteroidsBus.SetSoundOutput(soundOutput); }
 
    // simple dispatches to the runner
    uint8_t  GetAccumulator(void) { return cpuRunner->Get6502()->GetA(); }

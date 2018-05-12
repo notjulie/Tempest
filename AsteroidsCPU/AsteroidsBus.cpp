@@ -43,12 +43,6 @@ void AsteroidsBus::GetVectorData(AsteroidsVectorInterpreter &vectorData)
 }
 
 
-void AsteroidsBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
-{
-   tempestSoundIO = _tempestSoundIO;
-}
-
-
 void AsteroidsBus::SetNMITimer(void)
 {
    // generate the NMI
@@ -168,8 +162,8 @@ void AsteroidsBus::WriteBankedRAM(AbstractBus *bus, uint16_t address, uint8_t va
 void AsteroidsBus::Write3200(AbstractBus *bus, uint16_t address, uint8_t value)
 {
    AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
-   asteroidsBus->tempestSoundIO->SetButtonLED(ONE_PLAYER_BUTTON, (value & 2) != 0);
-   asteroidsBus->tempestSoundIO->SetButtonLED(TWO_PLAYER_BUTTON, (value & 1) != 0);
+   asteroidsBus->controlPanel->SetButtonLED(ONE_PLAYER_BUTTON, (value & 2) != 0);
+   asteroidsBus->controlPanel->SetButtonLED(TWO_PLAYER_BUTTON, (value & 1) != 0);
    asteroidsBus->ramSel = (value & 4) != 0;
 }
 

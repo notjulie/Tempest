@@ -24,22 +24,23 @@ namespace TempestDotNET {
    {
       // create objects
       environment = new Win32TempestEnvironment();
-      tempestSoundIO = soundIO->GetIOObject();
+      soundOutput = soundIO->GetIOObject();
       tempestRunner = new TempestRunner(environment);
 
       // hook objects together
-      tempestRunner->SetTempestIO(tempestSoundIO);
+      tempestRunner->SetSoundOutput(soundOutput);
    }
 
    Tempest::Tempest(TDNWin32TempestSoundIO ^soundIO)
    {
       // create objects
       environment = new Win32TempestEnvironment();
-      tempestSoundIO = soundIO->GetSoundIOObject();
+      soundOutput = soundIO->GetSoundOutput();
       tempestRunner = new TempestRunner(environment);
 
       // hook objects together
-      tempestRunner->SetTempestIO(tempestSoundIO);
+      tempestRunner->SetSoundOutput(soundOutput);
+      tempestRunner->SetControlPanel(soundIO->GetControlPanel());
    }
 
    Tempest::~Tempest(void)

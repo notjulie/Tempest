@@ -10,7 +10,7 @@ using namespace System;
 using namespace System::Threading;
 
 class Win32RealTimeClock;
-class AbstractTempestSoundIO;
+class AbstractTempestSoundOutput;
 class Win32WaveStreamer;
 
 namespace TempestDotNET {
@@ -41,7 +41,7 @@ namespace TempestDotNET {
 
 	private:
 		Win32TempestEnvironment *environment;
-      AbstractTempestSoundIO *tempestSoundIO;
+      AbstractTempestSoundOutput *soundOutput;
       AsteroidsRunner *asteroidsRunner;
 	};
 

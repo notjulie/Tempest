@@ -37,7 +37,8 @@ public:
    void GetVectorData(VectorData &vectorData);
    bool IsPaused(void) { return isPaused; }
    void SetDemoMode(void) { demoMode = true; }
-   void SetTempestIO(AbstractTempestSoundIO *tempestSoundIOs);
+   void SetControlPanel(AbstractArcadeGameControlPanel *_controlPanel);
+   void SetSoundOutput(AbstractTempestSoundOutput *soundOutput);
 
 private:
    void  ConfigureAddressSpace(void);
@@ -79,18 +80,19 @@ private:
    EEPROM eeprom;
    MathBox mathBox;
 
-   AbstractTempestSoundIO *tempestSoundIO;
+   AbstractArcadeGameControlPanel *controlPanel = nullptr;
+   AbstractTempestSoundOutput *soundOutput = nullptr;
 
-   uint64_t lastPlayer2ButtonDownTime;
-   uint64_t lastWatchdogTime;
-   uint64_t lastVectorRAMWrite;
-   bool demoMode;
-	bool selfTest;
-	bool slam;
-	bool clock3KHzIsHigh;
-	bool lastPlayer2ButtonState;
-   bool vectorGoRequested;
-   bool vectorRAMReady;
+   uint64_t lastPlayer2ButtonDownTime = 0;
+   uint64_t lastWatchdogTime = 0;
+   uint64_t lastVectorRAMWrite = 0;
+   bool demoMode = false;
+	bool selfTest = false;
+	bool slam = false;
+	bool clock3KHzIsHigh = false;
+	bool lastPlayer2ButtonState = false;
+   bool vectorGoRequested = false;
+   bool vectorRAMReady = false;
    bool isPaused = false;
 };
 

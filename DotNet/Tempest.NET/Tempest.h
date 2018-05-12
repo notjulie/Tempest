@@ -41,7 +41,7 @@ namespace TempestDotNET {
 
 	private:
 		Win32TempestEnvironment *environment;
-      AbstractTempestSoundIO *tempestSoundIO;
+      AbstractTempestSoundOutput *soundOutput;
       TempestRunner *tempestRunner;
 	};
 

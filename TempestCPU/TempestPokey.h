@@ -21,7 +21,7 @@ public:
 
 	virtual uint8_t GetALLPOT(void) {
       // get the encoder
-      uint8_t encoder = GetIO()->GetEncoder();
+      uint8_t encoder = GetControlPanel()->GetEncoder();
 
       // see how much it has changed since last time
       int8_t encoderChange = encoder - lastReadEncoder;
@@ -61,7 +61,7 @@ public:
 		//; BIT 6: Start Player 2 Button
 		//; BIT 7: Unused.
 		uint8_t result = 0;
-      uint8_t buttons = GetIO()->GetButtons();
+      uint8_t buttons = GetControlPanel()->GetButtons();
       if (buttons & ONE_PLAYER_BUTTON)
          result |= 0x20;
       if (buttons & TWO_PLAYER_BUTTON)

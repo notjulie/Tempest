@@ -17,7 +17,8 @@ namespace TempestDotNET {
       TDNWin32TempestSoundIO(void);
       ~TDNWin32TempestSoundIO(void);
 
-      AbstractTempestSoundIO *GetSoundIOObject(void) { return tempestSoundIO; }
+      AbstractTempestSoundOutput *GetSoundOutput(void) { return tempestSoundIO; }
+      AbstractArcadeGameControlPanel *GetControlPanel(void) { return tempestSoundIO; }
       void Fire(bool state) { tempestSoundIO->Fire(state); }
       void OnePlayer(bool state) { tempestSoundIO->OnePlayer(state); }
       void TwoPlayer(bool state) { tempestSoundIO->TwoPlayer(state); }

@@ -5,24 +5,29 @@
 #include "PacketStream.h"
 #include "SoundIOPacket.h"
 
-class AbstractTempestSoundIO;
+class AbstractTempestSoundOutput;
 class AbstractTempestStream;
 
 class TempestIOStreamListener {
 public:
-   TempestIOStreamListener(AbstractTempestStream *stream, AbstractTempestSoundIO *tempestIO);
+   TempestIOStreamListener(
+      AbstractTempestStream *stream,
+      AbstractTempestSoundOutput *tempestIO,
+      AbstractArcadeGameControlPanel *controlPanel
+   );
 
    void Service(void);
 
 private:
    PacketStream stream;
-   AbstractTempestSoundIO *tempestIO;
+   AbstractTempestSoundOutput *soundOutput = nullptr;
+   AbstractArcadeGameControlPanel *controlPanel = nullptr;
 
-   uint8_t encoder;
-   uint8_t buttons;
-   uint64_t lastPacketCpuTime;
+   uint8_t encoder = 0;
+   uint8_t buttons = 0;
+   uint64_t lastPacketCpuTime = 0;
    TempestInPacket lastResponsePacket;
-   uint64_t lastResponsePacketTime;
+   uint64_t lastResponsePacketTime = 0;
 };
 
 #endif

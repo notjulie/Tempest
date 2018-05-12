@@ -26,22 +26,22 @@ namespace TempestDotNET {
    {
       // create objects
       environment = new Win32TempestEnvironment();
-      tempestSoundIO = soundIO->GetIOObject();
+      soundOutput = soundIO->GetIOObject();
       asteroidsRunner = new AsteroidsRunner(environment);
 
       // hook objects together
-      asteroidsRunner->SetTempestIO(tempestSoundIO);
+      asteroidsRunner->SetSoundOutput(soundOutput);
    }
 
    Asteroids::Asteroids(TDNWin32TempestSoundIO ^soundIO)
    {
       // create objects
       environment = new Win32TempestEnvironment();
-      tempestSoundIO = soundIO->GetSoundIOObject();
+      soundOutput = soundIO->GetSoundOutput();
       asteroidsRunner = new AsteroidsRunner(environment);
 
       // hook objects together
-      asteroidsRunner->SetTempestIO(tempestSoundIO);
+      asteroidsRunner->SetSoundOutput(soundOutput);
    }
 
    Asteroids::~Asteroids(void)

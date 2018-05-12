@@ -16,18 +16,6 @@ TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
    // copy parameters
    environment = _environment;
 
-	// clear
-	selfTest = false;
-	clock3KHzIsHigh = false;
-	slam = false;
-   tempestSoundIO = NULL;
-   lastPlayer2ButtonState = false;
-   lastPlayer2ButtonDownTime = 0;
-   lastWatchdogTime = 0;
-   lastVectorRAMWrite = 0;
-   vectorGoRequested = false;
-   vectorRAMReady = false;
-
    // allocate
    vectorDataSnapshotMutex = new std::mutex();
 
@@ -166,8 +154,8 @@ void TempestBus::WriteIOByte(uint16_t address, uint8_t value)
 
       case 0x60E0:
          // register for flashing the start buttons
-         tempestSoundIO->SetButtonLED(ONE_PLAYER_BUTTON, (value & 1) != 0);
-         tempestSoundIO->SetButtonLED(TWO_PLAYER_BUTTON, (value & 2) != 0);
+         controlPanel->SetButtonLED(ONE_PLAYER_BUTTON, (value & 1) != 0);
+         controlPanel->SetButtonLED(TWO_PLAYER_BUTTON, (value & 2) != 0);
          break;
 
       default:
@@ -180,11 +168,18 @@ void TempestBus::WriteIOByte(uint16_t address, uint8_t value)
 }
 
 
-void TempestBus::SetTempestIO(AbstractTempestSoundIO *_tempestSoundIO)
+void TempestBus::SetSoundOutput(AbstractTempestSoundOutput *_soundOutput)
 {
-   tempestSoundIO = _tempestSoundIO;
-   pokey1.SetTempestIO(tempestSoundIO);
-	pokey2.SetTempestIO(tempestSoundIO);
+   this->soundOutput = _soundOutput;
+   pokey1.SetTempestIO(_soundOutput);
+	pokey2.SetTempestIO(_soundOutput);
+}
+
+void TempestBus::SetControlPanel(AbstractArcadeGameControlPanel *_controlPanel)
+{
+   this->controlPanel = _controlPanel;
+   pokey1.SetControlPanel(_controlPanel);
+   pokey2.SetControlPanel(_controlPanel);
 }
 
 
@@ -194,7 +189,7 @@ void TempestBus::Tick6KHz(void)
    clock3KHzIsHigh = !clock3KHzIsHigh;
 
    // give the sound output its heartbeat
-   tempestSoundIO->SetTime(GetTotalClockCycles());
+   soundOutput->SetTime(GetTotalClockCycles());
 }
 
 void TempestBus::Tick250Hz(void)
@@ -206,7 +201,7 @@ void TempestBus::Tick250Hz(void)
       throw TempestException("Watchdog timer timeout");
 
    // check for double tap on player two button
-   bool player2ButtonDown = (tempestSoundIO->GetButtons() & TWO_PLAYER_BUTTON) != 0;
+   bool player2ButtonDown = (controlPanel->GetButtons() & TWO_PLAYER_BUTTON) != 0;
    if (player2ButtonDown != lastPlayer2ButtonState)
    {
       lastPlayer2ButtonState = player2ButtonDown;
@@ -217,7 +212,7 @@ void TempestBus::Tick250Hz(void)
          {
             isPaused = !isPaused;
             if (isPaused)
-               tempestSoundIO->AllSoundOff();
+               soundOutput->AllSoundOff();
          }
          lastPlayer2ButtonDownTime = now;
       }

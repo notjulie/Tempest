@@ -34,7 +34,8 @@ public:
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
    bool     IsInAttractMode(void) { return tempestBus.ReadByte(GAME_INPUT_MODE) == GAME_INPUT_MODE_ATTRACT; }
    void     SetDemoMode(void);
-   void     SetTempestIO(AbstractTempestSoundIO *tempestSoundIO) { tempestBus.SetTempestIO(tempestSoundIO); }
+   void     SetControlPanel(AbstractArcadeGameControlPanel *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
+   void     SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
 
    // function for getting display vector data
    void GetAllVectors(std::vector<SimpleVector> &vectors);

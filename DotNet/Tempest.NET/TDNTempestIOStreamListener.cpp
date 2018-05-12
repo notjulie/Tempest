@@ -18,7 +18,11 @@ namespace TempestDotNET {
 		this->tempestIO = tempestIO;
 
 		// create our listener
-      listener = new TempestIOStreamListener(stream->GetStream(), tempestIO->GetSoundIOObject());
+      listener = new TempestIOStreamListener(
+         stream->GetStream(),
+         tempestIO->GetSoundOutput(),
+         tempestIO->GetControlPanel()
+         );
 
       // create our thread that does the listening
       thread = gcnew Thread(gcnew ThreadStart(this, &TDNTempestIOStreamListener::ThreadEntry));

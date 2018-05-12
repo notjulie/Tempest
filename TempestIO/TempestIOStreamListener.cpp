@@ -8,19 +8,17 @@
 #include "TempestIOStreamListener.h"
 
 
-TempestIOStreamListener::TempestIOStreamListener(AbstractTempestStream *_stream, AbstractTempestSoundIO *tempestIO)
+TempestIOStreamListener::TempestIOStreamListener(
+         AbstractTempestStream *_stream,
+         AbstractTempestSoundOutput *soundOutput,
+         AbstractArcadeGameControlPanel *controlPanel)
    :
    stream(_stream)
 {
    // copy parameters
    this->stream = stream;
-   this->tempestIO = tempestIO;
-
-   // clear
-   encoder = 0;
-   buttons = 0;
-   lastPacketCpuTime = 0;
-   lastResponsePacketTime = 0;
+   this->soundOutput = soundOutput;
+   this->controlPanel = controlPanel;
 }
 
 void TempestIOStreamListener::Service(void)
@@ -36,12 +34,12 @@ void TempestIOStreamListener::Service(void)
       SoundIOPacketReader packet(packetBuffer, packetLength);
 
       // set the buttons
-      tempestIO->SetButtonLED(ONE_PLAYER_BUTTON, packet.GetButtonLED(ONE_PLAYER_BUTTON));
-      tempestIO->SetButtonLED(TWO_PLAYER_BUTTON, packet.GetButtonLED(TWO_PLAYER_BUTTON));
+      controlPanel->SetButtonLED(ONE_PLAYER_BUTTON, packet.GetButtonLED(ONE_PLAYER_BUTTON));
+      controlPanel->SetButtonLED(TWO_PLAYER_BUTTON, packet.GetButtonLED(TWO_PLAYER_BUTTON));
 
       // send the initial sound channel data to the I/O module
       for (int channel = 0; channel < 8; ++channel)
-         tempestIO->SetSoundChannelState(channel, packet.GetInitialSoundChannelState(channel));
+         soundOutput->SetSoundChannelState(channel, packet.GetInitialSoundChannelState(channel));
 
       // add additional sound commands
       int ticksThisPacket = 0;
@@ -52,21 +50,21 @@ void TempestIOStreamListener::Service(void)
          while (packet.GetSoundCommand(&delay, &channel, &state))
          {
             ticksThisPacket += delay;
-            tempestIO->SetTime(lastPacketCpuTime + ticksThisPacket * SoundIOPacketReader::ClockCyclesPerTick);
-            tempestIO->SetSoundChannelState(channel, state);
+            soundOutput->SetTime(lastPacketCpuTime + ticksThisPacket * SoundIOPacketReader::ClockCyclesPerTick);
+            soundOutput->SetSoundChannelState(channel, state);
          }
       }
 
       // update our time
       lastPacketCpuTime += SoundIOPacketReader::ClockCyclesPerPacket;
-      tempestIO->SetTime(lastPacketCpuTime);
+      soundOutput->SetTime(lastPacketCpuTime);
    }
 
    // send a message with control panel information if anything
    // has changed or enough time has passed
    TempestInPacket packet;
-   packet.SetButtons(tempestIO->GetButtons());
-   packet.SetEncoder(tempestIO->GetEncoder());
+   packet.SetButtons(controlPanel->GetButtons());
+   packet.SetEncoder(controlPanel->GetEncoder());
    if (packet != lastResponsePacket || (lastPacketCpuTime - lastResponsePacketTime) >= SoundIOPacketReader::MaxResponsePacketPeriod)
    {
       packet.WriteToStream(&stream);
