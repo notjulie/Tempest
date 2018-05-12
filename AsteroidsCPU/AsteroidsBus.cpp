@@ -173,3 +173,19 @@ void AsteroidsBus::WriteVectorGO(AbstractBus *bus, uint16_t address, uint8_t val
    AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
    asteroidsBus->vectorGo = true;
 }
+
+
+uint8_t AsteroidsBus::ReadOnePlayerButton(AbstractBus *bus, uint16_t address)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   bool pressed = (asteroidsBus->controlPanel->GetButtons() & ONE_PLAYER_BUTTON) != 0;
+   return pressed ? 0xFF : 0x00;
+}
+
+uint8_t AsteroidsBus::ReadTwoPlayerButton(AbstractBus *bus, uint16_t address)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   bool pressed = (asteroidsBus->controlPanel->GetButtons() & TWO_PLAYER_BUTTON) != 0;
+   return pressed ? 0xFF : 0x00;
+}
+

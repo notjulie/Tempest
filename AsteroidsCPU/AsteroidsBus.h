@@ -36,7 +36,6 @@ public:
 
 private:
    void  ConfigureAddressSpace(void);
-   void  HandleTick250Hz(void);
    void SetNMITimer(void);
 
 private:
@@ -46,8 +45,8 @@ private:
    static uint8_t ReadRotateLeftButton(AbstractBus *bus, uint16_t address) { return 0; }
    static uint8_t ReadRotateRightButton(AbstractBus *bus, uint16_t address) { return 0; }
    static uint8_t ReadThrustButton(AbstractBus *bus, uint16_t address) { return 0; }
-   static uint8_t ReadOnePlayerButton(AbstractBus *bus, uint16_t address) { return 0; }
-   static uint8_t ReadTwoPlayerButton(AbstractBus *bus, uint16_t address) { return 0; }
+   static uint8_t ReadOnePlayerButton(AbstractBus *bus, uint16_t address);
+   static uint8_t ReadTwoPlayerButton(AbstractBus *bus, uint16_t address);
    static uint8_t ReadVectorRAM(AbstractBus *bus, uint16_t address);
    static uint8_t Read3KHzClock(AbstractBus *bus, uint16_t address);
    static uint8_t ReadSelfTestSwitch(AbstractBus *bus, uint16_t address);
@@ -65,12 +64,11 @@ private:
    static void WriteVectorGO(AbstractBus *bus, uint16_t address, uint8_t value);
 
 private:
-   AbstractTempestEnvironment *environment;
+   AbstractTempestEnvironment *environment = nullptr;
+   AbstractTempestSoundOutput *soundOutput = nullptr;
+   AbstractArcadeGameControlPanel *controlPanel = nullptr;
 
-   std::mutex *vectorDataSnapshotMutex;
-
-   AbstractTempestSoundOutput *soundOutput;
-   AbstractArcadeGameControlPanel *controlPanel;
+   std::mutex *vectorDataSnapshotMutex = nullptr;
 
    uint8_t bankedRAM[0x200];
    uint8_t vectorRAM[0x800];

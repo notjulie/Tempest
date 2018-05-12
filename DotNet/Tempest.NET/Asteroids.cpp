@@ -42,6 +42,7 @@ namespace TempestDotNET {
 
       // hook objects together
       asteroidsRunner->SetSoundOutput(soundOutput);
+      asteroidsRunner->SetControlPanel(soundIO->GetControlPanel());
    }
 
    Asteroids::~Asteroids(void)
