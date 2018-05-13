@@ -42,8 +42,8 @@ private:
    static uint8_t ReadBankedRAM(AbstractBus *bus, uint16_t address);
    static uint8_t ReadFireButton(AbstractBus *bus, uint16_t address) { return 0; }
    static uint8_t ReadHyperspaceButton(AbstractBus *bus, uint16_t address) { return 0; }
-   static uint8_t ReadRotateLeftButton(AbstractBus *bus, uint16_t address) { return 0; }
-   static uint8_t ReadRotateRightButton(AbstractBus *bus, uint16_t address) { return 0; }
+   static uint8_t ReadRotateLeftButton(AbstractBus *bus, uint16_t address);
+   static uint8_t ReadRotateRightButton(AbstractBus *bus, uint16_t address);
    static uint8_t ReadThrustButton(AbstractBus *bus, uint16_t address) { return 0; }
    static uint8_t ReadOnePlayerButton(AbstractBus *bus, uint16_t address);
    static uint8_t ReadTwoPlayerButton(AbstractBus *bus, uint16_t address);

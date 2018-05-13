@@ -13,10 +13,12 @@
 /// Bit flag enumeration for button flags
 /// </summary>
 enum ButtonFlag {
-   ONE_PLAYER_BUTTON = 1,
-   FIRE_BUTTON = 2,
-   ZAPPER_BUTTON = 4,
-   TWO_PLAYER_BUTTON = 32
+   ONE_PLAYER_BUTTON = (1 << 0),
+   FIRE_BUTTON = (1<<1),
+   ZAPPER_BUTTON = (1<<2),
+   TWO_PLAYER_BUTTON = (1<<3),
+   ROTATE_LEFT_BUTTON = (1<<4),
+   ROTATE_RIGHT_BUTTON = (1<<5)
 };
 
 /// <summary>

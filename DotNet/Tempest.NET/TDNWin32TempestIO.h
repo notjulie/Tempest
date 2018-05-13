@@ -19,13 +19,14 @@ namespace TempestDotNET {
 
       AbstractTempestSoundOutput *GetSoundOutput(void) { return tempestSoundIO; }
       AbstractArcadeGameControlPanel *GetControlPanel(void) { return tempestSoundIO; }
-      void Fire(bool state) { tempestSoundIO->Fire(state); }
-      void OnePlayer(bool state) { tempestSoundIO->OnePlayer(state); }
-      void TwoPlayer(bool state) { tempestSoundIO->TwoPlayer(state); }
-      void Zap(bool state) { tempestSoundIO->Zap(state); }
-      void MoveWheel(int distance) { tempestSoundIO->MoveWheel(distance); }
-      bool OnePlayerLED(void) { return tempestSoundIO->OnePlayerLED(); }
-      bool TwoPlayerLED(void) { return tempestSoundIO->TwoPlayerLED(); }
+
+      void Fire(bool state) { tempestSoundIO->SetInputButtonState(FIRE_BUTTON, state); }
+      void OnePlayer(bool state) { tempestSoundIO->SetInputButtonState(ONE_PLAYER_BUTTON, state); }
+      void TwoPlayer(bool state) { tempestSoundIO->SetInputButtonState(TWO_PLAYER_BUTTON, state); }
+      void Zap(bool state) { tempestSoundIO->SetInputButtonState(ZAPPER_BUTTON, state); }
+      void MoveWheel(int distance) { tempestSoundIO->MoveSpinner(distance); }
+      bool OnePlayerLED(void) { return tempestSoundIO->GetPlayer1LEDState(); }
+      bool TwoPlayerLED(void) { return tempestSoundIO->GetPlayer2LEDState(); }
 
    private:
       Win32TempestSoundIO *tempestSoundIO;

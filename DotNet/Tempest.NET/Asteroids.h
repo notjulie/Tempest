@@ -37,10 +37,17 @@ namespace TempestDotNET {
       void     Step(void) { asteroidsRunner->Step(); }
       void     Resume(void) { asteroidsRunner->Resume(); }
 
+      //  simple dispatches to the control panel
+      void RotateLeftDown(bool down) { controlPanel->SetInputButtonState(ROTATE_LEFT_BUTTON, down); }
+      void RotateRightDown(bool down) { controlPanel->SetInputButtonState(ROTATE_RIGHT_BUTTON, down); }
+      void OnePlayer(bool down) { controlPanel->SetInputButtonState(ONE_PLAYER_BUTTON, down); }
+      void TwoPlayer(bool down) { controlPanel->SetInputButtonState(TWO_PLAYER_BUTTON, down); }
+
 	private:
-		Win32TempestEnvironment *environment;
-      AbstractTempestSoundOutput *soundOutput;
-      AsteroidsRunner *asteroidsRunner;
+		Win32TempestEnvironment *environment = nullptr;
+      AbstractTempestSoundOutput *soundOutput = nullptr;
+      AsteroidsRunner *asteroidsRunner = nullptr;
+      SimpleArcadeGameControlPanel *controlPanel = nullptr;
 	};
 
 }

@@ -190,6 +190,21 @@ uint8_t AsteroidsBus::ReadTwoPlayerButton(AbstractBus *bus, uint16_t address)
    return pressed ? 0xFF : 0x00;
 }
 
+uint8_t AsteroidsBus::ReadRotateLeftButton(AbstractBus *bus, uint16_t address)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   bool pressed = (asteroidsBus->controlPanel->GetButtons() & ROTATE_LEFT_BUTTON) != 0;
+   return pressed ? 0xFF : 0x00;
+}
+
+uint8_t AsteroidsBus::ReadRotateRightButton(AbstractBus *bus, uint16_t address)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   bool pressed = (asteroidsBus->controlPanel->GetButtons() & ROTATE_RIGHT_BUTTON) != 0;
+   return pressed ? 0xFF : 0x00;
+}
+
+
 void AsteroidsBus::WriteResetSound(AbstractBus *bus, uint16_t address, uint8_t value)
 {
    AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);

@@ -28,10 +28,11 @@ namespace TempestDotNET {
       environment = new Win32TempestEnvironment();
       soundOutput = soundIO->GetSoundOutput();
       asteroidsRunner = new AsteroidsRunner(environment);
+      controlPanel = new SimpleArcadeGameControlPanel();
 
       // hook objects together
       asteroidsRunner->SetSoundOutput(soundOutput);
-      asteroidsRunner->SetControlPanel(soundIO->GetControlPanel());
+      asteroidsRunner->SetControlPanel(controlPanel);
    }
 
    Asteroids::~Asteroids(void)

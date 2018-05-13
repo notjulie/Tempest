@@ -20,7 +20,7 @@ namespace AsteroidsWpf
       #region Private Fields
 
       private TDNWin32TempestSoundIO tempestSoundIO;
-      private Asteroids tempest;
+      private Asteroids asteroids;
 
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
@@ -28,8 +28,6 @@ namespace AsteroidsWpf
       private List<Line> lines = new List<Line>();
       private DateTime startTime;
       private SolidColorBrush[] vectorBrush = new SolidColorBrush[16];
-      private bool leftKeyDown = false;
-      private bool rightKeyDown = false;
 
       private SolidColorBrush ledOnBrush = new SolidColorBrush(Colors.Red);
       private SolidColorBrush ledOffBrush = new SolidColorBrush(Colors.Black);
@@ -77,15 +75,11 @@ namespace AsteroidsWpf
          switch (e.Key)
          {
             case Key.Left:
-               tempestSoundIO.MoveWheel(-4);
-               leftKeyDown = true;
-               rightKeyDown = false;
+               asteroids.RotateLeftDown(true);
                break;
 
             case Key.Right:
-               tempestSoundIO.MoveWheel(4);
-               leftKeyDown = false;
-               rightKeyDown = true;
+               asteroids.RotateRightDown(true);
                break;
 
             case Key.F:
@@ -103,11 +97,11 @@ namespace AsteroidsWpf
          switch (e.Key)
          {
             case Key.Left:
-               leftKeyDown = false;
+               asteroids.RotateLeftDown(false);
                break;
 
             case Key.Right:
-               rightKeyDown = false;
+               asteroids.RotateRightDown(false);
                break;
 
             case Key.F:
@@ -122,16 +116,16 @@ namespace AsteroidsWpf
 
       void buttonOnePlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
-         tempestSoundIO.OnePlayer(true);
+         asteroids.OnePlayer(true);
          System.Threading.Thread.Sleep(100);
-         tempestSoundIO.OnePlayer(false);
+         asteroids.OnePlayer(false);
       }
 
       void buttonTwoPlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
-         tempestSoundIO.TwoPlayer(true);
+         asteroids.TwoPlayer(true);
          System.Threading.Thread.Sleep(100);
-         tempestSoundIO.TwoPlayer(false);
+         asteroids.TwoPlayer(false);
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -143,7 +137,7 @@ namespace AsteroidsWpf
 
       void MainWindow_Closed(object sender, EventArgs e)
       {
-         tempest.Dispose();
+         asteroids.Dispose();
       }
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -152,11 +146,11 @@ namespace AsteroidsWpf
          tempestSoundIO = new TDNWin32TempestSoundIO();
 
          // create our tempest, connected to the IO object
-         tempest = new Asteroids(tempestSoundIO);
+         asteroids = new Asteroids(tempestSoundIO);
 
          // set it to running
          startTime = DateTime.Now;
-         tempest.Start();
+         asteroids.Start();
 
          timer = new DispatcherTimer();
          timer.Interval = TimeSpan.FromMilliseconds(200);
@@ -176,12 +170,6 @@ namespace AsteroidsWpf
 
       void spinnerTimer_Tick(object sender, EventArgs e)
       {
-         // update the spinner if we should
-         if (leftKeyDown)
-            tempestSoundIO.MoveWheel(-1);
-         else if (rightKeyDown)
-            tempestSoundIO.MoveWheel(1);
-
          // update our LED's
          if (tempestSoundIO.OnePlayerLED())
             buttonOnePlayerStart.Fill = ledOnBrush;
@@ -195,9 +183,9 @@ namespace AsteroidsWpf
 
       void timer_Tick(object sender, EventArgs e)
       {
-         processorStatus.Text = tempest.GetProcessorStatus();
+         processorStatus.Text = asteroids.GetProcessorStatus();
 
-         double processorSpeed = tempest.GetTotalClockCycles();
+         double processorSpeed = asteroids.GetTotalClockCycles();
          processorSpeed /= (DateTime.Now - startTime).TotalSeconds;
          processorSpeed /= 1000000;
          processorSpeedText.Text = processorSpeed.ToString("F1") + " MHz";
@@ -206,7 +194,7 @@ namespace AsteroidsWpf
       void vectorTimer_Tick(object sender, EventArgs e)
       {
          // get a vector enumerator
-         VectorEnumerator enumerator = tempest.GetVectorEnumerator();
+         VectorEnumerator enumerator = asteroids.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;

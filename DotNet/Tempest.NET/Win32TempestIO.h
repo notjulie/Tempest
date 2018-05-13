@@ -9,7 +9,7 @@
 
 class Win32TempestSoundIO :
    public AbstractTempestSoundOutput,
-   public AbstractArcadeGameControlPanel
+   public SimpleArcadeGameControlPanel
 {
 public:
    Win32TempestSoundIO(void);
@@ -17,24 +17,10 @@ public:
 
    virtual void SetSoundChannelState(int channel, SoundChannelState state);
    virtual void SetTime(uint64_t clockCycles);
-   virtual uint8_t GetButtons(void) { return buttons; }
-   virtual uint8_t GetEncoder(void) { return encoder; }
-   virtual void SetButtonLED(ButtonFlag button, bool value);
-
-   void OnePlayer(bool state);
-   void TwoPlayer(bool state);
-   bool OnePlayerLED(void);
-   bool TwoPlayerLED(void);
-   void Fire(bool state);
-   void Zap(bool state);
-   void MoveWheel(int distance) { encoder += distance; }
 
 private:
    Win32WaveStreamer	waveStreamer;
-   uint8_t buttons;
-   uint8_t encoder;
-   uint8_t leds;
-   uint64_t cpuTime;
+   uint64_t cpuTime = 0;
 };
 
 
