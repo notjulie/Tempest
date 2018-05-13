@@ -55,6 +55,7 @@ private:
    static void WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WriteExplosionOutput(AbstractBus *bus, uint16_t address, uint8_t value) {}
    static void WriteThumpOutput(AbstractBus *bus, uint16_t address, uint8_t value) {}
+   static void WriteResetSound(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WriteSaucerSoundEnable(AbstractBus *bus, uint16_t address, uint8_t value) {}
    static void WriteSaucerFireSound(AbstractBus *bus, uint16_t address, uint8_t value) {}
    static void WriteSaucerSoundSelect(AbstractBus *bus, uint16_t address, uint8_t value) {}

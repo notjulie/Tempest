@@ -111,6 +111,7 @@ void AsteroidsBus::ConfigureAddressSpace(void)
    ConfigureAddress(0x3C03, 0, ReadAddressInvalid, WriteThrustSoundEnable);
    ConfigureAddress(0x3C04, 0, ReadAddressInvalid, WriteShipFireSound);
    ConfigureAddress(0x3C05, 0, ReadAddressInvalid, WriteLifeSound);
+   ConfigureAddress(0x3E00, 0, ReadAddressInvalid, WriteResetSound);
 }
 
 
@@ -189,3 +190,8 @@ uint8_t AsteroidsBus::ReadTwoPlayerButton(AbstractBus *bus, uint16_t address)
    return pressed ? 0xFF : 0x00;
 }
 
+void AsteroidsBus::WriteResetSound(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+   asteroidsBus->soundOutput->AllSoundOff();
+}

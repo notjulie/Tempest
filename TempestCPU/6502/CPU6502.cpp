@@ -95,7 +95,8 @@ uint8_t CPU6502::SingleStep(void)
       case 0x09: ORA(PC++); return 2;
       case 0x0A: ASL(); return 2;
 		case 0x0D: ORA(GetAbsoluteAddress()); return 4;
-		case 0x10: BPL(); return 2;
+      case 0x0E: ASL(GetAbsoluteAddress()); return 4;
+      case 0x10: BPL(); return 2;
       case 0x18: P.C = false; return 2; //CLC
       case 0x19: ORA((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
       case 0x1D: ORA((uint16_t)(GetAbsoluteAddress() + X)); return 4;
@@ -195,7 +196,8 @@ uint8_t CPU6502::SingleStep(void)
 		case 0xCE: DEC(GetAbsoluteAddress()); return 6;
 		case 0xD0: BNE(); return 2;
       case 0xD1: CMP(GetIndirectYAddress()); return 6;
-		case 0xD6: DEC((uint8_t)(bus->ReadByte(PC++) + X)); return 6;
+      case 0xD5: CMP(GetIndirectXAddress()); return 6;
+      case 0xD6: DEC((uint8_t)(bus->ReadByte(PC++) + X)); return 6;
 		case 0xD8: P.D = false; return 2; //CLD
 		case 0xD9: CMP((uint16_t)(GetAbsoluteAddress() + Y)); return 4;
 		case 0xDD: CMP((uint16_t)(GetAbsoluteAddress() + X)); return 4;
