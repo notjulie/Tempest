@@ -22,17 +22,6 @@
 using namespace System;
 
 namespace TempestDotNET {
-   Asteroids::Asteroids(TDNIOStreamProxy ^soundIO)
-   {
-      // create objects
-      environment = new Win32TempestEnvironment();
-      soundOutput = soundIO->GetIOObject();
-      asteroidsRunner = new AsteroidsRunner(environment);
-
-      // hook objects together
-      asteroidsRunner->SetSoundOutput(soundOutput);
-   }
-
    Asteroids::Asteroids(TDNWin32TempestSoundIO ^soundIO)
    {
       // create objects

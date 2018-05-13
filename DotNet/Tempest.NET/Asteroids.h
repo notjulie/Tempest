@@ -3,7 +3,6 @@
 #define TEMPEST_H
 
 #include "AsteroidsCPU/AsteroidsRunner.h"
-#include "TDNIOStreamProxy.h"
 #include "VectorEnumerator.h"
 
 using namespace System;
@@ -18,7 +17,6 @@ namespace TempestDotNET {
    public ref class Asteroids
 	{
 	public:
-      Asteroids(TDNIOStreamProxy ^soundIO);
       Asteroids(TDNWin32TempestSoundIO ^soundIO);
       ~Asteroids(void);
 
