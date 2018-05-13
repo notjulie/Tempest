@@ -37,7 +37,7 @@ public:
    void GetVectorData(VectorData &vectorData);
    bool IsPaused(void) { return isPaused; }
    void SetDemoMode(void) { demoMode = true; }
-   void SetControlPanel(AbstractArcadeGameControlPanel *_controlPanel);
+   void SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel);
    void SetSoundOutput(AbstractTempestSoundOutput *soundOutput);
 
 private:
@@ -80,7 +80,7 @@ private:
    EEPROM eeprom;
    MathBox mathBox;
 
-   AbstractArcadeGameControlPanel *controlPanel = nullptr;
+   AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
    AbstractTempestSoundOutput *soundOutput = nullptr;
 
    uint64_t lastPlayer2ButtonDownTime = 0;

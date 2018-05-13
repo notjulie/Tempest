@@ -27,7 +27,7 @@ public:
    bool     HaveVectorData(void) { return asteroidsBus.IsVectorGo(); }
    uint64_t GetTotalClockCycles(void) { return asteroidsBus.GetTotalClockCycles(); }
    void     GetVectorData(AsteroidsVectorInterpreter &vectorData) { asteroidsBus.GetVectorData(vectorData); }
-   void     SetControlPanel(AbstractArcadeGameControlPanel *controlPanel) { asteroidsBus.SetControlPanel(controlPanel); }
+   void     SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { asteroidsBus.SetControlPanel(controlPanel); }
    void     SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { asteroidsBus.SetSoundOutput(soundOutput); }
 
    // simple dispatches to the runner

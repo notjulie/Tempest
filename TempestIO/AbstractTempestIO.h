@@ -22,38 +22,53 @@ enum ButtonFlag {
 };
 
 /// <summary>
-/// Abstract class for a general arcade game control panel
+/// Abstract class for a general arcade game control panel reader; something that
+/// a user of the control panel might want.
 /// </summary>
-class AbstractArcadeGameControlPanel
+class AbstractArcadeGameControlPanelReader
 {
 public:
-   virtual ~AbstractArcadeGameControlPanel(void) {}
+   virtual ~AbstractArcadeGameControlPanelReader(void) {}
    virtual uint8_t GetButtons(void) = 0;
    virtual uint8_t GetEncoder(void) = 0;
    virtual void SetButtonLED(ButtonFlag button, bool value) = 0;
 };
 
 /// <summary>
+/// Abstract class for a general arcade game control panel writer; something that
+/// pushes the state of the control panel to someone else.
+/// </summary>
+class AbstractArcadeGameControlPanelWriter
+{
+public:
+   virtual ~AbstractArcadeGameControlPanelWriter(void) {}
+   virtual void SetButtonState(ButtonFlag button, bool state) = 0;
+   virtual void MoveEncoder(int8_t distance) = 0;
+   virtual bool GetButtonLED(ButtonFlag button) const = 0;
+};
+
+/// <summary>
 /// Simple implementation of AbstractArcadeGameControlPanel that just allows each
 /// side to cooperatively write its output data and poll its input data.
 /// </summary>
-class SimpleArcadeGameControlPanel : public AbstractArcadeGameControlPanel
+class SimpleArcadeGameControlPanel :
+   public AbstractArcadeGameControlPanelReader,
+   public AbstractArcadeGameControlPanelWriter
 {
 public:
-   // base class implementation
+   // AbstractArcadeGameControlPanelReader implementation
    virtual uint8_t GetButtons(void) { return buttons; }
    virtual uint8_t GetEncoder(void) { return encoder; }
    virtual void SetButtonLED(ButtonFlag button, bool value) { if (value) buttonLEDs |= button; else buttonLEDs &= ~button; }
 
-   // additional accessors
-   bool GetPlayer1LEDState(void) const { return (buttonLEDs & ONE_PLAYER_BUTTON) != 0; }
-   bool GetPlayer2LEDState(void) const { return (buttonLEDs & TWO_PLAYER_BUTTON) != 0; }
-   void SetInputButtonState(ButtonFlag button, bool state) {
+   // AbstractArcadeGameControlPanelWriter implementation
+   virtual void SetButtonState(ButtonFlag button, bool state) {
       if (state) buttons |= button;
       else buttons &= ~button;
    }
-   void MoveSpinner(int offset) { encoder = (uint8_t)(encoder + offset); }
-   
+   virtual void MoveEncoder(int8_t distance) { encoder = (uint8_t)(encoder + distance); }
+   virtual bool GetButtonLED(ButtonFlag button) const { return (buttonLEDs & button) != 0; }
+
 private:
    uint8_t buttons = 0;
    uint8_t buttonLEDs = 0;

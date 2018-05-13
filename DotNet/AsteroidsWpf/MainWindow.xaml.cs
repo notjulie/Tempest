@@ -19,7 +19,6 @@ namespace AsteroidsWpf
    {
       #region Private Fields
 
-      private TDNWin32TempestSoundIO tempestSoundIO;
       private Asteroids asteroids;
 
       private DispatcherTimer timer;
@@ -83,11 +82,11 @@ namespace AsteroidsWpf
                break;
 
             case Key.F:
-               tempestSoundIO.Fire(true);
+               //asteroids.Fire(true);
                break;
 
             case Key.V:
-               tempestSoundIO.Zap(true);
+               //tempestSoundIO.Zap(true);
                break;
          }
       }
@@ -105,11 +104,11 @@ namespace AsteroidsWpf
                break;
 
             case Key.F:
-               tempestSoundIO.Fire(false);
+               //tempestSoundIO.Fire(false);
                break;
 
             case Key.V:
-               tempestSoundIO.Zap(false);
+               //tempestSoundIO.Zap(false);
                break;
          }
       }
@@ -142,11 +141,8 @@ namespace AsteroidsWpf
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
-         // create the IO object that we represent
-         tempestSoundIO = new TDNWin32TempestSoundIO();
-
          // create our tempest, connected to the IO object
-         asteroids = new Asteroids(tempestSoundIO);
+         asteroids = new Asteroids();
 
          // set it to running
          startTime = DateTime.Now;
@@ -171,11 +167,11 @@ namespace AsteroidsWpf
       void spinnerTimer_Tick(object sender, EventArgs e)
       {
          // update our LED's
-         if (tempestSoundIO.OnePlayerLED())
+         if (asteroids.OnePlayerLED())
             buttonOnePlayerStart.Fill = ledOnBrush;
          else
             buttonOnePlayerStart.Fill = ledOffBrush;
-         if (tempestSoundIO.TwoPlayerLED())
+         if (asteroids.TwoPlayerLED())
             buttonTwoPlayerStart.Fill = ledOnBrush;
          else
             buttonTwoPlayerStart.Fill = ledOffBrush;

@@ -12,8 +12,6 @@
 
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 
-#include "TDNWin32TempestIO.h"
-
 #include "Tempest.h"
 
 
@@ -32,16 +30,11 @@ namespace TempestDotNET {
       tempestRunner->SetControlPanel(soundIO->GetControlPanel());
    }
 
-   Tempest::Tempest(TDNWin32TempestSoundIO ^soundIO)
+   Tempest::Tempest(void)
    {
       // create objects
       environment = new Win32TempestEnvironment();
-      soundOutput = soundIO->GetSoundOutput();
       tempestRunner = new TempestRunner(environment);
-
-      // hook objects together
-      tempestRunner->SetSoundOutput(soundOutput);
-      tempestRunner->SetControlPanel(soundIO->GetControlPanel());
    }
 
    Tempest::~Tempest(void)
@@ -85,5 +78,25 @@ namespace TempestDotNET {
 		else
 			return gcnew String("OK");
 	}
+
+
+   TempestWithInternalAudio::TempestWithInternalAudio(void)
+   {
+      // create the audio object
+      tempestSoundIO = new Win32TempestSoundIO();
+
+      // hook objects together
+      soundOutput = tempestSoundIO;
+      controlPanel = tempestSoundIO;
+      tempestRunner->SetSoundOutput(soundOutput);
+      tempestRunner->SetControlPanel(tempestSoundIO);
+   }
+
+   TempestWithInternalAudio::~TempestWithInternalAudio(void)
+   {
+      // yes, I know this is bad because it will destroy the audio while the
+      // base class's thread is still running... this is temporary
+      delete tempestSoundIO, tempestSoundIO = nullptr;
+   }
 }
 

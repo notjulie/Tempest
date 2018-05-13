@@ -6,7 +6,7 @@
 
 
 // forward declarations
-class AbstractArcadeGameControlPanel;
+class AbstractArcadeGameControlPanelReader;
 class AbstractTempestEnvironment;
 class AbstractTempestSoundOutput;
 class AsteroidsVectorInterpreter;
@@ -32,7 +32,7 @@ public:
    void GetVectorData(AsteroidsVectorInterpreter &vectorInterpreter);
    bool IsVectorGo(void) const { return vectorGo; }
    void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { this->soundOutput = soundOutput; }
-   void SetControlPanel(AbstractArcadeGameControlPanel *controlPanel) { this->controlPanel = controlPanel; }
+   void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { this->controlPanel = controlPanel; }
 
 private:
    void  ConfigureAddressSpace(void);
@@ -67,7 +67,7 @@ private:
 private:
    AbstractTempestEnvironment *environment = nullptr;
    AbstractTempestSoundOutput *soundOutput = nullptr;
-   AbstractArcadeGameControlPanel *controlPanel = nullptr;
+   AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
 
    std::mutex *vectorDataSnapshotMutex = nullptr;
 

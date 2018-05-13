@@ -6,7 +6,7 @@ using namespace System;
 using namespace System::Threading;
 
 #include "TDNMemoryStream.h"
-#include "TDNWin32TempestIO.h"
+#include "Win32TempestIO.h"
 
 class TempestIOStreamListener;
 
@@ -14,7 +14,7 @@ namespace TempestDotNET {
 
    public ref class TDNTempestIOStreamListener : public IDisposable {
 	public:
-      TDNTempestIOStreamListener(ITDNStreamProvider ^stream, TDNWin32TempestSoundIO ^tempestIO);
+      TDNTempestIOStreamListener(ITDNStreamProvider ^stream);
 		~TDNTempestIOStreamListener(void);
 
    private:
@@ -22,7 +22,7 @@ namespace TempestDotNET {
 
 	private:
       ITDNStreamProvider ^stream;
-		TDNWin32TempestSoundIO ^tempestIO;
+      Win32TempestSoundIO *tempestSoundIO = nullptr;
 
 		TempestIOStreamListener *listener;
 

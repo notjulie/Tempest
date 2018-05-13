@@ -163,7 +163,6 @@
     <ClInclude Include="TDNIOStreamProxy.h" />
     <ClInclude Include="TDNTempestIOStreamListener.h" />
     <ClInclude Include="Tempest.h" />
-    <ClInclude Include="TDNWin32TempestIO.h" />
     <ClInclude Include="TDNMemoryStream.h" />
     <ClInclude Include="VectorEnumerator.h" />
     <ClInclude Include="Win32TempestIO.h" />
@@ -183,7 +182,6 @@
     <ClCompile Include="TDNIOStreamProxy.cpp" />
     <ClCompile Include="TDNTempestIOStreamListener.cpp" />
     <ClCompile Include="Tempest.cpp" />
-    <ClCompile Include="TDNWin32TempestIO.cpp" />
     <ClCompile Include="TDNMemoryStream.cpp" />
     <ClCompile Include="VectorEnumerator.cpp" />
     <ClCompile Include="Win32ComPortStream.cpp" />

@@ -13,7 +13,7 @@ public:
    TempestIOStreamListener(
       AbstractTempestStream *stream,
       AbstractTempestSoundOutput *tempestIO,
-      AbstractArcadeGameControlPanel *controlPanel
+      AbstractArcadeGameControlPanelReader *controlPanel
    );
 
    void Service(void);
@@ -21,7 +21,7 @@ public:
 private:
    PacketStream stream;
    AbstractTempestSoundOutput *soundOutput = nullptr;
-   AbstractArcadeGameControlPanel *controlPanel = nullptr;
+   AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
 
    uint8_t encoder = 0;
    uint8_t buttons = 0;

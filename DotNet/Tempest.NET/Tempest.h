@@ -4,13 +4,12 @@
 
 #include "TDNIOStreamProxy.h"
 #include "VectorEnumerator.h"
+#include "Win32TempestIO.h"
 
 using namespace System;
 using namespace System::Threading;
 
-class Win32RealTimeClock;
 class AbstractTempestSoundIO;
-class Win32WaveStreamer;
 
 namespace TempestDotNET {
 
@@ -18,7 +17,6 @@ namespace TempestDotNET {
 	{
 	public:
       Tempest(TDNIOStreamProxy ^soundIO);
-      Tempest(TDNWin32TempestSoundIO ^soundIO);
 		~Tempest(void);
 
 		String ^GetProcessorStatus(void);
@@ -39,11 +37,35 @@ namespace TempestDotNET {
 		void     Step(void) { tempestRunner->Step(); }
 		void     Resume(void) { tempestRunner->Resume(); }
 
-	private:
+      //  simple dispatches to the control panel
+      void OnePlayer(bool down) { controlPanel->SetButtonState(ONE_PLAYER_BUTTON, down); }
+      void TwoPlayer(bool down) { controlPanel->SetButtonState(TWO_PLAYER_BUTTON, down); }
+      void Fire(bool down) { controlPanel->SetButtonState(FIRE_BUTTON, down); }
+      void Zap(bool down) { controlPanel->SetButtonState(ZAPPER_BUTTON, down); }
+      bool OnePlayerLED(void) { return controlPanel->GetButtonLED(ONE_PLAYER_BUTTON); }
+      bool TwoPlayerLED(void) { return controlPanel->GetButtonLED(TWO_PLAYER_BUTTON); }
+      void MoveWheel(int distance) { controlPanel->MoveEncoder(distance); }
+
+   protected:
+      Tempest(void);
+
+	protected:
 		Win32TempestEnvironment *environment;
       AbstractTempestSoundOutput *soundOutput;
+      AbstractArcadeGameControlPanelWriter *controlPanel = nullptr;
       TempestRunner *tempestRunner;
 	};
+
+   public ref class TempestWithInternalAudio : public Tempest
+   {
+   public:
+      TempestWithInternalAudio(void);
+      ~TempestWithInternalAudio(void);
+
+   private:
+      Win32TempestSoundIO * tempestSoundIO = nullptr;
+   };
+
 
 }
 

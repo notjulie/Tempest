@@ -26,7 +26,6 @@ namespace TempestWpf
    {
       #region Private Fields
 
-      private TDNWin32TempestSoundIO tempestSoundIO;
       private Tempest tempest;
 
       private DispatcherTimer timer;
@@ -86,23 +85,23 @@ namespace TempestWpf
          switch (e.Key)
          {
             case Key.Left:
-               tempestSoundIO.MoveWheel(-4);
+               tempest.MoveWheel(-4);
                leftKeyDown = true;
                rightKeyDown = false;
                break;
 
             case Key.Right:
-               tempestSoundIO.MoveWheel(4);
+               tempest.MoveWheel(4);
                leftKeyDown = false;
                rightKeyDown = true;
                break;
 
             case Key.F:
-               tempestSoundIO.Fire(true);
+               tempest.Fire(true);
                break;
 
             case Key.V:
-               tempestSoundIO.Zap(true);
+               tempest.Zap(true);
                break;
          }
       }
@@ -120,11 +119,11 @@ namespace TempestWpf
                break;
 
             case Key.F:
-               tempestSoundIO.Fire(false);
+               tempest.Fire(false);
                break;
 
             case Key.V:
-               tempestSoundIO.Zap(false);
+               tempest.Zap(false);
                break;
          }
       }
@@ -145,16 +144,16 @@ namespace TempestWpf
 
       void buttonOnePlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
-         tempestSoundIO.OnePlayer(true);
+         tempest.OnePlayer(true);
          System.Threading.Thread.Sleep(100);
-         tempestSoundIO.OnePlayer(false);
+         tempest.OnePlayer(false);
       }
 
       void buttonTwoPlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
-         tempestSoundIO.TwoPlayer(true);
+         tempest.TwoPlayer(true);
          System.Threading.Thread.Sleep(100);
-         tempestSoundIO.TwoPlayer(false);
+         tempest.TwoPlayer(false);
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -171,11 +170,8 @@ namespace TempestWpf
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
-         // create the IO object that we represent
-         tempestSoundIO = new TDNWin32TempestSoundIO();
-
          // create our tempest, connected to the IO object
-         tempest = new Tempest(tempestSoundIO);
+         tempest = new TempestWithInternalAudio();
 
          // see if we're in Demo mode
          if (Environment.CommandLine.ToLower().IndexOf(" demo ") >= 0)
@@ -205,16 +201,16 @@ namespace TempestWpf
       {
          // update the spinner if we should
          if (leftKeyDown)
-            tempestSoundIO.MoveWheel(-1);
+            tempest.MoveWheel(-1);
          else if (rightKeyDown)
-            tempestSoundIO.MoveWheel(1);
+            tempest.MoveWheel(1);
 
          // update our LED's
-         if (tempestSoundIO.OnePlayerLED())
+         if (tempest.OnePlayerLED())
             buttonOnePlayerStart.Fill = ledOnBrush;
          else
             buttonOnePlayerStart.Fill = ledOffBrush;
-         if (tempestSoundIO.TwoPlayerLED())
+         if (tempest.TwoPlayerLED())
             buttonTwoPlayerStart.Fill = ledOnBrush;
          else
             buttonTwoPlayerStart.Fill = ledOffBrush;

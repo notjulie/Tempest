@@ -8,20 +8,22 @@
 
 namespace TempestDotNET {
 
-	TDNTempestIOStreamListener::TDNTempestIOStreamListener(ITDNStreamProvider ^stream, TDNWin32TempestSoundIO ^tempestIO)
+	TDNTempestIOStreamListener::TDNTempestIOStreamListener(ITDNStreamProvider ^stream)
 	{
       // clear
       terminated = false;
 
 		// keep references to the managed objects so they don't get garbage collected
 		this->stream = stream;
-		this->tempestIO = tempestIO;
+
+      // create our IO object
+      tempestSoundIO = new Win32TempestSoundIO();
 
 		// create our listener
       listener = new TempestIOStreamListener(
          stream->GetStream(),
-         tempestIO->GetSoundOutput(),
-         tempestIO->GetControlPanel()
+         tempestSoundIO,
+         tempestSoundIO
          );
 
       // create our thread that does the listening
@@ -38,7 +40,10 @@ namespace TempestDotNET {
       thread = nullptr;
 
       // delete the listener
-		delete listener, listener = NULL;
+		delete listener, listener = nullptr;
+
+      // delete the IO object
+      delete tempestSoundIO, tempestSoundIO = nullptr;
 	}
 
    void TDNTempestIOStreamListener::ThreadEntry(void)

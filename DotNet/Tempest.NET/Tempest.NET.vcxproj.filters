@@ -39,9 +39,6 @@
     <ClInclude Include="TDNMemoryStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TDNWin32TempestIO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TDNTempestIOStreamListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,9 +75,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TDNMemoryStream.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TDNWin32TempestIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TDNTempestIOStreamListener.cpp">

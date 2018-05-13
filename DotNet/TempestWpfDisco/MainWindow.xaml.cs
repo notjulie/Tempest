@@ -27,7 +27,6 @@ namespace TempestWpf
       #region Private Fields
 
       // our Tempest objects
-      private TDNWin32TempestSoundIO tempestSoundIO;
       private Tempest tempest;
       private TDNComPortStream tempestComPortStream;
       private TDNIOStreamProxy tempestIOStreamProxy;
@@ -85,12 +84,12 @@ namespace TempestWpf
       void onePlayer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
          // this goes to our simulated sound IO device
-         tempestSoundIO.OnePlayer(true);
+         tempest.OnePlayer(true);
       }
 
       void onePlayer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
       {
-         tempestSoundIO.OnePlayer(false);
+         tempest.OnePlayer(false);
       }
 
       void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -98,23 +97,23 @@ namespace TempestWpf
          switch (e.Key)
          {
             case Key.Left:
-               tempestSoundIO.MoveWheel(-4);
+               tempest.MoveWheel(-4);
                leftKeyDown = true;
                rightKeyDown = false;
                break;
 
             case Key.Right:
-               tempestSoundIO.MoveWheel(4);
+               tempest.MoveWheel(4);
                leftKeyDown = false;
                rightKeyDown = true;
                break;
 
             case Key.F:
-               tempestSoundIO.Fire(true);
+               tempest.Fire(true);
                break;
 
             case Key.V:
-               tempestSoundIO.Zap(true);
+               tempest.Zap(true);
                break;
          }
       }
@@ -133,11 +132,11 @@ namespace TempestWpf
 
 
             case Key.F:
-               tempestSoundIO.Fire(false);
+               tempest.Fire(false);
                break;
 
             case Key.V:
-               tempestSoundIO.Zap(false);
+               tempest.Zap(false);
                break;
          }
       }
@@ -166,9 +165,6 @@ namespace TempestWpf
          {
             // create the stream object that will connect to the sound board
             tempestComPortStream = new TDNComPortStream("COM3");
-
-            // create the IO object that we represent
-            tempestSoundIO = new TDNWin32TempestSoundIO();
 
             // create the IO proxy
             tempestIOStreamProxy = new TDNIOStreamProxy(tempestComPortStream);
@@ -214,16 +210,16 @@ namespace TempestWpf
       void spinnerTimer_Tick(object sender, EventArgs e)
       {
          if (leftKeyDown)
-            tempestSoundIO.MoveWheel(-1);
+            tempest.MoveWheel(-1);
          else if (rightKeyDown)
-            tempestSoundIO.MoveWheel(1);
+            tempest.MoveWheel(1);
 
          // update our LED's
-         if (tempestSoundIO.OnePlayerLED())
+         if (tempest.OnePlayerLED())
             onePlayer.Fill = ledOnBrush;
          else
             onePlayer.Fill = ledOffBrush;
-         if (tempestSoundIO.TwoPlayerLED())
+         if (tempest.TwoPlayerLED())
             twoPlayer.Fill = ledOnBrush;
          else
             twoPlayer.Fill = ledOffBrush;

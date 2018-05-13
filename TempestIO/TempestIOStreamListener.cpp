@@ -11,7 +11,7 @@
 TempestIOStreamListener::TempestIOStreamListener(
          AbstractTempestStream *_stream,
          AbstractTempestSoundOutput *soundOutput,
-         AbstractArcadeGameControlPanel *controlPanel)
+         AbstractArcadeGameControlPanelReader *controlPanel)
    :
    stream(_stream)
 {

@@ -14,32 +14,30 @@
 
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 
-#include "TDNWin32TempestIO.h"
-
 #include "Asteroids.h"
 
 
 using namespace System;
 
 namespace TempestDotNET {
-   Asteroids::Asteroids(TDNWin32TempestSoundIO ^soundIO)
+   Asteroids::Asteroids(void)
    {
       // create objects
       environment = new Win32TempestEnvironment();
-      soundOutput = soundIO->GetSoundOutput();
+      tempestSoundIO = new Win32TempestSoundIO();
       asteroidsRunner = new AsteroidsRunner(environment);
-      controlPanel = new SimpleArcadeGameControlPanel();
 
       // hook objects together
-      asteroidsRunner->SetSoundOutput(soundOutput);
-      asteroidsRunner->SetControlPanel(controlPanel);
+      asteroidsRunner->SetSoundOutput(tempestSoundIO);
+      asteroidsRunner->SetControlPanel(tempestSoundIO);
    }
 
    Asteroids::~Asteroids(void)
 	{
 		// delete
-      delete asteroidsRunner, asteroidsRunner = NULL;
-      delete environment, environment = NULL;
+      delete asteroidsRunner, asteroidsRunner = nullptr;
+      delete environment, environment = nullptr;
+      delete tempestSoundIO, tempestSoundIO = nullptr;
 	}
 
    uint64_t Asteroids::GetTotalClockCycles(void)

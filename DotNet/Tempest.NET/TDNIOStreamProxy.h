@@ -17,7 +17,7 @@ namespace TempestDotNET {
 		~TDNIOStreamProxy(void);
 
 
-      AbstractArcadeGameControlPanel *GetControlPanel(void) { return tempestIO; }
+      AbstractArcadeGameControlPanelReader *GetControlPanel(void) { return tempestIO; }
       AbstractTempestSoundOutput *GetIOObject(void) { return tempestIO; }
 
 	private:

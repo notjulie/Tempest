@@ -175,7 +175,7 @@ void TempestBus::SetSoundOutput(AbstractTempestSoundOutput *_soundOutput)
 	pokey2.SetTempestIO(_soundOutput);
 }
 
-void TempestBus::SetControlPanel(AbstractArcadeGameControlPanel *_controlPanel)
+void TempestBus::SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel)
 {
    this->controlPanel = _controlPanel;
    pokey1.SetControlPanel(_controlPanel);

@@ -8,16 +8,14 @@
 using namespace System;
 using namespace System::Threading;
 
-class Win32RealTimeClock;
-class AbstractTempestSoundOutput;
-class Win32WaveStreamer;
+#include "Win32TempestIO.h"
 
 namespace TempestDotNET {
 
    public ref class Asteroids
 	{
 	public:
-      Asteroids(TDNWin32TempestSoundIO ^soundIO);
+      Asteroids(void);
       ~Asteroids(void);
 
 		String ^GetProcessorStatus(void);
@@ -38,16 +36,17 @@ namespace TempestDotNET {
       void     Resume(void) { asteroidsRunner->Resume(); }
 
       //  simple dispatches to the control panel
-      void RotateLeftDown(bool down) { controlPanel->SetInputButtonState(ROTATE_LEFT_BUTTON, down); }
-      void RotateRightDown(bool down) { controlPanel->SetInputButtonState(ROTATE_RIGHT_BUTTON, down); }
-      void OnePlayer(bool down) { controlPanel->SetInputButtonState(ONE_PLAYER_BUTTON, down); }
-      void TwoPlayer(bool down) { controlPanel->SetInputButtonState(TWO_PLAYER_BUTTON, down); }
+      void RotateLeftDown(bool down) { tempestSoundIO->SetButtonState(ROTATE_LEFT_BUTTON, down); }
+      void RotateRightDown(bool down) { tempestSoundIO->SetButtonState(ROTATE_RIGHT_BUTTON, down); }
+      void OnePlayer(bool down) { tempestSoundIO->SetButtonState(ONE_PLAYER_BUTTON, down); }
+      void TwoPlayer(bool down) { tempestSoundIO->SetButtonState(TWO_PLAYER_BUTTON, down); }
+      bool OnePlayerLED(void) { return tempestSoundIO->GetButtonLED(ONE_PLAYER_BUTTON); }
+      bool TwoPlayerLED(void) { return tempestSoundIO->GetButtonLED(TWO_PLAYER_BUTTON); }
 
 	private:
 		Win32TempestEnvironment *environment = nullptr;
-      AbstractTempestSoundOutput *soundOutput = nullptr;
+      Win32TempestSoundIO *tempestSoundIO = nullptr;
       AsteroidsRunner *asteroidsRunner = nullptr;
-      SimpleArcadeGameControlPanel *controlPanel = nullptr;
 	};
 
 }
