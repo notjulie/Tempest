@@ -1,25 +1,34 @@
+// ====================================================================
+// Simple sound generator
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This plays part of a simple sound generator, whose genesis was
+//    the emulation of the sound generation of the Atari Pokey chip
+//    used in Tempest.  In my hardware setup I have a serial connection
+//    between the main processor and the sound generator, so this
+//    object essentially serves as a command sent on the serial line.
+//    Thus this class has comparison operators so that I don't waste
+//    serial clock cycles updating channels whose state hasn't changed.
+//
+// NOTE:
+//    This class is used in an embedded controller, so no C++11
+//    syntax, please.
+// ====================================================================
+
 
 #include "stdafx.h"
 #include "SoundChannelState.h"
 
 SoundChannelState::SoundChannelState(void)
 {
-   volume = 0;
-   waveform = 0;
    frequency = 0;
+   volume = 0;
+   waveform = None;
 }
 
-uint8_t SoundChannelState::GetVolumeAndWaveform(void) const
-{
-   return volume | (waveform << 4);
-}
-
-
-void SoundChannelState::SetVolumeAndWaveform(uint8_t volumeAndWaveform)
-{
-   volume = volumeAndWaveform & 0x0F;
-   waveform = volumeAndWaveform >> 4;
-}
 
 bool SoundChannelState::operator==(const SoundChannelState &state) const
 {

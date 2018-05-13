@@ -32,12 +32,9 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 
    switch (currentState.GetWaveform())
 	{
-	case 0x0:
-	case 0x2:
-   case 0x4:
-	case 0x6:
-	case 0x8:
-   case 0xC:
+   case Noise4Bit:
+   case Noise5BitHalfFrequency:
+   case Noise17Bit:
 		// noise
 		for (int i = 0; i < count; ++i)
 		{
@@ -59,7 +56,7 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 		}
 		break;
 
-	case 0xA:
+   case SquareWave:
 		// pure tone
 		for (int i = 0; i < count; ++i)
 		{
@@ -72,7 +69,12 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 			}
 		}
 		break;
-	}
+
+   case None:
+   default:
+      // add nothing to the output
+      break;
+   }
 }
 
 
@@ -80,22 +82,7 @@ void SoundChannel::UpdateWaveform(void)
 {
 	switch (currentState.GetWaveform())
 	{
-	case 0x0:
-		// The doc implies that this has something to do with both the 17-bit and
-		// 5-bit polynomials... note really sure what that's about.  For now I just
-		// treat it as 17-bit noise
-		// 17-bit noise polynomial
-		actualFrequency = 64000.0F / (1 + currentState.GetFrequency());
-		pulseWidth = 44100.0F / actualFrequency;
-		noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
-		if (outputCounter > pulseWidth)
-			outputCounter = 0;
-		noiseWaveformLength = 128 * 1024;
-		noiseWaveform = noise17;
-		break;
-
-	case 0x2:	// doc says these are the same?
-	case 0x6:
+   case Noise5BitHalfFrequency:
 		// 5-bit noise polynomial, half frequency
 		actualFrequency = 64000.0F / (1 + currentState.GetFrequency()) / 2;
 		pulseWidth = 44100.0F / actualFrequency;
@@ -106,8 +93,7 @@ void SoundChannel::UpdateWaveform(void)
 		noiseWaveform = noise5;
 		break;
 
-   case 0x4:
-   case 0xC:
+   case Noise4Bit:
       // these may be the same or not... the doc is strange... anyway,
       // it's a 4-bit noise polynomial
       actualFrequency = 64000.0F / (1 + currentState.GetFrequency());
@@ -119,7 +105,7 @@ void SoundChannel::UpdateWaveform(void)
       noiseWaveform = noise4;
       break;
 
-	case 0x8:
+   case Noise17Bit:
 		// 17-bit noise polynomial
       actualFrequency = 64000.0F / (1 + currentState.GetFrequency());
 		pulseWidth = 44100.0F / actualFrequency;
@@ -130,7 +116,7 @@ void SoundChannel::UpdateWaveform(void)
 		noiseWaveform = noise17;
 		break;
 
-	case 0xA:
+	case SquareWave:
 		// pure tone
       actualFrequency = 64000.0F / (1 + currentState.GetFrequency()) / 2;
 		pulseWidth = 44100.0F / actualFrequency / 2;
@@ -138,6 +124,7 @@ void SoundChannel::UpdateWaveform(void)
 		outputCounter = 0;
 		break;
 
+   case None:
 	default:
       outputCounter = 0;
       break;

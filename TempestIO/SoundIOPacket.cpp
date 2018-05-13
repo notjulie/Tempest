@@ -20,7 +20,9 @@ SoundIOPacketReader::SoundIOPacketReader(const uint8_t *data, int length)
       if (channelMask & (1<<i))
       {
          initialChannelState[i].SetFrequency(packet[offset++]);
-         initialChannelState[i].SetVolumeAndWaveform(packet[offset++]);
+         uint8_t volumeAndWaveform = packet[offset++];
+         initialChannelState[i].SetVolume(volumeAndWaveform & 0xF);
+         initialChannelState[i].SetWaveform((Waveform)(volumeAndWaveform >> 4));
       }
       else
       {
@@ -49,7 +51,9 @@ bool SoundIOPacketReader::GetSoundCommand(uint8_t *delay, uint8_t *channel, Soun
    *delay = b & 0x1F;
    *channel = b>>5;
    state->SetFrequency(packet[offset++]);
-   state->SetVolumeAndWaveform(packet[offset++]);
+   uint8_t volumeAndWaveform = packet[offset++];
+   state->SetVolume(volumeAndWaveform & 0xF);
+   state->SetWaveform((Waveform)(volumeAndWaveform >> 4));
    return true;
 }
 

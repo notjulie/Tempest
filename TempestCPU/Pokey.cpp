@@ -72,7 +72,31 @@ void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
       {
          uint8_t channel = (uint8_t)(address / 2);
          soundOutput->SetTime(busTime);
-         soundChannelState[channel].SetVolumeAndWaveform(value);
+         soundChannelState[channel].SetVolume((uint8_t)(value & 0xF));
+         switch (value >> 4)
+         {
+         case 0x0:
+            // The doc implies that this has something to do with both the 17-bit and
+            // 5-bit polynomials... note really sure what that's about.  I have been treating
+            // it as 17-bit noise in Tempest and that seems to be right.
+         case 0x8:
+            soundChannelState[channel].SetWaveform(Noise17Bit);
+            break;
+
+         case 0x2:	// doc says these are the same?
+         case 0x6:
+            soundChannelState[channel].SetWaveform(Noise5BitHalfFrequency);
+            break;
+
+         case 0x4:
+         case 0xC:
+            soundChannelState[channel].SetWaveform(Noise4Bit);
+            break;
+
+         case 0xA:
+            soundChannelState[channel].SetWaveform(SquareWave);
+            break;
+         }
          soundOutput->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
       }
 		break;
