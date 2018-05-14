@@ -28,9 +28,6 @@ namespace TempestWpf
 
       // our Tempest objects
       private Tempest tempest;
-      private TDNMemoryStream tempestMemoryStream;
-      private TDNTempestIOStreamListener tempestIOStreamListener;
-      private TDNIOStreamProxy tempestIOStreamProxy;
 
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
@@ -153,13 +150,6 @@ namespace TempestWpf
 
       void MainWindow_Closed(object sender, EventArgs e)
       {
-         // stop the stream listener
-         if (tempestIOStreamListener != null)
-         {
-            tempestIOStreamListener.Dispose();
-            tempestIOStreamListener = null;
-         }
-
          if (tempest != null)
          {
             tempest.Dispose();
@@ -171,17 +161,8 @@ namespace TempestWpf
       {
          try
          {
-            // create the stream object that's going to be in the middle of everything
-            tempestMemoryStream = new TDNMemoryStream();
-
-            // create the streamlistener that feeds it
-            tempestIOStreamListener = new TDNTempestIOStreamListener(tempestMemoryStream.GetLeftSide());
-
-            // create the IO proxy
-            tempestIOStreamProxy = new TDNIOStreamProxy(tempestMemoryStream.GetRightSide());
-
             // create our tempest
-            tempest = new Tempest(tempestIOStreamProxy);
+            tempest = Tempest.CreateStreamedInstance();
 
             // at this point here's what we have:
             //   - tempest is writing to tempestIOStreamProxy, which is its output device

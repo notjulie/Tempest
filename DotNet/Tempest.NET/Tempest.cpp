@@ -18,33 +18,29 @@
 using namespace System;
 
 namespace TempestDotNET {
-   Tempest::Tempest(TDNIOStreamProxy ^soundIO)
+   Tempest::Tempest(GameContext *_gameContext)
    {
-      // create objects
-      environment = new Win32TempestEnvironment();
-      soundOutput = soundIO->GetIOObject();
-      tempestRunner = new TempestRunner(environment);
+      // save/take ownership of the gameContext
+      gameContext = _gameContext;
 
-      // hook objects together
-      tempestRunner->SetSoundOutput(soundOutput);
-      tempestRunner->SetControlPanel(soundIO->GetControlPanel());
-   }
-
-   Tempest::Tempest(void)
-   {
       // create objects
       environment = new Win32TempestEnvironment();
       tempestRunner = new TempestRunner(environment);
+      tempestRunner->SetSoundOutput(gameContext->GetSoundOutput());
+      tempestRunner->SetControlPanel(gameContext->GetControlPanelReader());
    }
 
    Tempest::~Tempest(void)
 	{
-		// delete
-      delete tempestRunner, tempestRunner = NULL;
-      delete environment, environment = NULL;
-	}
+		// delete the runner first since it is a thread object
+      delete tempestRunner, tempestRunner = nullptr;
 
-	uint64_t Tempest::GetTotalClockCycles(void)
+      // then we can get rid of the rest
+      delete environment, environment = nullptr;
+      delete gameContext, gameContext = nullptr;
+	}
+   
+   uint64_t Tempest::GetTotalClockCycles(void)
 	{
 		return tempestRunner->GetTotalClockCycles();
 	}
@@ -79,24 +75,22 @@ namespace TempestDotNET {
 			return gcnew String("OK");
 	}
 
-
-   TempestWithInternalAudio::TempestWithInternalAudio(void)
+   Tempest^ Tempest::CreateNormalInstance(void)
    {
-      // create the audio object
-      tempestSoundIO = new Win32TempestSoundIO();
-
-      // hook objects together
-      soundOutput = tempestSoundIO;
-      controlPanel = tempestSoundIO;
-      tempestRunner->SetSoundOutput(soundOutput);
-      tempestRunner->SetControlPanel(tempestSoundIO);
+      return gcnew Tempest(new NormalGameContext());
    }
 
-   TempestWithInternalAudio::~TempestWithInternalAudio(void)
+   Tempest^ Tempest::CreateStreamedInstance(void)
    {
-      // yes, I know this is bad because it will destroy the audio while the
-      // base class's thread is still running... this is temporary
-      delete tempestSoundIO, tempestSoundIO = nullptr;
+      return gcnew Tempest(new SerializedGameContext());
+   }
+
+   Tempest^ Tempest::CreateCOMPortInstance(String^ portName)
+   {
+      std::string name;
+      for (int i = 0; i < portName->Length; ++i)
+         name += (char)portName[i];
+      return gcnew Tempest(new COMPortGameContext(name));
    }
 }
 

@@ -28,8 +28,6 @@ namespace TempestWpf
 
       // our Tempest objects
       private Tempest tempest;
-      private TDNComPortStream tempestComPortStream;
-      private TDNIOStreamProxy tempestIOStreamProxy;
 
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
@@ -163,23 +161,7 @@ namespace TempestWpf
       {
          try
          {
-            // create the stream object that will connect to the sound board
-            tempestComPortStream = new TDNComPortStream("COM3");
-
-            // create the IO proxy
-            tempestIOStreamProxy = new TDNIOStreamProxy(tempestComPortStream);
-
-            // create our tempest
-            tempest = new Tempest(tempestIOStreamProxy);
-
-            // at this point here's what we have:
-            //   - tempest is writing to tempestIOStreamProxy, which is its output device
-            //   - tempestIOStreamProxy is writing to tempestMemoryStream
-            //   - tempestIOStreamListener is reading from tempestMemoryStream and writing
-            //     to tempestIO, which is the actual screen output device
-            //
-            // this is basically the identical scheme that we'll use to write to the real device
-            //
+            tempest = Tempest.CreateCOMPortInstance("COM3");
 
             // set it to running
             startTime = DateTime.Now;

@@ -36,19 +36,7 @@
     <ClInclude Include="Win32WaveStreamer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TDNMemoryStream.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TDNTempestIOStreamListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TDNIOStreamProxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TDNComPortStream.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ITDNStreamProvider.h">
+    <ClInclude Include="GameContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,22 +62,13 @@
     <ClCompile Include="WinTempestIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TDNMemoryStream.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TDNTempestIOStreamListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TDNIOStreamProxy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TDNComPortStream.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Win32ComPortStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Asteroids.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

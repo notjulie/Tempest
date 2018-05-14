@@ -2,6 +2,7 @@
 #ifndef WIN32COMPORTSTREAM_H
 #define WIN32COMPORTSTREAM_H
 
+#include <Windows.h>
 #include "TempestIO/AbstractTempestStream.h"
 
 

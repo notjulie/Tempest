@@ -2,21 +2,19 @@
 #ifndef TEMPEST_H
 #define TEMPEST_H
 
-#include "TDNIOStreamProxy.h"
+#include "GameContext.h"
 #include "VectorEnumerator.h"
-#include "Win32TempestIO.h"
+
 
 using namespace System;
 using namespace System::Threading;
 
-class AbstractTempestSoundIO;
 
 namespace TempestDotNET {
 
-	public ref class Tempest
+	public ref class Tempest sealed
 	{
 	public:
-      Tempest(TDNIOStreamProxy ^soundIO);
 		~Tempest(void);
 
 		String ^GetProcessorStatus(void);
@@ -38,35 +36,45 @@ namespace TempestDotNET {
 		void     Resume(void) { tempestRunner->Resume(); }
 
       //  simple dispatches to the control panel
-      void OnePlayer(bool down) { controlPanel->SetButtonState(ONE_PLAYER_BUTTON, down); }
-      void TwoPlayer(bool down) { controlPanel->SetButtonState(TWO_PLAYER_BUTTON, down); }
-      void Fire(bool down) { controlPanel->SetButtonState(FIRE_BUTTON, down); }
-      void Zap(bool down) { controlPanel->SetButtonState(ZAPPER_BUTTON, down); }
-      bool OnePlayerLED(void) { return controlPanel->GetButtonLED(ONE_PLAYER_BUTTON); }
-      bool TwoPlayerLED(void) { return controlPanel->GetButtonLED(TWO_PLAYER_BUTTON); }
-      void MoveWheel(int distance) { controlPanel->MoveEncoder(distance); }
+      void OnePlayer(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(ONE_PLAYER_BUTTON, down); }
+      void TwoPlayer(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(TWO_PLAYER_BUTTON, down); }
+      void Fire(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(FIRE_BUTTON, down); }
+      void Zap(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(ZAPPER_BUTTON, down); }
+      bool OnePlayerLED(void) { return gameContext->GetControlPanelWriter()->GetButtonLED(ONE_PLAYER_BUTTON); }
+      bool TwoPlayerLED(void) { return gameContext->GetControlPanelWriter()->GetButtonLED(TWO_PLAYER_BUTTON); }
+      void MoveWheel(int distance) { gameContext->GetControlPanelWriter()->MoveEncoder(distance); }
 
-   protected:
-      Tempest(void);
-
-	protected:
-		Win32TempestEnvironment *environment;
-      AbstractTempestSoundOutput *soundOutput;
-      AbstractArcadeGameControlPanelWriter *controlPanel = nullptr;
-      TempestRunner *tempestRunner;
-	};
-
-   public ref class TempestWithInternalAudio : public Tempest
-   {
    public:
-      TempestWithInternalAudio(void);
-      ~TempestWithInternalAudio(void);
+      /// <summary>
+      /// Creates an instance that interacts with the keyboard and uses the internal audio
+      /// </summary>
+      static Tempest^ CreateNormalInstance(void);
+
+      /// <summary>
+      /// Creates an instance that interacts with the keyboard and uses the internal audio,
+      /// but uses a simulated serial connection between the game and the interface
+      /// </summary>
+      static Tempest^ CreateStreamedInstance(void);
+
+      /// <summary>
+      /// Creates an instance that interacts with the actual Tempest hardware via
+      /// COM port.
+      /// </summary>
+      static Tempest^ Tempest::CreateCOMPortInstance(String^ portName);
 
    private:
-      Win32TempestSoundIO * tempestSoundIO = nullptr;
-   };
+      /// <summary>
+      /// Constructor; I keep it private because the caller is supposed to instantiate
+      /// the GameContext and give ownership to us, so I want to keep that logic internal
+      /// to the statis constructors.
+      /// </summary>
+      Tempest(GameContext *_gameContext);
 
-
+	protected:
+		Win32TempestEnvironment *environment = nullptr;
+      GameContext *gameContext = nullptr;
+      TempestRunner *tempestRunner = nullptr;
+	};
 }
 
 #endif

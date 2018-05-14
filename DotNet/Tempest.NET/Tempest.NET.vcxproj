@@ -156,14 +156,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ITDNStreamProvider.h" />
+    <ClInclude Include="GameContext.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="TDNComPortStream.h" />
-    <ClInclude Include="TDNIOStreamProxy.h" />
-    <ClInclude Include="TDNTempestIOStreamListener.h" />
     <ClInclude Include="Tempest.h" />
-    <ClInclude Include="TDNMemoryStream.h" />
     <ClInclude Include="VectorEnumerator.h" />
     <ClInclude Include="Win32TempestIO.h" />
     <ClInclude Include="Win32WaveBuffer.h" />
@@ -172,17 +168,23 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Asteroids.cpp" />
+    <ClCompile Include="GameContext.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TDNComPortStream.cpp" />
-    <ClCompile Include="TDNIOStreamProxy.cpp" />
-    <ClCompile Include="TDNTempestIOStreamListener.cpp" />
     <ClCompile Include="Tempest.cpp" />
-    <ClCompile Include="TDNMemoryStream.cpp" />
     <ClCompile Include="VectorEnumerator.cpp" />
     <ClCompile Include="Win32ComPortStream.cpp" />
     <ClCompile Include="Win32WaveBuffer.cpp" />

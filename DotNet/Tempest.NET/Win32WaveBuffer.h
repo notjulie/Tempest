@@ -2,6 +2,9 @@
 #ifndef WIN32EWAVEBUFFER_H
 #define WIN32EWAVEBUFFER_H
 
+#include <Windows.h>
+#include <vector>
+
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 

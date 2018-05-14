@@ -170,8 +170,9 @@ namespace TempestWpf
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
-         // create our tempest, connected to the IO object
-         tempest = new TempestWithInternalAudio();
+         // create our tempest... just a normal Tempest that interacts with our keyboard
+         // commands and the internal audio
+         tempest = Tempest.CreateNormalInstance();
 
          // see if we're in Demo mode
          if (Environment.CommandLine.ToLower().IndexOf(" demo ") >= 0)
