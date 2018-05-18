@@ -34,5 +34,17 @@ namespace TempestWpf.Properties {
                 this["SoundIOType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DiscoveryCOMPort {
+            get {
+                return ((string)(this["DiscoveryCOMPort"]));
+            }
+            set {
+                this["DiscoveryCOMPort"] = value;
+            }
+        }
     }
 }

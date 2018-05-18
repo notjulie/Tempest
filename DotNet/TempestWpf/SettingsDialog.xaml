@@ -5,20 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TempestWpf"
         mc:Ignorable="d"
-        Title="Settings Dialog" Height="250" Width="400">
+        Title="Settings Dialog" Height="250" Width="400"
+        WindowStartupLocation="CenterScreen">
     <DockPanel>
       <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="10" HorizontalAlignment="Center">
          <Button Name="okButton" Width="80" IsDefault="True">OK</Button>
          <Button Width="80" Margin="20,0,0,0" IsCancel="True">Cancel</Button>
       </StackPanel>
-      <StackPanel>
+      <StackPanel DockPanel.Dock="Top">
          <StackPanel Orientation="Horizontal">
             <Label>I/O Type</Label>
             <ComboBox Name="soundIOCombo" Width="200">
                <ComboBoxItem Tag="Direct">Direct</ComboBoxItem>
+               <ComboBoxItem Name="discoveryItem" Tag="Discovery">Discovery</ComboBoxItem>
                <ComboBoxItem Tag="MemoryStream">Memory Stream</ComboBoxItem>
             </ComboBox>
          </StackPanel>
       </StackPanel>
+      <Grid >
+         <StackPanel Name="discoverySettings" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <local:COMPortSelector x:Name="discoveryCOMPort"/>
+         </StackPanel>
+      </Grid>
    </DockPanel>
 </Window>

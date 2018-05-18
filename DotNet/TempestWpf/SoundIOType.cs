@@ -17,6 +17,11 @@ namespace TempestWpf
       Direct,
 
       /// <summary>
+      /// COM port connection to Discovery board
+      /// </summary>
+      Discovery,
+
+      /// <summary>
       /// Serial connection between control panel/sound and game processor via a
       /// memory stream
       /// </summary>

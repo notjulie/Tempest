@@ -152,7 +152,11 @@ namespace TempestWpf
 
       void MainWindow_Closed(object sender, EventArgs e)
       {
-         tempest.Dispose();
+         if (tempest != null)
+         {
+            tempest.Dispose();
+            tempest = null;
+         }
       }
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -184,6 +188,9 @@ namespace TempestWpf
 
       void spinnerTimer_Tick(object sender, EventArgs e)
       {
+         if (tempest == null)
+            return;
+
          // update the spinner if we should
          if (leftKeyDown)
             tempest.MoveWheel(-1);
@@ -203,6 +210,9 @@ namespace TempestWpf
 
       void timer_Tick(object sender, EventArgs e)
       {
+         if (tempest == null)
+            return;
+
          processorStatus.Text = tempest.GetProcessorStatus();
 
          double processorSpeed = tempest.GetTotalClockCycles();
@@ -213,6 +223,9 @@ namespace TempestWpf
 
       void vectorTimer_Tick(object sender, EventArgs e)
       {
+         if (tempest == null)
+            return;
+
          // get a vector enumerator
          VectorEnumerator enumerator = tempest.GetVectorEnumerator();
          if (enumerator != null)
@@ -323,31 +336,40 @@ namespace TempestWpf
             tempest = null;
          }
 
-         SoundIOType soundIOType = SoundIOType.Direct;
-         Enum.TryParse(Settings.Default.SoundIOType, out soundIOType);
-         switch(soundIOType)
+         try
          {
-            case SoundIOType.Direct:
-            default:
-               // create our tempest... just a normal Tempest that interacts with our keyboard
-               // commands and the internal audio
-               tempest = Tempest.CreateNormalInstance();
-               break;
+            SoundIOType soundIOType = SoundIOType.Direct;
+            Enum.TryParse(Settings.Default.SoundIOType, out soundIOType);
+            switch (soundIOType)
+            {
+               case SoundIOType.Direct:
+                  // create our tempest... just a normal Tempest that interacts with our keyboard
+                  // commands and the internal audio
+                  tempest = Tempest.CreateNormalInstance();
+                  break;
 
-            case SoundIOType.MemoryStream:
-               // create our tempest... just a normal Tempest that interacts with the sound &
-               // control panel via a memory stream
-               tempest = Tempest.CreateStreamedInstance();
-               break;
+               case SoundIOType.MemoryStream:
+                  // create our tempest... just a normal Tempest that interacts with the sound &
+                  // control panel via a memory stream
+                  tempest = Tempest.CreateStreamedInstance();
+                  break;
+
+               case SoundIOType.Discovery:
+                  tempest = Tempest.CreateCOMPortInstance(Settings.Default.DiscoveryCOMPort);
+                  break;
+
+               default:
+                  throw new Exception("Unsupported I/O type: " + soundIOType);
+            }
+
+            // set it to running
+            startTime = DateTime.Now;
+            tempest.Start();
          }
-
-         // create our tempest... just a normal Tempest that interacts with our keyboard
-         // commands and the internal audio
-         //tempest = Tempest.CreateNormalInstance();
-
-         // set it to running
-         startTime = DateTime.Now;
-         tempest.Start();
+         catch (Exception e)
+         {
+            MessageBox.Show("Error starting game: " + e.Message);
+         }
       }
 
       #endregion
