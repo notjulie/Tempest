@@ -65,9 +65,8 @@ extern "C" {
 		InitializeSerial();
 
 		// our listener that handles data transmission between us and Tempest
-		//tempestStream = &USBStream;
 		tempestStream = &SerialStream;
-		TempestIOStreamListener listener(tempestStream, &IO);
+		TempestIOStreamListener listener(tempestStream, &IO, &IO);
 		tempestListener = &listener;
 
 		// initialize the watchdog just before we enter the main loop

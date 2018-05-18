@@ -56,6 +56,11 @@ class SimpleArcadeGameControlPanel :
    public AbstractArcadeGameControlPanelWriter
 {
 public:
+   SimpleArcadeGameControlPanel(void) {
+      buttons = 0;
+      buttonLEDs = 0;
+      encoder = 0;
+   }
    // AbstractArcadeGameControlPanelReader implementation
    virtual uint8_t GetButtons(void) { return buttons; }
    virtual uint8_t GetEncoder(void) { return encoder; }
@@ -70,9 +75,9 @@ public:
    virtual bool GetButtonLED(ButtonFlag button) const { return (buttonLEDs & button) != 0; }
 
 private:
-   uint8_t buttons = 0;
-   uint8_t buttonLEDs = 0;
-   uint8_t encoder = 0;
+   uint8_t buttons;
+   uint8_t buttonLEDs;
+   uint8_t encoder;
 };
 
 

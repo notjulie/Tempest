@@ -5,7 +5,10 @@
 #include "TempestIO/AbstractTempestIO.h"
 
 
-class TempestDiscoAudioIO : public AbstractTempestSoundIO {
+class TempestDiscoAudioIO :
+	public AbstractTempestSoundOutput,
+	public AbstractArcadeGameControlPanelReader
+{
 public:
 	TempestDiscoAudioIO(void);
 

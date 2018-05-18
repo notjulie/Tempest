@@ -19,6 +19,12 @@ TempestIOStreamListener::TempestIOStreamListener(
    this->stream = stream;
    this->soundOutput = soundOutput;
    this->controlPanel = controlPanel;
+
+   // clear
+   encoder = 0;
+   buttons = 0;
+   lastPacketCpuTime = 0;
+   lastResponsePacketTime = 0;
 }
 
 void TempestIOStreamListener::Service(void)

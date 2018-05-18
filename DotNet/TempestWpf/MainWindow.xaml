@@ -2,31 +2,34 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Tempest" Height="720" Width="650" WindowStartupLocation="CenterScreen">
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="View">
-                <MenuItem Name="view6502DebugWindowItem" Header="6502 Debug"/>
-            </MenuItem>
-        </Menu>
-        <DockPanel DockPanel.Dock="Bottom">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Processor Status: "/>
-                    <TextBlock Name="processorStatus"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Processor speed: "/>
-                    <TextBlock Name="processorSpeedText"/>
-                </StackPanel>
+   <DockPanel>
+      <Menu DockPanel.Dock="Top">
+         <MenuItem Header="File">
+            <MenuItem Name="settingsMenuItem" Header="Settings..."/>
+         </MenuItem>
+         <MenuItem Header="View">
+            <MenuItem Name="view6502DebugWindowItem" Header="6502 Debug"/>
+         </MenuItem>
+      </Menu>
+      <DockPanel DockPanel.Dock="Bottom">
+         <StackPanel>
+            <StackPanel Orientation="Horizontal">
+               <TextBlock Text="Processor Status: "/>
+               <TextBlock Name="processorStatus"/>
             </StackPanel>
-        </DockPanel>
-        <StackPanel DockPanel.Dock="Right">
-            <Ellipse Name="buttonOnePlayerStart" Width="20" Height="20" Margin="5" Fill="Black"/>
-            <Ellipse Name="buttonTwoPlayerStart" Width="20" Height="20" Margin="5" Fill="Black"/>
-        </StackPanel>
-        <Viewbox Stretch="Uniform">
-            <Canvas Name="canvas" Height="69536" Width="70536" Background="Black" ClipToBounds="True">
-            </Canvas>
-        </Viewbox>
-    </DockPanel>
+            <StackPanel Orientation="Horizontal">
+               <TextBlock Text="Processor speed: "/>
+               <TextBlock Name="processorSpeedText"/>
+            </StackPanel>
+         </StackPanel>
+      </DockPanel>
+      <StackPanel DockPanel.Dock="Right">
+         <Ellipse Name="buttonOnePlayerStart" Width="20" Height="20" Margin="5" Fill="Black"/>
+         <Ellipse Name="buttonTwoPlayerStart" Width="20" Height="20" Margin="5" Fill="Black"/>
+      </StackPanel>
+      <Viewbox Stretch="Uniform">
+         <Canvas Name="canvas" Height="69536" Width="70536" Background="Black" ClipToBounds="True">
+         </Canvas>
+      </Viewbox>
+   </DockPanel>
 </Window>

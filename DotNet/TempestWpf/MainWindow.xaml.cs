@@ -2,20 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
 using TempestDotNET;
+using TempestWpf.Properties;
 
 namespace TempestWpf
 {
@@ -42,6 +36,8 @@ namespace TempestWpf
       private SolidColorBrush ledOffBrush = new SolidColorBrush(Colors.Black);
 
       #endregion
+
+      #region Constructor
 
       /// <summary>
       /// Initializes a new instance of class MainWindow
@@ -78,7 +74,12 @@ namespace TempestWpf
          buttonOnePlayerStart.MouseLeftButtonDown += buttonOnePlayerStart_MouseLeftButtonDown;
          buttonTwoPlayerStart.MouseLeftButtonDown += buttonTwoPlayerStart_MouseLeftButtonDown;
          view6502DebugWindowItem.Click += view6502DebugWindowItem_Click;
+         settingsMenuItem.Click += SettingsMenuItem_Click;
       }
+
+      #endregion
+
+      #region Event Handlers
 
       void MainWindow_KeyDown(object sender, KeyEventArgs e)
       {
@@ -128,20 +129,6 @@ namespace TempestWpf
          }
       }
 
-      void view6502DebugWindowItem_Click(object sender, RoutedEventArgs e)
-      {
-         // create the window if we haven't yet
-         if (debug6502 == null)
-         {
-            debug6502 = new Debug6502Window();
-            debug6502.Tempest = tempest;
-         }
-
-         // show it
-         debug6502.Show();
-         debug6502.Activate();
-      }
-
       void buttonOnePlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
          tempest.OnePlayer(true);
@@ -170,17 +157,7 @@ namespace TempestWpf
 
       void MainWindow_Loaded(object sender, RoutedEventArgs e)
       {
-         // create our tempest... just a normal Tempest that interacts with our keyboard
-         // commands and the internal audio
-         tempest = Tempest.CreateNormalInstance();
-
-         // see if we're in Demo mode
-         if (Environment.CommandLine.ToLower().IndexOf(" demo ") >= 0)
-            tempest.SetDemoMode();
-
-         // set it to running
-         startTime = DateTime.Now;
-         tempest.Start();
+         RestartGame();
 
          timer = new DispatcherTimer();
          timer.Interval = TimeSpan.FromMilliseconds(200);
@@ -196,6 +173,13 @@ namespace TempestWpf
          spinnerTimer.Interval = TimeSpan.FromMilliseconds(10);
          spinnerTimer.IsEnabled = true;
          spinnerTimer.Tick += spinnerTimer_Tick;
+      }
+
+      private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
+      {
+         SettingsDialog settings = new SettingsDialog();
+         if (true.Equals(settings.ShowDialog()))
+            RestartGame();
       }
 
       void spinnerTimer_Tick(object sender, EventArgs e)
@@ -288,6 +272,24 @@ namespace TempestWpf
          }
       }
 
+      void view6502DebugWindowItem_Click(object sender, RoutedEventArgs e)
+      {
+         // create the window if we haven't yet
+         if (debug6502 == null)
+         {
+            debug6502 = new Debug6502Window();
+            debug6502.Tempest = tempest;
+         }
+
+         // show it
+         debug6502.Show();
+         debug6502.Activate();
+      }
+
+      #endregion
+
+      #region Private Methods
+
       private byte[] GetROM(string name)
       {
          Assembly assembly = Assembly.GetExecutingAssembly();
@@ -311,5 +313,43 @@ namespace TempestWpf
 
          throw new Exception("ROM resource not found: " + name);
       }
+
+      private void RestartGame()
+      {
+         // dispose the old game
+         if (tempest != null)
+         {
+            tempest.Dispose();
+            tempest = null;
+         }
+
+         SoundIOType soundIOType = SoundIOType.Direct;
+         Enum.TryParse(Settings.Default.SoundIOType, out soundIOType);
+         switch(soundIOType)
+         {
+            case SoundIOType.Direct:
+            default:
+               // create our tempest... just a normal Tempest that interacts with our keyboard
+               // commands and the internal audio
+               tempest = Tempest.CreateNormalInstance();
+               break;
+
+            case SoundIOType.MemoryStream:
+               // create our tempest... just a normal Tempest that interacts with the sound &
+               // control panel via a memory stream
+               tempest = Tempest.CreateStreamedInstance();
+               break;
+         }
+
+         // create our tempest... just a normal Tempest that interacts with our keyboard
+         // commands and the internal audio
+         //tempest = Tempest.CreateNormalInstance();
+
+         // set it to running
+         startTime = DateTime.Now;
+         tempest.Start();
+      }
+
+      #endregion
    }
 }

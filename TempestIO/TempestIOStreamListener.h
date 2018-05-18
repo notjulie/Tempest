@@ -20,14 +20,14 @@ public:
 
 private:
    PacketStream stream;
-   AbstractTempestSoundOutput *soundOutput = nullptr;
-   AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
+   AbstractTempestSoundOutput *soundOutput;
+   AbstractArcadeGameControlPanelReader *controlPanel;
 
-   uint8_t encoder = 0;
-   uint8_t buttons = 0;
-   uint64_t lastPacketCpuTime = 0;
+   uint8_t encoder;
+   uint8_t buttons;
+   uint64_t lastPacketCpuTime;
    TempestInPacket lastResponsePacket;
-   uint64_t lastResponsePacketTime = 0;
+   uint64_t lastResponsePacketTime;
 };
 
 #endif

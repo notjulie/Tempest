@@ -161,7 +161,7 @@ namespace TempestWpf
       {
          try
          {
-            tempest = Tempest.CreateCOMPortInstance("COM3");
+            tempest = Tempest.CreateCOMPortInstance("COM8");
 
             // set it to running
             startTime = DateTime.Now;
