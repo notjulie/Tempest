@@ -34,13 +34,13 @@ public:
    bool IsInAttractMode(void) { return runner.IsInAttractMode(); }
 
    // dispatchers to the control panel
-   bool GetPlayer1LEDState(void) { return controlPanel.GetPlayer1LEDState(); }
-   bool GetPlayer2LEDState(void) { return controlPanel.GetPlayer2LEDState(); }
-   void MoveSpinner(int offset) { controlPanel.MoveSpinner(offset); }
-   void SetPlayer1ButtonState(bool state) { controlPanel.SetInputButtonState(ONE_PLAYER_BUTTON, state); }
-   void SetPlayer2ButtonState(bool state) { controlPanel.SetInputButtonState(TWO_PLAYER_BUTTON, state); }
-   void SetFireButtonState(bool state) { controlPanel.SetInputButtonState(FIRE_BUTTON, state); }
-   void SetZapButtonState(bool state) { controlPanel.SetInputButtonState(ZAPPER_BUTTON, state); }
+   bool GetPlayer1LEDState(void) { return controlPanel.GetButtonLED(ONE_PLAYER_BUTTON); }
+   bool GetPlayer2LEDState(void) { return controlPanel.GetButtonLED(TWO_PLAYER_BUTTON); }
+   void MoveSpinner(int offset) { controlPanel.MoveEncoder(offset); }
+   void SetPlayer1ButtonState(bool state) { controlPanel.SetButtonState(ONE_PLAYER_BUTTON, state); }
+   void SetPlayer2ButtonState(bool state) { controlPanel.SetButtonState(TWO_PLAYER_BUTTON, state); }
+   void SetFireButtonState(bool state) { controlPanel.SetButtonState(FIRE_BUTTON, state); }
+   void SetZapButtonState(bool state) { controlPanel.SetButtonState(ZAPPER_BUTTON, state); }
 
 private:
    iOSTempestEnvironment environment;
