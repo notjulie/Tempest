@@ -22,23 +22,24 @@ struct SimpleVector;
 
 const uint8_t HIGH_SCORE_COUNT = 100;
 
-class TempestRunner
+class VectorGame
 {
 public:
-	TempestRunner(AbstractTempestEnvironment *environment);
-	virtual ~TempestRunner(void);
+   VectorGame(void) {}
+   virtual ~VectorGame(void) {}
 
-   void	Start(void);
-   
-	// simple dispatches to the TempestBus object
-   uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
-   bool     IsInAttractMode(void) { return tempestBus.ReadByte(GAME_INPUT_MODE) == GAME_INPUT_MODE_ATTRACT; }
-   void     SetDemoMode(void);
-   void     SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
-   void     SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
+   virtual AbstractBus *GetBus(void) = 0;
+   virtual void  Register6502Hooks(CPU6502Runner *) {}
+   virtual void Start(void) {}
+};
 
-   // function for getting display vector data
-   void GetAllVectors(std::vector<SimpleVector> &vectors);
+class VectorGameRunner final
+{
+public:
+   VectorGameRunner(VectorGame *game);
+   ~VectorGameRunner(void);
+
+   void Start(void);
 
    // simple dispatches to the runner
    uint8_t  GetAccumulator(void) { return cpuRunner->Get6502()->GetA(); }
@@ -53,27 +54,48 @@ public:
    std::string GetProcessorStatus() const { return cpuRunner->GetProcessorStatus(); }
 
 private:
-   void  Register6502Hooks(void);
+   VectorGame *game;
+   CPU6502Runner *cpuRunner = nullptr;
+};
+
+class TempestGame : public VectorGame
+{
+public:
+   TempestGame(AbstractTempestEnvironment *environment);
+   TempestGame(const TempestGame &) = delete;
+   TempestGame& operator=(const TempestGame &) = delete;
+   virtual ~TempestGame(void);
+
+   void	Start(void);
+   
+	// simple dispatches to the TempestBus object
+   uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
+   bool     IsInAttractMode(void) { return tempestBus.ReadByte(GAME_INPUT_MODE) == GAME_INPUT_MODE_ATTRACT; }
+   void     SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
+   void     SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
+
+   // base class overrides
+   virtual AbstractBus *GetBus(void) { return &tempestBus; }
+
+   // function for getting display vector data
+   void GetAllVectors(std::vector<SimpleVector> &vectors);
+
+   virtual void  Register6502Hooks(CPU6502Runner *runner);
+
+private:
    void  RegisterVectorHooks(void);
 
 private:
    // game modifications and hooks
-   uint32_t  AddToScore(void);
+   uint32_t  AddToScore(CPU6502Runner *cpuRunner);
    uint8_t   InsertHighScore(uint32_t score);
    void      SetPlayerScore(uint8_t playerIndex, uint32_t score);
-   uint32_t  SortHighScores(void);
+   uint32_t  SortHighScores(CPU6502Runner *cpuRunner);
    void      Printf(const char *format, ...);
    void      Char(char c);
 
 private:
-	// forbidden
-	TempestRunner(const TempestRunner &tr) = delete;
-	TempestRunner &operator=(const TempestRunner &tr) = delete;
-
-private:
-	AbstractTempestEnvironment *environment;
-   CPU6502Runner *cpuRunner = nullptr;
-
+   AbstractTempestEnvironment * environment;
    int pointsPerBonusLife = 10000;
 
    TempestDB   db;

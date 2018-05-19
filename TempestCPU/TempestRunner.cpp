@@ -22,65 +22,66 @@
 
 #include "TempestRunner.h"
 
-TempestRunner::TempestRunner(AbstractTempestEnvironment *_environment)
-	:
-		tempestBus(_environment)
+
+VectorGameRunner::VectorGameRunner(VectorGame *_game)
 {
-   try
-   {
-      // save parameters
-      environment = _environment;
+   // copy parameters
+   game = _game;
 
-      // clear
-      playerScores[0] = playerScores[1] = 0;
-      for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
-         highScores[i] = 10101;
-
-      // create objects
-      cpuRunner = CPU6502Runner::Create(&tempestBus);
-
-      // register commands
-      environment->RegisterCommand(
-         "?pc",
-         [this](const CommandLine &) {
-         std::ostringstream s;
-         s << std::setfill('0') << std::hex << std::uppercase;
-         s << "PC: " << std::setw(4) << cpuRunner->Get6502()->GetPC();
-         return s.str();
-      }
-      );
-
-      // register hooks
-      Register6502Hooks();
-      RegisterVectorHooks();
-   }
-   catch (...)
-   {
-      delete cpuRunner;
-      cpuRunner = nullptr;
-      throw;
-   }
+   // create objects
+   cpuRunner = CPU6502Runner::Create(game->GetBus());
 }
 
-TempestRunner::~TempestRunner(void)
+VectorGameRunner::~VectorGameRunner(void)
 {
-   // stop the runner thread first
+   // stop the runner thread
    delete cpuRunner;
    cpuRunner = nullptr;
 }
 
 
-void TempestRunner::Start(void)
+void VectorGameRunner::Start(void)
 {
-   // open the database
-   db.Open(environment->GetDatabasePathName());
+   // tell the game to start
+   game->Start();
+
+   // tell it to register its hooks
+   game->Register6502Hooks(cpuRunner);
 
    // start running the CPU
    cpuRunner->Start();
 }
 
 
-void TempestRunner::RegisterVectorHooks(void)
+TempestGame::TempestGame(AbstractTempestEnvironment *_environment)
+	:
+		tempestBus(_environment)
+{
+   // save parameters
+   environment = _environment;
+
+   // clear
+   playerScores[0] = playerScores[1] = 0;
+   for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
+      highScores[i] = 10101;
+
+   // register hooks
+   RegisterVectorHooks();
+}
+
+TempestGame::~TempestGame(void)
+{
+}
+
+
+void TempestGame::Start(void)
+{
+   // open the database
+   db.Open(environment->GetDatabasePathName());
+}
+
+
+void TempestGame::RegisterVectorHooks(void)
 {
    // add a hook that displays the player one score
    vectorInterpreter.RegisterHook(DISPLAY_PLAYER1_SCORE_ADDRESS,
@@ -107,15 +108,15 @@ void TempestRunner::RegisterVectorHooks(void)
    );
 }
 
-void TempestRunner::Register6502Hooks(void)
+void TempestGame::Register6502Hooks(CPU6502Runner *cpuRunner)
 {
    // add in our handler for when the game adds points to the player's score
-   cpuRunner->RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
-      return AddToScore();
+   cpuRunner->RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this,cpuRunner]() {
+      return AddToScore(cpuRunner);
    });
 
    // add in our handler for when the game clears player scores
-   cpuRunner->RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this]() {
+   cpuRunner->RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this,cpuRunner]() {
       SetPlayerScore(0, 0);
       SetPlayerScore(1, 0);
       cpuRunner->Get6502()->RTS();
@@ -124,7 +125,7 @@ void TempestRunner::Register6502Hooks(void)
 
    // this is the routine that outputs the score part of a line in the high
    // score table
-   cpuRunner->RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this]() {
+   cpuRunner->RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this,cpuRunner]() {
       // x tells us which score we're displaying
       uint8_t x = cpuRunner->Get6502()->GetX();
       int highScoreIndex = 7 - x / 3;
@@ -135,12 +136,12 @@ void TempestRunner::Register6502Hooks(void)
 
    // this gets called when it's time to sort the high score table and see
    // if player 1 or player 2 belong in it
-   cpuRunner->RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this]() {
-      return SortHighScores();
+   cpuRunner->RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this,cpuRunner]() {
+      return SortHighScores(cpuRunner);
    });
 
    // this gets called after a player has entered his high score
-   cpuRunner->RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this]() {
+   cpuRunner->RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this,cpuRunner]() {
       if (tempestBus.ReadByte(CURRENT_PLAYER) == 0)
       {
          // set current player
@@ -163,7 +164,7 @@ void TempestRunner::Register6502Hooks(void)
 }
 
 
-uint32_t TempestRunner::SortHighScores(void)
+uint32_t TempestGame::SortHighScores(CPU6502Runner *cpuRunner)
 {
    // figure out how many scores we're dealing with
    int numberOfPlayers = 1 + tempestBus.ReadByte(PLAYER_COUNT);
@@ -200,7 +201,7 @@ uint32_t TempestRunner::SortHighScores(void)
    return 200;
 }
 
-uint8_t TempestRunner::InsertHighScore(uint32_t score)
+uint8_t TempestGame::InsertHighScore(uint32_t score)
 {
    for (uint8_t i = 0; i < HIGH_SCORE_COUNT; ++i)
    {
@@ -247,7 +248,7 @@ uint8_t TempestRunner::InsertHighScore(uint32_t score)
 /// zero-page vector.  In such case, it writes characters per the rules
 /// of printf, limited of course to the Tempest character set.
 /// </summary>
-void TempestRunner::Printf(const char *format, ...)
+void TempestGame::Printf(const char *format, ...)
 {
    char buffer[256];
    va_list args;
@@ -262,7 +263,7 @@ void TempestRunner::Printf(const char *format, ...)
    }
 }
 
-void TempestRunner::Char(char c)
+void TempestGame::Char(char c)
 {
    // This is valid only in a particular context where the game is writing out text using
    // a particular subroutine.  In that context, the address in vector RAM to which we
@@ -282,17 +283,7 @@ void TempestRunner::Char(char c)
    tempestBus.WriteByte(0x0075, (uint8_t)(targetAddress >> 8));
 }
 
-void TempestRunner::SetDemoMode(void)
-{
-   // tell the bus to set the proper DIP switches
-   tempestBus.SetDemoMode();
-
-   // force a reset
-   cpuRunner->Reset();
-}
-
-
-void TempestRunner::GetAllVectors(std::vector<SimpleVector> &vectors)
+void TempestGame::GetAllVectors(std::vector<SimpleVector> &vectors)
 {
    // NOTE: this typically does not get called on the 6502 thread, so
    // be careful what you do here... everything we call should be safe
@@ -312,7 +303,7 @@ void TempestRunner::GetAllVectors(std::vector<SimpleVector> &vectors)
    vectorGenerator.GetAllVectors(vectors);
 }
 
-uint32_t TempestRunner::AddToScore(void)
+uint32_t TempestGame::AddToScore(CPU6502Runner *cpuRunner)
 {
    // this does nothing if we're not in the right mode... for now I just know
    // that the high bit of address 0005 should be set, but probably I can learn
@@ -375,7 +366,7 @@ uint32_t TempestRunner::AddToScore(void)
    return 100;
 }
 
-void TempestRunner::SetPlayerScore(uint8_t playerIndex, uint32_t newScore)
+void TempestGame::SetPlayerScore(uint8_t playerIndex, uint32_t newScore)
 {
    // update our copy of the score
    playerScores[playerIndex] = newScore;

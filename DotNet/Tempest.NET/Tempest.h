@@ -26,14 +26,13 @@ namespace TempestDotNET {
 		void Start(void);
 		uint64_t GetTotalClockCycles(void);
 
-		// simple dispatches to the TempestRunner
-		uint8_t  GetAccumulator(void) { return tempestRunner->GetAccumulator(); }
-		int      GetProgramCounter(void) { return tempestRunner->GetProgramCounter(); }
-		uint8_t  GetXRegister(void) { return tempestRunner->GetXRegister(); }
-		uint8_t  GetYRegister(void) { return tempestRunner->GetYRegister(); }
-      void     SetDemoMode(void) { tempestRunner->SetDemoMode(); }
-		void     Step(void) { tempestRunner->Step(); }
-		void     Resume(void) { tempestRunner->Resume(); }
+		// simple dispatches to the VectorGameRunner
+		uint8_t  GetAccumulator(void) { return gameRunner->GetAccumulator(); }
+		int      GetProgramCounter(void) { return gameRunner->GetProgramCounter(); }
+		uint8_t  GetXRegister(void) { return gameRunner->GetXRegister(); }
+		uint8_t  GetYRegister(void) { return gameRunner->GetYRegister(); }
+		void     Step(void) { gameRunner->Step(); }
+		void     Resume(void) { gameRunner->Resume(); }
 
       //  simple dispatches to the control panel
       void OnePlayer(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(ONE_PLAYER_BUTTON, down); }
@@ -79,8 +78,9 @@ namespace TempestDotNET {
 	protected:
 		Win32TempestEnvironment *environment = nullptr;
       GameContext *gameContext = nullptr;
-      TempestRunner *tempestRunner = nullptr;
-	};
+      VectorGameRunner *gameRunner = nullptr;
+      TempestGame *game = nullptr;
+   };
 }
 
 #endif

@@ -25,52 +25,54 @@ namespace TempestDotNET {
 
       // create objects
       environment = new Win32TempestEnvironment();
-      tempestRunner = new TempestRunner(environment);
-      tempestRunner->SetSoundOutput(gameContext->GetSoundOutput());
-      tempestRunner->SetControlPanel(gameContext->GetControlPanelReader());
+      game = new TempestGame(environment);
+      game->SetSoundOutput(gameContext->GetSoundOutput());
+      game->SetControlPanel(gameContext->GetControlPanelReader());
+      gameRunner = new VectorGameRunner(game);
    }
 
    Tempest::~Tempest(void)
 	{
 		// delete the runner first since it is a thread object
-      delete tempestRunner, tempestRunner = nullptr;
+      delete gameRunner, gameRunner = nullptr;
 
       // then we can get rid of the rest
+      delete game, game = nullptr;
       delete environment, environment = nullptr;
       delete gameContext, gameContext = nullptr;
 	}
    
    uint64_t Tempest::GetTotalClockCycles(void)
 	{
-		return tempestRunner->GetTotalClockCycles();
+		return game->GetTotalClockCycles();
 	}
 
    VectorEnumerator ^Tempest::GetVectorEnumerator(void)
    {
       std::vector<SimpleVector> vectors;
-      tempestRunner->GetAllVectors(vectors);
+      game->GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);
    }
    
    bool Tempest::IsStopped(void)
 	{
-		return tempestRunner->IsStopped();
+		return gameRunner->IsStopped();
 	}
 
 	void Tempest::SetBreakpoint(int address, bool set)
 	{
-		tempestRunner->SetBreakpoint(address, set);
+		gameRunner->SetBreakpoint(address, set);
 	}
 
 	void Tempest::Start(void)
 	{
-		tempestRunner->Start();
+		gameRunner->Start();
 	}
 
 	String ^Tempest::GetProcessorStatus(void)
 	{
-		if (tempestRunner->IsTerminated())
-			return gcnew String(tempestRunner->GetProcessorStatus().c_str());
+		if (gameRunner->IsTerminated())
+			return gcnew String(gameRunner->GetProcessorStatus().c_str());
 		else
 			return gcnew String("OK");
 	}
