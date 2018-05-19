@@ -2,6 +2,9 @@
 #ifndef CPU6502RUNNER_H
 #define CPU6502RUNNER_H
 
+#include <chrono>
+#include <functional>
+#include <map>
 #include "CPU6502.h"
 
 #ifdef _WIN32

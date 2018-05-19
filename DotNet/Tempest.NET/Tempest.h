@@ -4,6 +4,7 @@
 
 #include "GameContext.h"
 #include "VectorEnumerator.h"
+#include "VectorGameRunner.h"
 
 
 using namespace System;

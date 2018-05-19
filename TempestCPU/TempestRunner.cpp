@@ -23,35 +23,6 @@
 #include "TempestRunner.h"
 
 
-VectorGameRunner::VectorGameRunner(VectorGame *_game)
-{
-   // copy parameters
-   game = _game;
-
-   // create objects
-   cpuRunner = CPU6502Runner::Create(game->GetBus());
-}
-
-VectorGameRunner::~VectorGameRunner(void)
-{
-   // stop the runner thread
-   delete cpuRunner;
-   cpuRunner = nullptr;
-}
-
-
-void VectorGameRunner::Start(void)
-{
-   // tell the game to start
-   game->Start();
-
-   // tell it to register its hooks
-   game->Register6502Hooks(cpuRunner);
-
-   // start running the CPU
-   cpuRunner->Start();
-}
-
 
 TempestGame::TempestGame(AbstractTempestEnvironment *_environment)
 	:

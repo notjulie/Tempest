@@ -96,7 +96,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..;..\..\AsteroidsCPU;..\..\TempestDisco\app</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\AsteroidsCPU;..\..\TempestDisco\app;..\..\VectorGame</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -111,7 +111,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..;..\..\TempestIO\Vector;..\..\TempestIO;..\..\SQLite\SQLRR;..\..\SQLite;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\TempestIO\Vector;..\..\TempestIO;..\..\SQLite\SQLRR;..\..\SQLite;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app;..\..\VectorGame</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..;;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app;..\..\VectorGame</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -140,7 +140,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..;;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app;..\..\VectorGame</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -212,6 +212,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\TempestIO\TempestIO.vcxproj">
       <Project>{db91aa41-e33e-4fa3-a901-50daadb164d8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VectorGame\VectorGame.vcxproj">
+      <Project>{b20f3af0-06e4-4946-a1a4-1b2bd56f2372}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
