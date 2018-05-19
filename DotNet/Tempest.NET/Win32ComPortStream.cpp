@@ -1,5 +1,18 @@
+// ====================================================================
+// Atari vector game emulator, Win32 support
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a simple Win32 COM port stream that implements our
+//    stream interface.  Baudrate is hardcoded to match the baud rate
+//    of my custom Tempest cabinet's sound/control panel module.
+// ====================================================================
+
 
 #include "stdafx.h"
+#include "TempestCabinetModule.h"
 
 #include "TempestCPU/TempestException.h"
 
@@ -32,6 +45,16 @@ Win32ComPortStream::Win32ComPortStream(const char *portName)
       );
    if (file == INVALID_HANDLE_VALUE)
       throw TempestException("Win32ComPortStream::Win32ComPortStream: CreateFile failed");
+
+   // set baud rate and data bits
+   DCB dcb;
+   FillMemory(&dcb, sizeof(dcb), 0);
+   dcb.DCBlength = sizeof(dcb);
+   dcb.BaudRate = TEMPEST_CABINET_MODULE_BAUD_RATE;
+   dcb.fBinary = TRUE;
+   dcb.ByteSize = 8;
+   if (!SetCommState(file, &dcb))
+      throw TempestException("Win32ComPortStream::Win32ComPortStream: SetCommState failed");
 
    // set our comm timeouts
    COMMTIMEOUTS   commTimeouts;

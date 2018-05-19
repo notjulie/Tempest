@@ -1,5 +1,17 @@
+// ====================================================================
+// Tempest cabinet control panel/sound module
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Simple USART driver module that just reads from and writes to
+//    a steam.
+// ====================================================================
+
 
 #include <stm32f4xx.h>
+#include "TempestCabinetModule.h"
 #include "TempestDisco.h"
 
 #include "SystemError.h"
@@ -15,7 +27,7 @@ AbstractTempestStream &SerialStream = *memoryStream.GetLeftSide();
 
 void InitializeSerial(void)
 {
-	int baudRate = 115200;
+	int baudRate = TEMPEST_CABINET_MODULE_BAUD_RATE;
 
 	// enable clock for USART2 and GPIOA
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
