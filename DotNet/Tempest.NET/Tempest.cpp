@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include <msclr\lock.h>
 
+#include "AsteroidsCPU/AsteroidsGame.h"
 #include "TempestCPU/6502/CPU6502.h"
 #include "TempestCPU/6502/CPU6502Exception.h"
 #include "TempestCPU/TempestBus.h"
@@ -18,17 +19,16 @@
 using namespace System;
 
 namespace TempestDotNET {
-   Tempest::Tempest(GameContext *_gameContext)
+   Tempest::Tempest(String^ _gameName, GameContext *_gameContext)
    {
       // save/take ownership of the gameContext
       gameContext = _gameContext;
 
+      // copy the game name
+      gameName = _gameName;
+
       // create objects
       environment = new Win32TempestEnvironment();
-      game = new TempestGame(environment);
-      game->SetSoundOutput(gameContext->GetSoundOutput());
-      game->SetControlPanel(gameContext->GetControlPanelReader());
-      gameRunner = new VectorGameRunner(game);
    }
 
    Tempest::~Tempest(void)
@@ -45,7 +45,8 @@ namespace TempestDotNET {
    VectorEnumerator ^Tempest::GetVectorEnumerator(void)
    {
       std::vector<SimpleVector> vectors;
-      game->GetAllVectors(vectors);
+      if (game != nullptr)
+         game->GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);
    }
    
@@ -61,12 +62,32 @@ namespace TempestDotNET {
 
 	void Tempest::Start(void)
 	{
-		gameRunner->Start();
+      // create the game instance
+      if (gameName->Equals("Asteroids"))
+      {
+         game = new AsteroidsGame(environment);
+      }
+      else if (gameName->Equals("Tempest"))
+      {
+         game = new TempestGame(environment);
+      }
+      else
+      {
+         throw gcnew Exception("");
+      }
+
+      game->SetSoundOutput(gameContext->GetSoundOutput());
+      game->SetControlPanel(gameContext->GetControlPanelReader());
+ 
+      gameRunner = new VectorGameRunner(game);
+      gameRunner->Start();
 	}
 
 	String ^Tempest::GetProcessorStatus(void)
 	{
-		if (gameRunner->IsTerminated())
+      if (gameRunner == nullptr)
+         return gcnew String("Not running");
+      else if (gameRunner->IsTerminated())
 			return gcnew String(gameRunner->GetProcessorStatus().c_str());
 		else
 			return gcnew String("OK");
@@ -74,12 +95,12 @@ namespace TempestDotNET {
 
    Tempest^ Tempest::CreateNormalInstance(String^ game)
    {
-      return gcnew Tempest(new NormalGameContext());
+      return gcnew Tempest(game, new NormalGameContext());
    }
 
    Tempest^ Tempest::CreateStreamedInstance(String^ game)
    {
-      return gcnew Tempest(new SerializedGameContext());
+      return gcnew Tempest(game, new SerializedGameContext());
    }
 
    Tempest^ Tempest::CreateCOMPortInstance(String^ game, String^ portName)
@@ -87,7 +108,7 @@ namespace TempestDotNET {
       std::string name;
       for (int i = 0; i < portName->Length; ++i)
          name += (char)portName[i];
-      return gcnew Tempest(new COMPortGameContext(name));
+      return gcnew Tempest(game, new COMPortGameContext(name));
    }
 
    Tempest^ Tempest::CreateLoopbackInstance(String^ game, String^ port1, String^ port2)
@@ -98,7 +119,7 @@ namespace TempestDotNET {
       std::string name2;
       for (int i = 0; i < port2->Length; ++i)
          name2 += (char)port2[i];
-      return gcnew Tempest(new LoopbackGameContext(name1, name2));
+      return gcnew Tempest(game, new LoopbackGameContext(name1, name2));
    }
 }
 

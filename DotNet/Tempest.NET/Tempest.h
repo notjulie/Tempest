@@ -73,13 +73,14 @@ namespace TempestDotNET {
       /// the GameContext and give ownership to us, so I want to keep that logic internal
       /// to the statis constructors.
       /// </summary>
-      Tempest(GameContext *_gameContext);
+      Tempest(String^ gameName, GameContext *_gameContext);
 
-	protected:
+	private:
 		Win32TempestEnvironment *environment = nullptr;
       GameContext *gameContext = nullptr;
       VectorGameRunner *gameRunner = nullptr;
       VectorGame *game = nullptr;
+      String^ gameName = String::Empty;
    };
 }
 
