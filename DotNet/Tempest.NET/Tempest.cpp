@@ -92,5 +92,16 @@ namespace TempestDotNET {
          name += (char)portName[i];
       return gcnew Tempest(new COMPortGameContext(name));
    }
+
+   Tempest^ Tempest::CreateLoopbackInstance(String^ port1, String^ port2)
+   {
+      std::string name1;
+      for (int i = 0; i < port1->Length; ++i)
+         name1 += (char)port1[i];
+      std::string name2;
+      for (int i = 0; i < port2->Length; ++i)
+         name2 += (char)port2[i];
+      return gcnew Tempest(new LoopbackGameContext(name1, name2));
+   }
 }
 

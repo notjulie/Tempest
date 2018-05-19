@@ -62,6 +62,12 @@ namespace TempestDotNET {
       /// </summary>
       static Tempest^ Tempest::CreateCOMPortInstance(String^ portName);
 
+      /// <summary>
+      /// Creates an instance that interacts with the keyboard and uses the internal audio,
+      /// but uses a serial loopback connection between the game and the interface
+      /// </summary>
+      static Tempest^ Tempest::CreateLoopbackInstance(String^ port1, String^ port2);
+
    private:
       /// <summary>
       /// Constructor; I keep it private because the caller is supposed to instantiate

@@ -85,4 +85,31 @@ private:
    TempestIOStreamProxy *proxy = nullptr;
 };
 
+
+/// <summary>
+/// GameContext implementation for games that want to connect to the Windows hardware
+/// via a serial loopback stream.
+/// </summary>
+class LoopbackGameContext : public GameContext {
+public:
+   LoopbackGameContext(const std::string &port1, const std::string &port2);
+   virtual ~LoopbackGameContext(void);
+
+private:
+   void PollListener(void);
+
+private:
+   bool terminated = false;
+   Win32TempestSoundIO tempestSoundIO;
+   TempestIOStreamListener *listener = nullptr;
+   TempestIOStreamProxy *proxy = nullptr;
+   Win32ComPortStream comPort1Stream;
+   Win32ComPortStream comPort2Stream;
+
+   // this is an std::thread, but managed C++ will choke on this header if it includes
+   // <thread>, so I just cast to void
+   void *pollThread = nullptr;
+};
+
+
 #endif

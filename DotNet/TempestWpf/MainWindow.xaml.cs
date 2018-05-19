@@ -348,14 +348,21 @@ namespace TempestWpf
                   tempest = Tempest.CreateNormalInstance();
                   break;
 
+               case SoundIOType.Discovery:
+                  tempest = Tempest.CreateCOMPortInstance(Settings.Default.DiscoveryCOMPort);
+                  break;
+
+               case SoundIOType.Loopback:
+                  tempest = Tempest.CreateLoopbackInstance(
+                     Settings.Default.LoopbackPort1,
+                     Settings.Default.LoopbackPort2
+                     );
+                  break;
+
                case SoundIOType.MemoryStream:
                   // create our tempest... just a normal Tempest that interacts with the sound &
                   // control panel via a memory stream
                   tempest = Tempest.CreateStreamedInstance();
-                  break;
-
-               case SoundIOType.Discovery:
-                  tempest = Tempest.CreateCOMPortInstance(Settings.Default.DiscoveryCOMPort);
                   break;
 
                default:

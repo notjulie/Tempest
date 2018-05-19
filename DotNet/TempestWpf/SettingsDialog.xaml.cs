@@ -20,8 +20,7 @@ namespace TempestWpf
 
          // add event handlers
          okButton.Click += OkButton_Click;
-         discoveryItem.Selected += DiscoveryItem_SelectedChanged;
-         discoveryItem.Unselected += DiscoveryItem_SelectedChanged;
+         soundIOCombo.SelectionChanged += SoundIOCombo_SelectionChanged;
 
          // load settings
          string soundIOType = Settings.Default.SoundIOType;
@@ -31,12 +30,14 @@ namespace TempestWpf
          if (soundIOCombo.SelectedIndex < 0)
             soundIOCombo.SelectedIndex = 0;
          discoveryCOMPort.PortName = Settings.Default.DiscoveryCOMPort;
+         loopbackPort1.PortName = Settings.Default.LoopbackPort1;
+         loopbackPort2.PortName = Settings.Default.LoopbackPort2;
 
          // set initial state
          UpdateControlStates();
       }
 
-      private void DiscoveryItem_SelectedChanged(object sender, RoutedEventArgs e)
+      private void SoundIOCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
       {
          UpdateControlStates();
       }
@@ -49,6 +50,11 @@ namespace TempestWpf
          {
             Settings.Default.DiscoveryCOMPort = discoveryCOMPort.PortName;
          }
+         else if (Settings.Default.SoundIOType == "Loopback")
+         {
+            Settings.Default.LoopbackPort1 = loopbackPort1.PortName;
+            Settings.Default.LoopbackPort2 = loopbackPort2.PortName;
+         }
 
          Settings.Default.Save();
 
@@ -59,6 +65,7 @@ namespace TempestWpf
       private void UpdateControlStates()
       {
          discoverySettings.Visibility = discoveryItem.IsSelected ? Visibility.Visible : Visibility.Collapsed;
+         loopbackSettings.Visibility = loopbackItem.IsSelected ? Visibility.Visible : Visibility.Collapsed;
       }
    }
 }

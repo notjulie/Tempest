@@ -46,5 +46,29 @@ namespace TempestWpf.Properties {
                 this["DiscoveryCOMPort"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LoopbackPort1 {
+            get {
+                return ((string)(this["LoopbackPort1"]));
+            }
+            set {
+                this["LoopbackPort1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LoopbackPort2 {
+            get {
+                return ((string)(this["LoopbackPort2"]));
+            }
+            set {
+                this["LoopbackPort2"] = value;
+            }
+        }
     }
 }

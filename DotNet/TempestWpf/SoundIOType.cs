@@ -22,6 +22,11 @@ namespace TempestWpf
       Discovery,
 
       /// <summary>
+      /// Serial connection using loopback between two COM ports
+      /// </summary>
+      Loopback,
+
+      /// <summary>
       /// Serial connection between control panel/sound and game processor via a
       /// memory stream
       /// </summary>
