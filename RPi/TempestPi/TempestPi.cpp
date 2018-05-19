@@ -88,7 +88,8 @@ void TempestPi::Run(void)
        soundIO = new TempestIOStreamProxy(serialStream);
 
        // create the runner object that drives the fake 6502
-       tempestRunner->SetTempestIO(soundIO);
+       tempestRunner->SetSoundOutput(soundIO);
+       tempestRunner->SetControlPanel(soundIO);
        if (demo)
          tempestRunner->SetDemoMode();
 
