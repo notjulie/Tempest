@@ -23,9 +23,13 @@ namespace TempestWpf
          soundIOCombo.SelectionChanged += SoundIOCombo_SelectionChanged;
 
          // load settings
-         string soundIOType = Settings.Default.SoundIOType;
+         foreach (ComboBoxItem item in gameCombo.Items)
+            if (item.Tag.ToString() == Settings.Default.Game)
+               item.IsSelected = true;
+         if (gameCombo.SelectedIndex < 0)
+            gameCombo.SelectedIndex = 0;
          foreach (ComboBoxItem item in soundIOCombo.Items)
-            if (item.Tag.ToString() == soundIOType)
+            if (item.Tag.ToString() == Settings.Default.SoundIOType)
                item.IsSelected = true;
          if (soundIOCombo.SelectedIndex < 0)
             soundIOCombo.SelectedIndex = 0;
@@ -45,6 +49,7 @@ namespace TempestWpf
       private void OkButton_Click(object sender, RoutedEventArgs e)
       {
          // save the settings
+         Settings.Default.Game = ((ComboBoxItem)gameCombo.SelectedItem).Tag.ToString();
          Settings.Default.SoundIOType = ((ComboBoxItem)soundIOCombo.SelectedItem).Tag.ToString();
          if (Settings.Default.SoundIOType == "Discovery")
          {

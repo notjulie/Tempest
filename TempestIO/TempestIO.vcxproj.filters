@@ -39,9 +39,6 @@
     <ClInclude Include="Vector\VectorData.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector\SimpleVector.h">
-      <Filter>Vector\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector\SimpleVectorDataInterpreter.h">
       <Filter>Vector\Header Files</Filter>
     </ClInclude>
@@ -62,9 +59,6 @@
     </ClInclude>
     <ClInclude Include="WaveStreamer.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector\TempestColor.h">
-      <Filter>Vector\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PacketStream.h">
       <Filter>Header Files</Filter>

@@ -47,8 +47,25 @@ void SimpleVectorGenerator::LDraw(int _x, int _y, int _intensity)
 	vector.startY = startY;
 	vector.endX = endX;
 	vector.endY = endY;
-	vector.color = color;
-	vectors.push_back(vector);
+
+   if ((color & 2) == 0)
+      vector.r = 255;
+   else if ((color & 1) == 0)
+      vector.r = 128;
+   else
+      vector.r = 0;
+
+   if ((color & 8) == 0)
+      vector.g = 255;
+   else
+      vector.g = 0;
+
+   if ((color & 4) == 0)
+      vector.b = 255;
+   else
+      vector.b = 0;
+
+   vectors.push_back(vector);
 }
 
 void SimpleVectorGenerator::SDraw(int x, int y, int intensity)

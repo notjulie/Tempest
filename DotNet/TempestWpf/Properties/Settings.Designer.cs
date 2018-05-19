@@ -70,5 +70,17 @@ namespace TempestWpf.Properties {
                 this["LoopbackPort2"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Game {
+            get {
+                return ((string)(this["Game"]));
+            }
+            set {
+                this["Game"] = value;
+            }
+        }
     }
 }

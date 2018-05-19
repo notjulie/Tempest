@@ -36,14 +36,12 @@ public:
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
    bool     IsInAttractMode(void) { return tempestBus.ReadByte(GAME_INPUT_MODE) == GAME_INPUT_MODE_ATTRACT; }
-   void     SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
-   void     SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
 
    // base class overrides
+   virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
    virtual AbstractBus *GetBus(void) { return &tempestBus; }
-
-   // function for getting display vector data
-   void GetAllVectors(std::vector<SimpleVector> &vectors);
+   virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
+   virtual void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
 
    virtual void  Register6502Hooks(CPU6502Runner *runner);
 

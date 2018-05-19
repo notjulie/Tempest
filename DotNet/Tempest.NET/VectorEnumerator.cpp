@@ -36,8 +36,8 @@ bool VectorEnumerator::GetNextVector(
 	startY = vector.startY;
 	endX =   vector.endX;
 	endY =   vector.endY;
-   r = vector.color.GetR();
-   g = vector.color.GetG();
-   b = vector.color.GetB();
+   r = vector.r;
+   g = vector.g;
+   b = vector.b;
    return true;
 }

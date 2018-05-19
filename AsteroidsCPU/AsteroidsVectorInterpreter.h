@@ -2,7 +2,7 @@
 #ifndef ASTEROIDSVECTORINTERPRETER_H
 #define ASTEROIDSVECTORINTERPRETER_H
 
-#include "TempestIO/Vector/SimpleVector.h"
+#include "SimpleVector.h"
 
 class AsteroidsVectorInterpreter
 {

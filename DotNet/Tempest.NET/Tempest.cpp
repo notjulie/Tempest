@@ -42,11 +42,6 @@ namespace TempestDotNET {
       delete gameContext, gameContext = nullptr;
 	}
    
-   uint64_t Tempest::GetTotalClockCycles(void)
-	{
-		return game->GetTotalClockCycles();
-	}
-
    VectorEnumerator ^Tempest::GetVectorEnumerator(void)
    {
       std::vector<SimpleVector> vectors;
@@ -77,17 +72,17 @@ namespace TempestDotNET {
 			return gcnew String("OK");
 	}
 
-   Tempest^ Tempest::CreateNormalInstance(void)
+   Tempest^ Tempest::CreateNormalInstance(String^ game)
    {
       return gcnew Tempest(new NormalGameContext());
    }
 
-   Tempest^ Tempest::CreateStreamedInstance(void)
+   Tempest^ Tempest::CreateStreamedInstance(String^ game)
    {
       return gcnew Tempest(new SerializedGameContext());
    }
 
-   Tempest^ Tempest::CreateCOMPortInstance(String^ portName)
+   Tempest^ Tempest::CreateCOMPortInstance(String^ game, String^ portName)
    {
       std::string name;
       for (int i = 0; i < portName->Length; ++i)
@@ -95,7 +90,7 @@ namespace TempestDotNET {
       return gcnew Tempest(new COMPortGameContext(name));
    }
 
-   Tempest^ Tempest::CreateLoopbackInstance(String^ port1, String^ port2)
+   Tempest^ Tempest::CreateLoopbackInstance(String^ game, String^ port1, String^ port2)
    {
       std::string name1;
       for (int i = 0; i < port1->Length; ++i)

@@ -41,25 +41,10 @@ namespace TempestDotNET {
       delete tempestSoundIO, tempestSoundIO = nullptr;
 	}
 
-   uint64_t Asteroids::GetTotalClockCycles(void)
-	{
-      return game->GetTotalClockCycles();
-	}
-
    VectorEnumerator ^Asteroids::GetVectorEnumerator(void)
    {
       std::vector<SimpleVector> vectors;
-
-      if (game->HaveVectorData())
-      {
-         // get the latest vector data
-         AsteroidsVectorInterpreter vectorInterpreter;
-         game->GetVectorData(vectorInterpreter);
-
-         // interpret it
-         vectorInterpreter.Interpret();
-         vectorInterpreter.GetAllVectors(vectors);
-      }
+      game->GetAllVectors(vectors);
 
       // return the result
       return gcnew VectorEnumerator(vectors);

@@ -224,7 +224,7 @@ void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int s
    vector.startY = (int16_t)startY;
    vector.endX = (int16_t)endX;
    vector.endY = (int16_t)endY;
-   vector.color = 1;
+   vector.r = vector.g = vector.b = 0xFF;
 
    if (intensity != 0)
       vectors.push_back(vector);

@@ -25,7 +25,6 @@ namespace TempestDotNET {
 		void SetBreakpoint(int address, bool set);
 
 		void Start(void);
-		uint64_t GetTotalClockCycles(void);
 
 		// simple dispatches to the VectorGameRunner
 		uint8_t  GetAccumulator(void) { return gameRunner->GetAccumulator(); }
@@ -48,25 +47,25 @@ namespace TempestDotNET {
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio
       /// </summary>
-      static Tempest^ CreateNormalInstance(void);
+      static Tempest^ CreateNormalInstance(String^ game);
 
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio,
       /// but uses a simulated serial connection between the game and the interface
       /// </summary>
-      static Tempest^ CreateStreamedInstance(void);
+      static Tempest^ CreateStreamedInstance(String^ game);
 
       /// <summary>
       /// Creates an instance that interacts with the actual Tempest hardware via
       /// COM port.
       /// </summary>
-      static Tempest^ Tempest::CreateCOMPortInstance(String^ portName);
+      static Tempest^ Tempest::CreateCOMPortInstance(String^ game, String^ portName);
 
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio,
       /// but uses a serial loopback connection between the game and the interface
       /// </summary>
-      static Tempest^ Tempest::CreateLoopbackInstance(String^ port1, String^ port2);
+      static Tempest^ Tempest::CreateLoopbackInstance(String^ game, String^ port1, String^ port2);
 
    private:
       /// <summary>
@@ -80,7 +79,7 @@ namespace TempestDotNET {
 		Win32TempestEnvironment *environment = nullptr;
       GameContext *gameContext = nullptr;
       VectorGameRunner *gameRunner = nullptr;
-      TempestGame *game = nullptr;
+      VectorGame *game = nullptr;
    };
 }
 

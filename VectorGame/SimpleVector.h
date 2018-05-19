@@ -2,7 +2,6 @@
 #ifndef SIMPLEVECTOR_H
 #define SIMPLEVECTOR_H
 
-#include "TempestColor.h"
 
 #ifdef _WIN32
    #pragma warning(push)
@@ -15,7 +14,7 @@ struct SimpleVector
 	int16_t startY;
 	int16_t endX;
 	int16_t endY;
-   TempestColor color;
+   uint8_t r, g, b;
 };
 
 #ifdef _WIN32

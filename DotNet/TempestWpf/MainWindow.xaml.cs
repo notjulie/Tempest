@@ -214,11 +214,6 @@ namespace TempestWpf
             return;
 
          processorStatus.Text = tempest.GetProcessorStatus();
-
-         double processorSpeed = tempest.GetTotalClockCycles();
-         processorSpeed /= (DateTime.Now - startTime).TotalSeconds;
-         processorSpeed /= 1000000;
-         processorSpeedText.Text = processorSpeed.ToString("F1") + " MHz";
       }
 
       void vectorTimer_Tick(object sender, EventArgs e)
@@ -343,26 +338,27 @@ namespace TempestWpf
             switch (soundIOType)
             {
                case SoundIOType.Direct:
-                  // create our tempest... just a normal Tempest that interacts with our keyboard
+                  // create our tempest... just a normal game that interacts with our keyboard
                   // commands and the internal audio
-                  tempest = Tempest.CreateNormalInstance();
+                  tempest = Tempest.CreateNormalInstance(Settings.Default.Game);
                   break;
 
                case SoundIOType.Discovery:
-                  tempest = Tempest.CreateCOMPortInstance(Settings.Default.DiscoveryCOMPort);
+                  tempest = Tempest.CreateCOMPortInstance(Settings.Default.Game, Settings.Default.DiscoveryCOMPort);
                   break;
 
                case SoundIOType.Loopback:
                   tempest = Tempest.CreateLoopbackInstance(
+                     Settings.Default.Game,
                      Settings.Default.LoopbackPort1,
                      Settings.Default.LoopbackPort2
                      );
                   break;
 
                case SoundIOType.MemoryStream:
-                  // create our tempest... just a normal Tempest that interacts with the sound &
+                  // create our tempest... just a normal game that interacts with the sound &
                   // control panel via a memory stream
-                  tempest = Tempest.CreateStreamedInstance();
+                  tempest = Tempest.CreateStreamedInstance(Settings.Default.Game);
                   break;
 
                default:

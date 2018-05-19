@@ -27,7 +27,6 @@ namespace TempestDotNET {
 		void SetBreakpoint(int address, bool set);
 
 		void Start(void);
-		uint64_t GetTotalClockCycles(void);
 
 		// simple dispatches to the AsteroidsRunner
       uint8_t  GetAccumulator(void) { return asteroidsRunner->GetAccumulator(); }

@@ -180,11 +180,6 @@ namespace AsteroidsWpf
       void timer_Tick(object sender, EventArgs e)
       {
          processorStatus.Text = asteroids.GetProcessorStatus();
-
-         double processorSpeed = asteroids.GetTotalClockCycles();
-         processorSpeed /= (DateTime.Now - startTime).TotalSeconds;
-         processorSpeed /= 1000000;
-         processorSpeedText.Text = processorSpeed.ToString("F1") + " MHz";
       }
 
       void vectorTimer_Tick(object sender, EventArgs e)
