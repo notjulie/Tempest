@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include <msclr\lock.h>
 
-#include "AsteroidsCPU/AsteroidsRunner.h"
+#include "AsteroidsCPU/AsteroidsGame.h"
 #include "AsteroidsCPU/AsteroidsVectorInterpreter.h"
 
 #include "TempestCPU/6502/CPU6502.h"
@@ -25,35 +25,36 @@ namespace TempestDotNET {
       // create objects
       environment = new Win32TempestEnvironment();
       tempestSoundIO = new Win32TempestSoundIO();
-      asteroidsRunner = new AsteroidsRunner(environment);
+      game = new AsteroidsGame(environment);
+      game->SetSoundOutput(tempestSoundIO);
+      game->SetControlPanel(tempestSoundIO);
 
-      // hook objects together
-      asteroidsRunner->SetSoundOutput(tempestSoundIO);
-      asteroidsRunner->SetControlPanel(tempestSoundIO);
+      asteroidsRunner = new VectorGameRunner(game);
    }
 
    Asteroids::~Asteroids(void)
 	{
 		// delete
       delete asteroidsRunner, asteroidsRunner = nullptr;
+      delete game, game = nullptr;
       delete environment, environment = nullptr;
       delete tempestSoundIO, tempestSoundIO = nullptr;
 	}
 
    uint64_t Asteroids::GetTotalClockCycles(void)
 	{
-      return asteroidsRunner->GetTotalClockCycles();
+      return game->GetTotalClockCycles();
 	}
 
    VectorEnumerator ^Asteroids::GetVectorEnumerator(void)
    {
       std::vector<SimpleVector> vectors;
 
-      if (asteroidsRunner->HaveVectorData())
+      if (game->HaveVectorData())
       {
          // get the latest vector data
          AsteroidsVectorInterpreter vectorInterpreter;
-         asteroidsRunner->GetVectorData(vectorInterpreter);
+         game->GetVectorData(vectorInterpreter);
 
          // interpret it
          vectorInterpreter.Interpret();

@@ -14,8 +14,8 @@
 
 #include <stdint.h>
 #include <string>
+#include "CPU6502Runner.h"
 
-class CPU6502Runner;
 class VectorGame;
 
 class VectorGameRunner final

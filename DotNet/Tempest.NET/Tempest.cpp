@@ -7,7 +7,7 @@
 #include "TempestCPU/6502/CPU6502Exception.h"
 #include "TempestCPU/TempestBus.h"
 #include "TempestCPU/TempestException.h"
-#include "TempestCPU/TempestRunner.h"
+#include "TempestCPU/TempestGame.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
 
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"

@@ -2,13 +2,15 @@
 #ifndef TEMPEST_H
 #define TEMPEST_H
 
-#include "AsteroidsCPU/AsteroidsRunner.h"
+#include "AsteroidsCPU/AsteroidsGame.h"
 #include "VectorEnumerator.h"
+#include "VectorGameRunner.h"
 
 using namespace System;
 using namespace System::Threading;
 
 #include "Win32TempestIO.h"
+
 
 namespace TempestDotNET {
 
@@ -46,8 +48,9 @@ namespace TempestDotNET {
 	private:
 		Win32TempestEnvironment *environment = nullptr;
       Win32TempestSoundIO *tempestSoundIO = nullptr;
-      AsteroidsRunner *asteroidsRunner = nullptr;
-	};
+      VectorGameRunner *asteroidsRunner = nullptr;
+      AsteroidsGame *game = nullptr;
+   };
 
 }
 

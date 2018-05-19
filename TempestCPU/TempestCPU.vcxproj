@@ -66,7 +66,7 @@
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestException.cpp" />
     <ClCompile Include="TempestROMS.cpp" />
-    <ClCompile Include="TempestRunner.cpp" />
+    <ClCompile Include="TempestGame.cpp" />
     <ClCompile Include="Win32\Win32TempestEnvironment.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +89,7 @@
     <ClInclude Include="TempestMemoryMap.h" />
     <ClInclude Include="TempestPokey.h" />
     <ClInclude Include="TempestROMS.h" />
-    <ClInclude Include="TempestRunner.h" />
+    <ClInclude Include="TempestGame.h" />
     <ClInclude Include="Win32\Win32.h" />
     <ClInclude Include="Win32\Win32TempestEnvironment.h" />
   </ItemGroup>

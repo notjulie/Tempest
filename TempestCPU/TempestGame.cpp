@@ -20,7 +20,7 @@
 #include "AbstractTempestEnvironment.h"
 #include "TempestException.h"
 
-#include "TempestRunner.h"
+#include "TempestGame.h"
 
 
 
