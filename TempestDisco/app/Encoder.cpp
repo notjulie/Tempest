@@ -73,7 +73,7 @@ void EncoderInput::AddSample(int value)
 	double highpassOutput = lowPassCapacitor - highPassCapacitor;
 
 	// adjust our value accordingly
-	int hysteresis = 3000;
+	int hysteresis = 500;
 	if (highpassOutput < -hysteresis)
 		isHigh = false;
 	else if (highpassOutput > hysteresis)
