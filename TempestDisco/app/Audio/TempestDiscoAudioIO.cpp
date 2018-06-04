@@ -45,8 +45,6 @@ uint8_t TempestDiscoAudioIO::GetButtons(void)
 
 uint8_t TempestDiscoAudioIO::GetEncoder(void)
 {
-	// our reading of the encoder is twice as precise as the
-	// original
 	return (uint8_t)::GetEncoder();
 }
 

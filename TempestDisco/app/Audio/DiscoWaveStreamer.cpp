@@ -26,9 +26,7 @@ void DiscoWaveStreamer::Service(void)
    	// buffer mono
       FillBuffer(bufferToFill, frameCount);
 
-      // then make it stereo... Tempest's audio wants two balanced inputs
-      // so I just negate one and use the stereo output as complementary
-      // outputs
+      // then make it stereo
       for (int i=frameCount-1; i>=0; --i)
       {
       	bufferToFill[i*2 + 1] = bufferToFill[i];

@@ -1,13 +1,8 @@
 
 #include "TempestDisco.h"
 
-#include "AudioDriver.h"
 #include "ControlPanel.h"
-#include "DiscoWaveStreamer.h"
 #include "LED.h"
-#include "SystemTime.h"
-#include "TempestDiscoAudio.h"
-#include "WatchDog.h"
 
 #include "AudioLEDs.h"
 
