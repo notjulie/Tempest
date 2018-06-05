@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "Tempest.NET.h"
 
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 #include "TempestIO/Vector/VectorData.h"

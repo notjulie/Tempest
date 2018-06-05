@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "Tempest.NET.h"
 
 #include "TempestCPU/TempestException.h"
 

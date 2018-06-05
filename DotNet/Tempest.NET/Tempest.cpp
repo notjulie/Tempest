@@ -1,6 +1,6 @@
 
 
-#include "stdafx.h"
+#include "Tempest.NET.h"
 #include <msclr\lock.h>
 
 #include "AsteroidsCPU/AsteroidsGame.h"

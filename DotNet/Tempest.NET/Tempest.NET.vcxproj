@@ -98,9 +98,10 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\..;..\..\AsteroidsCPU;..\..\TempestDisco\app;..\..\VectorGame;..\..\TempestCPU\6502</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeaderFile>Tempest.NET.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies />
       <NoEntryPoint>true</NoEntryPoint>
     </Link>
@@ -113,9 +114,10 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\..;..\..\TempestIO\Vector;..\..\TempestIO;..\..\SQLite\SQLRR;..\..\SQLite;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app;..\..\VectorGame;..\..\TempestCPU\6502</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeaderFile>Tempest.NET.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>
       </AdditionalDependencies>
       <NoEntryPoint>true</NoEntryPoint>
@@ -128,6 +130,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\..;;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app;..\..\VectorGame;..\..\TempestCPU\6502</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeaderFile>Tempest.NET.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -142,6 +145,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\..;;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app;..\..\VectorGame;..\..\TempestCPU\6502</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeaderFile>Tempest.NET.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -158,7 +162,7 @@
   <ItemGroup>
     <ClInclude Include="GameContext.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="Tempest.NET.h" />
     <ClInclude Include="Tempest.h" />
     <ClInclude Include="VectorEnumerator.h" />
     <ClInclude Include="Win32TempestIO.h" />
@@ -178,7 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Stdafx.cpp">
+    <ClCompile Include="Tempest.NET.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

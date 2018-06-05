@@ -11,7 +11,7 @@
 // ====================================================================
 
 
-#include "stdafx.h"
+#include "Tempest.NET.h"
 #include "TempestCabinetModule.h"
 
 #include "TempestCPU/TempestException.h"

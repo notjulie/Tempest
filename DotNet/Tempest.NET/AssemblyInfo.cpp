@@ -8,7 +8,7 @@
 //    AssemblyInfo for Tempest.NET managed C++ wrapper class library
 // ====================================================================
 
-#include "stdafx.h"
+#include "Tempest.NET.h"
 
 using namespace System;
 using namespace System::Reflection;
