@@ -64,7 +64,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TempestBus.cpp" />
-    <ClCompile Include="TempestException.cpp" />
     <ClCompile Include="TempestROMS.cpp" />
     <ClCompile Include="TempestGame.cpp" />
     <ClCompile Include="Win32\Win32TempestEnvironment.cpp" />

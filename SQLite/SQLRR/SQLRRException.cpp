@@ -4,7 +4,7 @@
 
 
 SQLRRException::SQLRRException(sqlite3 *db, int error, const std::string &message)
-   : TempestException(FormatMessage(db, error, message))
+   : VectorGameException(FormatMessage(db, error, message))
 {
 }
 

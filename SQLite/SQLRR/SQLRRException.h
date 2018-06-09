@@ -2,9 +2,9 @@
 #ifndef SQLRREXCEPTION_H
 #define SQLRREXCEPTION_H
 
-#include "TempestException.h"
+#include "VectorGameException.h"
 
-class SQLRRException : public TempestException {
+class SQLRRException : public VectorGameException {
 public:
    SQLRRException(sqlite3 *db, int error, const std::string &message);
 

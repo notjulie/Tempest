@@ -8,17 +8,12 @@
 #ifndef TEMPESTEXCEPTION_H
 #define	TEMPESTEXCEPTION_H
 
-#include <string>
+#include "VectorGameException.h"
 
-class TempestException
+class TempestException : public VectorGameException
 {
 public:
-   TempestException(const std::string &_message);
-   virtual ~TempestException(void);
-   virtual const char* what(void) const;
-
-private:
-   std::string message;
+   TempestException(const std::string &_message) : VectorGameException(_message) {}
 };
 
 #endif	/* TEMPESTEXCEPTION_H */

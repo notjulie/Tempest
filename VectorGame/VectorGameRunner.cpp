@@ -9,8 +9,12 @@
 // ====================================================================
 
 #include <thread>
+
+#include "CPU6502Exception.h"
 #include "CPU6502Runner.h"
+#include "VectorGameException.h"
 #include "VectorGame.h"
+
 #include "VectorGameRunner.h"
 
 VectorGameRunner::VectorGameRunner(VectorGame *_game)
@@ -46,7 +50,28 @@ void VectorGameRunner::Start(void)
 
 void VectorGameRunner::RunnerThread(void)
 {
-   while (!terminateRequested)
-      game->SingleStep();
+   try
+   {
+      while (!terminateRequested)
+      {
+         game->SingleStep();
+      }
+
+      processorStatus = "Exited normally";
+   }
+   catch (CPU6502Exception &_x6502)
+   {
+      processorStatus = _x6502.what();
+   }
+   catch (VectorGameException &_xTempest)
+   {
+      // for now this goes as the processor status, too
+      processorStatus = _xTempest.what();
+   }
+   catch (...)
+   {
+      processorStatus = "Tempest runner unknown exception";
+   }
+
    isTerminated = true;
 }

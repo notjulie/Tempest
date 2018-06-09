@@ -25,7 +25,6 @@ public:
    // simple accessors
    AbstractBus *GetBus(void) { return bus; }
    CPU6502     *Get6502(void) { return cpu6502; }
-   std::string GetProcessorStatus(void) { return processorStatus; }
    bool        IsStopped(void) { return state == Stopped && requestedAction == NoAction; }
    void			Step(void) { requestedAction = StepAction; }
    void			Resume(void) { requestedAction = ResumeAction; }
@@ -66,7 +65,6 @@ private:
    std::chrono::high_resolution_clock::time_point cpuTime;
    uint8_t	addressFlags[64 * 1024];
    std::map<uint16_t, std::function<uint32_t()> > hooks;
-   std::string processorStatus;
 
    AbstractBus *bus = nullptr;
    CPU6502		*cpu6502 = nullptr;

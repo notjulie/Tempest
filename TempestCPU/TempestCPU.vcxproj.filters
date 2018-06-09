@@ -45,9 +45,6 @@
     <ClCompile Include="TempestBus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TempestException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="6502\CPU6502.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>

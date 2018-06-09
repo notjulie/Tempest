@@ -1,10 +1,6 @@
 
 #include "stdafx.h"
-
 #include "AbstractBus.h"
-#include "CPU6502Exception.h"
-#include "TempestException.h"
-
 #include "CPU6502Runner.h"
 
 
@@ -78,57 +74,39 @@ void CPU6502Runner::SingleStep(void)
 
 void CPU6502Runner::DoSingleStep(void)
 {
-   try
+   // reset if so requested
+   if (resetRequested)
    {
-      // reset if so requested
-      if (resetRequested)
-      {
-         cpu6502->Reset();
-         resetRequested = false;
-      }
+      cpu6502->Reset();
+      resetRequested = false;
+   }
 
-      uint16_t pc = cpu6502->GetPC();
-      uint8_t flags = addressFlags[pc];
+   uint16_t pc = cpu6502->GetPC();
+   uint8_t flags = addressFlags[pc];
 
-      // pause if we hit a breakpoint
-      if (flags & BREAKPOINT)
-      {
-         Break();
+   // pause if we hit a breakpoint
+   if (flags & BREAKPOINT)
+   {
+      Break();
+      return;
+   }
+
+   // execute a hook if we have one at this address
+   if (flags & HOOK)
+   {
+      bus->IncrementClockCycleCount(hooks[pc]());
+
+      // if the program counter has changed we should skip to the top of the loop
+      // in case it brought us to a break point
+      if (cpu6502->GetPC() != pc)
          return;
-      }
-
-      // execute a hook if we have one at this address
-      if (flags & HOOK)
-      {
-         bus->IncrementClockCycleCount(hooks[pc]());
-
-         // if the program counter has changed we should skip to the top of the loop
-         // in case it brought us to a break point
-         if (cpu6502->GetPC() != pc)
-            return;
-      }
-
-      // execute the next instruction
-      if (!bus->IsPaused())
-      {
-         uint32_t clockCyclesThisInstruction = cpu6502->SingleStep();
-         bus->IncrementClockCycleCount(clockCyclesThisInstruction);
-      }
-
-      processorStatus = "Exited normally";
    }
-   catch (CPU6502Exception &_x6502)
+
+   // execute the next instruction
+   if (!bus->IsPaused())
    {
-      processorStatus = _x6502.what();
-   }
-   catch (TempestException &_xTempest)
-   {
-      // for now this goes as the processor status, too
-      processorStatus = _xTempest.what();
-   }
-   catch (...)
-   {
-      processorStatus = "Tempest runner unknown exception";
+      uint32_t clockCyclesThisInstruction = cpu6502->SingleStep();
+      bus->IncrementClockCycleCount(clockCyclesThisInstruction);
    }
 }
 

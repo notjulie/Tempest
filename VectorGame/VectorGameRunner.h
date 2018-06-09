@@ -36,7 +36,7 @@ public:
    bool     IsStopped(void) const { return game->GetCPURunner()->IsStopped(); }
    void     SetBreakpoint(uint16_t address, bool set) { game->GetCPURunner()->SetBreakpoint(address, set); }
    bool     IsTerminated(void) const { return isTerminated; }
-   std::string GetProcessorStatus() const { return game->GetCPURunner()->GetProcessorStatus(); }
+   std::string GetProcessorStatus() const { return processorStatus; }
 
 private:
    void	RunnerThread(void);
@@ -45,6 +45,7 @@ private:
    VectorGame * game;
    bool     terminateRequested = false;
    bool     isTerminated = false;
+   std::string processorStatus;
 
    /// <summary>
    /// this is actually a pointer to a std::thread, but the .NET CLR doesn't allow including
