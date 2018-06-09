@@ -23,6 +23,7 @@
     <ClInclude Include="VectorGameRunner.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="VectorGame.cpp" />
     <ClCompile Include="VectorGameRunner.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

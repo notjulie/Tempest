@@ -39,21 +39,19 @@ public:
 
    // base class overrides
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
-   virtual AbstractBus *GetBus(void) { return &tempestBus; }
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
    virtual void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
 
-   virtual void  Register6502Hooks(CPU6502Runner *runner);
-
 private:
+   void  Register6502Hooks(void);
    void  RegisterVectorHooks(void);
 
 private:
    // game modifications and hooks
-   uint32_t  AddToScore(CPU6502Runner *cpuRunner);
+   uint32_t  AddToScore(void);
    uint8_t   InsertHighScore(uint32_t score);
    void      SetPlayerScore(uint8_t playerIndex, uint32_t score);
-   uint32_t  SortHighScores(CPU6502Runner *cpuRunner);
+   uint32_t  SortHighScores(void);
    void      Printf(const char *format, ...);
    void      Char(char c);
 

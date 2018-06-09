@@ -26,7 +26,7 @@
 
 TempestGame::TempestGame(AbstractTempestEnvironment *_environment)
 	:
-		tempestBus(_environment)
+      tempestBus(_environment)
 {
    // save parameters
    environment = _environment;
@@ -35,6 +35,9 @@ TempestGame::TempestGame(AbstractTempestEnvironment *_environment)
    playerScores[0] = playerScores[1] = 0;
    for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
       highScores[i] = 10101;
+
+   // connect the base class to the bus
+   SetBus(&tempestBus);
 
    // register hooks
    RegisterVectorHooks();
@@ -79,47 +82,49 @@ void TempestGame::RegisterVectorHooks(void)
    );
 }
 
-void TempestGame::Register6502Hooks(CPU6502Runner *cpuRunner)
+void TempestGame::Register6502Hooks(void)
 {
+   CPU6502Runner *cpu = GetCPURunner();
+
    // add in our handler for when the game adds points to the player's score
-   cpuRunner->RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this,cpuRunner]() {
-      return AddToScore(cpuRunner);
+   cpu->RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
+      return AddToScore();
    });
 
    // add in our handler for when the game clears player scores
-   cpuRunner->RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this,cpuRunner]() {
+   cpu->RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this,cpu]() {
       SetPlayerScore(0, 0);
       SetPlayerScore(1, 0);
-      cpuRunner->Get6502()->RTS();
+      cpu->Get6502()->RTS();
       return 30;
    });
 
    // this is the routine that outputs the score part of a line in the high
    // score table
-   cpuRunner->RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this,cpuRunner]() {
+   cpu->RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this,cpu]() {
       // x tells us which score we're displaying
-      uint8_t x = cpuRunner->Get6502()->GetX();
+      uint8_t x = cpu->Get6502()->GetX();
       int highScoreIndex = 7 - x / 3;
       Printf("%7d", highScores[highScoreIndex]);
-      cpuRunner->Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
+      cpu->Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
       return 100;
    });
 
    // this gets called when it's time to sort the high score table and see
    // if player 1 or player 2 belong in it
-   cpuRunner->RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this,cpuRunner]() {
-      return SortHighScores(cpuRunner);
+   cpu->RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this]() {
+      return SortHighScores();
    });
 
    // this gets called after a player has entered his high score
-   cpuRunner->RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this,cpuRunner]() {
+   cpu->RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this,cpu]() {
       if (tempestBus.ReadByte(CURRENT_PLAYER) == 0)
       {
          // set current player
          tempestBus.WriteByte(CURRENT_PLAYER, 1);
 
          // and skip to the high score entry check
-         cpuRunner->Get6502()->JMP(HIGH_SCORE_ENTRY);
+         cpu->Get6502()->JMP(HIGH_SCORE_ENTRY);
       }
       else
       {
@@ -127,7 +132,7 @@ void TempestGame::Register6502Hooks(CPU6502Runner *cpuRunner)
          tempestBus.WriteByte(GAME_MODE, GAME_MODE_SHOW_HIGH_SCORES);
 
          // skip out of here
-         cpuRunner->Get6502()->RTS();
+         cpu->Get6502()->RTS();
       }
 
       return (uint32_t)10;
@@ -135,7 +140,7 @@ void TempestGame::Register6502Hooks(CPU6502Runner *cpuRunner)
 }
 
 
-uint32_t TempestGame::SortHighScores(CPU6502Runner *cpuRunner)
+uint32_t TempestGame::SortHighScores(void)
 {
    // figure out how many scores we're dealing with
    int numberOfPlayers = 1 + tempestBus.ReadByte(PLAYER_COUNT);
@@ -166,7 +171,7 @@ uint32_t TempestGame::SortHighScores(CPU6502Runner *cpuRunner)
    tempestBus.WriteByte(CURRENT_PLAYER, 0);
 
    // and skip the 6502 implementation
-   cpuRunner->Get6502()->JMP(HIGH_SCORE_ENTRY);
+   this->GetCPURunner()->Get6502()->JMP(HIGH_SCORE_ENTRY);
 
    // fake some clock cycles
    return 200;
@@ -274,20 +279,20 @@ void TempestGame::GetAllVectors(std::vector<SimpleVector> &vectors)
    vectorGenerator.GetAllVectors(vectors);
 }
 
-uint32_t TempestGame::AddToScore(CPU6502Runner *cpuRunner)
+uint32_t TempestGame::AddToScore(void)
 {
    // this does nothing if we're not in the right mode... for now I just know
    // that the high bit of address 0005 should be set, but probably I can learn
    // more about this
    if ((tempestBus.ReadByte(0x0005) & 0x80) == 0)
    {
-      cpuRunner->Get6502()->RTS();
+      GetCPURunner()->Get6502()->RTS();
       return 10;
    }
 
    // get the value we are adding from either [29][2A][2B] or a lookup table based on X
    int value = 0;
-   switch (cpuRunner->Get6502()->GetX())
+   switch (GetCPURunner()->Get6502()->GetX())
    {
    case 0: value = 0; break;
    case 1: value = 150; break;
@@ -323,13 +328,13 @@ uint32_t TempestGame::AddToScore(CPU6502Runner *cpuRunner)
          tempestBus.WriteByte(0x0124, 0x20);
 
          // jump to the routine that starts the fanfare
-         cpuRunner->Get6502()->JMP(0xCCB9);
+         GetCPURunner()->Get6502()->JMP(0xCCB9);
          return 100;
       }
    }
 
    // exit the subroutine... we just did all it's work for it
-   cpuRunner->Get6502()->RTS();
+   GetCPURunner()->Get6502()->RTS();
 
    // return the approximate number of clock cycles we think the old routine would have
    // taken... this doesn't have to be at all exact, it just helps try to keep things

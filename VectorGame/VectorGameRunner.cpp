@@ -17,9 +17,6 @@ VectorGameRunner::VectorGameRunner(VectorGame *_game)
 {
    // copy parameters
    game = _game;
-
-   // create objects
-   cpuRunner = CPU6502Runner::Create(game->GetBus());
 }
 
 VectorGameRunner::~VectorGameRunner(void)
@@ -32,10 +29,6 @@ VectorGameRunner::~VectorGameRunner(void)
       delete (std::thread *)theThread;
       theThread = nullptr;
    }
-
-   // delete our children
-   delete cpuRunner;
-   cpuRunner = nullptr;
 }
 
 
@@ -43,12 +36,6 @@ void VectorGameRunner::Start(void)
 {
    // tell the game to start
    game->Start();
-
-   // tell it to register its hooks
-   game->Register6502Hooks(cpuRunner);
-
-   // start running the CPU
-   cpuRunner->Start();
 
    // create the thread
    theThread = new std::thread(
@@ -60,6 +47,6 @@ void VectorGameRunner::Start(void)
 void VectorGameRunner::RunnerThread(void)
 {
    while (!terminateRequested)
-      cpuRunner->SingleStep();
+      game->SingleStep();
    isTerminated = true;
 }

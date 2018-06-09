@@ -10,10 +10,13 @@
 
 AsteroidsGame::AsteroidsGame(AbstractTempestEnvironment *_environment)
 	:
-		asteroidsBus(_environment)
+      asteroidsBus(_environment)
 {
    // save parameters
    environment = _environment;
+
+   // connect the base class to the bus
+   SetBus(&asteroidsBus);
 }
 
 AsteroidsGame::~AsteroidsGame(void)

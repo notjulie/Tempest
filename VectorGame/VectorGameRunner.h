@@ -27,23 +27,22 @@ public:
    void Start(void);
 
    // simple dispatches to the runner
-   uint8_t  GetAccumulator(void) { return cpuRunner->Get6502()->GetA(); }
-   int      GetProgramCounter(void) { return cpuRunner->Get6502()->GetPC(); }
-   uint8_t  GetXRegister(void) { return cpuRunner->Get6502()->GetX(); }
-   uint8_t  GetYRegister(void) { return cpuRunner->Get6502()->GetY(); }
-   void     Step(void) { cpuRunner->Step(); }
-   void     Resume(void) { cpuRunner->Resume(); }
-   bool     IsStopped(void) const { return cpuRunner->IsStopped(); }
-   void     SetBreakpoint(uint16_t address, bool set) { cpuRunner->SetBreakpoint(address, set); }
+   uint8_t  GetAccumulator(void) { return game->GetCPURunner()->Get6502()->GetA(); }
+   int      GetProgramCounter(void) { return game->GetCPURunner()->Get6502()->GetPC(); }
+   uint8_t  GetXRegister(void) { return game->GetCPURunner()->Get6502()->GetX(); }
+   uint8_t  GetYRegister(void) { return game->GetCPURunner()->Get6502()->GetY(); }
+   void     Step(void) { game->GetCPURunner()->Step(); }
+   void     Resume(void) { game->GetCPURunner()->Resume(); }
+   bool     IsStopped(void) const { return game->GetCPURunner()->IsStopped(); }
+   void     SetBreakpoint(uint16_t address, bool set) { game->GetCPURunner()->SetBreakpoint(address, set); }
    bool     IsTerminated(void) const { return isTerminated; }
-   std::string GetProcessorStatus() const { return cpuRunner->GetProcessorStatus(); }
+   std::string GetProcessorStatus() const { return game->GetCPURunner()->GetProcessorStatus(); }
 
 private:
    void	RunnerThread(void);
 
 private:
    VectorGame * game;
-   CPU6502Runner *cpuRunner = nullptr;
    bool     terminateRequested = false;
    bool     isTerminated = false;
 

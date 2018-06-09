@@ -8,10 +8,7 @@
 #include "CPU6502Runner.h"
 
 
-CPU6502Runner::CPU6502Runner(AbstractBus *_bus)
-   :
-      bus(_bus),
-      cpu6502(_bus)
+CPU6502Runner::CPU6502Runner(void)
 {
    // clear
    for (int i = 0; i < 64 * 1024; ++i)
@@ -20,13 +17,9 @@ CPU6502Runner::CPU6502Runner(AbstractBus *_bus)
 
 CPU6502Runner::~CPU6502Runner(void)
 {
+   delete cpu6502, cpu6502 = nullptr;
 }
 
-
-CPU6502Runner *CPU6502Runner::Create(AbstractBus *bus)
-{
-   return new CPU6502Runner(bus);
-}
 
 void CPU6502Runner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)
 {
@@ -44,13 +37,6 @@ void CPU6502Runner::SetBreakpoint(uint16_t address, bool set)
 }
 
 
-void CPU6502Runner::Start(void)
-{
-   // register our timer that synchronizes the CPU clock with real time
-   bus->StartTimer(1500, [this]() { SynchronizeCPUWithRealTime(); });
-}
-
-
 void CPU6502Runner::Break(void)
 {
    state = Stopped;
@@ -62,9 +48,17 @@ void CPU6502Runner::SingleStep(void)
    switch (state)
    {
    case Unstarted:
+      // create our CPU
+      cpu6502 = new CPU6502(bus);
+
       // reset the CPU and the realtime clock
-      cpu6502.Reset();
+      cpu6502->Reset();
       cpuTime = std::chrono::high_resolution_clock::now();
+
+      // register our timer that synchronizes the CPU clock with real time
+      bus->StartTimer(1500, [this]() { SynchronizeCPUWithRealTime(); });
+
+      // start
       state = Running;
       break;
 
@@ -89,11 +83,11 @@ void CPU6502Runner::DoSingleStep(void)
       // reset if so requested
       if (resetRequested)
       {
-         cpu6502.Reset();
+         cpu6502->Reset();
          resetRequested = false;
       }
 
-      uint16_t pc = cpu6502.GetPC();
+      uint16_t pc = cpu6502->GetPC();
       uint8_t flags = addressFlags[pc];
 
       // pause if we hit a breakpoint
@@ -110,14 +104,14 @@ void CPU6502Runner::DoSingleStep(void)
 
          // if the program counter has changed we should skip to the top of the loop
          // in case it brought us to a break point
-         if (cpu6502.GetPC() != pc)
+         if (cpu6502->GetPC() != pc)
             return;
       }
 
       // execute the next instruction
       if (!bus->IsPaused())
       {
-         uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
+         uint32_t clockCyclesThisInstruction = cpu6502->SingleStep();
          bus->IncrementClockCycleCount(clockCyclesThisInstruction);
       }
 

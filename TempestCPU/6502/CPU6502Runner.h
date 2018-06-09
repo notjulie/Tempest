@@ -15,16 +15,16 @@
 class CPU6502Runner
 {
 public:
-   // no public constructors allowed, use the static instantiator
-   static CPU6502Runner *Create(AbstractBus *bus);
+   CPU6502Runner(void);
    ~CPU6502Runner(void);
 
    void     RegisterHook(uint16_t address, std::function<uint32_t()> hook);
-   void     Start(void);
    void     SetBreakpoint(uint16_t address, bool set);
+   void     SetBus(AbstractBus *_bus) { bus = _bus; }
 
    // simple accessors
-   CPU6502     *Get6502(void) { return &cpu6502; }
+   AbstractBus *GetBus(void) { return bus; }
+   CPU6502     *Get6502(void) { return cpu6502; }
    std::string GetProcessorStatus(void) { return processorStatus; }
    bool        IsStopped(void) { return state == Stopped && requestedAction == NoAction; }
    void			Step(void) { requestedAction = StepAction; }
@@ -33,11 +33,6 @@ public:
 
    // our main thing that we do
    void  SingleStep(void);
-
-private:
-   // this can only be instantiated by the static method; since this is
-   // a thread class inheriting it is just too dangerous
-   CPU6502Runner(AbstractBus *bus);
 
 private:
    void  Break(void);
@@ -74,7 +69,7 @@ private:
    std::string processorStatus;
 
    AbstractBus *bus = nullptr;
-   CPU6502		cpu6502;
+   CPU6502		*cpu6502 = nullptr;
 };
 
 #ifdef _WIN32

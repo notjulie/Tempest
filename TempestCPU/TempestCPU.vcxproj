@@ -165,7 +165,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);..\VectorGame</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);..\VectorGame;.\6502</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
@@ -182,7 +182,7 @@
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir);..;..\SQLite;..\TempestIO\Vector;..\TempestIO;..\SQLite\SQLRR;%(AdditionalIncludeDirectories);..\VectorGame</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..;..\SQLite;..\TempestIO\Vector;..\TempestIO;..\SQLite\SQLRR;%(AdditionalIncludeDirectories);..\VectorGame;.\6502</AdditionalIncludeDirectories>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
