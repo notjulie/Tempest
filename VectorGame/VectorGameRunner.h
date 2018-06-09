@@ -35,12 +35,23 @@ public:
    void     Resume(void) { cpuRunner->Resume(); }
    bool     IsStopped(void) const { return cpuRunner->IsStopped(); }
    void     SetBreakpoint(uint16_t address, bool set) { cpuRunner->SetBreakpoint(address, set); }
-   bool     IsTerminated(void) const { return cpuRunner->IsTerminated(); }
+   bool     IsTerminated(void) const { return isTerminated; }
    std::string GetProcessorStatus() const { return cpuRunner->GetProcessorStatus(); }
+
+private:
+   void	RunnerThread(void);
 
 private:
    VectorGame * game;
    CPU6502Runner *cpuRunner = nullptr;
+   bool     terminateRequested = false;
+   bool     isTerminated = false;
+
+   /// <summary>
+   /// this is actually a pointer to a std::thread, but the .NET CLR doesn't allow including
+   /// <thread> in any file it compiles, so we leave the detail private to the CPP file
+   /// </summary>
+   void *theThread = nullptr;
 };
 
 

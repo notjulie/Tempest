@@ -20,13 +20,6 @@ CPU6502Runner::CPU6502Runner(AbstractBus *_bus)
 
 CPU6502Runner::~CPU6502Runner(void)
 {
-   if (theThread != nullptr)
-   {
-      terminateRequested = true;
-      ((std::thread *)theThread)->join();
-      delete (std::thread *)theThread;
-      theThread = nullptr;
-   }
 }
 
 
@@ -55,78 +48,77 @@ void CPU6502Runner::Start(void)
 {
    // register our timer that synchronizes the CPU clock with real time
    bus->StartTimer(1500, [this]() { SynchronizeCPUWithRealTime(); });
-
-   // create the thread is all
-   theThread = new std::thread(
-      [this]() { RunnerThread(); }
-   );
 }
 
 
-void CPU6502Runner::RunnerThread(void)
+void CPU6502Runner::Break(void)
 {
-   try
-   {
-      // set our state
-      state = Running;
+   state = Stopped;
+   requestedAction = NoAction;
+}
 
+void CPU6502Runner::SingleStep(void)
+{
+   switch (state)
+   {
+   case Unstarted:
       // reset the CPU and the realtime clock
       cpu6502.Reset();
       cpuTime = std::chrono::high_resolution_clock::now();
+      state = Running;
+      break;
 
-      // run
-      while (!terminateRequested)
+   case StepState:
+      Break();
+      break;
+
+   case Stopped:
+      CheckForResume();
+      break;
+
+   case Running:
+      DoSingleStep();
+      break;
+   }
+}
+
+void CPU6502Runner::DoSingleStep(void)
+{
+   try
+   {
+      // reset if so requested
+      if (resetRequested)
       {
-         // reset if so requested
-         if (resetRequested)
-         {
-            cpu6502.Reset();
-            resetRequested = false;
-         }
+         cpu6502.Reset();
+         resetRequested = false;
+      }
 
-         uint16_t pc = cpu6502.GetPC();
-         uint8_t flags = addressFlags[pc];
+      uint16_t pc = cpu6502.GetPC();
+      uint8_t flags = addressFlags[pc];
 
-         // pause if we hit a breakpoint
-         if ((flags&BREAKPOINT) || state == StepState)
-         {
-            state = Stopped;
-            requestedAction = NoAction;
+      // pause if we hit a breakpoint
+      if (flags & BREAKPOINT)
+      {
+         Break();
+         return;
+      }
 
-            while (!terminateRequested)
-            {
-               if (requestedAction == StepAction)
-               {
-                  state = StepState;
-                  break;
-               }
-               else if (requestedAction == ResumeAction)
-               {
-                  state = Running;
-                  break;
-               }
+      // execute a hook if we have one at this address
+      if (flags & HOOK)
+      {
+         bus->IncrementClockCycleCount(hooks[pc]());
 
-               std::this_thread::sleep_for(std::chrono::milliseconds(50));
-            }
-         }
+         // if the program counter has changed we should skip to the top of the loop
+         // in case it brought us to a break point
+         if (cpu6502.GetPC() != pc)
+            return;
+      }
 
-         // execute a hook if we have one at this address
-         if (flags & HOOK)
-         {
-            bus->IncrementClockCycleCount(hooks[pc]());
-
-            // if the program counter has changed we should skip to the top of the loop
-            // in case it brought us to a break point
-            if (cpu6502.GetPC() != pc)
-               continue;
-         }
-
-         // execute the next instruction
-         if (!bus->IsPaused())
-         {
-            uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
-            bus->IncrementClockCycleCount(clockCyclesThisInstruction);
-         }
+      // execute the next instruction
+      if (!bus->IsPaused())
+      {
+         uint32_t clockCyclesThisInstruction = cpu6502.SingleStep();
+         bus->IncrementClockCycleCount(clockCyclesThisInstruction);
       }
 
       processorStatus = "Exited normally";
@@ -144,8 +136,22 @@ void CPU6502Runner::RunnerThread(void)
    {
       processorStatus = "Tempest runner unknown exception";
    }
+}
 
-   state = Terminated;
+void CPU6502Runner::CheckForResume(void)
+{
+   if (requestedAction == StepAction)
+   {
+      state = StepState;
+      return;
+   }
+   else if (requestedAction == ResumeAction)
+   {
+      state = Running;
+      return;
+   }
+
+   std::this_thread::sleep_for(std::chrono::milliseconds(50));
 }
 
 

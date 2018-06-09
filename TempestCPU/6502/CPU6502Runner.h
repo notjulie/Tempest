@@ -27,10 +27,12 @@ public:
    CPU6502     *Get6502(void) { return &cpu6502; }
    std::string GetProcessorStatus(void) { return processorStatus; }
    bool        IsStopped(void) { return state == Stopped && requestedAction == NoAction; }
-   bool		   IsTerminated(void) { return state == Terminated; }
    void			Step(void) { requestedAction = StepAction; }
    void			Resume(void) { requestedAction = ResumeAction; }
    void        Reset(void) { resetRequested = true; }
+
+   // our main thing that we do
+   void  SingleStep(void);
 
 private:
    // this can only be instantiated by the static method; since this is
@@ -38,7 +40,9 @@ private:
    CPU6502Runner(AbstractBus *bus);
 
 private:
-   void	RunnerThread(void);
+   void  Break(void);
+   void  CheckForResume(void);
+   void  DoSingleStep(void);
    void  SynchronizeCPUWithRealTime(void);
 
 private:
@@ -46,8 +50,7 @@ private:
       Unstarted,
       Running,
       StepState,
-      Stopped,
-      Terminated
+      Stopped
    };
 
    enum Action {
@@ -64,16 +67,11 @@ private:
 private:
    State    state = Unstarted;
    Action   requestedAction = NoAction;
-   bool     terminateRequested = false;
    bool     resetRequested = false;
    std::chrono::high_resolution_clock::time_point cpuTime;
    uint8_t	addressFlags[64 * 1024];
    std::map<uint16_t, std::function<uint32_t()> > hooks;
    std::string processorStatus;
-
-   // this is actually a pointer to a std::thread, but the .NET CLR doesn't allow including
-   // <thread> in any file it compiles, so we leave the detail private to the CPP file
-   void *theThread = nullptr;
 
    AbstractBus *bus = nullptr;
    CPU6502		cpu6502;
