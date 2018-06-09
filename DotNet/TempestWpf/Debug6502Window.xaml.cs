@@ -26,7 +26,7 @@ namespace TempestWpf
    {
       #region Private Fields
 
-      private Tempest tempest;
+      private VectorGameManager vectorGameManager;
       private DispatcherTimer timer;
       private bool stopped = false;
       private DebugLine selectedLine;
@@ -95,20 +95,20 @@ namespace TempestWpf
       /// <summary>
       /// Gets or sets the Tempest instance
       /// </summary>
-      public Tempest Tempest
+      public VectorGameManager VectorGameManager
       {
          get
          {
-            return tempest;
+            return vectorGameManager;
          }
          set
          {
             // never mind if this is not a change
-            if (value == tempest)
+            if (value == vectorGameManager)
                return;
 
             // set the value
-            tempest = value;
+            vectorGameManager = value;
 
             // mark ourself as not stopped, so that if it is the timer will
             // act like we just hit a break point and bring us to the front
@@ -122,14 +122,14 @@ namespace TempestWpf
 
       void timer_Tick(object sender, EventArgs e)
       {
-         if (Tempest == null)
+         if (VectorGameManager == null)
             return;
 
          if (!stopped)
          {
             // if we changed from running to not running show ourself and
             // highlight the current instruction
-            if (tempest.IsStopped())
+            if (vectorGameManager.IsStopped())
             {
                stopped = true;
 
@@ -162,7 +162,7 @@ namespace TempestWpf
          if (address < 0)
             return;
 
-         Tempest.SetBreakpoint(address, lineControl.IsBreakpoint);
+         VectorGameManager.SetBreakpoint(address, lineControl.IsBreakpoint);
       }
 
       void findString_KeyDown(object sender, KeyEventArgs e)
@@ -175,13 +175,13 @@ namespace TempestWpf
 
       void stepButton_Click(object sender, RoutedEventArgs e)
       {
-         Tempest.Step();
+         VectorGameManager.Step();
          stopped = false;
       }
 
       void runButton_Click(object sender, RoutedEventArgs e)
       {
-         Tempest.Resume();
+         VectorGameManager.Resume();
          stopped = false;
       }
 
@@ -230,7 +230,7 @@ namespace TempestWpf
 
       private void ShowCurrentInstruction()
       {
-         int pc = tempest.GetProgramCounter();
+         int pc = vectorGameManager.GetProgramCounter();
          for (int i=0; i<listView.Items.Count; ++i)
          {
             DebugLine line = (DebugLine)listView.Items[i];
@@ -245,9 +245,9 @@ namespace TempestWpf
 
       private void UpdateCPUDisplay()
       {
-         aLabel.Field = HexByte(Tempest.GetAccumulator());
-         xLabel.Field = HexByte(Tempest.GetXRegister());
-         yLabel.Field = HexByte(Tempest.GetYRegister());
+         aLabel.Field = HexByte(VectorGameManager.GetAccumulator());
+         xLabel.Field = HexByte(VectorGameManager.GetXRegister());
+         yLabel.Field = HexByte(VectorGameManager.GetYRegister());
       }
 
       private static string HexByte(byte b)

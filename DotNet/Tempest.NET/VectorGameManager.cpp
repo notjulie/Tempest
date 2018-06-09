@@ -13,13 +13,13 @@
 
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 
-#include "Tempest.h"
+#include "VectorGameManager.h"
 
 
 using namespace System;
 
 namespace TempestDotNET {
-   Tempest::Tempest(String^ _gameName, GameContext *_gameContext)
+   VectorGameManager::VectorGameManager(String^ _gameName, GameContext *_gameContext)
    {
       // save/take ownership of the gameContext
       gameContext = _gameContext;
@@ -31,7 +31,7 @@ namespace TempestDotNET {
       environment = new Win32TempestEnvironment();
    }
 
-   Tempest::~Tempest(void)
+   VectorGameManager::~VectorGameManager(void)
 	{
 		// delete the runner first since it is a thread object
       delete gameRunner, gameRunner = nullptr;
@@ -42,7 +42,7 @@ namespace TempestDotNET {
       delete gameContext, gameContext = nullptr;
 	}
    
-   VectorEnumerator ^Tempest::GetVectorEnumerator(void)
+   VectorEnumerator ^VectorGameManager::GetVectorEnumerator(void)
    {
       std::vector<SimpleVector> vectors;
       if (game != nullptr)
@@ -50,17 +50,17 @@ namespace TempestDotNET {
       return gcnew VectorEnumerator(vectors);
    }
    
-   bool Tempest::IsStopped(void)
+   bool VectorGameManager::IsStopped(void)
 	{
 		return gameRunner->IsStopped();
 	}
 
-	void Tempest::SetBreakpoint(int address, bool set)
+	void VectorGameManager::SetBreakpoint(int address, bool set)
 	{
 		gameRunner->SetBreakpoint(address, set);
 	}
 
-	void Tempest::Start(void)
+	void VectorGameManager::Start(void)
 	{
       // create the game instance
       if (gameName->Equals("Asteroids"))
@@ -83,7 +83,7 @@ namespace TempestDotNET {
       gameRunner->Start();
 	}
 
-	String ^Tempest::GetProcessorStatus(void)
+	String ^VectorGameManager::GetProcessorStatus(void)
 	{
       if (gameRunner == nullptr)
          return gcnew String("Not running");
@@ -93,25 +93,25 @@ namespace TempestDotNET {
 			return gcnew String("OK");
 	}
 
-   Tempest^ Tempest::CreateNormalInstance(String^ game)
+   VectorGameManager^ VectorGameManager::CreateNormalInstance(String^ game)
    {
-      return gcnew Tempest(game, new NormalGameContext());
+      return gcnew VectorGameManager(game, new NormalGameContext());
    }
 
-   Tempest^ Tempest::CreateStreamedInstance(String^ game)
+   VectorGameManager^ VectorGameManager::CreateStreamedInstance(String^ game)
    {
-      return gcnew Tempest(game, new SerializedGameContext());
+      return gcnew VectorGameManager(game, new SerializedGameContext());
    }
 
-   Tempest^ Tempest::CreateCOMPortInstance(String^ game, String^ portName)
+   VectorGameManager^ VectorGameManager::CreateCOMPortInstance(String^ game, String^ portName)
    {
       std::string name;
       for (int i = 0; i < portName->Length; ++i)
          name += (char)portName[i];
-      return gcnew Tempest(game, new COMPortGameContext(name));
+      return gcnew VectorGameManager(game, new COMPortGameContext(name));
    }
 
-   Tempest^ Tempest::CreateLoopbackInstance(String^ game, String^ port1, String^ port2)
+   VectorGameManager^ VectorGameManager::CreateLoopbackInstance(String^ game, String^ port1, String^ port2)
    {
       std::string name1;
       for (int i = 0; i < port1->Length; ++i)
@@ -119,7 +119,7 @@ namespace TempestDotNET {
       std::string name2;
       for (int i = 0; i < port2->Length; ++i)
          name2 += (char)port2[i];
-      return gcnew Tempest(game, new LoopbackGameContext(name1, name2));
+      return gcnew VectorGameManager(game, new LoopbackGameContext(name1, name2));
    }
 }
 

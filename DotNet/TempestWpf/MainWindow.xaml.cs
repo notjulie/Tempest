@@ -20,7 +20,7 @@ namespace TempestWpf
    {
       #region Private Fields
 
-      private Tempest tempest;
+      private VectorGameManager vectorGameManager;
 
       private DispatcherTimer timer;
       private DispatcherTimer vectorTimer;
@@ -86,23 +86,23 @@ namespace TempestWpf
          switch (e.Key)
          {
             case Key.Left:
-               tempest.MoveWheel(-4);
+               vectorGameManager.MoveWheel(-4);
                leftKeyDown = true;
                rightKeyDown = false;
                break;
 
             case Key.Right:
-               tempest.MoveWheel(4);
+               vectorGameManager.MoveWheel(4);
                leftKeyDown = false;
                rightKeyDown = true;
                break;
 
             case Key.F:
-               tempest.Fire(true);
+               vectorGameManager.Fire(true);
                break;
 
             case Key.V:
-               tempest.Zap(true);
+               vectorGameManager.Zap(true);
                break;
          }
       }
@@ -120,27 +120,27 @@ namespace TempestWpf
                break;
 
             case Key.F:
-               tempest.Fire(false);
+               vectorGameManager.Fire(false);
                break;
 
             case Key.V:
-               tempest.Zap(false);
+               vectorGameManager.Zap(false);
                break;
          }
       }
 
       void buttonOnePlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
-         tempest.OnePlayer(true);
+         vectorGameManager.OnePlayer(true);
          System.Threading.Thread.Sleep(100);
-         tempest.OnePlayer(false);
+         vectorGameManager.OnePlayer(false);
       }
 
       void buttonTwoPlayerStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
       {
-         tempest.TwoPlayer(true);
+         vectorGameManager.TwoPlayer(true);
          System.Threading.Thread.Sleep(100);
-         tempest.TwoPlayer(false);
+         vectorGameManager.TwoPlayer(false);
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -152,10 +152,10 @@ namespace TempestWpf
 
       void MainWindow_Closed(object sender, EventArgs e)
       {
-         if (tempest != null)
+         if (vectorGameManager != null)
          {
-            tempest.Dispose();
-            tempest = null;
+            vectorGameManager.Dispose();
+            vectorGameManager = null;
          }
       }
 
@@ -188,21 +188,21 @@ namespace TempestWpf
 
       void spinnerTimer_Tick(object sender, EventArgs e)
       {
-         if (tempest == null)
+         if (vectorGameManager == null)
             return;
 
          // update the spinner if we should
          if (leftKeyDown)
-            tempest.MoveWheel(-1);
+            vectorGameManager.MoveWheel(-1);
          else if (rightKeyDown)
-            tempest.MoveWheel(1);
+            vectorGameManager.MoveWheel(1);
 
          // update our LED's
-         if (tempest.OnePlayerLED())
+         if (vectorGameManager.OnePlayerLED())
             buttonOnePlayerStart.Fill = ledOnBrush;
          else
             buttonOnePlayerStart.Fill = ledOffBrush;
-         if (tempest.TwoPlayerLED())
+         if (vectorGameManager.TwoPlayerLED())
             buttonTwoPlayerStart.Fill = ledOnBrush;
          else
             buttonTwoPlayerStart.Fill = ledOffBrush;
@@ -210,19 +210,19 @@ namespace TempestWpf
 
       void timer_Tick(object sender, EventArgs e)
       {
-         if (tempest == null)
+         if (vectorGameManager == null)
             return;
 
-         processorStatus.Text = tempest.GetProcessorStatus();
+         processorStatus.Text = vectorGameManager.GetProcessorStatus();
       }
 
       void vectorTimer_Tick(object sender, EventArgs e)
       {
-         if (tempest == null)
+         if (vectorGameManager == null)
             return;
 
          // get a vector enumerator
-         VectorEnumerator enumerator = tempest.GetVectorEnumerator();
+         VectorEnumerator enumerator = vectorGameManager.GetVectorEnumerator();
          if (enumerator != null)
          {
             int index = 0;
@@ -286,7 +286,7 @@ namespace TempestWpf
          if (debug6502 == null)
          {
             debug6502 = new Debug6502Window();
-            debug6502.Tempest = tempest;
+            debug6502.VectorGameManager = vectorGameManager;
          }
 
          // show it
@@ -325,10 +325,10 @@ namespace TempestWpf
       private void RestartGame()
       {
          // dispose the old game
-         if (tempest != null)
+         if (vectorGameManager != null)
          {
-            tempest.Dispose();
-            tempest = null;
+            vectorGameManager.Dispose();
+            vectorGameManager = null;
          }
 
          try
@@ -340,15 +340,15 @@ namespace TempestWpf
                case SoundIOType.Direct:
                   // create our tempest... just a normal game that interacts with our keyboard
                   // commands and the internal audio
-                  tempest = Tempest.CreateNormalInstance(Settings.Default.Game);
+                  vectorGameManager = VectorGameManager.CreateNormalInstance(Settings.Default.Game);
                   break;
 
                case SoundIOType.Discovery:
-                  tempest = Tempest.CreateCOMPortInstance(Settings.Default.Game, Settings.Default.DiscoveryCOMPort);
+                  vectorGameManager = VectorGameManager.CreateCOMPortInstance(Settings.Default.Game, Settings.Default.DiscoveryCOMPort);
                   break;
 
                case SoundIOType.Loopback:
-                  tempest = Tempest.CreateLoopbackInstance(
+                  vectorGameManager = VectorGameManager.CreateLoopbackInstance(
                      Settings.Default.Game,
                      Settings.Default.LoopbackPort1,
                      Settings.Default.LoopbackPort2
@@ -358,7 +358,7 @@ namespace TempestWpf
                case SoundIOType.MemoryStream:
                   // create our tempest... just a normal game that interacts with the sound &
                   // control panel via a memory stream
-                  tempest = Tempest.CreateStreamedInstance(Settings.Default.Game);
+                  vectorGameManager = VectorGameManager.CreateStreamedInstance(Settings.Default.Game);
                   break;
 
                default:
@@ -367,7 +367,7 @@ namespace TempestWpf
 
             // set it to running
             startTime = DateTime.Now;
-            tempest.Start();
+            vectorGameManager.Start();
          }
          catch (Exception e)
          {

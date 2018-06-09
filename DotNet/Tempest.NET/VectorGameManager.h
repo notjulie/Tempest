@@ -1,6 +1,6 @@
 
-#ifndef TEMPEST_H
-#define TEMPEST_H
+#ifndef VECTORGAMEMANAGER_H
+#define VECTORGAMEMANAGER_H
 
 #include "GameContext.h"
 #include "VectorEnumerator.h"
@@ -13,10 +13,10 @@ using namespace System::Threading;
 
 namespace TempestDotNET {
 
-	public ref class Tempest sealed
+	public ref class VectorGameManager sealed
 	{
 	public:
-		~Tempest(void);
+		~VectorGameManager(void);
 
 		String ^GetProcessorStatus(void);
       VectorEnumerator ^GetVectorEnumerator(void);
@@ -47,25 +47,25 @@ namespace TempestDotNET {
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio
       /// </summary>
-      static Tempest^ CreateNormalInstance(String^ game);
+      static VectorGameManager^ CreateNormalInstance(String^ game);
 
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio,
       /// but uses a simulated serial connection between the game and the interface
       /// </summary>
-      static Tempest^ CreateStreamedInstance(String^ game);
+      static VectorGameManager^ CreateStreamedInstance(String^ game);
 
       /// <summary>
       /// Creates an instance that interacts with the actual Tempest hardware via
       /// COM port.
       /// </summary>
-      static Tempest^ Tempest::CreateCOMPortInstance(String^ game, String^ portName);
+      static VectorGameManager^ CreateCOMPortInstance(String^ game, String^ portName);
 
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio,
       /// but uses a serial loopback connection between the game and the interface
       /// </summary>
-      static Tempest^ Tempest::CreateLoopbackInstance(String^ game, String^ port1, String^ port2);
+      static VectorGameManager^ CreateLoopbackInstance(String^ game, String^ port1, String^ port2);
 
    private:
       /// <summary>
@@ -73,7 +73,7 @@ namespace TempestDotNET {
       /// the GameContext and give ownership to us, so I want to keep that logic internal
       /// to the statis constructors.
       /// </summary>
-      Tempest(String^ gameName, GameContext *_gameContext);
+      VectorGameManager(String^ gameName, GameContext *_gameContext);
 
 	private:
 		Win32TempestEnvironment *environment = nullptr;
