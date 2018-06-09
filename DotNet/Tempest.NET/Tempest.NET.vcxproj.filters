@@ -62,9 +62,6 @@
     <ClCompile Include="Win32ComPortStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Asteroids.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
