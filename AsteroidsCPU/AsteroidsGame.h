@@ -28,10 +28,13 @@ public:
 
    // base class overrides
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
+   virtual CPU6502Runner *GetCPURunner(void) { return &cpuRunner; }
+   virtual void SingleStep(void) { cpuRunner.SingleStep(); }
 
 private:
 	AbstractTempestEnvironment *environment;
 	AsteroidsBus	asteroidsBus;
+   CPU6502Runner cpuRunner;
 };
 
 #ifdef _WIN32

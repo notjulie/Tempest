@@ -41,6 +41,8 @@ public:
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
    virtual void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
+   virtual CPU6502Runner *GetCPURunner(void) { return &cpuRunner; }
+   virtual void SingleStep(void) { cpuRunner.SingleStep(); }
 
 private:
    void  Register6502Hooks(void);
@@ -62,6 +64,7 @@ private:
    TempestDB   db;
 	TempestBus	tempestBus;
    VectorDataInterpreter vectorInterpreter;
+   CPU6502Runner cpuRunner;
 
    uint32_t playerScores[2];
    uint32_t highScores[HIGH_SCORE_COUNT];

@@ -15,8 +15,8 @@ AsteroidsGame::AsteroidsGame(AbstractTempestEnvironment *_environment)
    // save parameters
    environment = _environment;
 
-   // connect the base class to the bus
-   SetBus(&asteroidsBus);
+   // solder the CPU to the bus
+   cpuRunner.SetBus(&asteroidsBus);
 }
 
 AsteroidsGame::~AsteroidsGame(void)

@@ -26,19 +26,13 @@ public:
    VectorGame(void);
    virtual ~VectorGame(void);
 
-   CPU6502Runner *GetCPURunner(void) { return &cpuRunner; }
+   virtual CPU6502Runner *GetCPURunner(void) = 0;
 
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors) = 0;
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) = 0;
    virtual void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) = 0;
-   virtual void SingleStep(void) { cpuRunner.SingleStep(); }
+   virtual void SingleStep(void) = 0;
    virtual void Start(void) {}
-
-protected:
-   void SetBus(AbstractBus *_bus) { cpuRunner.SetBus(_bus); }
-
-private:
-   CPU6502Runner cpuRunner;
 };
 
 #endif

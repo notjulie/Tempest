@@ -36,8 +36,8 @@ TempestGame::TempestGame(AbstractTempestEnvironment *_environment)
    for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
       highScores[i] = 10101;
 
-   // connect the base class to the bus
-   SetBus(&tempestBus);
+   // solder the CPU to the bus
+   cpuRunner.SetBus(&tempestBus);
 
    // register hooks
    RegisterVectorHooks();
