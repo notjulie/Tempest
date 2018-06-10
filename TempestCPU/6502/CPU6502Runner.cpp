@@ -103,11 +103,8 @@ void CPU6502Runner::DoSingleStep(void)
    }
 
    // execute the next instruction
-   if (!bus->IsPaused())
-   {
-      uint32_t clockCyclesThisInstruction = cpu6502->SingleStep();
-      bus->IncrementClockCycleCount(clockCyclesThisInstruction);
-   }
+   uint32_t clockCyclesThisInstruction = cpu6502->SingleStep();
+   bus->IncrementClockCycleCount(clockCyclesThisInstruction);
 }
 
 void CPU6502Runner::CheckForResume(void)

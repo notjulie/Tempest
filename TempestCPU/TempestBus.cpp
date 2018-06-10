@@ -200,24 +200,6 @@ void TempestBus::Tick250Hz(void)
    if (now - lastWatchdogTime > 1500000)
       throw TempestException("Watchdog timer timeout");
 
-   // check for double tap on player two button
-   bool player2ButtonDown = (controlPanel->GetButtons() & TWO_PLAYER_BUTTON) != 0;
-   if (player2ButtonDown != lastPlayer2ButtonState)
-   {
-      lastPlayer2ButtonState = player2ButtonDown;
-      if (player2ButtonDown)
-      {
-         // if this is a double tap we toggle the paused state
-         if (now - lastPlayer2ButtonDownTime < 500000)
-         {
-            isPaused = !isPaused;
-            if (isPaused)
-               soundOutput->AllSoundOff();
-         }
-         lastPlayer2ButtonDownTime = now;
-      }
-   }
-
    // generate an IRQ
    SetIRQ(true);
 }

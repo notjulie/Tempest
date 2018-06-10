@@ -35,7 +35,6 @@ public:
 
    void ClearWatchdog(void);
    void GetVectorData(VectorData &vectorData);
-   bool IsPaused(void) { return isPaused; }
    void SetDemoMode(void) { demoMode = true; }
    void SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel);
    void SetSoundOutput(AbstractTempestSoundOutput *soundOutput);
@@ -90,10 +89,8 @@ private:
 	bool selfTest = false;
 	bool slam = false;
 	bool clock3KHzIsHigh = false;
-	bool lastPlayer2ButtonState = false;
    bool vectorGoRequested = false;
    bool vectorRAMReady = false;
-   bool isPaused = false;
 };
 
 #ifdef _WIN32
