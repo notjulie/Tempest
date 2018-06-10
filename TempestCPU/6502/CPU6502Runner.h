@@ -23,7 +23,6 @@ public:
    void     SetBus(AbstractBus *_bus) { bus = _bus; }
 
    // simple accessors
-   AbstractBus *GetBus(void) { return bus; }
    CPU6502     *Get6502(void) { return cpu6502; }
    bool        IsStopped(void) { return state == Stopped && requestedAction == NoAction; }
    void			Step(void) { requestedAction = StepAction; }

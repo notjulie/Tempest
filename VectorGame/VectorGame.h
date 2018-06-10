@@ -26,7 +26,6 @@ public:
    VectorGame(void);
    virtual ~VectorGame(void);
 
-   AbstractBus *GetBus(void) { return cpuRunner.GetBus(); }
    CPU6502Runner *GetCPURunner(void) { return &cpuRunner; }
 
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors) = 0;
