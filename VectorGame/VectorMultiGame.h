@@ -25,6 +25,7 @@ private:
    std::vector<VectorGame *> games;
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
    int currentGameIndex = 0;
+   bool menuButtonState = true;
 };
 
 

@@ -43,7 +43,10 @@ void VectorMultiGame::GetAllVectors(std::vector<SimpleVector> &vectors)
 
 void VectorMultiGame::SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel)
 {
+   // save a reference to it for our own purposes
    controlPanel = _controlPanel;
+
+   // pass it along to the games
    for (int i = 0; i < games.size(); ++i)
       games[i]->SetControlPanel(controlPanel);
 }
@@ -56,10 +59,19 @@ void VectorMultiGame::SetSoundOutput(AbstractTempestSoundOutput *soundOutput)
 
 void VectorMultiGame::SingleStep(void)
 {
-   // do our periodic things
-   //currentGameIndex = controlPanel->GetEncoder() % games.size();
+   // on a rising edge of the menu button we do our menu thing
+   bool newMenuButtonState = (controlPanel->GetButtons() & MENU_BUTTON) != 0;
+   if (newMenuButtonState && !menuButtonState)
+   {
+      if (++currentGameIndex >= games.size())
+         currentGameIndex = 0;
+   }
+   menuButtonState = newMenuButtonState;
 
-   // give the current game a solid timeslice
+   // give the current game a solid timeslice by stepping it a bunch of times;
+   // this is just because the games need to be stepped at a very high frequency
+   // (think processor frequency), far more often than we need to do our little
+   // overhead items in this function
    for (int i=0; i<100; ++i)
       games[currentGameIndex]->SingleStep();
 }

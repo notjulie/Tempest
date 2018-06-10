@@ -73,6 +73,7 @@ namespace TempestWpf
          this.KeyUp += MainWindow_KeyUp;
          buttonOnePlayerStart.MouseLeftButtonDown += buttonOnePlayerStart_MouseLeftButtonDown;
          buttonTwoPlayerStart.MouseLeftButtonDown += buttonTwoPlayerStart_MouseLeftButtonDown;
+         buttonMenu.Click += ButtonMenu_Click;
          view6502DebugWindowItem.Click += view6502DebugWindowItem_Click;
          settingsMenuItem.Click += SettingsMenuItem_Click;
       }
@@ -141,6 +142,13 @@ namespace TempestWpf
          vectorGameManager.TwoPlayer(true);
          System.Threading.Thread.Sleep(100);
          vectorGameManager.TwoPlayer(false);
+      }
+
+      private void ButtonMenu_Click(object sender, RoutedEventArgs e)
+      {
+         vectorGameManager.MenuButton(true);
+         System.Threading.Thread.Sleep(100);
+         vectorGameManager.MenuButton(false);
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

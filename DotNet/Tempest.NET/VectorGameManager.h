@@ -39,6 +39,7 @@ namespace TempestDotNET {
       void TwoPlayer(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(TWO_PLAYER_BUTTON, down); }
       void Fire(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(FIRE_BUTTON, down); }
       void Zap(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(ZAPPER_BUTTON, down); }
+      void MenuButton(bool down) { gameContext->GetControlPanelWriter()->SetButtonState(MENU_BUTTON, down); }
       bool OnePlayerLED(void) { return gameContext->GetControlPanelWriter()->GetButtonLED(ONE_PLAYER_BUTTON); }
       bool TwoPlayerLED(void) { return gameContext->GetControlPanelWriter()->GetButtonLED(TWO_PLAYER_BUTTON); }
       void MoveWheel(int distance) { gameContext->GetControlPanelWriter()->MoveEncoder(distance); }

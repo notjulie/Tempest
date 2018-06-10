@@ -18,7 +18,8 @@ enum ButtonFlag {
    ZAPPER_BUTTON = (1<<2),
    TWO_PLAYER_BUTTON = (1<<3),
    ROTATE_LEFT_BUTTON = (1<<4),
-   ROTATE_RIGHT_BUTTON = (1<<5)
+   ROTATE_RIGHT_BUTTON = (1 << 5),
+   MENU_BUTTON = (1 << 6)
 };
 
 /// <summary>
