@@ -21,6 +21,8 @@
 #ifndef SOUNDCHANNELSTATE_H
 #define SOUNDCHANNELSTATE_H
 
+#include <stdint.h>
+
 #ifdef _WIN32
    #pragma warning(push)
    #pragma warning(disable : 4820)	// padding in structures

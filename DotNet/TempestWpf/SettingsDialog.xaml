@@ -14,13 +14,6 @@
       </StackPanel>
       <StackPanel DockPanel.Dock="Top">
          <StackPanel Orientation="Horizontal">
-            <Label>Game</Label>
-            <ComboBox Name="gameCombo">
-               <ComboBoxItem Tag="Asteroids">Asteroids</ComboBoxItem>
-               <ComboBoxItem Tag="Tempest">Tempest</ComboBoxItem>
-            </ComboBox>
-         </StackPanel>
-         <StackPanel Orientation="Horizontal">
             <Label>I/O Type</Label>
             <ComboBox Name="soundIOCombo" Width="200">
                <ComboBoxItem Tag="Direct">Direct</ComboBoxItem>

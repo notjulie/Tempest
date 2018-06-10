@@ -24,12 +24,18 @@
     <ClInclude Include="VectorGameException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VectorMultiGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VectorGameRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VectorGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorMultiGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

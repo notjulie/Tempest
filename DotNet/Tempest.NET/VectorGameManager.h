@@ -47,40 +47,39 @@ namespace TempestDotNET {
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio
       /// </summary>
-      static VectorGameManager^ CreateNormalInstance(String^ game);
+      static VectorGameManager^ CreateNormalInstance(void);
 
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio,
       /// but uses a simulated serial connection between the game and the interface
       /// </summary>
-      static VectorGameManager^ CreateStreamedInstance(String^ game);
+      static VectorGameManager^ CreateStreamedInstance(void);
 
       /// <summary>
       /// Creates an instance that interacts with the actual Tempest hardware via
       /// COM port.
       /// </summary>
-      static VectorGameManager^ CreateCOMPortInstance(String^ game, String^ portName);
+      static VectorGameManager^ CreateCOMPortInstance(String^ portName);
 
       /// <summary>
       /// Creates an instance that interacts with the keyboard and uses the internal audio,
       /// but uses a serial loopback connection between the game and the interface
       /// </summary>
-      static VectorGameManager^ CreateLoopbackInstance(String^ game, String^ port1, String^ port2);
+      static VectorGameManager^ CreateLoopbackInstance(String^ port1, String^ port2);
 
    private:
       /// <summary>
       /// Constructor; I keep it private because the caller is supposed to instantiate
       /// the GameContext and give ownership to us, so I want to keep that logic internal
-      /// to the statis constructors.
+      /// to the static constructors.
       /// </summary>
-      VectorGameManager(String^ gameName, GameContext *_gameContext);
+      VectorGameManager(GameContext *_gameContext);
 
 	private:
 		Win32TempestEnvironment *environment = nullptr;
       GameContext *gameContext = nullptr;
       VectorGameRunner *gameRunner = nullptr;
       VectorGame *game = nullptr;
-      String^ gameName = String::Empty;
    };
 }
 

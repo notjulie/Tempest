@@ -340,16 +340,15 @@ namespace TempestWpf
                case SoundIOType.Direct:
                   // create our tempest... just a normal game that interacts with our keyboard
                   // commands and the internal audio
-                  vectorGameManager = VectorGameManager.CreateNormalInstance(Settings.Default.Game);
+                  vectorGameManager = VectorGameManager.CreateNormalInstance();
                   break;
 
                case SoundIOType.Discovery:
-                  vectorGameManager = VectorGameManager.CreateCOMPortInstance(Settings.Default.Game, Settings.Default.DiscoveryCOMPort);
+                  vectorGameManager = VectorGameManager.CreateCOMPortInstance(Settings.Default.DiscoveryCOMPort);
                   break;
 
                case SoundIOType.Loopback:
                   vectorGameManager = VectorGameManager.CreateLoopbackInstance(
-                     Settings.Default.Game,
                      Settings.Default.LoopbackPort1,
                      Settings.Default.LoopbackPort2
                      );
@@ -358,7 +357,7 @@ namespace TempestWpf
                case SoundIOType.MemoryStream:
                   // create our tempest... just a normal game that interacts with the sound &
                   // control panel via a memory stream
-                  vectorGameManager = VectorGameManager.CreateStreamedInstance(Settings.Default.Game);
+                  vectorGameManager = VectorGameManager.CreateStreamedInstance();
                   break;
 
                default:

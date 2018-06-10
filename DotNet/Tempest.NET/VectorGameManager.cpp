@@ -13,19 +13,20 @@
 
 #include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 
+#include "VectorMultiGame.h"
+
 #include "VectorGameManager.h"
 
 
 using namespace System;
 
+static VectorGame *CreateOurVectorGame(AbstractTempestEnvironment *environment);
+
 namespace TempestDotNET {
-   VectorGameManager::VectorGameManager(String^ _gameName, GameContext *_gameContext)
+   VectorGameManager::VectorGameManager(GameContext *_gameContext)
    {
       // save/take ownership of the gameContext
       gameContext = _gameContext;
-
-      // copy the game name
-      gameName = _gameName;
 
       // create objects
       environment = new Win32TempestEnvironment();
@@ -63,18 +64,7 @@ namespace TempestDotNET {
 	void VectorGameManager::Start(void)
 	{
       // create the game instance
-      if (gameName->Equals("Asteroids"))
-      {
-         game = new AsteroidsGame(environment);
-      }
-      else if (gameName->Equals("Tempest"))
-      {
-         game = new TempestGame(environment);
-      }
-      else
-      {
-         throw gcnew Exception("");
-      }
+      game = CreateOurVectorGame(environment);
 
       game->SetSoundOutput(gameContext->GetSoundOutput());
       game->SetControlPanel(gameContext->GetControlPanelReader());
@@ -93,25 +83,25 @@ namespace TempestDotNET {
 			return gcnew String("OK");
 	}
 
-   VectorGameManager^ VectorGameManager::CreateNormalInstance(String^ game)
+   VectorGameManager^ VectorGameManager::CreateNormalInstance(void)
    {
-      return gcnew VectorGameManager(game, new NormalGameContext());
+      return gcnew VectorGameManager(new NormalGameContext());
    }
 
-   VectorGameManager^ VectorGameManager::CreateStreamedInstance(String^ game)
+   VectorGameManager^ VectorGameManager::CreateStreamedInstance(void)
    {
-      return gcnew VectorGameManager(game, new SerializedGameContext());
+      return gcnew VectorGameManager(new SerializedGameContext());
    }
 
-   VectorGameManager^ VectorGameManager::CreateCOMPortInstance(String^ game, String^ portName)
+   VectorGameManager^ VectorGameManager::CreateCOMPortInstance(String^ portName)
    {
       std::string name;
       for (int i = 0; i < portName->Length; ++i)
          name += (char)portName[i];
-      return gcnew VectorGameManager(game, new COMPortGameContext(name));
+      return gcnew VectorGameManager(new COMPortGameContext(name));
    }
 
-   VectorGameManager^ VectorGameManager::CreateLoopbackInstance(String^ game, String^ port1, String^ port2)
+   VectorGameManager^ VectorGameManager::CreateLoopbackInstance(String^ port1, String^ port2)
    {
       std::string name1;
       for (int i = 0; i < port1->Length; ++i)
@@ -119,7 +109,18 @@ namespace TempestDotNET {
       std::string name2;
       for (int i = 0; i < port2->Length; ++i)
          name2 += (char)port2[i];
-      return gcnew VectorGameManager(game, new LoopbackGameContext(name1, name2));
+      return gcnew VectorGameManager(new LoopbackGameContext(name1, name2));
    }
 }
 
+static VectorGame *CreateOurVectorGame(AbstractTempestEnvironment *environment)
+{
+   // we have to do this outside of the class because of a rule about C++ lambdas
+   // in managed code
+   return new VectorMultiGame(
+      {
+         [=]() { return new TempestGame(environment); },
+         [=]() { return new AsteroidsGame(environment); }
+      }
+   );
+}
