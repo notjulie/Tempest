@@ -57,7 +57,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Pokey.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="TempestCPU.Headers.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -82,7 +82,7 @@
     <ClInclude Include="MathBox\MathBoxAFX.h" />
     <ClInclude Include="MathBox\Nybble.h" />
     <ClInclude Include="Pokey.h" />
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TempestCPU.Headers.h" />
     <ClInclude Include="TempestBus.h" />
     <ClInclude Include="TempestException.h" />
     <ClInclude Include="TempestMemoryMap.h" />
@@ -167,6 +167,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);..\VectorGame;.\6502</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <PrecompiledHeaderFile>TempestCPU.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -183,6 +184,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(ProjectDir);..;..\SQLite;..\TempestIO\Vector;..\TempestIO;..\SQLite\SQLRR;%(AdditionalIncludeDirectories);..\VectorGame;.\6502</AdditionalIncludeDirectories>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <PrecompiledHeaderFile>TempestCPU.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -200,6 +202,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);..\VectorGame</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <PrecompiledHeaderFile>TempestCPU.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -221,6 +224,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);..\VectorGame</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <PrecompiledHeaderFile>TempestCPU.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

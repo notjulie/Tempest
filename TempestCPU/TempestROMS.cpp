@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestCPU.Headers.h"
 
 extern const uint8_t ROM_136002_111[2048] = {
     0xC0,    0x48,    0xC4,    0x44,    0xC4,    0x5C,    0xC0,    0x58,

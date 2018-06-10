@@ -57,9 +57,6 @@
     <ClCompile Include="MathBox\MathBox.cpp">
       <Filter>MathBox\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EEPROM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,6 +87,9 @@
     <ClCompile Include="TempestGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TempestCPU.Headers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EEPROM.h">
@@ -118,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="Win32\Win32.h">
       <Filter>Win32\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TempestPokey.h">
       <Filter>Header Files</Filter>
@@ -156,6 +153,9 @@
       <Filter>6502\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TempestGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TempestCPU.Headers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

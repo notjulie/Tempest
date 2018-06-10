@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestCPU.Headers.h"
 #include "AbstractBus.h"
 #include "CPU6502Runner.h"
 

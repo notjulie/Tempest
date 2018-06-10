@@ -1,6 +1,6 @@
 
-#ifndef STDAFX_H
-#define STDAFX_H
+#ifndef TEMPESTCPU_HEADERS_H
+#define TEMPESTCPU_HEADERS_H
 
 
 #ifdef _WIN32

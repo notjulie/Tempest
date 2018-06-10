@@ -10,7 +10,7 @@
 //    6502 connects to.
 // ====================================================================
 
-#include "stdafx.h"
+#include "TempestCPU.Headers.h"
 #include "AbstractBus.h"
 #include "CPU6502Exception.h"
 
