@@ -40,6 +40,7 @@ TempestGame::TempestGame(AbstractTempestEnvironment *_environment)
    cpuRunner.SetBus(&tempestBus);
 
    // register hooks
+   Register6502Hooks();
    RegisterVectorHooks();
 }
 
@@ -84,47 +85,45 @@ void TempestGame::RegisterVectorHooks(void)
 
 void TempestGame::Register6502Hooks(void)
 {
-   CPU6502Runner *cpu = GetCPURunner();
-
    // add in our handler for when the game adds points to the player's score
-   cpu->RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
+   cpuRunner.RegisterHook(INCREASE_PLAYER_SCORE_ROUTINE, [this]() {
       return AddToScore();
    });
 
    // add in our handler for when the game clears player scores
-   cpu->RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this,cpu]() {
+   cpuRunner.RegisterHook(CLEAR_PLAYER_SCORE_ROUTINE, [this]() {
       SetPlayerScore(0, 0);
       SetPlayerScore(1, 0);
-      cpu->Get6502()->RTS();
+      cpuRunner.Get6502()->RTS();
       return 30;
    });
 
    // this is the routine that outputs the score part of a line in the high
    // score table
-   cpu->RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this,cpu]() {
+   cpuRunner.RegisterHook(OUTPUT_HIGH_SCORE_ROUTINE, [this]() {
       // x tells us which score we're displaying
-      uint8_t x = cpu->Get6502()->GetX();
+      uint8_t x = cpuRunner.Get6502()->GetX();
       int highScoreIndex = 7 - x / 3;
       Printf("%7d", highScores[highScoreIndex]);
-      cpu->Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
+      cpuRunner.Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
       return 100;
    });
 
    // this gets called when it's time to sort the high score table and see
    // if player 1 or player 2 belong in it
-   cpu->RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this]() {
+   cpuRunner.RegisterHook(CHECK_HIGH_SCORE_ROUTINE, [this]() {
       return SortHighScores();
    });
 
    // this gets called after a player has entered his high score
-   cpu->RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this,cpu]() {
+   cpuRunner.RegisterHook(CHECK_NEXT_PLAYER_HIGH_SCORE, [this]() {
       if (tempestBus.ReadByte(CURRENT_PLAYER) == 0)
       {
          // set current player
          tempestBus.WriteByte(CURRENT_PLAYER, 1);
 
          // and skip to the high score entry check
-         cpu->Get6502()->JMP(HIGH_SCORE_ENTRY);
+         cpuRunner.Get6502()->JMP(HIGH_SCORE_ENTRY);
       }
       else
       {
@@ -132,7 +131,7 @@ void TempestGame::Register6502Hooks(void)
          tempestBus.WriteByte(GAME_MODE, GAME_MODE_SHOW_HIGH_SCORES);
 
          // skip out of here
-         cpu->Get6502()->RTS();
+         cpuRunner.Get6502()->RTS();
       }
 
       return (uint32_t)10;
