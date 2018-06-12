@@ -5,6 +5,7 @@
 		<Option title="TempestPi" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="Sources/VectorGame/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/TempestPi" prefix_auto="1" extension_auto="1" />
@@ -24,6 +25,7 @@
 					<Add directory="../../SQLite" />
 					<Add directory="../../SQLite/SQLRR" />
 					<Add directory="../../TempestCPU" />
+					<Add directory="../../VectorGame" />
 				</Compiler>
 				<Linker>
 					<Add option="-ldl" />
@@ -51,6 +53,8 @@
 					<Add directory="../../SQLite/SQLRR" />
 					<Add directory="../../SQLite" />
 					<Add directory="../../TempestCPU" />
+					<Add directory="../../VectorGame" />
+					<Add directory="../../TempestCPU/6502" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -107,10 +111,9 @@
 		<Unit filename="../../TempestCPU/Pokey.cpp" />
 		<Unit filename="../../TempestCPU/TempestBus.cpp" />
 		<Unit filename="../../TempestCPU/TempestBus.h" />
-		<Unit filename="../../TempestCPU/TempestException.cpp" />
+		<Unit filename="../../TempestCPU/TempestGame.cpp" />
 		<Unit filename="../../TempestCPU/TempestMemoryMap.h" />
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
-		<Unit filename="../../TempestCPU/TempestRunner.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.h" />
 		<Unit filename="../../TempestCPU/stdafx.h" />
 		<Unit filename="../../TempestIO/AbstractTempestIO.h" />
@@ -123,6 +126,9 @@
 		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorDataInterpreter.cpp" />
+		<Unit filename="../../VectorGame/VectorGame.cpp" />
+		<Unit filename="../../VectorGame/VectorGameRunner.cpp" />
+		<Unit filename="../../VectorGame/VectorMultiGame.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -1,24 +1,21 @@
 
 #include "stdafx.h"
 
-#include "../../TempestCPU/TempestRunner.h"
 #include "../../TempestIO/Vector/SimpleVectorDataInterpreter.h"
 #include "../../TempestIO/Vector/VectorData.h"
+#include "VectorGame.h"
 
 #include "TempestPiIO.h"
 
 
 TempestPiIO::TempestPiIO(void)
 {
-   logFrameRate = false;
-   terminated = false;
-   this->tempestRunner = NULL;
 }
 
 
-void TempestPiIO::Run(TempestRunner *tempestRunner)
+void TempestPiIO::Run(VectorGame *game)
 {
-   this->tempestRunner = tempestRunner;
+   this->game = game;
 
    // push to the screen
    timespec startTime;
@@ -49,7 +46,7 @@ void TempestPiIO::PushFrameToScreen(void)
 {
    // get the vectors
    std::vector<SimpleVector> vectors;
-   tempestRunner->GetAllVectors(vectors);
+   game->GetAllVectors(vectors);
 
    // dump them to the screen
    screen.DisplayVectors(vectors);

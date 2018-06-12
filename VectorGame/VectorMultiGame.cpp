@@ -25,7 +25,7 @@ VectorMultiGame::~VectorMultiGame(void)
 
 void VectorMultiGame::DeleteGames(void)
 {
-   for (int i = 0; i < games.size(); ++i)
+   for (unsigned i = 0; i < games.size(); ++i)
       delete games[i];
 
    games.resize(0);
@@ -47,13 +47,13 @@ void VectorMultiGame::SetControlPanel(AbstractArcadeGameControlPanelReader *_con
    controlPanel = _controlPanel;
 
    // pass it along to the games
-   for (int i = 0; i < games.size(); ++i)
+   for (unsigned i = 0; i < games.size(); ++i)
       games[i]->SetControlPanel(controlPanel);
 }
 
 void VectorMultiGame::SetSoundOutput(AbstractTempestSoundOutput *soundOutput)
 {
-   for (int i = 0; i < games.size(); ++i)
+   for (unsigned i = 0; i < games.size(); ++i)
       games[i]->SetSoundOutput(soundOutput);
 }
 
@@ -63,7 +63,7 @@ void VectorMultiGame::SingleStep(void)
    bool newMenuButtonState = (controlPanel->GetButtons() & MENU_BUTTON) != 0;
    if (newMenuButtonState && !menuButtonState)
    {
-      if (++currentGameIndex >= games.size())
+      if (++currentGameIndex >= (int)games.size())
          currentGameIndex = 0;
    }
    menuButtonState = newMenuButtonState;
@@ -78,7 +78,7 @@ void VectorMultiGame::SingleStep(void)
 
 void VectorMultiGame::Start(void)
 {
-   for (int i = 0; i < games.size(); ++i)
+   for (unsigned i = 0; i < games.size(); ++i)
       games[i]->Start();
 }
 

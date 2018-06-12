@@ -2,13 +2,14 @@
 #ifndef TEMPESTPI_H
 #define TEMPESTPI_H
 
-#include "TempestCPU/TempestRunner.h"
 #include "TempestSocketListener.h"
 #include "TempestPiEnvironment.h"
 #include "TempestPiIO.h"
 
 class PiSerialStream;
 class TempestIOStreamProxy;
+class VectorGame;
+class VectorGameRunner;
 
 
 class TempestPi {
@@ -17,25 +18,24 @@ public:
    ~TempestPi(void);
 
    void Run(void);
-   void SetDemoMode(bool isDemo) { demo = isDemo; }
 
 private:
    void Log(const char *s);
    void MonitorThread(void);
 
 private:
-   bool demo;
-   bool terminated;
-   std::thread *monitorThread;
-   FILE *log;
+   bool terminated = false;
+   std::thread *monitorThread = nullptr;
+   FILE *log = nullptr;
    char currentCommand [100];
 
    TempestPiEnvironment environment;
-   TempestRunner *tempestRunner;
+   VectorGame *game = nullptr;
+   VectorGameRunner *gameRunner = nullptr;
    TempestPiIO vectorIO;
-   TempestSocketListener *socketListener;
-   PiSerialStream *serialStream;
-   TempestIOStreamProxy *soundIO;
+   TempestSocketListener *socketListener = nullptr;
+   PiSerialStream *serialStream = nullptr;
+   TempestIOStreamProxy *soundIO = nullptr;
 };
 
 #endif

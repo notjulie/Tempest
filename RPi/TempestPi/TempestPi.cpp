@@ -4,6 +4,9 @@
 
 #include "TempestCPU/TempestException.h"
 #include "TempestIO/TempestIOStreamProxy.h"
+#include "TempestGame.h"
+#include "VectorGameRunner.h"
+#include "VectorMultiGame.h"
 
 #include "PiSerialStream.h"
 
@@ -13,12 +16,7 @@
 TempestPi::TempestPi(void)
 {
    // clear
-   demo = false;
-   terminated = false;
-   monitorThread = 0;
-   log = NULL;
    currentCommand[0] = 0;
-   tempestRunner = NULL;
 
    // open the log
    log = fopen("TempestMonitor.log", "a");
@@ -35,8 +33,15 @@ TempestPi::TempestPi(void)
          }
       );
 
+   // create the game
+   game = new VectorMultiGame(
+      {
+         [this]() { return new TempestGame(&environment); }
+      }
+   );
+
    // create the runner; it doesn't get started until later
-   tempestRunner = new TempestRunner(&environment);
+   gameRunner = new VectorGameRunner(game);
 
    // start our socket listener
    socketListener = new TempestSocketListener(&environment);
@@ -59,8 +64,8 @@ TempestPi::~TempestPi(void)
 
    // the runner is also a thread and it needs to get shut down before
    // we delete objects it uses
-   if (tempestRunner != NULL)
-      delete tempestRunner, tempestRunner = NULL;
+   delete gameRunner, gameRunner = nullptr;
+   delete game, game = nullptr;
 
    delete soundIO, soundIO = NULL;
    delete serialStream, serialStream = NULL;
@@ -87,11 +92,9 @@ void TempestPi::Run(void)
 
        soundIO = new TempestIOStreamProxy(serialStream);
 
-       // create the runner object that drives the fake 6502
-       tempestRunner->SetSoundOutput(soundIO);
-       tempestRunner->SetControlPanel(soundIO);
-       if (demo)
-         tempestRunner->SetDemoMode();
+       // hook the game to its ins and outs
+       game->SetSoundOutput(soundIO);
+       game->SetControlPanel(soundIO);
 
       // start the monitor thread if it's not running
       if (monitorThread == NULL)
@@ -100,11 +103,11 @@ void TempestPi::Run(void)
             );
 
        // go
-       tempestRunner->Start();
+       gameRunner->Start();
 
       // the IO object (i.e. the screen) takes over the main thread
       // from here
-      vectorIO.Run(tempestRunner);
+      vectorIO.Run(game);
    }
    catch (TempestException &te)
    {
@@ -132,17 +135,17 @@ void TempestPi::MonitorThread(void)
       usleep(100000);
 
       // look for any issues
-      if (tempestRunner->IsTerminated())
+      if (gameRunner->IsTerminated())
       {
          Log("Tempest terminated");
-         Log(tempestRunner->GetProcessorStatus().c_str());
+         Log(gameRunner->GetProcessorStatus().c_str());
 
-         sprintf(s, "Program terminated at address %X", tempestRunner->GetProgramCounter());
+         sprintf(s, "Program terminated at address %X", gameRunner->GetProgramCounter());
          Log(s);
          sprintf(s, "A=%X, X=%X, Y=%X",
-                 tempestRunner->GetAccumulator(),
-                 tempestRunner->GetXRegister(),
-                 tempestRunner->GetYRegister()
+                 gameRunner->GetAccumulator(),
+                 gameRunner->GetXRegister(),
+                 gameRunner->GetYRegister()
                  );
          Log(s);
 

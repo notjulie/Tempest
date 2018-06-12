@@ -4,14 +4,14 @@
 
 #include "PiScreen.h"
 
-class TempestRunner;
+class VectorGame;
 
 class TempestPiIO
 {
 public:
    TempestPiIO(void);
 
-   void Run(TempestRunner *tempestRunner);
+   void Run(VectorGame *game);
 
    void LogFrameRate(void) { logFrameRate = true; }
    void Terminate(void) { terminated = true; }
@@ -20,10 +20,10 @@ private:
    void PushFrameToScreen(void);
 
 private:
-   TempestRunner *tempestRunner;
+   VectorGame *game = nullptr;
 	PiScreen screen;
-	bool logFrameRate;
-	bool terminated;
+	bool logFrameRate = false;
+	bool terminated = false;
 };
 
 #endif

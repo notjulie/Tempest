@@ -4,7 +4,7 @@
 
 #include "EGL/egl.h"
 
-#include "TempestIO/Vector/SimpleVector.h"
+#include "SimpleVector.h"
 
 
 class PiScreen
@@ -28,12 +28,12 @@ public:
 
 private:
    void DeleteStrokes(void);
-   VGPaint GetStroke(const TempestColor &color);
+   VGPaint GetStroke(uint8_t r, uint8_t g, uint8_t b);
    void StartFrame(void);
    void EndFrame(void);
    void DisplayVector(const SimpleVector &vector);
    void init_ogl(void);
-   void DrawDot(float x, float y, const TempestColor &color);
+   void DrawDot(float x, float y, uint8_t r, uint8_t g, uint8_t b);
 
 private:
    typedef std::map<uint32_t, VGPaint> StrokeMap;

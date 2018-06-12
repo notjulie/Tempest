@@ -40,13 +40,13 @@ void PiScreen::DeleteStrokes(void)
    strokeMap.clear();
 }
 
-VGPaint PiScreen::GetStroke(const TempestColor &color)
+VGPaint PiScreen::GetStroke(uint8_t r, uint8_t g, uint8_t b)
 {
    // make a key based on the color
    uint32_t key =
-      (color.GetR() << 16) +
-      (color.GetG() << 8) +
-      (color.GetB());
+      (r << 16) +
+      (g << 8) +
+      (b);
 
    // if we already have a stroke for that color, return it
    StrokeMap::iterator existingStroke = strokeMap.find(key);
@@ -55,9 +55,9 @@ VGPaint PiScreen::GetStroke(const TempestColor &color)
 
    // create a new stroke
    float rgba[] = {
-      color.GetR() / 255.0F,
-      color.GetG() / 255.0F,
-      color.GetB() / 255.0F,
+      r / 255.0F,
+      g / 255.0F,
+      b / 255.0F,
       1.0F
    };
    VGPaint stroke = vgCreatePaint();
@@ -210,13 +210,13 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    // if this is just a dot draw our dot path
    if (vector.startX==vector.endX && vector.startY==vector.endY)
    {
-      DrawDot(x1, y1, vector.color);
+      DrawDot(x1, y1, vector.r, vector.g, vector.b);
       return;
    }
 
    // set our line drawing parameters
    vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
-   vgSetPaint(GetStroke(vector.color), VG_STROKE_PATH);
+   vgSetPaint(GetStroke(vector.r, vector.g, vector.b), VG_STROKE_PATH);
    vgSetf(VG_STROKE_LINE_WIDTH, 1);
    vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
    vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
@@ -242,7 +242,7 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
 }
 
 
-void PiScreen::DrawDot(float x, float y, const TempestColor &color)
+void PiScreen::DrawDot(float x, float y, uint8_t r, uint8_t g, uint8_t b)
 {
    // In general it appears that openVG on the RPi is most efficient
    // at drawing lines, moreso than filling shapes.  We have a path
@@ -256,7 +256,7 @@ void PiScreen::DrawDot(float x, float y, const TempestColor &color)
    // A useful performance test would be to see if it's quicker to change the
    // length of the line and width of the stroke versus scaling the line.
    vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
-   vgSetPaint(GetStroke(color), VG_STROKE_PATH);
+   vgSetPaint(GetStroke(r, g, b), VG_STROKE_PATH);
    vgSetf(VG_STROKE_LINE_WIDTH, 1);
    vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
    vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
