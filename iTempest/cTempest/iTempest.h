@@ -12,7 +12,8 @@
 // generic Tempest includes
 #include "AbstractTempestEnvironment.h"
 #include "SimpleVector.h"
-#include "TempestRunner.h"
+#include "VectorGameRunner.h"
+#include "TempestGame.h"
 
 // iTempest includes
 #include "iTempestSoundOutput.h"
@@ -29,9 +30,10 @@ class iTempest
 {
 public:
    iTempest(void);
+   ~iTempest(void);
 
    int GetVectors(TempestVector *buffer, int bufferSize);
-   bool IsInAttractMode(void) { return runner.IsInAttractMode(); }
+   bool IsInAttractMode(void) { return game->IsInAttractMode(); }
 
    // dispatchers to the control panel
    bool GetPlayer1LEDState(void) { return controlPanel.GetButtonLED(ONE_PLAYER_BUTTON); }
@@ -45,7 +47,8 @@ public:
 private:
    iOSTempestEnvironment environment;
    iTempestSoundOutput soundOutput;
-   TempestRunner runner;
+   VectorGameRunner *runner = nullptr;
+   TempestGame *game = nullptr;
    SimpleArcadeGameControlPanel controlPanel;
 };
 

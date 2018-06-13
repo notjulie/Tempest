@@ -9,19 +9,26 @@
 #include "iTempest.h"
 
 iTempest::iTempest(void)
-    :
-        runner(&environment)
 {
-   runner.SetSoundOutput(&soundOutput);
-   runner.SetControlPanel(&controlPanel);
-   runner.Start();
+   game = new TempestGame(&environment);
+   game->SetSoundOutput(&soundOutput);
+   game->SetControlPanel(&controlPanel);
+
+   runner = new VectorGameRunner(game);
+   runner->Start();
+}
+
+iTempest::~iTempest(void)
+{
+   delete runner; runner = nullptr;
+   delete game; game = nullptr;
 }
 
 int iTempest::GetVectors(TempestVector *buffer, int bufferSize)
 {
    // get the latest screen image from the TempestRunner
    std::vector<SimpleVector> vectors;
-   runner.GetAllVectors(vectors);
+   game->GetAllVectors(vectors);
    
    // figure out how many we're going to return
    int result = (int)vectors.size();
@@ -37,9 +44,9 @@ int iTempest::GetVectors(TempestVector *buffer, int bufferSize)
       dest->startY = src->startY;
       dest->endX = src->endX;
       dest->endY = src->endY;
-      dest->r = src->color.GetR();
-      dest->g = src->color.GetG();
-      dest->b = src->color.GetB();
+      dest->r = src->r;
+      dest->g = src->g;
+      dest->b = src->b;
    }
    
    // done

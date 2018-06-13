@@ -13,7 +13,7 @@ CPU6502Runner::CPU6502Runner(void)
 
 CPU6502Runner::~CPU6502Runner(void)
 {
-   delete cpu6502, cpu6502 = nullptr;
+   delete cpu6502; cpu6502 = nullptr;
 }
 
 
