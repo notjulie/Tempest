@@ -49,17 +49,16 @@ private:
 
 private:
 	// inputs
-	uint8_t dataIn;
-	uint8_t addressIn;
-	bool BEGIN;
+	uint8_t addressIn = 0;
+	bool BEGIN = false;
 
 	// state values that change on rising clock
-	uint8_t   PC;
-	bool  Q0Latch;
+	uint8_t   PC = 0;
+	bool  Q0Latch = false;
 
 	// state values that change on falling clock
-	bool STOP;
-	uint8_t JumpLatch;
+	bool STOP = false;
+	uint8_t JumpLatch = 0;
 
 	// ALUs
 	Am2901	aluK;

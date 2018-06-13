@@ -19,14 +19,6 @@
 
 MathBox::MathBox(void)
 {
-	// clear
-	PC = 0;
-	BEGIN = false;
-	Q0Latch = false;
-	dataIn = 0;
-	addressIn = 0;
-	STOP = false;
-
 	// point to our ROMs
 	romA = ROM_136002_126;
 	romE = ROM_136002_127;
@@ -68,7 +60,8 @@ void MathBox::Write(uint8_t address, uint8_t value)
 	// set our inputs... the address strobe will assert BEGIN and cause the
 	// first rising edge of the clock
 	addressIn = address;
-	dataIn = value;
+   aluK.DataIn = aluJ.DataIn = (uint8_t)(value & 0xF);
+   aluF.DataIn = aluE.DataIn = (uint8_t)(value >> 4);
 	BEGIN = true;
 	HandleRisingClock();
 
@@ -88,7 +81,7 @@ void MathBox::Write(uint8_t address, uint8_t value)
 
 	// now our inputs will clear
 	addressIn = 0;
-	dataIn = 0;
+   aluK.DataIn = aluJ.DataIn = aluF.DataIn = aluE.DataIn = 0;
 
 	// then we can just handle clock pulses until the clock is disabled
 	while (!STOP)
@@ -101,23 +94,21 @@ void MathBox::Write(uint8_t address, uint8_t value)
 
 void MathBox::HandleRisingClock(void)
 {
-	// calculate the new PC
+	// calculate the new PC... these are signals that come from a handful
+   // of logic gates, and I unrolled them this way to avoid having to check
+   // the aluE outputs unless all the other conditions require it
 	uint8_t newPC;
-	bool pcen;
-	{
-		bool E5XORout = aluE.GetOVR() ^ aluE.GetF3();
-		bool D4NAND1out = !(E5XORout && ((romE[PC] & 8) != 0));
-		bool D4NAND2out = !(D4NAND1out && ((romE[PC] & 4) != 0));
-		pcen = BEGIN || !D4NAND2out;
-	}
-	if (pcen)
-	{
-		// we load the PC from whichever source is selected
-		if (BEGIN)
-			newPC = romA[(unsigned)addressIn];
-		else
-			newPC = JumpLatch;
-	}
+   if (BEGIN)
+   {
+      newPC = romA[(unsigned)addressIn];
+   }
+   else if (
+      ((romE[PC] & 4) != 0) &&
+      ((romE[PC] & 8) == 0 || !(aluE.GetOVR() ^ aluE.GetF3()))
+      )
+   {
+      newPC = JumpLatch;
+   }
 	else
 	{
 		newPC = (uint8_t)(PC + 1);
@@ -127,7 +118,6 @@ void MathBox::HandleRisingClock(void)
 	bool newQ0Latch = GetQ0();
 
 	// let the ALUs handle the rising clock edge...
-	SetALUInputs();
 	aluK.SetClock(true);
 	aluF.SetClock(true);
 	aluJ.SetClock(true);
@@ -209,10 +199,6 @@ void MathBox::SetALUInputs(void)
 		i01 += 2;
 	aluK.I012 = aluF.I012 = (uint8_t)(i01 + (romJ[PC] & 4));
 	aluJ.I012 = aluE.I012 = (uint8_t)(i01 + ((romJ[PC] & 8) >> 1));
-
-	// set the data inputs accordingly
-	aluK.DataIn = aluJ.DataIn = (uint8_t)(dataIn & 0xF);
-	aluF.DataIn = aluE.DataIn = (uint8_t)(dataIn >> 4);
 }
 
 
