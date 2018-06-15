@@ -26,36 +26,7 @@
     <ClCompile Include="6502\ProcessorStatusWord.cpp" />
     <ClCompile Include="AbstractTempestEnvironment.cpp" />
     <ClCompile Include="EEPROM.cpp" />
-    <ClCompile Include="MathBox\Am2901.cpp">
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExceptionHandling>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="MathBox\Am2901Tables.cpp">
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExceptionHandling>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="MathBox\MathBox.cpp">
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExceptionHandling>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="MathBox.cpp" />
     <ClCompile Include="Pokey.cpp" />
     <ClCompile Include="TempestCPU.Headers.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -76,11 +47,7 @@
     <ClInclude Include="6502\ProcessorStatusWord.h" />
     <ClInclude Include="AbstractTempestEnvironment.h" />
     <ClInclude Include="EEPROM.h" />
-    <ClInclude Include="MathBox\Am2901.h" />
-    <ClInclude Include="MathBox\Am2901Tables.h" />
-    <ClInclude Include="MathBox\MathBox.h" />
-    <ClInclude Include="MathBox\MathBoxAFX.h" />
-    <ClInclude Include="MathBox\Nybble.h" />
+    <ClInclude Include="MathBox.h" />
     <ClInclude Include="Pokey.h" />
     <ClInclude Include="TempestCPU.Headers.h" />
     <ClInclude Include="TempestBus.h" />
