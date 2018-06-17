@@ -1,3 +1,20 @@
+// ====================================================================
+// Simple sound generator
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This plays part of a simple sound generator, whose genesis was
+//    the emulation of the sound generation of the Atari Pokey chip
+//    used in Tempest.  This class takes simple wave commands and
+//    transforms them into an output stream of sampled audio.
+//
+// NOTE:
+//    This class is used in an embedded controller, so no C++11
+//    syntax, please.
+// ====================================================================
+
 
 #ifndef SOUNDCHANNEL_H
 #define SOUNDCHANNEL_H

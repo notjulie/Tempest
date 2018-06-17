@@ -1,13 +1,29 @@
+// ====================================================================
+// Simple sound generator
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This plays part of a simple sound generator, whose genesis was
+//    the emulation of the sound generation of the Atari Pokey chip
+//    used in Tempest.  This class takes simple wave commands and
+//    transforms them into an output stream of sampled audio.
+//
+// NOTE:
+//    This class is used in an embedded controller, so no C++11
+//    syntax, please.
+// ====================================================================
+
 
 #include "stdafx.h"
-
-#include "../TempestCPU/TempestException.h"
 #include "Noise.h"
-
 #include "SoundChannel.h"
 
 
-
+/// <summary>
+/// Constructor
+/// </summary>
 SoundChannel::SoundChannel(void)
 {
 	// clear our state variables
@@ -16,6 +32,10 @@ SoundChannel::SoundChannel(void)
 	UpdateWaveform();
 }
 
+/// <summary>
+/// Streams the next 'count' samples into the buffer.  The samples
+/// are summed with what's already in the buffer.
+/// </summary>
 void SoundChannel::AddWaveData(int16_t *buffer, int count)
 {
 	// if we've had changes made to out input parameters, accept them now
@@ -78,6 +98,9 @@ void SoundChannel::AddWaveData(int16_t *buffer, int count)
 }
 
 
+/// <summary>
+/// Updates the waveform that we are outputting when the caller changes it
+/// </summary>
 void SoundChannel::UpdateWaveform(void)
 {
 	switch (currentState.GetWaveform())
@@ -94,8 +117,7 @@ void SoundChannel::UpdateWaveform(void)
 		break;
 
    case Noise4Bit:
-      // these may be the same or not... the doc is strange... anyway,
-      // it's a 4-bit noise polynomial
+      // 4-bit noise polynomial
       actualFrequency = 64000.0F / (1 + currentState.GetFrequency());
       pulseWidth = 44100.0F / actualFrequency;
       noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
