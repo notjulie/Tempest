@@ -3,6 +3,11 @@
 #include "AbstractBus.h"
 #include "CPU6502Runner.h"
 
+/// <summary>
+/// The period between checks to see how far ahead of the realtime clock the 6502 has gotten;
+/// this actually taxes the CPU a bit if we check too often
+/// </summary>
+static const int CPU_SYNCHRONIZE_PERIOD_MS = 4;
 
 CPU6502Runner::CPU6502Runner(void)
 {
@@ -52,7 +57,7 @@ void CPU6502Runner::SingleStep(void)
       cpuTime = std::chrono::high_resolution_clock::now();
 
       // register our timer that synchronizes the CPU clock with real time
-      bus->StartTimer(1500, [this]() { SynchronizeCPUWithRealTime(); });
+      bus->StartTimer(1500 * CPU_SYNCHRONIZE_PERIOD_MS, [this]() { SynchronizeCPUWithRealTime(); });
 
       // start
       state = Running;
@@ -135,7 +140,7 @@ void CPU6502Runner::SynchronizeCPUWithRealTime(void)
    // we get called every millisecond according to the number of clock cycles
    // executed by the 6502... our job is to align that with real time by pausing
    // to let realtime catch up
-   cpuTime += std::chrono::microseconds(1000);
+   cpuTime += std::chrono::microseconds(CPU_SYNCHRONIZE_PERIOD_MS * 1000);
 
    // figure out how far ahead of realtime the CPU time is
    auto now = std::chrono::high_resolution_clock::now();
@@ -151,7 +156,7 @@ void CPU6502Runner::SynchronizeCPUWithRealTime(void)
 
    // if the CPU is ahead of realtime (which it usually should be) then
    // sleep to let time catch up
-   if (cpuAheadTime.count() > 0)
+   if (cpuAheadTime.count() >= CPU_SYNCHRONIZE_PERIOD_MS * 1000)
       std::this_thread::sleep_for(cpuAheadTime);
 }
 
