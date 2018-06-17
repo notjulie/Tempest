@@ -1,3 +1,16 @@
+// ====================================================================
+// Vector game emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a wrapper around an emulated 6502-based system.  When
+//    our SingleStep() method is called, we check to see if we have
+//    any special actions to do and determine whether or not we want
+//    to pass the call directly to the 6502's SingleStep function.
+//    As such we can add in hooks, implement debug breakpoints, etc.
+// ====================================================================
 
 #ifndef CPU6502RUNNER_H
 #define CPU6502RUNNER_H

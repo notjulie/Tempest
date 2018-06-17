@@ -1,3 +1,17 @@
+// ====================================================================
+// Vector game emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a wrapper around an emulated 6502-based system.  When
+//    our SingleStep() method is called, we check to see if we have
+//    any special actions to do and determine whether or not we want
+//    to pass the call directly to the 6502's SingleStep function.
+//    As such we can add in hooks, implement debug breakpoints, etc.
+// ====================================================================
+
 
 #include "TempestCPU.Headers.h"
 #include "AbstractBus.h"
@@ -9,6 +23,10 @@
 /// </summary>
 static const int CPU_SYNCHRONIZE_PERIOD_MS = 4;
 
+
+/// <summary>
+/// Constructor
+/// </summary>
 CPU6502Runner::CPU6502Runner(void)
 {
    // clear
@@ -16,12 +34,19 @@ CPU6502Runner::CPU6502Runner(void)
       addressFlags[i] = 0;
 }
 
+/// <summary>
+/// Destructor
+/// </summary>
 CPU6502Runner::~CPU6502Runner(void)
 {
    delete cpu6502; cpu6502 = nullptr;
 }
 
 
+/// <summary>
+/// Registers a function to be called when the 6502's program counter hits a
+/// certain address... as such we can insert C++ hooks into the 6502 code
+/// </summary>
 void CPU6502Runner::RegisterHook(uint16_t address, std::function<uint32_t()> hook)
 {
    hooks[address] = hook;
@@ -29,6 +54,9 @@ void CPU6502Runner::RegisterHook(uint16_t address, std::function<uint32_t()> hoo
 }
 
 
+/// <summary>
+/// Sets or clears a debug breakpoint
+/// </summary>
 void CPU6502Runner::SetBreakpoint(uint16_t address, bool set)
 {
    if (set)
@@ -38,12 +66,19 @@ void CPU6502Runner::SetBreakpoint(uint16_t address, bool set)
 }
 
 
+/// <summary>
+/// Sets our state in response to hitting a breakpoint
+/// </summary>
 void CPU6502Runner::Break(void)
 {
    state = Stopped;
    requestedAction = NoAction;
 }
 
+
+/// <summary>
+/// Single steps ourself, taking our own state and hooks into account
+/// </summary>
 void CPU6502Runner::SingleStep(void)
 {
    switch (state)
@@ -77,6 +112,10 @@ void CPU6502Runner::SingleStep(void)
    }
 }
 
+
+/// <summary>
+/// Takes action according to the current 6502 program counter
+/// </summary>
 void CPU6502Runner::DoSingleStep(void)
 {
    // reset if so requested
@@ -112,6 +151,10 @@ void CPU6502Runner::DoSingleStep(void)
    bus->IncrementClockCycleCount(clockCyclesThisInstruction);
 }
 
+
+/// <summary>
+/// Checks to see if we should resume from a breakpoint
+/// </summary>
 void CPU6502Runner::CheckForResume(void)
 {
    if (requestedAction == StepAction)
@@ -137,9 +180,9 @@ void CPU6502Runner::CheckForResume(void)
 /// </summary>
 void CPU6502Runner::SynchronizeCPUWithRealTime(void)
 {
-   // we get called every millisecond according to the number of clock cycles
-   // executed by the 6502... our job is to align that with real time by pausing
-   // to let realtime catch up
+   // we get called every CPU_SYNCHRONIZE_PERIOD_MS milliseconds according to
+   // the number of clock cycles executed by the 6502... our job is to align
+   // that with real time by pausing to let realtime catch up
    cpuTime += std::chrono::microseconds(CPU_SYNCHRONIZE_PERIOD_MS * 1000);
 
    // figure out how far ahead of realtime the CPU time is
