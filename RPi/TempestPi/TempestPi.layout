@@ -112,7 +112,7 @@
 	<File name="../../TempestIO/Vector/VectorDataInterpreter.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="../../VectorGame/VectorMultiGame.cpp" open="1" top="1" tabpos="7">
-		<Cursor position="2046" topLine="72" />
+	<File name="../../VectorGame/VectorMultiGame.cpp" open="1" top="1" tabpos="6">
+		<Cursor position="2046" topLine="71" />
 	</File>
 </CodeBlocks_layout_file>
