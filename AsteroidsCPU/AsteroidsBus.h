@@ -1,3 +1,14 @@
+// ====================================================================
+// Asteroids emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the class that emulates the hardware of Asteroids that
+//    the 6502 talks to directly, i.e. the RAM, ROM and I/O.
+// ====================================================================
+
 #ifndef ASTEROIDSBUS_H
 #define	ASTEROIDSBUS_H
 
@@ -37,6 +48,7 @@ public:
 private:
    void  ConfigureAddressSpace(void);
    void SetNMITimer(void);
+   void Tick6KHz(void);
 
 private:
    static uint8_t ReadBankedRAM(AbstractBus *bus, uint16_t address);

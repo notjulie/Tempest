@@ -1,4 +1,13 @@
-
+// ====================================================================
+// Asteroids emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the class that emulates the hardware of Asteroids that
+//    the 6502 talks to directly, i.e. the RAM, ROM and I/O.
+// ====================================================================
 
 #include "stdafx.h"
 #include <memory.h>
@@ -27,6 +36,7 @@ AsteroidsBus::AsteroidsBus(AbstractGameEnvironment *_environment)
 
    // install our timers
    StartTimer(4000, [this]() { SetNMI(); });
+   StartTimer(250, [this]() { Tick6KHz(); });
 
    // configure address space
    ConfigureAddressSpace();
@@ -51,6 +61,17 @@ void AsteroidsBus::SetNMITimer(void)
       SetNMI();
 }
 
+/// <summary>
+/// The sound generator needs to know what our internal time is so that
+/// it can synchronize the generated sound with the game's clock.  This
+/// function does just that... tells the sound generator what our clock
+/// says.
+/// </summary>
+void AsteroidsBus::Tick6KHz(void)
+{
+   // give the sound output its heartbeat
+   soundOutput->SetTime(GetTotalClockCycles());
+}
 
 void AsteroidsBus::ConfigureAddressSpace(void)
 {
