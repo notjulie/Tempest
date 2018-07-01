@@ -3,11 +3,13 @@
 #define VECTORMULTIGAME_H
 
 #include "VectorGame.h"
+class AbstractTempestEnvironment;
+
 
 class VectorMultiGame : public VectorGame
 {
 public:
-   VectorMultiGame(std::initializer_list<std::function<VectorGame *()>> games);
+   VectorMultiGame(AbstractTempestEnvironment *_environment, std::initializer_list<std::function<VectorGame *()>> games);
    virtual ~VectorMultiGame(void);
 
    virtual CPU6502Runner *GetCPURunner(void);
@@ -22,10 +24,12 @@ private:
    void DeleteGames(void);
 
 private:
+   AbstractTempestEnvironment *environment;
    std::vector<VectorGame *> games;
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
    int currentGameIndex = 0;
    bool menuButtonState = true;
+   bool menuRequest = false;
 };
 
 

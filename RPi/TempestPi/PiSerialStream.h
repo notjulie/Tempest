@@ -2,6 +2,7 @@
 #ifndef PISERIALSTREAM_H
 #define PISERIALSTREAM_H
 
+#include <condition_variable>
 #include "TempestIO/AbstractTempestStream.h"
 
 

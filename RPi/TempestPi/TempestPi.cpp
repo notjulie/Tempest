@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include <pthread.h>
 
+#include "AsteroidsGame.h"
 #include "TempestCPU/TempestException.h"
 #include "TempestIO/TempestIOStreamProxy.h"
 #include "TempestGame.h"
@@ -35,8 +36,10 @@ TempestPi::TempestPi(void)
 
    // create the game
    game = new VectorMultiGame(
+      &environment,
       {
-         [this]() { return new TempestGame(&environment); }
+         [this]() { return new TempestGame(&environment); },
+         [this]() { return new AsteroidsGame(&environment); }
       }
    );
 

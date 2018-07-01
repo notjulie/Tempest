@@ -1,5 +1,10 @@
 
 #include <stdafx.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <termios.h>
+#include <unistd.h>
 
 #include "TempestCPU/TempestException.h"
 

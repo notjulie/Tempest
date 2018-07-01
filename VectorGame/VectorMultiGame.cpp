@@ -1,9 +1,22 @@
 
+#include "AbstractTempestEnvironment.h"
 #include "AbstractTempestIO.h"
 #include "VectorMultiGame.h"
 
-VectorMultiGame::VectorMultiGame(std::initializer_list<std::function<VectorGame *()>> _games)
+VectorMultiGame::VectorMultiGame(AbstractTempestEnvironment *_environment, std::initializer_list<std::function<VectorGame *()>> _games)
 {
+   // save parameters
+   environment = _environment;
+
+   // register our commands
+   environment->RegisterCommand(
+      "vg.menu",
+      [this](const CommandLine &cmd) {
+         menuRequest = true;
+         return "OK";
+      }
+   );
+
    try
    {
       // use the passed-in functions to instantiate our games
@@ -62,11 +75,15 @@ void VectorMultiGame::SingleStep(void)
    // on a rising edge of the menu button we do our menu thing
    bool newMenuButtonState = (controlPanel->GetButtons() & MENU_BUTTON) != 0;
    if (newMenuButtonState && !menuButtonState)
+      menuRequest = true;
+   menuButtonState = newMenuButtonState;
+
+   if (menuRequest)
    {
       if (++currentGameIndex >= (int)games.size())
          currentGameIndex = 0;
+         menuRequest = false;
    }
-   menuButtonState = newMenuButtonState;
 
    // give the current game a solid timeslice by stepping it a bunch of times;
    // this is just because the games need to be stepped at a very high frequency

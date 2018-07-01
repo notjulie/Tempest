@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="PiScreen.cpp" open="1" top="0" tabpos="2">
+	<File name="PiScreen.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="8128" topLine="254" />
 	</File>
-	<File name="PiSerialStream.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="5024" topLine="193" />
+	<File name="PiSerialStream.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="122" topLine="0" />
 	</File>
-	<File name="PiSerialStream.h" open="0" top="0" tabpos="4">
-		<Cursor position="376" topLine="23" />
+	<File name="PiSerialStream.h" open="1" top="0" tabpos="4">
+		<Cursor position="80" topLine="0" />
 	</File>
 	<File name="TempestPi.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="3865" topLine="136" />
+		<Cursor position="687" topLine="22" />
 	</File>
-	<File name="TempestPi.h" open="1" top="0" tabpos="1">
+	<File name="TempestPi.h" open="0" top="0" tabpos="1">
 		<Cursor position="318" topLine="13" />
 	</File>
 	<File name="TempestPiEnvironment.cpp" open="0" top="0" tabpos="6">
@@ -22,7 +22,7 @@
 	<File name="TempestPiEnvironment.h" open="0" top="0" tabpos="7">
 		<Cursor position="64" topLine="0" />
 	</File>
-	<File name="TempestPiIO.cpp" open="1" top="0" tabpos="4">
+	<File name="TempestPiIO.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="155" topLine="0" />
 	</File>
 	<File name="TempestSocketListener.cpp" open="0" top="0" tabpos="1">
@@ -31,7 +31,7 @@
 	<File name="TempestSocketListener.h" open="0" top="0" tabpos="2">
 		<Cursor position="396" topLine="0" />
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="5">
+	<File name="main.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="198" topLine="12" />
 	</File>
 	<File name="stdafx.h" open="0" top="0" tabpos="4">
@@ -56,22 +56,16 @@
 		<Cursor position="355" topLine="0" />
 	</File>
 	<File name="../../TempestCPU/AbstractTempestEnvironment.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="39" topLine="2" />
+		<Cursor position="140" topLine="0" />
 	</File>
-	<File name="../../TempestCPU/AbstractTempestEnvironment.h" open="0" top="0" tabpos="0">
-		<Cursor position="214" topLine="3" />
+	<File name="../../TempestCPU/AbstractTempestEnvironment.h" open="1" top="0" tabpos="2">
+		<Cursor position="149" topLine="3" />
 	</File>
 	<File name="../../TempestCPU/CommandLine.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="171" topLine="0" />
 	</File>
 	<File name="../../TempestCPU/CommandLine.h" open="0" top="0" tabpos="0">
 		<Cursor position="130" topLine="0" />
-	</File>
-	<File name="../../TempestCPU/MathBox/Am2901.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="411" topLine="4" />
-	</File>
-	<File name="../../TempestCPU/MathBox/MathBox.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="645" topLine="6" />
 	</File>
 	<File name="../../TempestCPU/Pokey.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="527" topLine="31" />
@@ -92,7 +86,7 @@
 		<Cursor position="1023" topLine="17" />
 	</File>
 	<File name="../../TempestIO/AbstractTempestIO.h" open="0" top="0" tabpos="2">
-		<Cursor position="800" topLine="19" />
+		<Cursor position="458" topLine="15" />
 	</File>
 	<File name="../../TempestIO/SoundChannelState.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="48" topLine="0" />
@@ -112,7 +106,7 @@
 	<File name="../../TempestIO/Vector/VectorDataInterpreter.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="../../VectorGame/VectorMultiGame.cpp" open="1" top="1" tabpos="6">
-		<Cursor position="2046" topLine="71" />
+	<File name="../../VectorGame/VectorMultiGame.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1890" topLine="73" />
 	</File>
 </CodeBlocks_layout_file>

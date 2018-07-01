@@ -22,10 +22,11 @@
 	<vector>
 	<VG/openvg.h>
 
-1508886271 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
+1530469724 /home/pi/Documents/Tempest/TempestCPU/AbstractTempestEnvironment.h
 	<stdint.h>
 	<functional>
 	<map>
+	<string>
 
 1509153760 /home/pi/Documents/Tempest/TempestCPU/TempestRunner.h
 	<chrono>
@@ -601,9 +602,10 @@
 
 1451615318 /home/pi/Documents/Tempest/TempestIO/Vector/TempestColor.h
 
-1528766960 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
+1530469205 source:/home/pi/Documents/Tempest/RPi/TempestPi/TempestPi.cpp
 	"stdafx.h"
 	<pthread.h>
+	"AsteroidsGame.h"
 	"TempestCPU/TempestException.h"
 	"TempestIO/TempestIOStreamProxy.h"
 	"TempestGame.h"
@@ -795,7 +797,7 @@
 	"CPU6502Runner.h"
 	"VectorGame.h"
 
-1528764372 /home/pi/Documents/Tempest/VectorGame/VectorMultiGame.h
+1530470094 /home/pi/Documents/Tempest/VectorGame/VectorMultiGame.h
 	"VectorGame.h"
 
 1528764372 /home/pi/Documents/Tempest/TempestCPU/TempestCPU.Headers.h
@@ -833,10 +835,70 @@
 	"VectorGame.h"
 	"VectorGameRunner.h"
 
-1528767901 source:/home/pi/Documents/Tempest/VectorGame/VectorMultiGame.cpp
+1530469351 source:/home/pi/Documents/Tempest/VectorGame/VectorMultiGame.cpp
 	"AbstractTempestIO.h"
 	"VectorMultiGame.h"
 
 1529285529 /home/pi/Documents/Tempest/TempestCPU/MathBox.h
 	<stdint.h>
+
+1529285529 source:/home/pi/Documents/Tempest/TempestCPU/MathBox.cpp
+	"TempestCPU.Headers.h"
+	"MathBox.h"
+
+1528764372 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsGame.h
+	<chrono>
+	"AsteroidsBus.h"
+	"VectorGame.h"
+
+1526739312 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsBus.h
+	"TempestCPU/6502/AbstractBus.h"
+	"TempestIO/Vector/VectorData.h"
+
+1529293411 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsBus.cpp
+	"stdafx.h"
+	<memory.h>
+	"TempestIO/AbstractTempestIO.h"
+	"TempestCPU/AbstractTempestEnvironment.h"
+	"TempestCPU/TempestException.h"
+	"AsteroidsROMs.h"
+	"AsteroidsVectorInterpreter.h"
+	"AsteroidsBus.h"
+
+1496026604 /home/pi/Documents/Tempest/AsteroidsCPU/stdafx.h
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	<iomanip>
+	<map>
+	<mutex>
+	<queue>
+	<sstream>
+	<string>
+	<thread>
+	<vector>
+
+1496026604 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsROMs.h
+
+1528764372 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsVectorInterpreter.h
+	"SimpleVector.h"
+
+1528764372 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsGame.cpp
+	"stdafx.h"
+	"TempestCPU/6502/CPU6502Exception.h"
+	"TempestCPU/AbstractTempestEnvironment.h"
+	"TempestCPU/TempestException.h"
+	"AsteroidsVectorInterpreter.h"
+	"AsteroidsGame.h"
+
+1496026604 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsROMs.cpp
+	"stdafx.h"
+	"AsteroidsROMs.h"
+
+1529363580 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsVectorInterpreter.cpp
+	"stdafx.h"
+	<memory.h>
+	"TempestCPU/TempestException.h"
+	"AsteroidsROMs.h"
+	"AsteroidsVectorInterpreter.h"
 

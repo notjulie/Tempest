@@ -72,10 +72,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-std=c++11" />
+			<Add directory="../../AsteroidsCPU" />
 		</Compiler>
 		<Linker>
 			<Add directory="../../../RPiLib/opt/vc/lib" />
 		</Linker>
+		<Unit filename="../../AsteroidsCPU/AsteroidsBus.cpp" />
+		<Unit filename="../../AsteroidsCPU/AsteroidsGame.cpp" />
+		<Unit filename="../../AsteroidsCPU/AsteroidsROMs.cpp" />
+		<Unit filename="../../AsteroidsCPU/AsteroidsVectorInterpreter.cpp" />
 		<Unit filename="PiScreen.cpp" />
 		<Unit filename="PiSerialStream.cpp" />
 		<Unit filename="PiSerialStream.h" />
@@ -105,9 +110,7 @@
 		<Unit filename="../../TempestCPU/CommandLine.cpp" />
 		<Unit filename="../../TempestCPU/CommandLine.h" />
 		<Unit filename="../../TempestCPU/EEPROM.cpp" />
-		<Unit filename="../../TempestCPU/MathBox/Am2901.cpp" />
-		<Unit filename="../../TempestCPU/MathBox/Am2901Tables.cpp" />
-		<Unit filename="../../TempestCPU/MathBox/MathBox.cpp" />
+		<Unit filename="../../TempestCPU/MathBox.cpp" />
 		<Unit filename="../../TempestCPU/Pokey.cpp" />
 		<Unit filename="../../TempestCPU/TempestBus.cpp" />
 		<Unit filename="../../TempestCPU/TempestBus.h" />

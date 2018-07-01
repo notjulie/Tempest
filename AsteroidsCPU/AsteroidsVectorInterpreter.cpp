@@ -1,12 +1,12 @@
 
 #include "stdafx.h"
+#include <memory.h>
 
 #include "TempestCPU/TempestException.h"
 #include "AsteroidsROMs.h"
 
 #include "AsteroidsVectorInterpreter.h"
 
-static int ShortVectorLength(int code);
 
 void AsteroidsVectorInterpreter::SetVectorRAM(const void *vectorRAM)
 {
@@ -31,7 +31,6 @@ void AsteroidsVectorInterpreter::GetAllVectors(std::vector<SimpleVector> &vector
    vectors = this->vectors;
 }
 
-static int lastJSR;
 
 bool AsteroidsVectorInterpreter::SingleStep(void)
 {
@@ -71,9 +70,6 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
    case 0x9:
    {
       // LDRAW
-      int rawX = (GetAt(2) + 256 * GetAt(3)) & 0x0FFF;
-      int rawY = (GetAt(0) + 256 * GetAt(1)) & 0x0FFF;
-
       int dx = (GetAt(2) + 256 * GetAt(3)) & 0x07FF;
       if (dx & 0x400)
          dx = -(dx & ~0x400);
@@ -117,7 +113,6 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
       // JSR
       stack[stackIndex++] = (uint16_t)(PC + 2);
       PC = (uint16_t)(2 * ((GetAt(0) + 256 * GetAt(1)) & 0x0FFF));
-      lastJSR = PC;
       return PC != 0;
 
    case 0xD:
@@ -228,20 +223,6 @@ void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int s
 
    if (intensity != 0)
       vectors.push_back(vector);
-}
-
-static int ShortVectorLength(int code)
-{
-   int result = 0;
-   if (code & 8)
-      result += 2;
-   if (code & 4)
-      result += 4;
-   if (code & 2)
-      result += 8;
-   if (code & 1)
-      result = -16 + result;
-   return result;
 }
 
 bool AsteroidsVectorInterpreter::ClipEndPoint(int &startX, int &startY, int &endX, int &endY)
