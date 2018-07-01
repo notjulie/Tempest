@@ -5,7 +5,7 @@
 
 #include "TempestIO/AbstractTempestIO.h"
 
-#include "TempestCPU/AbstractTempestEnvironment.h"
+#include "AbstractGameEnvironment.h"
 #include "TempestCPU/TempestException.h"
 
 #include "AsteroidsROMs.h"
@@ -14,7 +14,7 @@
 #include "AsteroidsBus.h"
 
 
-AsteroidsBus::AsteroidsBus(AbstractTempestEnvironment *_environment)
+AsteroidsBus::AsteroidsBus(AbstractGameEnvironment *_environment)
 {
    // copy parameters
    environment = _environment;

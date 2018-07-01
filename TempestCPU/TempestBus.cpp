@@ -3,7 +3,7 @@
 
 #include "AbstractTempestIO.h"
 
-#include "AbstractTempestEnvironment.h"
+#include "AbstractGameEnvironment.h"
 #include "TempestException.h"
 #include "TempestMemoryMap.h"
 #include "TempestROMS.h"
@@ -11,7 +11,7 @@
 #include "TempestBus.h"
 
 
-TempestBus::TempestBus(AbstractTempestEnvironment *_environment)
+TempestBus::TempestBus(AbstractGameEnvironment *_environment)
 {
    // copy parameters
    environment = _environment;

@@ -7,7 +7,7 @@
 
 // forward declarations
 class AbstractArcadeGameControlPanelReader;
-class AbstractTempestEnvironment;
+class AbstractGameEnvironment;
 class AbstractTempestSoundOutput;
 class AsteroidsVectorInterpreter;
 namespace std {
@@ -24,7 +24,7 @@ namespace std {
 class AsteroidsBus : public AbstractBus
 {
 public:
-   AsteroidsBus(AbstractTempestEnvironment *_environment);
+   AsteroidsBus(AbstractGameEnvironment *_environment);
    virtual ~AsteroidsBus(void);
    AsteroidsBus(const AsteroidsBus &bus) = delete;
    AsteroidsBus &operator=(const AsteroidsBus &bus) = delete;
@@ -65,7 +65,7 @@ private:
    static void WriteVectorGO(AbstractBus *bus, uint16_t address, uint8_t value);
 
 private:
-   AbstractTempestEnvironment *environment = nullptr;
+   AbstractGameEnvironment *environment = nullptr;
    AbstractTempestSoundOutput *soundOutput = nullptr;
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
 

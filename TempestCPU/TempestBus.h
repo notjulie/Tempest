@@ -18,7 +18,7 @@
 
 
 // forward declarations
-class AbstractTempestEnvironment;
+class AbstractGameEnvironment;
 
 
 #ifdef _WIN32
@@ -29,7 +29,7 @@ class AbstractTempestEnvironment;
 class TempestBus : public AbstractBus
 {
 public:
-	TempestBus(AbstractTempestEnvironment *_environment);
+	TempestBus(AbstractGameEnvironment *_environment);
 	virtual ~TempestBus(void);
 
    void ClearWatchdog(void);
@@ -64,7 +64,7 @@ private:
 	TempestBus &operator=(const TempestBus &bus) = delete;
 
 private:
-   AbstractTempestEnvironment *environment;
+   AbstractGameEnvironment *environment;
 
    // this is actually a pointer to std::mutex, but .NET gets upset if we
    // include <mutex> and it does include this file, so we cast it to a void and

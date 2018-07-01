@@ -12,7 +12,7 @@
 #include "VectorDataInterpreter.h"
 #include "VectorGame.h"
 
-class AbstractTempestEnvironment;
+class AbstractGameEnvironment;
 
 #ifdef _WIN32
    #pragma warning(push)
@@ -26,7 +26,7 @@ const uint8_t HIGH_SCORE_COUNT = 100;
 class TempestGame : public VectorGame
 {
 public:
-   TempestGame(AbstractTempestEnvironment *environment);
+   TempestGame(AbstractGameEnvironment *environment);
    TempestGame(const TempestGame &) = delete;
    TempestGame& operator=(const TempestGame &) = delete;
    virtual ~TempestGame(void);
@@ -58,7 +58,7 @@ private:
    void      Char(char c);
 
 private:
-   AbstractTempestEnvironment * environment;
+   AbstractGameEnvironment * environment;
    int pointsPerBonusLife = 10000;
 
    TempestDB   db;

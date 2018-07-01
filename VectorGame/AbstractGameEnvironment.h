@@ -9,13 +9,13 @@
 
 class CommandLine;
 
-class AbstractTempestEnvironment
+class AbstractGameEnvironment
 {
 public:
    typedef std::function<std::string(const CommandLine &)> CommandHandler;
 
 public:
-   virtual ~AbstractTempestEnvironment(void) {}
+   virtual ~AbstractGameEnvironment(void) {}
 
    virtual std::string GetDatabasePathName(void) = 0;
 

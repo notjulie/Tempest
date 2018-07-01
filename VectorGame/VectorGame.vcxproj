@@ -19,12 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractGameEnvironment.h" />
     <ClInclude Include="VectorGame.h" />
     <ClInclude Include="VectorGameException.h" />
     <ClInclude Include="VectorGameRunner.h" />
     <ClInclude Include="VectorMultiGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractGameEnvironment.cpp" />
+    <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="VectorMultiGame.cpp" />
     <ClCompile Include="VectorGame.cpp" />
     <ClCompile Include="VectorGameRunner.cpp" />

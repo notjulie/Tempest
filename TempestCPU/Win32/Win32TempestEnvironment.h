@@ -3,12 +3,12 @@
 #define WIN32TEMPESTENVIRONMENT_H
 
 #include "Win32.h"
-#include "TempestCPU/AbstractTempestEnvironment.h"
+#include "AbstractGameEnvironment.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
 
-class Win32TempestEnvironment : public AbstractTempestEnvironment
+class Win32TempestEnvironment : public AbstractGameEnvironment
 {
 public:
 	Win32TempestEnvironment(void);

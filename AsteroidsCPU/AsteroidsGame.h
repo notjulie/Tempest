@@ -6,7 +6,7 @@
 #include "AsteroidsBus.h"
 #include "VectorGame.h"
 
-class AbstractTempestEnvironment;
+class AbstractGameEnvironment;
 class AsteroidsVSM;
 
 #ifdef _WIN32
@@ -17,7 +17,7 @@ class AsteroidsVSM;
 class AsteroidsGame : public VectorGame
 {
 public:
-   AsteroidsGame(AbstractTempestEnvironment *environment);
+   AsteroidsGame(AbstractGameEnvironment *environment);
    ~AsteroidsGame(void);
    AsteroidsGame(const AsteroidsGame &tr) = delete;
    AsteroidsGame &operator=(const AsteroidsGame &tr) = delete;
@@ -32,7 +32,7 @@ public:
    virtual void SingleStep(void) { cpuRunner.SingleStep(); }
 
 private:
-	AbstractTempestEnvironment *environment;
+	AbstractGameEnvironment *environment;
 	AsteroidsBus	asteroidsBus;
    CPU6502Runner cpuRunner;
 };

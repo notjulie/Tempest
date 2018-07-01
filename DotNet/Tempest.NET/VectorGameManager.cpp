@@ -20,7 +20,7 @@
 
 using namespace System;
 
-static VectorGame *CreateOurVectorGame(AbstractTempestEnvironment *environment);
+static VectorGame *CreateOurVectorGame(AbstractGameEnvironment *environment);
 
 namespace TempestDotNET {
    VectorGameManager::VectorGameManager(GameContext *_gameContext)
@@ -113,11 +113,12 @@ namespace TempestDotNET {
    }
 }
 
-static VectorGame *CreateOurVectorGame(AbstractTempestEnvironment *environment)
+static VectorGame *CreateOurVectorGame(AbstractGameEnvironment *environment)
 {
    // we have to do this outside of the class because of a rule about C++ lambdas
    // in managed code
    return new VectorMultiGame(
+      environment,
       {
          [=]() { return new TempestGame(environment); },
          [=]() { return new AsteroidsGame(environment); }

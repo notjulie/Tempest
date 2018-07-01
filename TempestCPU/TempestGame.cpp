@@ -17,14 +17,14 @@
 
 #include "6502/CPU6502Exception.h"
 #include "SimpleVectorDataInterpreter.h"
-#include "AbstractTempestEnvironment.h"
+#include "AbstractGameEnvironment.h"
 #include "TempestException.h"
 
 #include "TempestGame.h"
 
 
 
-TempestGame::TempestGame(AbstractTempestEnvironment *_environment)
+TempestGame::TempestGame(AbstractGameEnvironment *_environment)
 	:
       tempestBus(_environment)
 {

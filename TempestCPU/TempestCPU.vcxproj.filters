@@ -60,9 +60,6 @@
     <ClCompile Include="6502\AbstractBus.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractTempestEnvironment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="6502\CPU6502Runner.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
       <Filter>Win32\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TempestPokey.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractTempestEnvironment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Win32\Win32TempestEnvironment.h">

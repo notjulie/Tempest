@@ -1,9 +1,9 @@
 
-#include "AbstractTempestEnvironment.h"
+#include "AbstractGameEnvironment.h"
 #include "AbstractTempestIO.h"
 #include "VectorMultiGame.h"
 
-VectorMultiGame::VectorMultiGame(AbstractTempestEnvironment *_environment, std::initializer_list<std::function<VectorGame *()>> _games)
+VectorMultiGame::VectorMultiGame(AbstractGameEnvironment *_environment, std::initializer_list<std::function<VectorGame *()>> _games)
 {
    // save parameters
    environment = _environment;

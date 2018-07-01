@@ -2,6 +2,8 @@
 #ifndef COMMANDLINE_H
 #define COMMANDLINE_H
 
+#include <string>
+
 class CommandLine {
    public:
       CommandLine(const std::string &commandString);
