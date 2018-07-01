@@ -40,6 +40,8 @@ uint8_t TempestDiscoAudioIO::GetButtons(void)
 		buttons |= ONE_PLAYER_BUTTON;
 	if (GetButton(TWO_PLAYER_BUTTON))
 		buttons |= TWO_PLAYER_BUTTON;
+	if (GetButton(MENU_BUTTON))
+		buttons |= MENU_BUTTON;
 	return buttons;
 }
 
