@@ -2,11 +2,11 @@
 #ifndef TEMPESTSOCKETLISTENER_H
 #define TEMPESTSOCKETLISTENER_H
 
-class AbstractTempestEnvironment;
+class AbstractGameEnvironment;
 
 class TempestSocketListener {
    public:
-      TempestSocketListener(AbstractTempestEnvironment *environment);
+      TempestSocketListener(AbstractGameEnvironment *environment);
       ~TempestSocketListener(void);
 
    private:
@@ -19,7 +19,7 @@ class TempestSocketListener {
       std::mutex clientListMutex;
       std::thread *connectionThread;
       std::vector<std::thread *> clientThreads;
-      AbstractTempestEnvironment *environment;
+      AbstractGameEnvironment *environment;
 };
 
 

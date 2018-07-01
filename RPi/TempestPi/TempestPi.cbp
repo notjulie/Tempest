@@ -105,9 +105,7 @@
 		<Unit filename="../../TempestCPU/6502/CPU6502Exception.cpp" />
 		<Unit filename="../../TempestCPU/6502/CPU6502Runner.cpp" />
 		<Unit filename="../../TempestCPU/6502/ProcessorStatusWord.cpp" />
-		<Unit filename="../../TempestCPU/AbstractTempestEnvironment.cpp" />
 		<Unit filename="../../TempestCPU/AbstractTempestEnvironment.h" />
-		<Unit filename="../../TempestCPU/CommandLine.cpp" />
 		<Unit filename="../../TempestCPU/CommandLine.h" />
 		<Unit filename="../../TempestCPU/EEPROM.cpp" />
 		<Unit filename="../../TempestCPU/MathBox.cpp" />
@@ -129,6 +127,8 @@
 		<Unit filename="../../TempestIO/Vector/SimpleVectorDataInterpreter.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorData.cpp" />
 		<Unit filename="../../TempestIO/Vector/VectorDataInterpreter.cpp" />
+		<Unit filename="../../VectorGame/AbstractGameEnvironment.cpp" />
+		<Unit filename="../../VectorGame/CommandLine.cpp" />
 		<Unit filename="../../VectorGame/VectorGame.cpp" />
 		<Unit filename="../../VectorGame/VectorGameRunner.cpp" />
 		<Unit filename="../../VectorGame/VectorMultiGame.cpp" />

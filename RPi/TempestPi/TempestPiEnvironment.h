@@ -2,9 +2,9 @@
 #ifndef TEMPESTPIENVIRONMENT_H
 #define TEMPESTPIENVIRONMENT_H
 
-#include "TempestCPU/AbstractTempestEnvironment.h"
+#include "AbstractGameEnvironment.h"
 
-class TempestPiEnvironment : public AbstractTempestEnvironment
+class TempestPiEnvironment : public AbstractGameEnvironment
 {
 public:
    TempestPiEnvironment(void);

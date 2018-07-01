@@ -4,13 +4,13 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include "../../TempestCPU/AbstractTempestEnvironment.h"
-#include "../../TempestCPU/CommandLine.h"
+#include "AbstractGameEnvironment.h"
+#include "CommandLine.h"
 #include "../../TempestCPU/TempestException.h"
 
 #include "TempestSocketListener.h"
 
-TempestSocketListener::TempestSocketListener(AbstractTempestEnvironment *environment)
+TempestSocketListener::TempestSocketListener(AbstractGameEnvironment *environment)
 {
    // copy parameters
    this->environment = environment;
