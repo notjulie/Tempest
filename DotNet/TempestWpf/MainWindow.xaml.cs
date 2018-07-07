@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Threading;
 
 using TempestDotNET;
 using TempestWpf.Properties;
@@ -146,9 +147,15 @@ namespace TempestWpf
 
       private void ButtonMenu_Click(object sender, RoutedEventArgs e)
       {
-         vectorGameManager.MenuButton(true);
-         System.Threading.Thread.Sleep(100);
-         vectorGameManager.MenuButton(false);
+         Thread thread = new Thread(
+            () =>
+            {
+               vectorGameManager.MenuButton(true);
+               System.Threading.Thread.Sleep(100);
+               vectorGameManager.MenuButton(false);
+            }
+            );
+         thread.Start();
       }
 
       void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -177,7 +184,7 @@ namespace TempestWpf
          timer.Tick += timer_Tick;
 
          vectorTimer = new DispatcherTimer();
-         vectorTimer.Interval = TimeSpan.FromMilliseconds(50);
+         vectorTimer.Interval = TimeSpan.FromMilliseconds(15);
          vectorTimer.IsEnabled = true;
          vectorTimer.Tick += vectorTimer_Tick;
 
