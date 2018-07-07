@@ -66,11 +66,7 @@ private:
 private:
    AbstractGameEnvironment *environment;
 
-   // this is actually a pointer to std::mutex, but .NET gets upset if we
-   // include <mutex> and it does include this file, so we cast it to a void and
-   // leave the implementation detail to the CPP file
-   void *vectorDataSnapshotMutex = nullptr;
-
+   std::mutex *vectorDataSnapshotMutex;
    VectorData vectorData;
    VectorData vectorDataSnapshot;
    TempestPokey1 pokey1;

@@ -41,12 +41,13 @@ public:
    AsteroidsBus &operator=(const AsteroidsBus &bus) = delete;
 
    void GetVectorData(AsteroidsVectorInterpreter &vectorInterpreter);
-   bool IsVectorGo(void) const { return vectorGo; }
+   bool IsVectorGo(void) const;
    void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { this->soundOutput = soundOutput; }
    void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { this->controlPanel = controlPanel; }
 
 private:
-   void  ConfigureAddressSpace(void);
+   void CheckVectorRAM(void);
+   void ConfigureAddressSpace(void);
    void SetNMITimer(void);
    void Tick6KHz(void);
 
@@ -81,13 +82,16 @@ private:
    AbstractTempestSoundOutput *soundOutput = nullptr;
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
 
-   std::mutex *vectorDataSnapshotMutex = nullptr;
-
    uint8_t bankedRAM[0x200];
+
+   bool vectorGo = false;
+   std::mutex *vectorDataSnapshotMutex = nullptr;
    uint8_t vectorRAM[0x800];
+   uint8_t vectorRAMSnapshot[0x800];
+   uint64_t lastVectorRAMWrite = 0;
+   uint64_t lastVectorSnapshotTime = 0;
 
    bool ramSel = false;
-   bool vectorGo = false;
    bool selfTest = false;
 };
 

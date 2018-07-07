@@ -44,13 +44,14 @@ AsteroidsBus::AsteroidsBus(AbstractGameEnvironment *_environment)
 
 AsteroidsBus::~AsteroidsBus(void)
 {
-   delete vectorDataSnapshotMutex, vectorDataSnapshotMutex = NULL;
+   delete vectorDataSnapshotMutex, vectorDataSnapshotMutex = nullptr;
 }
 
 
 void AsteroidsBus::GetVectorData(AsteroidsVectorInterpreter &vectorData)
 {
-   vectorData.SetVectorRAM(vectorRAM);
+   std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+   vectorData.SetVectorRAM(vectorRAMSnapshot);
 }
 
 
@@ -136,6 +137,13 @@ void AsteroidsBus::ConfigureAddressSpace(void)
    ConfigureAddress(0x3E00, 0, ReadAddressInvalid, WriteResetSound);
 }
 
+/// <summary>
+/// This returns a value indicating whether or not the caller can read
+/// </summary>
+bool AsteroidsBus::IsVectorGo(void) const
+{
+   return vectorGo;
+}
 
 uint8_t AsteroidsBus::Read3KHzClock(AbstractBus *bus, uint16_t address)
 {
@@ -158,9 +166,34 @@ uint8_t AsteroidsBus::ReadVectorRAM(AbstractBus *bus, uint16_t address)
    return asteroidsBus->vectorRAM[address - 0x4000];
 }
 
+void AsteroidsBus::CheckVectorRAM(void)
+{
+   // If it has been a while (as measured in clock cycles) since the last write to
+   // vector RAM we can conclude that it is stable and take a snapshot of it so that
+   // the display doesn't catch it in the middle of updating; 800 clock ticks appears
+   // to be a trustworthy number.
+   if (lastVectorSnapshotTime != lastVectorRAMWrite)
+   {
+      uint64_t now = GetTotalClockCycles();
+      if (now - lastVectorRAMWrite > 800)
+      {
+         std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+
+         memcpy(vectorRAMSnapshot, vectorRAM, sizeof(vectorRAM));
+         lastVectorSnapshotTime = lastVectorRAMWrite;
+      }
+   }
+}
+
 void AsteroidsBus::WriteVectorRAM(AbstractBus *bus, uint16_t address, uint8_t value)
 {
    AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+
+   // take a snapshot of the vector RAM if it's stable
+   asteroidsBus->CheckVectorRAM();
+
+   // do the write and note the time
+   asteroidsBus->lastVectorRAMWrite = asteroidsBus->GetTotalClockCycles();
    asteroidsBus->vectorRAM[address - 0x4000] = value;
 }
 
@@ -194,7 +227,14 @@ void AsteroidsBus::Write3200(AbstractBus *bus, uint16_t address, uint8_t value)
 void AsteroidsBus::WriteVectorGO(AbstractBus *bus, uint16_t address, uint8_t value)
 {
    AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
-   asteroidsBus->vectorGo = true;
+
+   // take a snapshot of the vector RAM if it's stable
+   asteroidsBus->CheckVectorRAM();
+
+   // set our GO flag if we have a valid snapshot; note that we don't trust snapshots
+   // taken while the game is starting up... there are circumstances where it will send
+   // a GO too early, such as if one of the player start buttons is down at power-on
+   asteroidsBus->vectorGo = asteroidsBus->lastVectorSnapshotTime > 500000;
 }
 
 
