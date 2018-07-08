@@ -223,6 +223,22 @@ void AsteroidsBus::Write3200(AbstractBus *bus, uint16_t address, uint8_t value)
    asteroidsBus->ramSel = (value & 4) != 0;
 }
 
+const uint8_t SOUND_CHANNEL_THUMP = 0;
+
+void AsteroidsBus::WriteThumpOutput(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
+
+   SoundChannelState state;
+   state.SetWaveform(Noise4Bit);
+   state.SetFrequency(200 + 10 * (value & 0xF));
+   if (value & 0x10)
+      state.SetVolume(255);
+   else
+      state.SetVolume(0);
+   asteroidsBus->soundOutput->SetTime(asteroidsBus->GetTotalClockCycles());
+   asteroidsBus->soundOutput->SetSoundChannelState(SOUND_CHANNEL_THUMP, state);
+}
 
 void AsteroidsBus::WriteVectorGO(AbstractBus *bus, uint16_t address, uint8_t value)
 {
