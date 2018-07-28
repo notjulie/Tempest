@@ -3,24 +3,21 @@
 #include "Tempest.NET.h"
 #include <msclr\lock.h>
 
-#include "AsteroidsCPU/AsteroidsGame.h"
-#include "TempestCPU/6502/CPU6502.h"
-#include "TempestCPU/6502/CPU6502Exception.h"
-#include "TempestCPU/TempestBus.h"
-#include "TempestCPU/TempestException.h"
-#include "TempestCPU/TempestGame.h"
+//#include "TempestCPU/6502/CPU6502.h"
+//#include "TempestCPU/6502/CPU6502Exception.h"
+//#include "TempestCPU/TempestBus.h"
+//#include "TempestCPU/TempestException.h"
 #include "TempestCPU/Win32/Win32TempestEnvironment.h"
 
-#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
+//#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
 
-#include "VectorMultiGame.h"
+#include "NativeVectorGameManager.h"
 
 #include "VectorGameManager.h"
 
 
 using namespace System;
 
-static VectorGame *CreateOurVectorGame(AbstractGameEnvironment *environment);
 
 namespace TempestDotNET {
    VectorGameManager::VectorGameManager(GameContext *_gameContext)
@@ -113,15 +110,3 @@ namespace TempestDotNET {
    }
 }
 
-static VectorGame *CreateOurVectorGame(AbstractGameEnvironment *environment)
-{
-   // we have to do this outside of the class because of a rule about C++ lambdas
-   // in managed code
-   return new VectorMultiGame(
-      environment,
-      {
-         [=]() { return new TempestGame(environment); },
-         [=]() { return new AsteroidsGame(environment); }
-      }
-   );
-}
