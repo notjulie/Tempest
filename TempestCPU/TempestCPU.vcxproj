@@ -36,7 +36,6 @@
     <ClCompile Include="TempestBus.cpp" />
     <ClCompile Include="TempestROMS.cpp" />
     <ClCompile Include="TempestGame.cpp" />
-    <ClCompile Include="Win32\Win32TempestEnvironment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="6502\AbstractBus.h" />
@@ -54,8 +53,6 @@
     <ClInclude Include="TempestPokey.h" />
     <ClInclude Include="TempestROMS.h" />
     <ClInclude Include="TempestGame.h" />
-    <ClInclude Include="Win32\Win32.h" />
-    <ClInclude Include="Win32\Win32TempestEnvironment.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A95EB6BB-84A8-4474-913F-D01D9FB77D24}</ProjectGuid>

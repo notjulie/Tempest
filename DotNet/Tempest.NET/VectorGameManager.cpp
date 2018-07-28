@@ -3,15 +3,8 @@
 #include "Tempest.NET.h"
 #include <msclr\lock.h>
 
-//#include "TempestCPU/6502/CPU6502.h"
-//#include "TempestCPU/6502/CPU6502Exception.h"
-//#include "TempestCPU/TempestBus.h"
-//#include "TempestCPU/TempestException.h"
-#include "TempestCPU/Win32/Win32TempestEnvironment.h"
-
-//#include "TempestIO/Vector/SimpleVectorDataInterpreter.h"
-
 #include "NativeVectorGameManager.h"
+#include "Win32GameEnvironment.h"
 
 #include "VectorGameManager.h"
 
@@ -26,7 +19,7 @@ namespace TempestDotNET {
       gameContext = _gameContext;
 
       // create objects
-      environment = new Win32TempestEnvironment();
+      environment = new Win32GameEnvironment();
    }
 
    VectorGameManager::~VectorGameManager(void)

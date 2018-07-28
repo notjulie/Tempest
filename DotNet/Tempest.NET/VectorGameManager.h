@@ -77,7 +77,7 @@ namespace TempestDotNET {
       VectorGameManager(GameContext *_gameContext);
 
 	private:
-		Win32TempestEnvironment *environment = nullptr;
+		Win32GameEnvironment *environment = nullptr;
       GameContext *gameContext = nullptr;
       VectorGameRunner *gameRunner = nullptr;
       VectorGame *game = nullptr;

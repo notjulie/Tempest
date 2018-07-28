@@ -1,6 +1,6 @@
 
-#include "TempestCPU.Headers.h"
-#include "Win32TempestEnvironment.h"
+#include "Tempest.NET.h"
+#include "Win32GameEnvironment.h"
 
 
 #ifdef _WIN32
@@ -12,15 +12,15 @@
    #pragma warning(pop)
 #endif
 
-Win32TempestEnvironment::Win32TempestEnvironment(void)
+Win32GameEnvironment::Win32GameEnvironment(void)
 {
 }
 
-Win32TempestEnvironment::~Win32TempestEnvironment(void)
+Win32GameEnvironment::~Win32GameEnvironment(void)
 {
 }
 
-std::string Win32TempestEnvironment::GetDatabasePathName(void)
+std::string Win32GameEnvironment::GetDatabasePathName(void)
 {
    // get this EXE's file name
    char exeFileName[1000] = "";

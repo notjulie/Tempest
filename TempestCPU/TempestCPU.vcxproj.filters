@@ -13,15 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Win32">
-      <UniqueIdentifier>{f5e58d3e-435b-4d3f-9538-62091d7e2ebb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Win32\Source Files">
-      <UniqueIdentifier>{a7056f75-ba72-42be-a767-969a319af6db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Win32\Header Files">
-      <UniqueIdentifier>{c37ad670-b0fc-4acf-a832-18c37e017033}</UniqueIdentifier>
-    </Filter>
     <Filter Include="6502">
       <UniqueIdentifier>{1f7a08b9-a3d5-4519-af4c-92a9cf2b9e21}</UniqueIdentifier>
     </Filter>
@@ -44,9 +35,6 @@
     </ClCompile>
     <ClCompile Include="EEPROM.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Win32\Win32TempestEnvironment.cpp">
-      <Filter>Win32\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="6502\ProcessorStatusWord.cpp">
       <Filter>6502\Source Files</Filter>
@@ -92,14 +80,8 @@
     <ClInclude Include="6502\CPU6502Exception.h">
       <Filter>6502\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Win32\Win32.h">
-      <Filter>Win32\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TempestPokey.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Win32\Win32TempestEnvironment.h">
-      <Filter>Win32\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="6502\ProcessorStatusWord.h">
       <Filter>6502\Header Files</Filter>
