@@ -9,6 +9,7 @@
 #ifndef iTempestSoundIO_h
 #define iTempestSoundIO_h
 
+#include <mutex>
 #include <stdint.h>
 #include <AudioToolbox/AudioQueue.h>
 #include "AbstractTempestIO.h"

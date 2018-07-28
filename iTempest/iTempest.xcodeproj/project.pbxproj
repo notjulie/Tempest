@@ -18,6 +18,7 @@
 		021E39CA1F9DAB1700FFAB2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39C91F9DAB1700FFAB2B /* main.m */; };
 		021E39D41F9DAB1700FFAB2B /* iTempestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39D31F9DAB1700FFAB2B /* iTempestTests.m */; };
 		021E39DF1F9DAB1700FFAB2B /* iTempestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 021E39DE1F9DAB1700FFAB2B /* iTempestUITests.m */; };
+		02408801210CDBCB006EA988 /* AbstractGameEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02408800210CDBCB006EA988 /* AbstractGameEnvironment.cpp */; };
 		024D0E201F9EAAB600DA5FFE /* VectorDataInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */; };
 		024D0E231F9EAAFD00DA5FFE /* CPU6502.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */; };
 		024D0E251F9EAB5100DA5FFE /* SimpleVectorDataInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E241F9EAB5000DA5FFE /* SimpleVectorDataInterpreter.cpp */; };
@@ -27,7 +28,6 @@
 		024D0E2E1F9EAC2300DA5FFE /* AbstractBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E2D1F9EAC2200DA5FFE /* AbstractBus.cpp */; };
 		024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E2F1F9EAC3600DA5FFE /* CPU6502Exception.cpp */; };
 		024D0E321F9EAC4900DA5FFE /* ProcessorStatusWord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E311F9EAC4900DA5FFE /* ProcessorStatusWord.cpp */; };
-		024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E331F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp */; };
 		024D0E361F9EB70A00DA5FFE /* Pokey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E351F9EB70900DA5FFE /* Pokey.cpp */; };
 		024D0E381F9EB76C00DA5FFE /* EEPROM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E371F9EB76C00DA5FFE /* EEPROM.cpp */; };
 		024D0E3D1F9EB7FE00DA5FFE /* TempestDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024D0E3C1F9EB7FE00DA5FFE /* TempestDB.cpp */; };
@@ -114,6 +114,8 @@
 		0235021E204C970A0081C43D /* SoundGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundGenerator.h; path = ../../TempestIO/SoundGenerator.h; sourceTree = "<group>"; };
 		0235021F204C970A0081C43D /* TempestDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempestDB.h; path = ../../TempestIO/TempestDB.h; sourceTree = "<group>"; };
 		02350220204C970B0081C43D /* SoundChannelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannelState.h; path = ../../TempestIO/SoundChannelState.h; sourceTree = "<group>"; };
+		024087FF210CDA1E006EA988 /* AbstractGameEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractGameEnvironment.h; path = ../VectorGame/AbstractGameEnvironment.h; sourceTree = "<group>"; };
+		02408800210CDBCB006EA988 /* AbstractGameEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractGameEnvironment.cpp; path = ../VectorGame/AbstractGameEnvironment.cpp; sourceTree = "<group>"; };
 		024D0DCE1F9DB53E00DA5FFE /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../SQLite/sqlite3.h; sourceTree = "<group>"; };
 		024D0E1F1F9EAAB600DA5FFE /* VectorDataInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorDataInterpreter.cpp; path = ../../TempestIO/Vector/VectorDataInterpreter.cpp; sourceTree = "<group>"; };
 		024D0E221F9EAAFD00DA5FFE /* CPU6502.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502.cpp; path = ../../TempestCPU/6502/CPU6502.cpp; sourceTree = "<group>"; };
@@ -124,7 +126,6 @@
 		024D0E2D1F9EAC2200DA5FFE /* AbstractBus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractBus.cpp; path = ../../TempestCPU/6502/AbstractBus.cpp; sourceTree = "<group>"; };
 		024D0E2F1F9EAC3600DA5FFE /* CPU6502Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Exception.cpp; path = ../../TempestCPU/6502/CPU6502Exception.cpp; sourceTree = "<group>"; };
 		024D0E311F9EAC4900DA5FFE /* ProcessorStatusWord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorStatusWord.cpp; path = ../../TempestCPU/6502/ProcessorStatusWord.cpp; sourceTree = "<group>"; };
-		024D0E331F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractTempestEnvironment.cpp; path = ../../TempestCPU/AbstractTempestEnvironment.cpp; sourceTree = "<group>"; };
 		024D0E351F9EB70900DA5FFE /* Pokey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pokey.cpp; path = ../../TempestCPU/Pokey.cpp; sourceTree = "<group>"; };
 		024D0E371F9EB76C00DA5FFE /* EEPROM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EEPROM.cpp; path = ../../TempestCPU/EEPROM.cpp; sourceTree = "<group>"; };
 		024D0E3C1F9EB7FE00DA5FFE /* TempestDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TempestDB.cpp; path = ../../TempestIO/TempestDB.cpp; sourceTree = "<group>"; };
@@ -292,7 +293,6 @@
 				0257BF2620D0986F00268C3B /* TempestGame.h */,
 				024D0E3E1F9EB85A00DA5FFE /* TempestROMS.cpp */,
 				024D0E371F9EB76C00DA5FFE /* EEPROM.cpp */,
-				024D0E331F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp */,
 				024D0E2B1F9EABD900DA5FFE /* TempestBus.cpp */,
 				024D0E211F9EAADC00DA5FFE /* 6502 */,
 			);
@@ -364,6 +364,8 @@
 		0257BF1520D094E100268C3B /* VectorGame */ = {
 			isa = PBXGroup;
 			children = (
+				02408800210CDBCB006EA988 /* AbstractGameEnvironment.cpp */,
+				024087FF210CDA1E006EA988 /* AbstractGameEnvironment.h */,
 				0257BF1D20D0950100268C3B /* SimpleVector.h */,
 				0257BF1B20D0950100268C3B /* VectorGame.cpp */,
 				0257BF1620D0950000268C3B /* VectorGame.h */,
@@ -576,11 +578,11 @@
 				026417B11FE5C114005D913E /* ButtonView.swift in Sources */,
 				025D84D420706E1000AF9C97 /* RectangleShaderButton.swift in Sources */,
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
-				024D0E341F9EB6A300DA5FFE /* AbstractTempestEnvironment.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
 				025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */,
 				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
 				0215CABD207A493F00A30E7E /* SolidRectangleShader.swift in Sources */,
+				02408801210CDBCB006EA988 /* AbstractGameEnvironment.cpp in Sources */,
 				0215CABF207A4A4600A30E7E /* SolidRectangleShader.metal in Sources */,
 				0257BF2820D0986F00268C3B /* TempestGame.cpp in Sources */,
 				024D0E301F9EAC3600DA5FFE /* CPU6502Exception.cpp in Sources */,
