@@ -37,6 +37,7 @@ AsteroidsBus::AsteroidsBus(AbstractGameEnvironment *_environment)
    // install our timers
    StartTimer(4000, [this]() { SetNMI(); });
    StartTimer(250, [this]() { Tick6KHz(); });
+   StartTimer(15000, [this]() { CheckVectorRAM(); });
 
    // configure address space
    ConfigureAddressSpace();
