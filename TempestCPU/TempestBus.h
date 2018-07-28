@@ -8,6 +8,7 @@
 #ifndef TEMPESTBUS_H
 #define	TEMPESTBUS_H
 
+#include <mutex>
 #include "6502/AbstractBus.h"
 
 #include "EEPROM.h"
@@ -66,7 +67,7 @@ private:
 private:
    AbstractGameEnvironment *environment;
 
-   std::mutex *vectorDataSnapshotMutex;
+   std::mutex vectorDataSnapshotMutex;
    VectorData vectorData;
    VectorData vectorDataSnapshot;
    TempestPokey1 pokey1;

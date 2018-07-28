@@ -10,7 +10,7 @@
 #define iTempest_h
 
 // generic Tempest includes
-#include "AbstractTempestEnvironment.h"
+#include "AbstractGameEnvironment.h"
 #include "SimpleVector.h"
 #include "VectorGameRunner.h"
 #include "TempestGame.h"
@@ -20,7 +20,7 @@
 #include "TempestVector.h"
 
 
-class iOSTempestEnvironment : public AbstractTempestEnvironment
+class iOSTempestEnvironment : public AbstractGameEnvironment
 {
 public:
     virtual std::string GetDatabasePathName(void) { return ":memory:"; }
