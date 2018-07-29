@@ -231,8 +231,8 @@ void AsteroidsBus::WriteThumpOutput(AbstractBus *bus, uint16_t address, uint8_t 
    AsteroidsBus *asteroidsBus = static_cast<AsteroidsBus *>(bus);
 
    SoundChannelState state;
-   state.SetWaveform(Noise4Bit);
-   state.SetFrequency(200 + 10 * (value & 0xF));
+   state.SetWaveform(SquareWave);
+   state.SetChannelFrequency(75 + (value & 0xF));
    if (value & 0x10)
       state.SetVolume(255);
    else

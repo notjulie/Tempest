@@ -43,10 +43,10 @@ class SoundChannelState
 public:
    SoundChannelState(void);
 
-   uint8_t GetFrequency(void) const { return frequency; }
+   float GetChannelFrequency(void) const { return channelFrequency; }
    uint8_t GetVolume(void) const { return volume; }
    Waveform GetWaveform(void) const { return waveform; }
-   void SetFrequency(uint8_t _frequency) { this->frequency = _frequency; }
+   void SetChannelFrequency(float _frequency) { this->channelFrequency = _frequency; }
    void SetVolume(uint8_t _volume) { this->volume = _volume; }
    void SetWaveform(Waveform _waveform) { this->waveform = _waveform; }
 
@@ -54,7 +54,7 @@ public:
    bool operator!=(const SoundChannelState &state) const;
 
 private:
-   uint8_t frequency;
+   float channelFrequency;
    uint8_t volume;
    Waveform waveform;
 };

@@ -54,9 +54,16 @@ void TempestIOStreamProxy::SetSoundChannelState(int channel, SoundChannelState s
    ticksThisPacket = elapsedTicks;
 
    // then we write the channel data
-   stream.Write(channelState[channel].GetFrequency());
-   uint8_t volumeAndWaveform = channelState[channel].GetVolume() & 0x0F;
-   volumeAndWaveform |= ((uint8_t)channelState[channel].GetWaveform()) << 4;
+   WriteSoundChannelState(channelState[channel]);
+}
+
+void TempestIOStreamProxy::WriteSoundChannelState(const SoundChannelState &state)
+{
+   uint16_t encodedFrequency = SoundIOPacketReader::EncodeFrequency(state.GetChannelFrequency());
+   stream.Write(encodedFrequency >> 8);
+   stream.Write((uint8_t)encodedFrequency);
+   uint8_t volumeAndWaveform = state.GetVolume() & 0x0F;
+   volumeAndWaveform |= ((uint8_t)state.GetWaveform()) << 4;
    stream.Write(volumeAndWaveform);
 }
 
@@ -83,12 +90,7 @@ void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
       for (int i = 0; i < 8; ++i)
       {
          if (channelMask & (1 << i))
-         {
-            stream.Write(channelState[i].GetFrequency());
-            uint8_t volumeAndWaveform = channelState[i].GetVolume() & 0x0F;
-            volumeAndWaveform |= ((uint8_t)channelState[i].GetWaveform()) << 4;
-            stream.Write(volumeAndWaveform);
-         }
+            WriteSoundChannelState(channelState[i]);
       }
 
       initialStatesSent = true;

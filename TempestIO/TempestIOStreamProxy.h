@@ -23,6 +23,7 @@ public:
 
 private:
    void StartPacket(void);
+   void WriteSoundChannelState(const SoundChannelState &state);
 
 private:
    PacketStream stream;

@@ -24,7 +24,7 @@
 
 SoundChannelState::SoundChannelState(void)
 {
-   frequency = 0;
+   channelFrequency = 0;
    volume = 0;
    waveform = None;
 }
@@ -38,7 +38,7 @@ bool SoundChannelState::operator==(const SoundChannelState &state) const
 
    // else everything has to match
    return
-      state.frequency == this->frequency &&
+      state.channelFrequency == this->channelFrequency &&
       state.volume == this->volume &&
       state.waveform == this->waveform;
 }

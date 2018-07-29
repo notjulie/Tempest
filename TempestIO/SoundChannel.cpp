@@ -107,7 +107,7 @@ void SoundChannel::UpdateWaveform(void)
 	{
    case Noise5BitHalfFrequency:
 		// 5-bit noise polynomial, half frequency
-		actualFrequency = 64000.0F / (1 + currentState.GetFrequency()) / 2;
+		actualFrequency = currentState.GetChannelFrequency() / 2;
 		pulseWidth = 44100.0F / actualFrequency;
 		noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
 		if (outputCounter > pulseWidth)
@@ -118,7 +118,7 @@ void SoundChannel::UpdateWaveform(void)
 
    case Noise4Bit:
       // 4-bit noise polynomial
-      actualFrequency = 64000.0F / (1 + currentState.GetFrequency());
+      actualFrequency = currentState.GetChannelFrequency();
       pulseWidth = 44100.0F / actualFrequency;
       noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
       if (outputCounter > pulseWidth)
@@ -129,7 +129,7 @@ void SoundChannel::UpdateWaveform(void)
 
    case Noise17Bit:
 		// 17-bit noise polynomial
-      actualFrequency = 64000.0F / (1 + currentState.GetFrequency());
+      actualFrequency = currentState.GetChannelFrequency();
 		pulseWidth = 44100.0F / actualFrequency;
 		noiseCounterCountsPerNoiseSample = 1790000 / actualFrequency;
 		if (outputCounter > pulseWidth)
@@ -140,7 +140,7 @@ void SoundChannel::UpdateWaveform(void)
 
 	case SquareWave:
 		// pure tone
-      actualFrequency = 64000.0F / (1 + currentState.GetFrequency()) / 2;
+      actualFrequency = currentState.GetChannelFrequency() / 2;
 		pulseWidth = 44100.0F / actualFrequency / 2;
 		outputState = true;
 		outputCounter = 0;

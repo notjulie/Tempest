@@ -14,11 +14,6 @@ public:
    SoundChannelState GetInitialSoundChannelState(uint8_t channel);
    bool GetSoundCommand(uint8_t *delay, uint8_t *channel, SoundChannelState *state);
 
-private:
-   static const int ButtonsOffset = 0;
-   static const int ChannelMaskOffset = 1;
-   static const int ChannelDataOffset = 2;
-
 public:
    static const int MaxPacketLength = 1000;
    static const int ClockCyclesPerTick = 250;
@@ -31,6 +26,18 @@ public:
    // we try to make sure to send the control panel info 50 times a second even if
    // it hasn't changed
    static const int MaxResponsePacketPeriod = 1500000 / 50;
+
+public:
+   static float DecodeFrequency(uint16_t encodedFrequency);
+   static uint16_t EncodeFrequency(float encodedFrequency);
+
+private:
+   void ReadSoundChannelState(SoundChannelState *state);
+
+private:
+   static const int ButtonsOffset = 0;
+   static const int ChannelMaskOffset = 1;
+   static const int ChannelDataOffset = 2;
 
 private:
    const uint8_t *packet;

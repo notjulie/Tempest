@@ -60,7 +60,7 @@ void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
       {
          uint8_t channel = (uint8_t)(address / 2);
          soundOutput->SetTime(busTime);
-         soundChannelState[channel].SetFrequency(value);
+         soundChannelState[channel].SetChannelFrequency(64000.0F / (1 + value));
          soundOutput->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
       }
 		break;
