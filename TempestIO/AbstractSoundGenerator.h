@@ -38,7 +38,7 @@ protected:
    virtual void ProcessTimeLapse(uint64_t clockCycles) = 0;
 
 private:
-   uint64_t cpuTime = 0;
+   uint64_t cpuTime;
 };
 
 

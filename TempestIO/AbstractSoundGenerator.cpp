@@ -5,6 +5,7 @@
 
 AbstractSoundGenerator::AbstractSoundGenerator(void)
 {
+	cpuTime = 0;
 }
 
 AbstractSoundGenerator::~AbstractSoundGenerator(void)

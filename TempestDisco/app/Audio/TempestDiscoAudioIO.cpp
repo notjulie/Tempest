@@ -14,8 +14,6 @@ TempestDiscoAudioIO	IO;
 
 TempestDiscoAudioIO::TempestDiscoAudioIO(void)
 {
-	// clear
-	cpuTime = 0;
 }
 
 void TempestDiscoAudioIO::SetSoundChannelState(int channel, SoundChannelState state)
@@ -23,10 +21,9 @@ void TempestDiscoAudioIO::SetSoundChannelState(int channel, SoundChannelState st
 	DWS.SetChannelState(channel, state);
 }
 
-void TempestDiscoAudioIO::SetTime(uint64_t clockCycles)
+void TempestDiscoAudioIO::ProcessTimeLapse(uint64_t elapsedCycles)
 {
-	DWS.Delay((int)(clockCycles - cpuTime));
-   cpuTime = clockCycles;
+	DWS.Delay((int)elapsedCycles);
 }
 
 uint8_t TempestDiscoAudioIO::GetButtons(void)
