@@ -12,19 +12,21 @@
 #include <mutex>
 #include <stdint.h>
 #include <AudioToolbox/AudioQueue.h>
-#include "AbstractTempestIO.h"
+#include "AbstractSoundGenerator.h"
 #include "Cpp11WaveStreamer.h"
 #include "SoundChannelState.h"
 #include "WaveSoundDriver.h"
 
-class iTempestSoundOutput : public AbstractTempestSoundOutput, private WaveSoundDriver
+class iTempestSoundOutput : public AbstractSoundGenerator, private WaveSoundDriver
 {
 public:
    iTempestSoundOutput(void);
    virtual ~iTempestSoundOutput(void);
 
    virtual void SetSoundChannelState(int channel, SoundChannelState state);
-   virtual void SetTime(uint64_t clockCycles);
+   
+protected:
+   virtual void ProcessTimeLapse(uint64_t clockCycles);
    
 private:
     virtual void FillNextBuffer(WaveSoundSource *streamer);

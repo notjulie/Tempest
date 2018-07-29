@@ -79,11 +79,10 @@ void iTempestSoundOutput::SetSoundChannelState(int channel, SoundChannelState st
     waveStreamer->SetChannelState(channel, state);
 }
 
-void iTempestSoundOutput::SetTime(uint64_t clockCycles)
+void iTempestSoundOutput::ProcessTimeLapse(uint64_t elapsedClockCycles)
 {
-    int elapsed = (int)(clockCycles - currentCPUTime);
-    waveStreamer->Delay(elapsed);
-    currentCPUTime = clockCycles;
+    waveStreamer->Delay((int)elapsedClockCycles);
+    currentCPUTime += elapsedClockCycles;
 }
 
 
