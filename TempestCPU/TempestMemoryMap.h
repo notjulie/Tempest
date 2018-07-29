@@ -18,12 +18,13 @@ const uint16_t VECTOR_ROM_BASE = 0x3000;
 const uint16_t VECTOR_ROM_SIZE = 0x1000;
 
 // peripheral addresses
+const uint16_t EEPROM_WRITE_BASE = 0x6000;
+const uint16_t EEPROM_WRITE_END = 0x603F;
+const uint16_t EEPROM_READ = 0x6050;
 const uint16_t POKEY1_BASE = 0x60C0;
 const uint16_t POKEY1_END = 0x60CF;
 const uint16_t POKEY2_BASE = 0x60D0;
 const uint16_t POKEY2_END = 0x60DF;
-const uint16_t EEPROM_WRITE_BASE = 0x6000;
-const uint16_t EEPROM_WRITE_END = 0x603F;
 const uint16_t MATHBOX_WRITE_BASE = 0x6080;
 const uint16_t MATHBOX_WRITE_END = 0x609F;
 

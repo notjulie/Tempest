@@ -76,9 +76,6 @@ uint8_t TempestBus::ReadIOByte(uint16_t address)
       case 0x6040:
          return mathBox.GetStatus();
 
-      case 0x6050:
-         return eeprom.ReadByte();
-
       case 0x6060:
          return mathBox.ReadLow();
 
@@ -110,13 +107,6 @@ void TempestBus::GetVectorData(VectorData &_vectorData)
 
 void TempestBus::WriteIOByte(uint16_t address, uint8_t value)
 {
-   // EEPROM
-   if (address >= EEPROM_WRITE_BASE && address <= EEPROM_WRITE_END)
-   {
-		eeprom.WriteByte((uint16_t)(address - EEPROM_WRITE_BASE), value);
-      return;
-   }
-
    if (address >= MATHBOX_WRITE_BASE && address <= MATHBOX_WRITE_END)
    {
       mathBox.Write((uint8_t)(address - MATHBOX_WRITE_BASE), value);
@@ -255,10 +245,10 @@ void TempestBus::ConfigureAddressSpace(void)
    for (uint16_t address = POKEY2_BASE; address <= POKEY2_END; ++address)
       ConfigureAddress(address, 0, ReadPokey, WritePokey);
 
-   // EEPROM
+   // EEPROM... just treat it as RAM, because we don't use it
    for (uint16_t address = EEPROM_WRITE_BASE; address <= EEPROM_WRITE_END; ++address)
-      ConfigureAddress(address, 0, ReadAddressInvalid, WriteEEPROM);
-   ConfigureAddress(0x6050, 0, ReadEEPROM, WriteAddressInvalid);
+      ConfigureAddressAsRAM(address);
+   ConfigureAddressAsRAM(EEPROM_READ);
 
    // Mathbox
    for (uint16_t address = MATHBOX_WRITE_BASE; address <= MATHBOX_WRITE_END; ++address)
@@ -274,7 +264,6 @@ void TempestBus::ConfigureAddressSpace(void)
       0x5000,
       0x5800,
       0x6040,
-      0x6050,
       0x6060,
       0x6070,
       0x60E0
@@ -298,12 +287,6 @@ uint8_t TempestBus::ReadColorRAM(AbstractBus *bus, uint16_t address)
 {
    TempestBus *tempestBus = static_cast<TempestBus *>(bus);
    return tempestBus->vectorData.ReadColorRAM((unsigned)(address - COLOR_RAM_BASE));
-}
-
-uint8_t TempestBus::ReadEEPROM(AbstractBus *bus, uint16_t)
-{
-   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
-   return tempestBus->eeprom.ReadByte();
 }
 
 uint8_t TempestBus::ReadIO(AbstractBus *bus, uint16_t address)
@@ -332,12 +315,6 @@ void TempestBus::WriteColorRAM(AbstractBus *bus, uint16_t address, uint8_t value
 {
    TempestBus *tempestBus = static_cast<TempestBus *>(bus);
    tempestBus->vectorData.WriteColorRAM((uint16_t)(address - COLOR_RAM_BASE), value);
-}
-
-void TempestBus::WriteEEPROM(AbstractBus *bus, uint16_t address, uint8_t value)
-{
-   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
-   tempestBus->eeprom.WriteByte((uint16_t)(address - EEPROM_WRITE_BASE), value);
 }
 
 void TempestBus::WriteIO(AbstractBus *bus, uint16_t address, uint8_t value)

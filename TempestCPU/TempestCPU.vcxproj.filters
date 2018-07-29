@@ -33,9 +33,6 @@
     <ClCompile Include="6502\CPU6502Exception.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EEPROM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="6502\ProcessorStatusWord.cpp">
       <Filter>6502\Source Files</Filter>
     </ClCompile>
@@ -62,9 +59,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EEPROM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TempestBus.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -11,7 +11,6 @@
 #include <mutex>
 #include "6502/AbstractBus.h"
 
-#include "EEPROM.h"
 #include "MathBox.h"
 #include "TempestMemoryMap.h"
 #include "TempestPokey.h"
@@ -48,12 +47,10 @@ private:
 
 private:
    static uint8_t ReadColorRAM(AbstractBus *bus, uint16_t address);
-   static uint8_t ReadEEPROM(AbstractBus *bus, uint16_t address);
    static uint8_t ReadIO(AbstractBus *bus, uint16_t address);
    static uint8_t ReadPokey(AbstractBus *bus, uint16_t address);
    static uint8_t ReadVectorRAM(AbstractBus *bus, uint16_t address);
    static void WriteColorRAM(AbstractBus *bus, uint16_t address, uint8_t value);
-   static void WriteEEPROM(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WriteIO(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WriteMathBoxValue(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WritePokey(AbstractBus *bus, uint16_t address, uint8_t value);
@@ -72,7 +69,6 @@ private:
    VectorData vectorDataSnapshot;
    TempestPokey1 pokey1;
    TempestPokey2 pokey2;
-   EEPROM eeprom;
    MathBox mathBox;
 
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;

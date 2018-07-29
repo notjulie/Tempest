@@ -24,7 +24,6 @@
     <ClCompile Include="6502\CPU6502Exception.cpp" />
     <ClCompile Include="6502\CPU6502Runner.cpp" />
     <ClCompile Include="6502\ProcessorStatusWord.cpp" />
-    <ClCompile Include="EEPROM.cpp" />
     <ClCompile Include="MathBox.cpp" />
     <ClCompile Include="Pokey.cpp" />
     <ClCompile Include="TempestCPU.Headers.cpp">
@@ -43,7 +42,6 @@
     <ClInclude Include="6502\CPU6502Exception.h" />
     <ClInclude Include="6502\CPU6502Runner.h" />
     <ClInclude Include="6502\ProcessorStatusWord.h" />
-    <ClInclude Include="EEPROM.h" />
     <ClInclude Include="MathBox.h" />
     <ClInclude Include="Pokey.h" />
     <ClInclude Include="TempestCPU.Headers.h" />
