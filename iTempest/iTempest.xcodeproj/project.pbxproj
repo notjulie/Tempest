@@ -50,6 +50,7 @@
 		027030B81FB88F8700A810B8 /* cTempest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027030B61FB88F8700A810B8 /* cTempest.cpp */; };
 		0278563C2054503000593A8E /* TempestViewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278563B2054503000593A8E /* TempestViewRenderer.swift */; };
 		0278563E2054588400593A8E /* SpinnerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278563D2054588400593A8E /* SpinnerRenderer.swift */; };
+		0279D815210DF0F7007B3BE5 /* AbstractSoundGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0279D814210DF0F7007B3BE5 /* AbstractSoundGenerator.cpp */; };
 		02825C8720026F130032BE41 /* Spinner.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02825C8620026F130032BE41 /* Spinner.metal */; };
 		0285F33E1FBBDEC30004B34F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F33D1FBBDEC30004B34F /* MainViewController.swift */; };
 		029AA0991FBCFFAB00762BC8 /* TempestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029AA0981FBCFFAB00762BC8 /* TempestView.swift */; };
@@ -164,6 +165,7 @@
 		027030B71FB88F8700A810B8 /* cTempest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cTempest.h; sourceTree = "<group>"; };
 		0278563B2054503000593A8E /* TempestViewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempestViewRenderer.swift; sourceTree = "<group>"; };
 		0278563D2054588400593A8E /* SpinnerRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerRenderer.swift; sourceTree = "<group>"; };
+		0279D814210DF0F7007B3BE5 /* AbstractSoundGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractSoundGenerator.cpp; path = ../../TempestIO/AbstractSoundGenerator.cpp; sourceTree = "<group>"; };
 		02825C8620026F130032BE41 /* Spinner.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Spinner.metal; sourceTree = "<group>"; };
 		0285F33A1FBBCE290004B34F /* iTempest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTempest-Bridging-Header.h"; sourceTree = "<group>"; };
 		0285F33D1FBBDEC30004B34F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 		024D0E1D1F9EAA7700DA5FFE /* TempestIO */ = {
 			isa = PBXGroup;
 			children = (
+				0279D814210DF0F7007B3BE5 /* AbstractSoundGenerator.cpp */,
 				0235021C204C970A0081C43D /* AbstractTempestIO.h */,
 				029AA0A51FC1269E00762BC8 /* Cpp11WaveStreamer.cpp */,
 				0235021A204C970A0081C43D /* Cpp11WaveStreamer.h */,
@@ -580,6 +583,7 @@
 				029AA09F1FBFBBDF00762BC8 /* SoundChannel.cpp in Sources */,
 				024D0E471F9EB9B700DA5FFE /* SoundChannelState.cpp in Sources */,
 				025D84D62071320400AF9C97 /* AbstractMetalRenderer.swift in Sources */,
+				0279D815210DF0F7007B3BE5 /* AbstractSoundGenerator.cpp in Sources */,
 				026A1B681FC1ED0D00EEFF34 /* iosException.cpp in Sources */,
 				0215CABD207A493F00A30E7E /* SolidRectangleShader.swift in Sources */,
 				02408801210CDBCB006EA988 /* AbstractGameEnvironment.cpp in Sources */,
