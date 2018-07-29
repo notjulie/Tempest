@@ -8,8 +8,9 @@
 #ifndef POKEY_H
 #define	POKEY_H
 
+#include "SoundChannelState.h"
 class AbstractArcadeGameControlPanelReader;
-class AbstractTempestSoundOutput;
+class AbstractSoundGenerator;
 
 #ifdef _WIN32
    #pragma warning(push)
@@ -22,7 +23,7 @@ class Pokey
 public:
 	Pokey(int baseSoundChannel);
 	virtual ~Pokey(void);
-   void SetTempestIO(AbstractTempestSoundOutput *_soundOutput) { this->soundOutput = _soundOutput; }
+   void SetTempestIO(AbstractSoundGenerator *_soundOutput) { this->soundOutput = _soundOutput; }
    void SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel) { this->controlPanel = _controlPanel; }
 
 	uint8_t ReadByte(uint16_t address);
@@ -31,7 +32,7 @@ public:
 	virtual uint8_t GetALLPOT(void) { return 0; }
 
 protected:
-   AbstractTempestSoundOutput * GetSoundOutput(void) { return soundOutput; }
+   AbstractSoundGenerator * GetSoundOutput(void) { return soundOutput; }
    AbstractArcadeGameControlPanelReader *GetControlPanel(void) { return controlPanel; }
 
 private:
@@ -39,7 +40,7 @@ private:
    uint8_t SKCTLS = 0;
    int baseSoundChannel = 0;
    SoundChannelState soundChannelState[4];
-	AbstractTempestSoundOutput *soundOutput = nullptr;
+   AbstractSoundGenerator *soundOutput = nullptr;
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
 };
 

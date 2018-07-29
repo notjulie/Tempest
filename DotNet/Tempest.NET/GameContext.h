@@ -18,12 +18,12 @@ public:
    GameContext(void) {}
    virtual ~GameContext(void) {}
 
-   AbstractTempestSoundOutput *GetSoundOutput(void) const { return soundOutput; }
+   AbstractSoundGenerator *GetSoundOutput(void) const { return soundOutput; }
    AbstractArcadeGameControlPanelReader *GetControlPanelReader(void) const { return controlPanelReader; }
    AbstractArcadeGameControlPanelWriter *GetControlPanelWriter(void) const { return controlPanelWriter; }
 
 protected:
-   AbstractTempestSoundOutput * soundOutput = nullptr;
+   AbstractSoundGenerator * soundOutput = nullptr;
    AbstractArcadeGameControlPanelReader *controlPanelReader = nullptr;
    AbstractArcadeGameControlPanelWriter *controlPanelWriter = nullptr;
 };

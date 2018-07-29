@@ -37,7 +37,7 @@ public:
    void GetVectorData(VectorData &vectorData);
    void SetDemoMode(void) { demoMode = true; }
    void SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel);
-   void SetSoundOutput(AbstractTempestSoundOutput *soundOutput);
+   void SetSoundOutput(AbstractSoundGenerator *soundOutput);
 
 private:
    void  ConfigureAddressSpace(void);
@@ -76,7 +76,7 @@ private:
    MathBox mathBox;
 
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
-   AbstractTempestSoundOutput *soundOutput = nullptr;
+   AbstractSoundGenerator *soundOutput = nullptr;
 
    uint64_t lastPlayer2ButtonDownTime = 0;
    uint64_t lastWatchdogTime = 0;

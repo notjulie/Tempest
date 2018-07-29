@@ -64,7 +64,7 @@ void VectorMultiGame::SetControlPanel(AbstractArcadeGameControlPanelReader *_con
       games[i]->SetControlPanel(controlPanel);
 }
 
-void VectorMultiGame::SetSoundOutput(AbstractTempestSoundOutput *soundOutput)
+void VectorMultiGame::SetSoundOutput(AbstractSoundGenerator *soundOutput)
 {
    for (unsigned i = 0; i < games.size(); ++i)
       games[i]->SetSoundOutput(soundOutput);

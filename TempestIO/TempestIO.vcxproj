@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractSoundGenerator.h" />
     <ClInclude Include="AbstractTempestIO.h" />
     <ClInclude Include="AbstractTempestStream.h" />
     <ClInclude Include="Cpp11WaveStreamer.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="WaveStreamer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractSoundGenerator.cpp" />
     <ClCompile Include="Cpp11WaveStreamer.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="PacketStream.cpp" />

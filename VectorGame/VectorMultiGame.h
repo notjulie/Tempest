@@ -16,7 +16,7 @@ public:
 
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel);
-   virtual void SetSoundOutput(AbstractTempestSoundOutput *soundOutput);
+   virtual void SetSoundOutput(AbstractSoundGenerator *soundOutput);
    virtual void SingleStep(void);
    virtual void Start(void);
 

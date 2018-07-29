@@ -12,7 +12,9 @@
 #include "stdafx.h"
 #include <memory.h>
 
+#include "TempestIO/AbstractSoundGenerator.h"
 #include "TempestIO/AbstractTempestIO.h"
+#include "TempestIO/SoundChannelState.h"
 
 #include "AbstractGameEnvironment.h"
 #include "TempestCPU/TempestException.h"
@@ -72,7 +74,7 @@ void AsteroidsBus::SetNMITimer(void)
 void AsteroidsBus::Tick6KHz(void)
 {
    // give the sound output its heartbeat
-   soundOutput->SetTime(GetTotalClockCycles());
+   soundOutput->SetCPUTime(GetTotalClockCycles());
 }
 
 void AsteroidsBus::ConfigureAddressSpace(void)
@@ -232,12 +234,12 @@ void AsteroidsBus::WriteThumpOutput(AbstractBus *bus, uint16_t address, uint8_t 
 
    SoundChannelState state;
    state.SetWaveform(SquareWave);
-   state.SetChannelFrequency(75 + (value & 0xF));
+   state.SetChannelFrequency(75.0F + (value & 0xF));
    if (value & 0x10)
       state.SetVolume(255);
    else
       state.SetVolume(0);
-   asteroidsBus->soundOutput->SetTime(asteroidsBus->GetTotalClockCycles());
+   asteroidsBus->soundOutput->SetCPUTime(asteroidsBus->GetTotalClockCycles());
    asteroidsBus->soundOutput->SetSoundChannelState(SOUND_CHANNEL_THUMP, state);
 }
 

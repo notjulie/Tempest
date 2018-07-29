@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 
+#include "AbstractSoundGenerator.h"
 #include "AbstractTempestIO.h"
 #include "AbstractTempestStream.h"
 #include "SoundIOPacket.h"
@@ -10,7 +11,7 @@
 
 TempestIOStreamListener::TempestIOStreamListener(
          AbstractTempestStream *_stream,
-         AbstractTempestSoundOutput *soundOutput,
+         AbstractSoundGenerator *soundOutput,
          AbstractArcadeGameControlPanelReader *controlPanel)
    :
    stream(_stream)
@@ -56,14 +57,14 @@ void TempestIOStreamListener::Service(void)
          while (packet.GetSoundCommand(&delay, &channel, &state))
          {
             ticksThisPacket += delay;
-            soundOutput->SetTime(lastPacketCpuTime + ticksThisPacket * SoundIOPacketReader::ClockCyclesPerTick);
+            soundOutput->SetCPUTime(lastPacketCpuTime + ticksThisPacket * SoundIOPacketReader::ClockCyclesPerTick);
             soundOutput->SetSoundChannelState(channel, state);
          }
       }
 
       // update our time
       lastPacketCpuTime += SoundIOPacketReader::ClockCyclesPerPacket;
-      soundOutput->SetTime(lastPacketCpuTime);
+      soundOutput->SetCPUTime(lastPacketCpuTime);
    }
 
    // send a message with control panel information if anything

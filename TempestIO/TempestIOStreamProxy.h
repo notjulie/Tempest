@@ -2,6 +2,7 @@
 #ifndef TEMPESTIOSTREAMPROXY_H
 #define TEMPESTIOSTREAMPROXY_H
 
+#include "AbstractSoundGenerator.h"
 #include "AbstractTempestIO.h"
 #include "PacketStream.h"
 #include "SoundIOPacket.h"
@@ -9,7 +10,7 @@
 class AbstractTempestStream;
 
 class TempestIOStreamProxy :
-   public AbstractTempestSoundOutput,
+   public AbstractSoundGenerator,
    public AbstractArcadeGameControlPanelReader 
 {
 public:
@@ -17,9 +18,11 @@ public:
 
 	virtual void SetSoundChannelState(int channel, SoundChannelState state);
    virtual void SetButtonLED(ButtonFlag button, bool value);
-   virtual void SetTime(uint64_t clockCycles);
    virtual uint8_t GetButtons(void) { return buttons; }
    virtual uint8_t GetEncoder(void) { return encoder; }
+
+protected:
+   virtual void ProcessTimeLapse(uint64_t clockCycles);
 
 private:
    void StartPacket(void);

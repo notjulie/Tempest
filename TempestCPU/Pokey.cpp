@@ -1,7 +1,7 @@
 
 #include "TempestCPU.Headers.h"
 
-#include "AbstractTempestIO.h"
+#include "AbstractSoundGenerator.h"
 
 #include "TempestException.h"
 
@@ -59,7 +59,7 @@ void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
    case 0x06:
       {
          uint8_t channel = (uint8_t)(address / 2);
-         soundOutput->SetTime(busTime);
+         soundOutput->SetCPUTime(busTime);
          soundChannelState[channel].SetChannelFrequency(64000.0F / (1 + value));
          soundOutput->SetSoundChannelState(baseSoundChannel + channel, soundChannelState[channel]);
       }
@@ -71,7 +71,7 @@ void Pokey::WriteByte(uint16_t address, uint8_t value, uint64_t busTime)
    case 0x07:
       {
          uint8_t channel = (uint8_t)(address / 2);
-         soundOutput->SetTime(busTime);
+         soundOutput->SetCPUTime(busTime);
          soundChannelState[channel].SetVolume((uint8_t)(value & 0xF));
          switch (value >> 4)
          {

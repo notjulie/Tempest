@@ -67,13 +67,13 @@ void TempestIOStreamProxy::WriteSoundChannelState(const SoundChannelState &state
    stream.Write(volumeAndWaveform);
 }
 
-void TempestIOStreamProxy::SetTime(uint64_t clockCycles)
+void TempestIOStreamProxy::ProcessTimeLapse(uint64_t elapsedCycles)
 {
    // update our clock
-   cpuTime = clockCycles;
+   cpuTime += elapsedCycles;
 
    // figure out how much time has elapsed since packet start
-   int elapsedTicks = (int)((clockCycles - lastSendTime) / SoundIOPacketReader::ClockCyclesPerTick);
+   int elapsedTicks = (int)((cpuTime - lastSendTime) / SoundIOPacketReader::ClockCyclesPerTick);
 
    // if we are no longer in the first tick of the packet it's time to send
    // the packet's initial state

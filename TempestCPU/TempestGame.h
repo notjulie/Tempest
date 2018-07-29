@@ -40,7 +40,7 @@ public:
    // base class overrides
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
-   virtual void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
+   virtual void SetSoundOutput(AbstractSoundGenerator *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
    virtual CPU6502Runner *GetCPURunner(void) { return &cpuRunner; }
    virtual void SingleStep(void) { cpuRunner.SingleStep(); }
 

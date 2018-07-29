@@ -1,9 +1,10 @@
 
 #include "TempestCPU.Headers.h"
 
+#include "AbstractGameEnvironment.h"
+#include "AbstractSoundGenerator.h"
 #include "AbstractTempestIO.h"
 
-#include "AbstractGameEnvironment.h"
 #include "TempestException.h"
 #include "TempestMemoryMap.h"
 #include "TempestROMS.h"
@@ -163,7 +164,7 @@ void TempestBus::WriteIOByte(uint16_t address, uint8_t value)
 }
 
 
-void TempestBus::SetSoundOutput(AbstractTempestSoundOutput *_soundOutput)
+void TempestBus::SetSoundOutput(AbstractSoundGenerator *_soundOutput)
 {
    this->soundOutput = _soundOutput;
    pokey1.SetTempestIO(_soundOutput);
@@ -184,7 +185,7 @@ void TempestBus::Tick6KHz(void)
    clock3KHzIsHigh = !clock3KHzIsHigh;
 
    // give the sound output its heartbeat
-   soundOutput->SetTime(GetTotalClockCycles());
+   soundOutput->SetCPUTime(GetTotalClockCycles());
 }
 
 void TempestBus::Tick250Hz(void)

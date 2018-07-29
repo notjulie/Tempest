@@ -3,6 +3,7 @@
 #define SOUNDIOPACKET_H
 
 #include "AbstractTempestIO.h"
+#include "SoundChannelState.h"
 
 class PacketStream;
 

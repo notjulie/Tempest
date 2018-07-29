@@ -2,8 +2,6 @@
 #ifndef ABSTRACTTEMPESTIO_H
 #define ABSTRACTTEMPESTIO_H
 
-#include "SoundChannel.h"
-
 #ifdef _WIN32
 #pragma warning(push)
 #pragma warning(disable : 4820)	// padding in structures
@@ -79,25 +77,6 @@ private:
    uint8_t buttons;
    uint8_t buttonLEDs;
    uint8_t encoder;
-};
-
-
-/// <summary>
-/// Abstract class that represents a Tempest's Pokey sound generators
-/// </summary>
-class AbstractTempestSoundOutput
-{
-public:
-   virtual ~AbstractTempestSoundOutput(void) {}
-
-	virtual void SetSoundChannelState(int channel, SoundChannelState state) = 0;
-	virtual void SetTime(uint64_t clockCycles) = 0;
-
-   void AllSoundOff(void) {
-      SoundChannelState state;
-      for (int i=0; i<8; ++i)
-         SetSoundChannelState(i, state);
-   }
 };
 
 

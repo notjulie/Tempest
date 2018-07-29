@@ -5,14 +5,14 @@
 #include "PacketStream.h"
 #include "SoundIOPacket.h"
 
-class AbstractTempestSoundOutput;
+class AbstractSoundGenerator;
 class AbstractTempestStream;
 
 class TempestIOStreamListener {
 public:
    TempestIOStreamListener(
       AbstractTempestStream *stream,
-      AbstractTempestSoundOutput *tempestIO,
+      AbstractSoundGenerator *tempestIO,
       AbstractArcadeGameControlPanelReader *controlPanel
    );
 
@@ -20,7 +20,7 @@ public:
 
 private:
    PacketStream stream;
-   AbstractTempestSoundOutput *soundOutput;
+   AbstractSoundGenerator *soundOutput;
    AbstractArcadeGameControlPanelReader *controlPanel;
 
    uint8_t encoder;

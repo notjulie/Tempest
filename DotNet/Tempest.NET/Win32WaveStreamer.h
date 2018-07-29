@@ -6,6 +6,7 @@
 #include "Win32WaveBuffer.h"
 
 class Cpp11WaveStreamer;
+class SoundChannelState;
 class WaveSoundSource;
 
 #pragma warning(push)

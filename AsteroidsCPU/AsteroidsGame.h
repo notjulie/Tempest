@@ -24,7 +24,7 @@ public:
 
 	// simple dispatches to the AsteroidsBus object
    void     SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { asteroidsBus.SetControlPanel(controlPanel); }
-   void     SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { asteroidsBus.SetSoundOutput(soundOutput); }
+   void     SetSoundOutput(AbstractSoundGenerator *soundOutput) { asteroidsBus.SetSoundOutput(soundOutput); }
 
    // base class overrides
    virtual void GetAllVectors(std::vector<SimpleVector> &vectors);

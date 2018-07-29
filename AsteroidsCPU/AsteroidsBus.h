@@ -19,7 +19,7 @@
 // forward declarations
 class AbstractArcadeGameControlPanelReader;
 class AbstractGameEnvironment;
-class AbstractTempestSoundOutput;
+class AbstractSoundGenerator;
 class AsteroidsVectorInterpreter;
 namespace std {
    // CLR code can't include <mutex>
@@ -42,7 +42,7 @@ public:
 
    void GetVectorData(AsteroidsVectorInterpreter &vectorInterpreter);
    bool IsVectorGo(void) const;
-   void SetSoundOutput(AbstractTempestSoundOutput *soundOutput) { this->soundOutput = soundOutput; }
+   void SetSoundOutput(AbstractSoundGenerator *soundOutput) { this->soundOutput = soundOutput; }
    void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { this->controlPanel = controlPanel; }
 
 private:
@@ -79,7 +79,7 @@ private:
 
 private:
    AbstractGameEnvironment *environment = nullptr;
-   AbstractTempestSoundOutput *soundOutput = nullptr;
+   AbstractSoundGenerator *soundOutput = nullptr;
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
 
    uint8_t bankedRAM[0x200];

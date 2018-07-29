@@ -1,5 +1,6 @@
 
 #include "Tempest.NET.h"
+#include "SoundChannelState.h"
 #include "Win32TempestIO.h"
 
 
@@ -16,10 +17,9 @@ void Win32TempestSoundIO::SetSoundChannelState(int channel, SoundChannelState st
 	waveStreamer.SetChannelState(channel, state);
 }
 
-void Win32TempestSoundIO::SetTime(uint64_t clockCycles)
+void Win32TempestSoundIO::ProcessTimeLapse(uint64_t elapsedCycles)
 {
-	waveStreamer.Delay((int)(clockCycles - cpuTime));
-   cpuTime = clockCycles;
+	waveStreamer.Delay((int)(elapsedCycles));
 }
 
 
