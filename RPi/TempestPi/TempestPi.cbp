@@ -117,6 +117,7 @@
 		<Unit filename="../../TempestCPU/TempestROMS.cpp" />
 		<Unit filename="../../TempestCPU/TempestRunner.h" />
 		<Unit filename="../../TempestCPU/stdafx.h" />
+		<Unit filename="../../TempestIO/AbstractSoundGenerator.cpp" />
 		<Unit filename="../../TempestIO/AbstractTempestIO.h" />
 		<Unit filename="../../TempestIO/PacketStream.cpp" />
 		<Unit filename="../../TempestIO/SoundChannelState.cpp" />

@@ -53,7 +53,8 @@ bool SoundIOPacketReader::GetSoundCommand(uint8_t *delay, uint8_t *channel, Soun
 
 void SoundIOPacketReader::ReadSoundChannelState(SoundChannelState *state)
 {
-   uint16_t encodedFrequency = (packet[offset++] << 8) + packet[offset++];
+   uint16_t encodedFrequency = packet[offset++] << 8;
+   encodedFrequency += packet[offset++];
    state->SetChannelFrequency(DecodeFrequency(encodedFrequency));
    uint8_t volumeAndWaveform = packet[offset++];
    state->SetVolume(volumeAndWaveform & 0xF);
