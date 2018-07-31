@@ -1,3 +1,13 @@
+// ====================================================================
+// Asteroids emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the class that emulates the vector state machine, which
+//    transfroms the vector data into a set of lines to draw.
+// ====================================================================
 
 #include "stdafx.h"
 #include <memory.h>
@@ -78,7 +88,6 @@ bool AsteroidsVectorInterpreter::SingleStep(void)
          dy = -(dy & ~0x400);
 
       int intensity = GetAt(3) >> 4;
-
       Draw(dx, dy, intensity, 1<<(9 - opCode));
 
       PC += 4;
@@ -219,7 +228,7 @@ void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int s
    vector.startY = (int16_t)startY;
    vector.endX = (int16_t)endX;
    vector.endY = (int16_t)endY;
-   vector.r = vector.g = vector.b = 0xFF;
+   vector.r = vector.g = vector.b = (uint8_t)(0xFF * intensity / 15);
 
    if (intensity != 0)
       vectors.push_back(vector);
