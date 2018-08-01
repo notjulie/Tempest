@@ -12,6 +12,7 @@
 #ifndef ASTEROIDSBUS_H
 #define	ASTEROIDSBUS_H
 
+#include <mutex>
 #include "TempestCPU/6502/AbstractBus.h"
 #include "TempestIO/Vector/VectorData.h"
 
@@ -21,10 +22,6 @@ class AbstractArcadeGameControlPanelReader;
 class AbstractGameEnvironment;
 class AbstractSoundGenerator;
 class AsteroidsVectorInterpreter;
-namespace std {
-   // CLR code can't include <mutex>
-   class mutex;
-};
 
 
 #ifdef _WIN32
@@ -85,7 +82,7 @@ private:
    uint8_t bankedRAM[0x200];
 
    bool vectorGo = false;
-   std::mutex *vectorDataSnapshotMutex = nullptr;
+   std::mutex vectorDataSnapshotMutex;
    uint8_t vectorRAM[0x800];
    uint8_t vectorRAMSnapshot[0x800];
    uint64_t lastVectorRAMWrite = 0;

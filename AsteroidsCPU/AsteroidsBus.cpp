@@ -33,9 +33,6 @@ AsteroidsBus::AsteroidsBus(AbstractGameEnvironment *_environment)
    // clear
    memset(this->vectorRAM, 0, sizeof(this->vectorRAM));
 
-   // allocate
-   vectorDataSnapshotMutex = new std::mutex();
-
    // install our timers
    StartTimer(4000, [this]() { SetNMI(); });
    StartTimer(250, [this]() { Tick6KHz(); });
@@ -47,13 +44,12 @@ AsteroidsBus::AsteroidsBus(AbstractGameEnvironment *_environment)
 
 AsteroidsBus::~AsteroidsBus(void)
 {
-   delete vectorDataSnapshotMutex, vectorDataSnapshotMutex = nullptr;
 }
 
 
 void AsteroidsBus::GetVectorData(AsteroidsVectorInterpreter &vectorData)
 {
-   std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+   std::lock_guard<std::mutex> lock(vectorDataSnapshotMutex);
    vectorData.SetVectorRAM(vectorRAMSnapshot);
 }
 
@@ -180,7 +176,7 @@ void AsteroidsBus::CheckVectorRAM(void)
       uint64_t now = GetTotalClockCycles();
       if (now - lastVectorRAMWrite > 800)
       {
-         std::lock_guard<std::mutex> lock(*vectorDataSnapshotMutex);
+         std::lock_guard<std::mutex> lock(vectorDataSnapshotMutex);
 
          memcpy(vectorRAMSnapshot, vectorRAM, sizeof(vectorRAM));
          lastVectorSnapshotTime = lastVectorRAMWrite;
