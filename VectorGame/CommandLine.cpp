@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include "CommandLine.h"
 
 CommandLine::CommandLine(const std::string &commandString)

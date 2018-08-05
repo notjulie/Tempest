@@ -155,7 +155,7 @@
     <ClInclude Include="SoundChannel.h" />
     <ClInclude Include="SoundGenerator.h" />
     <ClInclude Include="SoundIOPacket.h" />
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TempestIO.Headers.h" />
     <ClInclude Include="TempestDB.h" />
     <ClInclude Include="TempestIOStreamListener.h" />
     <ClInclude Include="TempestIOStreamProxy.h" />
@@ -175,11 +175,15 @@
     <ClCompile Include="SoundChannelState.cpp" />
     <ClCompile Include="SoundGenerator.cpp" />
     <ClCompile Include="SoundIOPacket.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="TempestIO.Headers.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TempestIO.Headers.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TempestIO.Headers.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TempestIO.Headers.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TempestIO.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="TempestDB.cpp" />
     <ClCompile Include="TempestIOStreamListener.cpp" />

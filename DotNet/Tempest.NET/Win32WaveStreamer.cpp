@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 
 #include "TempestCPU/TempestException.h"
 #include "TempestIO/Cpp11WaveStreamer.h"

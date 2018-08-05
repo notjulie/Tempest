@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SoundGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,11 +78,11 @@
     <ClInclude Include="AbstractSoundGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempestIO.Headers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SoundGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -132,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AbstractSoundGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempestIO.Headers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
