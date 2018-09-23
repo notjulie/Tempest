@@ -1,3 +1,12 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Tempest ROMs
+// ====================================================================
 
 #include "TempestCPU.Headers.h"
 

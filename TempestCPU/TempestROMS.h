@@ -1,3 +1,13 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Extern declarations for the Tempest ROMs
+// ====================================================================
+
 
 #ifndef TEMPESTROMS_H
 #define TEMPESTROMS_H
