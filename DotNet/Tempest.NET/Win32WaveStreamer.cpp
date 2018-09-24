@@ -1,3 +1,15 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a class that makes use of the generic Cpp11WaveStreamer
+//    class to drive Win32 sound output.
+//    
+// ====================================================================
+
 
 #include "TempestIO.Headers.h"
 
@@ -10,6 +22,11 @@
 #pragma comment(lib, "user32")
 #pragma comment(lib, "WinMM")
 
+/// <summary>
+/// Constructor... starts a stream of sound output that continues
+/// until destruction.  The sound output will be zero until we receive
+/// commands for sounds to generate.
+/// <summary>
 Win32WaveStreamer::Win32WaveStreamer(void)
 	:
 		buffer1(WAVE_STREAM_BUFFER_SAMPLE_COUNT),
@@ -18,7 +35,6 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 	// clear
 	waveOut = NULL;
 	terminating = false;
-	errorReported = false;
 
 	WAVEFORMATEX waveFormat;
 	memset(&waveFormat, 0, sizeof(waveFormat));
@@ -50,24 +66,27 @@ Win32WaveStreamer::Win32WaveStreamer(void)
 }
 
 
+/// <summary>
+/// Destructor; stops all sound output and cleans up
+/// <summary>
 Win32WaveStreamer::~Win32WaveStreamer(void)
 {
 	// mark ourself as terminating
 	terminating = true;
 
-	// stop playing
-	waveOutReset(waveOut);
-
-	// wait for both buffers to report that they aren't playing
-	while (buffer1.IsPlaying() || buffer2.IsPlaying())
-		Sleep(1);
-
-	// stop the waveStreamer
+   // stop the waveStreamer from calling us any further
    if (waveStreamer != nullptr)
    {
       delete waveStreamer;
       waveStreamer = nullptr;
    }
+
+   // stop playing
+	waveOutReset(waveOut);
+
+	// wait for both buffers to report that they aren't playing
+	while (buffer1.IsPlaying() || buffer2.IsPlaying())
+		Sleep(1);
 
 	// unprepare buffers
 	buffer1.Unprepare(waveOut);
@@ -81,16 +100,27 @@ Win32WaveStreamer::~Win32WaveStreamer(void)
 	}
 }
 
+/// <summary>
+/// Sets the state of the given channel
+/// </summary>
 void Win32WaveStreamer::SetChannelState(int channel, SoundChannelState state)
 {
    waveStreamer->SetChannelState(channel, state);
 }
 
+/// <summary>
+/// Causes the sound generator to continue the current waveforms without
+/// change for the given delay time
+/// </summary>
 void Win32WaveStreamer::Delay(int clockCycles)
 {
    waveStreamer->Delay(clockCycles);
 }
 
+/// <summary>
+/// Checks to see if there is a buffer available to be filled; if so, it
+/// pulls wave data from the waveStreamer into the buffer.
+/// </summary>
 void Win32WaveStreamer::FillNextBuffer(WaveSoundSource *source)
 {
    // see if we have a buffer ready to fill
@@ -112,6 +142,11 @@ void Win32WaveStreamer::FillNextBuffer(WaveSoundSource *source)
    }
 }
 
+/// <summary>
+/// Called by the Win32 driver when an event occurs; in our case we are
+/// only interested in WOM_DONE messages, which indicate that a buffer has
+/// finished playing, and is therefore ready to be refilled.
+/// </summary>
 void CALLBACK Win32WaveStreamer::BufferCallback(
    HWAVEOUT  hwo,
    UINT      uMsg,
@@ -130,15 +165,4 @@ void CALLBACK Win32WaveStreamer::BufferCallback(
       break;
    }
 }
-
-
-std::string Win32WaveStreamer::GetErrorString(void) const
-{
-	if (errorReported)
-		return errorString;
-	else
-		return "OK";
-}
-
-
 

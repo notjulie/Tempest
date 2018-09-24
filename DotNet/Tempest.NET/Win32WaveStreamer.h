@@ -1,3 +1,15 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a class that makes use of the generic Cpp11WaveStreamer
+//    class to drive Win32 sound output.
+//    
+// ====================================================================
+
 
 #ifndef WIN32WAVESTREAMER_H
 #define WIN32WAVESTREAMER_H
@@ -21,8 +33,6 @@ public:
 	Win32WaveStreamer(void);
 	~Win32WaveStreamer(void);
 
-	std::string GetErrorString(void) const;
-
    void SetChannelState(int channel, SoundChannelState state);
    void Delay(int clockCycles);
 
@@ -43,8 +53,6 @@ private:
 	HWAVEOUT waveOut;
 
 	bool terminating;
-	bool errorReported;
-	std::string errorString;
 
    Win32WaveBuffer buffer1;
 	Win32WaveBuffer buffer2;
