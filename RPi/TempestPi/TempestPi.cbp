@@ -107,7 +107,6 @@
 		<Unit filename="../../TempestCPU/6502/ProcessorStatusWord.cpp" />
 		<Unit filename="../../TempestCPU/AbstractTempestEnvironment.h" />
 		<Unit filename="../../TempestCPU/CommandLine.h" />
-		<Unit filename="../../TempestCPU/EEPROM.cpp" />
 		<Unit filename="../../TempestCPU/MathBox.cpp" />
 		<Unit filename="../../TempestCPU/Pokey.cpp" />
 		<Unit filename="../../TempestCPU/TempestBus.cpp" />

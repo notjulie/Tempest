@@ -43,10 +43,9 @@
 1508852690 /home/pi/Documents/Tempest/TempestCPU/6502/ProcessorStatusWord.h
 	<stdint.h>
 
-1532874992 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
+1541273268 /home/pi/Documents/Tempest/TempestCPU/TempestBus.h
 	<mutex>
 	"6502/AbstractBus.h"
-	"EEPROM.h"
 	"MathBox.h"
 	"TempestMemoryMap.h"
 	"TempestPokey.h"
@@ -68,7 +67,7 @@
 
 1439424979 /home/pi/Documents/Tempest/TempestCPU/EEPROM.h
 
-1526739314 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
+1541273268 /home/pi/Documents/Tempest/TempestCPU/TempestMemoryMap.h
 
 1526739314 /home/pi/Documents/Tempest/TempestCPU/TempestPokey.h
 	"AbstractTempestIO.h"
@@ -108,7 +107,7 @@
 1528764372 /home/pi/Documents/Tempest/TempestCPU/TempestException.h
 	"VectorGameException.h"
 
-1532874992 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
+1541273268 source:/home/pi/Documents/Tempest/TempestCPU/TempestBus.cpp
 	"TempestCPU.Headers.h"
 	"AbstractGameEnvironment.h"
 	"AbstractSoundGenerator.h"
@@ -118,7 +117,7 @@
 	"TempestROMS.h"
 	"TempestBus.h"
 
-1439424979 /home/pi/Documents/Tempest/TempestCPU/TempestROMS.h
+1541273268 /home/pi/Documents/Tempest/TempestCPU/TempestROMS.h
 
 1508852690 source:/home/pi/Documents/Tempest/TempestCPU/MathBox/MathBox.cpp
 	"MathBoxAFX.h"
@@ -137,7 +136,7 @@
 	"MathBoxAFX.h"
 	"Am2901Tables.h"
 
-1528764372 source:/home/pi/Documents/Tempest/TempestCPU/TempestROMS.cpp
+1541273268 source:/home/pi/Documents/Tempest/TempestCPU/TempestROMS.cpp
 	"TempestCPU.Headers.h"
 
 1532874992 source:/home/pi/Documents/Tempest/TempestCPU/Pokey.cpp
@@ -583,8 +582,8 @@
 
 1476583953 /home/pi/Documents/Tempest/TempestIO/AbstractTempestStream.h
 
-1532874992 source:/home/pi/Documents/Tempest/TempestIO/TempestIOStreamProxy.cpp
-	"stdafx.h"
+1541274385 source:/home/pi/Documents/Tempest/TempestIO/TempestIOStreamProxy.cpp
+	"TempestIO.Headers.h"
 	"../TempestCPU/TempestException.h"
 	"AbstractTempestStream.h"
 	"TempestIOStreamProxy.h"
@@ -635,17 +634,17 @@
 
 1454880751 /home/pi/Documents/Tempest/TempestIO/PacketStream.h
 
-1532874992 /home/pi/Documents/Tempest/TempestIO/SoundIOPacket.h
+1541273268 /home/pi/Documents/Tempest/TempestIO/SoundIOPacket.h
 	"AbstractTempestIO.h"
 	"SoundChannelState.h"
 
-1456001700 source:/home/pi/Documents/Tempest/TempestIO/PacketStream.cpp
-	"stdafx.h"
+1541274385 source:/home/pi/Documents/Tempest/TempestIO/PacketStream.cpp
+	"TempestIO.Headers.h"
 	"AbstractTempestStream.h"
 	"PacketStream.h"
 
-1532875145 source:/home/pi/Documents/Tempest/TempestIO/SoundIOPacket.cpp
-	"stdafx.h"
+1541274385 source:/home/pi/Documents/Tempest/TempestIO/SoundIOPacket.cpp
+	"TempestIO.Headers.h"
 	"PacketStream.h"
 	"SoundIOPacket.h"
 
@@ -655,8 +654,8 @@
 1532874992 /home/pi/Documents/Tempest/TempestIO/SoundChannelState.h
 	<stdint.h>
 
-1532874992 source:/home/pi/Documents/Tempest/TempestIO/SoundChannelState.cpp
-	"stdafx.h"
+1541274385 source:/home/pi/Documents/Tempest/TempestIO/SoundChannelState.cpp
+	"TempestIO.Headers.h"
 	"SoundChannelState.h"
 
 1530485413 /home/pi/Documents/Tempest/RPi/TempestPi/TempestSocketListener.h
@@ -762,8 +761,8 @@
 	<ctype.h>
 	<math.h>
 
-1508862860 source:/home/pi/Documents/Tempest/TempestIO/TempestDB.cpp
-	"stdafx.h"
+1541274385 source:/home/pi/Documents/Tempest/TempestIO/TempestDB.cpp
+	"TempestIO.Headers.h"
 	"TempestDB.h"
 
 1529285529 /home/pi/Documents/Tempest/TempestCPU/6502/CPU6502Runner.h
@@ -862,11 +861,12 @@
 	"AsteroidsBus.h"
 	"VectorGame.h"
 
-1532874992 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsBus.h
+1541273268 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsBus.h
+	<mutex>
 	"TempestCPU/6502/AbstractBus.h"
 	"TempestIO/Vector/VectorData.h"
 
-1532874992 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsBus.cpp
+1541273268 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsBus.cpp
 	"stdafx.h"
 	<memory.h>
 	"TempestIO/AbstractSoundGenerator.h"
@@ -908,7 +908,7 @@
 	"stdafx.h"
 	"AsteroidsROMs.h"
 
-1529363580 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsVectorInterpreter.cpp
+1541273268 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsVectorInterpreter.cpp
 	"stdafx.h"
 	<memory.h>
 	"TempestCPU/TempestException.h"
@@ -928,14 +928,22 @@
 	"CommandLine.h"
 	"AbstractGameEnvironment.h"
 
-1530485165 source:/home/pi/Documents/Tempest/VectorGame/CommandLine.cpp
-	"stdafx.h"
+1541273268 source:/home/pi/Documents/Tempest/VectorGame/CommandLine.cpp
+	"TempestIO.Headers.h"
 	"CommandLine.h"
 
 1532874992 /home/pi/Documents/Tempest/TempestIO/AbstractSoundGenerator.h
 
-1532874992 source:/home/pi/Documents/Tempest/TempestIO/AbstractSoundGenerator.cpp
-	"stdafx.h"
+1541274385 source:/home/pi/Documents/Tempest/TempestIO/AbstractSoundGenerator.cpp
+	"TempestIO.Headers.h"
 	"SoundChannelState.h"
 	"AbstractSoundGenerator.h"
+
+1541273268 /home/pi/Documents/Tempest/TempestIO/TempestIO.Headers.h
+	<stdint.h>
+	<string.h>
+	<functional>
+	<map>
+	<string>
+	<vector>
 
