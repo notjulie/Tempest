@@ -1,3 +1,16 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the SoundIOPacketReader class that is used for reading
+//    a sound IO packet from a serial stream.  In some implementations
+//    of Tempest I use a separate processor for sound generation, and
+//    this encapsulates some of the serial protocol used to
+//    communicate between them.
+// ====================================================================
 
 #ifndef SOUNDIOPACKET_H
 #define SOUNDIOPACKET_H
