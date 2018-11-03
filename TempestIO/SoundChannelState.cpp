@@ -19,7 +19,7 @@
 // ====================================================================
 
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include "SoundChannelState.h"
 
 SoundChannelState::SoundChannelState(void)

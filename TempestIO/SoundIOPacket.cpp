@@ -12,7 +12,7 @@
 //    communicate between them.
 // ====================================================================
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 
 #include "PacketStream.h"
 

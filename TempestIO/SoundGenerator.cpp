@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include "SoundGenerator.h"
 
 void SoundGenerator::ReadWaveData(int16_t *buffer, int sampleCount)

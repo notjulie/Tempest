@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include "Noise.h"
 
 // lookup table for 4-bit noise polynomial

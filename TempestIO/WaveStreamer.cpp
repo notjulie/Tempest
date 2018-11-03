@@ -17,7 +17,7 @@
 //    doesn't support things such as std::thread.  So keep this simple.
 // ====================================================================
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include <string.h>
 
 #include "WaveStreamer.h"

@@ -9,7 +9,7 @@
 //    possible.
 // =========================================================================
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 
 #include "../TempestCPU/TempestException.h"
 #include "AbstractTempestStream.h"

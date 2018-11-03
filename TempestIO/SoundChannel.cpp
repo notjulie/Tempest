@@ -16,7 +16,7 @@
 // ====================================================================
 
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include "Noise.h"
 #include "SoundChannel.h"
 

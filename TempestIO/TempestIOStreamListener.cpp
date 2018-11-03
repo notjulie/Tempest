@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 
 #include "AbstractSoundGenerator.h"
 #include "AbstractTempestIO.h"
