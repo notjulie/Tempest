@@ -9,7 +9,7 @@
 //    C++ 11.  This way I can standardize on the threading.
 // ====================================================================
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include "WaveSoundDriver.h"
 
 #include "Cpp11WaveStreamer.h"
