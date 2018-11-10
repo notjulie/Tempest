@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "TempestIO.Headers.h"
 #include "TempestMemoryStream.h"
 
 SimpleMemoryStream::SimpleMemoryStream(void)
