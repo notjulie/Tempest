@@ -6,6 +6,7 @@
 //  Copyright © 2017 Randy Rasmussen. All rights reserved.
 //
 
+#include "TempestException.h"
 #include "iTempest.h"
 
 iTempest::iTempest(void)
@@ -40,13 +41,15 @@ int iTempest::GetVectors(TempestVector *buffer, int bufferSize)
    {
       TempestVector *dest = buffer + i;
       SimpleVector *src = &vectors[i];
-      dest->startX = src->startX;
-      dest->startY = src->startY;
-      dest->endX = src->endX;
-      dest->endY = src->endY;
-      dest->r = src->r;
-      dest->g = src->g;
-      dest->b = src->b;
+      if (src->type != SimpleVector::Line)
+         throw TempestException("iTempest::GetVectors: unsupported vector type");
+      dest->startX = src->line.startX;
+      dest->startY = src->line.startY;
+      dest->endX = src->line.endX;
+      dest->endY = src->line.endY;
+      dest->r = src->line.r;
+      dest->g = src->line.g;
+      dest->b = src->line.b;
    }
    
    // done
