@@ -1,4 +1,14 @@
-﻿using System;
+﻿// ====================================================================
+// Tempest WPF version
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Handy little user control for named values.
+// ====================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

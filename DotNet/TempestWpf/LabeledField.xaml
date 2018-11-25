@@ -1,4 +1,15 @@
-﻿<UserControl x:Class="TempestWpf.LabeledField"
+﻿<!--
+// ====================================================================
+// Tempest WPF version
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Handy little user control for named values.
+// ====================================================================
+-->
+<UserControl x:Class="TempestWpf.LabeledField"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
