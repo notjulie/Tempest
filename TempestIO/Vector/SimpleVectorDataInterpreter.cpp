@@ -43,27 +43,28 @@ void SimpleVectorGenerator::LDraw(int _x, int _y, int _intensity)
 
 	// add the vector to the list
 	SimpleVector vector;
-	vector.startX = startX;
-	vector.startY = startY;
-	vector.endX = endX;
-	vector.endY = endY;
+   vector.type = SimpleVector::Line;
+	vector.line.startX = startX;
+	vector.line.startY = startY;
+	vector.line.endX = endX;
+	vector.line.endY = endY;
 
    if ((color & 2) == 0)
-      vector.r = 255;
+      vector.line.r = 255;
    else if ((color & 1) == 0)
-      vector.r = 128;
+      vector.line.r = 128;
    else
-      vector.r = 0;
+      vector.line.r = 0;
 
    if ((color & 8) == 0)
-      vector.g = 255;
+      vector.line.g = 255;
    else
-      vector.g = 0;
+      vector.line.g = 0;
 
    if ((color & 4) == 0)
-      vector.b = 255;
+      vector.line.b = 255;
    else
-      vector.b = 0;
+      vector.line.b = 0;
 
    vectors.push_back(vector);
 }

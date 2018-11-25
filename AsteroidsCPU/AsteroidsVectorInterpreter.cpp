@@ -224,11 +224,12 @@ void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int s
       return;
 
    SimpleVector vector;
-   vector.startX = (int16_t)startX;
-   vector.startY = (int16_t)startY;
-   vector.endX = (int16_t)endX;
-   vector.endY = (int16_t)endY;
-   vector.r = vector.g = vector.b = (uint8_t)(0xFF * intensity / 15);
+   vector.type = SimpleVector::Line;
+   vector.line.startX = (int16_t)startX;
+   vector.line.startY = (int16_t)startY;
+   vector.line.endX = (int16_t)endX;
+   vector.line.endY = (int16_t)endY;
+   vector.line.r = vector.line.g = vector.line.b = (uint8_t)(0xFF * intensity / 15);
 
    if (intensity != 0)
       vectors.push_back(vector);

@@ -32,12 +32,15 @@ bool VectorEnumerator::GetNextVector(
 		return false;
 
 	SimpleVector	vector = (*vectorData)[nextVector++];
-	startX = vector.startX;
-	startY = vector.startY;
-	endX =   vector.endX;
-	endY =   vector.endY;
-   r = vector.r;
-   g = vector.g;
-   b = vector.b;
+   if (vector.type != SimpleVector::Line)
+      throw gcnew System::NotImplementedException("VectorEnumerator::GetNextVector: unimplemented vector type");
+
+	startX = vector.line.startX;
+	startY = vector.line.startY;
+	endX =   vector.line.endX;
+	endY =   vector.line.endY;
+   r = vector.line.r;
+   g = vector.line.g;
+   b = vector.line.b;
    return true;
 }
