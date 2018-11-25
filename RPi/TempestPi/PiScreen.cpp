@@ -8,6 +8,8 @@
 #include "VG/openvg.h"
 #include "VG/vgu.h"
 
+#include "TempestException.h"
+
 #include "PiScreen.h"
 
 PiScreen::PiScreen(void)
@@ -195,11 +197,14 @@ void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
 
 void PiScreen::DisplayVector(const SimpleVector &vector)
 {
+   if (vector.type != SimpleVector::Line)
+      throw TempestException("PiScreen::DisplayVector: unimplemented vector type");
+
    // calculate our screen coordinates
-   float x1 = (float)state.screen_width - (float)(32768 - vector.startY) * state.screen_height / 65536;
-   float y1 = (float)(32768 - vector.startX) * state.screen_height / 65536;
-   float x2 = (float)state.screen_width - (float)(32768 - vector.endY) * state.screen_height / 65536;
-   float y2 = (float)(32768 - vector.endX) * state.screen_height / 65536;
+   float x1 = (float)state.screen_width - (float)(32768 - vector.line.startY) * state.screen_height / 65536;
+   float y1 = (float)(32768 - vector.line.startX) * state.screen_height / 65536;
+   float x2 = (float)state.screen_width - (float)(32768 - vector.line.endY) * state.screen_height / 65536;
+   float y2 = (float)(32768 - vector.line.endX) * state.screen_height / 65536;
 
    // center vertically... note that the display is rotated so that X is the vertical
    // axis
@@ -208,15 +213,15 @@ void PiScreen::DisplayVector(const SimpleVector &vector)
    x2 -= verticalOffset;
 
    // if this is just a dot draw our dot path
-   if (vector.startX==vector.endX && vector.startY==vector.endY)
+   if (vector.line.startX==vector.line.endX && vector.line.startY==vector.line.endY)
    {
-      DrawDot(x1, y1, vector.r, vector.g, vector.b);
+      DrawDot(x1, y1, vector.line.r, vector.line.g, vector.line.b);
       return;
    }
 
    // set our line drawing parameters
    vgSeti(VG_MATRIX_MODE, VG_MATRIX_PATH_USER_TO_SURFACE);
-   vgSetPaint(GetStroke(vector.r, vector.g, vector.b), VG_STROKE_PATH);
+   vgSetPaint(GetStroke(vector.line.r, vector.line.g, vector.line.b), VG_STROKE_PATH);
    vgSetf(VG_STROKE_LINE_WIDTH, 1);
    vgSeti(VG_STROKE_CAP_STYLE, VG_CAP_BUTT);
    vgSeti(VG_STROKE_JOIN_STYLE, VG_JOIN_MITER);
