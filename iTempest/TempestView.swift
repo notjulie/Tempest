@@ -76,7 +76,7 @@ class TempestView : MTKView {
       // create our parallel render encoder
       let commandBuffer = commandQueue!.makeCommandBuffer()
       let renderPassDescriptor = currentRenderPassDescriptor!
-      let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)
+      let parallelRenderEncoder = commandBuffer!.makeParallelRenderCommandEncoder(descriptor: renderPassDescriptor)!
 
       // set the color of the screen according to whether or not the player buttons
       // should be showing
@@ -101,17 +101,17 @@ class TempestView : MTKView {
       parallelRenderEncoder.endEncoding()
       
       let drawable = currentDrawable!
-      commandBuffer.present(drawable)
-      commandBuffer.commit()
+      commandBuffer!.present(drawable)
+      commandBuffer!.commit()
    }
 
    private func render(parallelRenderEncoder:MTLParallelRenderCommandEncoder, renderer:AbstractMetalRenderer) {
       // create our render encoder for tempest and render it
       let renderEncoder = parallelRenderEncoder.makeRenderCommandEncoder()
-      renderEncoder.setFrontFacing(.counterClockwise)
-      renderEncoder.setDepthStencilState(depthStencilState)
-      renderer.render(renderEncoder: renderEncoder)
-      renderEncoder.endEncoding()
+      renderEncoder!.setFrontFacing(.counterClockwise)
+      renderEncoder!.setDepthStencilState(depthStencilState)
+      renderer.render(renderEncoder: renderEncoder!)
+      renderEncoder!.endEncoding()
    }
    
    override func layoutSubviews() {

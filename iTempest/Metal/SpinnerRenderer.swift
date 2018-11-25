@@ -20,7 +20,7 @@ class SpinnerRenderer : MetalRenderer {
       super.init(view: view)
       
       // Render pipeline
-      let library = view.device!.newDefaultLibrary()!
+      let library = view.device!.makeDefaultLibrary()!
       let vertexFunction = library.makeFunction(name: "spinnerVertex")
       let fragmentFunction = library.makeFunction(name: "spinnerFragment")
       let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -74,11 +74,11 @@ class SpinnerRenderer : MetalRenderer {
             yScale: Float(frame.height / view.frame.height)
             )
       let dataSize = MemoryLayout.size(ofValue: renderParameters);
-      let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(bytes: [renderParameters], length: dataSize, options: []);
+      let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(bytes: [renderParameters], length: dataSize, options: [])!;
       
       // encode our render commands
-      renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, at: Int(SPINNER_VERTICES_BUFFER));
-      renderEncoder.setVertexBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
+      renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: Int(SPINNER_VERTICES_BUFFER));
+      renderEncoder.setVertexBuffer(renderParametersBuffer, offset: 0, index: Int(SPINNER_RENDER_PARAMETERS_BUFFER));
       renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6*vertexData.count, instanceCount: 1)
    }
    

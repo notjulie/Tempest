@@ -73,7 +73,7 @@ class SpinnerView : UIView
       super.init(coder:coder)
    }
    
-   func swipeTimer() {
+   @objc func swipeTimer() {
       if (touchState != TouchState.Coasting)
       {
          return;

@@ -36,9 +36,9 @@ class ButtonView : RectangleShaderButton {
       
       // initialize
       isUserInteractionEnabled = true
-      self.addTarget(self, action: #selector(buttonDown), for: UIControlEvents.touchDown)
-      self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpInside)
-      self.addTarget(self, action: #selector(buttonUp), for: UIControlEvents.touchUpOutside)
+      self.addTarget(self, action: #selector(buttonDown), for: UIControl.Event.touchDown)
+      self.addTarget(self, action: #selector(buttonUp), for: UIControl.Event.touchUpInside)
+      self.addTarget(self, action: #selector(buttonUp), for: UIControl.Event.touchUpOutside)
    }
 
    override func render(renderEncoder : MTLRenderCommandEncoder) {
@@ -46,19 +46,19 @@ class ButtonView : RectangleShaderButton {
       let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
          bytes: [settings],
          length: MemoryLayout.size(ofValue: settings),
-         options: [])
+         options: [])!
       super.setFragmentBuffer(index:Int(PLAYER_BUTTON_SETTINGS_BUFFER_INDEX), buffer:renderParametersBuffer)
       
       // let the base class render
       super.render(renderEncoder: renderEncoder)
    }
 
-   func buttonDown() {
+   @objc func buttonDown() {
      // tell Tempest that the button is down
      cTempestSetButtonState(tempest, whichButton, 1)
    }
 
-   func buttonUp() {
+   @objc func buttonUp() {
      // tell Tempest that the button is up
      cTempestSetButtonState(tempest, whichButton, 0);
    }

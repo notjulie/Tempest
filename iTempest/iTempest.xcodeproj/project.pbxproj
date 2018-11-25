@@ -67,23 +67,6 @@
 		02F307111FA4198F0062CE9F /* SQLRRException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F307101FA4198F0062CE9F /* SQLRRException.cpp */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		021E39D01F9DAB1700FFAB2B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 021E39A91F9DAB1700FFAB2B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 021E39B01F9DAB1700FFAB2B;
-			remoteInfo = iTempest;
-		};
-		021E39DB1F9DAB1700FFAB2B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 021E39A91F9DAB1700FFAB2B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 021E39B01F9DAB1700FFAB2B;
-			remoteInfo = iTempest;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		0215CABC207A493F00A30E7E /* SolidRectangleShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidRectangleShader.swift; sourceTree = "<group>"; };
 		0215CABE207A4A4600A30E7E /* SolidRectangleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SolidRectangleShader.metal; sourceTree = "<group>"; };
@@ -98,8 +81,6 @@
 		021E39C61F9DAB1700FFAB2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		021E39C81F9DAB1700FFAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		021E39C91F9DAB1700FFAB2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		021E39CF1F9DAB1700FFAB2B /* iTempestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTempestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTempestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		02350218204C970A0081C43D /* SoundChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannel.h; path = ../../TempestIO/SoundChannel.h; sourceTree = "<group>"; };
 		02350219204C970A0081C43D /* Noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Noise.h; path = ../../TempestIO/Noise.h; sourceTree = "<group>"; };
 		0235021A204C970A0081C43D /* Cpp11WaveStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cpp11WaveStreamer.h; path = ../../TempestIO/Cpp11WaveStreamer.h; sourceTree = "<group>"; };
@@ -192,20 +173,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		021E39CC1F9DAB1700FFAB2B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		021E39D71F9DAB1700FFAB2B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -241,8 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				021E39B11F9DAB1700FFAB2B /* iTempest.app */,
-				021E39CF1F9DAB1700FFAB2B /* iTempestTests.xctest */,
-				021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -413,42 +378,6 @@
 			productReference = 021E39B11F9DAB1700FFAB2B /* iTempest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		021E39CE1F9DAB1700FFAB2B /* iTempestTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 021E39E61F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestTests" */;
-			buildPhases = (
-				021E39CB1F9DAB1700FFAB2B /* Sources */,
-				021E39CC1F9DAB1700FFAB2B /* Frameworks */,
-				021E39CD1F9DAB1700FFAB2B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				021E39D11F9DAB1700FFAB2B /* PBXTargetDependency */,
-			);
-			name = iTempestTests;
-			productName = iTempestTests;
-			productReference = 021E39CF1F9DAB1700FFAB2B /* iTempestTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		021E39D91F9DAB1700FFAB2B /* iTempestUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 021E39E91F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestUITests" */;
-			buildPhases = (
-				021E39D61F9DAB1700FFAB2B /* Sources */,
-				021E39D71F9DAB1700FFAB2B /* Frameworks */,
-				021E39D81F9DAB1700FFAB2B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				021E39DC1F9DAB1700FFAB2B /* PBXTargetDependency */,
-			);
-			name = iTempestUITests;
-			productName = iTempestUITests;
-			productReference = 021E39DA1F9DAB1700FFAB2B /* iTempestUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -460,18 +389,8 @@
 				TargetAttributes = {
 					021E39B01F9DAB1700FFAB2B = {
 						CreatedOnToolsVersion = 9.0.1;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
-					};
-					021E39CE1F9DAB1700FFAB2B = {
-						CreatedOnToolsVersion = 9.0.1;
-						ProvisioningStyle = Manual;
-						TestTargetID = 021E39B01F9DAB1700FFAB2B;
-					};
-					021E39D91F9DAB1700FFAB2B = {
-						CreatedOnToolsVersion = 9.0.1;
-						ProvisioningStyle = Manual;
-						TestTargetID = 021E39B01F9DAB1700FFAB2B;
 					};
 				};
 			};
@@ -489,8 +408,6 @@
 			projectRoot = "";
 			targets = (
 				021E39B01F9DAB1700FFAB2B /* iTempest */,
-				021E39CE1F9DAB1700FFAB2B /* iTempestTests */,
-				021E39D91F9DAB1700FFAB2B /* iTempestUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -503,20 +420,6 @@
 				021E39C71F9DAB1700FFAB2B /* LaunchScreen.storyboard in Resources */,
 				021E39C41F9DAB1700FFAB2B /* Assets.xcassets in Resources */,
 				021E39C21F9DAB1700FFAB2B /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		021E39CD1F9DAB1700FFAB2B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		021E39D81F9DAB1700FFAB2B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,34 +486,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		021E39CB1F9DAB1700FFAB2B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		021E39D61F9DAB1700FFAB2B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		021E39D11F9DAB1700FFAB2B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 021E39B01F9DAB1700FFAB2B /* iTempest */;
-			targetProxy = 021E39D01F9DAB1700FFAB2B /* PBXContainerItemProxy */;
-		};
-		021E39DC1F9DAB1700FFAB2B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 021E39B01F9DAB1700FFAB2B /* iTempest */;
-			targetProxy = 021E39DB1F9DAB1700FFAB2B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		021E39C01F9DAB1700FFAB2B /* Main.storyboard */ = {
@@ -686,6 +562,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 			};
 			name = Debug;
 		};
@@ -737,6 +614,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -763,7 +641,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -792,68 +671,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
-			};
-			name = Release;
-		};
-		021E39E71F9DAB1700FFAB2B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Manual;
-				INFOPLIST_FILE = iTempestTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTempest.app/iTempest";
-			};
-			name = Debug;
-		};
-		021E39E81F9DAB1700FFAB2B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Manual;
-				INFOPLIST_FILE = iTempestTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTempest.app/iTempest";
-			};
-			name = Release;
-		};
-		021E39EA1F9DAB1700FFAB2B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Manual;
-				INFOPLIST_FILE = iTempestUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = iTempest;
-			};
-			name = Debug;
-		};
-		021E39EB1F9DAB1700FFAB2B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Manual;
-				INFOPLIST_FILE = iTempestUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = iTempest;
 			};
 			name = Release;
 		};
@@ -874,24 +696,6 @@
 			buildConfigurations = (
 				021E39E41F9DAB1700FFAB2B /* Debug */,
 				021E39E51F9DAB1700FFAB2B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		021E39E61F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				021E39E71F9DAB1700FFAB2B /* Debug */,
-				021E39E81F9DAB1700FFAB2B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		021E39E91F9DAB1700FFAB2B /* Build configuration list for PBXNativeTarget "iTempestUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				021E39EA1F9DAB1700FFAB2B /* Debug */,
-				021E39EB1F9DAB1700FFAB2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

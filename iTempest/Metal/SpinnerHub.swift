@@ -34,10 +34,10 @@ class SpinnerHub : RectangleShader {
       let renderParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
          bytes: [renderParameters],
          length: MemoryLayout.size(ofValue: renderParameters),
-         options: [])
+         options: [])!
 
       // give them to the fragment function
-      renderEncoder.setFragmentBuffer(renderParametersBuffer, offset: 0, at: Int(SPINNER_RENDER_PARAMETERS_BUFFER))
+      renderEncoder.setFragmentBuffer(renderParametersBuffer, offset: 0, index: Int(SPINNER_RENDER_PARAMETERS_BUFFER))
       
       // let the base class handle it from here
       super.render(renderEncoder: renderEncoder)

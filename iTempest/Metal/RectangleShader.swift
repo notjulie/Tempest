@@ -19,7 +19,7 @@ class RectangleShader : MetalRenderer {
       super.init(view: view)
       
       // Render pipeline
-      let library = view.device!.newDefaultLibrary()!
+      let library = view.device!.makeDefaultLibrary()!
       let vertexFunction = library.makeFunction(name: "rectangleShaderVertex")
       let fragmentFunction = library.makeFunction(name: shaderName)
       let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -61,21 +61,21 @@ class RectangleShader : MetalRenderer {
       let renderVertexParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
          bytes: [renderVertexParameters],
          length: MemoryLayout.size(ofValue: renderVertexParameters),
-         options: [])
-      renderEncoder.setVertexBuffer(renderVertexParametersBuffer, offset: 0, at: Int(RECTANGLE_SHADER_VERTEX_PARAMETERS_BUFFER_INDEX));
+         options: [])!
+      renderEncoder.setVertexBuffer(renderVertexParametersBuffer, offset: 0, index: Int(RECTANGLE_SHADER_VERTEX_PARAMETERS_BUFFER_INDEX));
 
       // create new fragment buffers
       for (index,buffer) in self.newFragmentBuffers {
          let renderVertexParametersBuffer: MTLBuffer = renderEncoder.device.makeBuffer(
             bytes: [buffer],
             length: MemoryLayout.size(ofValue: buffer),
-            options: [])
+            options: [])!
          setFragmentBuffer(index: index, buffer: renderVertexParametersBuffer)
       }
       
       // add the subclass's fragment buffers
       for (index,buffer) in self.fragmentBuffers {
-         renderEncoder.setFragmentBuffer(buffer, offset: 0, at: index)
+         renderEncoder.setFragmentBuffer(buffer, offset: 0, index: index)
       }
       
       // encode our render commands
