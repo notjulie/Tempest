@@ -26,6 +26,10 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
 
    // open the database
    db.Open(environment->GetDatabasePathName());
+
+   // load high scores; if this succeeds we mark the high scores as read only so that the
+   // game doesn't clear them on startup, else we allow the game to initialize them
+   highScoresWritable = !db.LoadHighScores(highScores);
 }
 
 TempestBus::~TempestBus(void)
@@ -39,6 +43,21 @@ void TempestBus::ClearWatchdog(void)
    lastWatchdogTime = GetTotalClockCycles();
 }
 
+
+uint8_t TempestBus::InsertHighScore(uint32_t score) 
+{
+   // note that we are now allowing the high scores to be written
+   highScoresWritable = true;
+
+   // insert the high score
+   uint8_t result = highScores.InsertScore(score);
+
+   // write the new scores to the database
+   db.SaveHighScores(highScores);
+
+   // return the position of the inserted score
+   return result;
+}
 
 uint8_t TempestBus::ReadIOByte(uint16_t address)
 {
@@ -306,8 +325,12 @@ uint8_t TempestBus::ReadHighScoreInitial(AbstractBus *bus, uint16_t address)
 void TempestBus::WriteHighScoreInitial(AbstractBus *bus, uint16_t address, uint8_t value)
 {
    TempestBus *tempestBus = static_cast<TempestBus *>(bus);
-   int offset = HIGH_SCORE_INITIALS_END - address;
-   tempestBus->highScores.SetInitial(offset / 3, offset % 3, (char)value);
+   if (tempestBus->highScoresWritable)
+   {
+      int offset = HIGH_SCORE_INITIALS_END - address;
+      tempestBus->highScores.SetInitial(offset / 3, offset % 3, (char)value);
+      tempestBus->db.SaveHighScores(tempestBus->highScores);
+   }
 }
 
 uint8_t TempestBus::ReadIO(AbstractBus *bus, uint16_t address)

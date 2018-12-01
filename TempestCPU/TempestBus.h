@@ -36,7 +36,7 @@ public:
 
    void ClearWatchdog(void);
    uint32_t GetHighScore(int index) const { return highScores.GetScore(index); }
-   uint8_t InsertHighScore(uint32_t score) { return highScores.InsertScore(score); }
+   uint8_t InsertHighScore(uint32_t score);
    void GetVectorData(VectorData &vectorData);
    void SetDemoMode(void) { demoMode = true; }
    void SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel);
@@ -79,6 +79,7 @@ private:
    MathBox mathBox;
    HighScoreList highScores;
    TempestDB   db;
+   bool highScoresWritable = true;
 
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
    AbstractSoundGenerator *soundOutput = nullptr;
