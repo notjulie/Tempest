@@ -14,6 +14,7 @@
 #include "Serial.h"
 #include "SystemError.h"
 #include "SystemTime.h"
+#include "TechPort.h"
 #include "WatchDog.h"
 
 #include "TempestDiscoAudio.h"
@@ -63,6 +64,9 @@ extern "C" {
 
 		// serial
 		InitializeSerial();
+
+		// tech port
+		Tech.Initialize();
 
 		// our listener that handles data transmission between us and Tempest
 		tempestStream = &SerialStream;

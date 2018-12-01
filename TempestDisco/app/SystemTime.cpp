@@ -38,6 +38,14 @@ uint32_t GetAPB1PeripheralClockSpeed(void)
 	return clockInfo.PCLK1_Frequency;
 }
 
+uint32_t GetAPB2PeripheralClockSpeed(void)
+{
+	// get clock info
+	RCC_ClocksTypeDef clockInfo;
+	RCC_GetClocksFreq(&clockInfo);
+	return clockInfo.PCLK2_Frequency;
+}
+
 
 
 uint32_t GetMillisecondCount(void)

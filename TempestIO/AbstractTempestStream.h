@@ -2,6 +2,8 @@
 #ifndef ABSTRACTTEMPESTSTREAM_H
 #define ABSTRACTTEMPESTSTREAM_H
 
+#include <stdint.h>
+
 class AbstractTempestStream
 {
 public:
