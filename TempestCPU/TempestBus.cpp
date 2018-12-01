@@ -23,6 +23,9 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
 
    // configure address space
    ConfigureAddressSpace();
+
+   // open the database
+   db.Open(environment->GetDatabasePathName());
 }
 
 TempestBus::~TempestBus(void)

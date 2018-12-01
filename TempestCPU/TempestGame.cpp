@@ -47,13 +47,6 @@ TempestGame::~TempestGame(void)
 }
 
 
-void TempestGame::Start(void)
-{
-   // open the database
-   db.Open(environment->GetDatabasePathName());
-}
-
-
 void TempestGame::RegisterVectorHooks(void)
 {
    // add a hook that displays the player one score

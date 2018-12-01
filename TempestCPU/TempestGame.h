@@ -8,7 +8,6 @@
 #include "6502/CPU6502.h"
 #include "6502/CPU6502Runner.h"
 #include "TempestBus.h"
-#include "TempestDB.h"
 #include "VectorDataInterpreter.h"
 #include "VectorGame.h"
 
@@ -29,8 +28,6 @@ public:
    TempestGame& operator=(const TempestGame &) = delete;
    virtual ~TempestGame(void);
 
-   void	Start(void);
-   
 	// simple dispatches to the TempestBus object
    uint64_t GetTotalClockCycles(void) { return tempestBus.GetTotalClockCycles(); }
    bool     IsInAttractMode(void) { return tempestBus.ReadByte(GAME_INPUT_MODE) == GAME_INPUT_MODE_ATTRACT; }
@@ -58,7 +55,6 @@ private:
    AbstractGameEnvironment * environment;
    int pointsPerBonusLife = 10000;
 
-   TempestDB   db;
 	TempestBus	tempestBus;
    VectorDataInterpreter vectorInterpreter;
    CPU6502Runner cpuRunner;

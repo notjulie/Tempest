@@ -13,6 +13,7 @@
 
 #include "HighScoreList.h"
 #include "MathBox.h"
+#include "TempestDB.h"
 #include "TempestMemoryMap.h"
 #include "TempestPokey.h"
 #include "VectorData.h"
@@ -77,6 +78,7 @@ private:
    TempestPokey2 pokey2;
    MathBox mathBox;
    HighScoreList highScores;
+   TempestDB   db;
 
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
    AbstractSoundGenerator *soundOutput = nullptr;
