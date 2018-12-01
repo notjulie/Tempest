@@ -11,6 +11,7 @@
 #include <mutex>
 #include "6502/AbstractBus.h"
 
+#include "HighScoreList.h"
 #include "MathBox.h"
 #include "TempestMemoryMap.h"
 #include "TempestPokey.h"
@@ -33,6 +34,8 @@ public:
 	virtual ~TempestBus(void);
 
    void ClearWatchdog(void);
+   uint32_t GetHighScore(int index) const { return highScores.GetScore(index); }
+   uint8_t InsertHighScore(uint32_t score) { return highScores.InsertScore(score); }
    void GetVectorData(VectorData &vectorData);
    void SetDemoMode(void) { demoMode = true; }
    void SetControlPanel(AbstractArcadeGameControlPanelReader *_controlPanel);
@@ -46,11 +49,14 @@ private:
    void Tick6KHz(void);
 
 private:
+   // our memory address handlers
    static uint8_t ReadColorRAM(AbstractBus *bus, uint16_t address);
+   static uint8_t ReadHighScoreInitial(AbstractBus *bus, uint16_t address);
    static uint8_t ReadIO(AbstractBus *bus, uint16_t address);
    static uint8_t ReadPokey(AbstractBus *bus, uint16_t address);
    static uint8_t ReadVectorRAM(AbstractBus *bus, uint16_t address);
    static void WriteColorRAM(AbstractBus *bus, uint16_t address, uint8_t value);
+   static void WriteHighScoreInitial(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WriteIO(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WriteMathBoxValue(AbstractBus *bus, uint16_t address, uint8_t value);
    static void WritePokey(AbstractBus *bus, uint16_t address, uint8_t value);
@@ -70,6 +76,7 @@ private:
    TempestPokey1 pokey1;
    TempestPokey2 pokey2;
    MathBox mathBox;
+   HighScoreList highScores;
 
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;
    AbstractSoundGenerator *soundOutput = nullptr;

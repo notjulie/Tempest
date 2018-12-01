@@ -33,8 +33,6 @@ TempestGame::TempestGame(AbstractGameEnvironment *_environment)
 
    // clear
    playerScores[0] = playerScores[1] = 0;
-   for (int i = 0; i < HIGH_SCORE_COUNT; ++i)
-      highScores[i] = 10101;
 
    // solder the CPU to the bus
    cpuRunner.SetBus(&tempestBus);
@@ -77,7 +75,7 @@ void TempestGame::RegisterVectorHooks(void)
    // add a hook that displays the high score
    vectorInterpreter.RegisterHook(DISPLAY_HIGH_SCORE_ADDRESS,
       [this](uint16_t pc) {
-      vectorInterpreter.Printf("%6d", highScores[0]);
+      vectorInterpreter.Printf("%6d", tempestBus.GetHighScore(0));
       return (uint16_t)(pc + 12);
    }
    );
@@ -104,7 +102,7 @@ void TempestGame::Register6502Hooks(void)
       // x tells us which score we're displaying
       uint8_t x = cpuRunner.Get6502()->GetX();
       int highScoreIndex = 7 - x / 3;
-      Printf("%7d", highScores[highScoreIndex]);
+      Printf("%7d", tempestBus.GetHighScore(highScoreIndex));
       cpuRunner.Get6502()->JMP(OUTPUT_HIGH_SCORE_ROUTINE_EXIT);
       return 100;
    });
@@ -149,12 +147,12 @@ uint32_t TempestGame::SortHighScores(void)
    uint8_t player2Rank = 0;
 
    // figure out the rank of player 1
-   player1Rank = InsertHighScore(playerScores[0]);
+   player1Rank = tempestBus.InsertHighScore(playerScores[0]);
 
    // and the rank of player 2, if we have a player 2
    if (numberOfPlayers > 1)
    {
-      player2Rank = InsertHighScore(playerScores[1]);
+      player2Rank = tempestBus.InsertHighScore(playerScores[1]);
 
       // and of course if player 2 beat player 1 that moves player 1
       // down in the rankings
@@ -175,47 +173,6 @@ uint32_t TempestGame::SortHighScores(void)
    // fake some clock cycles
    return 200;
 }
-
-uint8_t TempestGame::InsertHighScore(uint32_t score)
-{
-   for (uint8_t i = 0; i < HIGH_SCORE_COUNT; ++i)
-   {
-      if (score > highScores[i])
-      {
-         // we find were it's supposed to be, so move everything else down
-         for (int j = HIGH_SCORE_COUNT - 1; j > i; --j)
-            highScores[j] = highScores[j - 1];
-
-         // insert the new score
-         highScores[i] = score;
-
-         // and do the same with the initials... we let the 6502 manage those
-         // so move some RAM around
-         if (i < 8)
-         {
-            for (int j = 7; j > i; --j)
-            {
-               for (int n = 0; n < 3; ++n)
-               {
-                  uint16_t address = (uint16_t)(HIGH_SCORE_INITIALS - 3 * j - n);
-                  tempestBus.WriteByte(address, tempestBus.ReadByte((uint16_t)(address + 3)));
-               }
-            }
-            for (int n = 0; n < 3; ++n)
-            {
-               uint16_t address = (uint16_t)(HIGH_SCORE_INITIALS - 3 * i - n);
-               tempestBus.WriteByte(address, 0);
-            }
-         }
-
-         // and the caller expects a 1-based rank instead of a zero-based index
-         return ++i;
-      }
-   }
-
-   return HIGH_SCORE_COUNT;
-}
-
 
 /// <summary>
 /// This is only useful if called from a point in the program where the

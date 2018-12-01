@@ -280,6 +280,10 @@ void TempestBus::ConfigureAddressSpace(void)
    // if I set this to a fixed value I can start on level 80 without the other features
    // of demo mode enabled
    ConfigureAddress(MAX_START_LEVEL_ADDRESS, 80, ReadAddressNormal, WriteAddressNoOp);
+
+   // point the memory addresses associated with high score initials to the high score table
+   for (uint16_t i = HIGH_SCORE_INITIALS_START; i <= HIGH_SCORE_INITIALS_END; ++i)
+      ConfigureAddress(i, 0, ReadHighScoreInitial, WriteHighScoreInitial);
 }
 
 
@@ -287,6 +291,20 @@ uint8_t TempestBus::ReadColorRAM(AbstractBus *bus, uint16_t address)
 {
    TempestBus *tempestBus = static_cast<TempestBus *>(bus);
    return tempestBus->vectorData.ReadColorRAM((unsigned)(address - COLOR_RAM_BASE));
+}
+
+uint8_t TempestBus::ReadHighScoreInitial(AbstractBus *bus, uint16_t address)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   int offset = HIGH_SCORE_INITIALS_END - address;
+   return (uint8_t)tempestBus->highScores.GetInitial(offset/3, offset%3);
+}
+
+void TempestBus::WriteHighScoreInitial(AbstractBus *bus, uint16_t address, uint8_t value)
+{
+   TempestBus *tempestBus = static_cast<TempestBus *>(bus);
+   int offset = HIGH_SCORE_INITIALS_END - address;
+   tempestBus->highScores.SetInitial(offset / 3, offset % 3, (char)value);
 }
 
 uint8_t TempestBus::ReadIO(AbstractBus *bus, uint16_t address)

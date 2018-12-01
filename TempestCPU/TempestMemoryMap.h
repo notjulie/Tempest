@@ -39,7 +39,13 @@ const uint16_t COPY_PROTECTION_FLAG_ADDRESS = 0x011F;
 const uint16_t MAX_START_LEVEL_ADDRESS = 0x0126;
 const uint16_t PLAYER1_RANK = 0x0600;
 const uint16_t PLAYER2_RANK = 0x0601;
-const uint16_t HIGH_SCORE_INITIALS = 0x061D;
+
+// an array of the initials of the top 8 high scores... order is:
+//    last initial, score #8
+//    middle initial, score #8
+//    etc...
+const uint16_t HIGH_SCORE_INITIALS_START = 0x0606;
+const uint16_t HIGH_SCORE_INITIALS_END = 0x061D;
 
 // program addresses
 const uint16_t CHECK_HIGH_SCORE_ROUTINE = 0xAC3F;

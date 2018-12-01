@@ -154,6 +154,7 @@
     <ClInclude Include="AbstractTempestIO.h" />
     <ClInclude Include="AbstractTempestStream.h" />
     <ClInclude Include="Cpp11WaveStreamer.h" />
+    <ClInclude Include="HighScoreList.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="PacketStream.h" />
     <ClInclude Include="SoundChannel.h" />
@@ -182,6 +183,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TempestIO.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Cpp11WaveStreamer.cpp" />
+    <ClCompile Include="HighScoreList.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="PacketStream.cpp" />
     <ClCompile Include="SoundChannel.cpp" />
