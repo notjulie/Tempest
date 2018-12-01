@@ -269,12 +269,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="app.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\AsteroidsCPU\AsteroidsCPU.vcxproj">
       <Project>{d547c13f-5819-49da-8ee6-e64881b219c4}</Project>
     </ProjectReference>
