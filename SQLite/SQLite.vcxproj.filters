@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="SQLRR">
-      <UniqueIdentifier>{aa9593ae-9b66-47b0-972c-a338b4acbb9d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="shell.c">
@@ -24,14 +21,14 @@
     <ClCompile Include="sqlite3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SQLRR\SQLRRDB.cpp">
-      <Filter>SQLRR</Filter>
-    </ClCompile>
     <ClCompile Include="SQLiteCommonHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SQLRR\SQLRRException.cpp">
-      <Filter>SQLRR</Filter>
+    <ClCompile Include="SQLDB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SQLException.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,14 +38,8 @@
     <ClInclude Include="sqlite3ext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SQLRR\SQLRRDB.h">
-      <Filter>SQLRR</Filter>
-    </ClInclude>
     <ClInclude Include="SQLiteCommonHeader.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SQLRR\SQLRRException.h">
-      <Filter>SQLRR</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

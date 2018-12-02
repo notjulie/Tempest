@@ -1,15 +1,15 @@
 
 #include "SQLiteCommonHeader.h"
-#include "SQLRRException.h"
+#include "SQLException.h"
 
 
-SQLRRException::SQLRRException(sqlite3 *db, int error, const std::string &message)
-   : VectorGameException(FormatMessage(db, error, message))
+SQLException::SQLException(sqlite3 *db, int error, const std::string &message)
+   : std::runtime_error(FormatMessage(db, error, message))
 {
 }
 
 
-std::string SQLRRException::FormatMessage(sqlite3 *db, int error, const std::string &message)
+std::string SQLException::FormatMessage(sqlite3 *db, int error, const std::string &message)
 {
    std::ostringstream result;
    result << "SQLite exception, Error #" << error;
@@ -26,7 +26,7 @@ std::string SQLRRException::FormatMessage(sqlite3 *db, int error, const std::str
 }
 
 
-std::string SQLRRException::GetExtendedErrorString(sqlite3 *db)
+std::string SQLException::GetExtendedErrorString(sqlite3 *db)
 {
    int extendedError = sqlite3_extended_errcode(db);
 

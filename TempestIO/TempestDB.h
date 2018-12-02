@@ -2,7 +2,7 @@
 #ifndef TEMPESTDB_H
 #define TEMPESTDB_H
 
-#include "SQLRRDB.h"
+#include "SQLDB.h"
 
 class HighScoreList;
 
@@ -13,7 +13,7 @@ public:
    void SaveHighScores(const HighScoreList &) {}
 
 private:
-   SQLRRDB  db;
+   SQLDB  db;
 };
 
 #endif

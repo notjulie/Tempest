@@ -1,13 +1,13 @@
 
-#ifndef SQLRRDB_H
-#define SQLRRDB_H
+#ifndef SQLDB_H
+#define SQLDB_H
 
 #include "sqlite3.h"
 
-class SQLRRDB {
+class SQLDB {
 public:
-   SQLRRDB(void);
-   ~SQLRRDB(void);
+   SQLDB(void);
+   ~SQLDB(void);
 
    void OpenOrCreate(const std::string &path);
 
