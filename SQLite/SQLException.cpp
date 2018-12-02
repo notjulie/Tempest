@@ -2,6 +2,11 @@
 #include "SQLiteCommonHeader.h"
 #include "SQLException.h"
 
+SQLException::SQLException(const std::string &message)
+   : std::runtime_error(message)
+{
+}
+
 
 SQLException::SQLException(sqlite3 *db, int error, const std::string &message)
    : std::runtime_error(FormatMessage(db, error, message))

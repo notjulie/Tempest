@@ -29,3 +29,19 @@ void SQLDB::OpenOrCreate(const std::string &path)
 }
 
 
+bool SQLDB::DoesTableExist(const std::string &name)
+{
+   auto count = (int)ExecuteScalar("SELECT name FROM sqlite_master WHERE type='table' AND name=?1", name);
+   if (count == 0)
+      return false;
+   else if (count == 1)
+      return true;
+   else
+      throw SQLException(std::string("SQLDB::DoesTableExist: multiple results for table ") + name);
+}
+
+
+SQLVariant SQLDB::DoScalarQuery(const std::string &sql, const SQLVariantList &params)
+{
+   throw SQLException("SQLDB::DoScalarQuery: not implemented");
+}

@@ -53,14 +53,22 @@ namespace TempestDotNET {
 
 	void VectorGameManager::Start(void)
 	{
-      // create the game instance
-      game = CreateOurVectorGame(environment);
+      try {
+         // create the game instance
+         game = CreateOurVectorGame(environment);
 
-      game->SetSoundOutput(gameContext->GetSoundOutput());
-      game->SetControlPanel(gameContext->GetControlPanelReader());
- 
-      gameRunner = new VectorGameRunner(game);
-      gameRunner->Start();
+         game->SetSoundOutput(gameContext->GetSoundOutput());
+         game->SetControlPanel(gameContext->GetControlPanelReader());
+
+         gameRunner = new VectorGameRunner(game);
+         gameRunner->Start();
+      }
+      catch (std::runtime_error &e) {
+         throw gcnew System::Exception(gcnew System::String(e.what()));
+      }
+      catch (...) {
+         throw gcnew System::Exception("VectorGameManager::Start: unknown exception");
+      }
 	}
 
 	String ^VectorGameManager::GetProcessorStatus(void)

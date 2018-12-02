@@ -4,6 +4,7 @@
 
 class SQLException : public std::runtime_error {
 public:
+   SQLException(const std::string &message);
    SQLException(sqlite3 *db, int error, const std::string &message);
 
 private:
