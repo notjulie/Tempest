@@ -4,7 +4,13 @@
 
 #include <vector>
 #include "sqlite3.h"
-#include "SQLVariant.h"
+#include "SQLException.h"
+#include "SQLParameter.h"
+
+class SQLVariant {
+public:
+   operator int(void) const { throw SQLException("SQLVariant::in cast not implemented"); }
+};
 
 class SQLDB {
 public:
@@ -17,11 +23,11 @@ public:
 
    // query execution
    template <typename... Args> SQLVariant ExecuteScalar(const std::string &sql, Args... args) {
-      return DoScalarQuery(sql, SQLVariantList(args...));
+      return DoScalarQuery(sql, SQLParameterList(args...));
    }
 
 private:
-   SQLVariant DoScalarQuery(const std::string &sql, const SQLVariantList &params);
+   SQLVariant DoScalarQuery(const std::string &sql, const SQLParameterList &params);
 
 private:
    sqlite3  *db = nullptr;

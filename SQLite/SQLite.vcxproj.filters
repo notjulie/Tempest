@@ -30,7 +30,7 @@
     <ClCompile Include="SQLException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SQLVariant.cpp">
+    <ClCompile Include="SQLParameter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="SQLiteCommonHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SQLVariant.h">
+    <ClInclude Include="SQLParameter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -41,7 +41,7 @@ bool SQLDB::DoesTableExist(const std::string &name)
 }
 
 
-SQLVariant SQLDB::DoScalarQuery(const std::string &sql, const SQLVariantList &params)
+SQLVariant SQLDB::DoScalarQuery(const std::string &sql, const SQLParameterList &params)
 {
    throw SQLException("SQLDB::DoScalarQuery: not implemented");
 }
