@@ -4,15 +4,11 @@
 
 #include <string>
 
-class VectorGameException
+class VectorGameException : public std::runtime_error
 {
 public:
-   VectorGameException(const std::string &_message) : message(_message) {}
+   VectorGameException(const std::string &_message) : std::runtime_error(_message) {}
    virtual ~VectorGameException(void) {}
-   virtual const char* what(void) const { return message.c_str(); }
-
-private:
-   std::string message;
 };
 
 

@@ -6,11 +6,8 @@
 #include "sqlite3.h"
 #include "SQLException.h"
 #include "SQLParameter.h"
+#include "SQLVariant.h"
 
-class SQLVariant {
-public:
-   operator int(void) const { throw SQLException("SQLVariant::in cast not implemented"); }
-};
 
 class SQLDB {
 public:

@@ -27,6 +27,8 @@ std::string SQLException::FormatMessage(sqlite3 *db, int error, const std::strin
       break;
    }
 
+   result << message;
+
    return result.str();
 }
 
