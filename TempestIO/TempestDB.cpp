@@ -37,11 +37,14 @@ bool TempestDB::LoadHighScores(HighScoreList &highScores)
       ++count;
    }
 
-   return count == HIGH_SCORE_COUNT;
+   return false;
+//   return count == HIGH_SCORE_COUNT;
 }
 
 void TempestDB::SaveHighScores(const HighScoreList &highScores)
 {
+   // need to make this asynchronous
+   /*
    // delete the high scores
    db.ExecuteNonQuery("DELETE FROM HighScore");
 
@@ -53,4 +56,5 @@ void TempestDB::SaveHighScores(const HighScoreList &highScores)
          highScores.GetScore(i),
          highScores.GetInitials(i)
          );
+         */
 }
