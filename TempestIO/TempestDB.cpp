@@ -6,8 +6,16 @@
 
 void TempestDB::Open(const std::string &path)
 {
+   // create
    db.OpenOrCreate(path);
-   if (!db.DoesTableExist("HighScore"))
-      throw VectorGameException("TempestDB::Open: missing table");
+
+   // add the HighScore table if there is none
+   db.ExecuteNonQuery(
+      "CREATE TABLE IF NOT EXISTS HighScore ("
+      "Place INTEGER,"
+      "Score INTEGER,"
+      "Name TEXT"
+      ")"
+   );
 }
 

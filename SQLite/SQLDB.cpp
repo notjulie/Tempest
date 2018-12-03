@@ -2,6 +2,7 @@
 #include "SQLiteCommonHeader.h"
 
 #include "SQLException.h"
+#include "SQLStatement.h"
 
 #include "SQLDB.h"
 
@@ -43,57 +44,21 @@ bool SQLDB::DoesTableExist(const std::string &name)
 
 SQLVariant SQLDB::DoScalarQuery(const std::string &sql, const SQLParameterList &params)
 {
-   sqlite3_stmt *statement = nullptr;
+   SQLStatement statement(db, sql, params);
 
-   try {
-      // prepare the statement
-      int sqlResult = sqlite3_prepare_v2(
-         db,
-         sql.c_str(),
-         (int)sql.length(),
-         &statement,
-         nullptr
-      );
-      if (sqlResult != SQLITE_OK)
-         throw SQLException(db, sqlResult, std::string("sqlite3_prepare_v2 error in query: ") + sql);
+   if (!statement.MoveNext())
+      return SQLVariant();
 
-      // bind the parameters
-      for (int i = 0; i < params.size(); ++i)
-         params[i].Bind(statement, i + 1);
-
-      // execute once
-      sqlResult = sqlite3_step(statement);
-
-      // get the result
-      SQLVariant result;
-      switch (sqlResult)
-      {
-      case SQLITE_DONE:
-         // no rows returned... leave the result as null
-         break;
-
-      case SQLITE_ROW:
-         // got data... return the value from column zero
-         result = SQLVariant(statement, 0);
-         break;
-
-      default:
-         // error
-         throw SQLException(db, sqlResult, std::string("sqlite3_prepare_v2 error in query: ") + sql);
-      }
+   return statement.GetColumn(0);
+}
 
 
-      // dispose the statement
-      if (statement != nullptr)
-         sqlite3_finalize(statement);
+void SQLDB::DoNonQuery(const std::string &sql, const SQLParameterList &params)
+{
+   // create the statement
+   SQLStatement statement(db, sql, params);
 
-      // done
-      return result;
-   }
-   catch (...) {
-      // clean up and rethrow
-      if (statement != nullptr)
-         sqlite3_finalize(statement);
-      throw;
-   }
+   // this actually executes the query, so we need to call it even though
+   // we aren't looking for results
+   statement.MoveNext();
 }

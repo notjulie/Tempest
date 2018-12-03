@@ -22,9 +22,13 @@ public:
    template <typename... Args> SQLVariant ExecuteScalar(const std::string &sql, Args... args) {
       return DoScalarQuery(sql, SQLParameterList(args...));
    }
+   template <typename... Args> void ExecuteNonQuery(const std::string &sql, Args... args) {
+      return DoNonQuery(sql, SQLParameterList(args...));
+   }
 
 private:
    SQLVariant DoScalarQuery(const std::string &sql, const SQLParameterList &params);
+   void DoNonQuery(const std::string &sql, const SQLParameterList &params);
 
 private:
    sqlite3  *db = nullptr;
