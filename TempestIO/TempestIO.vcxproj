@@ -160,6 +160,7 @@
     <ClInclude Include="SoundChannel.h" />
     <ClInclude Include="SoundGenerator.h" />
     <ClInclude Include="SoundIOPacket.h" />
+    <ClInclude Include="TempestChar.h" />
     <ClInclude Include="TempestIO.Headers.h" />
     <ClInclude Include="TempestDB.h" />
     <ClInclude Include="TempestIOStreamListener.h" />
@@ -195,6 +196,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TempestChar.cpp" />
     <ClCompile Include="TempestIO.Headers.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

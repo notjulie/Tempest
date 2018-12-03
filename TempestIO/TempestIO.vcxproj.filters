@@ -84,6 +84,9 @@
     <ClInclude Include="HighScoreList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempestChar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SoundGenerator.cpp">
@@ -138,6 +141,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HighScoreList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempestChar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

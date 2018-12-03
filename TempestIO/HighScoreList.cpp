@@ -11,14 +11,28 @@ uint32_t HighScoreList::GetScore(int index) const
    return highScores[index].score;
 }
 
-char HighScoreList::GetInitial(int index, int charIndex)
+TempestChar HighScoreList::GetInitial(int index, int charIndex)
 {
    return highScores[index].initials[charIndex];
 }
 
-void HighScoreList::SetInitial(int index, int charIndex, char value)
+void HighScoreList::SetInitial(int index, int charIndex, TempestChar value)
 {
    highScores[index].initials[charIndex] = value;
+}
+
+void HighScoreList::SetScore(int index, uint32_t score)
+{
+   highScores[index].score = score;
+}
+
+std::string HighScoreList::GetInitials(int index) const
+{
+   std::string s;
+   s += highScores[index].initials[0].ToAscii();
+   s += highScores[index].initials[1].ToAscii();
+   s += highScores[index].initials[2].ToAscii();
+   return s;
 }
 
 uint8_t HighScoreList::InsertScore(uint32_t score)
@@ -43,3 +57,15 @@ uint8_t HighScoreList::InsertScore(uint32_t score)
    return HIGH_SCORE_COUNT;
 }
 
+void HighScoreList::SetInitials(int index, const std::string &initials)
+{
+   for (int i = 0; i < 3; ++i)
+   {
+      if (i >= initials.length())
+         highScores[i].initials[i] = TempestChar();
+      else
+         highScores[i].initials[i] = TempestChar::FromAscii(initials[i]);
+   }
+}
+
+void SetScore(int index, uint32_t score);

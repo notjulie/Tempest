@@ -11,6 +11,8 @@
    #pragma warning(disable : 4820)	// padding in structures
 #endif
 
+class TempestChar;
+
 class VectorGenerator
 {
 public:
@@ -35,8 +37,8 @@ public:
    void RegisterHook(uint16_t address, std::function<uint16_t(uint16_t)> hook);
 
    // primitives callable by hooks
-   void Char(char c);
-   uint16_t GetCharSubroutineAddress(char c);
+   void Char(TempestChar c);
+   uint16_t GetCharSubroutineAddress(TempestChar c);
    void Printf(const char *format, ...);
 
 protected:

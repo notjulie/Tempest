@@ -59,5 +59,8 @@
     <ClInclude Include="SQLStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SQLDB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

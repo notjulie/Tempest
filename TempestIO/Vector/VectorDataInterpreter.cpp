@@ -14,6 +14,7 @@
 #include <stdio.h>
 
 #include "../../TempestCPU/TempestException.h"
+#include "../TempestChar.h"
 
 #include "VectorDataInterpreter.h"
 
@@ -155,23 +156,17 @@ void VectorDataInterpreter::RegisterHook(uint16_t address, std::function<uint16_
 }
 
 
-void VectorDataInterpreter::Char(char c)
+void VectorDataInterpreter::Char(TempestChar c)
 {
    InterpretAt(GetCharSubroutineAddress(c));
 }
 
-uint16_t VectorDataInterpreter::GetCharSubroutineAddress(char c)
+uint16_t VectorDataInterpreter::GetCharSubroutineAddress(TempestChar c)
 {
-   // letters
-   if (c >= 'A' && c <= 'Z')
-      return 0x1000 + 2 * vectorData.GetAt(0x11fa + 2 * (c - 'A'));
-
-   // numbers
-   if (c >= '0' && c <= '9')
-      return 0x1000 + 2 * vectorData.GetAt(0x11e6 + 2 * (c - '0'));
-
-   // space for everything else
-   return 0x1168;
+   if (c.ToAscii() == ' ')
+      return 0x1168;
+   else
+      return 0x1000 + 2 * vectorData.GetAt(0x11e6 + 2 * c.GetRawValue());
 }
 
 
@@ -191,6 +186,6 @@ void VectorDataInterpreter::Printf(const char *format, ...)
    {
       if (buffer[i] == 0)
          break;
-      Char(buffer[i]);
+      Char(TempestChar::FromAscii(buffer[i]));
    }
 }

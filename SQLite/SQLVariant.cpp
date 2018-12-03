@@ -37,6 +37,13 @@ SQLVariant::operator int(void) const
    return sqlite3_value_int(value);
 }
 
+SQLVariant::operator std::string(void) const
+{
+   if (value == nullptr)
+      throw SQLException("SQLVariant::int: value is NULL");
+   return (const char *)sqlite3_value_text(value);
+}
+
 SQLVariant &SQLVariant::operator=(const SQLVariant &source)
 {
    if (value != nullptr)

@@ -150,6 +150,7 @@
     <ClCompile Include="SQLVariant.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SQLDB.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="sqlite3ext.h" />
     <ClInclude Include="SQLiteCommonHeader.h" />

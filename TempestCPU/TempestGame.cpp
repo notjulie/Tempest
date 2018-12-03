@@ -184,11 +184,11 @@ void TempestGame::Printf(const char *format, ...)
    {
       if (buffer[i] == 0)
          break;
-      Char(buffer[i]);
+      Char(TempestChar::FromAscii(buffer[i]));
    }
 }
 
-void TempestGame::Char(char c)
+void TempestGame::Char(TempestChar c)
 {
    // This is valid only in a particular context where the game is writing out text using
    // a particular subroutine.  In that context, the address in vector RAM to which we

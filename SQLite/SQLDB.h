@@ -6,6 +6,7 @@
 #include "sqlite3.h"
 #include "SQLException.h"
 #include "SQLParameter.h"
+#include "SQLStatement.h"
 #include "SQLVariant.h"
 
 
@@ -24,6 +25,9 @@ public:
    }
    template <typename... Args> void ExecuteNonQuery(const std::string &sql, Args... args) {
       return DoNonQuery(sql, SQLParameterList(args...));
+   }
+   template <typename... Args> SQLStatement ExecuteQuery(const std::string &sql, Args... args) {
+      return SQLStatement(db, sql, SQLParameterList(args...));
    }
 
 private:

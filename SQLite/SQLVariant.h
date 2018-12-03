@@ -10,6 +10,7 @@ public:
    ~SQLVariant(void);
 
    operator int(void) const;
+   operator std::string(void) const;
 
    SQLVariant &operator=(const SQLVariant &source);
 

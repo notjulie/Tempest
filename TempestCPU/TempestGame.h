@@ -49,7 +49,7 @@ private:
    void      SetPlayerScore(uint8_t playerIndex, uint32_t score);
    uint32_t  SortHighScores(void);
    void      Printf(const char *format, ...);
-   void      Char(char c);
+   void      Char(TempestChar c);
 
 private:
    AbstractGameEnvironment * environment;
