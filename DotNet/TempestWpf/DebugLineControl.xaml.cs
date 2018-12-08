@@ -1,4 +1,15 @@
-﻿using System;
+﻿// ====================================================================
+// DebugLineControl
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    A line in my 6502 debug window that handles setting breakpoints
+//    and the like.
+// ====================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

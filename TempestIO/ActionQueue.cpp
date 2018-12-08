@@ -1,28 +1,58 @@
+// ====================================================================
+// ActionQueue
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a simple queue thread that allows serialization of
+//    asynchronous operations so that they can be executed synchronously
+//    or asynchronously in a manner such that they always execute in
+//    the order in which they are enqueued.
+// ====================================================================
+
 
 #include "TempestIO.Headers.h"
 #include "ActionQueue.h"
 
+/// <summary>
+/// Creates a new ActionQueue
+/// </summary>
 ActionQueue *ActionQueue::Create(void)
 {
    return new ActionQueue();
 }
 
 
+/// <summary>
+/// Initializes a new instance of class ActionQueue
+/// </summary>
 ActionQueue::ActionQueue(void)
 {
    // create our thread
    thread = new std::thread([this]() { ThreadEntry(); });
 }
 
+/// <summary>
+/// Terminates an ActionQueue after all of its actions have completed
+/// </summary>
 ActionQueue::~ActionQueue(void)
 {
-   // shut down the thread
-   terminated = true;
-   ExecuteAsynchronous([]() {});
+   // make ourself as terminated; but let the thread itself do it, just to make
+   // timing clearer
+   ExecuteSynchronous<void>([this]() { terminated = true; });
+
+   // wait for the thread to fully exit
    thread->join();
+
+   // delete
    delete thread;
 }
 
+
+/// <summary>
+/// Enqueues an action
+/// </summary>
 void ActionQueue::ExecuteAsynchronous(const std::function<void(void)> &action)
 {
    std::lock_guard<std::mutex> lock(qMutex);
@@ -33,6 +63,10 @@ void ActionQueue::ExecuteAsynchronous(const std::function<void(void)> &action)
    }
 }
 
+
+/// <summary>
+/// Our thread function
+/// </summary>
 void ActionQueue::ThreadEntry(void)
 {
    while (!terminated)
