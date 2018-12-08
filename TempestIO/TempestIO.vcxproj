@@ -153,6 +153,7 @@
     <ClInclude Include="AbstractSoundGenerator.h" />
     <ClInclude Include="AbstractTempestIO.h" />
     <ClInclude Include="AbstractTempestStream.h" />
+    <ClInclude Include="ActionQueue.h" />
     <ClInclude Include="Cpp11WaveStreamer.h" />
     <ClInclude Include="HighScoreList.h" />
     <ClInclude Include="Noise.h" />
@@ -183,6 +184,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TempestIO.Headers.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TempestIO.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="ActionQueue.cpp" />
     <ClCompile Include="Cpp11WaveStreamer.cpp" />
     <ClCompile Include="HighScoreList.cpp" />
     <ClCompile Include="Noise.cpp" />
