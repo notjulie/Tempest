@@ -47,17 +47,20 @@ void SQLParameter::Bind(sqlite3_stmt *statement, int index) const
 /// ======================== class SQLParameterBinder ===========================
 /// =============================================================================
 
-int SQLParameterBinder<int>::Bind(sqlite3_stmt *statement, int index) const
+// --- template specializations of the Bind method for each type that we
+// --- support
+
+template<> int SQLParameterBinder<int>::Bind(sqlite3_stmt *statement, int index) const
 {
    return sqlite3_bind_int(statement, index, value);
 }
 
-int SQLParameterBinder<unsigned int>::Bind(sqlite3_stmt *statement, int index) const
+template<> int SQLParameterBinder<unsigned int>::Bind(sqlite3_stmt *statement, int index) const
 {
    return sqlite3_bind_int(statement, index, value);
 }
 
-int SQLParameterBinder<std::string>::Bind(sqlite3_stmt *statement, int index) const
+template<> int SQLParameterBinder<std::string>::Bind(sqlite3_stmt *statement, int index) const
 {
    return sqlite3_bind_text(statement, index, value.c_str(), (int)value.length(), SQLITE_TRANSIENT);
 }
