@@ -6,7 +6,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-#include "TempestCPU/TempestException.h"
+#include "TempestException.h"
 
 #include "PiSerialStream.h"
 

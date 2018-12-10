@@ -14,6 +14,7 @@
 #ifndef SQLPARAMETER_H
 #define SQLPARAMETER_H
 
+#include <memory>
 #include <vector>
 
 /// <summary>

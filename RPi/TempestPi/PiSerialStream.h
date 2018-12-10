@@ -3,7 +3,7 @@
 #define PISERIALSTREAM_H
 
 #include <condition_variable>
-#include "TempestIO/AbstractTempestStream.h"
+#include "AbstractTempestStream.h"
 
 
 class PiSerialStream : public AbstractTempestStream
