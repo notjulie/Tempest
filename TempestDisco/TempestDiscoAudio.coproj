@@ -92,20 +92,20 @@
     <File name="TempestIO/SoundIOPacket.cpp" path="../TempestIO/SoundIOPacket.cpp" type="1"/>
     <File name="ControlPanel.cpp" path="app/ControlPanel.cpp" type="1"/>
     <File name="Discovery" path="" type="2"/>
-    <File name="SystemTime.cpp" path="app/SystemTime.cpp" type="1"/>
     <File name="ControlPanelButton.cpp" path="app/ControlPanelButton.cpp" type="1"/>
+    <File name="SystemTime.cpp" path="app/SystemTime.cpp" type="1"/>
     <File name="TempestIO/AbstractTempestIO.h" path="../TempestIO/AbstractTempestIO.h" type="1"/>
     <File name="Encoder.cpp" path="app/Encoder.cpp" type="1"/>
     <File name="Audio/DiscoWaveStreamer.cpp" path="app/Audio/DiscoWaveStreamer.cpp" type="1"/>
     <File name="TempestIO/AbstractSoundGenerator.cpp" path="../TempestIO/AbstractSoundGenerator.cpp" type="1"/>
-    <File name="system_stm32f4xx.c" path="app/system_stm32f4xx.c" type="1"/>
     <File name="TempestDisco.cpp" path="app/TempestDisco.cpp" type="1"/>
+    <File name="system_stm32f4xx.c" path="app/system_stm32f4xx.c" type="1"/>
     <File name="WatchDog.cpp" path="app/WatchDog.cpp" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_dma.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dma.c" type="1"/>
     <File name="STM/StdPeriph/stm32f4xx_spi.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.c" type="1"/>
     <File name="Audio" path="" type="2"/>
-    <File name="TempestIO/AbstractTempestStream.cpp" path="../TempestIO/AbstractTempestStream.cpp" type="1"/>
     <File name="TechPort.cpp" path="app/TechPort.cpp" type="1"/>
+    <File name="TempestIO/AbstractTempestStream.cpp" path="../TempestIO/AbstractTempestStream.cpp" type="1"/>
     <File name="stm32f4xx_it.c" path="app/stm32f4xx_it.c" type="1"/>
     <File name="TempestIO/PacketStream.cpp" path="../TempestIO/PacketStream.cpp" type="1"/>
     <File name="STM" path="" type="2"/>
@@ -141,9 +141,9 @@
     <File name="STM/StdPeriph/misc.c" path="../../STM32F4-Discovery_FW_V1.1.0/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c" type="1"/>
     <File name="ControlPanel.h" path="app/ControlPanel.h" type="1"/>
     <File name="startup_stm32f4xx.c" path="app/startup_stm32f4xx.c" type="1"/>
-    <File name="TempestIO/SoundGenerator.cpp" path="../TempestIO/SoundGenerator.cpp" type="1"/>
-    <File name="STM/StdPeriph" path="" type="2"/>
     <File name="TempestDiscoAudio.cpp" path="app/TempestDiscoAudio.cpp" type="1"/>
+    <File name="STM/StdPeriph" path="" type="2"/>
+    <File name="TempestIO/SoundGenerator.cpp" path="../TempestIO/SoundGenerator.cpp" type="1"/>
     <File name="TempestIO" path="" type="2"/>
     <File name="TempestIO/TempestMemoryStream.cpp" path="../TempestIO/TempestMemoryStream.cpp" type="1"/>
     <File name="SystemError.h" path="app/SystemError.h" type="1"/>

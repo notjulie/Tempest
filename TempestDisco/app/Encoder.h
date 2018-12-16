@@ -20,6 +20,7 @@ public:
 
 	void AddSample(int value);
 	bool IsHigh(void) const { return isHigh; }
+	int GetFilteredOutput(void) const;
 
 private:
 	bool isHigh;

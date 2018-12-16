@@ -108,6 +108,12 @@ extern "C" {
 
 	   return 0;
 	}
+
+	void *_sbrk(intptr_t increment)
+	{
+		ReportSystemError(SYSTEM_ERROR_SBRK_CALLED);
+		return (void *)-1;
+	}
 };
 
 

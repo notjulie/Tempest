@@ -9,6 +9,8 @@
 // ===============================================================
 
 #include <math.h>
+#include <stdio.h>
+#include "TechPort.h"
 #include "Encoder.h"
 
 
@@ -81,6 +83,11 @@ void EncoderInput::AddSample(int value)
 }
 
 
+int EncoderInput::GetFilteredOutput(void) const
+{
+	return lowPassCapacitor - highPassCapacitor;
+}
+
 
 
 // =============================================================
@@ -127,6 +134,24 @@ void Encoder::AddSample(int a, int b)
 		transition |= 0x01;
 	if (input2.IsHigh())
 		transition |= 0x02;
+
+	// log transitions
+	switch (transition)
+	{
+	case 0x00:
+	case 0x11:
+	case 0x22:
+	case 0x33:
+		break;
+
+	default:
+		{
+			char msg[100];
+			snprintf(msg, sizeof(msg), "%d,%d,%d,%d\r\n", a, b, input1.GetFilteredOutput(), input2.GetFilteredOutput());
+			Tech.WriteString(msg);
+		}
+		break;
+	}
 
 	// our transition byte is set up for handy readability, such that
 	// 0x12 means that our inputs were 0x1 beforehand and 0x2 after
