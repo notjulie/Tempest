@@ -16,6 +16,11 @@
 
 #include <vector>
 
+
+/// =============================================================================
+/// ======================== SQLAbstractParameterBinder =========================
+/// =============================================================================
+
 /// <summary>
 /// Base class for classes that know how to bind parameters to queries
 /// </summary>
@@ -27,9 +32,23 @@ public:
 };
 
 
+
+/// =============================================================================
+/// ======================= Parameter binding primitives ========================
+/// =============================================================================
+// These are intended to be used internally by SQLParameterBinder, but they're
+// perfectly generic and there's no reason for them not to be public.
+
+int BindSQLiteParameterToStatement(int value, sqlite3_stmt *statement, int index);
+int BindSQLiteParameterToStatement(const std::string &value, sqlite3_stmt *statement, int index);
+
+
+/// =============================================================================
+/// ============================ SQLParameterBinder =============================
+/// =============================================================================
+
 /// <summary>
-/// Template class for binding values of different types to queries.  The Bind method is going to
-/// have implementations for each type that we support.
+/// Template class for binding values of different types to queries.
 /// </summary>
 template <typename T> class SQLParameterBinder : public SQLAbstractParameterBinder {
 public:
@@ -41,12 +60,19 @@ public:
       return new SQLParameterBinder(value);
    }
 
-   virtual int Bind(sqlite3_stmt *statement, int index) const;
+   virtual int Bind(sqlite3_stmt *statement, int index) const {
+      return BindSQLiteParameterToStatement(value, statement, index);
+   }
 
 private:
    T value;
 };
 
+
+
+/// =============================================================================
+/// =============================== SQLParameter ================================
+/// =============================================================================
 
 /// <summary>
 /// Represents a parameter that can be bound to a query.
@@ -65,6 +91,10 @@ private:
    std::unique_ptr<SQLAbstractParameterBinder> handler;
 };
 
+
+/// =============================================================================
+/// ============================= SQLParameterList ==============================
+/// =============================================================================
 
 /// <summary>
 /// A collection of SQLParameter objects; the variadic template constructor allows
