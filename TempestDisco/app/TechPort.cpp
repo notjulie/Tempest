@@ -22,10 +22,10 @@ void TechPort::Initialize(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 
 	// set PC6 to alternate function 8 (USART6 TX)
-	GPIOA->AFR[0] &= ~(15<<24);
-	GPIOA->AFR[0] |= (8<<24);
-	GPIOA->MODER &= ~(3<<12);
-	GPIOA->MODER |= (2<<12);
+	GPIOC->AFR[0] &= ~(15<<24);
+	GPIOC->AFR[0] |= (8<<24);
+	GPIOC->MODER &= ~(3<<12);
+	GPIOC->MODER |= (2<<12);
 
 	// get the UART master clock speed
 	uint32_t masterClock = GetAPB2PeripheralClockSpeed();

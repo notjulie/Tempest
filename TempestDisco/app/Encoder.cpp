@@ -56,7 +56,7 @@ void EncoderInput::AddSample(int value)
 	// This is actually a simulation of the original Tempest circuit, which
 	// feeds the analog inputs into a Schmitt-triggered inverter.  But it also
 	// does the following:
-	//    - biases the circuit so the Schmitt-trigger's threshold is effecively
+	//    - biases the circuit so the Schmitt-trigger's threshold is effectively
 	//      zero (plus or minus the hysteresis)
 	//    - lowpasses the input, presumably to reduce noise
 	//    - highpasses the input, to remove DC
@@ -74,8 +74,12 @@ void EncoderInput::AddSample(int value)
 	// get the highpass output
 	double highpassOutput = lowPassCapacitor - highPassCapacitor;
 
+	// observing the tech port, I saw that 500 was too small for the hysteresis
+	// value as it was well within the range of noise; 1000 seems mushc more
+	// stable
+	static const int hysteresis = 1000;
+
 	// adjust our value accordingly
-	int hysteresis = 500;
 	if (highpassOutput < -hysteresis)
 		isHigh = false;
 	else if (highpassOutput > hysteresis)
@@ -105,6 +109,7 @@ Encoder::Encoder(int sampleFrequency)
 {
 	phaseAccumulator = 0;
 	currentValue = 0;
+	loggingEnabled = true;
 }
 
 
@@ -145,11 +150,11 @@ void Encoder::AddSample(int a, int b)
 		break;
 
 	default:
-		{
+		/*{
 			char msg[100];
 			snprintf(msg, sizeof(msg), "%d,%d,%d,%d\r\n", a, b, input1.GetFilteredOutput(), input2.GetFilteredOutput());
 			Tech.WriteString(msg);
-		}
+		}*/
 		break;
 	}
 
@@ -171,7 +176,6 @@ void Encoder::AddSample(int a, int b)
 	case 0x10:
 		// these are all the negative moving transitions
 		--phaseAccumulator;
-		break;
 		break;
 	}
 

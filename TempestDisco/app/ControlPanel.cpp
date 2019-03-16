@@ -113,12 +113,13 @@ void ServiceControlPanel(void)
 	fireButton.SetSample(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1) == Bit_RESET);
 	zapButton.SetSample(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2) == Bit_RESET);
 
-	static bool twoPlayerState = false;
-	if (twoPlayerButton.IsOn() && !twoPlayerState)
+	// we use a double tap on player one to toggle encoder logging
+	static bool onePlayerDoubleTap = false;
+	if (onePlayerButton.IsDoubleTapOn() && !onePlayerDoubleTap)
 	{
-		Tech.WriteString("Two player pressed\r\n");
+		encoder.SetLoggingEnabled(!encoder.IsLoggingEnabled());
 	}
-	twoPlayerState = twoPlayerButton.IsOn();
+	onePlayerDoubleTap = onePlayerButton.IsDoubleTapOn();
 }
 
 
