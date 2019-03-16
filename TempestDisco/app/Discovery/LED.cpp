@@ -1,3 +1,16 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//		This has support for the LED's on the STM32F4 Discovery board,
+//		which are used for general diagnostics.  The LEDs are driven by
+//    PWM, so they are really flexible in how they can be used, more
+//    than just on/off.
+// ====================================================================
+
 
 #include "TempestDisco.h"
 #include "LED.h"
@@ -13,7 +26,6 @@ struct LEDDefinition
 	volatile uint32_t  *ccr;
 };
 
-static bool usingPWM = false;
 static const LEDDefinition LEDs[] = {
 		{ LED_RED_PIN,    &TIM4->CCR3 },
 		{ LED_GREEN_PIN,  &TIM4->CCR1 },
@@ -21,26 +33,19 @@ static const LEDDefinition LEDs[] = {
 		{ LED_ORANGE_PIN, &TIM4->CCR2 }
 };
 
-void InitializeLEDs(bool usePWM)
+void InitializeLEDs(void)
 {
-	// note how we are set up
-	usingPWM = usePWM;
-
 	// enable the peripheral clock for GPIOD
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
 	// Configure PD12, PD13, PD14 and PD15 in output pushpull mode
    GPIO_InitTypeDef  GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Pin = LED_GREEN_PIN|LED_ORANGE_PIN|LED_RED_PIN|LED_BLUE_PIN;
-	GPIO_InitStructure.GPIO_Mode = usePWM ? GPIO_Mode_AF : GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-	// if we're not using PWM then we're done
-	if (!usingPWM)
-		return;
 
 	// set the pins to connect to TIM4 outputs
 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_TIM4);
@@ -110,9 +115,6 @@ void LEDOn(DiscoLED led, bool on)
 
 void LEDValue(DiscoLED led, uint16_t value)
 {
-	if (usingPWM)
-		*LEDs[led].ccr = value;
-	else
-		GPIO_WriteBit(GPIOD, LEDs[led].gpioPin, (value!=0) ? Bit_SET : Bit_RESET);
+	*LEDs[led].ccr = value;
 }
 
