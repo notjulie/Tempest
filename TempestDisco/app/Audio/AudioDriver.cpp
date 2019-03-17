@@ -1,3 +1,15 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a wrapper around a sample implementation of double-buffered
+//    wave audio for the STM32F4 Discovery board, tailored to match my
+//    design sensibilities.
+// ====================================================================
+
 
 #include "TempestDisco.h"
 
@@ -13,9 +25,13 @@
 static int16_t wave[TEMPEST_DISCO_SOUND_BUFFER_SAMPLE_COUNT];
 static bool firstHalfReady;
 static bool secondHalfReady;
-static bool heartBeat = false;
 
 
+/// <summary>
+/// Initializes the audio driver.  This begins playing a buffer of silence;
+/// it will continue thus until someone polls for an empty buffer via
+/// AudioDriverPopEmptyBuffer() and fills it.
+/// </summary>
 void AudioDriverInit(void)
 {
 	// make sure that the clock for I2S is configured... this should
@@ -38,6 +54,11 @@ void AudioDriverInit(void)
 	EVAL_AUDIO_Play((uint16_t*)wave, sizeof(wave) * 4);
 }
 
+/// <summary>
+/// Gets the next buffer to be filled; this should be polled by
+/// the main loop, and when an empty buffer is reported the main
+/// loop should fill it.
+/// </summary>
 bool AudioDriverPopEmptyBuffer(int16_t **buffer, int *frameCount)
 {
 	if (firstHalfReady)
@@ -58,22 +79,11 @@ bool AudioDriverPopEmptyBuffer(int16_t **buffer, int *frameCount)
 	return false;
 }
 
-bool AudioDriverHeartbeat(void)
-{
-	return heartBeat;
-}
-
-
 // "C" callback functions that get called from the interrupt handlers
 extern "C" {
 
 	void EVAL_AUDIO_TransferComplete_CallBack(uint32_t pBuffer, uint32_t Size)
 	{
-		// this is the green heartbeat LED
-		static int cycles = 0;
-		++cycles;
-		heartBeat = ((cycles / 50) & 1) != 0;
-
 		// this means the first half of the buffer is starting to play
 		// and the second half is ready to be filled
 		firstHalfReady = false;
