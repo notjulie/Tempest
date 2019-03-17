@@ -51,7 +51,7 @@ extern "C" {
 		SystemInit();
 
 		hw_init();
-      InitializeLEDs(true);
+      InitializeLEDs();
 
 		// initialize our main counters, SysTick, etc.
 		InitializeSystemTime();
@@ -108,6 +108,12 @@ extern "C" {
 
 	   return 0;
 	}
+
+	void *_sbrk(intptr_t increment)
+	{
+		ReportSystemError(SYSTEM_ERROR_SBRK_CALLED);
+		return (void *)-1;
+	}
 };
 
 
@@ -151,3 +157,25 @@ AppState GetAppState(void)
 {
 	return appState;
 }
+
+/// <summary>
+/// these are functions that the linker wants ever since I added the first
+/// C++ file to the project
+/// </summary>
+extern "C" {
+
+	int _getpid(void)
+	{
+		return 42;
+	}
+
+	void _exit(void)
+	{
+		ReportSystemError(SYSTEM_ERROR_EXIT_CALLED);
+	}
+
+	void _kill(void)
+	{
+		ReportSystemError(SYSTEM_ERROR_KILL_CALLED);
+	}
+};

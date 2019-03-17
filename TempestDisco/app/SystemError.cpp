@@ -70,7 +70,7 @@ static void DisplaySystemError(SystemError systemError)
 
 	// call SystemInit to set up the clocks, then initialize the LEDs
 	SystemInit();
-	InitializeLEDs(false);
+	InitializeLEDs();
 
 	for (;;)
 	{

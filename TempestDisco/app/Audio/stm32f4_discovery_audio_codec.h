@@ -1,3 +1,15 @@
+// ====================================================================
+// Tempest emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    Defines interfaces and options for the I2S audio for the stm32f4
+//    Discovery board used in my Tempest machine.  Very simply, this is
+//    just a double-buffered waveform audio driver.
+// ====================================================================
+
 /**
   ******************************************************************************
   * @file    stm32f4_discovery_audio_codec.h

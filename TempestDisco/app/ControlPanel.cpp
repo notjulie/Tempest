@@ -4,6 +4,7 @@
 #include "ControlPanelButton.h"
 #include "Encoder.h"
 #include "SystemTime.h"
+#include "TechPort.h"
 
 #include "ControlPanel.h"
 
@@ -111,6 +112,14 @@ void ServiceControlPanel(void)
 	twoPlayerButton.SetSample(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == Bit_RESET);
 	fireButton.SetSample(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1) == Bit_RESET);
 	zapButton.SetSample(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2) == Bit_RESET);
+
+	// we use a double tap on player one to toggle encoder logging
+	static bool onePlayerDoubleTap = false;
+	if (onePlayerButton.IsDoubleTapOn() && !onePlayerDoubleTap)
+	{
+		encoder.SetLoggingEnabled(!encoder.IsLoggingEnabled());
+	}
+	onePlayerDoubleTap = onePlayerButton.IsDoubleTapOn();
 }
 
 

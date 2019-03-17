@@ -20,6 +20,7 @@ public:
 
 	void AddSample(int value);
 	bool IsHigh(void) const { return isHigh; }
+	int GetFilteredOutput(void) const;
 
 private:
 	bool isHigh;
@@ -36,12 +37,15 @@ public:
 
 	void AddSample(int a, int b);
 	uint16_t GetValue(void) const { return currentValue; }
+	bool IsLoggingEnabled(void) const { return loggingEnabled; }
+	void SetLoggingEnabled(bool enabled) { loggingEnabled = enabled; }
 
 private:
 	EncoderInput input1;
 	EncoderInput input2;
 	int phaseAccumulator;
 	uint16_t currentValue;
+	bool loggingEnabled;
 };
 
 #endif

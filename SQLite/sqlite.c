@@ -22,5 +22,9 @@
 // and it's not perfectly anal about its integer conversions
 #pragma GCC diagnostic ignored "-Wconversion"
 
+// this causes problems sometimes on the RPi Eclipse build... disable for
+// now until I find a have a reason to want it
+#define HAVE_MREMAP 0
+
 // include sqlite
 #include "sqlite3.c"
