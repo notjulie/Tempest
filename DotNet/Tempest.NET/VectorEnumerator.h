@@ -5,7 +5,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "SimpleVector.h"
+#include "DisplayVector.h"
 
 class SimpleVectorDataInterpreter;
 class VectorData;
@@ -13,7 +13,7 @@ class VectorData;
 public ref class VectorEnumerator
 {
 public:
-	VectorEnumerator(const std::vector<SimpleVector> &vectorList);
+	VectorEnumerator(const std::vector<DisplayVector> &vectorList);
 	virtual ~VectorEnumerator(void);
 
 	bool GetNextVector(
@@ -27,7 +27,7 @@ public:
       );
 
 private:
-	std::vector<SimpleVector> *vectorData;
+	std::vector<DisplayVector> *vectorData;
 	int nextVector;
 };
 

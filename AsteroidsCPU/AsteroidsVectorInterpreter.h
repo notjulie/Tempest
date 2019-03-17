@@ -2,14 +2,14 @@
 #ifndef ASTEROIDSVECTORINTERPRETER_H
 #define ASTEROIDSVECTORINTERPRETER_H
 
-#include "SimpleVector.h"
+#include "DisplayVector.h"
 
 class AsteroidsVectorInterpreter
 {
 public:
    void Interpret(void);
    void SetVectorRAM(const void *vectorRAM);
-   void GetAllVectors(std::vector<SimpleVector> &vectors);
+   void GetAllVectors(std::vector<DisplayVector> &vectors);
 
 private:
    void Draw(int dx, int dy, uint8_t intensity, int scale);
@@ -26,7 +26,7 @@ private:
    bool isHalt = false;
    float x, y;
    uint16_t stack[100];
-   std::vector<SimpleVector> vectors;
+   std::vector<DisplayVector> vectors;
    int globalScale = 0;
 };
 

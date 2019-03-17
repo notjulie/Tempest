@@ -42,8 +42,8 @@ void SimpleVectorGenerator::LDraw(int _x, int _y, int _intensity)
 		return;
 
 	// add the vector to the list
-	SimpleVector vector;
-   vector.type = SimpleVector::Line;
+   DisplayVector vector;
+   vector.type = DisplayVector::Line;
 	vector.line.startX = startX;
 	vector.line.startY = startY;
 	vector.line.endX = endX;

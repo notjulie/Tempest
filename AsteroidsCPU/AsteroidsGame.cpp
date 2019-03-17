@@ -23,7 +23,7 @@ AsteroidsGame::~AsteroidsGame(void)
 {
 }
 
-void AsteroidsGame::GetAllVectors(std::vector<SimpleVector> &vectors)
+void AsteroidsGame::GetAllVectors(std::vector<DisplayVector> &vectors)
 {
    if (asteroidsBus.IsVectorGo())
    {

@@ -35,7 +35,7 @@ namespace TempestDotNET {
    
    VectorEnumerator ^VectorGameManager::GetVectorEnumerator(void)
    {
-      std::vector<SimpleVector> vectors;
+      std::vector<DisplayVector> vectors;
       if (game != nullptr)
          game->GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);

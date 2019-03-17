@@ -7,9 +7,9 @@
 #include "VectorEnumerator.h"
 
 
-VectorEnumerator::VectorEnumerator(const std::vector<SimpleVector> &vectorList)
+VectorEnumerator::VectorEnumerator(const std::vector<DisplayVector> &vectorList)
 {
-	vectorData = new std::vector<SimpleVector>(vectorList);
+	vectorData = new std::vector<DisplayVector>(vectorList);
 	nextVector = 0;
 }
 
@@ -31,8 +31,8 @@ bool VectorEnumerator::GetNextVector(
 	if (nextVector >= (int)vectorData->size())
 		return false;
 
-	SimpleVector	vector = (*vectorData)[nextVector++];
-   if (vector.type != SimpleVector::Line)
+   DisplayVector	vector = (*vectorData)[nextVector++];
+   if (vector.type != DisplayVector::Line)
       throw gcnew System::NotImplementedException("VectorEnumerator::GetNextVector: unimplemented vector type");
 
 	startX = vector.line.startX;

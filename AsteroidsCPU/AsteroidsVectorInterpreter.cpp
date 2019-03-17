@@ -36,7 +36,7 @@ void AsteroidsVectorInterpreter::Interpret(void)
    }
 }
 
-void AsteroidsVectorInterpreter::GetAllVectors(std::vector<SimpleVector> &vectors)
+void AsteroidsVectorInterpreter::GetAllVectors(std::vector<DisplayVector> &vectors)
 {
    vectors = this->vectors;
 }
@@ -223,8 +223,8 @@ void AsteroidsVectorInterpreter::Draw(int _dx, int _dy, uint8_t intensity, int s
    if (!ClipEndPoint(endX, endY, startX, startY))
       return;
 
-   SimpleVector vector;
-   vector.type = SimpleVector::Line;
+   DisplayVector vector;
+   vector.type = DisplayVector::Line;
    vector.line.startX = (int16_t)startX;
    vector.line.startY = (int16_t)startY;
    vector.line.endX = (int16_t)endX;

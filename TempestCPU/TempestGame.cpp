@@ -208,7 +208,7 @@ void TempestGame::Char(TempestChar c)
    tempestBus.WriteByte(0x0075, (uint8_t)(targetAddress >> 8));
 }
 
-void TempestGame::GetAllVectors(std::vector<SimpleVector> &vectors)
+void TempestGame::GetAllVectors(std::vector<DisplayVector> &vectors)
 {
    // NOTE: this typically does not get called on the 6502 thread, so
    // be careful what you do here... everything we call should be safe

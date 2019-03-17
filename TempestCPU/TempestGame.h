@@ -33,7 +33,7 @@ public:
    bool     IsInAttractMode(void) { return tempestBus.ReadByte(GAME_INPUT_MODE) == GAME_INPUT_MODE_ATTRACT; }
 
    // base class overrides
-   virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
+   virtual void GetAllVectors(std::vector<DisplayVector> &vectors);
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) { tempestBus.SetControlPanel(controlPanel); }
    virtual void SetSoundOutput(AbstractSoundGenerator *soundOutput) { tempestBus.SetSoundOutput(soundOutput); }
    virtual CPU6502Runner *GetCPURunner(void) { return &cpuRunner; }

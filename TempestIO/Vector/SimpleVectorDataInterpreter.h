@@ -2,7 +2,7 @@
 #ifndef SIMPLEVECTORDATAINTERPRETER_H
 #define SIMPLEVECTORDATAINTERPRETER_H
 
-#include "SimpleVector.h"
+#include "DisplayVector.h"
 #include "VectorDataInterpreter.h"
 
 #ifdef _WIN32
@@ -16,7 +16,7 @@ class SimpleVectorGenerator : public VectorGenerator
 public:
    virtual ~SimpleVectorGenerator(void) {}
 
-   void GetAllVectors(std::vector<SimpleVector> &_vectors) { _vectors = this->vectors; }
+   void GetAllVectors(std::vector<DisplayVector> &_vectors) { _vectors = this->vectors; }
 
    virtual void Center(void);
    virtual void LDraw(int x, int y, int intensity);
@@ -34,7 +34,7 @@ private:
    int binaryScale = 1;
    int linearScale = 0;
    int color = 0;
-   std::vector<SimpleVector> vectors;
+   std::vector<DisplayVector> vectors;
 };
 
 #ifdef _WIN32

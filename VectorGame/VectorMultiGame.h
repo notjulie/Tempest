@@ -14,7 +14,7 @@ public:
 
    virtual CPU6502Runner *GetCPURunner(void);
 
-   virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
+   virtual void GetAllVectors(std::vector<DisplayVector> &vectors);
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel);
    virtual void SetSoundOutput(AbstractSoundGenerator *soundOutput);
    virtual void SingleStep(void);

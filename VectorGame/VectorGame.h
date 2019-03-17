@@ -14,7 +14,7 @@
 
 #include <vector>
 #include "CPU6502Runner.h"
-#include "SimpleVector.h"
+#include "DisplayVector.h"
 
 class AbstractArcadeGameControlPanelReader;
 class AbstractBus;
@@ -28,7 +28,7 @@ public:
 
    virtual CPU6502Runner *GetCPURunner(void) = 0;
 
-   virtual void GetAllVectors(std::vector<SimpleVector> &vectors) = 0;
+   virtual void GetAllVectors(std::vector<DisplayVector> &vectors) = 0;
    virtual void SetControlPanel(AbstractArcadeGameControlPanelReader *controlPanel) = 0;
    virtual void SetSoundOutput(AbstractSoundGenerator *soundOutput) = 0;
    virtual void SingleStep(void) = 0;

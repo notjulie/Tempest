@@ -49,7 +49,7 @@ CPU6502Runner *VectorMultiGame::GetCPURunner(void)
    return games[currentGameIndex]->GetCPURunner();
 }
 
-void VectorMultiGame::GetAllVectors(std::vector<SimpleVector> &vectors)
+void VectorMultiGame::GetAllVectors(std::vector<DisplayVector> &vectors)
 {
    games[currentGameIndex]->GetAllVectors(vectors);
 }

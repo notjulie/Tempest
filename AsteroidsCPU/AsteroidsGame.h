@@ -27,7 +27,7 @@ public:
    void     SetSoundOutput(AbstractSoundGenerator *soundOutput) { asteroidsBus.SetSoundOutput(soundOutput); }
 
    // base class overrides
-   virtual void GetAllVectors(std::vector<SimpleVector> &vectors);
+   virtual void GetAllVectors(std::vector<DisplayVector> &vectors);
    virtual CPU6502Runner *GetCPURunner(void) { return &cpuRunner; }
    virtual void SingleStep(void) { cpuRunner.SingleStep(); }
 
