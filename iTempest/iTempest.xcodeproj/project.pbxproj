@@ -71,6 +71,7 @@
 		02E8168F207057C00030CE93 /* sqlite.c in Sources */ = {isa = PBXBuildFile; fileRef = 02E8168D207057C00030CE93 /* sqlite.c */; };
 		02E84C1320687FF7009E08BC /* PlayerButtonRenderer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */; };
 		02F3070F1FA4194F0062CE9F /* CPU6502Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */; };
+		02FBAC46223F1F2800C72D1E /* AbstractTempestDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02FBAC45223F1F2800C72D1E /* AbstractTempestDB.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -173,6 +174,8 @@
 		02E8168D207057C00030CE93 /* sqlite.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sqlite.c; path = ../../SQLite/sqlite.c; sourceTree = "<group>"; };
 		02E84C1220687FF7009E08BC /* PlayerButtonRenderer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PlayerButtonRenderer.metal; sourceTree = "<group>"; };
 		02F3070E1FA4194F0062CE9F /* CPU6502Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPU6502Runner.cpp; path = ../../TempestCPU/6502/CPU6502Runner.cpp; sourceTree = "<group>"; };
+		02FBAC44223F1DE100C72D1E /* AbstractTempestDB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AbstractTempestDB.h; path = ../../TempestIO/AbstractTempestDB.h; sourceTree = "<group>"; };
+		02FBAC45223F1F2800C72D1E /* AbstractTempestDB.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractTempestDB.cpp; path = ../../TempestIO/AbstractTempestDB.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +281,8 @@
 				024D0E1E1F9EAA9C00DA5FFE /* Vector */,
 				029AA09A1FBFBB2C00762BC8 /* WaveStreamer.cpp */,
 				0235021D204C970A0081C43D /* WaveStreamer.h */,
+				02FBAC44223F1DE100C72D1E /* AbstractTempestDB.h */,
+				02FBAC45223F1F2800C72D1E /* AbstractTempestDB.cpp */,
 			);
 			name = TempestIO;
 			path = iTempest;
@@ -442,6 +447,7 @@
 			files = (
 				0278563C2054503000593A8E /* TempestViewRenderer.swift in Sources */,
 				02351E5421BD7DB300F41115 /* ActionQueue.cpp in Sources */,
+				02FBAC46223F1F2800C72D1E /* AbstractTempestDB.cpp in Sources */,
 				024D0E3F1F9EB85A00DA5FFE /* TempestROMS.cpp in Sources */,
 				0257BF1F20D0950100268C3B /* VectorMultiGame.cpp in Sources */,
 				02351E4F21BD7B1900F41115 /* SQLDB.cpp in Sources */,

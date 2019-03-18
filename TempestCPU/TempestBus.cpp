@@ -16,6 +16,10 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
 {
    // copy parameters
    environment = _environment;
+   
+   // set our database to the default database, which is basically just a stub; the
+   // caller can override this
+   db = &defaultDatabase;
 
    // install our timers
    StartTimer(250, [this]() { Tick6KHz(); });
@@ -24,12 +28,9 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
    // configure address space
    ConfigureAddressSpace();
 
-   // open the database
-   db.Open(environment->GetDatabasePathName());
-
    // load high scores; if this succeeds we mark the high scores as read only so that the
    // game doesn't clear them on startup, else we allow the game to initialize them
-   highScoresWritable = !db.LoadHighScores(highScores);
+   //highScoresWritable = !db->LoadHighScores(highScores);
 }
 
 TempestBus::~TempestBus(void)
@@ -53,7 +54,7 @@ uint8_t TempestBus::InsertHighScore(uint32_t score)
    uint8_t result = highScores.InsertScore(score);
 
    // write the new scores to the database
-   db.SaveHighScores(highScores);
+   db->SaveHighScores(highScores);
 
    // return the position of the inserted score
    return result;
@@ -329,7 +330,7 @@ void TempestBus::WriteHighScoreInitial(AbstractBus *bus, uint16_t address, uint8
    {
       int offset = HIGH_SCORE_INITIALS_END - address;
       tempestBus->highScores.SetInitial(offset / 3, offset % 3, TempestChar::FromRawValue(value));
-      tempestBus->db.SaveHighScores(tempestBus->highScores);
+      tempestBus->db->SaveHighScores(tempestBus->highScores);
    }
 }
 
