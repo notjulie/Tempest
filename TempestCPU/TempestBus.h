@@ -70,7 +70,9 @@ private:
 
 private:
    AbstractGameEnvironment *environment;
+   AbstractTempestDB   *db;
 
+   AbstractTempestDB defaultDatabase;
    std::mutex vectorDataSnapshotMutex;
    VectorData vectorData;
    VectorData vectorDataSnapshot;
@@ -78,7 +80,6 @@ private:
    TempestPokey2 pokey2;
    MathBox mathBox;
    HighScoreList highScores;
-   TempestDB   db;
    bool highScoresWritable = true;
 
    AbstractArcadeGameControlPanelReader *controlPanel = nullptr;

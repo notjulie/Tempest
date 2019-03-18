@@ -2,12 +2,13 @@
 #ifndef TEMPESTDB_H
 #define TEMPESTDB_H
 
+#include "AbstractTempestDB.h"
 #include "SQLDB.h"
 
 class ActionQueue;
 class HighScoreList;
 
-class TempestDB {
+class TempestDB : public AbstractTempestDB {
 public:
    TempestDB(void);
    ~TempestDB(void);

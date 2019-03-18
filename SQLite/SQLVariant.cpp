@@ -46,10 +46,18 @@ SQLVariant::operator std::string(void) const
 
 SQLVariant &SQLVariant::operator=(const SQLVariant &source)
 {
+   // free the current value
    if (value != nullptr)
-      sqlite3_value_free(value), value = nullptr;
+   {
+      sqlite3_value_free(value);
+      value = nullptr;
+   }
+   
+   // duplicate the given value
    if (source.value != nullptr)
       value = sqlite3_value_dup(source.value);
+   
+   // done
    return *this;
 }
 

@@ -20,12 +20,6 @@
 #include "TempestVector.h"
 
 
-class iOSTempestEnvironment : public AbstractGameEnvironment
-{
-public:
-    virtual std::string GetDatabasePathName(void) { return ":memory:"; }
-};
-
 class iTempest
 {
 public:
@@ -45,7 +39,7 @@ public:
    void SetZapButtonState(bool state) { controlPanel.SetButtonState(ZAPPER_BUTTON, state); }
 
 private:
-   iOSTempestEnvironment environment;
+   AbstractGameEnvironment environment;
    iTempestSoundOutput soundOutput;
    VectorGameRunner *runner = nullptr;
    TempestGame *game = nullptr;

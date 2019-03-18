@@ -17,8 +17,6 @@ public:
 public:
    virtual ~AbstractGameEnvironment(void) {}
 
-   virtual std::string GetDatabasePathName(void) = 0;
-
 	void RegisterCommand(const std::string &name, CommandHandler handler);
 	std::string ExecuteCommand(const CommandLine &command);
 
