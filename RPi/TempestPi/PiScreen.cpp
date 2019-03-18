@@ -187,18 +187,18 @@ void PiScreen::EndFrame(void)
       throw "EndFrame error";
 }
 
-void PiScreen::DisplayVectors(const std::vector<SimpleVector> &vectors)
+void PiScreen::DisplayVectors(const std::vector<DisplayVector> &vectors)
 {
    StartFrame();
    for (unsigned i=0; i<vectors.size(); ++i)
-      DisplayVector(vectors[i]);
+      DisplaySingleVector(vectors[i]);
    EndFrame();
 }
 
-void PiScreen::DisplayVector(const SimpleVector &vector)
+void PiScreen::DisplaySingleVector(const DisplayVector &vector)
 {
-   if (vector.type != SimpleVector::Line)
-      throw TempestException("PiScreen::DisplayVector: unimplemented vector type");
+   if (vector.type != DisplayVector::Line)
+      throw TempestException("PiScreen::DisplaySingleVector: unimplemented vector type");
 
    // calculate our screen coordinates
    float x1 = (float)state.screen_width - (float)(32768 - vector.line.startY) * state.screen_height / 65536;

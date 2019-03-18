@@ -45,7 +45,7 @@ void TempestPiIO::Run(VectorGame *game)
 void TempestPiIO::PushFrameToScreen(void)
 {
    // get the vectors
-   std::vector<SimpleVector> vectors;
+   std::vector<DisplayVector> vectors;
    game->GetAllVectors(vectors);
 
    // dump them to the screen

@@ -4,7 +4,7 @@
 
 #include "EGL/egl.h"
 
-#include "SimpleVector.h"
+#include "DisplayVector.h"
 
 
 class PiScreen
@@ -24,14 +24,14 @@ public:
    PiScreen(void);
    ~PiScreen(void);
 
-   void DisplayVectors(const std::vector<SimpleVector> &vectors);
+   void DisplayVectors(const std::vector<DisplayVector> &vectors);
 
 private:
    void DeleteStrokes(void);
    VGPaint GetStroke(uint8_t r, uint8_t g, uint8_t b);
    void StartFrame(void);
    void EndFrame(void);
-   void DisplayVector(const SimpleVector &vector);
+   void DisplaySingleVector(const DisplayVector &vector);
    void init_ogl(void);
    void DrawDot(float x, float y, uint8_t r, uint8_t g, uint8_t b);
 
