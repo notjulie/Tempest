@@ -17,9 +17,11 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
    // copy parameters
    environment = _environment;
    
-   // set our database to the default database, which is basically just a stub; the
-   // caller can override this
-   db = &defaultDatabase;
+   // get our database from the environment; if they environment doesn't have one just use a default database
+   // which is basically just a stub
+   db = environment->GetResource<AbstractTempestDB *>("tempest.db");
+   if (db == nullptr)
+      db = &defaultDatabase;
 
    // install our timers
    StartTimer(250, [this]() { Tick6KHz(); });
@@ -30,7 +32,7 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
 
    // load high scores; if this succeeds we mark the high scores as read only so that the
    // game doesn't clear them on startup, else we allow the game to initialize them
-   //highScoresWritable = !db->LoadHighScores(highScores);
+   highScoresWritable = !db->LoadHighScores(highScores);
 }
 
 TempestBus::~TempestBus(void)

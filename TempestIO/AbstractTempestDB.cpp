@@ -6,6 +6,7 @@
 //  Copyright © 2019 Randy Rasmussen. All rights reserved.
 //
 
+#include "TempestIO.Headers.h"
 #include "AbstractTempestDB.h"
 
 

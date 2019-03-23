@@ -11,9 +11,9 @@
 #include <mutex>
 #include "6502/AbstractBus.h"
 
+#include "AbstractTempestDB.h"
 #include "HighScoreList.h"
 #include "MathBox.h"
-#include "TempestDB.h"
 #include "TempestMemoryMap.h"
 #include "TempestPokey.h"
 #include "VectorData.h"
