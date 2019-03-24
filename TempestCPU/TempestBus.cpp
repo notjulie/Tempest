@@ -331,8 +331,13 @@ void TempestBus::WriteHighScoreInitial(AbstractBus *bus, uint16_t address, uint8
    if (tempestBus->highScoresWritable)
    {
       int offset = HIGH_SCORE_INITIALS_END - address;
-      tempestBus->highScores.SetInitial(offset / 3, offset % 3, TempestChar::FromRawValue(value));
-      tempestBus->db->SaveHighScores(tempestBus->highScores);
+      TempestChar newValue = TempestChar::FromRawValue(value);
+      TempestChar oldValue = tempestBus->highScores.GetInitial(offset / 3, offset % 3);
+      if (newValue != oldValue)
+      {
+         tempestBus->highScores.SetInitial(offset / 3, offset % 3, TempestChar::FromRawValue(value));
+         tempestBus->db->SaveHighScores(tempestBus->highScores);
+      }
    }
 }
 

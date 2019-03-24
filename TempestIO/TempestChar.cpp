@@ -45,3 +45,7 @@ char TempestChar::ToAscii(void) const
       throw VectorGameException("TempestChar::ToAscii: don't know this one");
 }
 
+bool TempestChar::operator!=(const TempestChar &c) const
+{
+   return value != c.value;
+}
