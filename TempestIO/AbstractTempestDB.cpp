@@ -6,6 +6,7 @@
 //  Copyright © 2019 Randy Rasmussen. All rights reserved.
 //
 
+#include "TempestIO.Headers.h"
 #include "AbstractTempestDB.h"
 
 
@@ -16,5 +17,10 @@ bool AbstractTempestDB::LoadHighScores(HighScoreList &)
 
 void AbstractTempestDB::SaveHighScores(const HighScoreList &highScores)
 {
+}
+
+GameResourceID<AbstractTempestDB *> AbstractTempestDB::ResourceID(void)
+{
+   return GameResourceID<AbstractTempestDB *>("tempest.db");
 }
 

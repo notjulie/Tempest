@@ -50,12 +50,24 @@ bool TempestDB::LoadHighScores(HighScoreList &highScores)
          ++count;
       }
 
-      return count == HIGH_SCORE_COUNT;
+      if (count == HIGH_SCORE_COUNT)
+      {
+         highScores = result;
+         return true;
+      }
+      else
+      {
+         return false;
+      }
    });
 }
 
-void TempestDB::SaveHighScores(HighScoreList highScores)
+void TempestDB::SaveHighScores(const HighScoreList &_highScores)
 {
+   // make a local copy
+   HighScoreList highScores = _highScores;
+
+   // queue up and execute the query
    actionQueue->ExecuteAsynchronous([highScores,this]() {
       db.ExecuteNonQuery("BEGIN TRANSACTION");
 

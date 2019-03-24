@@ -17,9 +17,11 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
    // copy parameters
    environment = _environment;
    
-   // set our database to the default database, which is basically just a stub; the
-   // caller can override this
-   db = &defaultDatabase;
+   // get our database from the environment; if the environment doesn't have one just use a default database
+   // which is basically just a stub
+   db = environment->GetResource(AbstractTempestDB::ResourceID());
+   if (db == nullptr)
+      db = &defaultDatabase;
 
    // install our timers
    StartTimer(250, [this]() { Tick6KHz(); });
@@ -30,7 +32,7 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
 
    // load high scores; if this succeeds we mark the high scores as read only so that the
    // game doesn't clear them on startup, else we allow the game to initialize them
-   //highScoresWritable = !db->LoadHighScores(highScores);
+   highScoresWritable = !db->LoadHighScores(highScores);
 }
 
 TempestBus::~TempestBus(void)
@@ -329,8 +331,13 @@ void TempestBus::WriteHighScoreInitial(AbstractBus *bus, uint16_t address, uint8
    if (tempestBus->highScoresWritable)
    {
       int offset = HIGH_SCORE_INITIALS_END - address;
-      tempestBus->highScores.SetInitial(offset / 3, offset % 3, TempestChar::FromRawValue(value));
-      tempestBus->db->SaveHighScores(tempestBus->highScores);
+      TempestChar newValue = TempestChar::FromRawValue(value);
+      TempestChar oldValue = tempestBus->highScores.GetInitial(offset / 3, offset % 3);
+      if (newValue != oldValue)
+      {
+         tempestBus->highScores.SetInitial(offset / 3, offset % 3, TempestChar::FromRawValue(value));
+         tempestBus->db->SaveHighScores(tempestBus->highScores);
+      }
    }
 }
 

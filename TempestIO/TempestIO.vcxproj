@@ -107,6 +107,7 @@
       <AdditionalIncludeDirectories>..\;..\SQLite;..\SQLite\SQLRR;..\VectorGame</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderFile>TempestIO.Headers.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,6 +185,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TempestIO.Headers.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TempestIO.Headers.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="AbstractTempestDB.cpp" />
     <ClCompile Include="ActionQueue.cpp" />
     <ClCompile Include="Cpp11WaveStreamer.cpp" />
     <ClCompile Include="HighScoreList.cpp" />

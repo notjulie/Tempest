@@ -15,7 +15,7 @@ public:
 
    void  Open(const std::string &path);
    bool LoadHighScores(HighScoreList &);
-   void SaveHighScores(HighScoreList highScores);
+   void SaveHighScores(const HighScoreList &highScores);
 
 private:
    SQLDB  db;

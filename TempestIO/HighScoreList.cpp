@@ -62,10 +62,9 @@ void HighScoreList::SetInitials(int index, const std::string &initials)
    for (int i = 0; i < 3; ++i)
    {
       if (i >= initials.length())
-         highScores[i].initials[i] = TempestChar();
+         highScores[index].initials[i] = TempestChar();
       else
-         highScores[i].initials[i] = TempestChar::FromAscii(initials[i]);
+         highScores[index].initials[i] = TempestChar::FromAscii(initials[i]);
    }
 }
 
-void SetScore(int index, uint32_t score);

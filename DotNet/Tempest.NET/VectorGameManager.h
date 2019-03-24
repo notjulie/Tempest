@@ -3,6 +3,7 @@
 #define VECTORGAMEMANAGER_H
 
 #include "GameContext.h"
+#include "TempestDB.h"
 #include "VectorEnumerator.h"
 #include "VectorGameRunner.h"
 
@@ -77,10 +78,11 @@ namespace TempestDotNET {
       VectorGameManager(GameContext *_gameContext);
 
 	private:
-		Win32GameEnvironment *environment = nullptr;
+		AbstractGameEnvironment *environment = nullptr;
       GameContext *gameContext = nullptr;
       VectorGameRunner *gameRunner = nullptr;
       VectorGame *game = nullptr;
+      TempestDB *tempestDB = nullptr;
    };
 }
 

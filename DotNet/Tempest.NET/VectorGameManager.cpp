@@ -3,8 +3,8 @@
 #include "Tempest.NET.h"
 #include <msclr\lock.h>
 
+#include "AbstractGameEnvironment.h"
 #include "NativeVectorGameManager.h"
-#include "Win32GameEnvironment.h"
 
 #include "VectorGameManager.h"
 
@@ -18,8 +18,28 @@ namespace TempestDotNET {
       // save/take ownership of the gameContext
       gameContext = _gameContext;
 
-      // create objects
-      environment = new Win32GameEnvironment();
+      // create the environment object that allows us to pass general items
+      // to the games
+      environment = new AbstractGameEnvironment();
+
+      // create our database for Tempest and register it in the environment
+      tempestDB = new TempestDB();
+      {
+         // get this EXE's file name
+         char exeFileName[1000] = "";
+         GetModuleFileNameA(NULL, exeFileName, sizeof(exeFileName));
+
+         // strip off the file name
+         size_t len = strlen(exeFileName);
+         while (len > 0 && exeFileName[len - 1] != '\\')
+            exeFileName[--len] = 0;
+
+         // return the result
+         std::string result = exeFileName;
+         result += "Tempest.DB";
+         tempestDB->Open(result);
+      }
+      environment->RegisterResource(AbstractTempestDB::ResourceID(), tempestDB);
    }
 
    VectorGameManager::~VectorGameManager(void)
