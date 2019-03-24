@@ -34,6 +34,10 @@ TempestPi::TempestPi(void)
          }
       );
 
+   // register the database for Tempest
+   tempestDB.Open("./TempestDB");
+   environment.RegisterResource(AbstractTempestDB::ResourceID(), &tempestDB);
+
    // create the game
    game = new VectorMultiGame(
       &environment,

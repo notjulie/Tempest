@@ -82,7 +82,7 @@ void VectorMultiGame::SingleStep(void)
    {
       if (++currentGameIndex >= (int)games.size())
          currentGameIndex = 0;
-         menuRequest = false;
+      menuRequest = false;
    }
 
    // give the current game a solid timeslice by stepping it a bunch of times;

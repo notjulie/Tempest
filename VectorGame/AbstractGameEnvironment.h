@@ -18,6 +18,7 @@
 #include <stdint.h>
 #include <functional>
 #include <map>
+#include <memory>
 #include <string>
 #include "GameResourceID.h"
 
@@ -39,6 +40,18 @@ public:
    /// </summary>
    typedef std::function<std::string(const CommandLine &)> CommandHandler;
 
+private:
+   class AbstractResource {
+   public:
+      virtual ~AbstractResource(void) {}
+   };
+   template <typename T> class Resource : public AbstractResource {
+   public:
+      Resource(T value) { this->value = value; }
+      virtual ~Resource(void) {}
+      T value;
+   };
+
 public:
    /// <summary>
    /// assigns the given handler as the handler for a given command
@@ -50,7 +63,7 @@ public:
    /// pass in a pointer to an optional object that loads and saves high scores.
    /// </summary>
    template <typename T, typename U> void RegisterResource(const GameResourceID<T> &id, U value) {
-      resources[id.GetName()].reset(new Resource(static_cast<T>(value)));
+      resources[id.GetName()].reset(new Resource<T>(static_cast<T>(value)));
    }
 
    /// <summary>
@@ -75,17 +88,6 @@ public:
    }
 
 private:
-   class AbstractResource {
-   public:
-      virtual ~AbstractResource(void) {}
-   };
-   template <typename T> class Resource : public AbstractResource {
-   public:
-      Resource(T value) { this->value = value; }
-      virtual ~Resource(void) {}
-      T value;
-   };
-
    typedef std::map<std::string, CommandHandler> CommandMap;
    typedef std::map<std::string, std::unique_ptr<AbstractResource>> ResourceMap;
 
