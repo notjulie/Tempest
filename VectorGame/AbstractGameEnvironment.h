@@ -7,6 +7,7 @@
 #include <functional>
 #include <map>
 #include <string>
+#include "GameResourceID.h"
 
 class CommandLine;
 
@@ -19,13 +20,13 @@ public:
    virtual ~AbstractGameEnvironment(void) {}
 
 	void RegisterCommand(const std::string &name, CommandHandler handler);
-   template <typename T> void RegisterResource(const std::string &name, T value) {
-      resources[name] = value;
+   template <typename T, typename U> void RegisterResource(const GameResourceID<T> &id, U value) {
+      resources[id.GetName()] = static_cast<T>(value);
    }
 
    std::string ExecuteCommand(const CommandLine &command);
-   template <typename T> T GetResource(const std::string &name) const {
-      auto i = resources.find(name);
+   template <typename T> T GetResource(const GameResourceID<T> &id) const {
+      auto i = resources.find(id.GetName());
       if (i == resources.end())
          return T();
 

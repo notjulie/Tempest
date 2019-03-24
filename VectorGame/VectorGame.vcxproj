@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractGameEnvironment.h" />
     <ClInclude Include="DisplayVector.h" />
+    <ClInclude Include="GameResourceID.h" />
     <ClInclude Include="VectorGame.h" />
     <ClInclude Include="VectorGameException.h" />
     <ClInclude Include="VectorGameRunner.h" />

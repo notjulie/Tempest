@@ -17,9 +17,9 @@ TempestBus::TempestBus(AbstractGameEnvironment *_environment)
    // copy parameters
    environment = _environment;
    
-   // get our database from the environment; if they environment doesn't have one just use a default database
+   // get our database from the environment; if the environment doesn't have one just use a default database
    // which is basically just a stub
-   db = environment->GetResource<AbstractTempestDB *>("tempest.db");
+   db = environment->GetResource(AbstractTempestDB::ResourceID());
    if (db == nullptr)
       db = &defaultDatabase;
 

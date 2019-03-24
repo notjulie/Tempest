@@ -9,7 +9,10 @@
 #ifndef AbstractTempestDB_h
 #define AbstractTempestDB_h
 
+#include "GameResourceID.h"
+
 class HighScoreList;
+
 
 class AbstractTempestDB {
 public:
@@ -17,6 +20,9 @@ public:
    
    virtual bool LoadHighScores(HighScoreList &);
    virtual void SaveHighScores(const HighScoreList &highScores);
+
+public:
+   static GameResourceID<AbstractTempestDB *> ResourceID(void);
 };
 
 #endif /* AbstractTempestDB_h */

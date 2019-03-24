@@ -39,7 +39,7 @@ namespace TempestDotNET {
          result += "Tempest.DB";
          tempestDB->Open(result);
       }
-      environment->RegisterResource("tempest.db", static_cast<AbstractTempestDB *>(tempestDB));
+      environment->RegisterResource(AbstractTempestDB::ResourceID(), tempestDB);
    }
 
    VectorGameManager::~VectorGameManager(void)

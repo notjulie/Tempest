@@ -19,3 +19,8 @@ void AbstractTempestDB::SaveHighScores(const HighScoreList &highScores)
 {
 }
 
+GameResourceID<AbstractTempestDB *> AbstractTempestDB::ResourceID(void)
+{
+   return GameResourceID<AbstractTempestDB *>("tempest.db");
+}
+
