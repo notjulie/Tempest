@@ -81,6 +81,8 @@
 		021E39C61F9DAB1700FFAB2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		021E39C81F9DAB1700FFAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		021E39C91F9DAB1700FFAB2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0226E889224FB53A00D65737 /* DisplayVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayVector.h; path = ../VectorGame/DisplayVector.h; sourceTree = "<group>"; };
+		0226E88A224FB56100D65737 /* GameResourceID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResourceID.h; path = ../VectorGame/GameResourceID.h; sourceTree = "<group>"; };
 		02350218204C970A0081C43D /* SoundChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundChannel.h; path = ../../TempestIO/SoundChannel.h; sourceTree = "<group>"; };
 		02350219204C970A0081C43D /* Noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Noise.h; path = ../../TempestIO/Noise.h; sourceTree = "<group>"; };
 		0235021A204C970A0081C43D /* Cpp11WaveStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cpp11WaveStreamer.h; path = ../../TempestIO/Cpp11WaveStreamer.h; sourceTree = "<group>"; };
@@ -111,7 +113,6 @@
 		0257BF1A20D0950100268C3B /* VectorMultiGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorMultiGame.cpp; path = ../VectorGame/VectorMultiGame.cpp; sourceTree = "<group>"; };
 		0257BF1B20D0950100268C3B /* VectorGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorGame.cpp; path = ../VectorGame/VectorGame.cpp; sourceTree = "<group>"; };
 		0257BF1C20D0950100268C3B /* VectorMultiGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VectorMultiGame.h; path = ../VectorGame/VectorMultiGame.h; sourceTree = "<group>"; };
-		0257BF1D20D0950100268C3B /* SimpleVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleVector.h; path = ../VectorGame/SimpleVector.h; sourceTree = "<group>"; };
 		0257BF2120D0958400268C3B /* ProcessorStatusWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProcessorStatusWord.h; path = ../../TempestCPU/6502/ProcessorStatusWord.h; sourceTree = "<group>"; };
 		0257BF2220D0958400268C3B /* CPU6502Runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPU6502Runner.h; path = ../../TempestCPU/6502/CPU6502Runner.h; sourceTree = "<group>"; };
 		0257BF2320D0958400268C3B /* CPU6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPU6502.h; path = ../../TempestCPU/6502/CPU6502.h; sourceTree = "<group>"; };
@@ -284,9 +285,10 @@
 		0257BF1520D094E100268C3B /* VectorGame */ = {
 			isa = PBXGroup;
 			children = (
+				0226E88A224FB56100D65737 /* GameResourceID.h */,
+				0226E889224FB53A00D65737 /* DisplayVector.h */,
 				02408800210CDBCB006EA988 /* AbstractGameEnvironment.cpp */,
 				024087FF210CDA1E006EA988 /* AbstractGameEnvironment.h */,
-				0257BF1D20D0950100268C3B /* SimpleVector.h */,
 				0257BF1B20D0950100268C3B /* VectorGame.cpp */,
 				0257BF1620D0950000268C3B /* VectorGame.h */,
 				0257BF1720D0950000268C3B /* VectorGameException.h */,
