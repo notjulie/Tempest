@@ -11,7 +11,7 @@
 
 // generic Tempest includes
 #include "AbstractGameEnvironment.h"
-#include "SimpleVector.h"
+#include "DisplayVector.h"
 #include "VectorGameRunner.h"
 #include "TempestGame.h"
 
