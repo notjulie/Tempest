@@ -162,7 +162,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\TempestCPU\6502;..\TempestIO</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\TempestCPU\6502;..\TempestIO;..\;.;..\TempestIO\Vector</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

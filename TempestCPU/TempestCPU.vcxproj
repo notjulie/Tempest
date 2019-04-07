@@ -182,7 +182,7 @@
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);..\VectorGame</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..;..\SQLite;..\TempestIO\Vector;..\TempestIO;..\SQLite\SQLRR;%(AdditionalIncludeDirectories);..\VectorGame;.\6502</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
       <PrecompiledHeaderFile>TempestCPU.Headers.h</PrecompiledHeaderFile>

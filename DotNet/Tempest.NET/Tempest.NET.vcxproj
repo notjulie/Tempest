@@ -147,7 +147,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..;;C:\Users\Randy\Documents\Visual Studio 2013\Projects\Tempest\TempestDisco\app;..\..\VectorGame;..\..\TempestCPU\6502</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\TempestIO\Vector;..\..\TempestIO;..\..\SQLite\SQLRR;..\..\SQLite;..\..\TempestDisco\app;..\..\VectorGame;..\..\TempestCPU\6502;..\..\DotNet\Win32</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Tempest.NET.h</PrecompiledHeaderFile>
       <CompileAsManaged>true</CompileAsManaged>
