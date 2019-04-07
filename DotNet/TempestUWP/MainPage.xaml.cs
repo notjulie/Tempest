@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Navigation;
 
 using Tempest_UWP_Component;
@@ -29,6 +30,7 @@ namespace TempestUWP
       private SolidColorBrush[] vectorBrush = new SolidColorBrush[16];
       private DateTime startTime;
       private DispatcherTimer vectorTimer;
+      private List<Line> lines = new List<Line>();
 
       public MainPage()
       {
@@ -159,7 +161,7 @@ namespace TempestUWP
 
       void VectorTimer_Tick(object sender, object e)
       {
-         /*if (vectorGameManager == null)
+         if (vectorGameManager == null)
             return;
 
          // get a vector enumerator
@@ -170,17 +172,17 @@ namespace TempestUWP
             for (; ; )
             {
                // get the vector
-               Int16 startX16, startY16, endX16, endY16;
-               byte r, g, b;
-               if (!enumerator.GetNextVector(out startX16, out startY16, out endX16, out endY16, out r, out g, out b))
+               Vector vector = enumerator.GetNextVector();
+               if (!vector.valid)
                   break;
 
                // switch to longer than 16 bits
-               int startX = startX16;
-               int startY = startY16;
-               int endX = endX16;
-               int endY = endY16;
+               int startX = vector.startX;
+               int startY = vector.startY;
+               int endX = vector.endX;
+               int endY = vector.endY;
 
+               
                Line line;
                if (index >= lines.Count)
                {
@@ -205,20 +207,20 @@ namespace TempestUWP
                   startY += strokeThickness / 2;
                }
 
-               line.Stroke = new SolidColorBrush(Color.FromRgb(r, g, b));
+               line.Stroke = new SolidColorBrush(Color.FromArgb(255, vector.r, vector.g, vector.b));
                line.X1 = canvas.ActualWidth / 2 + startX;
                line.X2 = canvas.ActualWidth / 2 + endX;
                line.Y1 = canvas.ActualHeight / 2 - startY;
                line.Y2 = canvas.ActualHeight / 2 - endY;
                line.StrokeThickness = 100;
-               line.Visibility = System.Windows.Visibility.Visible;
+               line.Visibility = Visibility.Visible;
 
                ++index;
             }
 
             while (index < lines.Count)
-               lines[index++].Visibility = System.Windows.Visibility.Hidden;
-         }*/
+               lines[index++].Visibility = Visibility.Collapsed;
+         }
       }
    }
 }
