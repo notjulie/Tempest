@@ -21,15 +21,6 @@
     <ClInclude Include="VectorEnumerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Win32TempestIO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Win32WaveBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Win32WaveStreamer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -50,18 +41,6 @@
     <ClCompile Include="VectorEnumerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Win32WaveBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Win32WaveStreamer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WinTempestIO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Win32ComPortStream.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,9 +48,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VectorGameManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NativeVectorGameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

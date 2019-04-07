@@ -10,8 +10,7 @@
 //    of my custom Tempest cabinet's sound/control panel module.
 // ====================================================================
 
-
-#include "Tempest.NET.h"
+#include <Windows.h>
 #include "TempestCabinetModule.h"
 
 #include "TempestCPU/TempestException.h"

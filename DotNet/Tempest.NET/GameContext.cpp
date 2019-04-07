@@ -84,8 +84,8 @@ LoopbackGameContext::LoopbackGameContext(const std::string &port1, const std::st
    // actual control panel and sound output
    listener = new TempestIOStreamListener(
       &comPort1Stream,
-      &tempestSoundIO,
-      &tempestSoundIO
+      tempestSoundIO,
+      tempestSoundIO
    );
 
    // create the proxy that makes the stream look like a control panel and sound interface that
@@ -97,7 +97,7 @@ LoopbackGameContext::LoopbackGameContext(const std::string &port1, const std::st
    this->soundOutput = proxy;
 
    // direct our keyboard input to the tempestSoundIO object
-   this->controlPanelWriter = &tempestSoundIO;
+   this->controlPanelWriter = tempestSoundIO;
 
    // and start our poll thread
    pollThread = new std::thread([this]() { PollListener(); });

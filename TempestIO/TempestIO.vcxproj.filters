@@ -22,6 +22,9 @@
     <Filter Include="Vector\Header Files">
       <UniqueIdentifier>{b1e56580-8a11-47e5-8cd2-6a4e91fedb4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Win32">
+      <UniqueIdentifier>{71e5b82a-20cc-41ed-9eeb-d7535137d451}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SoundGenerator.h">
@@ -90,6 +93,18 @@
     <ClInclude Include="ActionQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\DotNet\Win32\Win32ComPortStream.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DotNet\Win32\Win32WaveStreamer.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DotNet\Win32\Win32TempestSoundIO.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DotNet\Win32\Win32WaveBuffer.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SoundGenerator.cpp">
@@ -154,6 +169,18 @@
     </ClCompile>
     <ClCompile Include="AbstractTempestDB.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DotNet\Win32\Win32ComPortStream.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DotNet\Win32\Win32WaveStreamer.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DotNet\Win32\Win32TempestSoundIO.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DotNet\Win32\Win32WaveBuffer.cpp">
+      <Filter>Win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

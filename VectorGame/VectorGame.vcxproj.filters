@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Win32">
+      <UniqueIdentifier>{1722ce65-607e-4669-b7c1-9a77feaa78c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VectorGame.h">
@@ -36,6 +39,9 @@
     <ClInclude Include="GameResourceID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\DotNet\Win32\NativeVectorGameManager.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VectorGameRunner.cpp">
@@ -52,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="CommandLine.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DotNet\Win32\NativeVectorGameManager.cpp">
+      <Filter>Win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

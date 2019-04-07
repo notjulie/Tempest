@@ -1,8 +1,5 @@
 
-#include "Tempest.NET.h"
-
 #include "TempestCPU/TempestException.h"
-
 #include "Win32WaveBuffer.h"
 
 
