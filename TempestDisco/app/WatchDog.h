@@ -30,11 +30,6 @@ void InitializeWatchdog(void);
 void ResetIndependentWatchdogCounter(void);
 
 /// <summary>
-/// Registers a function to be called on the window watchdog's interrupt
-/// </summary>
-void AddWatchdogInterruptFunction(WatchdogInterruptFunction *function);
-
-/// <summary>
 /// Returns the state of the watchdog's heartbeat pulse.
 /// </summary>
 bool WatchdogHeartbeat(void);

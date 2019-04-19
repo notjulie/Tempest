@@ -6,25 +6,14 @@
 
 #include "WatchDog.h"
 
-#define MAX_WATCHDOG_FUNCTIONS 5
+
 
 static int wwdgTimerCounts;
-static WatchdogInterruptFunction *watchdogFunctions[MAX_WATCHDOG_FUNCTIONS];
-static int watchdogFunctionCount;
 
 static void InitializeIndependentWatchdog(void);
 static void InitializeWindowWatchdog(void);
 
 static bool heartBeat = false;
-
-void AddWatchdogInterruptFunction(WatchdogInterruptFunction *function)
-{
-	if (watchdogFunctionCount >= MAX_WATCHDOG_FUNCTIONS-1)
-		ReportSystemError(SYSTEM_ERROR_TOO_MANY_WATCHDOG_FUNCTIONS);
-
-	watchdogFunctions[watchdogFunctionCount] = function;
-	++watchdogFunctionCount;
-}
 
 void InitializeWatchdog(void)
 {
@@ -153,10 +142,6 @@ extern "C" {
 	   // 1ms period
 	   static unsigned int count = 0;
 	   heartBeat = ((++count % 1000) > 500) != 0;
-
-	   // call our watchdog functions
-	   for (int i=0; i<watchdogFunctionCount; ++i)
-	   	watchdogFunctions[i]();
 
 	   // clear the interrupt
 		WWDG->SR = 0;
