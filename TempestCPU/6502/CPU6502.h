@@ -112,12 +112,12 @@ private:
 private:
    AbstractBus *bus = nullptr;
 
-   uint8_t  A;
-   uint8_t  S;
-   uint8_t  X;
-   uint8_t  Y;
+   uint8_t  A = 0;
+   uint8_t  S = 0;
+   uint8_t  X = 0;
+   uint8_t  Y = 0;
    ProcessorStatusWord  P;
-   uint16_t PC;
+   uint16_t PC = 0;
 
    bool inNMI = false;
 };
