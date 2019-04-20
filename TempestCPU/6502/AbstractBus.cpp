@@ -1,3 +1,14 @@
+// ====================================================================
+// 6502 emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the abstraction of everything that the 6502 will interact
+//    with.
+// ====================================================================
+
 
 #include "TempestCPU.Headers.h"
 
