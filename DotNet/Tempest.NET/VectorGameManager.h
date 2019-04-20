@@ -1,3 +1,14 @@
+// ====================================================================
+// Vector game emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a managed C++ wrapper around the native vector game
+//    implementation.
+// ====================================================================
+
 
 #ifndef VECTORGAMEMANAGER_H
 #define VECTORGAMEMANAGER_H
@@ -14,10 +25,15 @@ using namespace System::Threading;
 
 namespace TempestDotNET {
 
-	public ref class VectorGameManager sealed
+   /// <summary>
+   /// This class is a managed wrapper around the native vector game implementation so that I
+   /// can use it handily from C#.
+   /// </summary>
+   public ref class VectorGameManager sealed
 	{
 	public:
-		~VectorGameManager(void);
+      !VectorGameManager(void);
+      ~VectorGameManager(void);
 
 		String ^GetProcessorStatus(void);
       VectorEnumerator ^GetVectorEnumerator(void);

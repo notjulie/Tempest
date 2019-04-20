@@ -59,14 +59,9 @@ private:
       std::function<void()> timerFunction;
    };
    struct MemoryAttributes {
-      MemoryAttributes(void) {
-         reader = &ReadAddressInvalid;
-         writer = &WriteAddressInvalid;
-      }
-
-      ReadFunction *reader;
-      WriteFunction *writer;
-      uint8_t value;
+      ReadFunction *reader = &ReadAddressInvalid;
+      WriteFunction *writer = &WriteAddressInvalid;
+      uint8_t value = 0;
    };
 
 private:
