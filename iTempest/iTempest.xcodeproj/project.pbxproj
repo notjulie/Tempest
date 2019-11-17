@@ -617,9 +617,11 @@
 					"$(SRCROOT)/../TempestIO/",
 					"$(SRCROOT)/../SQLite/SQLRR/",
 					"$(SRCROOT)/../SQLite/",
+					"$(SRCROOT)/cTempest",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/cTempest";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
@@ -647,9 +649,11 @@
 					"$(SRCROOT)/../TempestIO/",
 					"$(SRCROOT)/../SQLite/SQLRR/",
 					"$(SRCROOT)/../SQLite/",
+					"$(SRCROOT)/cTempest",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/cTempest";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tralfaz.iTempest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iTempest-Bridging-Header.h";
