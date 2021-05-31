@@ -28,7 +28,7 @@ iTempest::~iTempest(void)
 int iTempest::GetVectors(TempestVector *buffer, int bufferSize)
 {
    // get the latest screen image from the TempestRunner
-   std::vector<SimpleVector> vectors;
+   std::vector<DisplayVector> vectors;
    game->GetAllVectors(vectors);
    
    // figure out how many we're going to return
@@ -40,8 +40,8 @@ int iTempest::GetVectors(TempestVector *buffer, int bufferSize)
    for (int i=0; i<result; ++i)
    {
       TempestVector *dest = buffer + i;
-      SimpleVector *src = &vectors[i];
-      if (src->type != SimpleVector::Line)
+      DisplayVector *src = &vectors[i];
+      if (src->type != DisplayVector::Line)
          throw TempestException("iTempest::GetVectors: unsupported vector type");
       dest->startX = src->line.startX;
       dest->startY = src->line.startY;

@@ -11,6 +11,13 @@
    // and these are some that I just don't like
    #pragma warning(disable : 4571)  // informational... SEH exceptions not caught by catch (...)
    #pragma warning(disable : 4711)  // informational... function being inlined
+   #pragma warning(disable : 5045)	// compiler inserting Spectre mitigation
+
+   // these occur most any time you declare a lambda
+   #pragma warning(disable : 4625)
+   #pragma warning(disable : 4626)
+   #pragma warning(disable : 5026)
+   #pragma warning(disable : 5027)
 
    // temporarily disable some warnings that get reported while loading system headers
    #pragma warning(push)

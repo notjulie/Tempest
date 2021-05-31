@@ -5,8 +5,7 @@
 #include "TempestIO/AbstractSoundGenerator.h"
 #include "TempestIO/AbstractTempestIO.h"
 
-#include "Win32WaveStreamer.h"
-
+class Win32WaveStreamer;
 
 class Win32TempestSoundIO :
    public AbstractSoundGenerator,
@@ -22,7 +21,7 @@ protected:
    virtual void ProcessTimeLapse(uint64_t clockCycles);
 
 private:
-   Win32WaveStreamer	waveStreamer;
+   Win32WaveStreamer	*waveStreamer = nullptr;
 };
 
 

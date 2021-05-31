@@ -1,3 +1,13 @@
+// ====================================================================
+// Vector game emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is a managed C++ wrapper around the native vector game
+//    implementation.
+// ====================================================================
 
 
 #include "Tempest.NET.h"
@@ -13,7 +23,7 @@ using namespace System;
 
 
 namespace TempestDotNET {
-   VectorGameManager::VectorGameManager(GameContext *_gameContext)
+   VectorGameManager::VectorGameManager(GameContext* _gameContext)
    {
       // save/take ownership of the gameContext
       gameContext = _gameContext;
@@ -43,36 +53,41 @@ namespace TempestDotNET {
    }
 
    VectorGameManager::~VectorGameManager(void)
-	{
-		// delete the runner first since it is a thread object
+   {
+      this->!VectorGameManager();
+   }
+
+   VectorGameManager::!VectorGameManager(void)
+   {
+      // delete the runner first since it is a thread object
       delete gameRunner, gameRunner = nullptr;
 
       // then we can get rid of the rest
       delete game, game = nullptr;
       delete environment, environment = nullptr;
       delete gameContext, gameContext = nullptr;
-	}
-   
-   VectorEnumerator ^VectorGameManager::GetVectorEnumerator(void)
+   }
+
+   VectorEnumerator^ VectorGameManager::GetVectorEnumerator(void)
    {
       std::vector<DisplayVector> vectors;
       if (game != nullptr)
          game->GetAllVectors(vectors);
       return gcnew VectorEnumerator(vectors);
    }
-   
+
    bool VectorGameManager::IsStopped(void)
-	{
-		return gameRunner->IsStopped();
-	}
+   {
+      return gameRunner->IsStopped();
+   }
 
-	void VectorGameManager::SetBreakpoint(int address, bool set)
-	{
-		gameRunner->SetBreakpoint(address, set);
-	}
+   void VectorGameManager::SetBreakpoint(int address, bool set)
+   {
+      gameRunner->SetBreakpoint(address, set);
+   }
 
-	void VectorGameManager::Start(void)
-	{
+   void VectorGameManager::Start(void)
+   {
       try {
          // create the game instance
          game = CreateOurVectorGame(environment);
@@ -83,23 +98,23 @@ namespace TempestDotNET {
          gameRunner = new VectorGameRunner(game);
          gameRunner->Start();
       }
-      catch (std::runtime_error &e) {
+      catch (std::runtime_error & e) {
          throw gcnew System::Exception(gcnew System::String(e.what()));
       }
       catch (...) {
          throw gcnew System::Exception("VectorGameManager::Start: unknown exception");
       }
-	}
+   }
 
-	String ^VectorGameManager::GetProcessorStatus(void)
-	{
+   String^ VectorGameManager::GetProcessorStatus(void)
+   {
       if (gameRunner == nullptr)
          return gcnew String("Not running");
       else if (gameRunner->IsTerminated())
-			return gcnew String(gameRunner->GetProcessorStatus().c_str());
-		else
-			return gcnew String("OK");
-	}
+         return gcnew String(gameRunner->GetProcessorStatus().c_str());
+      else
+         return gcnew String("OK");
+   }
 
    VectorGameManager^ VectorGameManager::CreateNormalInstance(void)
    {
@@ -111,7 +126,7 @@ namespace TempestDotNET {
       return gcnew VectorGameManager(new SerializedGameContext());
    }
 
-   VectorGameManager^ VectorGameManager::CreateCOMPortInstance(String^ portName)
+   VectorGameManager^ VectorGameManager::CreateCOMPortInstance(String ^ portName)
    {
       std::string name;
       for (int i = 0; i < portName->Length; ++i)
@@ -119,7 +134,7 @@ namespace TempestDotNET {
       return gcnew VectorGameManager(new COMPortGameContext(name));
    }
 
-   VectorGameManager^ VectorGameManager::CreateLoopbackInstance(String^ port1, String^ port2)
+   VectorGameManager^ VectorGameManager::CreateLoopbackInstance(String ^ port1, String ^ port2)
    {
       std::string name1;
       for (int i = 0; i < port1->Length; ++i)

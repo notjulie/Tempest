@@ -7,7 +7,7 @@
 //
 
 #include <metal_stdlib>
-#include "cTempest/TempestVector.h"
+#include "TempestVector.h"
 using namespace metal;
 
 // these are defined in the source coordinate system, which is a 65536x65536 square
@@ -64,8 +64,8 @@ float4 calculateVertexPosition(TempestVector v, int vertexIndex)
 }
 
 vertex VertexResult tempestVertex(
-                           device TempestVector* vectorArray [[ buffer(TEMPEST_VERTICES_BUFFER) ]],
-                           device TempestRenderParameters* renderParameters [[ buffer(TEMPEST_RENDER_PARAMETERS_BUFFER) ]],
+                           const device TempestVector* vectorArray [[ buffer(TEMPEST_VERTICES_BUFFER) ]],
+                           const device TempestRenderParameters* renderParameters [[ buffer(TEMPEST_RENDER_PARAMETERS_BUFFER) ]],
                            unsigned int vid [[ vertex_id ]])
 {
    // we have 6 vertices per vector = two triangles

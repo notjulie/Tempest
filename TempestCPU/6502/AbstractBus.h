@@ -1,9 +1,13 @@
-/*
- * File:   AbstractBus.h
- * Author: Randy
- *
- * Created on April 25, 2015, 2:11 PM
- */
+// ====================================================================
+// 6502 emulation project
+//    Author: Randy Rasmussen
+//    Copyright: none... do what you will
+//    Warranties: none... do what you will at your own risk
+//
+// File summary:
+//    This is the abstraction of everything that the 6502 will interact
+//    with.
+// ====================================================================
 
 #ifndef ABSTRACTBUS_H
 #define	ABSTRACTBUS_H
@@ -13,6 +17,7 @@
 #pragma warning(disable : 4820)	// padding in structures
 #endif
 
+#include <functional>
 #include <vector>
 
 class AbstractBus
@@ -59,14 +64,9 @@ private:
       std::function<void()> timerFunction;
    };
    struct MemoryAttributes {
-      MemoryAttributes(void) {
-         reader = &ReadAddressInvalid;
-         writer = &WriteAddressInvalid;
-      }
-
-      ReadFunction *reader;
-      WriteFunction *writer;
-      uint8_t value;
+      ReadFunction *reader = &ReadAddressInvalid;
+      WriteFunction *writer = &WriteAddressInvalid;
+      uint8_t value = 0;
    };
 
 private:

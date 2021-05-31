@@ -2,6 +2,8 @@
 #ifndef SQLEXCEPTION_H
 #define SQLEXCEPTION_H
 
+#include <stdexcept>
+
 class SQLException : public std::runtime_error {
 public:
    SQLException(const std::string &message);

@@ -1,6 +1,4 @@
 
-#include "Tempest.NET.h"
-
 #include "AsteroidsCPU/AsteroidsGame.h"
 #include "TempestCPU/TempestGame.h"
 #include "VectorMultiGame.h"

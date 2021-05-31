@@ -4,7 +4,7 @@
 
 #include "TempestMemoryStream.h"
 #include "Win32ComPortStream.h"
-#include "Win32TempestIO.h"
+#include "Win32TempestSoundIO.h"
 
 class TempestIOStreamListener;
 class TempestIOStreamProxy;
@@ -100,7 +100,7 @@ private:
 
 private:
    bool terminated = false;
-   Win32TempestSoundIO tempestSoundIO;
+   Win32TempestSoundIO *tempestSoundIO = nullptr;
    TempestIOStreamListener *listener = nullptr;
    TempestIOStreamProxy *proxy = nullptr;
    Win32ComPortStream comPort1Stream;
