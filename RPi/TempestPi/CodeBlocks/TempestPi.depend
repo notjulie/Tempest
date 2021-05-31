@@ -972,3 +972,55 @@
 	"SQLException.h"
 	"SQLVariant.h"
 
+1544388166 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsROMs.cpp
+	"stdafx.h"
+	"AsteroidsROMs.h"
+
+1544388166 /home/pi/Documents/Tempest/AsteroidsCPU/stdafx.h
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	<iomanip>
+	<map>
+	<mutex>
+	<queue>
+	<sstream>
+	<string>
+	<thread>
+	<vector>
+
+1544388166 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsROMs.h
+
+1544388166 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsBus.cpp
+	"stdafx.h"
+	<memory.h>
+	"TempestIO/AbstractSoundGenerator.h"
+	"TempestIO/AbstractTempestIO.h"
+	"TempestIO/SoundChannelState.h"
+	"AbstractGameEnvironment.h"
+	"TempestCPU/TempestException.h"
+	"AsteroidsROMs.h"
+	"AsteroidsVectorInterpreter.h"
+	"AsteroidsBus.h"
+
+1552948202 /home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsVectorInterpreter.h
+	"DisplayVector.h"
+
+1552948202 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsGame.cpp
+	"stdafx.h"
+	"TempestCPU/6502/CPU6502Exception.h"
+	"AbstractGameEnvironment.h"
+	"TempestCPU/TempestException.h"
+	"AsteroidsVectorInterpreter.h"
+	"AsteroidsGame.h"
+
+1552948202 source:/home/pi/Documents/Tempest/AsteroidsCPU/AsteroidsVectorInterpreter.cpp
+	"stdafx.h"
+	<memory.h>
+	"TempestCPU/TempestException.h"
+	"AsteroidsROMs.h"
+	"AsteroidsVectorInterpreter.h"
+
+1544388166 source:/home/pi/Documents/Tempest/AsteroidsCPU/stdafx.cpp
+	"stdafx.h"
+
