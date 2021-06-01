@@ -25,7 +25,7 @@
 class ActionQueue final {
 public:
    /// <summary>
-   /// class Action; this is a simple template for allowing any Callable to be passed to us 
+   /// class Action; this is a simple template for allowing any Callable to be passed to us
    /// </summary>
    template <typename T> class Action {
    public:
@@ -52,15 +52,13 @@ public:
    /// Executes the action asynchronously but waits for it to complete
    /// </summary>
    template <typename T> T ExecuteSynchronous(Action<T> action) {
-      //std::packaged_task<T> task(action);
+      // get the future that will tell us when the action has been carried out
       std::future<T> result = action.task.get_future();
 
-      {
-         std::lock_guard<std::mutex> lock(qMutex);
-         actions.push_back([&]() { action.task(); });
-         qEvent.notify_all();
-      }
+      // execute asynchronously
+      ExecuteAsynchronous([&]() { action.task(); });
 
+      // wait and return
       result.wait();
       return result.get();
    }
@@ -78,8 +76,10 @@ private:
    std::thread *thread = nullptr;
    std::mutex qMutex;
    std::deque<std::function<void(void)>> actions;
-   std::condition_variable qEvent;
-   std::mutex eventMutex;
+
+   bool haveActionsInQueue = false;
+   std::condition_variable actionsInQueueCondition;
+   std::mutex actionsInQueueMutex;
 };
 
 #endif

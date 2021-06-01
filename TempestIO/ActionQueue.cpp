@@ -55,11 +55,17 @@ ActionQueue::~ActionQueue(void)
 /// </summary>
 void ActionQueue::ExecuteAsynchronous(const std::function<void(void)> &action)
 {
-   std::lock_guard<std::mutex> lock(qMutex);
-   actions.push_back(action);
+   // enqueue it
    {
-      std::lock_guard<std::mutex> eventLock(eventMutex);
-      qEvent.notify_all();
+      std::lock_guard<std::mutex> lock(qMutex);
+      actions.push_back(action);
+   }
+
+   // set our condition that wakes up the thread
+   {
+      std::lock_guard<std::mutex> eventLock(actionsInQueueMutex);
+      haveActionsInQueue = true;
+      actionsInQueueCondition.notify_all();
    }
 }
 
@@ -71,11 +77,13 @@ void ActionQueue::ThreadEntry(void)
 {
    while (!terminated)
    {
+      // wait for something to show up in the queue
       {
-         std::unique_lock<std::mutex> lock(eventMutex);
-         qEvent.wait(lock);
+         std::unique_lock<std::mutex> lock(actionsInQueueMutex);
+         actionsInQueueCondition.wait(lock, [this]{ return haveActionsInQueue;});
       }
 
+      // empty out the queue
       for (;;)
       {
          std::function<void()> action;
@@ -91,7 +99,11 @@ void ActionQueue::ThreadEntry(void)
          }
 
          if (!haveAction)
+         {
+            haveActionsInQueue = false;
             break;
+         }
+
          action();
       }
    }
