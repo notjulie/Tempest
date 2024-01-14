@@ -1,0 +1,50 @@
+//
+// Created by Randy Rasmussen on 1/14/24.
+//
+
+#ifndef ANDROIDTEMPEST_ANDROIDTEMPEST_H
+#define ANDROIDTEMPEST_ANDROIDTEMPEST_H
+
+
+// generic Tempest includes
+#include "AbstractGameEnvironment.h"
+#include "DisplayVector.h"
+#include "VectorGameRunner.h"
+#include "TempestGame.h"
+
+// AndroidTempest includes
+#include "AndroidTempestSoundOutput.h"
+//#include "TempestVector.h"
+
+struct AndroidTempestVector
+{
+};
+
+class AndroidTempest
+{
+public:
+    AndroidTempest();
+    ~AndroidTempest();
+
+    int GetVectors(AndroidTempestVector *buffer, int bufferSize);
+    bool IsInAttractMode() { return game->IsInAttractMode(); }
+
+    // dispatchers to the control panel
+    bool GetPlayer1LEDState() { return controlPanel.GetButtonLED(ONE_PLAYER_BUTTON); }
+    bool GetPlayer2LEDState() { return controlPanel.GetButtonLED(TWO_PLAYER_BUTTON); }
+    void MoveSpinner(int offset) { controlPanel.MoveEncoder(offset); }
+    void SetPlayer1ButtonState(bool state) { controlPanel.SetButtonState(ONE_PLAYER_BUTTON, state); }
+    void SetPlayer2ButtonState(bool state) { controlPanel.SetButtonState(TWO_PLAYER_BUTTON, state); }
+    void SetFireButtonState(bool state) { controlPanel.SetButtonState(FIRE_BUTTON, state); }
+    void SetZapButtonState(bool state) { controlPanel.SetButtonState(ZAPPER_BUTTON, state); }
+
+private:
+    AbstractGameEnvironment environment;
+    AndroidTempestSoundOutput soundOutput;
+    VectorGameRunner *runner = nullptr;
+    TempestGame *game = nullptr;
+    SimpleArcadeGameControlPanel controlPanel;
+};
+
+
+#endif //ANDROIDTEMPEST_ANDROIDTEMPEST_H
