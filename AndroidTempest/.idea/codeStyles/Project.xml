@@ -3,6 +3,24 @@
     <JetCodeStyleSettings>
       <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
     </JetCodeStyleSettings>
+    <Objective-C>
+      <option name="INDENT_NAMESPACE_MEMBERS" value="3" />
+      <option name="INDENT_C_STRUCT_MEMBERS" value="3" />
+      <option name="INDENT_CLASS_MEMBERS" value="3" />
+      <option name="INDENT_INSIDE_CODE_BLOCK" value="3" />
+    </Objective-C>
+    <codeStyleSettings language="JAVA">
+      <indentOptions>
+        <option name="INDENT_SIZE" value="3" />
+        <option name="TAB_SIZE" value="3" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="ObjectiveC">
+      <indentOptions>
+        <option name="INDENT_SIZE" value="3" />
+        <option name="TAB_SIZE" value="3" />
+      </indentOptions>
+    </codeStyleSettings>
     <codeStyleSettings language="XML">
       <option name="FORCE_REARRANGE_MODE" value="1" />
       <indentOptions>
@@ -118,6 +136,10 @@
     </codeStyleSettings>
     <codeStyleSettings language="kotlin">
       <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
+      <indentOptions>
+        <option name="INDENT_SIZE" value="3" />
+        <option name="TAB_SIZE" value="3" />
+      </indentOptions>
     </codeStyleSettings>
   </code_scheme>
 </component>

@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
     private var currentHolder: SurfaceHolder? = null
     private var location: Float = 0.0F
     private val background : Paint = Paint()
+    private val tempest : Tempest = Tempest()
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
