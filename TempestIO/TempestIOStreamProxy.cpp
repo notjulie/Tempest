@@ -21,9 +21,6 @@ TempestIOStreamProxy::TempestIOStreamProxy(AbstractTempestStream *_stream)
    :
       stream(_stream)
 {
-   // copy parameters
-   this->stream = stream;
-
    // clear
    buttons = 0;
    encoder = 0;
