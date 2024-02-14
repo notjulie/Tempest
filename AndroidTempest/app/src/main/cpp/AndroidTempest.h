@@ -42,6 +42,7 @@ public:
    // static interface for JNI calls
    static int CreateInstance();
    static void DeleteInstance(int instance);
+   static void GetVectors(int instance, std::vector<DisplayVector> &result);
 
 private:
    static int nextInstanceHandle;
