@@ -56,30 +56,30 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun run() {
                 val holder: SurfaceHolder? = currentHolder
-                if (holder == null)
-                    return
-                val canvas : Canvas = holder.lockHardwareCanvas()
-                //val canvas : Canvas = holder.lockCanvas()
+                val canvas : Canvas? = holder?.lockHardwareCanvas()
 
-                // draw the background
-                val width = canvas.width.toFloat()
-                val height = canvas.height.toFloat()
-                canvas.drawRect(0.0F, 0.0F, canvas.width.toFloat(), canvas.height.toFloat(), background)
+                if (canvas != null) {
+                    // draw the background
+                    val width = canvas.width.toFloat()
+                    val height = canvas.height.toFloat()
+                    canvas.drawRect(0.0F, 0.0F, canvas.width.toFloat(), canvas.height.toFloat(), background)
 
-                // draw the vectors
-                val vectors = tempest.getCurrentVectors()
-                while (vectors.moveNext()) {
-                    val startX = (vectors.getStartX().toFloat() + 32768) * width / 65536
-                    val startY = (32767 - vectors.getStartY().toFloat()) * height / 65536
-                    val endX = (vectors.getEndX().toFloat() + 32768) * width / 65536
-                    val endY = (32767 - vectors.getEndY().toFloat()) * height / 65536
-                    canvas.drawLine(
-                        startX, startY, endX, endY,
-                        getPaintForColor(vectors.getColor())
-                    )
+                    // draw the vectors
+                    val vectors = tempest.getCurrentVectors()
+                    while (vectors.moveNext()) {
+                        val startX = (vectors.getStartX().toFloat() + 32768) * width / 65536
+                        val startY = (32767 - vectors.getStartY().toFloat()) * height / 65536
+                        val endX = (vectors.getEndX().toFloat() + 32768) * width / 65536
+                        val endY = (32767 - vectors.getEndY().toFloat()) * height / 65536
+                        canvas.drawLine(
+                            startX, startY, endX, endY,
+                            getPaintForColor(vectors.getColor())
+                        )
+                    }
+
+                    holder.unlockCanvasAndPost(canvas)
                 }
 
-                holder.unlockCanvasAndPost(canvas)
             }
         },0L,100L)
     }
