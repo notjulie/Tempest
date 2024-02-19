@@ -36,11 +36,14 @@ class TempestVectors (var data: ByteArray) {
       return index < data.size
    }
 
+   /**
+    * returns the color as SRGB
+    */
    fun getColor() : Int {
       val r : Int = 0xFF and data[index + 8].toInt()
       val g : Int = 0xFF and data[index + 9].toInt()
       val b : Int = 0xFF and data[index + 10].toInt()
-      return (r shl 16) or (g shl 8) or b
+      return (0xFF shl 24) or (r shl 16) or (g shl 8) or b
    }
 
    fun getStartX() : Int {
