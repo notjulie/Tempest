@@ -66,21 +66,28 @@ void AndroidTempest::DeleteInstance(int instance)
 /// <summary>
 /// Gets the current display vectors
 /// </summary>
-void AndroidTempest::GetVectors(int instance, std::vector<DisplayVector> &result)
+void AndroidTempest::GetVectors(std::vector<DisplayVector> &result)
 {
    // clear
    result.resize(0);
 
-   // get the instance
-   auto ii = instances.find(instance);
-   if (ii == instances.end())
-      return;
-   AndroidTempest *tempest = ii->second;
-
    // get the vectors
-   tempest->game->GetAllVectors(result);
+   if (game != nullptr)
+      game->GetAllVectors(result);
 }
 
+
+/// <summary>
+/// Gets an AndroidTempest instance given its handle
+/// </summary>
+AndroidTempest *AndroidTempest::GetInstance(int instanceHandle)
+{
+   auto ii = instances.find(instanceHandle);
+   if (ii == instances.end())
+      return nullptr;
+   else
+      return ii->second;
+}
 
 
 // ========================================================
@@ -116,12 +123,28 @@ Java_com_notjulie_tempest_Tempest_deleteInstance(JNIEnv *, jclass , jint instanc
 /// <summary>
 extern "C"
 JNIEXPORT jbyteArray JNICALL
-Java_com_notjulie_tempest_Tempest_getVectors(JNIEnv *env, jclass , jint instance) {
+Java_com_notjulie_tempest_Tempest_getVectors(JNIEnv *env, jclass , jint instanceHandle) {
+   // get the instance
+   AndroidTempest *tempest = AndroidTempest::GetInstance(instanceHandle);
+   if (tempest == nullptr)
+      return nullptr;
+
    // get the instance's vectors
    std::vector<DisplayVector> vectors;
-   AndroidTempest::GetVectors(instance, vectors);
+   tempest->GetVectors(vectors);
 
-   // serialize
+   // serialize; the C struct transliteration of this would be:
+   // struct {
+   //    uint8_t startXlo;
+   //    uint8_t startXhi;
+   //    uint8_t startYlo;
+   //    uint8_t startYhi;
+   //    uint8_t endXlo;
+   //    uint8_t endXhi;
+   //    uint8_t endYlo;
+   //    uint8_t endYhi;
+   //    uint8_t r,g,b;
+   // };
    std::vector<uint8_t> serialized;
    for (auto v : vectors)
    {

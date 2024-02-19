@@ -58,7 +58,6 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
         AndroidTempest.cpp
         AndroidTempestSoundOutput.cpp
-        native-lib.cpp
 
         ${SQLITE}
         ${TEMPEST_CPU}

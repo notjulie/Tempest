@@ -14,19 +14,17 @@
 
 // AndroidTempest includes
 #include "AndroidTempestSoundOutput.h"
-//#include "TempestVector.h"
 
-struct AndroidTempestVector
-{
-};
 
-class AndroidTempest
+class AndroidTempest final
 {
-public:
+private:
+   // we only allow instantiation/destruction via our static methods
    AndroidTempest();
    ~AndroidTempest();
 
-   int GetVectors(AndroidTempestVector *buffer, int bufferSize);
+public:
+   void GetVectors(std::vector<DisplayVector> &result);
    bool IsInAttractMode() { return game->IsInAttractMode(); }
 
    // dispatchers to the control panel
@@ -42,7 +40,7 @@ public:
    // static interface for JNI calls
    static int CreateInstance();
    static void DeleteInstance(int instance);
-   static void GetVectors(int instance, std::vector<DisplayVector> &result);
+   static AndroidTempest *GetInstance(int instanceHandle);
 
 private:
    static int nextInstanceHandle;

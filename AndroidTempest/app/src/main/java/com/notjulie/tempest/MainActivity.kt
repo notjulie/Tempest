@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
     private lateinit var view : SurfaceView
     private lateinit var handler : Handler
     private var currentHolder: SurfaceHolder? = null
-    private var location: Float = 0.0F
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val tempest : Tempest = Tempest()
 
@@ -49,12 +48,11 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun run() {
                 val vectors = tempest.getCurrentVectors()
-                while (vectors.moveNext()) {
+                /*while (vectors.moveNext()) {
                     val red = vectors.getRed()
                     val blue = vectors.getRed()
-                }
+                }*/
 
-                location += 10
                 val holder: SurfaceHolder? = currentHolder
                 if (holder == null)
                     return
@@ -67,7 +65,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
                 background.style = Paint.Style.FILL
                 canvas.drawRect(0.0F, 0.0F, canvas.width.toFloat(), canvas.height.toFloat(), background)
 
-                val paint = Paint()
+                /*val paint = Paint()
                 paint.isAntiAlias = true
                 paint.isDither = true
                 paint.color = -0x100FF00
@@ -76,17 +74,11 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
                 paint.strokeCap = Paint.Cap.ROUND
                 paint.strokeWidth = 10.0F
 
-                canvas.drawOval(location,location,100.0F,100.0F, paint)
+                canvas.drawOval(location,location,100.0F,100.0F, paint)*/
                 holder.unlockCanvasAndPost(canvas)
             }
         },0L,100L)
     }
-
-    /**
-     * A native method that is implemented by the 'tempest' native library,
-     * which is packaged with this application.
-     */
-    private external fun stringFromJNI(): String
 
     companion object {
         // Used to load the 'tempest' library on application startup.
