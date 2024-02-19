@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
     private lateinit var handler : Handler
     private var currentHolder: SurfaceHolder? = null
     private var location: Float = 0.0F
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val tempest : Tempest = Tempest()
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -45,7 +46,14 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
         // schedule something to do
         Timer().scheduleAtFixedRate(object : TimerTask() {
+            @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun run() {
+                val vectors = tempest.getCurrentVectors()
+                while (vectors.moveNext()) {
+                    val red = vectors.getRed()
+                    val blue = vectors.getRed()
+                }
+
                 location += 10
                 val holder: SurfaceHolder? = currentHolder
                 if (holder == null)

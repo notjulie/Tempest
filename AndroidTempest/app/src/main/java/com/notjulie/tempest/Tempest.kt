@@ -1,27 +1,32 @@
 /**
  * Author: Randy Rasmussen
  * Copyright: 2024
- * Warantees: none
+ * Warranties: none
  *
  * Use for free as you will
  */
 
 package com.notjulie.tempest
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.lang.ref.Cleaner
 
 
 /**
  * Kotlin wrapper around a native AndroidTempest instance
  */
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class Tempest {
    /**
     * our companions
     */
    companion object {
+      @RequiresApi(Build.VERSION_CODES.TIRAMISU)
       val cleaner : Cleaner = Cleaner.create()
       @JvmStatic private external fun createInstance(): Int
       @JvmStatic private external fun deleteInstance(instance : Int)
+      @JvmStatic private external fun getVectors(instance : Int): ByteArray
    }
 
    /**
@@ -38,4 +43,7 @@ class Tempest {
       cleaner.register(this) { deleteInstance(tempest) }
    }
 
+   public fun getCurrentVectors(): TempestVectors {
+      return TempestVectors(getVectors(tempest))
+   }
 }
