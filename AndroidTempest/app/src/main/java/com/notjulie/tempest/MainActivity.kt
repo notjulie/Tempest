@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
         paint.style = Paint.Style.STROKE
         paint.strokeJoin = Paint.Join.ROUND
         paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeWidth = 10.0F
+        paint.strokeWidth = 2.0F
         return paint
     }
 
@@ -106,26 +106,10 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun surfaceCreated(holder: SurfaceHolder) {
         currentHolder = holder
-        /*val canvas : Canvas = holder.lockHardwareCanvas()
-        val paint = Paint()
-        canvas.drawOval(0.0F,0.0F,100.0F,100.0F, paint)
-        holder.unlockCanvasAndPost(canvas)*/
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        val canvas : Canvas = holder.lockHardwareCanvas()
-        val paint = Paint()
-        paint.isAntiAlias = true
-        paint.isDither = true
-        paint.color = -0x100FF00
-        paint.style = Paint.Style.STROKE
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeWidth = 10.0F
-
-        canvas.drawOval(0.0F,0.0F,100.0F,100.0F, paint)
-        holder.unlockCanvasAndPost(canvas)
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
